@@ -2,12 +2,16 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import os
+import re
 
 TEAM = {
     "name": "Buffalo Bills",
     "abbr": "BUF",
     "ourlads_url": "https://www.ourlads.com/nfldepthcharts/depthchart/BUF"
 }
+
+def clean_name(name):
+    return re.sub(r'\s+\S*[\d/]\S*$', '', name).strip()
 
 def scrape_depth_chart(team):
     headers = {
@@ -49,7 +53,7 @@ def scrape_depth_chart(team):
                 player_name = player_tag.get_text(strip=True)
                 if player_name:
                     players.append({
-                        "name": player_name,
+                        "name": clean_name(player_name),
                         "depth": len(players) + 1
                     })
 

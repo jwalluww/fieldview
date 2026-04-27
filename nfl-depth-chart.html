@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NFL Depth Charts — FieldView</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --surface2: #181c24;
+    --border: #1e2330;
+    --border2: #262d3d;
+    --text: #e8eaf0;
+    --text-muted: #6b7494;
+    --text-dim: #404660;
+    --accent: #00d4ff;
+    --accent2: #0099cc;
+    --gold: #f5a623;
+    --green: #22c55e;
+    --red: #ef4444;
+    --orange: #f97316;
+    --purple: #a855f7;
+    --pff-blue: #2563eb;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Header ── */
+  .header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 22px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .logo span { color: var(--text-muted); font-weight: 400; }
+
+  .team-selector {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: border-color .2s;
+  }
+  .team-selector:hover { border-color: var(--accent); }
+
+  .team-badge {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 11px;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+  }
+
+  .team-name-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 1px;
+  }
+
+  .season-badge {
+    margin-left: auto;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  .updated-tag {
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: .5px;
+  }
+
+  /* ── Legend ── */
+  .legend-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: .5px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+  }
+
+  /* ── Layout ── */
+  .main {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    height: calc(100vh - 98px);
+  }
+
+  /* ── Side nav ── */
+  .sidenav {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 16px 0;
+  }
+
+  .sidenav-section {
+    padding: 0 16px 16px;
+  }
+
+  .sidenav-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+
+  .side-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: .5px;
+    cursor: pointer;
+    text-align: left;
+    transition: all .15s;
+  }
+  .side-btn:hover { background: var(--surface2); color: var(--text); }
+  .side-btn.active { background: rgba(0,212,255,.08); color: var(--accent); }
+
+  .side-btn .group-icon {
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+  }
+
+  .divider { height: 1px; background: var(--border); margin: 8px 16px; }
+
+  /* ── Content ── */
+  .content {
+    overflow-y: auto;
+    padding: 24px;
+  }
+
+  /* ── Group header ── */
+  .group-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    margin-top: 32px;
+  }
+  .group-header:first-child { margin-top: 0; }
+
+  .group-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 22px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  .group-bar {
+    flex: 1;
+    height: 1px;
+    background: var(--border2);
+  }
+
+  .group-avg {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  /* ── Position block ── */
+  .position-block {
+    margin-bottom: 12px;
+  }
+
+  .pos-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 0 0 6px 4px;
+  }
+
+  /* ── Depth row ── */
+  .depth-grid {
+    display: grid;
+    grid-template-columns: 28px 1fr 70px 70px 70px 90px;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 2px;
+  }
+
+  .depth-row {
+    display: contents;
+  }
+
+  .depth-row:not(:last-child) > * {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .depth-row > * {
+    padding: 10px 12px;
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    transition: background .15s;
+  }
+
+  .depth-row:hover > * { background: var(--surface2); }
+
+  /* Column: depth number */
+  .col-depth {
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--text-dim);
+    background: var(--surface2) !important;
+    border-right: 1px solid var(--border);
+    padding: 10px 6px !important;
+  }
+
+  .depth-row:nth-child(1) .col-depth { color: var(--gold); }
+
+  /* Column: player */
+  .col-player {
+    gap: 10px;
+    border-right: 1px solid var(--border);
+  }
+
+  .player-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 2px solid var(--border2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .player-info { flex: 1; min-width: 0; }
+
+  .player-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: .5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .player-meta {
+    font-size: 11px;
+    color: var(--text-muted);
+    display: flex;
+    gap: 8px;
+    margin-top: 1px;
+  }
+
+  .contract-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .5px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+  .contract-tag.expiring { background: rgba(239,68,68,.15); color: var(--red); border: 1px solid rgba(239,68,68,.3); }
+  .contract-tag.rookie { background: rgba(34,197,94,.1); color: var(--green); border: 1px solid rgba(34,197,94,.25); }
+  .contract-tag.extension { background: rgba(168,85,247,.1); color: var(--purple); border: 1px solid rgba(168,85,247,.25); }
+  .contract-tag.mid { background: rgba(107,116,148,.1); color: var(--text-muted); border: 1px solid var(--border2); }
+  .contract-tag.franchise { background: rgba(245,166,35,.1); color: var(--gold); border: 1px solid rgba(245,166,35,.3); }
+
+  /* Columns: ratings */
+  .col-pff, .col-madden, .col-stat, .col-snap {
+    justify-content: center;
+    border-right: 1px solid var(--border);
+    flex-direction: column;
+    gap: 2px;
+  }
+  .col-snap { border-right: none; }
+
+  .rating-val {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .rating-label {
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+
+  .bar-mini {
+    width: 100%;
+    height: 3px;
+    background: var(--border2);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 3px;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width .3s ease;
+  }
+
+  /* Rating color bands */
+  .elite { color: #22c55e; }
+  .great { color: #86efac; }
+  .good { color: #a3e635; }
+  .avg  { color: #facc15; }
+  .poor { color: #fb923c; }
+  .bad  { color: #ef4444; }
+
+  .elite-bar { background: #22c55e; }
+  .great-bar { background: #86efac; }
+  .good-bar  { background: #a3e635; }
+  .avg-bar   { background: #facc15; }
+  .poor-bar  { background: #fb923c; }
+  .bad-bar   { background: #ef4444; }
+
+  .madden-blue { color: #60a5fa; }
+  .madden-bar  { background: #60a5fa; }
+
+  /* Column header row */
+  .col-headers {
+    display: grid;
+    grid-template-columns: 28px 1fr 70px 70px 70px 90px;
+    margin-bottom: 4px;
+    padding: 0 0 0 4px;
+  }
+
+  .col-hdr {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 0 12px;
+    text-align: center;
+  }
+  .col-hdr:nth-child(2) { text-align: left; }
+
+  /* ── Injury / status badge ── */
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .status-dot.active { background: var(--green); }
+  .status-dot.questionable { background: var(--gold); }
+  .status-dot.injured { background: var(--red); }
+  .status-dot.ir { background: var(--text-dim); }
+
+  /* ── Team selector dropdown ── */
+  .teams-dropdown {
+    position: absolute;
+    top: 60px;
+    left: 24px;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    padding: 8px;
+    z-index: 200;
+    display: none;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    width: 320px;
+    box-shadow: 0 16px 48px rgba(0,0,0,.6);
+  }
+  .teams-dropdown.open { display: grid; }
+
+  .team-opt {
+    padding: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transition: background .15s;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: .5px;
+  }
+  .team-opt:hover { background: var(--border); color: var(--text); }
+  .team-opt.selected { background: rgba(0,212,255,.1); color: var(--accent); }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+  /* ── Tooltip ── */
+  .tooltip-wrap { position: relative; }
+  .tooltip {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1e2330;
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    padding: 8px 12px;
+    white-space: nowrap;
+    font-size: 11px;
+    color: var(--text);
+    z-index: 300;
+    box-shadow: 0 8px 24px rgba(0,0,0,.5);
+    pointer-events: none;
+  }
+  .tooltip-wrap:hover .tooltip { display: block; }
+
+  /* ── Override section ── */
+  .override-banner {
+    background: rgba(245,166,35,.06);
+    border: 1px solid rgba(245,166,35,.2);
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--gold);
+  }
+
+  /* ── Mobile hint ── */
+  @media (max-width: 900px) {
+    .main { grid-template-columns: 1fr; }
+    .sidenav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="header">
+  <div class="logo">Field<span>View</span></div>
+
+  <div class="team-selector" onclick="toggleTeamDropdown()">
+    <div class="team-badge" id="teamBadge" style="background:#003087;color:#c8102e">BUF</div>
+    <div>
+      <div class="team-name-label" id="teamNameLabel">Buffalo Bills</div>
+      <div class="updated-tag">OurLads · PFF 2024 · Madden 25</div>
+    </div>
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="margin-left:8px;color:var(--text-muted)">
+      <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <div class="teams-dropdown" id="teamsDropdown">
+  </div>
+
+  <div class="season-badge">2024 SEASON</div>
+</header>
+
+<!-- ── LEGEND BAR ── -->
+<div class="legend-bar">
+  <span style="font-family:'Barlow Condensed';font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase">Ratings</span>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Elite (90+)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#86efac"></div>Great (80–89)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#a3e635"></div>Good (70–79)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#facc15"></div>Average (60–69)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#fb923c"></div>Below Avg (50–59)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div>Poor (&lt;50)</div>
+  <div style="margin-left:auto;display:flex;gap:16px">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--green);border-radius:50%"></div>Active</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--gold);border-radius:50%"></div>Questionable</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--red);border-radius:50%"></div>Injured</div>
+  </div>
+</div>
+
+<!-- ── MAIN ── -->
+<div class="main">
+
+  <!-- Side nav -->
+  <nav class="sidenav">
+    <div class="sidenav-section">
+      <div class="sidenav-label">Offense</div>
+      <button class="side-btn active" onclick="scrollTo('QB')"><span class="group-icon">🏈</span> Quarterbacks</button>
+      <button class="side-btn" onclick="scrollTo('RB')"><span class="group-icon">💨</span> Running Backs</button>
+      <button class="side-btn" onclick="scrollTo('WR')"><span class="group-icon">📡</span> Wide Receivers</button>
+      <button class="side-btn" onclick="scrollTo('TE')"><span class="group-icon">🔗</span> Tight Ends</button>
+      <button class="side-btn" onclick="scrollTo('OL')"><span class="group-icon">🧱</span> O-Line</button>
+    </div>
+    <div class="divider"></div>
+    <div class="sidenav-section">
+      <div class="sidenav-label">Defense</div>
+      <button class="side-btn" onclick="scrollTo('DL')"><span class="group-icon">🛡️</span> D-Line</button>
+      <button class="side-btn" onclick="scrollTo('LB')"><span class="group-icon">⚡</span> Linebackers</button>
+      <button class="side-btn" onclick="scrollTo('CB')"><span class="group-icon">🔒</span> Cornerbacks</button>
+      <button class="side-btn" onclick="scrollTo('S')"><span class="group-icon">👁️</span> Safeties</button>
+    </div>
+    <div class="divider"></div>
+    <div class="sidenav-section">
+      <div class="sidenav-label">Special Teams</div>
+      <button class="side-btn" onclick="scrollTo('ST')"><span class="group-icon">🦵</span> Special Teams</button>
+    </div>
+    <div class="divider"></div>
+    <div class="sidenav-section">
+      <div class="sidenav-label">Filters</div>
+      <button class="side-btn" onclick="toggleInjured()"><span class="group-icon">🏥</span> Hide Injured</button>
+      <button class="side-btn" onclick="toggleExpiring()"><span class="group-icon">📋</span> Expiring Only</button>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <div class="content" id="mainContent">
+    <!-- Rendered by JS -->
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// DATA — structured like real API responses would be
+// Sources: OurLads depth, PFF grades, Madden 25, ESPN stats
+// ══════════════════════════════════════════════
+
+const TEAMS = {
+  BUF: { name: "Buffalo Bills", colors: ["#003087","#c8102e"], abbr: "BUF" },
+  KC:  { name: "Kansas City Chiefs", colors: ["#e31837","#ffb81c"], abbr: "KC" },
+  SF:  { name: "San Francisco 49ers", colors: ["#aa0000","#b3995d"], abbr: "SF" },
+  PHI: { name: "Philadelphia Eagles", colors: ["#004c54","#a5acaf"], abbr: "PHI" },
+  BAL: { name: "Baltimore Ravens", colors: ["#241773","#9e7c0c"], abbr: "BAL" },
+  DET: { name: "Detroit Lions", colors: ["#0076b6","#b0b7bc"], abbr: "DET" },
+  DAL: { name: "Dallas Cowboys", colors: ["#003594","#869397"], abbr: "DAL" },
+  MIA: { name: "Miami Dolphins", colors: ["#008e97","#fc4c02"], abbr: "MIA" },
+};
+
+// PFF Grade color/class helper
+function pffClass(g) {
+  if (!g) return '';
+  if (g >= 90) return 'elite';
+  if (g >= 80) return 'great';
+  if (g >= 70) return 'good';
+  if (g >= 60) return 'avg';
+  if (g >= 50) return 'poor';
+  return 'bad';
+}
+function pffBarClass(g) { return pffClass(g) + '-bar'; }
+
+// Madden always blue
+function maddenClass() { return 'madden-blue'; }
+function maddenBarClass() { return 'madden-bar'; }
+
+// Contract tag
+function contractTag(c) {
+  if (!c) return '';
+  const map = {
+    expiring: 'Exp. Contract',
+    rookie:   'Rookie Deal',
+    extension:'Extension',
+    franchise:'Franchise',
+    mid:      'Multi-Year',
+  };
+  return `<span class="contract-tag ${c}">${map[c]||c}</span>`;
+}
+
+// Status dot
+function statusDot(s) {
+  return `<div class="status-dot ${s||'active'}"></div>`;
+}
+
+// ── DEPTH CHART DATA ─────────────────────────────────────────
+// Real structure: {pos, depth: [{name, jersey, age, exp, pff, madden, contract, status, stat, statLabel, snapPct, note}]}
+
+let depthData = {};
+
+async function loadTeamData(abbr) {
+  const response = await fetch(`data/${abbr.toLowerCase()}.json`);
+  const json = await response.json();
+
+  // Group OurLads positions into offense/defense/ST
+  const offensePositions = ['QB','LWR','RWR','SWR','LT','LG','C','RG','RT','TE','RB','FB','HB'];
+  const defensePositions = ['LE','RE','DT','NT','LOLB','ROLB','MLB','ILB','LCB','RCB','SCB','SS','FS','CB'];
+  const stPositions = ['K','P','LS','KR','PR'];
+
+  function groupPositions(posObj) {
+    const offense = [], defense = [], st = [];
+    for (const [pos, players] of Object.entries(posObj)) {
+      const entry = { pos, players: players.map(p => ({ ...p, status:'active' })) };
+      if (offensePositions.includes(pos)) offense.push(entry);
+      else if (defensePositions.includes(pos)) defense.push(entry);
+      else if (stPositions.includes(pos)) st.push(entry);
+      else offense.push(entry); // fallback
+    }
+    return { offense, defense, st };
+  }
+
+  const grouped = groupPositions(json.depth_chart);
+
+  depthData[abbr] = [
+    { group: "OFFENSE", id: "OFF", positions: grouped.offense },
+    { group: "DEFENSE", id: "DEF", positions: grouped.defense },
+    { group: "SPECIAL TEAMS", id: "ST", positions: grouped.st },
+  ];
+}
+
+// Active team
+let currentTeam = 'BUF';
+
+// ══════════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════════
+
+function ratingDisplay(val, colorClass, barClass, label) {
+  if (!val) {
+    return `<div class="col-pff" style="justify-content:center">
+      <span style="color:var(--text-dim);font-size:11px;font-style:italic">N/A</span>
+    </div>`;
+  }
+  const pct = Math.min(val / 99 * 100, 100).toFixed(0);
+  return `
+    <div class="col-pff tooltip-wrap">
+      <div class="rating-val ${colorClass}">${val}</div>
+      <div class="bar-mini"><div class="bar-fill ${barClass}" style="width:${pct}%"></div></div>
+      <div class="rating-label">${label}</div>
+    </div>
+  `;
+}
+
+function renderPlayer(p, depth) {
+  const depthLabel = ['1ST','2ND','3RD','4TH','5TH'][depth] || `${depth+1}TH`;
+  const initials = p.name.split(' ').map(w=>w[0]).join('').slice(0,2);
+
+  return `
+    <div class="depth-row">
+      <div class="col-depth">${depthLabel}</div>
+      <div class="col-player">
+        ${statusDot(p.status)}
+        <div class="player-avatar">${initials}</div>
+        <div class="player-info">
+          <div class="player-name">#${p.jersey} ${p.name}</div>
+          <div class="player-meta">
+            <span>${p.age}y</span>
+            <span>${p.exp}yr exp</span>
+            ${contractTag(p.contract)}
+          </div>
+        </div>
+      </div>
+      ${ratingDisplay(p.pff, pffClass(p.pff), pffBarClass(p.pff), 'PFF')}
+      ${ratingDisplay(p.madden, 'madden-blue', 'madden-bar', 'MADDEN')}
+      <div class="col-stat" style="text-align:center;padding:8px 10px">
+        <div style="font-size:10px;color:var(--text-muted);line-height:1.4">${p.stat||'—'}</div>
+        ${p.statLabel ? `<div style="font-size:9px;color:var(--text-dim);margin-top:2px">${p.statLabel}</div>` : ''}
+      </div>
+      <div class="col-snap" style="justify-content:center">
+        ${p.snap != null ? `
+          <div class="rating-val" style="color:var(--text-muted);font-size:16px">${p.snap}%</div>
+          <div class="bar-mini"><div class="bar-fill" style="width:${p.snap}%;background:var(--border2)"></div></div>
+          <div class="rating-label">SNAP %</div>
+        ` : '<span style="color:var(--text-dim);font-size:11px">—</span>'}
+      </div>
+    </div>
+  `;
+}
+
+function renderPositionBlock(posBlock) {
+  const rows = posBlock.players.map((p,i) => renderPlayer(p,i)).join('');
+  return `
+    <div class="position-block">
+      <div class="pos-label">${posBlock.pos}</div>
+      <div class="col-headers">
+        <div class="col-hdr"></div>
+        <div class="col-hdr" style="text-align:left">Player</div>
+        <div class="col-hdr">PFF Grade</div>
+        <div class="col-hdr">Madden OVR</div>
+        <div class="col-hdr">Stats</div>
+        <div class="col-hdr">Snaps</div>
+      </div>
+      <div class="depth-grid">${rows}</div>
+    </div>
+  `;
+}
+
+function renderGroup(group) {
+  const posBlocks = group.positions.map(renderPositionBlock).join('');
+  return `
+    <div id="section-${group.id}">
+      <div class="group-header">
+        <div class="group-title">${group.group} — ${group.id}</div>
+        <div class="group-bar"></div>
+      </div>
+      ${posBlocks}
+    </div>
+  `;
+}
+
+function renderAll() {
+  const data = depthData[currentTeam];
+  if (!data) { console.error('No data for', currentTeam); return; }
+  const team = TEAMS[currentTeam];
+
+  document.getElementById('teamBadge').textContent = currentTeam;
+  document.getElementById('teamBadge').style.background = team.colors[0];
+  document.getElementById('teamBadge').style.color = team.colors[1];
+  document.getElementById('teamNameLabel').textContent = team.name;
+
+  const html = `
+    <div class="override-banner">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm.75 4a.75.75 0 00-1.5 0v3.25c0 .414.336.75.75.75h2a.75.75 0 000-1.5H8.75V5z"/></svg>
+      <strong>Data note:</strong>&nbsp;Depth chart via OurLads. PFF grades = 2023 season. Madden 25 ratings. Stats from ESPN. Live integration available — see README.
+    </div>
+    ${data.map(renderGroup).join('')}
+  `;
+
+  document.getElementById('mainContent').innerHTML = html;
+}
+
+// ══════════════════════════════════════════════
+// TEAM SELECTOR
+// ══════════════════════════════════════════════
+
+function buildTeamDropdown() {
+  const dd = document.getElementById('teamsDropdown');
+  dd.innerHTML = Object.entries(TEAMS).map(([abbr, t]) => `
+    <div class="team-opt ${abbr===currentTeam?'selected':''}" onclick="selectTeam('${abbr}')">
+      <div class="team-badge" style="background:${t.colors[0]};color:${t.colors[1]};width:28px;height:28px;font-size:9px">${abbr}</div>
+      ${t.name.split(' ').pop()}
+    </div>
+  `).join('');
+}
+
+function toggleTeamDropdown() {
+  const dd = document.getElementById('teamsDropdown');
+  dd.classList.toggle('open');
+  buildTeamDropdown();
+}
+
+function selectTeam(abbr) {
+  currentTeam = abbr;
+  document.getElementById('teamsDropdown').classList.remove('open');
+
+  // If we have data for this team, render it; otherwise show placeholder
+  if (!depthData[abbr]) {
+    depthData[abbr] = depthData.BUF.map(g => ({
+      ...g,
+      positions: g.positions.map(p => ({
+        ...p,
+        players: p.players.map(pl => ({
+          ...pl,
+          name: pl.name + ' (placeholder)',
+          pff: Math.round(50 + Math.random()*40),
+          madden: Math.round(65 + Math.random()*30),
+        }))
+      }))
+    }));
+  }
+
+  loadTeamData('BUF').then(() => renderAll()).catch(err => console.error('Failed to load team data:', err));
+}
+
+// ══════════════════════════════════════════════
+// NAV scroll
+// ══════════════════════════════════════════════
+
+function scrollTo(id) {
+  const el = document.getElementById('section-' + id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.side-btn').forEach(b => b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+}
+
+// ══════════════════════════════════════════════
+// FILTER toggles (stub — extend as needed)
+// ══════════════════════════════════════════════
+
+function toggleInjured() {
+  alert('Filter: Hide injured players — wire this to your data layer to filter status:"injured" and status:"ir" rows.');
+}
+function toggleExpiring() {
+  alert('Filter: Expiring contracts only — wire this to filter contract:"expiring" and contract:"franchise" rows.');
+}
+
+// Close dropdown on outside click
+document.addEventListener('click', e => {
+  if (!e.target.closest('.team-selector') && !e.target.closest('.teams-dropdown')) {
+    document.getElementById('teamsDropdown').classList.remove('open');
+  }
+});
+
+// ── INIT
+loadTeamData('BUF').then(() => renderAll()).catch(err => console.error('Failed to load team data:', err));
+</script>
+</body>
+</html>

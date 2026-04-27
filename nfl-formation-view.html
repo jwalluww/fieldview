@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FieldView — Formation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0e0a;
+  --field-dark: #0d1a0d;
+  --field-mid: #0f1f0f;
+  --field-light: #122212;
+  --line-color: rgba(255,255,255,0.07);
+  --surface: #111318;
+  --surface2: #181c24;
+  --border: #1e2330;
+  --border2: #262d3d;
+  --text: #e8eaf0;
+  --text-muted: #6b7494;
+  --text-dim: #404660;
+  --accent: #00d4ff;
+  --gold: #f5a623;
+  --green: #22c55e;
+  --red: #ef4444;
+  --orange: #f97316;
+  --purple: #a855f7;
+  --team-primary: #003087;
+  --team-secondary: #c8102e;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── HEADER ── */
+.header {
+  background: #0d1118;
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 52px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+
+.logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: var(--accent);
+}
+.logo span { color: var(--text-muted); font-weight: 400; }
+
+.header-divider { width: 1px; height: 24px; background: var(--border2); }
+
+.team-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.team-swatch {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--team-primary);
+  border: 2px solid var(--team-secondary);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 900; letter-spacing: .5px;
+  color: #fff;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.ctrl-group {
+  display: flex;
+  gap: 2px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.ctrl-btn {
+  background: none;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all .15s;
+  text-transform: uppercase;
+}
+.ctrl-btn:hover { color: var(--text); background: var(--border); }
+.ctrl-btn.active { background: var(--accent); color: #000; }
+
+.view-toggle {
+  margin-left: auto;
+  display: flex;
+  gap: 2px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.view-btn {
+  background: none;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 14px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all .15s;
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 6px;
+}
+.view-btn:hover { color: var(--text); }
+.view-btn.active { background: var(--border2); color: var(--text); }
+
+/* ── FIELD WRAPPER ── */
+.field-outer {
+  position: relative;
+  padding: 20px 40px 32px;
+  min-height: calc(100vh - 52px);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Turf field background */
+.field-canvas {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  flex: 1;
+  border-radius: 4px;
+  overflow: visible;
+}
+
+/* SVG field lines rendered behind players */
+.field-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Player positioning layer */
+.players-layer {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 580px;
+}
+
+/* ── PLAYER NODE ── */
+.player-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.player-node:hover { z-index: 100; }
+
+/* Circle */
+.p-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2.5px solid rgba(255,255,255,0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform .2s cubic-bezier(.34,1.56,.64,1), border-color .2s;
+  background: var(--team-primary);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+}
+
+.player-node:hover .p-circle {
+  transform: scale(1.12);
+  border-color: rgba(255,255,255,0.5);
+  box-shadow: 0 0 0 3px rgba(0,212,255,0.25), 0 8px 24px rgba(0,0,0,0.6);
+}
+
+.p-jersey {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 16px;
+  color: #fff;
+  line-height: 1;
+}
+
+.p-ovr {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1;
+}
+
+/* Rating ring arc — drawn as a conic gradient border overlay */
+.p-ring {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Position label chip below circle */
+.p-pos-chip {
+  background: #000;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 3px;
+  padding: 1px 6px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.9);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Name below chip */
+.p-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: rgba(255,255,255,0.85);
+  white-space: nowrap;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+  letter-spacing: .3px;
+  max-width: 90px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* PFF badge */
+.p-pff-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 8px;
+  border: 1.5px solid #000;
+  line-height: 1;
+}
+
+/* Contract warning dot */
+.p-contract-dot {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1.5px solid #000;
+}
+
+/* ── HOVER CARD ── */
+.hover-card {
+  position: absolute;
+  bottom: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  background: #14171f;
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .15s, transform .15s;
+  transform: translateX(-50%) translateY(6px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,212,255,0.08);
+  z-index: 500;
+  overflow: hidden;
+}
+
+.player-node:hover .hover-card {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+/* Card positioning — flip for bottom-row players */
+.player-node.flip-card .hover-card {
+  bottom: auto;
+  top: calc(100% + 14px);
+  transform: translateX(-50%) translateY(-6px);
+}
+.player-node.flip-card:hover .hover-card {
+  transform: translateX(-50%) translateY(0);
+}
+
+.card-header {
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.card-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--team-primary);
+  border: 2px solid var(--team-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 13px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.card-nameblock { flex: 1; min-width: 0; }
+
+.card-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: .5px;
+  color: var(--text);
+  line-height: 1.1;
+}
+
+.card-meta {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  letter-spacing: .3px;
+}
+
+/* Ratings row */
+.card-ratings {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 1px solid var(--border);
+}
+
+.card-rating-cell {
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  border-right: 1px solid var(--border);
+}
+.card-rating-cell:last-child { border-right: none; }
+
+.crc-val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.crc-label {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* Stats */
+.card-stats {
+  padding: 8px 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 12px;
+}
+
+.card-stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.cs-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.cs-val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--text);
+}
+
+/* Contract footer */
+.card-footer {
+  padding: 8px 14px;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.contract-pill {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.cp-expiring { background: rgba(239,68,68,.15); color: var(--red); border: 1px solid rgba(239,68,68,.3); }
+.cp-rookie   { background: rgba(34,197,94,.1);  color: var(--green); border: 1px solid rgba(34,197,94,.25); }
+.cp-extension{ background: rgba(168,85,247,.1); color: var(--purple); border: 1px solid rgba(168,85,247,.25); }
+.cp-mid      { background: rgba(107,116,148,.1); color: var(--text-muted); border: 1px solid var(--border2); }
+.cp-franchise{ background: rgba(245,166,35,.1); color: var(--gold); border: 1px solid rgba(245,166,35,.3); }
+
+.cap-hit {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ── Personnel / formation switcher bar ── */
+.formation-bar {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.formation-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.pff-rank-strip {
+  margin-left: auto;
+  display: flex;
+  gap: 16px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.prs-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.prs-val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--green);
+}
+
+/* ── Legend strip ── */
+.legend-strip {
+  width: 100%;
+  max-width: 1100px;
+  margin: 16px auto 0;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: .5px;
+  padding: 10px 0;
+  border-top: 1px solid var(--border);
+}
+
+.ls-item { display: flex; align-items: center; gap: 6px; }
+
+.ls-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 7px;
+  font-weight: 900;
+  color: #fff;
+}
+
+/* ── Rating colors ── */
+.pff-elite { color: #22c55e; }
+.pff-great { color: #86efac; }
+.pff-good  { color: #a3e635; }
+.pff-avg   { color: #facc15; }
+.pff-poor  { color: #fb923c; }
+.pff-bad   { color: #ef4444; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+/* Animation */
+@keyframes nodeIn {
+  from { opacity: 0; transform: translate(-50%, calc(-50% - 12px)); }
+  to   { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+.player-node { animation: nodeIn .4s cubic-bezier(.34,1.56,.64,1) both; }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="header">
+  <div class="logo">Field<span>View</span></div>
+  <div class="header-divider"></div>
+  <div class="team-chip">
+    <div class="team-swatch">BUF</div>
+    Buffalo Bills
+  </div>
+
+  <div class="controls" style="margin-left:16px">
+    <div class="ctrl-group">
+      <button class="ctrl-btn active" onclick="setUnit('offense',this)">Offense</button>
+      <button class="ctrl-btn" onclick="setUnit('defense',this)">Defense</button>
+      <button class="ctrl-btn" onclick="setUnit('st',this)">Special Teams</button>
+    </div>
+    <div class="ctrl-group" id="personnelGroup">
+      <button class="ctrl-btn active" onclick="setPersonnel('11',this)">11 (3 WR)</button>
+      <button class="ctrl-btn" onclick="setPersonnel('12',this)">12 (2 TE)</button>
+      <button class="ctrl-btn" onclick="setPersonnel('21',this)">21 (2 RB)</button>
+    </div>
+  </div>
+
+  <div class="view-toggle" style="margin-left:auto">
+    <button class="view-btn" onclick="window.location='nfl-depth-chart.html'">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="3" rx="1" fill="currentColor"/><rect x="1" y="5" width="10" height="3" rx="1" fill="currentColor" opacity=".5"/><rect x="1" y="9" width="10" height="2" rx="1" fill="currentColor" opacity=".3"/></svg>
+      Depth Chart
+    </button>
+    <button class="view-btn active">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="2" fill="currentColor"/><circle cx="2" cy="2" r="1.5" fill="currentColor" opacity=".6"/><circle cx="10" cy="2" r="1.5" fill="currentColor" opacity=".6"/><circle cx="2" cy="10" r="1.5" fill="currentColor" opacity=".6"/><circle cx="10" cy="10" r="1.5" fill="currentColor" opacity=".6"/></svg>
+      Formation
+    </button>
+  </div>
+</header>
+
+<!-- ── FIELD OUTER ── -->
+<div class="field-outer">
+
+  <!-- formation top bar -->
+  <div class="formation-bar">
+    <div class="formation-label">11 Personnel · Shotgun Spread</div>
+    <div class="pff-rank-strip">
+      <div class="prs-item">OFF GRADE <span class="prs-val" style="margin-left:6px">71.4</span></div>
+      <div class="header-divider" style="height:16px"></div>
+      <div class="prs-item">PASS BLK <span class="prs-val" style="margin-left:6px">68.2</span></div>
+      <div class="header-divider" style="height:16px"></div>
+      <div class="prs-item">RUN BLK <span class="prs-val" style="margin-left:6px;color:var(--gold)">65.9</span></div>
+    </div>
+  </div>
+
+  <!-- Field canvas -->
+  <div class="field-canvas">
+
+    <!-- Turf background via SVG -->
+    <svg class="field-bg" viewBox="0 0 1100 580" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="turfGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0d1f0d"/>
+          <stop offset="100%" stop-color="#0a1a0a"/>
+        </linearGradient>
+        <!-- alternating stripe pattern -->
+        <pattern id="stripes" x="0" y="0" width="1100" height="72.5" patternUnits="userSpaceOnUse">
+          <rect width="1100" height="72.5" fill="#0d1f0d"/>
+          <rect y="36.25" width="1100" height="36.25" fill="#0f2210"/>
+        </pattern>
+      </defs>
+      <!-- Base -->
+      <rect width="1100" height="580" fill="url(#stripes)" rx="4"/>
+      <!-- Yard lines -->
+      <g stroke="rgba(255,255,255,0.07)" stroke-width="1">
+        <line x1="0" y1="116" x2="1100" y2="116"/>
+        <line x1="0" y1="232" x2="1100" y2="232"/>
+        <line x1="0" y1="348" x2="1100" y2="348"/>
+        <line x1="0" y1="464" x2="1100" y2="464"/>
+      </g>
+      <!-- Hash marks -->
+      <g stroke="rgba(255,255,255,0.1)" stroke-width="1.5">
+        <!-- Left hash -->
+        <line x1="363" y1="0" x2="363" y2="580"/>
+        <!-- Right hash -->
+        <line x1="737" y1="0" x2="737" y2="580"/>
+      </g>
+      <!-- Line of scrimmage -->
+      <line x1="0" y1="360" x2="1100" y2="360" stroke="rgba(0,212,255,0.18)" stroke-width="2" stroke-dasharray="8 6"/>
+      <!-- LOS label -->
+      <text x="18" y="355" fill="rgba(0,212,255,0.35)" font-family="Barlow Condensed, sans-serif" font-size="10" font-weight="700" letter-spacing="2">LINE OF SCRIMMAGE</text>
+      <!-- End zone hint at top -->
+      <rect x="0" y="0" width="1100" height="60" fill="rgba(0,48,135,0.15)"/>
+      <text x="550" y="38" fill="rgba(255,255,255,0.06)" font-family="Barlow Condensed, sans-serif" font-size="28" font-weight="900" letter-spacing="12" text-anchor="middle">END ZONE</text>
+    </svg>
+
+    <!-- Players layer -->
+    <div class="players-layer" id="playersLayer">
+      <!-- rendered by JS -->
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend-strip">
+    <span style="font-family:'Barlow Condensed';font-weight:700;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim)">Ring = PFF Grade</span>
+    <div class="ls-item">
+      <div class="ls-swatch" style="background:conic-gradient(#22c55e 90%, var(--border2) 0)">90</div>Elite
+    </div>
+    <div class="ls-item">
+      <div class="ls-swatch" style="background:conic-gradient(#86efac 80%, var(--border2) 0)">80</div>Great
+    </div>
+    <div class="ls-item">
+      <div class="ls-swatch" style="background:conic-gradient(#a3e635 70%, var(--border2) 0)">70</div>Good
+    </div>
+    <div class="ls-item">
+      <div class="ls-swatch" style="background:conic-gradient(#facc15 60%, var(--border2) 0)">60</div>Average
+    </div>
+    <div class="ls-item" style="margin-left:auto;gap:16px">
+      <div style="display:flex;align-items:center;gap:6px">
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--red);border:1.5px solid #000"></div>
+        Expiring contract
+      </div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--green);border:1.5px solid #000"></div>
+        Rookie deal
+      </div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--purple);border:1.5px solid #000"></div>
+        Extension
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// PLAYER DATA
+// ══════════════════════════════════════════════
+
+const TEAM = { primary: '#003087', secondary: '#c8102e', abbr: 'BUF' };
+
+function pffColor(g) {
+  if (!g) return '#6b7494';
+  if (g >= 90) return '#22c55e';
+  if (g >= 80) return '#86efac';
+  if (g >= 70) return '#a3e635';
+  if (g >= 60) return '#facc15';
+  if (g >= 50) return '#fb923c';
+  return '#ef4444';
+}
+
+function pffClass(g) {
+  if (!g) return 'pff-avg';
+  if (g >= 90) return 'pff-elite';
+  if (g >= 80) return 'pff-great';
+  if (g >= 70) return 'pff-good';
+  if (g >= 60) return 'pff-avg';
+  if (g >= 50) return 'pff-poor';
+  return 'pff-bad';
+}
+
+function contractClass(c) {
+  const map = { expiring:'cp-expiring', rookie:'cp-rookie', extension:'cp-extension', mid:'cp-mid', franchise:'cp-franchise' };
+  return map[c] || 'cp-mid';
+}
+
+function contractLabel(c) {
+  const map = { expiring:'Expiring', rookie:'Rookie Deal', extension:'Extension', mid:'Multi-Year', franchise:'Franchise Tag' };
+  return map[c] || c;
+}
+
+function contractDotColor(c) {
+  const map = { expiring:'#ef4444', rookie:'#22c55e', extension:'#a855f7', mid:'rgba(107,116,148,0.5)', franchise:'#f5a623' };
+  return map[c] || '#6b7494';
+}
+
+// Stats vary by position — shown in hover card
+const PLAYERS = {
+  offense: {
+    '11': [
+      // x/y as percentage of field canvas (1100×580)
+      // ── WRs ──
+      { id:'wr1', pos:'WR', name:'Stefon Diggs',      jersey:14, pff:74.6, madden:91, contract:'expiring',  capHit:'$13.4M', age:30, exp:9,
+        stats:{ 'Targets':'119', 'Rec':'107', 'Yards':'1183', 'TDs':'8', 'YAC':'4.1', 'ADOT':'9.2' }, x:7, y:45, flip:false },
+      { id:'wr2', pos:'WR', name:'Khalil Shakir',     jersey:10, pff:72.1, madden:78, contract:'rookie',    capHit:'$1.1M',  age:25, exp:3,
+        stats:{ 'Targets':'81', 'Rec':'67', 'Yards':'821', 'TDs':'5', 'YAC':'5.2', 'ADOT':'7.8' }, x:93, y:45, flip:false },
+      { id:'slot', pos:'SLOT', name:'Trent Sherfield', jersey:15, pff:60.4, madden:72, contract:'expiring', capHit:'$2.1M',  age:28, exp:5,
+        stats:{ 'Targets':'38', 'Rec':'24', 'Yards':'301', 'TDs':'2', 'YAC':'3.8', 'ADOT':'6.1' }, x:28, y:52, flip:false },
+      // ── TE ──
+      { id:'te',  pos:'TE',   name:'Dawson Knox',      jersey:88, pff:68.0, madden:79, contract:'extension', capHit:'$9.6M',  age:28, exp:5,
+        stats:{ 'Targets':'56', 'Rec':'39', 'Yards':'446', 'TDs':'4', 'Blk Gr':'67.2', 'Routes':'298' }, x:75, y:55, flip:false },
+      // ── OL ──
+      { id:'lt',  pos:'LT',   name:'Dion Dawkins',     jersey:73, pff:76.2, madden:82, contract:'extension', capHit:'$14.0M', age:29, exp:8,
+        stats:{ 'Pass Blk':'76.2', 'Run Blk':'72.1', 'Sacks All':'3', 'Pressures':'28', 'Pen.':'3', 'Snaps':'1102' }, x:37, y:68, flip:true },
+      { id:'lg',  pos:'LG',   name:'C. McGovern',      jersey:66, pff:64.7, madden:73, contract:'expiring',  capHit:'$5.5M',  age:30, exp:7,
+        stats:{ 'Pass Blk':'62.1', 'Run Blk':'68.4', 'Sacks All':'2', 'Pressures':'22', 'Pen.':'2', 'Snaps':'988' }, x:43, y:68, flip:true },
+      { id:'c',   pos:'C',    name:'Mitch Morse',      jersey:60, pff:72.4, madden:77, contract:'expiring',  capHit:'$9.0M',  age:31, exp:9,
+        stats:{ 'Pass Blk':'71.8', 'Run Blk':'73.2', 'Sacks All':'1', 'Pressures':'18', 'Pen.':'1', 'Snaps':'1098' }, x:50, y:68, flip:true },
+      { id:'rg',  pos:'RG',   name:"O'Cyrus Torrence", jersey:64, pff:70.1, madden:78, contract:'rookie',    capHit:'$1.3M',  age:23, exp:2,
+        stats:{ 'Pass Blk':'68.9', 'Run Blk':'72.4', 'Sacks All':'2', 'Pressures':'24', 'Pen.':'3', 'Snaps':'1044' }, x:57, y:68, flip:true },
+      { id:'rt',  pos:'RT',   name:'Spencer Brown',    jersey:79, pff:67.3, madden:76, contract:'extension', capHit:'$5.5M',  age:25, exp:4,
+        stats:{ 'Pass Blk':'65.8', 'Run Blk':'69.1', 'Sacks All':'4', 'Pressures':'34', 'Pen.':'4', 'Snaps':'1088' }, x:63, y:68, flip:true },
+      // ── QB ──
+      { id:'qb',  pos:'QB',   name:'Josh Allen',       jersey:17, pff:88.3, madden:99, contract:'extension', capHit:'$46.2M', age:28, exp:7,
+        stats:{ 'Pass Yds':'4306', 'TDs':'29', 'INTs':'18', 'QBR':'57.1', 'Rush Yds':'524', 'Sacks':'33' }, x:50, y:82, flip:true },
+      // ── RB ──
+      { id:'rb',  pos:'HB',   name:'James Cook',       jersey:4,  pff:78.4, madden:84, contract:'rookie',    capHit:'$1.1M',  age:24, exp:3,
+        stats:{ 'Carries':'188', 'Rush Yds':'1122', 'YPC':'4.5', 'TDs':'7', 'Rec':'40', 'Rec Yds':'320' }, x:50, y:91, flip:true },
+    ]
+  },
+  defense: {
+    'base43': [
+      // ── DL ──
+      { id:'dt1', pos:'DT',  name:'DeForest Buckner', jersey:99, pff:90.4, madden:97, contract:'mid',      capHit:'$21.0M', age:30, exp:9,
+        stats:{ 'Sacks':'8', 'Pressures':'62', 'Tackles':'48', 'TFL':'10', 'PFF Gr':'90.4', 'Snaps':'812' }, x:45, y:55, flip:false },
+      { id:'de1', pos:'DE',  name:'Greg Rousseau',    jersey:50, pff:72.8, madden:80, contract:'rookie',   capHit:'$4.3M',  age:24, exp:4,
+        stats:{ 'Sacks':'7', 'Pressures':'40', 'Tackles':'38', 'TFL':'7', 'PFF Gr':'72.8', 'Snaps':'752' }, x:30, y:52, flip:false },
+      { id:'de2', pos:'DE',  name:'A.J. Epenesa',     jersey:57, pff:66.3, madden:75, contract:'expiring', capHit:'$3.4M',  age:25, exp:4,
+        stats:{ 'Sacks':'5.5', 'Pressures':'32', 'Tackles':'30', 'TFL':'5', 'PFF Gr':'66.3', 'Snaps':'680' }, x:70, y:52, flip:false },
+      // ── LBs ──
+      { id:'mlb', pos:'MLB', name:'Tremaine Edmunds',  jersey:49, pff:70.2, madden:81, contract:'extension',capHit:'$17.5M', age:26, exp:7,
+        stats:{ 'Tackles':'109', 'Sacks':'1', 'INTs':'2', 'PD':'5', 'Coverage':'70.2', 'Snaps':'918' }, x:50, y:40, flip:false },
+      { id:'olb1',pos:'OLB', name:'Matt Milano',       jersey:58, pff:82.6, madden:86, contract:'extension',capHit:'$11.2M', age:29, exp:7,
+        stats:{ 'Tackles':'88', 'Sacks':'2', 'INTs':'4', 'PD':'8', 'Coverage':'82.6', 'Snaps':'826' }, x:32, y:40, flip:false },
+      { id:'olb2',pos:'OLB', name:'Dorian Williams',   jersey:42, pff:60.1, madden:71, contract:'rookie',   capHit:'$0.9M',  age:23, exp:2,
+        stats:{ 'Tackles':'74', 'Sacks':'1', 'INTs':'1', 'PD':'3', 'Coverage':'60.1', 'Snaps':'744' }, x:68, y:40, flip:false },
+      // ── CBs ──
+      { id:'cb1', pos:'CB',  name:"Tre'Davious White", jersey:27, pff:68.4, madden:82, contract:'expiring', capHit:'$13.5M', age:29, exp:8,
+        stats:{ 'Targets':'74', 'Comp All':'48', 'INTs':'2', 'PD':'10', 'Cover Gr':'68.4', 'Snaps':'902' }, x:8, y:28, flip:false },
+      { id:'cb2', pos:'CB',  name:'Christian Benford',  jersey:47, pff:70.8, madden:76, contract:'rookie',  capHit:'$1.0M',  age:24, exp:3,
+        stats:{ 'Targets':'60', 'Comp All':'38', 'INTs':'1', 'PD':'8', 'Cover Gr':'70.8', 'Snaps':'880' }, x:92, y:28, flip:false },
+      { id:'nickel',pos:'SCB',name:'Rasul Douglas',     jersey:23, pff:66.0, madden:77, contract:'mid',     capHit:'$5.0M',  age:29, exp:7,
+        stats:{ 'Targets':'52', 'Comp All':'32', 'INTs':'2', 'PD':'6', 'Cover Gr':'66.0', 'Snaps':'774' }, x:38, y:32, flip:false },
+      // ── Safeties ──
+      { id:'ss',  pos:'SS',  name:'Micah Hyde',         jersey:23, pff:72.0, madden:80, contract:'expiring', capHit:'$10.5M', age:33, exp:11,
+        stats:{ 'Tackles':'62', 'INTs':'2', 'PD':'6', 'Cover Gr':'72.0', 'Snaps':'902', 'MTC Rate':'91%' }, x:35, y:15, flip:false },
+      { id:'fs',  pos:'FS',  name:'Jordan Poyer',        jersey:21, pff:76.1, madden:82, contract:'expiring', capHit:'$10.5M', age:33, exp:11,
+        stats:{ 'Tackles':'68', 'INTs':'4', 'PD':'8', 'Cover Gr':'76.1', 'Snaps':'918', 'MTC Rate':'88%' }, x:65, y:15, flip:false },
+    ]
+  }
+};
+
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+
+let currentUnit = 'offense';
+let currentPersonnel = '11';
+
+// ══════════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════════
+
+function buildHoverCard(p) {
+  const initials = p.name.split(' ').map(w=>w[0]).join('').slice(0,2);
+  const statsHtml = Object.entries(p.stats).map(([k,v]) => `
+    <div class="card-stat-row">
+      <span class="cs-label">${k}</span>
+      <span class="cs-val">${v}</span>
+    </div>
+  `).join('');
+
+  return `
+    <div class="hover-card">
+      <div class="card-header">
+        <div class="card-avatar" style="background:${TEAM.primary};border-color:${TEAM.secondary}">${initials}</div>
+        <div class="card-nameblock">
+          <div class="card-name">#${p.jersey} ${p.name}</div>
+          <div class="card-meta">${p.pos} · Age ${p.age} · ${p.exp}yr exp</div>
+        </div>
+      </div>
+      <div class="card-ratings">
+        <div class="card-rating-cell">
+          <div class="crc-val ${pffClass(p.pff)}">${p.pff||'—'}</div>
+          <div class="crc-label">PFF Grade</div>
+        </div>
+        <div class="card-rating-cell">
+          <div class="crc-val" style="color:#60a5fa">${p.madden}</div>
+          <div class="crc-label">Madden OVR</div>
+        </div>
+        <div class="card-rating-cell">
+          <div class="crc-val" style="color:var(--gold)">${p.age}</div>
+          <div class="crc-label">Age</div>
+        </div>
+      </div>
+      <div class="card-stats">${statsHtml}</div>
+      <div class="card-footer">
+        <span class="contract-pill ${contractClass(p.contract)}">${contractLabel(p.contract)}</span>
+        <span class="cap-hit">${p.capHit} cap hit</span>
+      </div>
+    </div>
+  `;
+}
+
+function buildPlayerNode(p, delay) {
+  // PFF ring: conic-gradient
+  const pct = p.pff ? (p.pff / 99 * 360).toFixed(1) : 0;
+  const ringColor = pffColor(p.pff);
+
+  const ringStyle = p.pff
+    ? `background: conic-gradient(${ringColor} ${pct}deg, rgba(255,255,255,0.06) 0deg); inset:-4px; border-radius:50%;`
+    : '';
+
+  return `
+    <div class="player-node${p.flip?'':''}" 
+         style="left:${p.x}%; top:${p.y}%; animation-delay:${delay}ms"
+         data-id="${p.id}">
+      
+      <div class="p-circle" style="background:${TEAM.primary}">
+        ${ringStyle ? `<div class="p-ring" style="${ringStyle}"></div>` : ''}
+        <div class="p-jersey">${p.jersey}</div>
+        <div class="p-ovr">${p.madden} OVR</div>
+        
+        <!-- PFF badge top-right -->
+        ${p.pff ? `
+          <div class="p-pff-badge" style="background:${ringColor};color:#000">
+            ${Math.round(p.pff)}
+          </div>
+        ` : ''}
+
+        <!-- Contract dot bottom-right -->
+        <div class="p-contract-dot" style="background:${contractDotColor(p.contract)}"></div>
+      </div>
+
+      <div class="p-pos-chip">${p.pos}</div>
+      <div class="p-name">${p.name.split(' ').slice(-1)[0]}</div>
+
+      ${buildHoverCard(p)}
+    </div>
+  `;
+}
+
+function renderFormation() {
+  const layer = document.getElementById('playersLayer');
+
+  let players = [];
+  if (currentUnit === 'offense') {
+    players = PLAYERS.offense[currentPersonnel] || PLAYERS.offense['11'];
+  } else if (currentUnit === 'defense') {
+    players = PLAYERS.defense['base43'] || [];
+  } else {
+    players = [];
+  }
+
+  // Mark bottom-row players for card flip
+  players = players.map(p => ({ ...p, flip: p.y > 70 }));
+
+  layer.innerHTML = players.map((p, i) => buildPlayerNode(p, i * 40)).join('');
+}
+
+// ══════════════════════════════════════════════
+// CONTROLS
+// ══════════════════════════════════════════════
+
+function setUnit(unit, btn) {
+  currentUnit = unit;
+  document.querySelectorAll('.ctrl-group:first-child .ctrl-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  // swap personnel options
+  const pg = document.getElementById('personnelGroup');
+  if (unit === 'offense') {
+    pg.innerHTML = `
+      <button class="ctrl-btn active" onclick="setPersonnel('11',this)">11 (3 WR)</button>
+      <button class="ctrl-btn" onclick="setPersonnel('12',this)">12 (2 TE)</button>
+      <button class="ctrl-btn" onclick="setPersonnel('21',this)">21 (2 RB)</button>
+    `;
+    currentPersonnel = '11';
+  } else if (unit === 'defense') {
+    pg.innerHTML = `
+      <button class="ctrl-btn active" onclick="setPersonnel('base43',this)">4-3 Base</button>
+      <button class="ctrl-btn" onclick="setPersonnel('nickel',this)">Nickel</button>
+      <button class="ctrl-btn" onclick="setPersonnel('dime',this)">Dime</button>
+    `;
+    currentPersonnel = 'base43';
+  } else {
+    pg.innerHTML = `<button class="ctrl-btn active">Kickoff</button>`;
+  }
+
+  renderFormation();
+}
+
+function setPersonnel(pers, btn) {
+  currentPersonnel = pers;
+  document.querySelectorAll('#personnelGroup .ctrl-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderFormation();
+}
+
+// ── INIT
+renderFormation();
+</script>
+</body>
+</html>
