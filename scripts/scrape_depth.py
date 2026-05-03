@@ -4,11 +4,43 @@ import json
 import os
 import re
 
-TEAM = {
-    "name": "Buffalo Bills",
-    "abbr": "BUF",
-    "ourlads_url": "https://www.ourlads.com/nfldepthcharts/depthchart/BUF"
-}
+TEAMS = [
+    {"name": "Arizona Cardinals",   "abbr": "ARZ"},
+    {"name": "Atlanta Falcons",     "abbr": "ATL"},
+    {"name": "Baltimore Ravens",    "abbr": "BAL"},
+    {"name": "Buffalo Bills",       "abbr": "BUF"},
+    {"name": "Carolina Panthers",   "abbr": "CAR"},
+    {"name": "Chicago Bears",       "abbr": "CHI"},
+    {"name": "Cincinnati Bengals",  "abbr": "CIN"},
+    {"name": "Cleveland Browns",    "abbr": "CLE"},
+    {"name": "Dallas Cowboys",      "abbr": "DAL"},
+    {"name": "Denver Broncos",      "abbr": "DEN"},
+    {"name": "Detroit Lions",       "abbr": "DET"},
+    {"name": "Green Bay Packers",   "abbr": "GB"},
+    {"name": "Houston Texans",      "abbr": "HOU"},
+    {"name": "Indianapolis Colts",  "abbr": "IND"},
+    {"name": "Jacksonville Jaguars","abbr": "JAX"},
+    {"name": "Kansas City Chiefs",  "abbr": "KC"},
+    {"name": "Las Vegas Raiders",   "abbr": "LV"},
+    {"name": "Los Angeles Chargers","abbr": "LAC"},
+    {"name": "Los Angeles Rams",    "abbr": "LAR"},
+    {"name": "Miami Dolphins",      "abbr": "MIA"},
+    {"name": "Minnesota Vikings",   "abbr": "MIN"},
+    {"name": "New England Patriots","abbr": "NE"},
+    {"name": "New Orleans Saints",  "abbr": "NO"},
+    {"name": "New York Giants",     "abbr": "NYG"},
+    {"name": "New York Jets",       "abbr": "NYJ"},
+    {"name": "Philadelphia Eagles", "abbr": "PHI"},
+    {"name": "Pittsburgh Steelers", "abbr": "PIT"},
+    {"name": "San Francisco 49ers", "abbr": "SF"},
+    {"name": "Seattle Seahawks",    "abbr": "SEA"},
+    {"name": "Tampa Bay Buccaneers","abbr": "TB"},
+    {"name": "Tennessee Titans",    "abbr": "TEN"},
+    {"name": "Washington Commanders","abbr": "WAS"},
+]
+
+# for team in TEAMS:
+#     team["ourlads_url"] = f"https://www.ourlads.com/nfldepthcharts/depthchart/{team['abbr']}"
 
 def clean_name(name):
     name = re.sub(r'\s+\S*[\d/]\S*$', '', name).strip()
@@ -23,7 +55,12 @@ def scrape_depth_chart(team):
     }
 
     print(f"Fetching {team['name']} depth chart from OurLads...")
-    response = requests.get(team["ourlads_url"], headers=headers)
+    url = f"https://www.ourlads.com/nfldepthcharts/depthchart/{team['abbr']}"
+    try:
+        response = requests.get(url, headers=headers, timeout=10)
+    except requests.exceptions.RequestException as e:
+        print(f"ERROR: Network error — {e}")
+        return None
 
     if response.status_code != 200:
         print(f"ERROR: Got status code {response.status_code}")
@@ -81,11 +118,17 @@ def save_json(data, abbr):
 
 
 if __name__ == "__main__":
-    result = scrape_depth_chart(TEAM)
-    if result:
-        save_json(result, TEAM["abbr"])
-        print(f"\nSuccess! Found {len(result['depth_chart'])} positions")
-        print("\nPositions found:")
-        for pos, players in result["depth_chart"].items():
-            starter = players[0]["name"] if players else "?"
-            print(f"  {pos:<6} — {starter} + {len(players)-1} backup(s)")
+    import time
+    for team in TEAMS:
+        if os.path.exists(f"data/{team['abbr'].lower()}.json"):
+            print(f"Skipping {team['name']} — already have data")
+            continue
+        result = scrape_depth_chart(team)
+        if result:
+            save_json(result, team["abbr"])
+            print(f"Success: {team['name']} — {len(result['depth_chart'])} positions\n")
+        else:
+            print(f"FAILED: {team['name']}\n")
+        time.sleep(5)  # be polite to OurLads, don't hammer them
+
+
