@@ -23,7 +23,6 @@
     --red: #ef4444;
     --orange: #f97316;
     --purple: #a855f7;
-    --pff-blue: #2563eb;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -255,7 +254,7 @@
   /* ── Depth row ── */
   .depth-grid {
     display: grid;
-    grid-template-columns: 28px 1fr 70px 70px 70px 90px;
+    grid-template-columns: 28px 1fr 70px 70px 90px;
     gap: 0;
     border: 1px solid var(--border);
     border-radius: 8px;
@@ -353,7 +352,7 @@
   .contract-tag.franchise { background: rgba(245,166,35,.1); color: var(--gold); border: 1px solid rgba(245,166,35,.3); }
 
   /* Columns: ratings */
-  .col-pff, .col-madden, .col-stat, .col-snap {
+  .col-madden, .col-stat, .col-snap {
     justify-content: center;
     border-right: 1px solid var(--border);
     flex-direction: column;
@@ -412,7 +411,7 @@
   /* Column header row */
   .col-headers {
     display: grid;
-    grid-template-columns: 28px 1fr 70px 70px 70px 90px;
+    grid-template-columns: 28px 1fr 70px 70px 90px;
     margin-bottom: 4px;
     padding: 0 0 0 4px;
   }
@@ -533,7 +532,7 @@
     <div class="team-badge" id="teamBadge" style="background:#003087;color:#c8102e">BUF</div>
     <div>
       <div class="team-name-label" id="teamNameLabel">Buffalo Bills</div>
-      <div class="updated-tag">OurLads · PFF 2024 · Madden 25</div>
+      <div class="updated-tag">OurLads · Madden 25</div>
     </div>
     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="margin-left:8px;color:var(--text-muted)">
       <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -605,7 +604,7 @@
 <script>
 // ══════════════════════════════════════════════
 // DATA — structured like real API responses would be
-// Sources: OurLads depth, PFF grades, Madden 25, ESPN stats
+// Sources: OurLads depth, Madden 25, ESPN stats
 // ══════════════════════════════════════════════
 
 const TEAMS = {
@@ -643,18 +642,6 @@ const TEAMS = {
   WAS: { name: "Washington Commanders",colors: ["#5a1414","#ffb612"], abbr: "WAS" },
 };
 
-// PFF Grade color/class helper
-function pffClass(g) {
-  if (!g) return '';
-  if (g >= 90) return 'elite';
-  if (g >= 80) return 'great';
-  if (g >= 70) return 'good';
-  if (g >= 60) return 'avg';
-  if (g >= 50) return 'poor';
-  return 'bad';
-}
-function pffBarClass(g) { return pffClass(g) + '-bar'; }
-
 // Madden always blue
 function maddenClass() { return 'madden-blue'; }
 function maddenBarClass() { return 'madden-bar'; }
@@ -678,7 +665,7 @@ function statusDot(s) {
 }
 
 // ── DEPTH CHART DATA ─────────────────────────────────────────
-// Real structure: {pos, depth: [{name, jersey, age, exp, pff, madden, contract, status, stat, statLabel, snapPct, note}]}
+// Real structure: {pos, depth: [{name, jersey, age, exp, madden, contract, status, stat, statLabel, snapPct, note}]}
 
 let depthData = {};
 
@@ -719,22 +706,6 @@ let currentTeam = 'BUF';
 // RENDER
 // ══════════════════════════════════════════════
 
-function ratingDisplay(val, colorClass, barClass, label) {
-  if (!val) {
-    return `<div class="col-pff" style="justify-content:center">
-      <span style="color:var(--text-dim);font-size:11px;font-style:italic">N/A</span>
-    </div>`;
-  }
-  const pct = Math.min(val / 99 * 100, 100).toFixed(0);
-  return `
-    <div class="col-pff tooltip-wrap">
-      <div class="rating-val ${colorClass}">${val}</div>
-      <div class="bar-mini"><div class="bar-fill ${barClass}" style="width:${pct}%"></div></div>
-      <div class="rating-label">${label}</div>
-    </div>
-  `;
-}
-
 function renderPlayer(p, depth) {
   const depthLabel = ['1ST','2ND','3RD','4TH','5TH'][depth] || `${depth+1}TH`;
   const initials = p.name.split(' ').map(w=>w[0]).join('').slice(0,2);
@@ -754,7 +725,6 @@ function renderPlayer(p, depth) {
           </div>
         </div>
       </div>
-      ${ratingDisplay(p.pff, pffClass(p.pff), pffBarClass(p.pff), 'PFF')}
       ${ratingDisplay(p.madden, 'madden-blue', 'madden-bar', 'MADDEN')}
       <div class="col-stat" style="text-align:center;padding:8px 10px">
         <div style="font-size:10px;color:var(--text-muted);line-height:1.4">${p.stat||'—'}</div>
@@ -779,7 +749,6 @@ function renderPositionBlock(posBlock) {
       <div class="col-headers">
         <div class="col-hdr"></div>
         <div class="col-hdr" style="text-align:left">Player</div>
-        <div class="col-hdr">PFF Grade</div>
         <div class="col-hdr">Madden OVR</div>
         <div class="col-hdr">Stats</div>
         <div class="col-hdr">Snaps</div>
@@ -815,7 +784,7 @@ function renderAll() {
   const html = `
     <div class="override-banner">
       <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm.75 4a.75.75 0 00-1.5 0v3.25c0 .414.336.75.75.75h2a.75.75 0 000-1.5H8.75V5z"/></svg>
-      <strong>Data note:</strong>&nbsp;Depth chart via OurLads. PFF grades = 2023 season. Madden 25 ratings. Stats from ESPN. Live integration available — see README.
+      <strong>Data note:</strong>&nbsp;Depth chart via OurLads. Madden 25 ratings. Stats from ESPN. Live integration available — see README.
     </div>
     ${data.map(renderGroup).join('')}
   `;
@@ -856,7 +825,6 @@ function selectTeam(abbr) {
         players: p.players.map(pl => ({
           ...pl,
           name: pl.name + ' (placeholder)',
-          pff: Math.round(50 + Math.random()*40),
           madden: Math.round(65 + Math.random()*30),
         }))
       }))
