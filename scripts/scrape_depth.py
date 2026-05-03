@@ -39,9 +39,6 @@ TEAMS = [
     {"name": "Washington Commanders","abbr": "WAS"},
 ]
 
-# for team in TEAMS:
-#     team["ourlads_url"] = f"https://www.ourlads.com/nfldepthcharts/depthchart/{team['abbr']}"
-
 def clean_name(name):
     name = re.sub(r'\s+\S*[\d/]\S*$', '', name).strip()
     if ',' in name:
