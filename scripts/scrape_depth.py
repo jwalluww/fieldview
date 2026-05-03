@@ -11,7 +11,11 @@ TEAM = {
 }
 
 def clean_name(name):
-    return re.sub(r'\s+\S*[\d/]\S*$', '', name).strip()
+    name = re.sub(r'\s+\S*[\d/]\S*$', '', name).strip()
+    if ',' in name:
+        parts = name.split(',', 1)
+        name = parts[1].strip() + ' ' + parts[0].strip()
+    return name
 
 def scrape_depth_chart(team):
     headers = {
