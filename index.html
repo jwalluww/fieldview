@@ -543,7 +543,7 @@
   </div>
 
   <div class="season-badge">2024 SEASON</div>
-  <!-- <a href="nfl-formation-view.html" style="background:var(--surface2);border:1px solid var(--border2);border-radius:6px;padding:6px 14px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;color:var(--text-muted);letter-spacing:1px;text-decoration:none;transition:color .2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'">FORMATION VIEW →</a> -->
+  <a href="nfl-formation-view.html" style="background:var(--surface2);border:1px solid var(--border2);border-radius:6px;padding:6px 14px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;color:var(--text-muted);letter-spacing:1px;text-decoration:none;transition:color .2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'">FORMATION VIEW →</a>
 </header>
 
 <!-- ── LEGEND BAR ── -->
@@ -726,7 +726,13 @@ function renderPlayer(p, depth) {
           </div>
         </div>
       </div>
-      ${ratingDisplay(p.madden, 'madden-blue', 'madden-bar', 'MADDEN')}
+      <div class="col-madden" style="justify-content:center;flex-direction:column;gap:2px">
+        ${p.madden ? `
+          <div class="rating-val madden-blue">${p.madden}</div>
+          <div class="bar-mini"><div class="bar-fill madden-bar" style="width:${(p.madden/99*100).toFixed(0)}%"></div></div>
+          <div class="rating-label">MADDEN</div>
+        ` : '<span style="color:var(--text-dim);font-size:11px">N/A</span>'}
+      </div>
       <div class="col-stat" style="text-align:center;padding:8px 10px">
         <div style="font-size:10px;color:var(--text-muted);line-height:1.4">${p.stat||'—'}</div>
         ${p.statLabel ? `<div style="font-size:9px;color:var(--text-dim);margin-top:2px">${p.statLabel}</div>` : ''}
@@ -832,7 +838,7 @@ function selectTeam(abbr) {
     }));
   }
 
-  loadTeamData('BUF').then(() => renderAll()).catch(err => console.error('Failed to load team data:', err));
+  loadTeamData(abbr).then(() => renderAll()).catch(err => console.error('Failed to load team data:', err));
 }
 
 // ══════════════════════════════════════════════
