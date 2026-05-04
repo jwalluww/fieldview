@@ -117,9 +117,6 @@ def save_json(data, abbr):
 if __name__ == "__main__":
     import time
     for team in TEAMS:
-        if os.path.exists(f"data/{team['abbr'].lower()}.json"):
-            print(f"Skipping {team['name']} — already have data")
-            continue
         result = scrape_depth_chart(team)
         if result:
             save_json(result, team["abbr"])
