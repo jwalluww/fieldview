@@ -103,10 +103,11 @@ def merge():
             team_data = json.load(f)
 
         madden_players = madden_by_team.get(abbr, [])
+        all_madden_players = [p for players in madden_by_team.values() for p in players]
 
         for pos, players in team_data["depth_chart"].items():
             for player in players:
-                mp = find_madden_player(player["name"], madden_players)
+                mp = find_madden_player(player["name"], all_madden_players)
                 if mp:
                     player["madden"] = mp["overall"]
                     player["jersey"] = mp["jersey"]
