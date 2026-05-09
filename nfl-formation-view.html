@@ -150,7 +150,7 @@ body {
 /* ── FIELD WRAPPER ── */
 .field-outer {
   position: relative;
-  padding: 20px 40px 32px;
+  padding: 16px 24px 24px;
   min-height: calc(100vh - 52px);
   display: flex;
   flex-direction: column;
@@ -183,7 +183,7 @@ body {
   position: relative;
   z-index: 10;
   width: 100%;
-  height: 580px;
+  height: 680px;
 }
 
 /* ── PLAYER NODE ── */
@@ -193,49 +193,64 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
   cursor: pointer;
   z-index: 20;
+  gap: 0;
 }
 
 .player-node:hover { z-index: 100; }
 
+.player-node:hover { z-index: 100; }
+
 /* Circle */
-.p-circle {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  border: 2.5px solid rgba(255,255,255,0.15);
+.p-card {
+  width: 100px;
+  background: var(--team-primary-card, #003087);
+  border-radius: 8px 8px 0 0;
+  padding: 8px 10px 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  position: relative;
+  gap: 2px;
+  border: 1.5px solid rgba(255,255,255,0.15);
+  border-bottom: none;
   transition: transform .2s cubic-bezier(.34,1.56,.64,1), border-color .2s;
-  background: var(--team-primary);
   box-shadow: 0 4px 16px rgba(0,0,0,0.5);
 }
 
-.player-node:hover .p-circle {
-  transform: scale(1.12);
-  border-color: rgba(255,255,255,0.5);
-  box-shadow: 0 0 0 3px rgba(0,212,255,0.25), 0 8px 24px rgba(0,0,0,0.6);
+.player-node:hover .p-card {
+  transform: scale(1.06);
+  border-color: rgba(255,255,255,0.4);
 }
 
 .p-jersey {
   font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900;
-  font-size: 16px;
-  color: #fff;
-  line-height: 1;
-}
-
-.p-ovr {
-  font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
-  font-size: 10px;
+  font-size: 13px;
   color: rgba(255,255,255,0.7);
   line-height: 1;
+  align-self: flex-start;
+}
+
+.p-lastname {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 17px;
+  color: #fff;
+  line-height: 1.1;
+  letter-spacing: .3px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 88px;
+}
+.p-madden {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 26px;
+  line-height: 1;
+  text-align: center;
 }
 
 /* Rating ring arc — drawn as a conic gradient border overlay */
@@ -246,52 +261,20 @@ body {
   pointer-events: none;
 }
 
-/* Position label chip below circle */
-.p-pos-chip {
+.p-pos-bar {
+  width: 100px;
   background: #000;
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 3px;
-  padding: 1px 6px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 800;
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  color: rgba(255,255,255,0.9);
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-/* Name below chip */
-.p-name {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 12px;
-  color: rgba(255,255,255,0.85);
-  white-space: nowrap;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
-  letter-spacing: .3px;
-  max-width: 90px;
+  border-radius: 0 0 6px 6px;
+  padding: 4px 0;
   text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* PFF badge */
-.p-pff-badge {
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 900;
-  font-size: 8px;
-  border: 1.5px solid #000;
-  line-height: 1;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.9);
+  text-transform: uppercase;
+  border: 1.5px solid rgba(255,255,255,0.15);
+  border-top: none;
 }
 
 /* Contract warning dot */
@@ -780,18 +763,18 @@ const TEAMS = {
 const FORMATION_COORDS = {
   offense: {
     '11': {
-      LWR: {x:5,  y:45},
-      SWR: {x:28, y:52},
-      RWR: {x:95, y:45},
-      TE:  {x:68, y:65},
-      LT:  {x:37, y:68},
-      LG:  {x:43, y:68},
-      C:   {x:50, y:68},
-      RG:  {x:57, y:68},
-      RT:  {x:63, y:68},
-      QB:  {x:50, y:80},
-      RB:  {x:50, y:90},
-      FB:  {x:50, y:90},
+      LWR: {x:5,  y:38},
+      SWR: {x:28, y:48},
+      RWR: {x:95, y:38},
+      TE:  {x:70, y:60},
+      LT:  {x:37, y:62},
+      LG:  {x:43, y:62},
+      C:   {x:50, y:62},
+      RG:  {x:57, y:62},
+      RT:  {x:63, y:62},
+      QB:  {x:50, y:78},
+      RB:  {x:50, y:92},
+      FB:  {x:50, y:92},
     },
     '12': {
       LWR: {x:5,  y:45},
@@ -822,14 +805,14 @@ const FORMATION_COORDS = {
   },
   defense: {
     'base43': {
-      LCB:  {x:5,  y:28},
-      RCB:  {x:95, y:28},
-      SS:   {x:30, y:18},
-      FS:   {x:70, y:18},
-      LOLB: {x:22, y:42},
-      MLB:  {x:50, y:42},
-      WLB:  {x:50, y:42},
-      ROLB: {x:78, y:42},
+      LCB:  {x:5,  y:22},
+      RCB:  {x:95, y:22},
+      SS:   {x:30, y:12},
+      FS:   {x:70, y:12},
+      LOLB: {x:22, y:38},
+      MLB:  {x:50, y:38},
+      WLB:  {x:50, y:38},
+      ROLB: {x:78, y:38},
       DE:   {x:30, y:55},
       NT:   {x:44, y:55},
       DT:   {x:56, y:55},
@@ -954,25 +937,29 @@ function buildHoverCard(p, pos) {
 function buildPlayerNode(p, pos, coords, delay, flipCard) {
   if (!p) return '';
   const team = TEAMS[currentTeam];
-  const maddenColor = p.madden >= 90 ? '#22c55e' : p.madden >= 80 ? '#86efac' : p.madden >= 70 ? '#a3e635' : p.madden >= 60 ? '#facc15' : '#fb923c';
-  const ringPct = p.madden ? (p.madden / 99 * 360).toFixed(1) : 0;
-  const ringStyle = p.madden ? `background:conic-gradient(${maddenColor} ${ringPct}deg, rgba(255,255,255,0.06) 0deg);inset:-4px;border-radius:50%;` : '';
-  const lastName = p.name.split(' ').slice(-1)[0];
+  const maddenColor = !p.madden ? '#6b7494'
+    : p.madden >= 90 ? '#22c55e'
+    : p.madden >= 80 ? '#86efac'
+    : p.madden >= 70 ? '#a3e635'
+    : p.madden >= 60 ? '#facc15'
+    : '#fb923c';
+  const lastName = p.name.split(' ').filter(w => w.length > 1).slice(-1)[0] || p.name;
 
   return `
     <div class="player-node ${flipCard ? 'flip-card' : ''}"
          style="left:${coords.x}%;top:${coords.y}%;animation-delay:${delay}ms">
-      <div class="p-circle" style="background:${team.colors[0]}">
-        ${ringStyle ? `<div class="p-ring" style="${ringStyle}"></div>` : ''}
-        ${p.jersey ? `<div class="p-jersey">${p.jersey}</div>` : ''}
-        <div class="p-ovr">${p.madden ? p.madden+' OVR' : pos}</div>
+      <div class="p-card" style="background:${team.colors[0]};--team-primary-card:${team.colors[0]}">
+        <div class="p-jersey">${p.jersey ? '#'+p.jersey : ''}</div>
+        <div class="p-lastname">${lastName}</div>
+        <div class="p-madden" style="color:${maddenColor}">${p.madden || '—'}</div>
       </div>
-      <div class="p-pos-chip">${pos}</div>
-      <div class="p-name">${lastName}</div>
+      <div class="p-pos-bar">${pos}</div>
       ${buildHoverCard(p, pos)}
     </div>
   `;
 }
+
+
 
 // ══════════════════════════════════════════════
 // RENDER
