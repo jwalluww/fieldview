@@ -564,6 +564,37 @@ body {
 }
 
 .player-node { animation: nodeIn .4s cubic-bezier(.34,1.56,.64,1) both; }
+.teams-dropdown {
+  position: absolute;
+  top: 44px;
+  left: 0;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 8px;
+  z-index: 200;
+  display: none;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  width: 320px;
+  box-shadow: 0 16px 48px rgba(0,0,0,.6);
+}
+.teams-dropdown.open { display: grid; }
+.team-opt {
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+.team-opt:hover { background: var(--border); color: var(--text); }
+.team-opt.selected { background: rgba(0,212,255,.1); color: var(--accent); }
 </style>
 </head>
 <body>
@@ -572,9 +603,13 @@ body {
 <header class="header">
   <div class="logo">Field<span>View</span></div>
   <div class="header-divider"></div>
-  <div class="team-chip">
-    <div class="team-swatch">BUF</div>
-    Buffalo Bills
+  <div class="team-selector-wrap" style="position:relative">
+    <div style="display:flex;align-items:center;gap:10px;cursor:pointer;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:6px 12px" onclick="toggleTeamDropdown()">
+      <div class="team-swatch" id="teamSwatchEl">BUF</div>
+      <span class="team-chip" id="teamNameEl">Buffalo Bills</span>
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="color:var(--text-muted)"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </div>
+    <div class="teams-dropdown" id="teamsDropdown"></div>
   </div>
 
   <div class="controls" style="margin-left:16px">
@@ -666,7 +701,7 @@ body {
 
   <!-- Legend -->
   <div class="legend-strip">
-    <span style="font-family:'Barlow Condensed';font-weight:700;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim)">Ring = PFF Grade</span>
+    <span style="font-family:'Barlow Condensed';font-weight:700;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim)">Ring = Madden OVR</span>
     <div class="ls-item">
       <div class="ls-swatch" style="background:conic-gradient(#22c55e 90%, var(--border2) 0)">90</div>Elite
     </div>
@@ -699,230 +734,291 @@ body {
 
 <script>
 // ══════════════════════════════════════════════
-// PLAYER DATA
+// TEAMS
+// ══════════════════════════════════════════════
+const TEAMS = {
+  ARI: { name: "Arizona Cardinals",    colors: ["#97233f","#ffb612"] },
+  ATL: { name: "Atlanta Falcons",      colors: ["#a71930","#a5acaf"] },
+  BAL: { name: "Baltimore Ravens",     colors: ["#241773","#9e7c0c"] },
+  BUF: { name: "Buffalo Bills",        colors: ["#003087","#c8102e"] },
+  CAR: { name: "Carolina Panthers",    colors: ["#0085ca","#101820"] },
+  CHI: { name: "Chicago Bears",        colors: ["#0b162a","#c83803"] },
+  CIN: { name: "Cincinnati Bengals",   colors: ["#fb4f14","#000000"] },
+  CLE: { name: "Cleveland Browns",     colors: ["#311d00","#ff3c00"] },
+  DAL: { name: "Dallas Cowboys",       colors: ["#003594","#869397"] },
+  DEN: { name: "Denver Broncos",       colors: ["#fb4f14","#002244"] },
+  DET: { name: "Detroit Lions",        colors: ["#0076b6","#b0b7bc"] },
+  GB:  { name: "Green Bay Packers",    colors: ["#203731","#ffb612"] },
+  HOU: { name: "Houston Texans",       colors: ["#03202f","#a71930"] },
+  IND: { name: "Indianapolis Colts",   colors: ["#002c5f","#a5acaf"] },
+  JAX: { name: "Jacksonville Jaguars", colors: ["#101820","#d7a22a"] },
+  KC:  { name: "Kansas City Chiefs",   colors: ["#e31837","#ffb81c"] },
+  LAC: { name: "Los Angeles Chargers", colors: ["#0080c6","#ffc20e"] },
+  LAR: { name: "Los Angeles Rams",     colors: ["#003594","#ffd100"] },
+  LV:  { name: "Las Vegas Raiders",    colors: ["#000000","#a5acaf"] },
+  MIA: { name: "Miami Dolphins",       colors: ["#008e97","#fc4c02"] },
+  MIN: { name: "Minnesota Vikings",    colors: ["#4f2683","#ffc62f"] },
+  NE:  { name: "New England Patriots", colors: ["#002244","#c60c30"] },
+  NO:  { name: "New Orleans Saints",   colors: ["#101820","#d3bc8d"] },
+  NYG: { name: "New York Giants",      colors: ["#0b2265","#a71930"] },
+  NYJ: { name: "New York Jets",        colors: ["#125740","#ffffff"] },
+  PHI: { name: "Philadelphia Eagles",  colors: ["#004c54","#a5acaf"] },
+  PIT: { name: "Pittsburgh Steelers",  colors: ["#101820","#ffb612"] },
+  SF:  { name: "San Francisco 49ers",  colors: ["#aa0000","#b3995d"] },
+  SEA: { name: "Seattle Seahawks",     colors: ["#002244","#69be28"] },
+  TB:  { name: "Tampa Bay Buccaneers", colors: ["#d50a0a","#ff7900"] },
+  TEN: { name: "Tennessee Titans",     colors: ["#0c2340","#4b92db"] },
+  WAS: { name: "Washington Commanders",colors: ["#5a1414","#ffb612"] },
+};
+
+// ══════════════════════════════════════════════
+// POSITION COORDINATE MAPS
+// x/y as % of field canvas (left=0, right=100, top=0, bottom=100)
+// Field is oriented so offense attacks upward (end zone at top)
 // ══════════════════════════════════════════════
 
-const TEAM = { primary: '#003087', secondary: '#c8102e', abbr: 'BUF' };
-
-function pffColor(g) {
-  if (!g) return '#6b7494';
-  if (g >= 90) return '#22c55e';
-  if (g >= 80) return '#86efac';
-  if (g >= 70) return '#a3e635';
-  if (g >= 60) return '#facc15';
-  if (g >= 50) return '#fb923c';
-  return '#ef4444';
-}
-
-function pffClass(g) {
-  if (!g) return 'pff-avg';
-  if (g >= 90) return 'pff-elite';
-  if (g >= 80) return 'pff-great';
-  if (g >= 70) return 'pff-good';
-  if (g >= 60) return 'pff-avg';
-  if (g >= 50) return 'pff-poor';
-  return 'pff-bad';
-}
-
-function contractClass(c) {
-  const map = { expiring:'cp-expiring', rookie:'cp-rookie', extension:'cp-extension', mid:'cp-mid', franchise:'cp-franchise' };
-  return map[c] || 'cp-mid';
-}
-
-function contractLabel(c) {
-  const map = { expiring:'Expiring', rookie:'Rookie Deal', extension:'Extension', mid:'Multi-Year', franchise:'Franchise Tag' };
-  return map[c] || c;
-}
-
-function contractDotColor(c) {
-  const map = { expiring:'#ef4444', rookie:'#22c55e', extension:'#a855f7', mid:'rgba(107,116,148,0.5)', franchise:'#f5a623' };
-  return map[c] || '#6b7494';
-}
-
-// Stats vary by position — shown in hover card
-const PLAYERS = {
+const FORMATION_COORDS = {
   offense: {
-    '11': [
-      // x/y as percentage of field canvas (1100×580)
-      // ── WRs ──
-      { id:'wr1', pos:'WR', name:'Stefon Diggs',      jersey:14, pff:74.6, madden:91, contract:'expiring',  capHit:'$13.4M', age:30, exp:9,
-        stats:{ 'Targets':'119', 'Rec':'107', 'Yards':'1183', 'TDs':'8', 'YAC':'4.1', 'ADOT':'9.2' }, x:7, y:45, flip:false },
-      { id:'wr2', pos:'WR', name:'Khalil Shakir',     jersey:10, pff:72.1, madden:78, contract:'rookie',    capHit:'$1.1M',  age:25, exp:3,
-        stats:{ 'Targets':'81', 'Rec':'67', 'Yards':'821', 'TDs':'5', 'YAC':'5.2', 'ADOT':'7.8' }, x:93, y:45, flip:false },
-      { id:'slot', pos:'SLOT', name:'Trent Sherfield', jersey:15, pff:60.4, madden:72, contract:'expiring', capHit:'$2.1M',  age:28, exp:5,
-        stats:{ 'Targets':'38', 'Rec':'24', 'Yards':'301', 'TDs':'2', 'YAC':'3.8', 'ADOT':'6.1' }, x:28, y:52, flip:false },
-      // ── TE ──
-      { id:'te',  pos:'TE',   name:'Dawson Knox',      jersey:88, pff:68.0, madden:79, contract:'extension', capHit:'$9.6M',  age:28, exp:5,
-        stats:{ 'Targets':'56', 'Rec':'39', 'Yards':'446', 'TDs':'4', 'Blk Gr':'67.2', 'Routes':'298' }, x:75, y:55, flip:false },
-      // ── OL ──
-      { id:'lt',  pos:'LT',   name:'Dion Dawkins',     jersey:73, pff:76.2, madden:82, contract:'extension', capHit:'$14.0M', age:29, exp:8,
-        stats:{ 'Pass Blk':'76.2', 'Run Blk':'72.1', 'Sacks All':'3', 'Pressures':'28', 'Pen.':'3', 'Snaps':'1102' }, x:37, y:68, flip:true },
-      { id:'lg',  pos:'LG',   name:'C. McGovern',      jersey:66, pff:64.7, madden:73, contract:'expiring',  capHit:'$5.5M',  age:30, exp:7,
-        stats:{ 'Pass Blk':'62.1', 'Run Blk':'68.4', 'Sacks All':'2', 'Pressures':'22', 'Pen.':'2', 'Snaps':'988' }, x:43, y:68, flip:true },
-      { id:'c',   pos:'C',    name:'Mitch Morse',      jersey:60, pff:72.4, madden:77, contract:'expiring',  capHit:'$9.0M',  age:31, exp:9,
-        stats:{ 'Pass Blk':'71.8', 'Run Blk':'73.2', 'Sacks All':'1', 'Pressures':'18', 'Pen.':'1', 'Snaps':'1098' }, x:50, y:68, flip:true },
-      { id:'rg',  pos:'RG',   name:"O'Cyrus Torrence", jersey:64, pff:70.1, madden:78, contract:'rookie',    capHit:'$1.3M',  age:23, exp:2,
-        stats:{ 'Pass Blk':'68.9', 'Run Blk':'72.4', 'Sacks All':'2', 'Pressures':'24', 'Pen.':'3', 'Snaps':'1044' }, x:57, y:68, flip:true },
-      { id:'rt',  pos:'RT',   name:'Spencer Brown',    jersey:79, pff:67.3, madden:76, contract:'extension', capHit:'$5.5M',  age:25, exp:4,
-        stats:{ 'Pass Blk':'65.8', 'Run Blk':'69.1', 'Sacks All':'4', 'Pressures':'34', 'Pen.':'4', 'Snaps':'1088' }, x:63, y:68, flip:true },
-      // ── QB ──
-      { id:'qb',  pos:'QB',   name:'Josh Allen',       jersey:17, pff:88.3, madden:99, contract:'extension', capHit:'$46.2M', age:28, exp:7,
-        stats:{ 'Pass Yds':'4306', 'TDs':'29', 'INTs':'18', 'QBR':'57.1', 'Rush Yds':'524', 'Sacks':'33' }, x:50, y:82, flip:true },
-      // ── RB ──
-      { id:'rb',  pos:'HB',   name:'James Cook',       jersey:4,  pff:78.4, madden:84, contract:'rookie',    capHit:'$1.1M',  age:24, exp:3,
-        stats:{ 'Carries':'188', 'Rush Yds':'1122', 'YPC':'4.5', 'TDs':'7', 'Rec':'40', 'Rec Yds':'320' }, x:50, y:91, flip:true },
-    ]
+    '11': {
+      LWR: {x:5,  y:45},
+      SWR: {x:28, y:52},
+      RWR: {x:95, y:45},
+      TE:  {x:68, y:65},
+      LT:  {x:37, y:68},
+      LG:  {x:43, y:68},
+      C:   {x:50, y:68},
+      RG:  {x:57, y:68},
+      RT:  {x:63, y:68},
+      QB:  {x:50, y:80},
+      RB:  {x:50, y:90},
+      FB:  {x:50, y:90},
+    },
+    '12': {
+      LWR: {x:5,  y:45},
+      RWR: {x:95, y:45},
+      TE:  {x:68, y:65},
+      LT:  {x:37, y:68},
+      LG:  {x:43, y:68},
+      C:   {x:50, y:68},
+      RG:  {x:57, y:68},
+      RT:  {x:63, y:68},
+      QB:  {x:50, y:80},
+      RB:  {x:50, y:90},
+      FB:  {x:50, y:90},
+    },
+    '21': {
+      LWR: {x:5,  y:45},
+      RWR: {x:95, y:45},
+      TE:  {x:68, y:65},
+      LT:  {x:37, y:68},
+      LG:  {x:43, y:68},
+      C:   {x:50, y:68},
+      RG:  {x:57, y:68},
+      RT:  {x:63, y:68},
+      QB:  {x:50, y:80},
+      RB:  {x:43, y:90},
+      FB:  {x:57, y:90},
+    },
   },
   defense: {
-    'base43': [
-      // ── DL ──
-      { id:'dt1', pos:'DT',  name:'DeForest Buckner', jersey:99, pff:90.4, madden:97, contract:'mid',      capHit:'$21.0M', age:30, exp:9,
-        stats:{ 'Sacks':'8', 'Pressures':'62', 'Tackles':'48', 'TFL':'10', 'PFF Gr':'90.4', 'Snaps':'812' }, x:45, y:55, flip:false },
-      { id:'de1', pos:'DE',  name:'Greg Rousseau',    jersey:50, pff:72.8, madden:80, contract:'rookie',   capHit:'$4.3M',  age:24, exp:4,
-        stats:{ 'Sacks':'7', 'Pressures':'40', 'Tackles':'38', 'TFL':'7', 'PFF Gr':'72.8', 'Snaps':'752' }, x:30, y:52, flip:false },
-      { id:'de2', pos:'DE',  name:'A.J. Epenesa',     jersey:57, pff:66.3, madden:75, contract:'expiring', capHit:'$3.4M',  age:25, exp:4,
-        stats:{ 'Sacks':'5.5', 'Pressures':'32', 'Tackles':'30', 'TFL':'5', 'PFF Gr':'66.3', 'Snaps':'680' }, x:70, y:52, flip:false },
-      // ── LBs ──
-      { id:'mlb', pos:'MLB', name:'Tremaine Edmunds',  jersey:49, pff:70.2, madden:81, contract:'extension',capHit:'$17.5M', age:26, exp:7,
-        stats:{ 'Tackles':'109', 'Sacks':'1', 'INTs':'2', 'PD':'5', 'Coverage':'70.2', 'Snaps':'918' }, x:50, y:40, flip:false },
-      { id:'olb1',pos:'OLB', name:'Matt Milano',       jersey:58, pff:82.6, madden:86, contract:'extension',capHit:'$11.2M', age:29, exp:7,
-        stats:{ 'Tackles':'88', 'Sacks':'2', 'INTs':'4', 'PD':'8', 'Coverage':'82.6', 'Snaps':'826' }, x:32, y:40, flip:false },
-      { id:'olb2',pos:'OLB', name:'Dorian Williams',   jersey:42, pff:60.1, madden:71, contract:'rookie',   capHit:'$0.9M',  age:23, exp:2,
-        stats:{ 'Tackles':'74', 'Sacks':'1', 'INTs':'1', 'PD':'3', 'Coverage':'60.1', 'Snaps':'744' }, x:68, y:40, flip:false },
-      // ── CBs ──
-      { id:'cb1', pos:'CB',  name:"Tre'Davious White", jersey:27, pff:68.4, madden:82, contract:'expiring', capHit:'$13.5M', age:29, exp:8,
-        stats:{ 'Targets':'74', 'Comp All':'48', 'INTs':'2', 'PD':'10', 'Cover Gr':'68.4', 'Snaps':'902' }, x:8, y:28, flip:false },
-      { id:'cb2', pos:'CB',  name:'Christian Benford',  jersey:47, pff:70.8, madden:76, contract:'rookie',  capHit:'$1.0M',  age:24, exp:3,
-        stats:{ 'Targets':'60', 'Comp All':'38', 'INTs':'1', 'PD':'8', 'Cover Gr':'70.8', 'Snaps':'880' }, x:92, y:28, flip:false },
-      { id:'nickel',pos:'SCB',name:'Rasul Douglas',     jersey:23, pff:66.0, madden:77, contract:'mid',     capHit:'$5.0M',  age:29, exp:7,
-        stats:{ 'Targets':'52', 'Comp All':'32', 'INTs':'2', 'PD':'6', 'Cover Gr':'66.0', 'Snaps':'774' }, x:38, y:32, flip:false },
-      // ── Safeties ──
-      { id:'ss',  pos:'SS',  name:'Micah Hyde',         jersey:23, pff:72.0, madden:80, contract:'expiring', capHit:'$10.5M', age:33, exp:11,
-        stats:{ 'Tackles':'62', 'INTs':'2', 'PD':'6', 'Cover Gr':'72.0', 'Snaps':'902', 'MTC Rate':'91%' }, x:35, y:15, flip:false },
-      { id:'fs',  pos:'FS',  name:'Jordan Poyer',        jersey:21, pff:76.1, madden:82, contract:'expiring', capHit:'$10.5M', age:33, exp:11,
-        stats:{ 'Tackles':'68', 'INTs':'4', 'PD':'8', 'Cover Gr':'76.1', 'Snaps':'918', 'MTC Rate':'88%' }, x:65, y:15, flip:false },
-    ]
+    'base43': {
+      LCB:  {x:5,  y:28},
+      RCB:  {x:95, y:28},
+      SS:   {x:30, y:18},
+      FS:   {x:70, y:18},
+      LOLB: {x:22, y:42},
+      MLB:  {x:50, y:42},
+      WLB:  {x:50, y:42},
+      ROLB: {x:78, y:42},
+      DE:   {x:30, y:55},
+      NT:   {x:44, y:55},
+      DT:   {x:56, y:55},
+    },
+    'nickel': {
+      LCB:  {x:5,  y:28},
+      RCB:  {x:95, y:28},
+      NB:   {x:30, y:35},
+      SS:   {x:38, y:18},
+      FS:   {x:62, y:18},
+      LOLB: {x:25, y:42},
+      MLB:  {x:50, y:42},
+      WLB:  {x:50, y:42},
+      ROLB: {x:75, y:42},
+      DE:   {x:30, y:55},
+      NT:   {x:44, y:55},
+      DT:   {x:56, y:55},
+    },
+    'dime': {
+      LCB:  {x:5,  y:28},
+      RCB:  {x:95, y:28},
+      NB:   {x:25, y:33},
+      SS:   {x:38, y:18},
+      FS:   {x:62, y:18},
+      MLB:  {x:44, y:42},
+      WLB:  {x:56, y:42},
+      DE:   {x:30, y:55},
+      NT:   {x:44, y:55},
+      DT:   {x:56, y:55},
+    },
+  },
+  st: {
+    kickoff: {
+      PK:  {x:50, y:92},
+      KO:  {x:50, y:92},
+      LS:  {x:50, y:75},
+      H:   {x:50, y:75},
+      PR:  {x:20, y:60},
+      KR:  {x:80, y:60},
+      PT:  {x:50, y:80},
+    }
   }
 };
+
+// For 12 personnel, second TE gets offset position
+const TE2_COORD = {x:75, y:60};
 
 // ══════════════════════════════════════════════
 // STATE
 // ══════════════════════════════════════════════
-
+let currentTeam = 'BUF';
 let currentUnit = 'offense';
 let currentPersonnel = '11';
+let teamData = null;
 
 // ══════════════════════════════════════════════
-// RENDER
+// DATA LOADING
 // ══════════════════════════════════════════════
+async function loadTeam(abbr) {
+  const res = await fetch(`data/${abbr.toLowerCase()}.json`);
+  teamData = await res.json();
+  updateHeader();
+  renderFormation();
+}
 
-function buildHoverCard(p) {
+function getStarter(pos) {
+  const players = teamData?.depth_chart?.[pos];
+  return players?.[0] || null;
+}
+
+// ══════════════════════════════════════════════
+// HEADER UPDATE
+// ══════════════════════════════════════════════
+function updateHeader() {
+  const team = TEAMS[currentTeam];
+  document.getElementById('teamSwatchEl').textContent = currentTeam;
+  document.getElementById('teamSwatchEl').style.background = team.colors[0];
+  document.getElementById('teamSwatchEl').style.borderColor = team.colors[1];
+  document.getElementById('teamNameEl').textContent = team.name;
+}
+
+// ══════════════════════════════════════════════
+// HOVER CARD
+// ══════════════════════════════════════════════
+function buildHoverCard(p, pos) {
+  const team = TEAMS[currentTeam];
   const initials = p.name.split(' ').map(w=>w[0]).join('').slice(0,2);
-  const statsHtml = Object.entries(p.stats).map(([k,v]) => `
-    <div class="card-stat-row">
-      <span class="cs-label">${k}</span>
-      <span class="cs-val">${v}</span>
-    </div>
-  `).join('');
-
   return `
     <div class="hover-card">
       <div class="card-header">
-        <div class="card-avatar" style="background:${TEAM.primary};border-color:${TEAM.secondary}">${initials}</div>
+        <div class="card-avatar" style="background:${team.colors[0]};border-color:${team.colors[1]}">${initials}</div>
         <div class="card-nameblock">
-          <div class="card-name">#${p.jersey} ${p.name}</div>
-          <div class="card-meta">${p.pos} · Age ${p.age} · ${p.exp}yr exp</div>
+          <div class="card-name">${p.jersey ? '#'+p.jersey+' ' : ''}${p.name}</div>
+          <div class="card-meta">${pos}${p.age ? ' · Age '+p.age : ''}${p.years_pro ? ' · '+p.years_pro+'yr exp' : ''}</div>
         </div>
       </div>
       <div class="card-ratings">
         <div class="card-rating-cell">
-          <div class="crc-val ${pffClass(p.pff)}">${p.pff||'—'}</div>
-          <div class="crc-label">PFF Grade</div>
-        </div>
-        <div class="card-rating-cell">
-          <div class="crc-val" style="color:#60a5fa">${p.madden}</div>
+          <div class="crc-val" style="color:#60a5fa">${p.madden || '—'}</div>
           <div class="crc-label">Madden OVR</div>
         </div>
         <div class="card-rating-cell">
-          <div class="crc-val" style="color:var(--gold)">${p.age}</div>
+          <div class="crc-val" style="color:var(--gold)">${p.age || '—'}</div>
           <div class="crc-label">Age</div>
         </div>
+        <div class="card-rating-cell">
+          <div class="crc-val" style="color:var(--text-muted)">${p.years_pro || '—'}</div>
+          <div class="crc-label">Exp</div>
+        </div>
       </div>
-      <div class="card-stats">${statsHtml}</div>
-      <div class="card-footer">
-        <span class="contract-pill ${contractClass(p.contract)}">${contractLabel(p.contract)}</span>
-        <span class="cap-hit">${p.capHit} cap hit</span>
+      <div class="card-footer" style="justify-content:center">
+        <span style="font-family:'Barlow Condensed';font-weight:700;font-size:13px;color:var(--gold)">${p.cap_number || '—'}</span>
+        <span style="font-size:10px;color:var(--text-dim);margin-left:6px">cap hit</span>
       </div>
     </div>
   `;
 }
 
-function buildPlayerNode(p, delay) {
-  // PFF ring: conic-gradient
-  const pct = p.pff ? (p.pff / 99 * 360).toFixed(1) : 0;
-  const ringColor = pffColor(p.pff);
-
-  const ringStyle = p.pff
-    ? `background: conic-gradient(${ringColor} ${pct}deg, rgba(255,255,255,0.06) 0deg); inset:-4px; border-radius:50%;`
-    : '';
+// ══════════════════════════════════════════════
+// PLAYER NODE
+// ══════════════════════════════════════════════
+function buildPlayerNode(p, pos, coords, delay, flipCard) {
+  if (!p) return '';
+  const team = TEAMS[currentTeam];
+  const maddenColor = p.madden >= 90 ? '#22c55e' : p.madden >= 80 ? '#86efac' : p.madden >= 70 ? '#a3e635' : p.madden >= 60 ? '#facc15' : '#fb923c';
+  const ringPct = p.madden ? (p.madden / 99 * 360).toFixed(1) : 0;
+  const ringStyle = p.madden ? `background:conic-gradient(${maddenColor} ${ringPct}deg, rgba(255,255,255,0.06) 0deg);inset:-4px;border-radius:50%;` : '';
+  const lastName = p.name.split(' ').slice(-1)[0];
 
   return `
-    <div class="player-node${p.flip?'':''}" 
-         style="left:${p.x}%; top:${p.y}%; animation-delay:${delay}ms"
-         data-id="${p.id}">
-      
-      <div class="p-circle" style="background:${TEAM.primary}">
+    <div class="player-node ${flipCard ? 'flip-card' : ''}"
+         style="left:${coords.x}%;top:${coords.y}%;animation-delay:${delay}ms">
+      <div class="p-circle" style="background:${team.colors[0]}">
         ${ringStyle ? `<div class="p-ring" style="${ringStyle}"></div>` : ''}
-        <div class="p-jersey">${p.jersey}</div>
-        <div class="p-ovr">${p.madden} OVR</div>
-        
-        <!-- PFF badge top-right -->
-        ${p.pff ? `
-          <div class="p-pff-badge" style="background:${ringColor};color:#000">
-            ${Math.round(p.pff)}
-          </div>
-        ` : ''}
-
-        <!-- Contract dot bottom-right -->
-        <div class="p-contract-dot" style="background:${contractDotColor(p.contract)}"></div>
+        ${p.jersey ? `<div class="p-jersey">${p.jersey}</div>` : ''}
+        <div class="p-ovr">${p.madden ? p.madden+' OVR' : pos}</div>
       </div>
-
-      <div class="p-pos-chip">${p.pos}</div>
-      <div class="p-name">${p.name.split(' ').slice(-1)[0]}</div>
-
-      ${buildHoverCard(p)}
+      <div class="p-pos-chip">${pos}</div>
+      <div class="p-name">${lastName}</div>
+      ${buildHoverCard(p, pos)}
     </div>
   `;
 }
 
+// ══════════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════════
 function renderFormation() {
   const layer = document.getElementById('playersLayer');
+  if (!teamData) { layer.innerHTML = ''; return; }
 
-  let players = [];
-  if (currentUnit === 'offense') {
-    players = PLAYERS.offense[currentPersonnel] || PLAYERS.offense['11'];
-  } else if (currentUnit === 'defense') {
-    players = PLAYERS.defense['base43'] || [];
-  } else {
-    players = [];
+  const coordMap = FORMATION_COORDS[currentUnit]?.[currentPersonnel]
+                || FORMATION_COORDS[currentUnit]?.['11']
+                || {};
+
+  let html = '';
+  let delay = 0;
+  let teCount = 0;
+
+  for (const [pos, coords] of Object.entries(coordMap)) {
+    // For 12 personnel, render two TEs
+    if (pos === 'TE' && currentPersonnel === '12') {
+      const starters = teamData.depth_chart['TE'] || [];
+      const te1 = starters[0] || null;
+      const te2 = starters[1] || null;
+      html += buildPlayerNode(te1, 'TE', coords, delay, false);
+      delay += 40;
+      html += buildPlayerNode(te2, 'TE2', TE2_COORD, delay, false);
+      delay += 40;
+      continue;
+    }
+
+    const starter = getStarter(pos);
+    const flipCard = coords.y > 70;
+    html += buildPlayerNode(starter, pos, coords, delay, flipCard);
+    delay += 40;
   }
 
-  // Mark bottom-row players for card flip
-  players = players.map(p => ({ ...p, flip: p.y > 70 }));
-
-  layer.innerHTML = players.map((p, i) => buildPlayerNode(p, i * 40)).join('');
+  layer.innerHTML = html;
 }
 
 // ══════════════════════════════════════════════
 // CONTROLS
 // ══════════════════════════════════════════════
-
 function setUnit(unit, btn) {
   currentUnit = unit;
   document.querySelectorAll('.ctrl-group:first-child .ctrl-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 
-  // swap personnel options
   const pg = document.getElementById('personnelGroup');
   if (unit === 'offense') {
     pg.innerHTML = `
@@ -939,9 +1035,9 @@ function setUnit(unit, btn) {
     `;
     currentPersonnel = 'base43';
   } else {
-    pg.innerHTML = `<button class="ctrl-btn active">Kickoff</button>`;
+    pg.innerHTML = `<button class="ctrl-btn active" onclick="setPersonnel('kickoff',this)">Kickoff</button>`;
+    currentPersonnel = 'kickoff';
   }
-
   renderFormation();
 }
 
@@ -952,8 +1048,40 @@ function setPersonnel(pers, btn) {
   renderFormation();
 }
 
+// ══════════════════════════════════════════════
+// TEAM SELECTOR
+// ══════════════════════════════════════════════
+function buildTeamDropdown() {
+  const dd = document.getElementById('teamsDropdown');
+  dd.innerHTML = Object.entries(TEAMS).map(([abbr, t]) => `
+    <div class="team-opt ${abbr===currentTeam?'selected':''}" onclick="selectTeam('${abbr}')">
+      <div class="team-badge" style="background:${t.colors[0]};color:${t.colors[1]};width:28px;height:28px;font-size:9px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900">${abbr}</div>
+      ${t.name.split(' ').pop()}
+    </div>
+  `).join('');
+}
+
+function toggleTeamDropdown() {
+  const dd = document.getElementById('teamsDropdown');
+  dd.classList.toggle('open');
+  buildTeamDropdown();
+}
+
+function selectTeam(abbr) {
+  currentTeam = abbr;
+  document.getElementById('teamsDropdown').classList.remove('open');
+  loadTeam(abbr);
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.team-selector-wrap') && !e.target.closest('#teamsDropdown')) {
+    document.getElementById('teamsDropdown').classList.remove('open');
+  }
+});
+
 // ── INIT
-renderFormation();
+loadTeam('BUF');
 </script>
+
 </body>
 </html>
