@@ -2,52 +2,17 @@
   "team": "Cleveland Browns",
   "abbr": "CLE",
   "source": "OurLads",
+  "base_defense": "Base 4-3",
   "depth_chart": {
     "LWR": [
-      {
-        "name": "Jerry Jeudy",
-        "depth": 1,
-        "madden": 81,
-        "jersey": 3,
-        "age": 26,
-        "years_pro": 5,
-        "cap_number": "$10,372,400"
-      },
-      {
-        "name": "Tylan Wallace",
-        "depth": 2,
-        "madden": 71,
-        "jersey": 16,
-        "age": 26,
-        "years_pro": 4,
-        "cap_number": "$1,262,500"
-      },
-      {
-        "name": "Gage Larvadain",
-        "depth": 3,
-        "madden": 66,
-        "jersey": 84,
-        "age": 22,
-        "years_pro": 0,
-        "cap_number": "$1,005,000"
-      },
-      {
-        "name": "Jamari Thrash",
-        "depth": 4,
-        "madden": 69,
-        "jersey": 80,
-        "age": 24,
-        "years_pro": 1,
-        "cap_number": "$1,075,000"
-      }
-    ],
-    "RWR": [
       {
         "name": "Denzel Boston",
         "depth": 1,
         "madden": null,
         "jersey": null,
-        "cap_number": "$885,000"
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       },
       {
         "name": "Cedric Tillman",
@@ -56,7 +21,55 @@
         "jersey": 19,
         "age": 25,
         "years_pro": 2,
-        "cap_number": "$3,944,084"
+        "madden_rank": 98,
+        "madden_rank_total": 201,
+        "madden_pos_label": "WR"
+      },
+      {
+        "name": "Gage Larvadain",
+        "depth": 3,
+        "madden": 66,
+        "jersey": 84,
+        "age": 22,
+        "years_pro": 0,
+        "madden_rank": 185,
+        "madden_rank_total": 201,
+        "madden_pos_label": "WR"
+      },
+      {
+        "name": "Jamari Thrash",
+        "depth": 4,
+        "madden": 69,
+        "jersey": 80,
+        "age": 24,
+        "years_pro": 1,
+        "madden_rank": 158,
+        "madden_rank_total": 201,
+        "madden_pos_label": "WR"
+      }
+    ],
+    "RWR": [
+      {
+        "name": "Jerry Jeudy",
+        "depth": 1,
+        "madden": 81,
+        "jersey": 3,
+        "age": 26,
+        "years_pro": 5,
+        "madden_rank": 39,
+        "madden_rank_total": 201,
+        "madden_pos_label": "WR"
+      },
+      {
+        "name": "Tylan Wallace",
+        "depth": 2,
+        "madden": 71,
+        "jersey": 16,
+        "age": 26,
+        "years_pro": 4,
+        "madden_rank": 141,
+        "madden_rank_total": 201,
+        "madden_pos_label": "WR"
       },
       {
         "name": "Malachi Corley",
@@ -65,14 +78,18 @@
         "jersey": 83,
         "age": 23,
         "years_pro": 1,
-        "cap_number": "$1,075,000"
+        "madden_rank": 159,
+        "madden_rank_total": 201,
+        "madden_pos_label": "WR"
       },
       {
         "name": "Isaiah Wooden",
         "depth": 4,
         "madden": null,
         "jersey": null,
-        "cap_number": "$885,000"
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "SWR": [
@@ -81,7 +98,9 @@
         "depth": 1,
         "madden": null,
         "jersey": null,
-        "cap_number": "$885,000"
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       },
       {
         "name": "Isaiah Bond",
@@ -90,28 +109,27 @@
         "jersey": 16,
         "age": 21,
         "years_pro": 0,
-        "cap_number": "$1,022,666"
+        "madden_rank": 157,
+        "madden_rank_total": 201,
+        "madden_pos_label": "WR"
       },
       {
         "name": "Luke Floriea",
         "depth": 3,
         "madden": null,
         "jersey": null,
-        "cap_number": "$885,000"
-      },
-      {
-        "name": "Aaron Anderson",
-        "depth": 4,
-        "madden": null,
-        "jersey": null,
-        "cap_number": null
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       },
       {
         "name": "Kole Wilson",
-        "depth": 5,
+        "depth": 4,
         "madden": null,
         "jersey": null,
-        "cap_number": null
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "LT": [
@@ -120,7 +138,9 @@
         "depth": 1,
         "madden": null,
         "jersey": null,
-        "cap_number": "$885,000"
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       },
       {
         "name": "Dawand Jones",
@@ -129,7 +149,9 @@
         "jersey": 79,
         "age": 24,
         "years_pro": 2,
-        "cap_number": "$1,488,084"
+        "madden_rank": 43,
+        "madden_rank_total": 66,
+        "madden_pos_label": "LT"
       },
       {
         "name": "Jeremiah Byers",
@@ -138,14 +160,18 @@
         "jersey": 63,
         "age": 24,
         "years_pro": 0,
-        "cap_number": "$1,005,000"
+        "madden_rank": 74,
+        "madden_rank_total": 79,
+        "madden_pos_label": "RT"
       },
       {
         "name": "Jack Conley",
         "depth": 4,
         "madden": null,
         "jersey": null,
-        "cap_number": "$885,000"
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "LG": [
@@ -156,7 +182,9 @@
         "jersey": 77,
         "age": 25,
         "years_pro": 3,
-        "cap_number": "$5,145,000"
+        "madden_rank": 13,
+        "madden_rank_total": 57,
+        "madden_pos_label": "LG"
       },
       {
         "name": "Kendrick Green",
@@ -165,7 +193,9 @@
         "jersey": 52,
         "age": 26,
         "years_pro": 4,
-        "cap_number": "$1,215,000"
+        "madden_rank": 44,
+        "madden_rank_total": 70,
+        "madden_pos_label": "RG"
       }
     ],
     "C": [
@@ -176,14 +206,18 @@
         "jersey": 74,
         "age": 29,
         "years_pro": 6,
-        "cap_number": "$3,769,412"
+        "madden_rank": 5,
+        "madden_rank_total": 61,
+        "madden_pos_label": "C"
       },
       {
         "name": "Parker Brailsford",
         "depth": 2,
         "madden": null,
         "jersey": null,
-        "cap_number": "$885,000"
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       },
       {
         "name": "Luke Wypler",
@@ -192,7 +226,9 @@
         "jersey": 56,
         "age": 24,
         "years_pro": 2,
-        "cap_number": "$1,189,993"
+        "madden_rank": 40,
+        "madden_rank_total": 61,
+        "madden_pos_label": "C"
       },
       {
         "name": "Kingsley Eguakun",
@@ -201,7 +237,9 @@
         "jersey": 65,
         "age": 24,
         "years_pro": 1,
-        "cap_number": "$1,005,000"
+        "madden_rank": 59,
+        "madden_rank_total": 61,
+        "madden_pos_label": "C"
       }
     ],
     "RG": [
@@ -212,7 +250,9 @@
         "jersey": 74,
         "age": 27,
         "years_pro": 4,
-        "cap_number": "$2,732,000"
+        "madden_rank": 14,
+        "madden_rank_total": 57,
+        "madden_pos_label": "LG"
       },
       {
         "name": "Zak Zinter",
@@ -221,14 +261,18 @@
         "jersey": 70,
         "age": 24,
         "years_pro": 1,
-        "cap_number": "$1,564,020"
+        "madden_rank": 37,
+        "madden_rank_total": 70,
+        "madden_pos_label": "RG"
       },
       {
-        "name": "Izavion Miller",
+        "name": "Tyre Phillips",
         "depth": 3,
         "madden": null,
         "jersey": null,
-        "cap_number": null
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "RT": [
@@ -239,14 +283,18 @@
         "jersey": 71,
         "age": 29,
         "years_pro": 6,
-        "cap_number": "$5,981,176"
+        "madden_rank": 15,
+        "madden_rank_total": 79,
+        "madden_pos_label": "RT"
       },
       {
         "name": "Austin Barber",
         "depth": 2,
         "madden": null,
         "jersey": null,
-        "cap_number": "$885,000"
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       },
       {
         "name": "KT Leveston",
@@ -255,14 +303,18 @@
         "jersey": 72,
         "age": 25,
         "years_pro": 1,
-        "cap_number": "$1,005,000"
+        "madden_rank": 47,
+        "madden_rank_total": 79,
+        "madden_pos_label": "RT"
       },
       {
-        "name": "Tyre Phillips",
+        "name": "Izavion Miller",
         "depth": 4,
         "madden": null,
         "jersey": null,
-        "cap_number": "$1,075,000"
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "TE": [
@@ -273,7 +325,9 @@
         "jersey": 88,
         "age": 27,
         "years_pro": 4,
-        "cap_number": "$1,163,235"
+        "madden_rank": 93,
+        "madden_rank_total": 126,
+        "madden_pos_label": "TE"
       },
       {
         "name": "Brenden Bates",
@@ -282,14 +336,18 @@
         "jersey": 82,
         "age": 25,
         "years_pro": 1,
-        "cap_number": "$1,075,000"
+        "madden_rank": 95,
+        "madden_rank_total": 126,
+        "madden_pos_label": "TE"
       },
       {
         "name": "Caden Prieskorn",
         "depth": 3,
         "madden": null,
         "jersey": null,
-        "cap_number": "$885,000"
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "QB": [
@@ -300,7 +358,9 @@
         "jersey": 4,
         "age": 29,
         "years_pro": 8,
-        "cap_number": "$44,956,514"
+        "madden_rank": 40,
+        "madden_rank_total": 90,
+        "madden_pos_label": "QB"
       },
       {
         "name": "Shedeur Sanders",
@@ -309,7 +369,9 @@
         "jersey": 12,
         "age": 23,
         "years_pro": 0,
-        "cap_number": "$1,116,845"
+        "madden_rank": 41,
+        "madden_rank_total": 90,
+        "madden_pos_label": "QB"
       },
       {
         "name": "Dillon Gabriel",
@@ -318,14 +380,18 @@
         "jersey": 8,
         "age": 24,
         "years_pro": 0,
-        "cap_number": "$1,415,073"
+        "madden_rank": 49,
+        "madden_rank_total": 90,
+        "madden_pos_label": "QB"
       },
       {
         "name": "Taylen Green",
         "depth": 4,
         "madden": null,
         "jersey": null,
-        "cap_number": "$885,000"
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "RB": [
@@ -334,7 +400,9 @@
         "depth": 1,
         "madden": null,
         "jersey": null,
-        "cap_number": null
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "FB": [
@@ -345,7 +413,9 @@
         "jersey": 20,
         "age": 33,
         "years_pro": 10,
-        "cap_number": "$1,135,000"
+        "madden_rank": 12,
+        "madden_rank_total": 13,
+        "madden_pos_label": "FB"
       }
     ],
     "LDE": [
@@ -356,7 +426,9 @@
         "jersey": 91,
         "age": 24,
         "years_pro": 3,
-        "cap_number": "$3,970,995"
+        "madden_rank": 57,
+        "madden_rank_total": 88,
+        "madden_pos_label": "LEDG"
       },
       {
         "name": "Isaiah McGuire",
@@ -365,14 +437,27 @@
         "jersey": 57,
         "age": 24,
         "years_pro": 2,
-        "cap_number": "$3,851,982"
+        "madden_rank": 58,
+        "madden_rank_total": 88,
+        "madden_pos_label": "LEDG"
       },
       {
         "name": "Tyreak Sapp",
         "depth": 3,
         "madden": null,
         "jersey": null,
-        "cap_number": null
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
+      },
+      {
+        "name": "Khordae Sydnor",
+        "depth": 4,
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "LDT": [
@@ -383,7 +468,9 @@
         "jersey": 96,
         "age": 30,
         "years_pro": 9,
-        "cap_number": "$5,327,824"
+        "madden_rank": 44,
+        "madden_rank_total": 191,
+        "madden_pos_label": "DT"
       },
       {
         "name": "Kalia Davis",
@@ -392,7 +479,9 @@
         "jersey": 93,
         "age": 26,
         "years_pro": 3,
-        "cap_number": "$2,000,000"
+        "madden_rank": 158,
+        "madden_rank_total": 191,
+        "madden_pos_label": "DT"
       },
       {
         "name": "Adin Huntington",
@@ -401,14 +490,18 @@
         "jersey": 98,
         "age": 23,
         "years_pro": 0,
-        "cap_number": "$1,011,666"
+        "madden_rank": 172,
+        "madden_rank_total": 191,
+        "madden_pos_label": "DT"
       },
       {
         "name": "Bernard Gooden",
         "depth": 4,
         "madden": null,
         "jersey": null,
-        "cap_number": null
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "RDT": [
@@ -419,7 +512,9 @@
         "jersey": 94,
         "age": 21,
         "years_pro": 0,
-        "cap_number": "$9,289,589"
+        "madden_rank": 28,
+        "madden_rank_total": 191,
+        "madden_pos_label": "DT"
       },
       {
         "name": "Mike Hall Jr.",
@@ -428,7 +523,9 @@
         "jersey": 51,
         "age": 22,
         "years_pro": 1,
-        "cap_number": null
+        "madden_rank": 90,
+        "madden_rank_total": 191,
+        "madden_pos_label": "DT"
       },
       {
         "name": "Sam Kamara",
@@ -437,7 +534,9 @@
         "jersey": 92,
         "age": 27,
         "years_pro": 4,
-        "cap_number": "$1,075,000"
+        "madden_rank": 191,
+        "madden_rank_total": 191,
+        "madden_pos_label": "DT"
       }
     ],
     "RDE": [
@@ -448,21 +547,27 @@
         "jersey": 95,
         "age": 29,
         "years_pro": 8,
-        "cap_number": "$23,874,000"
+        "madden_rank": 1,
+        "madden_rank_total": 87,
+        "madden_pos_label": "REDG"
       },
       {
         "name": "Julian Okwara",
         "depth": 2,
         "madden": null,
         "jersey": null,
-        "cap_number": "$1,075,000"
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       },
       {
         "name": "Logan Fano",
         "depth": 3,
         "madden": null,
         "jersey": null,
-        "cap_number": null
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "WLB": [
@@ -471,7 +576,9 @@
         "depth": 1,
         "madden": null,
         "jersey": null,
-        "cap_number": "$2,628,000"
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       },
       {
         "name": "Winston Reid",
@@ -480,7 +587,9 @@
         "jersey": 59,
         "age": 26,
         "years_pro": 1,
-        "cap_number": "$1,005,000"
+        "madden_rank": 62,
+        "madden_rank_total": 84,
+        "madden_pos_label": "WILL"
       },
       {
         "name": "Easton Mascarenas-Arnold",
@@ -489,16 +598,9 @@
         "jersey": 42,
         "age": 22,
         "years_pro": 0,
-        "cap_number": "$1,008,333"
-      },
-      {
-        "name": "Jeremiah Owusu-Koramoah",
-        "depth": 4,
-        "madden": 83,
-        "jersey": 6,
-        "age": 25,
-        "years_pro": 4,
-        "cap_number": "$4,772,765"
+        "madden_rank": 61,
+        "madden_rank_total": 77,
+        "madden_pos_label": "MIKE"
       }
     ],
     "MLB": [
@@ -509,7 +611,9 @@
         "jersey": 49,
         "age": 22,
         "years_pro": 0,
-        "cap_number": "$2,681,909"
+        "madden_rank": 15,
+        "madden_rank_total": 77,
+        "madden_pos_label": "MIKE"
       },
       {
         "name": "Justin Jefferson",
@@ -518,7 +622,9 @@
         "jersey": 18,
         "age": 26,
         "years_pro": 5,
-        "cap_number": "$885,000"
+        "madden_rank": 5,
+        "madden_rank_total": 201,
+        "madden_pos_label": "WR"
       },
       {
         "name": "Nathaniel Watson",
@@ -527,14 +633,18 @@
         "jersey": 40,
         "age": 25,
         "years_pro": 1,
-        "cap_number": "$1,075,000"
+        "madden_rank": 13,
+        "madden_rank_total": 22,
+        "madden_pos_label": "SAM"
       },
       {
         "name": "Edefuan Ulofoshio",
         "depth": 4,
         "madden": null,
         "jersey": null,
-        "cap_number": "$1,005,000"
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "LCB": [
@@ -545,7 +655,9 @@
         "jersey": 21,
         "age": 28,
         "years_pro": 7,
-        "cap_number": "$30,893,412"
+        "madden_rank": 4,
+        "madden_rank_total": 213,
+        "madden_pos_label": "CB"
       },
       {
         "name": "Dom Jones",
@@ -554,21 +666,18 @@
         "jersey": 37,
         "age": 25,
         "years_pro": 0,
-        "cap_number": "$1,005,000"
+        "madden_rank": 207,
+        "madden_rank_total": 213,
+        "madden_pos_label": "CB"
       },
       {
         "name": "DeCarlos Nicholson",
         "depth": 3,
         "madden": null,
         "jersey": null,
-        "cap_number": null
-      },
-      {
-        "name": "Nate Evans",
-        "depth": 4,
-        "madden": null,
-        "jersey": null,
-        "cap_number": null
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "SS": [
@@ -579,7 +688,9 @@
         "jersey": 9,
         "age": 26,
         "years_pro": 5,
-        "cap_number": "$8,033,000"
+        "madden_rank": 11,
+        "madden_rank_total": 79,
+        "madden_pos_label": "SS"
       },
       {
         "name": "Daniel Thomas",
@@ -588,21 +699,27 @@
         "jersey": 2,
         "age": 27,
         "years_pro": 5,
-        "cap_number": "$1,357,500"
+        "madden_rank": 65,
+        "madden_rank_total": 79,
+        "madden_pos_label": "SS"
       },
       {
         "name": "Christopher Edmonds",
         "depth": 3,
         "madden": null,
         "jersey": null,
-        "cap_number": null
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       },
       {
         "name": "Zion Washington",
         "depth": 4,
         "madden": null,
         "jersey": null,
-        "cap_number": null
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "FS": [
@@ -613,14 +730,18 @@
         "jersey": 33,
         "age": 23,
         "years_pro": 2,
-        "cap_number": "$3,520,000"
+        "madden_rank": 28,
+        "madden_rank_total": 78,
+        "madden_pos_label": "FS"
       },
       {
         "name": "Emmanuel McNeil-Warren",
         "depth": 2,
         "madden": null,
         "jersey": null,
-        "cap_number": "$885,000"
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       },
       {
         "name": "Donovan McMillon",
@@ -629,7 +750,9 @@
         "jersey": 31,
         "age": 23,
         "years_pro": 0,
-        "cap_number": "$1,008,333"
+        "madden_rank": 75,
+        "madden_rank_total": 78,
+        "madden_pos_label": "FS"
       }
     ],
     "RCB": [
@@ -640,7 +763,9 @@
         "jersey": 7,
         "age": 25,
         "years_pro": 4,
-        "cap_number": "$4,916,000"
+        "madden_rank": 44,
+        "madden_rank_total": 213,
+        "madden_pos_label": "CB"
       },
       {
         "name": "D'Angelo Ross",
@@ -649,14 +774,18 @@
         "jersey": 20,
         "age": 28,
         "years_pro": 4,
-        "cap_number": "$1,075,000"
+        "madden_rank": 201,
+        "madden_rank_total": 213,
+        "madden_pos_label": "CB"
       },
       {
-        "name": "Michael Coats Jr.",
+        "name": "Nate Evans",
         "depth": 3,
         "madden": null,
         "jersey": null,
-        "cap_number": null
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "NB": [
@@ -667,7 +796,9 @@
         "jersey": 26,
         "age": 23,
         "years_pro": 1,
-        "cap_number": "$1,102,583"
+        "madden_rank": 163,
+        "madden_rank_total": 213,
+        "madden_pos_label": "CB"
       },
       {
         "name": "Myles Bryant",
@@ -676,7 +807,9 @@
         "jersey": 25,
         "age": 27,
         "years_pro": 5,
-        "cap_number": "$1,262,500"
+        "madden_rank": 62,
+        "madden_rank_total": 79,
+        "madden_pos_label": "SS"
       },
       {
         "name": "Tre Avery",
@@ -685,7 +818,9 @@
         "jersey": 28,
         "age": 28,
         "years_pro": 3,
-        "cap_number": "$1,075,000"
+        "madden_rank": 211,
+        "madden_rank_total": 213,
+        "madden_pos_label": "CB"
       }
     ],
     "PT": [
@@ -696,21 +831,27 @@
         "jersey": 13,
         "age": 29,
         "years_pro": 7,
-        "cap_number": "$1,487,500"
+        "madden_rank": 3,
+        "madden_rank_total": 31,
+        "madden_pos_label": "P"
       },
       {
         "name": "Nik Constantinou",
         "depth": 2,
         "madden": null,
         "jersey": null,
-        "cap_number": "$885,000"
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       },
       {
         "name": "Wes Pahl",
         "depth": 3,
         "madden": null,
         "jersey": null,
-        "cap_number": null
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "PK": [
@@ -721,7 +862,9 @@
         "jersey": 25,
         "age": 26,
         "years_pro": 0,
-        "cap_number": "$1,005,000"
+        "madden_rank": 32,
+        "madden_rank_total": 34,
+        "madden_pos_label": "K"
       }
     ],
     "LS": [
@@ -732,7 +875,9 @@
         "jersey": 50,
         "age": 28,
         "years_pro": 1,
-        "cap_number": "$1,075,000"
+        "madden_rank": 29,
+        "madden_rank_total": 30,
+        "madden_pos_label": "LS"
       }
     ],
     "H": [
@@ -743,21 +888,27 @@
         "jersey": 13,
         "age": 29,
         "years_pro": 7,
-        "cap_number": "$1,487,500"
+        "madden_rank": 3,
+        "madden_rank_total": 31,
+        "madden_pos_label": "P"
       },
       {
         "name": "Nik Constantinou",
         "depth": 2,
         "madden": null,
         "jersey": null,
-        "cap_number": "$885,000"
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       },
       {
         "name": "Wes Pahl",
         "depth": 3,
         "madden": null,
         "jersey": null,
-        "cap_number": null
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "KO": [
@@ -768,7 +919,9 @@
         "jersey": 25,
         "age": 26,
         "years_pro": 0,
-        "cap_number": "$1,005,000"
+        "madden_rank": 32,
+        "madden_rank_total": 34,
+        "madden_pos_label": "K"
       }
     ],
     "PR": [
@@ -779,7 +932,9 @@
         "jersey": 84,
         "age": 22,
         "years_pro": 0,
-        "cap_number": "$1,005,000"
+        "madden_rank": 185,
+        "madden_rank_total": 201,
+        "madden_pos_label": "WR"
       },
       {
         "name": "Isaiah Bond",
@@ -788,7 +943,9 @@
         "jersey": 16,
         "age": 21,
         "years_pro": 0,
-        "cap_number": "$1,022,666"
+        "madden_rank": 157,
+        "madden_rank_total": 201,
+        "madden_pos_label": "WR"
       },
       {
         "name": "Tylan Wallace",
@@ -797,7 +954,9 @@
         "jersey": 16,
         "age": 26,
         "years_pro": 4,
-        "cap_number": "$1,262,500"
+        "madden_rank": 141,
+        "madden_rank_total": 201,
+        "madden_pos_label": "WR"
       }
     ],
     "KR": [
@@ -808,7 +967,9 @@
         "jersey": 83,
         "age": 23,
         "years_pro": 1,
-        "cap_number": "$1,075,000"
+        "madden_rank": 159,
+        "madden_rank_total": 201,
+        "madden_pos_label": "WR"
       },
       {
         "name": "Dylan Sampson",
@@ -817,7 +978,9 @@
         "jersey": 22,
         "age": 20,
         "years_pro": 0,
-        "cap_number": "$1,237,641"
+        "madden_rank": 60,
+        "madden_rank_total": 125,
+        "madden_pos_label": "HB"
       },
       {
         "name": "Tylan Wallace",
@@ -826,7 +989,20 @@
         "jersey": 16,
         "age": 26,
         "years_pro": 4,
-        "cap_number": "$1,262,500"
+        "madden_rank": 141,
+        "madden_rank_total": 201,
+        "madden_pos_label": "WR"
+      }
+    ],
+    "PUP": [
+      {
+        "name": "Jeremiah LB Owusu-Koramoah",
+        "depth": 1,
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ]
   }

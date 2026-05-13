@@ -160,7 +160,7 @@ body {
 .field-canvas {
   position: relative;
   width: 100%;
-  max-width: 1100px;
+  max-width: 1400px;
   margin: 0 auto;
   flex: 1;
   border-radius: 4px;
@@ -763,18 +763,17 @@ const TEAMS = {
 const FORMATION_COORDS = {
   offense: {
     '11': {
-      LWR: {x:5,  y:38},
-      SWR: {x:28, y:48},
-      RWR: {x:95, y:38},
-      TE:  {x:70, y:60},
-      LT:  {x:37, y:62},
-      LG:  {x:43, y:62},
+      LWR: {x:4,  y:38},
+      SWR: {x:25, y:48},
+      RWR: {x:96, y:38},
+      TE:  {x:72, y:60},
+      LT:  {x:33, y:62},
+      LG:  {x:41, y:62},
       C:   {x:50, y:62},
-      RG:  {x:57, y:62},
-      RT:  {x:63, y:62},
+      RG:  {x:59, y:62},
+      RT:  {x:67, y:62},
       QB:  {x:50, y:78},
-      RB:  {x:50, y:92},
-      FB:  {x:50, y:92},
+      RB:  {x:50, y:88},
     },
     '12': {
       LWR: {x:5,  y:45},
@@ -805,36 +804,36 @@ const FORMATION_COORDS = {
   },
   defense: {
     'base43': {
-      LCB:  {x:5,  y:22},
-      RCB:  {x:95, y:22},
-      SS:   {x:30, y:12},
-      FS:   {x:70, y:12},
-      LOLB: {x:22, y:38},
-      MLB:  {x:50, y:38},
-      WLB:  {x:50, y:38},
-      ROLB: {x:78, y:38},
-      DE:   {x:30, y:55},
-      NT:   {x:44, y:55},
-      DT:   {x:56, y:55},
+      LCB:  {x:4,  y:54},
+      RCB:  {x:96, y:54},
+      SS:   {x:28, y:10},
+      FS:   {x:72, y:10},
+      LOLB: {x:20, y:40},
+      MLB:  {x:42, y:36},
+      WLB:  {x:58, y:36},
+      ROLB: {x:80, y:40},
+      DE:   {x:35, y:54},
+      NT:   {x:50, y:54},
+      DT:   {x:65, y:54},
     },
     'nickel': {
-      LCB:  {x:5,  y:28},
-      RCB:  {x:95, y:28},
-      NB:   {x:30, y:35},
-      SS:   {x:38, y:18},
-      FS:   {x:62, y:18},
-      LOLB: {x:25, y:42},
-      MLB:  {x:50, y:42},
-      WLB:  {x:50, y:42},
-      ROLB: {x:75, y:42},
-      DE:   {x:30, y:55},
-      NT:   {x:44, y:55},
-      DT:   {x:56, y:55},
+      LCB:  {x:4,  y:54},
+      RCB:  {x:96, y:54},
+      NB:   {x:28, y:54},
+      SS:   {x:28, y:10},
+      FS:   {x:72, y:10},
+      LOLB: {x:22, y:38},
+      MLB:  {x:44, y:38},
+      WLB:  {x:56, y:38},
+      ROLB: {x:78, y:38},
+      DE:   {x:35, y:58},
+      NT:   {x:50, y:58},
+      DT:   {x:65, y:58},
     },
     'dime': {
-      LCB:  {x:5,  y:28},
-      RCB:  {x:95, y:28},
-      NB:   {x:25, y:33},
+      LCB:  {x:4,  y:58},
+      RCB:  {x:96, y:58},
+      NB:   {x:25, y:58},
       SS:   {x:38, y:18},
       FS:   {x:62, y:18},
       MLB:  {x:44, y:42},
@@ -906,7 +905,7 @@ function buildHoverCard(p, pos) {
         <div class="card-avatar" style="background:${team.colors[0]};border-color:${team.colors[1]}">${initials}</div>
         <div class="card-nameblock">
           <div class="card-name">${p.jersey ? '#'+p.jersey+' ' : ''}${p.name}</div>
-          <div class="card-meta">${pos}${p.age ? ' · Age '+p.age : ''}${p.years_pro ? ' · '+p.years_pro+'yr exp' : ''}</div>
+          <div class="card-meta">${pos}${p.age ? ' · Age '+p.age : ''}${p.years_pro != null ? ' · Yr '+(p.years_pro+1)+' NFL' : ''}</div>
         </div>
       </div>
       <div class="card-ratings">
@@ -937,18 +936,27 @@ function buildHoverCard(p, pos) {
 function buildPlayerNode(p, pos, coords, delay, flipCard) {
   if (!p) return '';
   const team = TEAMS[currentTeam];
-  const maddenColor = !p.madden ? '#6b7494'
-    : p.madden >= 90 ? '#22c55e'
-    : p.madden >= 80 ? '#86efac'
-    : p.madden >= 70 ? '#a3e635'
-    : p.madden >= 60 ? '#facc15'
-    : '#fb923c';
+function maddenGradient(r) {
+    if (!r) return '#6b7494';
+    // Continuous interpolation: 60=red, 75=yellow, 85=lime, 95=bright green
+    if (r >= 95) return '#00ff88';
+    if (r >= 90) { const t=(r-90)/5; return `hsl(${140+t*20},100%,55%)`; }
+    if (r >= 85) { const t=(r-85)/5; return `hsl(${100+t*40},100%,55%)`; }
+    if (r >= 80) { const t=(r-80)/5; return `hsl(${75+t*25},100%,55%)`; }
+    if (r >= 75) { const t=(r-75)/5; return `hsl(${55+t*20},100%,55%)`; }
+    if (r >= 70) { const t=(r-70)/5; return `hsl(${38+t*17},100%,55%)`; }
+    if (r >= 65) { const t=(r-65)/5; return `hsl(${25+t*13},100%,55%)`; }
+    return `hsl(${Math.max(0,r-55)*2},90%,50%)`;
+  }
+  const maddenColor = maddenGradient(p.madden);
   const lastName = p.name.split(' ').filter(w => w.length > 1).slice(-1)[0] || p.name;
 
   return `
     <div class="player-node ${flipCard ? 'flip-card' : ''}"
          style="left:${coords.x}%;top:${coords.y}%;animation-delay:${delay}ms">
       <div class="p-card" style="background:${team.colors[0]};--team-primary-card:${team.colors[0]}">
+        ${p.madden ? `<div class="p-madden" style="color:${maddenColor}">${p.madden}</div>` : ''}
+        ${p.madden_rank ? `<div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:.5px">${p.madden_rank} / ${p.madden_rank_total} ${p.madden_pos_label||''}</div>` : ''}
         <div class="p-jersey">${p.jersey ? '#'+p.jersey : ''}</div>
         <div class="p-lastname">${lastName}</div>
         <div class="p-madden" style="color:${maddenColor}">${p.madden || '—'}</div>

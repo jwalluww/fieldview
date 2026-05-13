@@ -2,9 +2,8 @@ import json
 import os
 import re
 
-# Map full team names to our abbreviations
 TEAM_MAP = {
-    "Arizona Cardinals": "ARI",
+    "Arizona Cardinals": "ARZ",
     "Atlanta Falcons": "ATL",
     "Baltimore Ravens": "BAL",
     "Buffalo Bills": "BUF",
@@ -18,7 +17,7 @@ TEAM_MAP = {
     "Green Bay Packers": "GB",
     "Houston Texans": "HOU",
     "Indianapolis Colts": "IND",
-    "Jacksonville Jaguars": "JAC",
+    "Jacksonville Jaguars": "JAX",
     "Kansas City Chiefs": "KC",
     "Las Vegas Raiders": "LV",
     "Los Angeles Chargers": "LAC",
@@ -39,28 +38,21 @@ TEAM_MAP = {
 }
 
 def normalize(name):
-    """Lowercase, remove punctuation, strip whitespace for fuzzy matching."""
     name = name.lower()
-    # Remove suffixes for matching
     name = re.sub(r'\b(jr|sr|ii|iii|iv)\b\.?', '', name)
-    # Remove all punctuation
     name = re.sub(r"[^a-z ]", "", name)
     return re.sub(r'\s+', ' ', name).strip()
 
 def load_madden(path):
     with open(path) as f:
         players = json.load(f)
-    
-    # Build lookup: abbr -> list of player dicts
     by_team = {}
     for p in players:
         team_label = p.get("team", {}).get("label", "")
         abbr = TEAM_MAP.get(team_label)
         if not abbr:
             continue
-        if abbr not in by_team:
-            by_team[abbr] = []
-        by_team[abbr].append({
+        by_team.setdefault(abbr, []).append({
             "full_name": f"{p['firstName']} {p['lastName']}",
             "normalized": normalize(f"{p['firstName']} {p['lastName']}"),
             "overall": p["overallRating"],
@@ -71,26 +63,38 @@ def load_madden(path):
         })
     return by_team
 
-def find_madden_player(name, madden_team_players):
-    """Try to match OurLads name to a Madden player on the same team."""
+def build_pos_ranks(madden_by_team):
+    all_players = [p for players in madden_by_team.values() for p in players]
+    by_position = {}
+    for p in all_players:
+        by_position.setdefault(p["position"], []).append(p)
+    pos_ranks = {}
+    for pos, players in by_position.items():
+        sorted_players = sorted(players, key=lambda x: x["overall"], reverse=True)
+        for rank, player in enumerate(sorted_players, 1):
+            pos_ranks[player["normalized"]] = {
+                "rank": rank,
+                "total": len(sorted_players),
+                "pos": pos
+            }
+    return pos_ranks
+
+def find_madden_player(name, all_madden_players):
     target = normalize(name)
-    
-    # Exact match first
-    for mp in madden_team_players:
+    for mp in all_madden_players:
         if mp["normalized"] == target:
             return mp
-    
-    # Partial match — all words in OurLads name appear in Madden name
     target_words = set(target.split())
-    for mp in madden_team_players:
-        madden_words = set(mp["normalized"].split())
-        if target_words and target_words.issubset(madden_words):
+    for mp in all_madden_players:
+        if target_words and target_words.issubset(set(mp["normalized"].split())):
             return mp
-
     return None
 
 def merge():
     madden_by_team = load_madden("data/madden.json")
+    pos_ranks = build_pos_ranks(madden_by_team)
+    all_madden_players = [p for players in madden_by_team.values() for p in players]
+
     matched = 0
     unmatched = 0
 
@@ -102,9 +106,6 @@ def merge():
         with open(filepath) as f:
             team_data = json.load(f)
 
-        madden_players = madden_by_team.get(abbr, [])
-        all_madden_players = [p for players in madden_by_team.values() for p in players]
-
         for pos, players in team_data["depth_chart"].items():
             for player in players:
                 mp = find_madden_player(player["name"], all_madden_players)
@@ -113,10 +114,17 @@ def merge():
                     player["jersey"] = mp["jersey"]
                     player["age"] = mp["age"]
                     player["years_pro"] = mp["years_pro"]
+                    rank_info = pos_ranks.get(mp["normalized"])
+                    player["madden_rank"] = rank_info["rank"] if rank_info else None
+                    player["madden_rank_total"] = rank_info["total"] if rank_info else None
+                    player["madden_pos_label"] = rank_info["pos"] if rank_info else None
                     matched += 1
                 else:
                     player["madden"] = None
                     player["jersey"] = None
+                    player["madden_rank"] = None
+                    player["madden_rank_total"] = None
+                    player["madden_pos_label"] = None
                     unmatched += 1
 
         with open(filepath, "w") as f:
@@ -124,22 +132,5 @@ def merge():
 
     print(f"\nDone — {matched} matched, {unmatched} unmatched")
 
-def diagnose(abbr="BUF"):
-    madden_by_team = load_madden("data/madden.json")
-    filepath = f"data/{abbr.lower()}.json"
-    with open(filepath) as f:
-        team_data = json.load(f)
-
-    madden_players = madden_by_team.get(abbr, [])
-    print(f"\nMadden players on {abbr}:")
-    for mp in madden_players:
-        print(f"  {mp['full_name']}")
-
-    print(f"\nOurLads players on {abbr}:")
-    for pos, players in team_data["depth_chart"].items():
-        for p in players:
-            print(f"  {p['name']}")
-
 if __name__ == "__main__":
-    diagnose("BUF")
-    # merge()
+    merge()

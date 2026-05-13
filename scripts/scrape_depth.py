@@ -66,6 +66,9 @@ def scrape_depth_chart(team):
     soup = BeautifulSoup(response.text, "html.parser")
 
     # OurLads depth chart table
+    base_tag = soup.find("b", string=lambda t: t and t.startswith("Base"))
+    base_defense = base_tag.get_text(strip=True) if base_tag else "Base 4-3"
+    print(f"  Defense scheme: {base_defense}")
     rows = soup.select("tr.row-dc-wht, tr.row-dc-grey")
 
     if not rows:
@@ -102,6 +105,7 @@ def scrape_depth_chart(team):
         "team": team["name"],
         "abbr": team["abbr"],
         "source": "OurLads",
+        "base_defense": base_defense,
         "depth_chart": depth_chart
     }
 
