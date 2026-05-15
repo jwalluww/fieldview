@@ -9,10 +9,6 @@
 <style>
 :root {
   --bg: #0a0e0a;
-  --field-dark: #0d1a0d;
-  --field-mid: #0f1f0f;
-  --field-light: #122212;
-  --line-color: rgba(255,255,255,0.07);
   --surface: #111318;
   --surface2: #181c24;
   --border: #1e2330;
@@ -24,10 +20,7 @@
   --gold: #f5a623;
   --green: #22c55e;
   --red: #ef4444;
-  --orange: #f97316;
   --purple: #a855f7;
-  --team-primary: #003087;
-  --team-secondary: #c8102e;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -66,31 +59,13 @@ body {
 
 .header-divider { width: 1px; height: 24px; background: var(--border2); }
 
-.team-chip {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  letter-spacing: 1px;
-}
-
 .team-swatch {
   width: 28px; height: 28px;
   border-radius: 50%;
-  background: var(--team-primary);
-  border: 2px solid var(--team-secondary);
   display: flex; align-items: center; justify-content: center;
   font-size: 9px; font-weight: 900; letter-spacing: .5px;
   color: #fff;
-}
-
-/* Controls */
-.controls {
-  display: flex;
-  gap: 8px;
-  align-items: center;
+  flex-shrink: 0;
 }
 
 .ctrl-group {
@@ -115,6 +90,7 @@ body {
   cursor: pointer;
   transition: all .15s;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 .ctrl-btn:hover { color: var(--text); background: var(--border); }
 .ctrl-btn.active { background: var(--accent); color: #000; }
@@ -147,16 +123,69 @@ body {
 .view-btn:hover { color: var(--text); }
 .view-btn.active { background: var(--border2); color: var(--text); }
 
-/* ── FIELD WRAPPER ── */
+/* ── TEAM DROPDOWN ── */
+.team-selector-wrap { position: relative; }
+
+.teams-dropdown {
+  position: absolute;
+  top: 44px;
+  left: 0;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 8px;
+  z-index: 300;
+  display: none;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  width: 320px;
+  box-shadow: 0 16px 48px rgba(0,0,0,.6);
+}
+.teams-dropdown.open { display: grid; }
+
+.team-opt {
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  transition: background .15s;
+}
+.team-opt:hover { background: var(--border); color: var(--text); }
+.team-opt.selected { background: rgba(0,212,255,.1); color: var(--accent); }
+
+/* ── FIELD ── */
 .field-outer {
-  position: relative;
   padding: 16px 24px 24px;
   min-height: calc(100vh - 52px);
   display: flex;
   flex-direction: column;
 }
 
-/* Turf field background */
+.formation-bar {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.formation-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
 .field-canvas {
   position: relative;
   width: 100%;
@@ -164,10 +193,8 @@ body {
   margin: 0 auto;
   flex: 1;
   border-radius: 4px;
-  overflow: visible;
 }
 
-/* SVG field lines rendered behind players */
 .field-bg {
   position: absolute;
   inset: 0;
@@ -178,15 +205,14 @@ body {
   overflow: hidden;
 }
 
-/* Player positioning layer */
 .players-layer {
   position: relative;
   z-index: 10;
   width: 100%;
-  height: 680px;
+  height: 700px;
 }
 
-/* ── PLAYER NODE ── */
+/* ── PLAYER CARD ── */
 .player-node {
   position: absolute;
   transform: translate(-50%, -50%);
@@ -197,27 +223,21 @@ body {
   z-index: 20;
   gap: 0;
 }
-
 .player-node:hover { z-index: 100; }
 
-.player-node:hover { z-index: 100; }
-
-/* Circle */
 .p-card {
-  width: 100px;
-  background: var(--team-primary-card, #003087);
+  width: 105px;
   border-radius: 8px 8px 0 0;
-  padding: 8px 10px 6px;
+  padding: 7px 10px 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: 1px;
   border: 1.5px solid rgba(255,255,255,0.15);
   border-bottom: none;
   transition: transform .2s cubic-bezier(.34,1.56,.64,1), border-color .2s;
   box-shadow: 0 4px 16px rgba(0,0,0,0.5);
 }
-
 .player-node:hover .p-card {
   transform: scale(1.06);
   border-color: rgba(255,255,255,0.4);
@@ -226,8 +246,8 @@ body {
 .p-jersey {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
-  font-size: 13px;
-  color: rgba(255,255,255,0.7);
+  font-size: 12px;
+  color: rgba(255,255,255,0.65);
   line-height: 1;
   align-self: flex-start;
 }
@@ -235,41 +255,41 @@ body {
 .p-lastname {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 800;
-  font-size: 17px;
+  font-size: 16px;
   color: #fff;
   line-height: 1.1;
-  letter-spacing: .3px;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 88px;
+  max-width: 93px;
 }
+
 .p-madden {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 900;
-  font-size: 26px;
+  font-size: 28px;
   line-height: 1;
   text-align: center;
 }
 
-/* Rating ring arc — drawn as a conic gradient border overlay */
-.p-ring {
-  position: absolute;
-  inset: -3px;
-  border-radius: 50%;
-  pointer-events: none;
+.p-rank {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: .5px;
+  line-height: 1;
 }
 
 .p-pos-bar {
-  width: 100px;
+  width: 105px;
   background: #000;
   border-radius: 0 0 6px 6px;
   padding: 4px 0;
   text-align: center;
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 900;
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 2px;
   color: rgba(255,255,255,0.9);
   text-transform: uppercase;
@@ -277,47 +297,31 @@ body {
   border-top: none;
 }
 
-/* Contract warning dot */
-.p-contract-dot {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: 1.5px solid #000;
-}
-
 /* ── HOVER CARD ── */
 .hover-card {
   position: absolute;
-  bottom: calc(100% + 14px);
+  bottom: calc(100% + 12px);
   left: 50%;
-  transform: translateX(-50%);
   width: 220px;
   background: #14171f;
   border: 1px solid var(--border2);
   border-radius: 10px;
-  padding: 0;
   opacity: 0;
   pointer-events: none;
   transition: opacity .15s, transform .15s;
   transform: translateX(-50%) translateY(6px);
-  box-shadow: 0 16px 48px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,212,255,0.08);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.8);
   z-index: 500;
   overflow: hidden;
 }
-
 .player-node:hover .hover-card {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
   pointer-events: auto;
 }
-
-/* Card positioning — flip for bottom-row players */
 .player-node.flip-card .hover-card {
   bottom: auto;
-  top: calc(100% + 14px);
+  top: calc(100% + 12px);
   transform: translateX(-50%) translateY(-6px);
 }
 .player-node.flip-card:hover .hover-card {
@@ -325,7 +329,7 @@ body {
 }
 
 .card-header {
-  padding: 12px 14px 10px;
+  padding: 11px 13px 9px;
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: flex-start;
@@ -333,19 +337,15 @@ body {
 }
 
 .card-avatar {
-  width: 38px;
-  height: 38px;
+  width: 36px; height: 36px;
   border-radius: 50%;
-  background: var(--team-primary);
-  border: 2px solid var(--team-secondary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 900;
   font-size: 13px;
   color: #fff;
   flex-shrink: 0;
+  border: 2px solid rgba(255,255,255,0.2);
 }
 
 .card-nameblock { flex: 1; min-width: 0; }
@@ -353,8 +353,7 @@ body {
 .card-name {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 800;
-  font-size: 15px;
-  letter-spacing: .5px;
+  font-size: 14px;
   color: var(--text);
   line-height: 1.1;
 }
@@ -363,10 +362,8 @@ body {
   font-size: 10px;
   color: var(--text-muted);
   margin-top: 2px;
-  letter-spacing: .3px;
 }
 
-/* Ratings row */
 .card-ratings {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -374,7 +371,7 @@ body {
 }
 
 .card-rating-cell {
-  padding: 8px 10px;
+  padding: 8px 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -393,115 +390,25 @@ body {
 .crc-label {
   font-size: 8px;
   font-weight: 700;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--text-dim);
 }
 
-/* Stats */
-.card-stats {
-  padding: 8px 14px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4px 12px;
-}
-
-.card-stat-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 3px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-}
-
-.cs-label {
-  font-size: 10px;
-  color: var(--text-muted);
-  font-weight: 500;
-}
-
-.cs-val {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 12px;
-  color: var(--text);
-}
-
-/* Contract footer */
 .card-footer {
-  padding: 8px 14px;
+  padding: 8px 13px;
   background: rgba(0,0,0,0.3);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-}
-
-.contract-pill {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .5px;
-  padding: 2px 8px;
-  border-radius: 4px;
-  text-transform: uppercase;
-}
-.cp-expiring { background: rgba(239,68,68,.15); color: var(--red); border: 1px solid rgba(239,68,68,.3); }
-.cp-rookie   { background: rgba(34,197,94,.1);  color: var(--green); border: 1px solid rgba(34,197,94,.25); }
-.cp-extension{ background: rgba(168,85,247,.1); color: var(--purple); border: 1px solid rgba(168,85,247,.25); }
-.cp-mid      { background: rgba(107,116,148,.1); color: var(--text-muted); border: 1px solid var(--border2); }
-.cp-franchise{ background: rgba(245,166,35,.1); color: var(--gold); border: 1px solid rgba(245,166,35,.3); }
-
-.cap-hit {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 11px;
-  color: var(--text-muted);
-}
-
-/* ── Personnel / formation switcher bar ── */
-.formation-bar {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.formation-label {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--text-dim);
-}
-
-.pff-rank-strip {
-  margin-left: auto;
-  display: flex;
-  gap: 16px;
-  font-size: 11px;
-  color: var(--text-muted);
-}
-
-.prs-item {
-  display: flex;
-  align-items: center;
+  justify-content: center;
   gap: 6px;
 }
 
-.prs-val {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 800;
-  font-size: 15px;
-  color: var(--green);
-}
-
-/* ── Legend strip ── */
+/* ── LEGEND ── */
 .legend-strip {
   width: 100%;
-  max-width: 1100px;
-  margin: 16px auto 0;
+  max-width: 1400px;
+  margin: 12px auto 0;
   display: flex;
   align-items: center;
   gap: 20px;
@@ -510,92 +417,44 @@ body {
   letter-spacing: .5px;
   padding: 10px 0;
   border-top: 1px solid var(--border);
+  flex-wrap: wrap;
 }
 
 .ls-item { display: flex; align-items: center; gap: 6px; }
 
-.ls-swatch {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 7px;
-  font-weight: 900;
-  color: #fff;
+.ls-dot {
+  width: 12px; height: 12px;
+  border-radius: 2px;
+  flex-shrink: 0;
 }
 
-/* ── Rating colors ── */
-.pff-elite { color: #22c55e; }
-.pff-great { color: #86efac; }
-.pff-good  { color: #a3e635; }
-.pff-avg   { color: #facc15; }
-.pff-poor  { color: #fb923c; }
-.pff-bad   { color: #ef4444; }
-
-/* Scrollbar */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
 
-/* Animation */
 @keyframes nodeIn {
-  from { opacity: 0; transform: translate(-50%, calc(-50% - 12px)); }
+  from { opacity: 0; transform: translate(-50%, calc(-50% - 10px)); }
   to   { opacity: 1; transform: translate(-50%, -50%); }
 }
-
-.player-node { animation: nodeIn .4s cubic-bezier(.34,1.56,.64,1) both; }
-.teams-dropdown {
-  position: absolute;
-  top: 44px;
-  left: 0;
-  background: var(--surface2);
-  border: 1px solid var(--border2);
-  border-radius: 10px;
-  padding: 8px;
-  z-index: 200;
-  display: none;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 4px;
-  width: 320px;
-  box-shadow: 0 16px 48px rgba(0,0,0,.6);
-}
-.teams-dropdown.open { display: grid; }
-.team-opt {
-  padding: 8px;
-  border-radius: 6px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--text-muted);
-}
-.team-opt:hover { background: var(--border); color: var(--text); }
-.team-opt.selected { background: rgba(0,212,255,.1); color: var(--accent); }
+.player-node { animation: nodeIn .35s cubic-bezier(.34,1.56,.64,1) both; }
 </style>
 </head>
 <body>
 
-<!-- ── HEADER ── -->
 <header class="header">
   <div class="logo">Field<span>View</span></div>
   <div class="header-divider"></div>
-  <div class="team-selector-wrap" style="position:relative">
+
+  <div class="team-selector-wrap">
     <div style="display:flex;align-items:center;gap:10px;cursor:pointer;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:6px 12px" onclick="toggleTeamDropdown()">
-      <div class="team-swatch" id="teamSwatchEl">BUF</div>
-      <span class="team-chip" id="teamNameEl">Buffalo Bills</span>
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="color:var(--text-muted)"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <div class="team-swatch" id="teamSwatchEl" style="background:#003087;border:2px solid #c8102e">BUF</div>
+      <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:1px" id="teamNameEl">Buffalo Bills</span>
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="color:var(--text-muted);margin-left:4px"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
     </div>
     <div class="teams-dropdown" id="teamsDropdown"></div>
   </div>
 
-  <div class="controls" style="margin-left:16px">
+  <div style="display:flex;gap:8px;align-items:center;margin-left:12px">
     <div class="ctrl-group">
       <button class="ctrl-btn active" onclick="setUnit('offense',this)">Offense</button>
       <button class="ctrl-btn" onclick="setUnit('defense',this)">Defense</button>
@@ -608,7 +467,7 @@ body {
     </div>
   </div>
 
-  <div class="view-toggle" style="margin-left:auto">
+  <div class="view-toggle">
     <button class="view-btn" onclick="window.location='index.html'">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="3" rx="1" fill="currentColor"/><rect x="1" y="5" width="10" height="3" rx="1" fill="currentColor" opacity=".5"/><rect x="1" y="9" width="10" height="2" rx="1" fill="currentColor" opacity=".3"/></svg>
       Depth Chart
@@ -620,107 +479,54 @@ body {
   </div>
 </header>
 
-<!-- ── FIELD OUTER ── -->
 <div class="field-outer">
-
-  <!-- formation top bar -->
   <div class="formation-bar">
-    <div class="formation-label">11 Personnel · Shotgun Spread</div>
-    <div class="pff-rank-strip">
-      <div class="prs-item">OFF GRADE <span class="prs-val" style="margin-left:6px">71.4</span></div>
-      <div class="header-divider" style="height:16px"></div>
-      <div class="prs-item">PASS BLK <span class="prs-val" style="margin-left:6px">68.2</span></div>
-      <div class="header-divider" style="height:16px"></div>
-      <div class="prs-item">RUN BLK <span class="prs-val" style="margin-left:6px;color:var(--gold)">65.9</span></div>
-    </div>
+    <div class="formation-label" id="formationLabel">11 Personnel · Shotgun Spread</div>
   </div>
 
-  <!-- Field canvas -->
   <div class="field-canvas">
-
-    <!-- Turf background via SVG -->
-    <svg class="field-bg" viewBox="0 0 1100 580" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <svg class="field-bg" viewBox="0 0 1400 700" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
       <defs>
-        <linearGradient id="turfGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#0d1f0d"/>
-          <stop offset="100%" stop-color="#0a1a0a"/>
-        </linearGradient>
-        <!-- alternating stripe pattern -->
-        <pattern id="stripes" x="0" y="0" width="1100" height="72.5" patternUnits="userSpaceOnUse">
-          <rect width="1100" height="72.5" fill="#0d1f0d"/>
-          <rect y="36.25" width="1100" height="36.25" fill="#0f2210"/>
+        <pattern id="stripes" x="0" y="0" width="1400" height="87.5" patternUnits="userSpaceOnUse">
+          <rect width="1400" height="87.5" fill="#0d1f0d"/>
+          <rect y="43.75" width="1400" height="43.75" fill="#0f2210"/>
         </pattern>
       </defs>
-      <!-- Base -->
-      <rect width="1100" height="580" fill="url(#stripes)" rx="4"/>
-      <!-- Yard lines -->
-      <g stroke="rgba(255,255,255,0.07)" stroke-width="1">
-        <line x1="0" y1="116" x2="1100" y2="116"/>
-        <line x1="0" y1="232" x2="1100" y2="232"/>
-        <line x1="0" y1="348" x2="1100" y2="348"/>
-        <line x1="0" y1="464" x2="1100" y2="464"/>
+      <rect width="1400" height="700" fill="url(#stripes)" rx="4"/>
+      <g stroke="rgba(255,255,255,0.06)" stroke-width="1">
+        <line x1="0" y1="140" x2="1400" y2="140"/>
+        <line x1="0" y1="280" x2="1400" y2="280"/>
+        <line x1="0" y1="420" x2="1400" y2="420"/>
+        <line x1="0" y1="560" x2="1400" y2="560"/>
       </g>
-      <!-- Hash marks -->
-      <g stroke="rgba(255,255,255,0.1)" stroke-width="1.5">
-        <!-- Left hash -->
-        <line x1="363" y1="0" x2="363" y2="580"/>
-        <!-- Right hash -->
-        <line x1="737" y1="0" x2="737" y2="580"/>
+      <g stroke="rgba(255,255,255,0.08)" stroke-width="1">
+        <line x1="462" y1="0" x2="462" y2="700"/>
+        <line x1="938" y1="0" x2="938" y2="700"/>
       </g>
-      <!-- Line of scrimmage -->
-      <line x1="0" y1="360" x2="1100" y2="360" stroke="rgba(0,212,255,0.18)" stroke-width="2" stroke-dasharray="8 6"/>
-      <!-- LOS label -->
-      <text x="18" y="355" fill="rgba(0,212,255,0.35)" font-family="Barlow Condensed, sans-serif" font-size="10" font-weight="700" letter-spacing="2">LINE OF SCRIMMAGE</text>
-      <!-- End zone hint at top -->
-      <rect x="0" y="0" width="1100" height="60" fill="rgba(0,48,135,0.15)"/>
-      <text x="550" y="38" fill="rgba(255,255,255,0.06)" font-family="Barlow Condensed, sans-serif" font-size="28" font-weight="900" letter-spacing="12" text-anchor="middle">END ZONE</text>
+      <line x1="0" y1="448" x2="1400" y2="448" stroke="rgba(0,212,255,0.2)" stroke-width="2" stroke-dasharray="10 7"/>
+      <text x="20" y="442" fill="rgba(0,212,255,0.3)" font-family="Barlow Condensed, sans-serif" font-size="11" font-weight="700" letter-spacing="2">LINE OF SCRIMMAGE</text>
+      <rect x="0" y="0" width="1400" height="70" fill="rgba(0,48,135,0.12)"/>
+      <text x="700" y="44" fill="rgba(255,255,255,0.05)" font-family="Barlow Condensed, sans-serif" font-size="32" font-weight="900" letter-spacing="14" text-anchor="middle">END ZONE</text>
     </svg>
 
-    <!-- Players layer -->
-    <div class="players-layer" id="playersLayer">
-      <!-- rendered by JS -->
-    </div>
+    <div class="players-layer" id="playersLayer"></div>
   </div>
 
-  <!-- Legend -->
   <div class="legend-strip">
-    <span style="font-family:'Barlow Condensed';font-weight:700;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim)">Ring = Madden OVR</span>
-    <div class="ls-item">
-      <div class="ls-swatch" style="background:conic-gradient(#22c55e 90%, var(--border2) 0)">90</div>Elite
-    </div>
-    <div class="ls-item">
-      <div class="ls-swatch" style="background:conic-gradient(#86efac 80%, var(--border2) 0)">80</div>Great
-    </div>
-    <div class="ls-item">
-      <div class="ls-swatch" style="background:conic-gradient(#a3e635 70%, var(--border2) 0)">70</div>Good
-    </div>
-    <div class="ls-item">
-      <div class="ls-swatch" style="background:conic-gradient(#facc15 60%, var(--border2) 0)">60</div>Average
-    </div>
-    <div class="ls-item" style="margin-left:auto;gap:16px">
-      <div style="display:flex;align-items:center;gap:6px">
-        <div style="width:10px;height:10px;border-radius:50%;background:var(--red);border:1.5px solid #000"></div>
-        Expiring contract
-      </div>
-      <div style="display:flex;align-items:center;gap:6px">
-        <div style="width:10px;height:10px;border-radius:50%;background:var(--green);border:1.5px solid #000"></div>
-        Rookie deal
-      </div>
-      <div style="display:flex;align-items:center;gap:6px">
-        <div style="width:10px;height:10px;border-radius:50%;background:var(--purple);border:1.5px solid #000"></div>
-        Extension
-      </div>
-    </div>
+    <span style="font-family:'Barlow Condensed';font-weight:700;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-right:4px">Madden Rating</span>
+    <div class="ls-item"><div class="ls-dot" style="background:#00ff88"></div>95+</div>
+    <div class="ls-item"><div class="ls-dot" style="background:#22c55e"></div>90–94</div>
+    <div class="ls-item"><div class="ls-dot" style="background:#a3e635"></div>85–89</div>
+    <div class="ls-item"><div class="ls-dot" style="background:#d4e635"></div>80–84</div>
+    <div class="ls-item"><div class="ls-dot" style="background:#facc15"></div>75–79</div>
+    <div class="ls-item"><div class="ls-dot" style="background:#fb923c"></div>70–74</div>
+    <div class="ls-item"><div class="ls-dot" style="background:#ef4444"></div>&lt;70</div>
   </div>
-
 </div>
 
 <script>
-// ══════════════════════════════════════════════
-// TEAMS
-// ══════════════════════════════════════════════
 const TEAMS = {
-  ARI: { name: "Arizona Cardinals",    colors: ["#97233f","#ffb612"] },
+  ARZ: { name: "Arizona Cardinals",    colors: ["#97233f","#ffb612"] },
   ATL: { name: "Atlanta Falcons",      colors: ["#a71930","#a5acaf"] },
   BAL: { name: "Baltimore Ravens",     colors: ["#241773","#9e7c0c"] },
   BUF: { name: "Buffalo Bills",        colors: ["#003087","#c8102e"] },
@@ -754,151 +560,162 @@ const TEAMS = {
   WAS: { name: "Washington Commanders",colors: ["#5a1414","#ffb612"] },
 };
 
-// ══════════════════════════════════════════════
-// POSITION COORDINATE MAPS
-// x/y as % of field canvas (left=0, right=100, top=0, bottom=100)
-// Field is oriented so offense attacks upward (end zone at top)
-// ══════════════════════════════════════════════
-
 const FORMATION_COORDS = {
   offense: {
     '11': {
       LWR: {x:4,  y:38},
       SWR: {x:25, y:48},
       RWR: {x:96, y:38},
-      TE:  {x:72, y:60},
+      TE:  {x:72, y:62},
       LT:  {x:33, y:62},
       LG:  {x:41, y:62},
       C:   {x:50, y:62},
       RG:  {x:59, y:62},
       RT:  {x:67, y:62},
       QB:  {x:50, y:78},
-      RB:  {x:50, y:88},
+      RB:  {x:50, y:90},
     },
     '12': {
-      LWR: {x:5,  y:45},
-      RWR: {x:95, y:45},
-      TE:  {x:68, y:65},
-      LT:  {x:37, y:68},
-      LG:  {x:43, y:68},
-      C:   {x:50, y:68},
-      RG:  {x:57, y:68},
-      RT:  {x:63, y:68},
-      QB:  {x:50, y:80},
+      LWR: {x:4,  y:38},
+      RWR: {x:96, y:38},
+      TE:  {x:68, y:62},
+      LT:  {x:33, y:62},
+      LG:  {x:41, y:62},
+      C:   {x:50, y:62},
+      RG:  {x:59, y:62},
+      RT:  {x:67, y:62},
+      QB:  {x:50, y:78},
       RB:  {x:50, y:90},
-      FB:  {x:50, y:90},
     },
     '21': {
-      LWR: {x:5,  y:45},
-      RWR: {x:95, y:45},
-      TE:  {x:68, y:65},
-      LT:  {x:37, y:68},
-      LG:  {x:43, y:68},
-      C:   {x:50, y:68},
-      RG:  {x:57, y:68},
-      RT:  {x:63, y:68},
-      QB:  {x:50, y:80},
+      LWR: {x:4,  y:38},
+      RWR: {x:96, y:38},
+      TE:  {x:68, y:62},
+      LT:  {x:33, y:62},
+      LG:  {x:41, y:62},
+      C:   {x:50, y:62},
+      RG:  {x:59, y:62},
+      RT:  {x:67, y:62},
+      QB:  {x:50, y:78},
       RB:  {x:43, y:90},
       FB:  {x:57, y:90},
     },
   },
   defense: {
     'base43': {
-      LCB:  {x:4,  y:54},
-      RCB:  {x:96, y:54},
-      SS:   {x:28, y:10},
-      FS:   {x:72, y:10},
+      LCB:  {x:4,  y:62},
+      RCB:  {x:96, y:62},
+      SS:   {x:28, y:12},
+      FS:   {x:72, y:12},
       LOLB: {x:20, y:40},
       MLB:  {x:42, y:36},
       WLB:  {x:58, y:36},
       ROLB: {x:80, y:40},
-      DE:   {x:35, y:54},
-      NT:   {x:50, y:54},
-      DT:   {x:65, y:54},
+      DE:   {x:35, y:56},
+      NT:   {x:50, y:56},
+      DT:   {x:65, y:56},
     },
-    'nickel': {
-      LCB:  {x:4,  y:54},
-      RCB:  {x:96, y:54},
-      NB:   {x:28, y:54},
-      SS:   {x:28, y:10},
-      FS:   {x:72, y:10},
-      LOLB: {x:22, y:38},
+    'base34': {
+      LCB:  {x:4,  y:62},
+      RCB:  {x:96, y:62},
+      SS:   {x:28, y:12},
+      FS:   {x:72, y:12},
+      LOLB: {x:18, y:56},
+      ROLB: {x:82, y:56},
       MLB:  {x:44, y:38},
       WLB:  {x:56, y:38},
-      ROLB: {x:78, y:38},
-      DE:   {x:35, y:58},
-      NT:   {x:50, y:58},
-      DT:   {x:65, y:58},
+      DE:   {x:35, y:56},
+      NT:   {x:50, y:56},
+      DT:   {x:65, y:56},
+    },
+    'nickel': {
+      LCB:  {x:4,  y:62},
+      RCB:  {x:96, y:62},
+      NB:   {x:26, y:56},
+      SS:   {x:35, y:12},
+      FS:   {x:65, y:12},
+      LOLB: {x:22, y:40},
+      MLB:  {x:44, y:38},
+      WLB:  {x:56, y:38},
+      ROLB: {x:78, y:40},
+      DE:   {x:35, y:56},
+      NT:   {x:50, y:56},
+      DT:   {x:65, y:56},
     },
     'dime': {
-      LCB:  {x:4,  y:58},
-      RCB:  {x:96, y:58},
-      NB:   {x:25, y:58},
-      SS:   {x:38, y:18},
-      FS:   {x:62, y:18},
-      MLB:  {x:44, y:42},
-      WLB:  {x:56, y:42},
-      DE:   {x:30, y:55},
-      NT:   {x:44, y:55},
-      DT:   {x:56, y:55},
+      LCB:  {x:4,  y:62},
+      RCB:  {x:96, y:62},
+      NB:   {x:22, y:56},
+      SS:   {x:35, y:12},
+      FS:   {x:65, y:12},
+      MLB:  {x:44, y:40},
+      WLB:  {x:56, y:40},
+      DE:   {x:35, y:56},
+      NT:   {x:50, y:56},
+      DT:   {x:65, y:56},
     },
   },
   st: {
-    kickoff: {
-      PK:  {x:50, y:92},
-      KO:  {x:50, y:92},
-      LS:  {x:50, y:75},
-      H:   {x:50, y:75},
-      PR:  {x:20, y:60},
-      KR:  {x:80, y:60},
-      PT:  {x:50, y:80},
+    'kickoff': {
+      PK: {x:50, y:88},
+      KO: {x:50, y:88},
+      LS: {x:50, y:72},
+      H:  {x:50, y:72},
+      PR: {x:22, y:58},
+      KR: {x:78, y:58},
+      PT: {x:50, y:78},
     }
   }
 };
 
-// For 12 personnel, second TE gets offset position
-const TE2_COORD = {x:75, y:60};
+const TE2_COORD = {x:76, y:56};
 
-// ══════════════════════════════════════════════
-// STATE
-// ══════════════════════════════════════════════
 let currentTeam = 'BUF';
 let currentUnit = 'offense';
 let currentPersonnel = '11';
 let teamData = null;
 
-// ══════════════════════════════════════════════
-// DATA LOADING
-// ══════════════════════════════════════════════
+function maddenColor(r) {
+  if (!r) return '#6b7494';
+  if (r >= 95) return '#00ff88';
+  if (r >= 90) { const t = (r-90)/5; return `hsl(${140+t*20},100%,55%)`; }
+  if (r >= 85) { const t = (r-85)/5; return `hsl(${100+t*40},100%,55%)`; }
+  if (r >= 80) { const t = (r-80)/5; return `hsl(${75+t*25},100%,55%)`; }
+  if (r >= 75) { const t = (r-75)/5; return `hsl(${55+t*20},100%,55%)`; }
+  if (r >= 70) { const t = (r-70)/5; return `hsl(${38+t*17},100%,55%)`; }
+  if (r >= 65) { const t = (r-65)/5; return `hsl(${25+t*13},100%,55%)`; }
+  return `hsl(${Math.max(0,(r-55)*2)},90%,50%)`;
+}
+
 async function loadTeam(abbr) {
-  const res = await fetch(`data/${abbr.toLowerCase()}.json`);
-  teamData = await res.json();
+  try {
+    const res = await fetch(`data/${abbr.toLowerCase()}.json`);
+    teamData = await res.json();
+  } catch(e) {
+    console.error('Failed to load team data:', e);
+    return;
+  }
   updateHeader();
   renderFormation();
 }
 
 function getStarter(pos) {
-  const players = teamData?.depth_chart?.[pos];
-  return players?.[0] || null;
+  return teamData?.depth_chart?.[pos]?.[0] || null;
 }
 
-// ══════════════════════════════════════════════
-// HEADER UPDATE
-// ══════════════════════════════════════════════
 function updateHeader() {
   const team = TEAMS[currentTeam];
-  document.getElementById('teamSwatchEl').textContent = currentTeam;
-  document.getElementById('teamSwatchEl').style.background = team.colors[0];
-  document.getElementById('teamSwatchEl').style.borderColor = team.colors[1];
+  const swatch = document.getElementById('teamSwatchEl');
+  swatch.textContent = currentTeam;
+  swatch.style.background = team.colors[0];
+  swatch.style.borderColor = team.colors[1];
   document.getElementById('teamNameEl').textContent = team.name;
 }
 
-// ══════════════════════════════════════════════
-// HOVER CARD
-// ══════════════════════════════════════════════
 function buildHoverCard(p, pos) {
   const team = TEAMS[currentTeam];
-  const initials = p.name.split(' ').map(w=>w[0]).join('').slice(0,2);
+  const initials = p.name.split(' ').map(w => w[0]).join('').slice(0, 2);
+  const mc = maddenColor(p.madden);
   return `
     <div class="hover-card">
       <div class="card-header">
@@ -910,56 +727,40 @@ function buildHoverCard(p, pos) {
       </div>
       <div class="card-ratings">
         <div class="card-rating-cell">
-          <div class="crc-val" style="color:#60a5fa">${p.madden || '—'}</div>
-          <div class="crc-label">Madden OVR</div>
+          <div class="crc-val" style="color:${mc}">${p.madden || '—'}</div>
+          <div class="crc-label">Madden</div>
         </div>
         <div class="card-rating-cell">
           <div class="crc-val" style="color:var(--gold)">${p.age || '—'}</div>
           <div class="crc-label">Age</div>
         </div>
         <div class="card-rating-cell">
-          <div class="crc-val" style="color:var(--text-muted)">${p.years_pro || '—'}</div>
-          <div class="crc-label">Exp</div>
+          <div class="crc-val" style="color:var(--text-muted)">${p.years_pro != null ? p.years_pro+1 : '—'}</div>
+          <div class="crc-label">NFL Yr</div>
         </div>
       </div>
-      <div class="card-footer" style="justify-content:center">
+      <div class="card-footer">
         <span style="font-family:'Barlow Condensed';font-weight:700;font-size:13px;color:var(--gold)">${p.cap_number || '—'}</span>
-        <span style="font-size:10px;color:var(--text-dim);margin-left:6px">cap hit</span>
+        <span style="font-size:10px;color:var(--text-dim)">cap hit</span>
       </div>
     </div>
   `;
 }
 
-// ══════════════════════════════════════════════
-// PLAYER NODE
-// ══════════════════════════════════════════════
 function buildPlayerNode(p, pos, coords, delay, flipCard) {
   if (!p) return '';
   const team = TEAMS[currentTeam];
-function maddenGradient(r) {
-    if (!r) return '#6b7494';
-    // Continuous interpolation: 60=red, 75=yellow, 85=lime, 95=bright green
-    if (r >= 95) return '#00ff88';
-    if (r >= 90) { const t=(r-90)/5; return `hsl(${140+t*20},100%,55%)`; }
-    if (r >= 85) { const t=(r-85)/5; return `hsl(${100+t*40},100%,55%)`; }
-    if (r >= 80) { const t=(r-80)/5; return `hsl(${75+t*25},100%,55%)`; }
-    if (r >= 75) { const t=(r-75)/5; return `hsl(${55+t*20},100%,55%)`; }
-    if (r >= 70) { const t=(r-70)/5; return `hsl(${38+t*17},100%,55%)`; }
-    if (r >= 65) { const t=(r-65)/5; return `hsl(${25+t*13},100%,55%)`; }
-    return `hsl(${Math.max(0,r-55)*2},90%,50%)`;
-  }
-  const maddenColor = maddenGradient(p.madden);
+  const mc = maddenColor(p.madden);
   const lastName = p.name.split(' ').filter(w => w.length > 1).slice(-1)[0] || p.name;
 
   return `
     <div class="player-node ${flipCard ? 'flip-card' : ''}"
          style="left:${coords.x}%;top:${coords.y}%;animation-delay:${delay}ms">
-      <div class="p-card" style="background:${team.colors[0]};--team-primary-card:${team.colors[0]}">
-        ${p.madden ? `<div class="p-madden" style="color:${maddenColor}">${p.madden}</div>` : ''}
-        ${p.madden_rank ? `<div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:.5px">${p.madden_rank} / ${p.madden_rank_total} ${p.madden_pos_label||''}</div>` : ''}
-        <div class="p-jersey">${p.jersey ? '#'+p.jersey : ''}</div>
+      <div class="p-card" style="background:${team.colors[0]}">
+        <div class="p-jersey">${p.jersey ? '#'+p.jersey : '\u00a0'}</div>
         <div class="p-lastname">${lastName}</div>
-        <div class="p-madden" style="color:${maddenColor}">${p.madden || '—'}</div>
+        <div class="p-madden" style="color:${mc}">${p.madden || '—'}</div>
+        ${p.madden_rank ? `<div class="p-rank">${p.madden_rank} / ${p.madden_rank_total} ${p.madden_pos_label || ''}</div>` : ''}
       </div>
       <div class="p-pos-bar">${pos}</div>
       ${buildHoverCard(p, pos)}
@@ -967,11 +768,6 @@ function maddenGradient(r) {
   `;
 }
 
-
-
-// ══════════════════════════════════════════════
-// RENDER
-// ══════════════════════════════════════════════
 function renderFormation() {
   const layer = document.getElementById('playersLayer');
   if (!teamData) { layer.innerHTML = ''; return; }
@@ -982,39 +778,31 @@ function renderFormation() {
 
   let html = '';
   let delay = 0;
-  let teCount = 0;
 
   for (const [pos, coords] of Object.entries(coordMap)) {
-    // For 12 personnel, render two TEs
     if (pos === 'TE' && currentPersonnel === '12') {
-      const starters = teamData.depth_chart['TE'] || [];
-      const te1 = starters[0] || null;
-      const te2 = starters[1] || null;
-      html += buildPlayerNode(te1, 'TE', coords, delay, false);
+      const players = teamData.depth_chart['TE'] || [];
+      html += buildPlayerNode(players[0] || null, 'TE',  coords,    delay, false);
       delay += 40;
-      html += buildPlayerNode(te2, 'TE2', TE2_COORD, delay, false);
+      html += buildPlayerNode(players[1] || null, 'TE2', TE2_COORD, delay, false);
       delay += 40;
       continue;
     }
-
     const starter = getStarter(pos);
-    const flipCard = coords.y > 70;
-    html += buildPlayerNode(starter, pos, coords, delay, flipCard);
+    html += buildPlayerNode(starter, pos, coords, delay, coords.y > 72);
     delay += 40;
   }
 
   layer.innerHTML = html;
 }
 
-// ══════════════════════════════════════════════
-// CONTROLS
-// ══════════════════════════════════════════════
 function setUnit(unit, btn) {
   currentUnit = unit;
   document.querySelectorAll('.ctrl-group:first-child .ctrl-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 
   const pg = document.getElementById('personnelGroup');
+
   if (unit === 'offense') {
     pg.innerHTML = `
       <button class="ctrl-btn active" onclick="setPersonnel('11',this)">11 (3 WR)</button>
@@ -1022,17 +810,25 @@ function setUnit(unit, btn) {
       <button class="ctrl-btn" onclick="setPersonnel('21',this)">21 (2 RB)</button>
     `;
     currentPersonnel = '11';
+    document.getElementById('formationLabel').textContent = '11 Personnel · Shotgun Spread';
   } else if (unit === 'defense') {
+    const baseScheme = teamData?.base_defense || 'Base 4-3';
+    const isThreeFour = baseScheme.includes('3-4');
+    const baseKey = isThreeFour ? 'base34' : 'base43';
+    const baseLabel = isThreeFour ? '3-4 Base' : '4-3 Base';
     pg.innerHTML = `
-      <button class="ctrl-btn active" onclick="setPersonnel('base43',this)">4-3 Base</button>
+      <button class="ctrl-btn active" onclick="setPersonnel('${baseKey}',this)">${baseLabel}</button>
       <button class="ctrl-btn" onclick="setPersonnel('nickel',this)">Nickel</button>
       <button class="ctrl-btn" onclick="setPersonnel('dime',this)">Dime</button>
     `;
-    currentPersonnel = 'base43';
+    currentPersonnel = baseKey;
+    document.getElementById('formationLabel').textContent = baseScheme;
   } else {
     pg.innerHTML = `<button class="ctrl-btn active" onclick="setPersonnel('kickoff',this)">Kickoff</button>`;
     currentPersonnel = 'kickoff';
+    document.getElementById('formationLabel').textContent = 'Special Teams';
   }
+
   renderFormation();
 }
 
@@ -1043,14 +839,10 @@ function setPersonnel(pers, btn) {
   renderFormation();
 }
 
-// ══════════════════════════════════════════════
-// TEAM SELECTOR
-// ══════════════════════════════════════════════
 function buildTeamDropdown() {
-  const dd = document.getElementById('teamsDropdown');
-  dd.innerHTML = Object.entries(TEAMS).map(([abbr, t]) => `
-    <div class="team-opt ${abbr===currentTeam?'selected':''}" onclick="selectTeam('${abbr}')">
-      <div class="team-badge" style="background:${t.colors[0]};color:${t.colors[1]};width:28px;height:28px;font-size:9px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900">${abbr}</div>
+  document.getElementById('teamsDropdown').innerHTML = Object.entries(TEAMS).map(([abbr, t]) => `
+    <div class="team-opt ${abbr === currentTeam ? 'selected' : ''}" onclick="selectTeam('${abbr}')">
+      <div style="width:28px;height:28px;border-radius:50%;background:${t.colors[0]};border:2px solid ${t.colors[1]};display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:9px;color:#fff">${abbr}</div>
       ${t.name.split(' ').pop()}
     </div>
   `).join('');
@@ -1059,7 +851,7 @@ function buildTeamDropdown() {
 function toggleTeamDropdown() {
   const dd = document.getElementById('teamsDropdown');
   dd.classList.toggle('open');
-  buildTeamDropdown();
+  if (dd.classList.contains('open')) buildTeamDropdown();
 }
 
 function selectTeam(abbr) {
@@ -1069,14 +861,12 @@ function selectTeam(abbr) {
 }
 
 document.addEventListener('click', e => {
-  if (!e.target.closest('.team-selector-wrap') && !e.target.closest('#teamsDropdown')) {
+  if (!e.target.closest('.team-selector-wrap')) {
     document.getElementById('teamsDropdown').classList.remove('open');
   }
 });
 
-// ── INIT
 loadTeam('BUF');
 </script>
-
 </body>
 </html>
