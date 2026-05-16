@@ -40,11 +40,26 @@ TEAMS = [
 ]
 
 def clean_name(name):
+    # Remove OurLads suffix junk (draft year, trade info, etc.)
     name = re.sub(r'\s+\S*[\d/]\S*$', '', name).strip()
+    # Flip Last, First to First Last
     if ',' in name:
         parts = name.split(',', 1)
         name = parts[1].strip() + ' ' + parts[0].strip()
-    return name
+    # Proper case, but preserve known suffixes
+    suffixes = {'II', 'III', 'IV', 'V', 'Jr', 'Jr.', 'Sr', 'Sr.'}
+    words = name.split()
+    cased = []
+    for word in words:
+        if word.upper() in {s.upper() for s in suffixes}:
+            # Find the canonical casing for this suffix
+            for s in suffixes:
+                if word.upper() == s.upper():
+                    cased.append(s)
+                    break
+        else:
+            cased.append(word.capitalize())
+    return ' '.join(cased)
 
 def scrape_depth_chart(team):
     headers = {
