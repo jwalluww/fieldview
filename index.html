@@ -733,9 +733,15 @@ function renderPlayer(p, depth) {
           <div class="rating-label">MADDEN</div>
         ` : '<span style="color:var(--text-dim);font-size:11px">N/A</span>'}
       </div>
-      <div class="col-stat" style="text-align:center;padding:8px 10px">
-        <div style="font-size:10px;color:var(--text-muted);line-height:1.4">${p.stat||'—'}</div>
-        ${p.statLabel ? `<div style="font-size:9px;color:var(--text-dim);margin-top:2px">${p.statLabel}</div>` : ''}
+      <div class="col-stat" style="padding:8px 10px">
+        ${p.stats && Object.keys(p.stats).length > 0 ? `
+          <div style="display:flex;flex-wrap:wrap;gap:2px 8px">
+            ${Object.entries(p.stats).slice(0,4).map(([k,v]) => `
+              <span style="font-size:10px;color:var(--text-muted)">${k}: <strong style="color:var(--text)">${v}</strong></span>
+            `).join('')}
+          </div>
+          <div style="font-size:9px;color:var(--text-dim);margin-top:2px">${p.stats_season || ''}</div>
+        ` : '<span style="font-size:10px;color:var(--text-dim)">—</span>'}
       </div>
       <div class="col-snap" style="justify-content:center">
         ${p.snap != null ? `

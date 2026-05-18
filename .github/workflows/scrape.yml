@@ -21,13 +21,16 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install requests beautifulsoup4
+        run: pip install requests beautifulsoup4 nflreadpy
 
       - name: Run depth chart scraper
         run: python scripts/scrape_depth.py
 
       - name: Run OTC contract scraper
         run: python scripts/scrape_otc.py
+
+      - name: Run stats scraper
+        run: python scripts/scrape_stats.py
 
       - name: Run Madden merge
         run: python scripts/merge_madden.py

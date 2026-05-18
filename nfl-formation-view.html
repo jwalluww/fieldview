@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0a0e0a;
+  --bg: #13141a;
   --surface: #111318;
   --surface2: #181c24;
   --border: #1e2330;
@@ -209,7 +209,7 @@ body {
   position: relative;
   z-index: 10;
   width: 100%;
-  height: 700px;
+  height: 1000px;
 }
 
 /* ── PLAYER CARD ── */
@@ -412,7 +412,7 @@ body {
   display: flex;
   align-items: center;
   gap: 20px;
-  font-size: 10px;
+  font-size: 16px;
   color: var(--text-muted);
   letter-spacing: .5px;
   padding: 10px 0;
@@ -485,35 +485,33 @@ body {
   </div>
 
   <div class="field-canvas">
-    <svg class="field-bg" viewBox="0 0 1400 700" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <svg class="field-bg" viewBox="0 0 1400 1000" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
       <defs>
-        <pattern id="stripes" x="0" y="0" width="1400" height="87.5" patternUnits="userSpaceOnUse">
-          <rect width="1400" height="87.5" fill="#0d1f0d"/>
-          <rect y="43.75" width="1400" height="43.75" fill="#0f2210"/>
+        <pattern id="stripes" x="0" y="0" width="1400" height="102.5" patternUnits="userSpaceOnUse">
+          <rect width="1400" height="102.5" fill="#0d1f0d"/>
+          <rect y="51.25" width="1400" height="51.25" fill="#0f2210"/>
         </pattern>
       </defs>
-      <rect width="1400" height="700" fill="url(#stripes)" rx="4"/>
+      <rect width="1400" height="820" fill="url(#stripes)" rx="4"/>
       <g stroke="rgba(255,255,255,0.06)" stroke-width="1">
-        <line x1="0" y1="140" x2="1400" y2="140"/>
-        <line x1="0" y1="280" x2="1400" y2="280"/>
-        <line x1="0" y1="420" x2="1400" y2="420"/>
-        <line x1="0" y1="560" x2="1400" y2="560"/>
+        <line x1="0" y1="164" x2="1400" y2="164"/>
+        <line x1="0" y1="328" x2="1400" y2="328"/>
+        <line x1="0" y1="492" x2="1400" y2="492"/>
+        <line x1="0" y1="656" x2="1400" y2="656"/>
       </g>
       <g stroke="rgba(255,255,255,0.08)" stroke-width="1">
-        <line x1="462" y1="0" x2="462" y2="700"/>
-        <line x1="938" y1="0" x2="938" y2="700"/>
+        <line x1="462" y1="0" x2="462" y2="820"/>
+        <line x1="938" y1="0" x2="938" y2="820"/>
       </g>
-      <line x1="0" y1="448" x2="1400" y2="448" stroke="rgba(0,212,255,0.2)" stroke-width="2" stroke-dasharray="10 7"/>
-      <text x="20" y="442" fill="rgba(0,212,255,0.3)" font-family="Barlow Condensed, sans-serif" font-size="11" font-weight="700" letter-spacing="2">LINE OF SCRIMMAGE</text>
-      <rect x="0" y="0" width="1400" height="70" fill="rgba(0,48,135,0.12)"/>
-      <text x="700" y="44" fill="rgba(255,255,255,0.05)" font-family="Barlow Condensed, sans-serif" font-size="32" font-weight="900" letter-spacing="14" text-anchor="middle">END ZONE</text>
+      <line x1="0" y1="410" x2="1400" y2="410" stroke="rgba(0,212,255,0.2)" stroke-width="2" stroke-dasharray="10 7"/>
+      <text x="20" y="404" fill="rgba(0,212,255,0.3)" font-family="Barlow Condensed, sans-serif" font-size="11" font-weight="700" letter-spacing="2">LINE OF SCRIMMAGE</text>
     </svg>
 
     <div class="players-layer" id="playersLayer"></div>
   </div>
 
   <div class="legend-strip">
-    <span style="font-family:'Barlow Condensed';font-weight:700;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-right:4px">Madden Rating</span>
+    <span style="font-family:'Barlow Condensed';font-weight:700;font-size:16px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-right:4px">Madden Rating</span>
     <div class="ls-item"><div class="ls-dot" style="background:#00ff88"></div>95+</div>
     <div class="ls-item"><div class="ls-dot" style="background:#22c55e"></div>90–94</div>
     <div class="ls-item"><div class="ls-dot" style="background:#a3e635"></div>85–89</div>
@@ -739,6 +737,19 @@ function buildHoverCard(p, pos) {
           <div class="crc-label">NFL Yr</div>
         </div>
       </div>
+      ${p.stats && Object.keys(p.stats).length > 0 ? `
+        <div style="padding:8px 13px;border-top:1px solid var(--border)">
+          <div style="font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:6px">${p.stats_season || ''} STATS</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px 12px">
+            ${Object.entries(p.stats).map(([k,v]) => `
+              <div style="display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid rgba(255,255,255,0.04)">
+                <span style="font-size:10px;color:var(--text-muted)">${k}</span>
+                <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:var(--text)">${v}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      ` : ''}
       <div class="card-footer">
         <span style="font-family:'Barlow Condensed';font-weight:700;font-size:13px;color:var(--gold)">${p.cap_number || '—'}</span>
         <span style="font-size:10px;color:var(--text-dim)">cap hit</span>
