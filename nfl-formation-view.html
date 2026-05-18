@@ -180,7 +180,7 @@ body {
 .formation-label {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
-  font-size: 11px;
+  font-size: 16px;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--text-dim);
@@ -485,11 +485,11 @@ body {
   </div>
 
   <div class="field-canvas">
-    <svg class="field-bg" viewBox="0 0 1400 1000" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <svg class="field-bg" viewBox="0 0 1400 820" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
       <defs>
         <pattern id="stripes" x="0" y="0" width="1400" height="102.5" patternUnits="userSpaceOnUse">
-          <rect width="1400" height="102.5" fill="#0d1f0d"/>
-          <rect y="51.25" width="1400" height="51.25" fill="#0f2210"/>
+          <rect width="1400" height="102.5" fill="#122b12"/>
+          <rect y="51.25" width="1400" height="51.25" fill="#163016"/>
         </pattern>
       </defs>
       <rect width="1400" height="820" fill="url(#stripes)" rx="4"/>
@@ -847,6 +847,17 @@ function setPersonnel(pers, btn) {
   currentPersonnel = pers;
   document.querySelectorAll('#personnelGroup .ctrl-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+  const labels = {
+    '11': '11 Personnel · Shotgun Spread',
+    '12': '12 Personnel · 2 TE Set',
+    '21': '21 Personnel · 2 Back Set',
+    'base43': teamData?.base_defense || 'Base 4-3',
+    'base34': teamData?.base_defense || 'Base 3-4',
+    'nickel': 'Nickel Package',
+    'dime': 'Dime Package',
+    'kickoff': 'Special Teams',
+  };
+  document.getElementById('formationLabel').textContent = labels[pers] || pers;
   renderFormation();
 }
 
