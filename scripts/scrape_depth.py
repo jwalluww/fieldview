@@ -93,28 +93,45 @@ def scrape_depth_chart(team):
 
     depth_chart = {}
 
+    last_position = None
+    
     for row in rows:
         cols = row.find_all("td")
         if len(cols) < 2:
             continue
 
         position = cols[0].get_text(strip=True)
-        if not position:
+
+        # Continuation row — no position label, extends previous position
+        if not position and last_position:
+            position = last_position
+        elif not position:
             continue
+        else:
+            last_position = position
 
         players = []
-        for col in cols[2::2]:  # start at index 2, skip every other td
+        for col in cols[2::2]:
             player_tag = col.find("a")
             if player_tag:
                 player_name = player_tag.get_text(strip=True)
                 if player_name:
+                    is_injured = 'lc_red' in player_tag.get('class', [])
                     players.append({
                         "name": clean_name(player_name),
-                        "depth": len(players) + 1
+                        "depth": len(players) + 1,
+                        "injured": is_injured
                     })
 
         if players:
-            depth_chart[position] = players
+            if position in depth_chart:
+                # Extend existing position with continuation row players
+                existing_count = len(depth_chart[position])
+                for p in players:
+                    p["depth"] = existing_count + p["depth"]
+                depth_chart[position].extend(players)
+            else:
+                depth_chart[position] = players
 
     return {
         "team": team["name"],

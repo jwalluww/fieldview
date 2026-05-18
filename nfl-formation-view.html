@@ -459,7 +459,6 @@ body {
     <div class="ctrl-group">
       <button class="ctrl-btn active" onclick="setUnit('offense',this)">Offense</button>
       <button class="ctrl-btn" onclick="setUnit('defense',this)">Defense</button>
-      <button class="ctrl-btn" onclick="setUnit('st',this)">Special Teams</button>
     </div>
     <div class="ctrl-group" id="personnelGroup">
       <button class="ctrl-btn active" onclick="setPersonnel('11',this)">11 (3 WR)</button>
@@ -698,8 +697,18 @@ async function loadTeam(abbr) {
   renderFormation();
 }
 
-function getStarter(pos) {
-  return teamData?.depth_chart?.[pos]?.[0] || null;
+function getStarter(formationPos) {
+  // Try direct match first
+  if (teamData?.depth_chart?.[formationPos]?.[0]) {
+    return teamData.depth_chart[formationPos][0];
+  }
+  // Try reverse alias — find any OurLads code that maps to this formation slot
+  for (const [ourladsCode, mappedPos] of Object.entries(POS_ALIAS)) {
+    if (mappedPos === formationPos && teamData?.depth_chart?.[ourladsCode]?.[0]) {
+      return teamData.depth_chart[ourladsCode][0];
+    }
+  }
+  return null;
 }
 
 function updateHeader() {
@@ -720,8 +729,11 @@ function buildHoverCard(p, pos) {
       <div class="card-header">
         <div class="card-avatar" style="background:${team.colors[0]};border-color:${team.colors[1]}">${initials}</div>
         <div class="card-nameblock">
-          <div class="card-name">${p.jersey ? '#'+p.jersey+' ' : ''}${p.name}</div>
-          <div class="card-meta">${pos}${p.age ? ' · Age '+p.age : ''}${p.years_pro != null ? ' · Yr '+(p.years_pro+1)+' NFL' : ''}</div>
+          <div class="card-name" style="display:flex;align-items:center;gap:6px">
+            <span>${p.jersey ? '#'+p.jersey+' ' : ''}${p.name}</span>
+            ${p.injured ? `<span style="background:rgba(239,68,68,.2);color:#ef4444;border:1px solid rgba(239,68,68,.4);border-radius:3px;font-size:9px;font-weight:800;padding:1px 5px;letter-spacing:1px">INJ</span>` : ''}
+          </div>
+          <div class="card-meta">${pos}${p.age ? ' · Age '+p.age : ''}${p.years_pro != null ? ' · Yr '+p.years_pro+' NFL' : ''}</div>
         </div>
       </div>
       <div class="card-ratings">
@@ -734,7 +746,7 @@ function buildHoverCard(p, pos) {
           <div class="crc-label">Age</div>
         </div>
         <div class="card-rating-cell">
-          <div class="crc-val" style="color:var(--text-muted)">${p.years_pro != null ? p.years_pro+1 : '—'}</div>
+          <div class="crc-val" style="color:var(--text-muted)">${p.years_pro != null ? p.years_pro : '—'}</div>
           <div class="crc-label">NFL Yr</div>
         </div>
       </div>
@@ -778,6 +790,40 @@ function buildPlayerNode(p, pos, coords, delay, flipCard) {
       ${buildHoverCard(p, pos)}
     </div>
   `;
+}
+
+// Maps OurLads position codes to formation slot keys
+const POS_ALIAS = {
+  // Offensive line
+  'OT': 'LT', 'LOT': 'LT', 'ROT': 'RT',
+  // Receivers
+  'WR': 'LWR', 'FL': 'SWR', 'SE': 'RWR',
+  // Tight end
+  'TE': 'TE',
+  // Backfield
+  'HB': 'RB', 'TB': 'RB',
+  // Defensive line — 4-3
+  'DLE': 'DE', 'DRE': 'DE',
+  'DLT': 'DT', 'DRT': 'DT',
+  // Defensive line — 3-4
+  'LE': 'DE', 'RE': 'DE',
+  'NT': 'NT',
+  // Edge rushers (Bears style)
+  'LEDG': 'DE', 'REDG': 'DE',
+  // Linebackers — 4-3
+  'WILL': 'LOLB', 'SAM': 'ROLB', 'MIKE': 'MLB',
+  // Linebackers — 3-4
+  'LILB': 'WLB', 'RILB': 'MLB',
+  // Corners
+  'LCB': 'LCB', 'RCB': 'RCB', 'CB': 'LCB',
+  // Safeties
+  'SS': 'SS', 'FS': 'FS', 'S': 'SS',
+  // Nickel
+  'NB': 'NB', 'SCB': 'NB',
+};
+
+function resolvePos(ourladsPos) {
+  return POS_ALIAS[ourladsPos] || ourladsPos;
 }
 
 function renderFormation() {
