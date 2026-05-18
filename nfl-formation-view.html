@@ -302,7 +302,7 @@ body {
   position: absolute;
   bottom: calc(100% + 12px);
   left: 50%;
-  width: 220px;
+  width: 260px;
   background: #14171f;
   border: 1px solid var(--border2);
   border-radius: 10px;
@@ -313,6 +313,7 @@ body {
   box-shadow: 0 16px 48px rgba(0,0,0,0.8);
   z-index: 500;
   overflow: hidden;
+  font-size: 13px;
 }
 .player-node:hover .hover-card {
   opacity: 1;
@@ -353,13 +354,13 @@ body {
 .card-name {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 800;
-  font-size: 14px;
+  font-size: 16px;
   color: var(--text);
   line-height: 1.1;
 }
 
 .card-meta {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--text-muted);
   margin-top: 2px;
 }
@@ -383,12 +384,12 @@ body {
 .crc-val {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 900;
-  font-size: 20px;
+  font-size: 24px;
   line-height: 1;
 }
 
 .crc-label {
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -800,7 +801,8 @@ function renderFormation() {
       continue;
     }
     const starter = getStarter(pos);
-    html += buildPlayerNode(starter, pos, coords, delay, coords.y > 72);
+    const forceFlip = ['QB', 'RB', 'FB', 'HB'].includes(pos);
+    html += buildPlayerNode(starter, pos, coords, delay, forceFlip || coords.y > 72);
     delay += 40;
   }
 
