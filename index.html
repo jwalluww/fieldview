@@ -877,7 +877,9 @@ document.addEventListener('click', e => {
 });
 
 // ── INIT
-loadTeamData('BUF').then(() => renderAll()).catch(err => console.error('Failed to load team data:', err));
+const savedTeam = localStorage.getItem('fieldview_team') || 'BUF';
+currentTeam = savedTeam;
+loadTeamData(savedTeam).then(() => renderAll()).catch(err => console.error('Failed to load team data:', err));
 </script>
 </body>
 </html>
