@@ -463,7 +463,6 @@ body {
     <div class="ctrl-group" id="personnelGroup">
       <button class="ctrl-btn active" onclick="setPersonnel('11',this)">11 (3 WR)</button>
       <button class="ctrl-btn" onclick="setPersonnel('12',this)">12 (2 TE)</button>
-      <button class="ctrl-btn" onclick="setPersonnel('21',this)">21 (2 RB)</button>
     </div>
   </div>
 
@@ -585,18 +584,6 @@ const FORMATION_COORDS = {
       QB:  {x:50, y:78},
       RB:  {x:50, y:90},
     },
-    '21': {
-      LWR: {x:4,  y:57},
-      RWR: {x:96, y:57},
-      TE:  {x:68, y:57},
-      LT:  {x:33, y:57},
-      LG:  {x:41, y:57},
-      C:   {x:50, y:57},
-      RG:  {x:59, y:57},
-      RT:  {x:67, y:57},
-      QB:  {x:50, y:68},
-      RB:  {x:43, y:80},
-    },
   },
   defense: {
     'base43': {
@@ -633,19 +620,6 @@ const FORMATION_COORDS = {
       SS:   {x:70, y:12},
       WLB:  {x:42, y:28},
       MLB:  {x:56, y:24},
-      LDE:  {x:32, y:43},
-      LDT:  {x:44, y:43},
-      RDT:  {x:56, y:43},
-      RDE:  {x:68, y:43},
-    },
-    'dime': {
-      RCB:  {x:6,  y:42},
-      LCB:  {x:94, y:42},
-      NB:   {x:26, y:42},
-      CB:   {x:44, y:42},
-      FS:   {x:30, y:8},
-      SS:   {x:70, y:12},
-      MLB:  {x:50, y:24},
       LDE:  {x:32, y:43},
       LDT:  {x:44, y:43},
       RDT:  {x:56, y:43},
@@ -763,7 +737,8 @@ function buildPlayerNode(p, pos, coords, delay, flipCard) {
   if (!p) return '';
   const team = TEAMS[currentTeam];
   const mc = maddenColor(p.madden);
-  const lastName = p.name.split(' ').filter(w => w.length > 1).slice(-1)[0] || p.name;
+  const parts = p.name.split(' ');
+  const lastName = parts.length > 1 ? parts.slice(1).join(' ') : parts[0];
 
   return `
     <div class="player-node ${flipCard ? 'flip-card' : ''}"
@@ -823,6 +798,23 @@ function renderFormation() {
   const layer = document.getElementById('playersLayer');
   if (!teamData) { layer.innerHTML = ''; return; }
 
+  // Refresh defense scheme buttons when team changes
+  if (currentUnit === 'defense') {
+    const baseScheme = teamData?.base_defense || 'Base 4-3';
+    const isThreeFour = baseScheme.includes('3-4');
+    const baseKey = isThreeFour ? 'base34' : 'base43';
+    const baseLabel = isThreeFour ? '3-4 Base' : '4-3 Base';
+    // Only update if currently on base package
+    if (currentPersonnel === 'base43' || currentPersonnel === 'base34') {
+      currentPersonnel = baseKey;
+      document.getElementById('personnelGroup').innerHTML = `
+        <button class="ctrl-btn active" onclick="setPersonnel('${baseKey}',this)">${baseLabel}</button>
+        <button class="ctrl-btn" onclick="setPersonnel('nickel',this)">Nickel</button>
+      `;
+      document.getElementById('formationLabel').textContent = baseScheme;
+    }
+  }
+
   const coordMap = FORMATION_COORDS[currentUnit]?.[currentPersonnel]
                 || FORMATION_COORDS[currentUnit]?.['11']
                 || {};
@@ -859,7 +851,6 @@ function setUnit(unit, btn) {
     pg.innerHTML = `
       <button class="ctrl-btn active" onclick="setPersonnel('11',this)">11 (3 WR)</button>
       <button class="ctrl-btn" onclick="setPersonnel('12',this)">12 (2 TE)</button>
-      <button class="ctrl-btn" onclick="setPersonnel('21',this)">21 (2 RB)</button>
     `;
     currentPersonnel = '11';
     document.getElementById('formationLabel').textContent = '11 Personnel · Shotgun Spread';
@@ -871,14 +862,9 @@ function setUnit(unit, btn) {
     pg.innerHTML = `
       <button class="ctrl-btn active" onclick="setPersonnel('${baseKey}',this)">${baseLabel}</button>
       <button class="ctrl-btn" onclick="setPersonnel('nickel',this)">Nickel</button>
-      <button class="ctrl-btn" onclick="setPersonnel('dime',this)">Dime</button>
     `;
     currentPersonnel = baseKey;
     document.getElementById('formationLabel').textContent = baseScheme;
-  } else {
-    pg.innerHTML = `<button class="ctrl-btn active" onclick="setPersonnel('kickoff',this)">Kickoff</button>`;
-    currentPersonnel = 'kickoff';
-    document.getElementById('formationLabel').textContent = 'Special Teams';
   }
 
   renderFormation();
@@ -891,12 +877,9 @@ function setPersonnel(pers, btn) {
   const labels = {
     '11': '11 Personnel · Shotgun Spread',
     '12': '12 Personnel · 2 TE Set',
-    '21': '21 Personnel · 2 Back Set',
     'base43': teamData?.base_defense || 'Base 4-3',
     'base34': teamData?.base_defense || 'Base 3-4',
     'nickel': 'Nickel Package',
-    'dime': 'Dime Package',
-    'kickoff': 'Special Teams',
   };
   document.getElementById('formationLabel').textContent = labels[pers] || pers;
   renderFormation();
