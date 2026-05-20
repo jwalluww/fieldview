@@ -932,7 +932,7 @@ document.addEventListener('click', e => {
 
 const savedTeam = localStorage.getItem('fieldview_team') || 'BUF';
 currentTeam = savedTeam;
-loadTeamData(savedTeam).then(() => renderAll()).catch(err => console.error('Failed to load team data:', err));
+loadTeam(savedTeam);
 </script>
 </body>
 </html>
