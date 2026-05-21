@@ -39,6 +39,79 @@ TEAMS = [
     {"name": "Washington Commanders","abbr": "WAS"},
 ]
 
+SKIP_POSITIONS = {'PUP', 'IR', 'NFI', 'PUP-R', 'EXE', 'RES'}
+
+# Standard slot mapping per scheme
+# Each entry: ourlads_code -> (standard_slot, standard_pos)
+SLOT_MAP_34 = {
+    'LDE':  ('LE',     'DI'),
+    'RDE':  ('RE',     'DI'),
+    'NT':   ('NT',     'DI'),
+    'DT':   ('RE',     'DI'),   # BAL/BUF style — DT is the RE side
+    'LOLB': ('LOLB',  'EDGE'),
+    'ROLB': ('ROLB',  'EDGE'),
+    'RUSH': ('ROLB',  'EDGE'),  # SEA
+    'WLB':  ('ILB_L', 'LB'),
+    'MLB':  ('ILB_R', 'LB'),
+    'LILB': ('ILB_L', 'LB'),
+    'RILB': ('ILB_R', 'LB'),
+    'LCB':  ('LCB',   'CB'),
+    'RCB':  ('RCB',   'CB'),
+    'SS':   ('SS',    'S'),
+    'FS':   ('FS',    'S'),
+    'NB':   ('NB',    None),    # resolved from Madden position
+}
+
+SLOT_MAP_43 = {
+    'LDE':  ('LE',    'EDGE'),
+    'RDE':  ('RE',    'EDGE'),
+    'DE':   ('LE',    'EDGE'),
+    'LDT':  ('LDT',   'DI'),
+    'RDT':  ('RDT',   'DI'),
+    'NT':   ('LDT',   'DI'),    # JAX
+    'DT':   ('RDT',   'DI'),    # JAX
+    'WLB':  ('WILL',  'LB'),
+    'WILL': ('WILL',  'LB'),
+    'MLB':  ('MIKE',  'LB'),
+    'MIKE': ('MIKE',  'LB'),
+    'SLB':  ('SAM',   'LB'),
+    'SAM':  ('SAM',   'LB'),
+    'LCB':  ('LCB',   'CB'),
+    'RCB':  ('RCB',   'CB'),
+    'SS':   ('SS',    'S'),
+    'FS':   ('FS',    'S'),
+    'NB':   ('NB',    None),    # resolved from Madden position
+}
+
+# For 3-4 teams using generic DE key — first player is LE, rest are LE depth
+# DT key handles RE side separately
+SLOT_MAP_34_DE_AS_LE = {
+    'DE':   ('LE',    'DI'),
+}
+
+OFF_SLOT_MAP = {
+    'QB':  ('QB',  'QB'),
+    'LWR': ('LWR', 'WR'),
+    'RWR': ('RWR', 'WR'),
+    'SWR': ('SWR', 'WR'),
+    'WR':  ('LWR', 'WR'),
+    'FL':  ('SWR', 'WR'),
+    'SE':  ('RWR', 'WR'),
+    'LT':  ('LT',  'OL'),
+    'LG':  ('LG',  'OL'),
+    'C':   ('C',   'OL'),
+    'RG':  ('RG',  'OL'),
+    'RT':  ('RT',  'OL'),
+    'OT':  ('LT',  'OL'),
+    'LOT': ('LT',  'OL'),
+    'ROT': ('RT',  'OL'),
+    'TE':  ('TE',  'TE'),
+    'RB':  ('RB',  'RB'),
+    'HB':  ('RB',  'RB'),
+    'TB':  ('RB',  'RB'),
+    'FB':  ('FB',  'RB'),
+}
+
 def clean_name(name):
     # Remove OurLads suffix junk (draft year, trade info, etc.)
     name = re.sub(r'\s+\S*[\d/]\S*$', '', name).strip()
@@ -47,7 +120,7 @@ def clean_name(name):
         parts = name.split(',', 1)
         name = parts[1].strip() + ' ' + parts[0].strip()
     # Proper case, but preserve known suffixes
-    suffixes = {'II', 'III', 'IV', 'V', 'Jr', 'Jr.', 'Sr', 'Sr.'}
+    suffixes = {'II', 'III', 'IV', 'V', 'Jr', 'Jr.', 'Sr', 'Sr.', 'DJ', 'AJ', 'CJ', 'TJ', 'OJ', 'BJ'}
     words = name.split()
     cased = []
     for word in words:
@@ -60,6 +133,50 @@ def clean_name(name):
         else:
             cased.append(word.capitalize())
     return ' '.join(cased)
+
+def enrich_positions(depth_chart, base_defense):
+    """Add standard_slot and standard_pos to every player."""
+    is_34 = '3-4' in (base_defense or '')
+    slot_map = SLOT_MAP_34 if is_34 else SLOT_MAP_43
+
+    for ourlads_pos, players in depth_chart.items():
+        if ourlads_pos in SKIP_POSITIONS:
+            continue
+
+        # Offense
+        if ourlads_pos in OFF_SLOT_MAP:
+            standard_slot, standard_pos = OFF_SLOT_MAP[ourlads_pos]
+            for p in players:
+                p['standard_slot'] = standard_slot
+                p['standard_pos'] = standard_pos
+            continue
+
+        # Defense — generic DE in 3-4 maps to LE
+        if is_34 and ourlads_pos == 'DE':
+            for p in players:
+                p['standard_slot'] = 'LE'
+                p['standard_pos'] = 'DI'
+            continue
+
+        # Defense — standard map
+        if ourlads_pos in slot_map:
+            standard_slot, standard_pos = slot_map[ourlads_pos]
+            for p in players:
+                p['standard_slot'] = standard_slot
+                # NB: use Madden position if available, else default
+                if standard_pos is None:
+                    madden_pos = p.get('madden_pos_label', '')
+                    if madden_pos in ('SS', 'FS', 'HB'):
+                        p['standard_pos'] = 'S'
+                    else:
+                        p['standard_pos'] = 'CB'
+                else:
+                    p['standard_pos'] = standard_pos
+        else:
+            # Unknown position — leave unset for now
+            for p in players:
+                p.setdefault('standard_slot', ourlads_pos)
+                p.setdefault('standard_pos', 'DEF')
 
 def scrape_depth_chart(team):
     headers = {
@@ -133,6 +250,13 @@ def scrape_depth_chart(team):
             else:
                 depth_chart[position] = players
 
+    # Remove non-position roster designations
+    for skip in list(depth_chart.keys()):
+        if skip in SKIP_POSITIONS:
+            del depth_chart[skip]
+
+    enrich_positions(depth_chart, base_defense)
+
     return {
         "team": team["name"],
         "abbr": team["abbr"],
@@ -160,5 +284,3 @@ if __name__ == "__main__":
         else:
             print(f"FAILED: {team['name']}\n")
         time.sleep(5)  # be polite to OurLads, don't hammer them
-
-

@@ -9,19 +9,30 @@
         "name": "Carnell Tate",
         "depth": 1,
         "injured": false,
-        "cap_number": "$9,297,257",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$9,297,257",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Elic Ayomanor",
         "depth": 2,
         "injured": false,
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "madden": 77,
+        "jersey": 5,
+        "age": 22,
+        "years_pro": 0,
+        "madden_rank": 72,
+        "madden_rank_total": 201,
+        "madden_pos_label": "WR",
         "cap_number": "$1,171,454",
         "stats": {
           "TGT": 89,
@@ -30,40 +41,37 @@
           "TDs": 4,
           "YAC": 115
         },
-        "stats_season": 2025,
-        "madden": 77,
-        "jersey": 5,
-        "age": 22,
-        "years_pro": 0,
-        "madden_rank": 72,
-        "madden_rank_total": 201,
-        "madden_pos_label": "WR"
+        "stats_season": 2025
       },
       {
         "name": "Lance Mccutcheon",
         "depth": 3,
         "injured": false,
-        "cap_number": "$1,005,000",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$1,005,000",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Tyren Montgomery",
         "depth": 4,
         "injured": false,
-        "cap_number": "$890,000",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$890,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RWR": [
@@ -71,6 +79,15 @@
         "name": "Calvin Ridley",
         "depth": 1,
         "injured": false,
+        "standard_slot": "RWR",
+        "standard_pos": "WR",
+        "madden": 78,
+        "jersey": 0,
+        "age": 30,
+        "years_pro": 7,
+        "madden_rank": 65,
+        "madden_rank_total": 201,
+        "madden_pos_label": "WR",
         "cap_number": "$15,200,000",
         "stats": {
           "TGT": 36,
@@ -78,19 +95,21 @@
           "YDS": 303,
           "YAC": 84
         },
-        "stats_season": 2025,
-        "madden": 78,
-        "jersey": 0,
-        "age": 30,
-        "years_pro": 7,
-        "madden_rank": 65,
-        "madden_rank_total": 201,
-        "madden_pos_label": "WR"
+        "stats_season": 2025
       },
       {
         "name": "Bryce Oliver",
         "depth": 2,
         "injured": false,
+        "standard_slot": "RWR",
+        "standard_pos": "WR",
+        "madden": 65,
+        "jersey": 80,
+        "age": 25,
+        "years_pro": 1,
+        "madden_rank": 194,
+        "madden_rank_total": 201,
+        "madden_pos_label": "WR",
         "cap_number": "$1,075,000",
         "stats": {
           "TGT": 1,
@@ -98,19 +117,21 @@
           "YDS": 8,
           "YAC": 2
         },
-        "stats_season": 2025,
-        "madden": 65,
-        "jersey": 80,
-        "age": 25,
-        "years_pro": 1,
-        "madden_rank": 194,
-        "madden_rank_total": 201,
-        "madden_pos_label": "WR"
+        "stats_season": 2025
       },
       {
         "name": "Mason Kinsey",
         "depth": 3,
         "injured": false,
+        "standard_slot": "RWR",
+        "standard_pos": "WR",
+        "madden": 63,
+        "jersey": 12,
+        "age": 27,
+        "years_pro": 5,
+        "madden_rank": 199,
+        "madden_rank_total": 201,
+        "madden_pos_label": "WR",
         "cap_number": "$1,145,000",
         "stats": {
           "TGT": 4,
@@ -118,27 +139,22 @@
           "YDS": 48,
           "YAC": 3
         },
-        "stats_season": 2025,
-        "madden": 63,
-        "jersey": 12,
-        "age": 27,
-        "years_pro": 5,
-        "madden_rank": 199,
-        "madden_rank_total": 201,
-        "madden_pos_label": "WR"
+        "stats_season": 2025
       },
       {
         "name": "K.j. Osborn",
         "depth": 4,
         "injured": false,
-        "cap_number": "$1,075,000",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "RWR",
+        "standard_pos": "WR",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$1,075,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "SWR": [
@@ -146,6 +162,13 @@
         "name": "Wan'dale Robinson",
         "depth": 1,
         "injured": false,
+        "standard_slot": "SWR",
+        "standard_pos": "WR",
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null,
         "cap_number": "$11,270,000",
         "stats": {
           "TGT": 140,
@@ -155,17 +178,21 @@
           "YAC": 386,
           "CAR": 3
         },
-        "stats_season": 2025,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
+        "stats_season": 2025
       },
       {
         "name": "Chimere Dike",
         "depth": 2,
         "injured": false,
+        "standard_slot": "SWR",
+        "standard_pos": "WR",
+        "madden": 74,
+        "jersey": 17,
+        "age": 23,
+        "years_pro": 0,
+        "madden_rank": 103,
+        "madden_rank_total": 201,
+        "madden_pos_label": "WR",
         "cap_number": "$1,380,238",
         "stats": {
           "TGT": 74,
@@ -175,19 +202,19 @@
           "YAC": 220,
           "CAR": 11
         },
-        "stats_season": 2025,
-        "madden": 74,
-        "jersey": 17,
-        "age": 23,
-        "years_pro": 0,
-        "madden_rank": 103,
-        "madden_rank_total": 201,
-        "madden_pos_label": "WR"
+        "stats_season": 2025
       },
       {
         "name": "Xavier Restrepo",
         "depth": 3,
         "injured": false,
+        "standard_slot": "SWR",
+        "standard_pos": "WR",
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null,
         "cap_number": "$885,000",
         "stats": {
           "TGT": 7,
@@ -195,38 +222,37 @@
           "YDS": 41,
           "YAC": 9
         },
-        "stats_season": 2025,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
+        "stats_season": 2025
       },
       {
         "name": "Hank Beatty",
         "depth": 4,
         "injured": false,
-        "cap_number": "$893,333",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "SWR",
+        "standard_pos": "WR",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$893,333",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Courtney Jackson",
         "depth": 5,
         "injured": false,
-        "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "SWR",
+        "standard_pos": "WR",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LT": [
@@ -234,44 +260,50 @@
         "name": "Dan Moore Jr.",
         "depth": 1,
         "injured": false,
-        "cap_number": "$26,345,000",
-        "stats": {},
-        "stats_season": 2025,
+        "standard_slot": "LT",
+        "standard_pos": "OL",
         "madden": 73,
         "jersey": 75,
         "age": 26,
         "years_pro": 4,
         "madden_rank": 30,
         "madden_rank_total": 66,
-        "madden_pos_label": "LT"
+        "madden_pos_label": "LT",
+        "cap_number": "$26,345,000",
+        "stats": {},
+        "stats_season": 2025
       },
       {
         "name": "Austin Deculus",
         "depth": 2,
         "injured": false,
-        "cap_number": "$1,200,000",
-        "stats": {},
-        "stats_season": 2025,
+        "standard_slot": "LT",
+        "standard_pos": "OL",
         "madden": 64,
         "jersey": 74,
         "age": 26,
         "years_pro": 3,
         "madden_rank": 62,
         "madden_rank_total": 79,
-        "madden_pos_label": "RT"
+        "madden_pos_label": "RT",
+        "cap_number": "$1,200,000",
+        "stats": {},
+        "stats_season": 2025
       },
       {
         "name": "Ryan Hayes",
         "depth": 3,
         "injured": false,
-        "cap_number": "$1,005,000",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "LT",
+        "standard_pos": "OL",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$1,005,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LG": [
@@ -279,44 +311,50 @@
         "name": "Peter Skoronski",
         "depth": 1,
         "injured": false,
-        "cap_number": "$6,259,693",
-        "stats": {},
-        "stats_season": 2025,
+        "standard_slot": "LG",
+        "standard_pos": "OL",
         "madden": 84,
         "jersey": 77,
         "age": 24,
         "years_pro": 2,
         "madden_rank": 7,
         "madden_rank_total": 57,
-        "madden_pos_label": "LG"
+        "madden_pos_label": "LG",
+        "cap_number": "$6,259,693",
+        "stats": {},
+        "stats_season": 2025
       },
       {
         "name": "Fernando Carmona",
         "depth": 2,
         "injured": false,
-        "cap_number": "$1,025,180",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "LG",
+        "standard_pos": "OL",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$1,025,180",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Drew Moss",
         "depth": 3,
         "injured": false,
-        "cap_number": "$1,005,000",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "LG",
+        "standard_pos": "OL",
         "madden": 62,
         "jersey": 67,
         "age": 22,
         "years_pro": 0,
         "madden_rank": 68,
         "madden_rank_total": 70,
-        "madden_pos_label": "RG"
+        "madden_pos_label": "RG",
+        "cap_number": "$1,005,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "C": [
@@ -324,40 +362,46 @@
         "name": "Austin Schlottmann",
         "depth": 1,
         "injured": false,
-        "cap_number": "$3,000,000",
-        "stats": {},
-        "stats_season": 2025,
+        "standard_slot": "C",
+        "standard_pos": "OL",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$3,000,000",
+        "stats": {},
+        "stats_season": 2025
       },
       {
         "name": "Pat Coogan",
         "depth": 2,
         "injured": false,
-        "cap_number": "$954,695",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "C",
+        "standard_pos": "OL",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$954,695",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Trey Hill",
         "depth": 3,
         "injured": false,
-        "cap_number": "$1,145,000",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "C",
+        "standard_pos": "OL",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$1,145,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RG": [
@@ -365,44 +409,50 @@
         "name": "Cordell Volson",
         "depth": 1,
         "injured": false,
-        "cap_number": "$2,450,000",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "RG",
+        "standard_pos": "OL",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$2,450,000",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Jackson Slater",
         "depth": 2,
         "injured": false,
-        "cap_number": "$1,095,153",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "RG",
+        "standard_pos": "OL",
         "madden": 67,
         "jersey": 64,
         "age": 22,
         "years_pro": 0,
         "madden_rank": 45,
         "madden_rank_total": 57,
-        "madden_pos_label": "LG"
+        "madden_pos_label": "LG",
+        "cap_number": "$1,095,153",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Garrett Dellinger",
         "depth": 3,
         "injured": false,
-        "cap_number": "$1,005,000",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "RG",
+        "standard_pos": "OL",
         "madden": 64,
         "jersey": 71,
         "age": 23,
         "years_pro": 0,
         "madden_rank": 55,
         "madden_rank_total": 57,
-        "madden_pos_label": "LG"
+        "madden_pos_label": "LG",
+        "cap_number": "$1,005,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RT": [
@@ -410,57 +460,65 @@
         "name": "Jc Latham",
         "depth": 1,
         "injured": false,
-        "cap_number": "$7,103,233",
-        "stats": {},
-        "stats_season": 2025,
+        "standard_slot": "RT",
+        "standard_pos": "OL",
         "madden": 79,
         "jersey": 55,
         "age": 22,
         "years_pro": 1,
         "madden_rank": 17,
         "madden_rank_total": 79,
-        "madden_pos_label": "RT"
+        "madden_pos_label": "RT",
+        "cap_number": "$7,103,233",
+        "stats": {},
+        "stats_season": 2025
       },
       {
         "name": "Brandon Crenshaw-dickson",
         "depth": 2,
         "injured": false,
-        "cap_number": "$1,005,000",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "RT",
+        "standard_pos": "OL",
         "madden": 61,
         "jersey": 78,
         "age": 24,
         "years_pro": 0,
         "madden_rank": 76,
         "madden_rank_total": 79,
-        "madden_pos_label": "RT"
+        "madden_pos_label": "RT",
+        "cap_number": "$1,005,000",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Aamil Wagner",
         "depth": 3,
         "injured": false,
-        "cap_number": "$891,666",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "RT",
+        "standard_pos": "OL",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$891,666",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Rasheed Miller",
         "depth": 4,
         "injured": false,
-        "cap_number": "$888,333",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "RT",
+        "standard_pos": "OL",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$888,333",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "TE": [
@@ -468,6 +526,15 @@
         "name": "Gunnar Helm",
         "depth": 1,
         "injured": false,
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "madden": 70,
+        "jersey": 84,
+        "age": 22,
+        "years_pro": 0,
+        "madden_rank": 55,
+        "madden_rank_total": 126,
+        "madden_pos_label": "TE",
         "cap_number": "$1,248,227",
         "stats": {
           "TGT": 55,
@@ -476,19 +543,19 @@
           "TDs": 2,
           "YAC": 159
         },
-        "stats_season": 2025,
-        "madden": 70,
-        "jersey": 84,
-        "age": 22,
-        "years_pro": 0,
-        "madden_rank": 55,
-        "madden_rank_total": 126,
-        "madden_pos_label": "TE"
+        "stats_season": 2025
       },
       {
         "name": "Daniel Bellinger",
         "depth": 2,
         "injured": false,
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null,
         "cap_number": "$5,136,666",
         "stats": {
           "TGT": 26,
@@ -497,17 +564,21 @@
           "TDs": 2,
           "YAC": 132
         },
-        "stats_season": 2025,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
+        "stats_season": 2025
       },
       {
         "name": "Kylen Granson",
         "depth": 3,
         "injured": false,
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "madden": 69,
+        "jersey": 83,
+        "age": 27,
+        "years_pro": 4,
+        "madden_rank": 59,
+        "madden_rank_total": 126,
+        "madden_pos_label": "TE",
         "cap_number": "$1,262,500",
         "stats": {
           "TGT": 9,
@@ -515,32 +586,36 @@
           "YDS": 40,
           "YAC": 13
         },
-        "stats_season": 2025,
-        "madden": 69,
-        "jersey": 83,
-        "age": 27,
-        "years_pro": 4,
-        "madden_rank": 59,
-        "madden_rank_total": 126,
-        "madden_pos_label": "TE"
+        "stats_season": 2025
       },
       {
         "name": "Jaren Kanak",
         "depth": 4,
         "injured": false,
-        "cap_number": "$925,853",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "TE",
+        "standard_pos": "TE",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$925,853",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "David Martin-robinson",
         "depth": 5,
         "injured": false,
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "madden": 62,
+        "jersey": 88,
+        "age": 25,
+        "years_pro": 1,
+        "madden_rank": 112,
+        "madden_rank_total": 126,
+        "madden_pos_label": "TE",
         "cap_number": "$1,077,500",
         "stats": {
           "TGT": 6,
@@ -549,27 +624,22 @@
           "TDs": 1,
           "YAC": 16
         },
-        "stats_season": 2025,
-        "madden": 62,
-        "jersey": 88,
-        "age": 25,
-        "years_pro": 1,
-        "madden_rank": 112,
-        "madden_rank_total": 126,
-        "madden_pos_label": "TE"
+        "stats_season": 2025
       },
       {
         "name": "Joel Wilson",
         "depth": 6,
         "injured": false,
-        "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "TE",
+        "standard_pos": "TE",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "QB": [
@@ -577,6 +647,15 @@
         "name": "Cam Ward",
         "depth": 1,
         "injured": false,
+        "standard_slot": "QB",
+        "standard_pos": "QB",
+        "madden": 73,
+        "jersey": 1,
+        "age": 23,
+        "years_pro": 0,
+        "madden_rank": 31,
+        "madden_rank_total": 90,
+        "madden_pos_label": "QB",
         "cap_number": "$11,099,910",
         "stats": {
           "CMP": 323,
@@ -587,19 +666,21 @@
           "SACKS": 55,
           "RU YDS": 159
         },
-        "stats_season": 2025,
-        "madden": 73,
-        "jersey": 1,
-        "age": 23,
-        "years_pro": 0,
-        "madden_rank": 31,
-        "madden_rank_total": 90,
-        "madden_pos_label": "QB"
+        "stats_season": 2025
       },
       {
         "name": "Mitchell Trubisky",
         "depth": 2,
         "injured": false,
+        "standard_slot": "QB",
+        "standard_pos": "QB",
+        "madden": 64,
+        "jersey": 11,
+        "age": 31,
+        "years_pro": 8,
+        "madden_rank": 63,
+        "madden_rank_total": 90,
+        "madden_pos_label": "QB",
         "cap_number": "$4,250,000",
         "stats": {
           "CMP": 25,
@@ -608,34 +689,36 @@
           "TDs": 4,
           "RU YDS": 6
         },
-        "stats_season": 2025,
-        "madden": 64,
-        "jersey": 11,
-        "age": 31,
-        "years_pro": 8,
-        "madden_rank": 63,
-        "madden_rank_total": 90,
-        "madden_pos_label": "QB"
+        "stats_season": 2025
       },
       {
         "name": "Will Levis",
         "depth": 3,
         "injured": false,
-        "cap_number": "$3,036,143",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "QB",
+        "standard_pos": "QB",
         "madden": 68,
         "jersey": 8,
         "age": 26,
         "years_pro": 2,
         "madden_rank": 44,
         "madden_rank_total": 90,
-        "madden_pos_label": "QB"
+        "madden_pos_label": "QB",
+        "cap_number": "$3,036,143",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Hendon Hooker",
         "depth": 4,
         "injured": false,
+        "standard_slot": "QB",
+        "standard_pos": "QB",
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null,
         "cap_number": "$1,145,000",
         "stats": {
           "TKL": 58,
@@ -644,12 +727,7 @@
           "TFL": 3,
           "QB HIT": 1
         },
-        "stats_season": 2025,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
+        "stats_season": 2025
       }
     ],
     "RB": [
@@ -657,6 +735,15 @@
         "name": "Tony Pollard",
         "depth": 1,
         "injured": false,
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "madden": 83,
+        "jersey": 20,
+        "age": 28,
+        "years_pro": 6,
+        "madden_rank": 22,
+        "madden_rank_total": 125,
+        "madden_pos_label": "HB",
         "cap_number": "$9,250,000",
         "stats": {
           "CAR": 242,
@@ -666,19 +753,21 @@
           "RE YDS": 206,
           "TGT": 41
         },
-        "stats_season": 2025,
-        "madden": 83,
-        "jersey": 20,
-        "age": 28,
-        "years_pro": 6,
-        "madden_rank": 22,
-        "madden_rank_total": 125,
-        "madden_pos_label": "HB"
+        "stats_season": 2025
       },
       {
         "name": "Tyjae Spears",
         "depth": 2,
         "injured": false,
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "madden": 77,
+        "jersey": 2,
+        "age": 24,
+        "years_pro": 2,
+        "madden_rank": 49,
+        "madden_rank_total": 125,
+        "madden_pos_label": "HB",
         "cap_number": "$3,922,291",
         "stats": {
           "CAR": 72,
@@ -688,32 +777,36 @@
           "RE YDS": 264,
           "TGT": 50
         },
-        "stats_season": 2025,
-        "madden": 77,
-        "jersey": 2,
-        "age": 24,
-        "years_pro": 2,
-        "madden_rank": 49,
-        "madden_rank_total": 125,
-        "madden_pos_label": "HB"
+        "stats_season": 2025
       },
       {
         "name": "Nicholas Singleton",
         "depth": 3,
         "injured": false,
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "RB",
+        "standard_pos": "RB",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Michael Carter",
         "depth": 4,
         "injured": false,
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "madden": 76,
+        "jersey": 35,
+        "age": 26,
+        "years_pro": 4,
+        "madden_rank": 89,
+        "madden_rank_total": 125,
+        "madden_pos_label": "HB",
         "cap_number": "$1,075,000",
         "stats": {
           "CAR": 92,
@@ -723,51 +816,48 @@
           "RE YDS": 267,
           "TGT": 45
         },
-        "stats_season": 2025,
-        "madden": 76,
-        "jersey": 35,
-        "age": 26,
-        "years_pro": 4,
-        "madden_rank": 89,
-        "madden_rank_total": 125,
-        "madden_pos_label": "HB"
+        "stats_season": 2025
       },
       {
         "name": "Kalel Mullings",
         "depth": 5,
         "injured": false,
-        "cap_number": "$1,064,627",
-        "stats": {
-          "CAR": 3,
-          "RU YDS": 7
-        },
-        "stats_season": 2025,
+        "standard_slot": "RB",
+        "standard_pos": "RB",
         "madden": 69,
         "jersey": 31,
         "age": 22,
         "years_pro": 0,
         "madden_rank": 104,
         "madden_rank_total": 125,
-        "madden_pos_label": "HB"
+        "madden_pos_label": "HB",
+        "cap_number": "$1,064,627",
+        "stats": {
+          "CAR": 3,
+          "RU YDS": 7
+        },
+        "stats_season": 2025
       },
       {
         "name": "Julius Chestnut",
         "depth": 6,
         "injured": false,
-        "cap_number": "$1,262,500",
-        "stats": {
-          "CAR": 11,
-          "RU YDS": 40,
-          "TGT": 2
-        },
-        "stats_season": 2025,
+        "standard_slot": "RB",
+        "standard_pos": "RB",
         "madden": 67,
         "jersey": 36,
         "age": 24,
         "years_pro": 3,
         "madden_rank": 118,
         "madden_rank_total": 125,
-        "madden_pos_label": "HB"
+        "madden_pos_label": "HB",
+        "cap_number": "$1,262,500",
+        "stats": {
+          "CAR": 11,
+          "RU YDS": 40,
+          "TGT": 2
+        },
+        "stats_season": 2025
       }
     ],
     "LDE": [
@@ -775,6 +865,15 @@
         "name": "John Franklin-myers",
         "depth": 1,
         "injured": false,
+        "standard_slot": "LE",
+        "standard_pos": "EDGE",
+        "madden": 80,
+        "jersey": 98,
+        "age": 28,
+        "years_pro": 7,
+        "madden_rank": 30,
+        "madden_rank_total": 191,
+        "madden_pos_label": "DT",
         "cap_number": "$14,958,000",
         "stats": {
           "TKL": 12,
@@ -782,32 +881,36 @@
           "TFL": 6,
           "QB HIT": 15
         },
-        "stats_season": 2025,
-        "madden": 80,
-        "jersey": 98,
-        "age": 28,
-        "years_pro": 7,
-        "madden_rank": 30,
-        "madden_rank_total": 191,
-        "madden_pos_label": "DT"
+        "stats_season": 2025
       },
       {
         "name": "Keldric Faulk",
         "depth": 2,
         "injured": false,
-        "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "LE",
+        "standard_pos": "EDGE",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Jaylen Harrell",
         "depth": 3,
         "injured": false,
+        "standard_slot": "LE",
+        "standard_pos": "EDGE",
+        "madden": 66,
+        "jersey": 92,
+        "age": 23,
+        "years_pro": 1,
+        "madden_rank": 79,
+        "madden_rank_total": 88,
+        "madden_pos_label": "LEDG",
         "cap_number": "$1,095,184",
         "stats": {
           "TKL": 14,
@@ -815,42 +918,39 @@
           "TFL": 5,
           "QB HIT": 8
         },
-        "stats_season": 2025,
-        "madden": 66,
-        "jersey": 92,
-        "age": 23,
-        "years_pro": 1,
-        "madden_rank": 79,
-        "madden_rank_total": 88,
-        "madden_pos_label": "LEDG"
+        "stats_season": 2025
       },
       {
         "name": "Earnest Brown IV",
         "depth": 4,
         "injured": false,
-        "cap_number": "$1,145,000",
-        "stats": {
-          "TKL": 3
-        },
-        "stats_season": 2025,
+        "standard_slot": "LE",
+        "standard_pos": "EDGE",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$1,145,000",
+        "stats": {
+          "TKL": 3
+        },
+        "stats_season": 2025
       },
       {
         "name": "Malik Herring",
         "depth": 5,
         "injured": false,
-        "cap_number": "$1,075,000",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "LE",
+        "standard_pos": "EDGE",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$1,075,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LDT": [
@@ -858,6 +958,15 @@
         "name": "Jeffery Simmons",
         "depth": 1,
         "injured": false,
+        "standard_slot": "LDT",
+        "standard_pos": "DI",
+        "madden": 95,
+        "jersey": 98,
+        "age": 28,
+        "years_pro": 6,
+        "madden_rank": 3,
+        "madden_rank_total": 191,
+        "madden_pos_label": "DT",
         "cap_number": "$25,625,019",
         "stats": {
           "TKL": 39,
@@ -865,59 +974,58 @@
           "TFL": 17,
           "QB HIT": 21
         },
-        "stats_season": 2025,
-        "madden": 95,
-        "jersey": 98,
-        "age": 28,
-        "years_pro": 6,
-        "madden_rank": 3,
-        "madden_rank_total": 191,
-        "madden_pos_label": "DT"
+        "stats_season": 2025
       },
       {
         "name": "Solomon Thomas",
         "depth": 2,
         "injured": false,
-        "cap_number": "$2,470,588",
-        "stats": {
-          "TKL": 10,
-          "TFL": 3,
-          "QB HIT": 2
-        },
-        "stats_season": 2025,
+        "standard_slot": "LDT",
+        "standard_pos": "DI",
         "madden": 72,
         "jersey": 90,
         "age": 30,
         "years_pro": 8,
         "madden_rank": 100,
         "madden_rank_total": 191,
-        "madden_pos_label": "DT"
+        "madden_pos_label": "DT",
+        "cap_number": "$2,470,588",
+        "stats": {
+          "TKL": 10,
+          "TFL": 3,
+          "QB HIT": 2
+        },
+        "stats_season": 2025
       },
       {
         "name": "Cam Horsley",
         "depth": 3,
         "injured": false,
-        "cap_number": "$1,005,000",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "LDT",
+        "standard_pos": "DI",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$1,005,000",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Timmy Horne",
         "depth": 4,
         "injured": false,
-        "cap_number": "$1,075,000",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "LDT",
+        "standard_pos": "DI",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$1,075,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RDT": [
@@ -925,50 +1033,56 @@
         "name": "Jordan Elliott",
         "depth": 1,
         "injured": false,
-        "cap_number": "$2,845,000",
-        "stats": {
-          "TKL": 8,
-          "TFL": 1,
-          "QB HIT": 2
-        },
-        "stats_season": 2025,
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
         "madden": 70,
         "jersey": 92,
         "age": 27,
         "years_pro": 5,
         "madden_rank": 121,
         "madden_rank_total": 191,
-        "madden_pos_label": "DT"
+        "madden_pos_label": "DT",
+        "cap_number": "$2,845,000",
+        "stats": {
+          "TKL": 8,
+          "TFL": 1,
+          "QB HIT": 2
+        },
+        "stats_season": 2025
       },
       {
         "name": "Jackie Marshall",
         "depth": 2,
         "injured": false,
-        "cap_number": "$965,781",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$965,781",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "C.j. Ravenell",
         "depth": 3,
         "injured": false,
-        "cap_number": "$1,005,000",
-        "stats": {
-          "TKL": 1
-        },
-        "stats_season": 2025,
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
         "madden": 63,
         "jersey": 91,
         "age": 25,
         "years_pro": 1,
         "madden_rank": 188,
         "madden_rank_total": 191,
-        "madden_pos_label": "DT"
+        "madden_pos_label": "DT",
+        "cap_number": "$1,005,000",
+        "stats": {
+          "TKL": 1
+        },
+        "stats_season": 2025
       }
     ],
     "RDE": [
@@ -976,6 +1090,13 @@
         "name": "Jermaine Johnson II",
         "depth": 1,
         "injured": false,
+        "standard_slot": "RE",
+        "standard_pos": "EDGE",
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null,
         "cap_number": "$13,411,000",
         "stats": {
           "TKL": 22,
@@ -984,36 +1105,42 @@
           "TFL": 5,
           "QB HIT": 6
         },
-        "stats_season": 2025,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
+        "stats_season": 2025
       },
       {
         "name": "Oluwafemi Oladejo",
         "depth": 2,
         "injured": false,
-        "cap_number": "$1,912,524",
-        "stats": {
-          "TKL": 5,
-          "TFL": 2,
-          "QB HIT": 2
-        },
-        "stats_season": 2025,
+        "standard_slot": "RE",
+        "standard_pos": "EDGE",
         "madden": 73,
         "jersey": 7,
         "age": 21,
         "years_pro": 0,
         "madden_rank": 53,
         "madden_rank_total": 88,
-        "madden_pos_label": "LEDG"
+        "madden_pos_label": "LEDG",
+        "cap_number": "$1,912,524",
+        "stats": {
+          "TKL": 5,
+          "TFL": 2,
+          "QB HIT": 2
+        },
+        "stats_season": 2025
       },
       {
         "name": "Jacob Martin",
         "depth": 3,
         "injured": false,
+        "standard_slot": "RE",
+        "standard_pos": "EDGE",
+        "madden": 76,
+        "jersey": 55,
+        "age": 29,
+        "years_pro": 7,
+        "madden_rank": 31,
+        "madden_rank_total": 87,
+        "madden_pos_label": "REDG",
         "cap_number": "$3,500,000",
         "stats": {
           "TKL": 17,
@@ -1021,19 +1148,21 @@
           "TFL": 3,
           "QB HIT": 18
         },
-        "stats_season": 2025,
-        "madden": 76,
-        "jersey": 55,
-        "age": 29,
-        "years_pro": 7,
-        "madden_rank": 31,
-        "madden_rank_total": 87,
-        "madden_pos_label": "REDG"
+        "stats_season": 2025
       },
       {
         "name": "Truman Jones",
         "depth": 4,
         "injured": false,
+        "standard_slot": "RE",
+        "standard_pos": "EDGE",
+        "madden": 65,
+        "jersey": 56,
+        "age": 25,
+        "years_pro": 2,
+        "madden_rank": 82,
+        "madden_rank_total": 87,
+        "madden_pos_label": "REDG",
         "cap_number": "$1,005,000",
         "stats": {
           "TKL": 4,
@@ -1042,27 +1171,22 @@
           "TFL": 2,
           "QB HIT": 2
         },
-        "stats_season": 2025,
-        "madden": 65,
-        "jersey": 56,
-        "age": 25,
-        "years_pro": 2,
-        "madden_rank": 82,
-        "madden_rank_total": 87,
-        "madden_pos_label": "REDG"
+        "stats_season": 2025
       },
       {
         "name": "David Ebuka Agoha",
         "depth": 5,
         "injured": false,
-        "cap_number": "$0",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "RE",
+        "standard_pos": "EDGE",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$0",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "WLB": [
@@ -1070,6 +1194,15 @@
         "name": "Cedric Gray",
         "depth": 1,
         "injured": false,
+        "standard_slot": "WILL",
+        "standard_pos": "LB",
+        "madden": 78,
+        "jersey": 33,
+        "age": 22,
+        "years_pro": 1,
+        "madden_rank": 19,
+        "madden_rank_total": 84,
+        "madden_pos_label": "WILL",
         "cap_number": "$1,283,623",
         "stats": {
           "TKL": 97,
@@ -1078,77 +1211,78 @@
           "TFL": 7,
           "QB HIT": 3
         },
-        "stats_season": 2025,
-        "madden": 78,
-        "jersey": 33,
-        "age": 22,
-        "years_pro": 1,
-        "madden_rank": 19,
-        "madden_rank_total": 84,
-        "madden_pos_label": "WILL"
+        "stats_season": 2025
       },
       {
         "name": "Mohamoud Diabate",
         "depth": 2,
         "injured": false,
-        "cap_number": "$1,363,000",
-        "stats": {
-          "TKL": 22,
-          "TFL": 3
-        },
-        "stats_season": 2025,
+        "standard_slot": "WILL",
+        "standard_pos": "LB",
         "madden": 70,
         "jersey": 43,
         "age": 24,
         "years_pro": 2,
         "madden_rank": 51,
         "madden_rank_total": 84,
-        "madden_pos_label": "WILL"
+        "madden_pos_label": "WILL",
+        "cap_number": "$1,363,000",
+        "stats": {
+          "TKL": 22,
+          "TFL": 3
+        },
+        "stats_season": 2025
       },
       {
         "name": "Dorian Mausi",
         "depth": 3,
         "injured": false,
-        "cap_number": "$1,005,000",
-        "stats": {
-          "TKL": 5
-        },
-        "stats_season": 2025,
+        "standard_slot": "WILL",
+        "standard_pos": "LB",
         "madden": 62,
         "jersey": 54,
         "age": 23,
         "years_pro": 0,
         "madden_rank": 80,
         "madden_rank_total": 84,
-        "madden_pos_label": "WILL"
+        "madden_pos_label": "WILL",
+        "cap_number": "$1,005,000",
+        "stats": {
+          "TKL": 5
+        },
+        "stats_season": 2025
       },
       {
         "name": "Sean Brown",
         "depth": 4,
         "injured": false,
-        "cap_number": "$891,666",
-        "stats": {
-          "TKL": 3
-        },
-        "stats_season": 2025,
+        "standard_slot": "WILL",
+        "standard_pos": "LB",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$891,666",
+        "stats": {
+          "TKL": 3
+        },
+        "stats_season": 2025
       },
       {
         "name": "Shad Banks Jr.",
         "depth": 5,
         "injured": false,
-        "cap_number": "$888,333",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "WILL",
+        "standard_pos": "LB",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$888,333",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "MLB": [
@@ -1156,19 +1290,30 @@
         "name": "Anthony Hill",
         "depth": 1,
         "injured": false,
-        "cap_number": "$1,475,307",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "MIKE",
+        "standard_pos": "LB",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$1,475,307",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Cody Barton",
         "depth": 2,
         "injured": false,
+        "standard_slot": "MIKE",
+        "standard_pos": "LB",
+        "madden": 78,
+        "jersey": 50,
+        "age": 28,
+        "years_pro": 6,
+        "madden_rank": 24,
+        "madden_rank_total": 77,
+        "madden_pos_label": "MIKE",
         "cap_number": "$8,230,000",
         "stats": {
           "TKL": 37,
@@ -1178,19 +1323,21 @@
           "TFL": 4,
           "QB HIT": 1
         },
-        "stats_season": 2025,
-        "madden": 78,
-        "jersey": 50,
-        "age": 28,
-        "years_pro": 6,
-        "madden_rank": 24,
-        "madden_rank_total": 77,
-        "madden_pos_label": "MIKE"
+        "stats_season": 2025
       },
       {
         "name": "James Williams Sr.",
         "depth": 3,
         "injured": false,
+        "standard_slot": "MIKE",
+        "standard_pos": "LB",
+        "madden": 67,
+        "jersey": 52,
+        "age": 22,
+        "years_pro": 1,
+        "madden_rank": 49,
+        "madden_rank_total": 77,
+        "madden_pos_label": "MIKE",
         "cap_number": "$1,097,373",
         "stats": {
           "TKL": 22,
@@ -1198,27 +1345,22 @@
           "TFL": 3,
           "QB HIT": 1
         },
-        "stats_season": 2025,
-        "madden": 67,
-        "jersey": 52,
-        "age": 22,
-        "years_pro": 1,
-        "madden_rank": 49,
-        "madden_rank_total": 77,
-        "madden_pos_label": "MIKE"
+        "stats_season": 2025
       },
       {
         "name": "Mani Powell",
         "depth": 4,
         "injured": false,
-        "cap_number": "$890,000",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "MIKE",
+        "standard_pos": "LB",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$890,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LCB": [
@@ -1226,6 +1368,15 @@
         "name": "Alontae Taylor",
         "depth": 1,
         "injured": false,
+        "standard_slot": "LCB",
+        "standard_pos": "CB",
+        "madden": 77,
+        "jersey": 1,
+        "age": 26,
+        "years_pro": 3,
+        "madden_rank": 71,
+        "madden_rank_total": 213,
+        "madden_pos_label": "CB",
         "cap_number": "$14,000,000",
         "stats": {
           "TKL": 59,
@@ -1235,57 +1386,56 @@
           "TFL": 7,
           "QB HIT": 3
         },
-        "stats_season": 2025,
-        "madden": 77,
-        "jersey": 1,
-        "age": 26,
-        "years_pro": 3,
-        "madden_rank": 71,
-        "madden_rank_total": 213,
-        "madden_pos_label": "CB"
+        "stats_season": 2025
       },
       {
         "name": "Joshua Williams",
         "depth": 2,
         "injured": false,
-        "cap_number": "$3,065,000",
-        "stats": {
-          "TKL": 4
-        },
-        "stats_season": 2025,
+        "standard_slot": "LCB",
+        "standard_pos": "CB",
         "madden": 74,
         "jersey": 2,
         "age": 25,
         "years_pro": 3,
         "madden_rank": 98,
         "madden_rank_total": 213,
-        "madden_pos_label": "CB"
+        "madden_pos_label": "CB",
+        "cap_number": "$3,065,000",
+        "stats": {
+          "TKL": 4
+        },
+        "stats_season": 2025
       },
       {
         "name": "Keydrain Calligan",
         "depth": 3,
         "injured": false,
-        "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "LCB",
+        "standard_pos": "CB",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Jeadyn Lukus",
         "depth": 4,
         "injured": false,
-        "cap_number": "$886,666",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "LCB",
+        "standard_pos": "CB",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$886,666",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "SS": [
@@ -1293,6 +1443,15 @@
         "name": "Amani Hooker",
         "depth": 1,
         "injured": false,
+        "standard_slot": "SS",
+        "standard_pos": "S",
+        "madden": 78,
+        "jersey": 37,
+        "age": 27,
+        "years_pro": 6,
+        "madden_rank": 22,
+        "madden_rank_total": 79,
+        "madden_pos_label": "SS",
         "cap_number": "$11,957,500",
         "stats": {
           "TKL": 58,
@@ -1301,19 +1460,19 @@
           "TFL": 3,
           "QB HIT": 1
         },
-        "stats_season": 2025,
-        "madden": 78,
-        "jersey": 37,
-        "age": 27,
-        "years_pro": 6,
-        "madden_rank": 22,
-        "madden_rank_total": 79,
-        "madden_pos_label": "SS"
+        "stats_season": 2025
       },
       {
         "name": "Tony Adams",
         "depth": 2,
         "injured": false,
+        "standard_slot": "SS",
+        "standard_pos": "S",
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null,
         "cap_number": "$2,015,000",
         "stats": {
           "TKL": 31,
@@ -1322,29 +1481,26 @@
           "TFL": 3,
           "QB HIT": 1
         },
-        "stats_season": 2025,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
+        "stats_season": 2025
       },
       {
         "name": "Sanoussi Kane",
         "depth": 3,
         "injured": false,
-        "cap_number": "$1,075,000",
-        "stats": {
-          "TKL": 3
-        },
-        "stats_season": 2025,
+        "standard_slot": "SS",
+        "standard_pos": "S",
         "madden": 66,
         "jersey": 42,
         "age": 23,
         "years_pro": 1,
         "madden_rank": 68,
         "madden_rank_total": 79,
-        "madden_pos_label": "SS"
+        "madden_pos_label": "SS",
+        "cap_number": "$1,075,000",
+        "stats": {
+          "TKL": 3
+        },
+        "stats_season": 2025
       }
     ],
     "FS": [
@@ -1352,6 +1508,15 @@
         "name": "Kevin Winston Jr.",
         "depth": 1,
         "injured": false,
+        "standard_slot": "FS",
+        "standard_pos": "S",
+        "madden": 73,
+        "jersey": 23,
+        "age": 21,
+        "years_pro": 0,
+        "madden_rank": 41,
+        "madden_rank_total": 78,
+        "madden_pos_label": "FS",
         "cap_number": "$1,455,680",
         "stats": {
           "TKL": 21,
@@ -1360,61 +1525,60 @@
           "TFL": 4,
           "QB HIT": 4
         },
-        "stats_season": 2025,
-        "madden": 73,
-        "jersey": 23,
-        "age": 21,
-        "years_pro": 0,
-        "madden_rank": 41,
-        "madden_rank_total": 78,
-        "madden_pos_label": "FS"
+        "stats_season": 2025
       },
       {
         "name": "Kendell Brooks",
         "depth": 2,
         "injured": false,
-        "cap_number": "$1,075,000",
-        "stats": {
-          "TKL": 11
-        },
-        "stats_season": 2025,
+        "standard_slot": "FS",
+        "standard_pos": "S",
         "madden": 63,
         "jersey": 30,
         "age": 25,
         "years_pro": 2,
         "madden_rank": 74,
         "madden_rank_total": 78,
-        "madden_pos_label": "FS"
+        "madden_pos_label": "FS",
+        "cap_number": "$1,075,000",
+        "stats": {
+          "TKL": 11
+        },
+        "stats_season": 2025
       },
       {
         "name": "Jerrick Reed II",
         "depth": 3,
         "injured": false,
-        "cap_number": "$1,145,000",
-        "stats": {
-          "TKL": 6
-        },
-        "stats_season": 2025,
+        "standard_slot": "FS",
+        "standard_pos": "S",
         "madden": 65,
         "jersey": 28,
         "age": 25,
         "years_pro": 2,
         "madden_rank": 66,
         "madden_rank_total": 78,
-        "madden_pos_label": "FS"
+        "madden_pos_label": "FS",
+        "cap_number": "$1,145,000",
+        "stats": {
+          "TKL": 6
+        },
+        "stats_season": 2025
       },
       {
         "name": "Bishop Fitzgerald",
         "depth": 4,
         "injured": false,
-        "cap_number": "$891,666",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "FS",
+        "standard_pos": "S",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$891,666",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RCB": [
@@ -1422,6 +1586,13 @@
         "name": "Cor'dale Flott",
         "depth": 1,
         "injured": false,
+        "standard_slot": "RCB",
+        "standard_pos": "CB",
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null,
         "cap_number": "$10,743,333",
         "stats": {
           "TKL": 27,
@@ -1429,44 +1600,43 @@
           "PD": 11,
           "TFL": 3
         },
-        "stats_season": 2025,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
+        "stats_season": 2025
       },
       {
         "name": "Micah Robinson",
         "depth": 2,
         "injured": false,
-        "cap_number": "$1,005,000",
-        "stats": {
-          "TKL": 8,
-          "PD": 2,
-          "TFL": 1
-        },
-        "stats_season": 2025,
+        "standard_slot": "RCB",
+        "standard_pos": "CB",
         "madden": 67,
         "jersey": 21,
         "age": 23,
         "years_pro": 0,
         "madden_rank": 179,
         "madden_rank_total": 213,
-        "madden_pos_label": "CB"
+        "madden_pos_label": "CB",
+        "cap_number": "$1,005,000",
+        "stats": {
+          "TKL": 8,
+          "PD": 2,
+          "TFL": 1
+        },
+        "stats_season": 2025
       },
       {
         "name": "Latrell Mccutchin Sr.",
         "depth": 3,
         "injured": false,
-        "cap_number": "$890,000",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "RCB",
+        "standard_pos": "CB",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$890,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "NB": [
@@ -1474,51 +1644,57 @@
         "name": "Marcus Harris",
         "depth": 1,
         "injured": false,
-        "cap_number": "$1,068,254",
-        "stats": {
-          "TKL": 18,
-          "PD": 5,
-          "TFL": 1
-        },
-        "stats_season": 2025,
+        "standard_slot": "NB",
+        "standard_pos": "CB",
         "madden": 71,
         "jersey": 26,
         "age": 24,
         "years_pro": 0,
         "madden_rank": 139,
         "madden_rank_total": 213,
-        "madden_pos_label": "CB"
+        "madden_pos_label": "CB",
+        "cap_number": "$1,068,254",
+        "stats": {
+          "TKL": 18,
+          "PD": 5,
+          "TFL": 1
+        },
+        "stats_season": 2025
       },
       {
         "name": "Erick Hallett II",
         "depth": 2,
         "injured": false,
-        "cap_number": "$1,005,000",
-        "stats": {
-          "TKL": 12,
-          "PD": 1
-        },
-        "stats_season": 2025,
+        "standard_slot": "NB",
+        "standard_pos": "CB",
         "madden": 66,
         "jersey": 41,
         "age": 25,
         "years_pro": 2,
         "madden_rank": 67,
         "madden_rank_total": 79,
-        "madden_pos_label": "SS"
+        "madden_pos_label": "SS",
+        "cap_number": "$1,005,000",
+        "stats": {
+          "TKL": 12,
+          "PD": 1
+        },
+        "stats_season": 2025
       },
       {
         "name": "Jalen Mcmurray",
         "depth": 3,
         "injured": false,
-        "cap_number": "$891,666",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "NB",
+        "standard_pos": "CB",
         "madden": null,
         "jersey": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null
+        "madden_pos_label": null,
+        "cap_number": "$891,666",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "PT": [
@@ -1526,18 +1702,20 @@
         "name": "Tommy Townsend",
         "depth": 1,
         "injured": false,
-        "cap_number": "$2,100,000",
-        "stats": {
-          "FG%": "\u2014"
-        },
-        "stats_season": 2025,
+        "standard_slot": "PT",
+        "standard_pos": "DEF",
         "madden": 78,
         "jersey": 6,
         "age": 28,
         "years_pro": 5,
         "madden_rank": 12,
         "madden_rank_total": 31,
-        "madden_pos_label": "P"
+        "madden_pos_label": "P",
+        "cap_number": "$2,100,000",
+        "stats": {
+          "FG%": "\u2014"
+        },
+        "stats_season": 2025
       }
     ],
     "PK": [
@@ -1545,6 +1723,15 @@
         "name": "Joey Slye",
         "depth": 1,
         "injured": false,
+        "standard_slot": "PK",
+        "standard_pos": "DEF",
+        "madden": 76,
+        "jersey": 6,
+        "age": 29,
+        "years_pro": 6,
+        "madden_rank": 22,
+        "madden_rank_total": 34,
+        "madden_pos_label": "K",
         "cap_number": "$2,000,000",
         "stats": {
           "FG": "28/35",
@@ -1552,14 +1739,7 @@
           "LONG": 58,
           "PAT": "26/27"
         },
-        "stats_season": 2025,
-        "madden": 76,
-        "jersey": 6,
-        "age": 29,
-        "years_pro": 6,
-        "madden_rank": 22,
-        "madden_rank_total": 34,
-        "madden_pos_label": "K"
+        "stats_season": 2025
       }
     ],
     "LS": [
@@ -1567,16 +1747,18 @@
         "name": "Morgan Cox",
         "depth": 1,
         "injured": false,
-        "cap_number": "$1,262,500",
-        "stats": {},
-        "stats_season": null,
+        "standard_slot": "LS",
+        "standard_pos": "DEF",
         "madden": 66,
         "jersey": 46,
         "age": 39,
         "years_pro": 16,
         "madden_rank": 17,
         "madden_rank_total": 30,
-        "madden_pos_label": "LS"
+        "madden_pos_label": "LS",
+        "cap_number": "$1,262,500",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "H": [
@@ -1584,18 +1766,20 @@
         "name": "Tommy Townsend",
         "depth": 1,
         "injured": false,
-        "cap_number": "$2,100,000",
-        "stats": {
-          "FG%": "\u2014"
-        },
-        "stats_season": 2025,
+        "standard_slot": "H",
+        "standard_pos": "DEF",
         "madden": 78,
         "jersey": 6,
         "age": 28,
         "years_pro": 5,
         "madden_rank": 12,
         "madden_rank_total": 31,
-        "madden_pos_label": "P"
+        "madden_pos_label": "P",
+        "cap_number": "$2,100,000",
+        "stats": {
+          "FG%": "\u2014"
+        },
+        "stats_season": 2025
       }
     ],
     "KO": [
@@ -1603,6 +1787,15 @@
         "name": "Joey Slye",
         "depth": 1,
         "injured": false,
+        "standard_slot": "KO",
+        "standard_pos": "DEF",
+        "madden": 76,
+        "jersey": 6,
+        "age": 29,
+        "years_pro": 6,
+        "madden_rank": 22,
+        "madden_rank_total": 34,
+        "madden_pos_label": "K",
         "cap_number": "$2,000,000",
         "stats": {
           "FG": "28/35",
@@ -1610,14 +1803,7 @@
           "LONG": 58,
           "PAT": "26/27"
         },
-        "stats_season": 2025,
-        "madden": 76,
-        "jersey": 6,
-        "age": 29,
-        "years_pro": 6,
-        "madden_rank": 22,
-        "madden_rank_total": 34,
-        "madden_pos_label": "K"
+        "stats_season": 2025
       }
     ],
     "PR": [
@@ -1625,6 +1811,15 @@
         "name": "Chimere Dike",
         "depth": 1,
         "injured": false,
+        "standard_slot": "PR",
+        "standard_pos": "DEF",
+        "madden": 74,
+        "jersey": 17,
+        "age": 23,
+        "years_pro": 0,
+        "madden_rank": 103,
+        "madden_rank_total": 201,
+        "madden_pos_label": "WR",
         "cap_number": "$1,380,238",
         "stats": {
           "TGT": 74,
@@ -1634,19 +1829,21 @@
           "YAC": 220,
           "CAR": 11
         },
-        "stats_season": 2025,
-        "madden": 74,
-        "jersey": 17,
-        "age": 23,
-        "years_pro": 0,
-        "madden_rank": 103,
-        "madden_rank_total": 201,
-        "madden_pos_label": "WR"
+        "stats_season": 2025
       },
       {
         "name": "Mason Kinsey",
         "depth": 2,
         "injured": false,
+        "standard_slot": "PR",
+        "standard_pos": "DEF",
+        "madden": 63,
+        "jersey": 12,
+        "age": 27,
+        "years_pro": 5,
+        "madden_rank": 199,
+        "madden_rank_total": 201,
+        "madden_pos_label": "WR",
         "cap_number": "$1,145,000",
         "stats": {
           "TGT": 4,
@@ -1654,14 +1851,7 @@
           "YDS": 48,
           "YAC": 3
         },
-        "stats_season": 2025,
-        "madden": 63,
-        "jersey": 12,
-        "age": 27,
-        "years_pro": 5,
-        "madden_rank": 199,
-        "madden_rank_total": 201,
-        "madden_pos_label": "WR"
+        "stats_season": 2025
       }
     ],
     "KR": [
@@ -1669,6 +1859,15 @@
         "name": "Chimere Dike",
         "depth": 1,
         "injured": false,
+        "standard_slot": "KR",
+        "standard_pos": "DEF",
+        "madden": 74,
+        "jersey": 17,
+        "age": 23,
+        "years_pro": 0,
+        "madden_rank": 103,
+        "madden_rank_total": 201,
+        "madden_pos_label": "WR",
         "cap_number": "$1,380,238",
         "stats": {
           "TGT": 74,
@@ -1678,33 +1877,28 @@
           "YAC": 220,
           "CAR": 11
         },
-        "stats_season": 2025,
-        "madden": 74,
-        "jersey": 17,
-        "age": 23,
-        "years_pro": 0,
-        "madden_rank": 103,
-        "madden_rank_total": 201,
-        "madden_pos_label": "WR"
+        "stats_season": 2025
       },
       {
         "name": "Julius Chestnut",
         "depth": 2,
         "injured": false,
-        "cap_number": "$1,262,500",
-        "stats": {
-          "CAR": 11,
-          "RU YDS": 40,
-          "TGT": 2
-        },
-        "stats_season": 2025,
+        "standard_slot": "KR",
+        "standard_pos": "DEF",
         "madden": 67,
         "jersey": 36,
         "age": 24,
         "years_pro": 3,
         "madden_rank": 118,
         "madden_rank_total": 125,
-        "madden_pos_label": "HB"
+        "madden_pos_label": "HB",
+        "cap_number": "$1,262,500",
+        "stats": {
+          "CAR": 11,
+          "RU YDS": 40,
+          "TGT": 2
+        },
+        "stats_season": 2025
       }
     ]
   }

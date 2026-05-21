@@ -456,7 +456,7 @@ body {
   </div>
 
   <div style="display:flex;gap:8px;align-items:center;margin-left:12px">
-    <div class="ctrl-group">
+    <div class="ctrl-group" id="unitGroup">
       <button class="ctrl-btn active" onclick="setUnit('offense',this)">Offense</button>
       <button class="ctrl-btn" onclick="setUnit('defense',this)">Defense</button>
     </div>
@@ -561,16 +561,16 @@ const FORMATION_COORDS = {
   offense: {
     '11': {
       LWR: {x:4,  y:57},
-      SWR: {x:25, y:57},
-      RWR: {x:96, y:57},
-      TE:  {x:72, y:57},
-      LT:  {x:33, y:57},
-      LG:  {x:41, y:57},
+      SWR: {x:18, y:60},
+      LT:  {x:34, y:59},
+      LG:  {x:42, y:58},
       C:   {x:50, y:57},
-      RG:  {x:59, y:57},
-      RT:  {x:67, y:57},
-      QB:  {x:50, y:78},
-      RB:  {x:50, y:90},
+      RG:  {x:58, y:58},
+      RT:  {x:66, y:59},
+      TE:  {x:74, y:60},
+      RWR: {x:96, y:57},
+      QB:  {x:50, y:80},
+      RB:  {x:62, y:78},
     },
     '12': {
       LWR: {x:4,  y:57},
@@ -591,26 +591,26 @@ const FORMATION_COORDS = {
       LCB:  {x:94, y:42},
       FS:   {x:30, y:8},
       SS:   {x:70, y:12},
-      WLB:  {x:36, y:28},
-      MLB:  {x:50, y:24},
-      SLB:  {x:64, y:28},
-      LDE:  {x:32, y:43},
-      LDT:  {x:44, y:43},
-      RDT:  {x:56, y:43},
-      RDE:  {x:68, y:43},
+      WILL:  {x:36, y:28},
+      MIKE:  {x:50, y:24},
+      SAM:  {x:64, y:28},
+      RE:  {x:32, y:43},
+      RDT:  {x:44, y:43},
+      LDT:  {x:56, y:43},
+      LE:  {x:68, y:43},
     },
     'base34': {
-      RCB:  {x:6,  y:42},
-      LCB:  {x:94, y:42},
-      FS:   {x:30, y:8},
-      SS:   {x:70, y:12},
-      LOLB: {x:26, y:44},
-      MLB:  {x:50, y:24},
-      WLB:  {x:36, y:28},
-      ROLB: {x:74, y:44},
-      LDT:  {x:44, y:43},
-      NT:   {x:50, y:43},
-      RDT:  {x:56, y:43},
+      RCB:    {x:6,  y:42},
+      LCB:    {x:94, y:42},
+      FS:     {x:30, y:8},
+      SS:     {x:70, y:12},
+      ROLB:   {x:26, y:38},
+      ILB_R:  {x:56, y:26},
+      ILB_L:  {x:44, y:26},
+      LOLB:   {x:74, y:38},
+      RE:     {x:42, y:43},
+      NT:     {x:50, y:43},
+      LE:     {x:58, y:43},
     },
     'nickel': {
       RCB:  {x:6,  y:42},
@@ -618,12 +618,25 @@ const FORMATION_COORDS = {
       NB:   {x:17, y:42},
       FS:   {x:30, y:8},
       SS:   {x:70, y:12},
-      WLB:  {x:42, y:28},
-      MLB:  {x:56, y:24},
-      LDE:  {x:32, y:43},
-      LDT:  {x:44, y:43},
-      RDT:  {x:56, y:43},
-      RDE:  {x:68, y:43},
+      WILL: {x:44, y:26},
+      MIKE: {x:56, y:26},
+      RE:   {x:32, y:43},
+      RDT:  {x:44, y:43},
+      LDT:  {x:56, y:43},
+      LE:   {x:68, y:43},
+    },
+    'nickel34': {
+      RCB:   {x:6,  y:42},
+      LCB:   {x:94, y:42},
+      NB:    {x:17, y:42},
+      FS:    {x:30, y:8},
+      SS:    {x:70, y:12},
+      ILB_R: {x:44, y:26},
+      ILB_L: {x:56, y:26},
+      ROLB:  {x:32, y:43},
+      RE:    {x:44, y:43},
+      LE:    {x:56, y:43},
+      LOLB:  {x:68, y:43},
     },
   }
 };
@@ -660,14 +673,11 @@ async function loadTeam(abbr) {
 }
 
 function getStarter(formationPos) {
-  // Try direct match first
-  if (teamData?.depth_chart?.[formationPos]?.[0]) {
-    return teamData.depth_chart[formationPos][0];
-  }
-  // Try reverse alias — find any OurLads code that maps to this formation slot
-  for (const [ourladsCode, mappedPos] of Object.entries(POS_ALIAS)) {
-    if (mappedPos === formationPos && teamData?.depth_chart?.[ourladsCode]?.[0]) {
-      return teamData.depth_chart[ourladsCode][0];
+  if (!teamData) return null;
+  // Search all positions for one whose standard_slot matches
+  for (const players of Object.values(teamData.depth_chart)) {
+    if (players.length && players[0].standard_slot === formationPos) {
+      return players[0];
     }
   }
   return null;
@@ -807,9 +817,10 @@ function renderFormation() {
     // Only update if currently on base package
     if (currentPersonnel === 'base43' || currentPersonnel === 'base34') {
       currentPersonnel = baseKey;
+      const nickelKey = isThreeFour ? 'nickel34' : 'nickel';
       document.getElementById('personnelGroup').innerHTML = `
         <button class="ctrl-btn active" onclick="setPersonnel('${baseKey}',this)">${baseLabel}</button>
-        <button class="ctrl-btn" onclick="setPersonnel('nickel',this)">Nickel</button>
+        <button class="ctrl-btn" onclick="setPersonnel('${nickelKey}',this)">Nickel</button>
       `;
       document.getElementById('formationLabel').textContent = baseScheme;
     }
@@ -842,15 +853,16 @@ function renderFormation() {
 
 function setUnit(unit, btn) {
   currentUnit = unit;
-  document.querySelectorAll('.ctrl-group:first-child .ctrl-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#unitGroup .ctrl-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 
   const pg = document.getElementById('personnelGroup');
 
   if (unit === 'offense') {
+    const nickelKey = isThreeFour ? 'nickel34' : 'nickel';
     pg.innerHTML = `
-      <button class="ctrl-btn active" onclick="setPersonnel('11',this)">11 (3 WR)</button>
-      <button class="ctrl-btn" onclick="setPersonnel('12',this)">12 (2 TE)</button>
+      <button class="ctrl-btn active" onclick="setPersonnel('${baseKey}',this)">${baseLabel}</button>
+      <button class="ctrl-btn" onclick="setPersonnel('${nickelKey}',this)">Nickel</button>
     `;
     currentPersonnel = '11';
     document.getElementById('formationLabel').textContent = '11 Personnel · Shotgun Spread';
