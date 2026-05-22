@@ -429,6 +429,71 @@ body {
   flex-shrink: 0;
 }
 
+/* ── SUB DROPDOWN ── */
+.sub-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  background: #14171f;
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  z-index: 600;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.8);
+  overflow: hidden;
+  display: none;
+}
+.sub-dropdown.open { display: block; }
+.sub-dropdown-header {
+  padding: 7px 12px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,0.3);
+}
+.sub-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background .15s;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.sub-option:last-child { border-bottom: none; }
+.sub-option:hover { background: var(--border); }
+.sub-option-madden {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 1;
+  width: 32px;
+  flex-shrink: 0;
+  text-align: center;
+}
+.sub-option-info { flex: 1; min-width: 0; }
+.sub-option-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sub-option-meta {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+.sub-option.active-player {
+  background: rgba(0,212,255,0.06);
+}
+
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
@@ -647,6 +712,9 @@ let currentTeam = 'BUF';
 let currentUnit = 'offense';
 let currentPersonnel = '11';
 let teamData = null;
+// Track current starters (overrides from depth chart default)
+let currentStarters = {}; // { formationPos: playerObject }
+let activeSubDropdown = null; // currently open dropdown pos key
 
 function maddenColor(r) {
   if (!r) return '#6b7494';
@@ -674,13 +742,102 @@ async function loadTeam(abbr) {
 
 function getStarter(formationPos) {
   if (!teamData) return null;
-  // Search all positions for one whose standard_slot matches
+  // Check if user has subbed someone in
+  if (currentStarters[formationPos]) return currentStarters[formationPos];
+  // Default: find depth 1 player with matching standard_slot
   for (const players of Object.values(teamData.depth_chart)) {
     if (players.length && players[0].standard_slot === formationPos) {
       return players[0];
     }
   }
   return null;
+}
+
+function getSubCandidates(formationPos) {
+  if (!teamData) return [];
+  // Find the standard_pos for this slot from current starter or coord map
+  const current = getStarter(formationPos);
+  const targetPos = current?.standard_pos;
+  if (!targetPos) return [];
+
+  // Collect all players with matching standard_pos, sorted by madden desc
+  const candidates = [];
+  for (const players of Object.values(teamData.depth_chart)) {
+    for (const p of players) {
+      if (p.standard_pos === targetPos) {
+        candidates.push(p);
+      }
+    }
+  }
+  candidates.sort((a, b) => (b.madden || 0) - (a.madden || 0));
+  // Dedupe by name
+  const seen = new Set();
+  return candidates.filter(p => {
+    if (seen.has(p.name)) return false;
+    seen.add(p.name);
+    return true;
+  });
+}
+
+function buildSubDropdown(formationPos, currentPlayer) {
+  const candidates = getSubCandidates(formationPos);
+  if (candidates.length <= 1) return '';
+
+  const options = candidates.map(p => {
+    const mc = maddenColor(p.madden);
+    const isActive = p.name === currentPlayer?.name;
+    const parts = p.name.split(' ');
+    const displayName = parts.length > 1 ? parts.slice(1).join(' ') : parts[0];
+    return `
+      <div class="sub-option ${isActive ? 'active-player' : ''}"
+           onclick="selectSub('${formationPos}', '${p.name.replace(/'/g, "\\'")}', event)">
+        <div class="sub-option-madden" style="color:${mc}">${p.madden || '—'}</div>
+        <div class="sub-option-info">
+          <div class="sub-option-name">${displayName}</div>
+          <div class="sub-option-meta">${p.standard_slot || ''} · ${p.cap_number || '—'}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  return `
+    <div class="sub-dropdown" id="sub-${formationPos}">
+      <div class="sub-dropdown-header">Substitute ${formationPos}</div>
+      ${options}
+    </div>
+  `;
+}
+
+function selectSub(formationPos, playerName, event) {
+  event.stopPropagation();
+  // Find the player object
+  for (const players of Object.values(teamData.depth_chart)) {
+    for (const p of players) {
+      if (p.name === playerName) {
+        currentStarters[formationPos] = p;
+        closeSubDropdown();
+        renderFormation();
+        return;
+      }
+    }
+  }
+}
+
+function openSubDropdown(formationPos, event) {
+  event.stopPropagation();
+  // Close any open dropdown first
+  closeSubDropdown();
+  activeSubDropdown = formationPos;
+  const el = document.getElementById('sub-' + formationPos);
+  if (el) el.classList.add('open');
+}
+
+function closeSubDropdown() {
+  if (activeSubDropdown) {
+    const el = document.getElementById('sub-' + activeSubDropdown);
+    if (el) el.classList.remove('open');
+    activeSubDropdown = null;
+  }
 }
 
 function updateHeader() {
@@ -704,6 +861,7 @@ function buildHoverCard(p, pos) {
           <div class="card-name" style="display:flex;align-items:center;gap:6px">
             <span>${p.jersey ? '#'+p.jersey+' ' : ''}${p.name}</span>
             ${p.injured ? `<span style="background:rgba(239,68,68,.2);color:#ef4444;border:1px solid rgba(239,68,68,.4);border-radius:3px;font-size:9px;font-weight:800;padding:1px 5px;letter-spacing:1px">INJ</span>` : ''}
+            ${p.years_pro === 0 ? `<span style="background:rgba(34,197,94,.1);color:#22c55e;border:1px solid rgba(34,197,94,.3);border-radius:3px;font-size:9px;font-weight:800;padding:1px 5px;letter-spacing:1px">R</span>` : ''}
           </div>
           <div class="card-meta">${pos}${p.age ? ' · Age '+p.age : ''}${p.years_pro != null ? ' · Yr '+p.years_pro+' NFL' : ''}</div>
         </div>
@@ -735,9 +893,12 @@ function buildHoverCard(p, pos) {
           </div>
         </div>
       ` : ''}
-      <div class="card-footer">
-        <span style="font-family:'Barlow Condensed';font-weight:700;font-size:13px;color:var(--gold)">${p.cap_number || '—'}</span>
-        <span style="font-size:10px;color:var(--text-dim)">cap hit</span>
+      <div class="card-footer" style="flex-direction:column;gap:4px;align-items:flex-start">
+        <div style="display:flex;justify-content:space-between;width:100%;align-items:center">
+          <span style="font-family:'Barlow Condensed';font-weight:700;font-size:13px;color:var(--gold)">${p.cap_number || '—'}</span>
+          <span style="font-size:10px;color:var(--text-dim)">cap hit</span>
+        </div>
+        ${p.attainment ? `<div style="font-size:10px;color:var(--text-muted)">Attained: <span style="color:var(--text)">${p.attainment}</span></div>` : ''}
       </div>
     </div>
   `;
@@ -752,7 +913,8 @@ function buildPlayerNode(p, pos, coords, delay, flipCard) {
 
   return `
     <div class="player-node ${flipCard ? 'flip-card' : ''}"
-         style="left:${coords.x}%;top:${coords.y}%;animation-delay:${delay}ms">
+         style="left:${coords.x}%;top:${coords.y}%;animation-delay:${delay}ms"
+         onclick="openSubDropdown('${pos}', event)">
       <div class="p-card" style="background:${team.colors[0]}">
         <div class="p-jersey">${p.jersey ? '#'+p.jersey : '\u00a0'}</div>
         <div class="p-lastname">${lastName}</div>
@@ -760,6 +922,7 @@ function buildPlayerNode(p, pos, coords, delay, flipCard) {
         ${p.madden_rank ? `<div class="p-rank">${p.madden_rank} / ${p.madden_rank_total} ${p.madden_pos_label || ''}</div>` : ''}
       </div>
       <div class="p-pos-bar">${pos}</div>
+      ${buildSubDropdown(pos, p)}
       ${buildHoverCard(p, pos)}
     </div>
   `;
@@ -853,6 +1016,7 @@ function renderFormation() {
 
 function setUnit(unit, btn) {
   currentUnit = unit;
+  currentStarters = {};
   document.querySelectorAll('#unitGroup .ctrl-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 
@@ -914,6 +1078,7 @@ function toggleTeamDropdown() {
 
 function selectTeam(abbr) {
   currentTeam = abbr;
+  currentStarters = {};
   localStorage.setItem('fieldview_team', abbr);
   document.getElementById('teamsDropdown').classList.remove('open');
   loadTeam(abbr);
@@ -922,6 +1087,9 @@ function selectTeam(abbr) {
 document.addEventListener('click', e => {
   if (!e.target.closest('.team-selector-wrap')) {
     document.getElementById('teamsDropdown').classList.remove('open');
+  }
+  if (!e.target.closest('.player-node')) {
+    closeSubDropdown();
   }
 });
 

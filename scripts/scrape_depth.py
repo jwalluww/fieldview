@@ -234,10 +234,15 @@ def scrape_depth_chart(team):
                 player_name = player_tag.get_text(strip=True)
                 if player_name:
                     is_injured = 'lc_red' in player_tag.get('class', [])
+                    raw_suffix = ''
+                    suffix_match = re.search(r'\s+(\S*[\d/]\S*)$', player_name)
+                    if suffix_match:
+                        raw_suffix = suffix_match.group(1)
                     players.append({
                         "name": clean_name(player_name),
                         "depth": len(players) + 1,
-                        "injured": is_injured
+                        "injured": is_injured,
+                        "attainment": raw_suffix if raw_suffix else None
                     })
 
         if players:
