@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FieldView — Player Table</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #1a1b23;
+  --surface: #1e2028;
+  --surface2: #23252f;
+  --border: #1e2330;
+  --border2: #262d3d;
+  --text: #c8cad4;
+  --text-muted: #7d87a8;
+  --text-dim: #404660;
+  --accent: #00d4ff;
+  --gold: #f5a623;
+  --green: #22c55e;
+  --red: #ef4444;
+  --purple: #a855f7;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── HEADER ── */
+.header {
+  background: #0d1118;
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 52px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+
+.logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.logo span { color: var(--text-muted); font-weight: 400; }
+
+.header-divider { width: 1px; height: 24px; background: var(--border2); flex-shrink: 0; }
+
+.page-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+.view-toggle {
+  margin-left: auto;
+  display: flex;
+  gap: 2px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.view-btn {
+  background: none;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 14px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all .15s;
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 6px;
+  white-space: nowrap;
+}
+.view-btn:hover { color: var(--text); }
+.view-btn.active { background: var(--border2); color: var(--text); }
+
+/* ── FILTER BAR ── */
+.filter-bar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 94px;
+  z-index: 190;
+}
+
+.filter-search {
+  position: relative;
+  flex: 0 0 220px;
+}
+
+.filter-search input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 7px 12px 7px 32px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  color: var(--text);
+  outline: none;
+  transition: border-color .2s;
+}
+.filter-search input::placeholder { color: var(--text-dim); }
+.filter-search input:focus { border-color: var(--accent); }
+
+.filter-search svg {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+  pointer-events: none;
+}
+
+.filter-select {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 7px 28px 7px 10px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: .5px;
+  color: var(--text-muted);
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23404660' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  transition: border-color .2s;
+}
+.filter-select:focus { border-color: var(--accent); color: var(--text); }
+.filter-select option { background: var(--surface2); }
+
+.filter-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: .5px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all .15s;
+  text-transform: uppercase;
+}
+.filter-chip:hover { border-color: var(--border); color: var(--text); }
+.filter-chip.active { border-color: var(--accent); color: var(--accent); background: rgba(0,212,255,0.06); }
+
+.filter-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.row-count {
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: .5px;
+  white-space: nowrap;
+}
+
+.clear-btn {
+  background: none;
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: .5px;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all .15s;
+  text-transform: uppercase;
+}
+.clear-btn:hover { color: var(--text); border-color: var(--border); }
+
+/* ── TABLE ── */
+.table-wrap {
+  padding: 0 24px 32px;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 900px;
+}
+
+/* Column headers */
+.table thead th {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 12px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+  /* position: sticky; */
+  /* top: 104px; */
+  z-index: 100;
+  user-select: none;
+  transition: color .15s;
+}
+.table thead th:hover { color: var(--text-muted); }
+.table thead th.sorted { color: var(--accent); }
+.table thead th .sort-icon { 
+  margin-left: 4px; 
+  opacity: 0.5;
+  pointer-events: none;
+}
+.table thead th.sorted .sort-icon { opacity: 1; }
+
+/* Rows */
+.table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background .1s;
+  cursor: default;
+}
+.table tbody tr:hover { background: var(--surface2); }
+
+.table tbody td {
+  padding: 9px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  vertical-align: middle;
+}
+
+/* Team cell */
+.cell-team {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.team-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 7px;
+  flex-shrink: 0;
+  letter-spacing: .5px;
+}
+
+/* Player cell */
+.cell-player {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.player-initials {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 10px;
+  flex-shrink: 0;
+  color: #fff;
+}
+
+.player-name-block { min-width: 0; }
+
+.player-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.player-sub {
+  font-size: 10px;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 1px;
+}
+
+.tag {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 2px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+.tag-inj { background: rgba(239,68,68,.15); color: var(--red); border: 1px solid rgba(239,68,68,.3); }
+.tag-rookie { background: rgba(34,197,94,.1); color: var(--green); border: 1px solid rgba(34,197,94,.25); }
+
+/* Madden cell */
+.cell-madden {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  text-align: center;
+}
+
+/* Position cell */
+.cell-pos {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* Standard pos badge */
+.std-pos {
+  display: inline-block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 10px;
+  letter-spacing: 1px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* Depth badge */
+.depth-badge {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-dim);
+}
+.depth-badge.starter { color: var(--gold); }
+
+/* Cap hit */
+.cell-cap {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+/* Stat cell */
+.cell-stat {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  color: var(--text-muted);
+  max-width: 180px;
+}
+
+.stat-pair {
+  display: inline-flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  white-space: nowrap;
+}
+
+.stat-item strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 80px 24px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.loading-bar {
+  width: 200px;
+  height: 2px;
+  background: var(--border);
+  border-radius: 1px;
+  margin: 16px auto 0;
+  overflow: hidden;
+}
+
+.loading-progress {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 1px;
+  animation: loadProgress 2s ease-in-out infinite;
+}
+
+@keyframes loadProgress {
+  0% { width: 0%; margin-left: 0; }
+  50% { width: 60%; margin-left: 20%; }
+  100% { width: 0%; margin-left: 100%; }
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 60px 24px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+/* ── VIEW TABS ── */
+.view-tabs {
+  background: var(--surface);
+  border-bottom: 2px solid var(--border);
+  padding: 0 24px;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  position: sticky;
+  top: 52px;
+  z-index: 195;
+  overflow-x: auto;
+}
+
+.view-tab {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  padding: 10px 16px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color .15s, border-color .15s;
+}
+.view-tab:hover { color: var(--text-muted); }
+.view-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.view-tab-divider {
+  width: 1px;
+  height: 16px;
+  background: var(--border2);
+  align-self: center;
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo" onclick="window.location='index.html'">Field<span>View</span></div>
+  <div class="header-divider"></div>
+  <div class="page-title">Player Table</div>
+  <div class="view-toggle">
+    <button class="view-btn" onclick="window.location='nfl-formation-view.html'">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="2" fill="currentColor"/><circle cx="2" cy="2" r="1.5" fill="currentColor" opacity=".6"/><circle cx="10" cy="2" r="1.5" fill="currentColor" opacity=".6"/><circle cx="2" cy="10" r="1.5" fill="currentColor" opacity=".6"/><circle cx="10" cy="10" r="1.5" fill="currentColor" opacity=".6"/></svg>
+      Formation
+    </button>
+    <button class="view-btn active">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="3" rx="1" fill="currentColor"/><rect x="1" y="5" width="10" height="3" rx="1" fill="currentColor" opacity=".5"/><rect x="1" y="9" width="10" height="2" rx="1" fill="currentColor" opacity=".3"/></svg>
+      Table
+    </button>
+  </div>
+</header>
+
+<!-- View tabs -->
+<div class="view-tabs" id="viewTabs">
+  <button class="view-tab active" onclick="setView('overview', this)">Overview</button>
+  <button class="view-tab" onclick="setView('financial', this)">Financial</button>
+  <button class="view-tab" onclick="setView('madden', this)">Madden Ratings</button>
+  <div class="view-tab-divider"></div>
+  <button class="view-tab" onclick="setView('passing', this)">Passing</button>
+  <button class="view-tab" onclick="setView('rushing', this)">Rushing</button>
+  <button class="view-tab" onclick="setView('receiving', this)">Receiving</button>
+  <button class="view-tab" onclick="setView('defense', this)">Defense</button>
+</div>
+
+<!-- Filter bar -->
+<div class="filter-bar">
+  <div class="filter-search">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.3"/><path d="M10 10l2.5 2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+    <input type="text" id="searchInput" placeholder="Search player..." oninput="applyFilters()">
+  </div>
+
+  <select class="filter-select" id="teamFilter" onchange="applyFilters()">
+    <option value="">All Teams</option>
+  </select>
+
+  <select class="filter-select" id="unitFilter" onchange="applyFilters()">
+    <option value="">Both Units</option>
+    <option value="offense">Offense</option>
+    <option value="defense">Defense</option>
+  </select>
+
+  <select class="filter-select" id="posFilter" onchange="applyFilters()">
+    <option value="">All Positions</option>
+    <option value="QB">QB</option>
+    <option value="WR">WR</option>
+    <option value="RB">RB</option>
+    <option value="TE">TE</option>
+    <option value="OL">OL</option>
+    <option value="EDGE">EDGE</option>
+    <option value="DI">DI</option>
+    <option value="LB">LB</option>
+    <option value="CB">CB</option>
+    <option value="S">S</option>
+    <option value="K">K</option>
+    <option value="P">P</option>
+  </select>
+
+  <select class="filter-select" id="depthFilter" onchange="applyFilters()">
+    <option value="">All Depths</option>
+    <option value="1">Starters Only</option>
+    <option value="2">Depth 1-2</option>
+  </select>
+
+  <div class="filter-right">
+    <span class="row-count" id="rowCount">Loading...</span>
+    <button class="clear-btn" onclick="clearFilters()">Clear</button>
+  </div>
+</div>
+
+<!-- Table -->
+<div class="table-wrap">
+  <div id="loadingState" class="loading">
+    Loading all 32 teams
+    <div class="loading-bar"><div class="loading-progress"></div></div>
+  </div>
+  <table class="table" id="mainTable" style="display:none">
+    <thead>
+      <tr>
+        <th onclick="sortBy('team')" id="th-team">Team <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('pos')" id="th-pos">Pos <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('depth')" id="th-depth">Depth <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('name')" id="th-name">Player <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('age')" id="th-age">Age <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('years_pro')" id="th-years_pro">NFL Yr <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('madden')" id="th-madden" class="sorted">Madden <span class="sort-icon">↓</span></th>
+        <th onclick="sortBy('cap')" id="th-cap">Cap Hit <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('cap')" id="th-attainment" style="display:none">Attainment <span class="sort-icon">↕</span></th>
+        <th id="th-stats">2025 Stats</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+  <div id="emptyState" class="empty-state" style="display:none">No players match your filters.</div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// TEAMS
+// ══════════════════════════════════════════
+const TEAMS = {
+  ARZ: { name: "Arizona Cardinals",    colors: ["#97233f","#ffb612"] },
+  ATL: { name: "Atlanta Falcons",      colors: ["#a71930","#a5acaf"] },
+  BAL: { name: "Baltimore Ravens",     colors: ["#241773","#9e7c0c"] },
+  BUF: { name: "Buffalo Bills",        colors: ["#003087","#c8102e"] },
+  CAR: { name: "Carolina Panthers",    colors: ["#0085ca","#101820"] },
+  CHI: { name: "Chicago Bears",        colors: ["#0b162a","#c83803"] },
+  CIN: { name: "Cincinnati Bengals",   colors: ["#fb4f14","#000000"] },
+  CLE: { name: "Cleveland Browns",     colors: ["#311d00","#ff3c00"] },
+  DAL: { name: "Dallas Cowboys",       colors: ["#003594","#869397"] },
+  DEN: { name: "Denver Broncos",       colors: ["#fb4f14","#002244"] },
+  DET: { name: "Detroit Lions",        colors: ["#0076b6","#b0b7bc"] },
+  GB:  { name: "Green Bay Packers",    colors: ["#203731","#ffb612"] },
+  HOU: { name: "Houston Texans",       colors: ["#03202f","#a71930"] },
+  IND: { name: "Indianapolis Colts",   colors: ["#002c5f","#a5acaf"] },
+  JAX: { name: "Jacksonville Jaguars", colors: ["#101820","#d7a22a"] },
+  KC:  { name: "Kansas City Chiefs",   colors: ["#e31837","#ffb81c"] },
+  LAC: { name: "Los Angeles Chargers", colors: ["#0080c6","#ffc20e"] },
+  LAR: { name: "Los Angeles Rams",     colors: ["#003594","#ffd100"] },
+  LV:  { name: "Las Vegas Raiders",    colors: ["#000000","#a5acaf"] },
+  MIA: { name: "Miami Dolphins",       colors: ["#008e97","#fc4c02"] },
+  MIN: { name: "Minnesota Vikings",    colors: ["#4f2683","#ffc62f"] },
+  NE:  { name: "New England Patriots", colors: ["#002244","#c60c30"] },
+  NO:  { name: "New Orleans Saints",   colors: ["#101820","#d3bc8d"] },
+  NYG: { name: "New York Giants",      colors: ["#0b2265","#a71930"] },
+  NYJ: { name: "New York Jets",        colors: ["#125740","#ffffff"] },
+  PHI: { name: "Philadelphia Eagles",  colors: ["#004c54","#a5acaf"] },
+  PIT: { name: "Pittsburgh Steelers",  colors: ["#101820","#ffb612"] },
+  SF:  { name: "San Francisco 49ers",  colors: ["#aa0000","#b3995d"] },
+  SEA: { name: "Seattle Seahawks",     colors: ["#002244","#69be28"] },
+  TB:  { name: "Tampa Bay Buccaneers", colors: ["#d50a0a","#ff7900"] },
+  TEN: { name: "Tennessee Titans",     colors: ["#0c2340","#4b92db"] },
+  WAS: { name: "Washington Commanders",colors: ["#5a1414","#ffb612"] },
+};
+
+const OFFENSE_POS = new Set(['QB','WR','RB','TE','OL']);
+const DEFENSE_POS = new Set(['EDGE','DI','LB','CB','S']);
+const ST_POS = new Set(['K','P','LS']);
+
+const TEAM_ABBRS = Object.keys(TEAMS);
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let allPlayers = [];
+let filteredPlayers = [];
+let sortCol = 'madden';
+let sortDir = 'desc';
+let currentView = 'overview';
+
+// View definitions: columns to show and auto-filters
+const VIEWS = {
+  overview:   { cols: ['team','pos','depth','name','age','madden','cap'],         pos: null,      sort: 'madden' },
+  financial:  { cols: ['team','pos','depth','name','cap','years_pro','attainment'], pos: null,     sort: 'cap' },
+  madden:     { cols: ['team','pos','depth','name','madden','age'],               pos: null,      sort: 'madden' },
+  passing:    { cols: ['team','depth','name','stats'],                            pos: 'QB',      sort: 'name' },
+  rushing:    { cols: ['team','depth','name','stats'],                            pos: 'RB',      sort: 'name' },
+  receiving:  { cols: ['team','depth','name','stats'],                            pos: 'WR',      sort: 'name' },
+  defense:    { cols: ['team','pos','depth','name','stats'],                      pos: null,      unit: 'defense', sort: 'name' },
+};
+
+function setView(viewKey, btn) {
+  currentView = viewKey;
+
+  // Update tab active state
+  document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+
+  const view = VIEWS[viewKey];
+
+  // Apply auto-filters
+  if (view.pos) {
+    document.getElementById('posFilter').value = view.pos;
+  } else if (!['financial','madden'].includes(viewKey)) {
+    // Only clear pos filter for views that don't auto-set it
+    // leave it alone so user can still override
+  }
+  if (view.unit) {
+    document.getElementById('unitFilter').value = view.unit;
+  } else if (viewKey !== 'defense') {
+    document.getElementById('unitFilter').value = '';
+  }
+
+  // Update visible columns
+  updateColumns(view.cols);
+
+  // Apply sort
+  sortCol = view.sort;
+  sortDir = (view.sort === 'madden' || view.sort === 'cap') ? 'desc' : 'asc';
+
+  applyFilters();
+  updateStickyOffset();
+}
+
+function updateColumns(cols) {
+  const allCols = ['team','pos','depth','name','age','years_pro','madden','cap','stats','attainment'];
+
+  // Update thead visibility
+  const colMap = {
+    team: 'th-team', pos: 'th-pos', depth: 'th-depth', name: 'th-name',
+    age: 'th-age', years_pro: 'th-years_pro', madden: 'th-madden',
+    cap: 'th-cap', stats: 'th-stats', attainment: 'th-attainment'
+  };
+
+  allCols.forEach(col => {
+    const th = document.getElementById(colMap[col]);
+    if (th) th.style.display = cols.includes(col) ? '' : 'none';
+  });
+
+  // Store for renderTable to use
+  window._activeCols = cols;
+}
+let loaded = 0;
+
+// ══════════════════════════════════════════
+// LOAD ALL TEAMS
+// ══════════════════════════════════════════
+async function loadAll() {
+  const promises = TEAM_ABBRS.map(abbr =>
+    fetch('data/' + abbr.toLowerCase() + '.json')
+      .then(r => r.json())
+      .then(data => {
+        const team = TEAMS[abbr];
+        for (const [ourladsPos, players] of Object.entries(data.depth_chart || {})) {
+          players.forEach((p, i) => {
+            allPlayers.push({
+              abbr,
+              teamName: team.name,
+              teamColors: team.colors,
+              ourladsPos,
+              depth: p.depth || (i + 1),
+              name: p.name || '',
+              jersey: p.jersey || null,
+              age: p.age || null,
+              years_pro: p.years_pro != null ? p.years_pro : null,
+              madden: p.madden || null,
+              cap_number: p.cap_number || null,
+              cap_raw: parseCap(p.cap_number),
+              standard_pos: p.standard_pos || '',
+              standard_slot: p.standard_slot || ourladsPos,
+              injured: p.injured || false,
+              attainment: p.attainment || null,
+              stats: p.stats || {},
+              stats_season: p.stats_season || null,
+            });
+          });
+        }
+        loaded++;
+      })
+      .catch(() => { loaded++; })
+  );
+
+  await Promise.all(promises);
+
+  // Populate team filter
+  const tf = document.getElementById('teamFilter');
+  TEAM_ABBRS.forEach(abbr => {
+    const opt = document.createElement('option');
+    opt.value = abbr;
+    opt.textContent = TEAMS[abbr].name;
+    tf.appendChild(opt);
+  });
+
+  document.getElementById('loadingState').style.display = 'none';
+  document.getElementById('mainTable').style.display = 'table';
+
+  applyFilters();
+}
+
+function parseCap(capStr) {
+  if (!capStr) return 0;
+  return parseInt(capStr.replace(/[$,]/g, '')) || 0;
+}
+
+// ══════════════════════════════════════════
+// FILTERS
+// ══════════════════════════════════════════
+function applyFilters() {
+  const search = document.getElementById('searchInput').value.toLowerCase().trim();
+  const team   = document.getElementById('teamFilter').value;
+  const unit   = document.getElementById('unitFilter').value;
+  const pos    = document.getElementById('posFilter').value;
+  const depth  = document.getElementById('depthFilter').value;
+
+  filteredPlayers = allPlayers.filter(p => {
+    if (search && !p.name.toLowerCase().includes(search)) return false;
+    if (team && p.abbr !== team) return false;
+    if (unit === 'offense' && !OFFENSE_POS.has(p.standard_pos)) return false;
+    if (unit === 'defense' && !DEFENSE_POS.has(p.standard_pos)) return false;
+    if (pos && p.standard_pos !== pos) return false;
+    if (depth === '1' && p.depth !== 1) return false;
+    if (depth === '2' && p.depth > 2) return false;
+    return true;
+  });
+
+  // Apply sort
+  sortPlayers();
+  renderTable();
+  document.getElementById('rowCount').textContent = filteredPlayers.length.toLocaleString() + ' players';
+}
+
+function clearFilters() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('teamFilter').value = '';
+  document.getElementById('unitFilter').value = '';
+  document.getElementById('posFilter').value = '';
+  document.getElementById('depthFilter').value = '';
+  applyFilters();
+}
+
+// ══════════════════════════════════════════
+// SORT
+// ══════════════════════════════════════════
+function sortBy(col) {
+  if (sortCol === col) {
+    sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+  } else {
+    sortCol = col;
+    sortDir = (col === 'madden' || col === 'cap' || col === 'age') ? 'desc' : 'asc';
+  }
+
+  document.querySelectorAll('.table thead th').forEach(th => {
+    th.classList.remove('sorted');
+    const icon = th.querySelector('.sort-icon');
+    if (icon) icon.textContent = '↕';
+  });
+
+  const th = document.getElementById('th-' + col);
+  if (th) {
+    th.classList.add('sorted');
+    const icon = th.querySelector('.sort-icon');
+    if (icon) icon.textContent = sortDir === 'asc' ? '↑' : '↓';
+  }
+
+  sortPlayers();
+  renderTable();
+}
+
+function sortPlayers() {
+  filteredPlayers.sort((a, b) => {
+    let av, bv;
+    switch(sortCol) {
+      case 'team':      av = a.abbr;         bv = b.abbr;         break;
+      case 'pos':       av = a.standard_pos;  bv = b.standard_pos; break;
+      case 'depth':     av = a.depth;         bv = b.depth;        break;
+      case 'name':      av = a.name;          bv = b.name;         break;
+      case 'age':       av = a.age || 0;      bv = b.age || 0;     break;
+      case 'years_pro': av = a.years_pro != null ? a.years_pro : -1;
+                        bv = b.years_pro != null ? b.years_pro : -1; break;
+      case 'madden':    av = a.madden || 0;   bv = b.madden || 0;  break;
+      case 'cap':       av = a.cap_raw;       bv = b.cap_raw;      break;
+      default:          av = a.madden || 0;   bv = b.madden || 0;
+    }
+    if (av < bv) return sortDir === 'asc' ? -1 : 1;
+    if (av > bv) return sortDir === 'asc' ? 1 : -1;
+    return 0;
+  });
+}
+
+// ══════════════════════════════════════════
+// MADDEN COLOR
+// ══════════════════════════════════════════
+function maddenColor(r) {
+  if (!r) return '#6b7494';
+  if (r >= 95) return '#86efac';
+  if (r >= 90) { const t=(r-90)/5; return 'hsl('+(140+t*20)+',60%,62%)'; }
+  if (r >= 85) { const t=(r-85)/5; return 'hsl('+(100+t*40)+',55%,58%)'; }
+  if (r >= 80) { const t=(r-80)/5; return 'hsl('+(75+t*25)+',55%,58%)'; }
+  if (r >= 75) { const t=(r-75)/5; return 'hsl('+(55+t*20)+',60%,58%)'; }
+  if (r >= 70) { const t=(r-70)/5; return 'hsl('+(38+t*17)+',65%,55%)'; }
+  if (r >= 65) { const t=(r-65)/5; return 'hsl('+(25+t*13)+',65%,52%)'; }
+  return 'hsl('+Math.max(0,(r-55)*2)+',70%,48%)';
+}
+
+// ══════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════
+function renderTable() {
+  const tbody = document.getElementById('tableBody');
+  const empty = document.getElementById('emptyState');
+
+  if (filteredPlayers.length === 0) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+    const html = filteredPlayers.map(p => {
+    const team = TEAMS[p.abbr];
+    const mc = maddenColor(p.madden);
+    const initials = p.name.split(' ').map(w => w[0]).join('').slice(0, 2);
+    const depthLabel = p.depth === 1 ? '1ST' : p.depth === 2 ? '2ND' : p.depth === 3 ? '3RD' : p.depth + 'TH';
+    const isStarter = p.depth === 1;
+    const cols = window._activeCols || ['team','pos','depth','name','age','years_pro','madden','cap','stats'];
+
+    const statEntries = Object.entries(p.stats || {}).slice(0, 4);
+    const statHtml = statEntries.length
+      ? statEntries.map(([k,v]) => '<span class="stat-item"><strong>' + v + '</strong> ' + k + '</span>').join('')
+      : '<span style="color:var(--text-dim)">—</span>';
+
+    let row = '<tr>';
+    if (cols.includes('team'))
+      row += '<td><div class="cell-team"><div class="team-dot" style="background:' + team.colors[0] + ';color:' + team.colors[1] + '">' + p.abbr + '</div></div></td>';
+    if (cols.includes('pos'))
+      row += '<td class="cell-pos"><div>' + p.ourladsPos + '</div>' + (p.standard_pos ? '<div style="margin-top:2px"><span class="std-pos">' + p.standard_pos + '</span></div>' : '') + '</td>';
+    if (cols.includes('depth'))
+      row += '<td><span class="depth-badge' + (isStarter ? ' starter' : '') + '">' + depthLabel + '</span></td>';
+    if (cols.includes('name'))
+      row += '<td><div class="cell-player">' +
+        '<div class="player-initials" style="background:' + team.colors[0] + '">' + initials + '</div>' +
+        '<div class="player-name-block">' +
+          '<div class="player-name">' + (p.jersey ? '#' + p.jersey + ' ' : '') + p.name + '</div>' +
+          '<div class="player-sub">' +
+            (p.injured ? '<span class="tag tag-inj">INJ</span>' : '') +
+            (p.years_pro === 0 ? '<span class="tag tag-rookie">R</span>' : '') +
+            (p.attainment ? '<span>' + p.attainment + '</span>' : '') +
+          '</div>' +
+        '</div>' +
+      '</div></td>';
+    if (cols.includes('age'))
+      row += '<td style="text-align:center;color:var(--text-muted);font-family:\'Barlow Condensed\',sans-serif;font-weight:600">' + (p.age || '—') + '</td>';
+    if (cols.includes('years_pro'))
+      row += '<td style="text-align:center;color:var(--text-muted);font-family:\'Barlow Condensed\',sans-serif;font-weight:600">' + (p.years_pro != null ? p.years_pro : '—') + '</td>';
+    if (cols.includes('madden'))
+      row += '<td class="cell-madden" style="color:' + mc + '">' + (p.madden || '—') + '</td>';
+    if (cols.includes('cap'))
+      row += '<td class="cell-cap">' + (p.cap_number || '—') + '</td>';
+    if (cols.includes('attainment'))
+      row += '<td style="font-family:\'Barlow Condensed\',sans-serif;font-size:12px;color:var(--text-muted)">' + (p.attainment || '—') + '</td>';
+    if (cols.includes('stats'))
+      row += '<td class="cell-stat"><div class="stat-pair">' + statHtml + '</div></td>';
+    row += '</tr>';
+    return row;
+  }).join('');
+
+  tbody.innerHTML = html;
+}
+
+// ══════════════════════════════════════════
+// STICKY OFFSET
+// ══════════════════════════════════════════
+function updateStickyOffset() {
+  const filterBar = document.querySelector('.filter-bar');
+  const viewTabs = document.querySelector('.view-tabs');
+  if (!filterBar) return;
+  const offset = 52 + (viewTabs ? viewTabs.offsetHeight : 0) + filterBar.offsetHeight;
+  document.querySelectorAll('.table thead th').forEach(th => {
+    th.style.top = offset + 'px';
+  });
+}
+
+window.addEventListener('resize', updateStickyOffset);
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+loadAll().then(() => {
+  updateStickyOffset();
+  requestAnimationFrame(() => updateStickyOffset());
+});
+</script>
+</body>
+</html>
