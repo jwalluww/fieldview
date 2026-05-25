@@ -34,6 +34,10 @@ body {
   overflow-x: hidden;
 }
 
+#th-stat1, #th-stat2, #th-stat3, #th-stat4, #th-stat5 {
+  text-align: center;
+}
+
 /* ── HEADER ── */
 .header {
   background: #0d1118;
@@ -101,9 +105,9 @@ body {
 
 /* ── FILTER BAR ── */
 .filter-bar {
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  padding: 10px 24px;
+  background: #0d1118;        /* match header bg exactly */
+  border-bottom: 2px solid var(--border2);  /* stronger separator */
+  padding: 8px 24px;          /* tighten it up */
   display: flex;
   align-items: center;
   gap: 10px;
@@ -230,23 +234,21 @@ body {
 .table thead th {
   background: var(--surface);
   border-bottom: 1px solid var(--border);
-  padding: 10px 12px;
+  padding: 8px 12px;
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
-  font-size: 10px;
-  letter-spacing: 1.5px;
+  font-size: 11px;
+  letter-spacing: 1px;
   text-transform: uppercase;
-  color: var(--text-dim);
+  color: var(--text-muted);
   text-align: left;
   cursor: pointer;
   white-space: nowrap;
-  /* position: sticky; */
-  /* top: 104px; */
   z-index: 100;
   user-select: none;
   transition: color .15s;
 }
-.table thead th:hover { color: var(--text-muted); }
+.table thead th:hover { color: var(--text); }
 .table thead th.sorted { color: var(--accent); }
 .table thead th .sort-icon { 
   margin-left: 4px; 
@@ -256,18 +258,26 @@ body {
 .table thead th.sorted .sort-icon { opacity: 1; }
 
 /* Rows */
+/* Add/replace in your <style> */
+.table tbody td {
+  padding: 7px 12px;  /* slightly tighter */
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  vertical-align: middle;
+  font-size: 14px;
+  color: var(--text);  /* brighter default */
+}
+
+/* Alternating rows like OOTP */
+.table tbody tr:nth-child(even) {
+  background: rgba(255,255,255,0.025);
+}
+
 .table tbody tr {
   border-bottom: 1px solid var(--border);
   transition: background .1s;
   cursor: default;
 }
 .table tbody tr:hover { background: var(--surface2); }
-
-.table tbody td {
-  padding: 9px 12px;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  vertical-align: middle;
-}
 
 /* Team cell */
 .cell-team {
@@ -465,7 +475,7 @@ body {
 
 /* ── VIEW TABS ── */
 .view-tabs {
-  background: var(--surface);
+  background: #0d1118;
   border-bottom: 2px solid var(--border);
   padding: 0 24px;
   display: flex;
@@ -600,6 +610,11 @@ body {
         <th onclick="sortBy('cap')" id="th-cap">Cap Hit <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('cap')" id="th-attainment" style="display:none">Attainment <span class="sort-icon">↕</span></th>
         <th id="th-stats">2025 Stats</th>
+        <th onclick="sortBy('stat1')" id="th-stat1" style="display:none"><span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('stat2')" id="th-stat2" style="display:none"><span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('stat3')" id="th-stat3" style="display:none"><span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('stat4')" id="th-stat4" style="display:none"><span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('stat5')" id="th-stat5" style="display:none"><span class="sort-icon">↕</span></th>
       </tr>
     </thead>
     <tbody id="tableBody"></tbody>
@@ -649,7 +664,15 @@ const TEAMS = {
 const OFFENSE_POS = new Set(['QB','WR','RB','TE','OL']);
 const DEFENSE_POS = new Set(['EDGE','DI','LB','CB','S']);
 const ST_POS = new Set(['K','P','LS']);
-
+const STAT_COLS = {
+  passing:   ['CMP','ATT','YDS','TDs','INT'],
+  rushing:   ['CAR','YDS','AVG','TDs'],
+  receiving: ['REC','TGT','YDS','TDs'],
+  defense:   ['TKL','SACK','INT','PBU'],
+  overview:  null,
+  financial: null,
+  madden:    null,
+};
 const TEAM_ABBRS = Object.keys(TEAMS);
 
 // ══════════════════════════════════════════
@@ -666,10 +689,10 @@ const VIEWS = {
   overview:   { cols: ['team','pos','depth','name','age','madden','cap'],         pos: null,      sort: 'madden' },
   financial:  { cols: ['team','pos','depth','name','cap','years_pro','attainment'], pos: null,     sort: 'cap' },
   madden:     { cols: ['team','pos','depth','name','madden','age'],               pos: null,      sort: 'madden' },
-  passing:    { cols: ['team','depth','name','stats'],                            pos: 'QB',      sort: 'name' },
-  rushing:    { cols: ['team','depth','name','stats'],                            pos: 'RB',      sort: 'name' },
-  receiving:  { cols: ['team','depth','name','stats'],                            pos: 'WR',      sort: 'name' },
-  defense:    { cols: ['team','pos','depth','name','stats'],                      pos: null,      unit: 'defense', sort: 'name' },
+  passing:    { cols: ['team','depth','name','stat1','stat2','stat3','stat4','stat5'], pos: 'QB',   sort: 'name' },
+  rushing:    { cols: ['team','depth','name','stat1','stat2','stat3','stat4'],        pos: 'RB',   sort: 'name' },
+  receiving:  { cols: ['team','depth','name','stat1','stat2','stat3','stat4'],        pos: 'WR',   sort: 'name' },
+  defense:    { cols: ['team','pos','depth','name','stat1','stat2','stat3','stat4'],  pos: null,   unit: 'defense', sort: 'name' }, 
 };
 
 function setView(viewKey, btn) {
@@ -690,7 +713,7 @@ function setView(viewKey, btn) {
   }
   if (view.unit) {
     document.getElementById('unitFilter').value = view.unit;
-  } else if (viewKey !== 'defense') {
+  } else {
     document.getElementById('unitFilter').value = '';
   }
 
@@ -700,19 +723,20 @@ function setView(viewKey, btn) {
   // Apply sort
   sortCol = view.sort;
   sortDir = (view.sort === 'madden' || view.sort === 'cap') ? 'desc' : 'asc';
-
+  updateStatColumns(viewKey);
   applyFilters();
   updateStickyOffset();
 }
 
 function updateColumns(cols) {
-  const allCols = ['team','pos','depth','name','age','years_pro','madden','cap','stats','attainment'];
+  const allCols = ['team','pos','depth','name','age','years_pro','madden','cap','stats','attainment','stat1','stat2','stat3','stat4','stat5'];
 
   // Update thead visibility
   const colMap = {
     team: 'th-team', pos: 'th-pos', depth: 'th-depth', name: 'th-name',
     age: 'th-age', years_pro: 'th-years_pro', madden: 'th-madden',
-    cap: 'th-cap', stats: 'th-stats', attainment: 'th-attainment'
+    cap: 'th-cap', stats: 'th-stats', attainment: 'th-attainment',
+    stat1: 'th-stat1', stat2: 'th-stat2', stat3: 'th-stat3', stat4: 'th-stat4', stat5: 'th-stat5'
   };
 
   allCols.forEach(col => {
@@ -857,13 +881,24 @@ function sortPlayers() {
       case 'pos':       av = a.standard_pos;  bv = b.standard_pos; break;
       case 'depth':     av = a.depth;         bv = b.depth;        break;
       case 'name':      av = a.name;          bv = b.name;         break;
-      case 'age':       av = a.age || 0;      bv = b.age || 0;     break;
-      case 'years_pro': av = a.years_pro != null ? a.years_pro : -1;
-                        bv = b.years_pro != null ? b.years_pro : -1; break;
-      case 'madden':    av = a.madden || 0;   bv = b.madden || 0;  break;
-      case 'cap':       av = a.cap_raw;       bv = b.cap_raw;      break;
-      default:          av = a.madden || 0;   bv = b.madden || 0;
+      case 'age':       av = a.age;           bv = b.age;          break;
+      case 'years_pro': av = a.years_pro;     bv = b.years_pro;    break;
+      case 'madden':    av = a.madden;        bv = b.madden;       break;
+      case 'cap':       av = a.cap_raw || null; bv = b.cap_raw || null; break;
+      case 'stat1': av = getStatVal(a, window._statKey1); bv = getStatVal(b, window._statKey1); break;
+      case 'stat2': av = getStatVal(a, window._statKey2); bv = getStatVal(b, window._statKey2); break;
+      case 'stat3': av = getStatVal(a, window._statKey3); bv = getStatVal(b, window._statKey3); break;
+      case 'stat4': av = getStatVal(a, window._statKey4); bv = getStatVal(b, window._statKey4); break;
+      case 'stat5': av = getStatVal(a, window._statKey5); bv = getStatVal(b, window._statKey5); break;
+      default:          av = a.madden;        bv = b.madden;
     }
+    // Nulls always last regardless of sort direction
+    const aNull = av == null || av === '' || av === 0 && sortCol !== 'depth';
+    const bNull = bv == null || bv === '' || bv === 0 && sortCol !== 'depth';
+    if (aNull && bNull) return 0;
+    if (aNull) return 1;
+    if (bNull) return -1;
+
     if (av < bv) return sortDir === 'asc' ? -1 : 1;
     if (av > bv) return sortDir === 'asc' ? 1 : -1;
     return 0;
@@ -883,6 +918,32 @@ function maddenColor(r) {
   if (r >= 70) { const t=(r-70)/5; return 'hsl('+(38+t*17)+',65%,55%)'; }
   if (r >= 65) { const t=(r-65)/5; return 'hsl('+(25+t*13)+',65%,52%)'; }
   return 'hsl('+Math.max(0,(r-55)*2)+',70%,48%)';
+}
+
+function getStatVal(p, statKey) {
+  if (!statKey || !p.stats) return null;
+  return p.stats[statKey] != null ? p.stats[statKey] : null;
+}
+
+function updateStatColumns(viewKey) {
+  const keys = STAT_COLS[viewKey] || null;
+  const ids = ['stat1','stat2','stat3','stat4','stat5'];
+  
+  ids.forEach((id, i) => {
+    const th = document.getElementById('th-' + id);
+    if (!th) return;
+    if (keys && i < keys.length) {
+      th.style.display = '';
+      th.innerHTML = keys[i] + ' <span class="sort-icon">↕</span>';
+      window['_statKey' + (i+1)] = keys[i];
+    } else {
+      th.style.display = 'none';
+      window['_statKey' + (i+1)] = null;
+    }
+  });
+
+  const thStats = document.getElementById('th-stats');
+  if (thStats) thStats.style.display = keys ? 'none' : '';
 }
 
 // ══════════════════════════════════════════
@@ -942,7 +1003,14 @@ function renderTable() {
     if (cols.includes('attainment'))
       row += '<td style="font-family:\'Barlow Condensed\',sans-serif;font-size:12px;color:var(--text-muted)">' + (p.attainment || '—') + '</td>';
     if (cols.includes('stats'))
-      row += '<td class="cell-stat"><div class="stat-pair">' + statHtml + '</div></td>';
+        row += '<td class="cell-stat"><div class="stat-pair">' + statHtml + '</div></td>';
+      ['stat1','stat2','stat3','stat4','stat5'].forEach((col, i) => {
+        if (cols.includes(col)) {
+          const key = window['_statKey' + (i+1)];
+          const val = key && p.stats ? p.stats[key] : null;
+          row += '<td style="text-align:center;font-family:\'Barlow Condensed\',sans-serif;font-weight:700;font-size:14px;color:var(--text)">' + (val != null ? val : '<span style="color:var(--text-muted)">—</span>') + '</td>';
+        }
+      });
     row += '</tr>';
     return row;
   }).join('');
@@ -972,6 +1040,8 @@ loadAll().then(() => {
   updateStickyOffset();
   requestAnimationFrame(() => updateStickyOffset());
 });
+window._activeCols = VIEWS['overview'].cols;
+updateStatColumns('overview');
 </script>
 </body>
 </html>

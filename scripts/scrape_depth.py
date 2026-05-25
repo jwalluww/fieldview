@@ -39,7 +39,7 @@ TEAMS = [
     {"name": "Washington Commanders","abbr": "WAS"},
 ]
 
-SKIP_POSITIONS = {'PUP', 'IR', 'NFI', 'PUP-R', 'EXE', 'RES'}
+SKIP_POSITIONS = {'PUP', 'IR', 'NFI', 'PUP-R', 'EXE', 'RES', 'KR', 'PR', 'LS', 'K', 'P'}
 
 # Standard slot mapping per scheme
 # Each entry: ourlads_code -> (standard_slot, standard_pos)
