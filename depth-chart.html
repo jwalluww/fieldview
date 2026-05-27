@@ -1029,28 +1029,30 @@ function updateStickyOffset() {
 
   const headerH = header ? header.offsetHeight : 52;
   const tabsH = viewTabs ? viewTabs.offsetHeight : 42;
+  const filterTop = headerH + tabsH;
 
-  if (filterBar) filterBar.style.top = (headerH + tabsH) + 'px';
+  if (filterBar) filterBar.style.top = filterTop + 'px';
 
-  // Sticky thead offset = header + tabs + filter bar
   const filterH = filterBar ? filterBar.offsetHeight : 48;
-  const theadTop = headerH + tabsH + filterH;
+  const theadTop = filterTop + filterH;
+
   document.querySelectorAll('.table thead th').forEach(th => {
     th.style.top = theadTop + 'px';
   });
 }
 
-window.addEventListener('resize', updateStickyOffset);
-
 // ══════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════
-loadAll().then(() => {
-  updateStickyOffset();
-  requestAnimationFrame(() => updateStickyOffset());
-});
 window._activeCols = VIEWS['overview'].cols;
 updateStatColumns('overview');
+loadAll().then(() => {
+  requestAnimationFrame(() => {
+    updateStickyOffset();
+    requestAnimationFrame(() => updateStickyOffset());
+  });
+});
+window.addEventListener('resize', updateStickyOffset);
 </script>
 </body>
 </html>
