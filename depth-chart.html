@@ -105,9 +105,9 @@ body {
 
 /* ── FILTER BAR ── */
 .filter-bar {
-  background: #0d1118;        /* match header bg exactly */
-  border-bottom: 2px solid var(--border2);  /* stronger separator */
-  padding: 8px 24px;          /* tighten it up */
+  background: #0d1118;
+  border-bottom: 2px solid var(--border2);
+  padding: 8px 24px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -233,19 +233,18 @@ body {
 /* Column headers */
 .table thead th {
   background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  padding: 8px 12px;
+  border-bottom: 2px solid var(--border2);
+  padding: 12px 16px;
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 1px;
+  font-size: 13px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--text-muted);
   text-align: left;
   cursor: pointer;
   white-space: nowrap;
   position: sticky;
-  top: 104px; /* overridden by JS anyway */
   z-index: 100;
   user-select: none;
   transition: color .15s;
@@ -1031,7 +1030,7 @@ function updateStickyOffset() {
   const headerH = header ? header.offsetHeight : 52;
   const tabsH = viewTabs ? viewTabs.offsetHeight : 42;
 
-  if (filterBar) filterBar.style.top = headerH + tabsH + 'px';
+  if (filterBar) filterBar.style.top = (headerH + tabsH) + 'px';
 
   // Sticky thead offset = header + tabs + filter bar
   const filterH = filterBar ? filterBar.offsetHeight : 48;
