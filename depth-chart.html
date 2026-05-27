@@ -244,6 +244,8 @@ body {
   text-align: left;
   cursor: pointer;
   white-space: nowrap;
+  position: sticky;
+  top: 104px; /* overridden by JS anyway */
   z-index: 100;
   user-select: none;
   transition: color .15s;
@@ -1022,12 +1024,20 @@ function renderTable() {
 // STICKY OFFSET
 // ══════════════════════════════════════════
 function updateStickyOffset() {
-  const filterBar = document.querySelector('.filter-bar');
+  const header = document.querySelector('.header');
   const viewTabs = document.querySelector('.view-tabs');
-  if (!filterBar) return;
-  const offset = 52 + (viewTabs ? viewTabs.offsetHeight : 0) + filterBar.offsetHeight;
+  const filterBar = document.querySelector('.filter-bar');
+
+  const headerH = header ? header.offsetHeight : 52;
+  const tabsH = viewTabs ? viewTabs.offsetHeight : 42;
+
+  if (filterBar) filterBar.style.top = headerH + tabsH + 'px';
+
+  // Sticky thead offset = header + tabs + filter bar
+  const filterH = filterBar ? filterBar.offsetHeight : 48;
+  const theadTop = headerH + tabsH + filterH;
   document.querySelectorAll('.table thead th').forEach(th => {
-    th.style.top = offset + 'px';
+    th.style.top = theadTop + 'px';
   });
 }
 
