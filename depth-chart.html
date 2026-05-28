@@ -244,7 +244,6 @@ body {
   text-align: left;
   cursor: pointer;
   white-space: nowrap;
-  position: sticky;
   z-index: 100;
   user-select: none;
   transition: color .15s;
@@ -1032,13 +1031,6 @@ function updateStickyOffset() {
   const filterTop = headerH + tabsH;
 
   if (filterBar) filterBar.style.top = filterTop + 'px';
-
-  const filterH = filterBar ? filterBar.offsetHeight : 48;
-  const theadTop = filterTop + filterH;
-
-  document.querySelectorAll('.table thead th').forEach(th => {
-    th.style.top = theadTop + 'px';
-  });
 }
 
 // ══════════════════════════════════════════
