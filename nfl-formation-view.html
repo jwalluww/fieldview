@@ -209,7 +209,7 @@ body {
   position: relative;
   z-index: 10;
   width: 100%;
-  height: 1000px;
+  height: 1000px; /* fallback, overridden by JS */
 }
 
 /* ── PLAYER CARD ── */
@@ -503,6 +503,45 @@ body {
   to   { opacity: 1; transform: translate(-50%, -50%); }
 }
 .player-node { animation: nodeIn .35s cubic-bezier(.34,1.56,.64,1) both; }
+
+@media (max-width: 600px) {
+  .p-card {
+    width: 72px;
+    padding: 4px 6px 4px;
+  }
+  .p-pos-bar {
+    width: 72px;
+    font-size: 11px;
+    padding: 3px 0;
+  }
+  .p-lastname {
+    font-size: 13px;
+    max-width: 64px;
+  }
+  .p-madden {
+    font-size: 20px;
+  }
+  .p-jersey {
+    font-size: 10px;
+  }
+  .p-rank {
+    font-size: 11px;
+  }
+  /* Hide rank on very small screens to save space */
+  .p-rank { display: none; }
+  
+  /* Header tighter on mobile */
+  .header {
+    padding: 0 12px;
+    gap: 10px;
+    flex-wrap: wrap;
+    height: auto;
+    min-height: 52px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -738,6 +777,32 @@ async function loadTeam(abbr) {
   }
   updateHeader();
   renderFormation();
+  syncFieldHeight();
+}
+
+function syncURL() {
+  const params = new URLSearchParams({
+    team: currentTeam,
+    unit: currentUnit,
+    pkg: currentPersonnel
+  });
+  history.replaceState(null, '', '?' + params.toString());
+}
+
+function syncFieldHeight() {
+  const fieldBg = document.querySelector('.field-bg');
+  const layer = document.getElementById('playersLayer');
+  if (!fieldBg || !layer) return;
+  const h = fieldBg.getBoundingClientRect().height;
+  if (h > 0) layer.style.height = h + 'px';
+}
+
+window.addEventListener('resize', syncFieldHeight);
+// Call after render
+function renderFormation() {
+  // ... existing code ...
+  layer.innerHTML = html;
+  syncFieldHeight(); // add this line at the end
 }
 
 function getStarter(formationPos) {
@@ -971,24 +1036,6 @@ function renderFormation() {
   const layer = document.getElementById('playersLayer');
   if (!teamData) { layer.innerHTML = ''; return; }
 
-  // Refresh defense scheme buttons when team changes
-  if (currentUnit === 'defense') {
-    const baseScheme = teamData?.base_defense || 'Base 4-3';
-    const isThreeFour = baseScheme.includes('3-4');
-    const baseKey = isThreeFour ? 'base34' : 'base43';
-    const baseLabel = isThreeFour ? '3-4 Base' : '4-3 Base';
-    // Only update if currently on base package
-    if (currentPersonnel === 'base43' || currentPersonnel === 'base34') {
-      currentPersonnel = baseKey;
-      const nickelKey = isThreeFour ? 'nickel34' : 'nickel';
-      document.getElementById('personnelGroup').innerHTML = `
-        <button class="ctrl-btn active" onclick="setPersonnel('${baseKey}',this)">${baseLabel}</button>
-        <button class="ctrl-btn" onclick="setPersonnel('${nickelKey}',this)">Nickel</button>
-      `;
-      document.getElementById('formationLabel').textContent = baseScheme;
-    }
-  }
-
   const coordMap = FORMATION_COORDS[currentUnit]?.[currentPersonnel]
                 || FORMATION_COORDS[currentUnit]?.['11']
                 || {};
@@ -1023,27 +1070,28 @@ function setUnit(unit, btn) {
   const pg = document.getElementById('personnelGroup');
 
   if (unit === 'offense') {
-    const nickelKey = isThreeFour ? 'nickel34' : 'nickel';
     pg.innerHTML = `
-      <button class="ctrl-btn active" onclick="setPersonnel('${baseKey}',this)">${baseLabel}</button>
-      <button class="ctrl-btn" onclick="setPersonnel('${nickelKey}',this)">Nickel</button>
+      <button class="ctrl-btn active" onclick="setPersonnel('11',this)">11 (3 WR)</button>
+      <button class="ctrl-btn" onclick="setPersonnel('12',this)">12 (2 TE)</button>
     `;
     currentPersonnel = '11';
     document.getElementById('formationLabel').textContent = '11 Personnel · Shotgun Spread';
-  } else if (unit === 'defense') {
+  } else {
     const baseScheme = teamData?.base_defense || 'Base 4-3';
     const isThreeFour = baseScheme.includes('3-4');
-    const baseKey = isThreeFour ? 'base34' : 'base43';
-    const baseLabel = isThreeFour ? '3-4 Base' : '4-3 Base';
+    const baseKey    = isThreeFour ? 'base34'   : 'base43';
+    const nickelKey  = isThreeFour ? 'nickel34' : 'nickel';
+    const baseLabel  = isThreeFour ? '3-4 Base' : '4-3 Base';
     pg.innerHTML = `
       <button class="ctrl-btn active" onclick="setPersonnel('${baseKey}',this)">${baseLabel}</button>
-      <button class="ctrl-btn" onclick="setPersonnel('nickel',this)">Nickel</button>
+      <button class="ctrl-btn" onclick="setPersonnel('${nickelKey}',this)">Nickel</button>
     `;
     currentPersonnel = baseKey;
     document.getElementById('formationLabel').textContent = baseScheme;
   }
 
   renderFormation();
+  syncURL(); // add this
 }
 
 function setPersonnel(pers, btn) {
@@ -1059,6 +1107,7 @@ function setPersonnel(pers, btn) {
   };
   document.getElementById('formationLabel').textContent = labels[pers] || pers;
   renderFormation();
+  syncURL(); // add this
 }
 
 function buildTeamDropdown() {
@@ -1081,7 +1130,18 @@ function selectTeam(abbr) {
   currentStarters = {};
   localStorage.setItem('fieldview_team', abbr);
   document.getElementById('teamsDropdown').classList.remove('open');
+  // Reset to offense/11 so defense buttons rebuild cleanly on next toggle
+  currentUnit = 'offense';
+  currentPersonnel = '11';
+  document.querySelectorAll('#unitGroup .ctrl-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('#unitGroup .ctrl-btn').classList.add('active');
+  document.getElementById('personnelGroup').innerHTML = `
+    <button class="ctrl-btn active" onclick="setPersonnel('11',this)">11 (3 WR)</button>
+    <button class="ctrl-btn" onclick="setPersonnel('12',this)">12 (2 TE)</button>
+  `;
+  document.getElementById('formationLabel').textContent = '11 Personnel · Shotgun Spread';
   loadTeam(abbr);
+  syncURL(); // add this
 }
 
 document.addEventListener('click', e => {
@@ -1093,9 +1153,28 @@ document.addEventListener('click', e => {
   }
 });
 
-const savedTeam = localStorage.getItem('fieldview_team') || 'BUF';
-currentTeam = savedTeam;
-loadTeam(savedTeam);
+const params = new URLSearchParams(window.location.search);
+const urlTeam = params.get('team');
+const urlUnit = params.get('unit');
+const urlPkg  = params.get('pkg');
+
+currentTeam = (urlTeam && TEAMS[urlTeam]) ? urlTeam : (localStorage.getItem('fieldview_team') || 'BUF');
+
+loadTeam(currentTeam).then(() => {
+  syncFieldHeight();
+  if (urlUnit && urlPkg) {
+    const unitBtns = document.querySelectorAll('#unitGroup .ctrl-btn');
+    unitBtns.forEach(btn => {
+      if (btn.textContent.toLowerCase().includes(urlUnit)) btn.click();
+    });
+    setTimeout(() => {
+      const persBtns = document.querySelectorAll('#personnelGroup .ctrl-btn');
+      persBtns.forEach(btn => {
+        if (btn.getAttribute('onclick')?.includes(urlPkg)) btn.click();
+      });
+    }, 50);
+  }
+});
 </script>
 </body>
 </html>

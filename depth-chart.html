@@ -263,7 +263,7 @@ body {
   padding: 7px 12px;  /* slightly tighter */
   border-bottom: 1px solid rgba(255,255,255,0.04);
   vertical-align: middle;
-  font-size: 14px;
+  /* font-size: 14px; */
   color: var(--text);  /* brighter default */
 }
 
@@ -326,7 +326,7 @@ body {
 .player-name {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
-  font-size: 15px;
+  font-size: 17px;
   color: var(--text);
   white-space: nowrap;
 }
@@ -354,8 +354,8 @@ body {
 /* Madden cell */
 .cell-madden {
   font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 500;
-  font-size: 18px;
+  font-weight: 700;
+  font-size: 31px;
   text-align: center;
 }
 
@@ -384,20 +384,11 @@ body {
   text-transform: uppercase;
 }
 
-/* Depth badge */
-.depth-badge {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--text-dim);
-}
-.depth-badge.starter { color: var(--gold); }
-
 /* Cap hit */
 .cell-cap {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
-  font-size: 13px;
+  font-size: 20px;
   color: var(--gold);
   white-space: nowrap;
 }
@@ -514,6 +505,31 @@ body {
   margin: 0 4px;
   flex-shrink: 0;
 }
+
+@media (max-width: 600px) {
+  .table-wrap { padding: 0 12px 32px; }
+  
+  .table { display: none; }
+  
+  #mobileList { display: block; }
+
+  .filter-bar {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+  
+  .filter-search { flex: 1 1 100%; }
+  
+  .filter-select {
+    flex: 1 1 calc(50% - 4px);
+    font-size: 12px;
+  }
+
+  .header { padding: 0 12px; }
+  
+  .view-tabs { padding: 0 12px; }
+}
+
 </style>
 </head>
 <body>
@@ -579,12 +595,6 @@ body {
     <option value="P">P</option>
   </select>
 
-  <select class="filter-select" id="depthFilter" onchange="applyFilters()">
-    <option value="">All Depths</option>
-    <option value="1">Starters Only</option>
-    <option value="2">Depth 1-2</option>
-  </select>
-
   <div class="filter-right">
     <span class="row-count" id="rowCount">Loading...</span>
     <button class="clear-btn" onclick="clearFilters()">Clear</button>
@@ -601,15 +611,14 @@ body {
     <thead>
       <tr>
         <th onclick="sortBy('team')" id="th-team">Team <span class="sort-icon">↕</span></th>
-        <th onclick="sortBy('pos')" id="th-pos">Pos <span class="sort-icon">↕</span></th>
-        <th onclick="sortBy('depth')" id="th-depth">Depth <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('ourlads_pos')" id="th-ourlads_pos">Position <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('pos')" id="th-pos">Group <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('name')" id="th-name">Player <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('age')" id="th-age">Age <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('years_pro')" id="th-years_pro">NFL Yr <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('madden')" id="th-madden" class="sorted">Madden <span class="sort-icon">↓</span></th>
         <th onclick="sortBy('cap')" id="th-cap">Cap Hit <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('cap')" id="th-attainment" style="display:none">Attainment <span class="sort-icon">↕</span></th>
-        <th id="th-stats">2025 Stats</th>
         <th onclick="sortBy('stat1')" id="th-stat1" style="display:none"><span class="sort-icon">↕</span></th>
         <th onclick="sortBy('stat2')" id="th-stat2" style="display:none"><span class="sort-icon">↕</span></th>
         <th onclick="sortBy('stat3')" id="th-stat3" style="display:none"><span class="sort-icon">↕</span></th>
@@ -619,6 +628,7 @@ body {
     </thead>
     <tbody id="tableBody"></tbody>
   </table>
+  <div id="mobileList" style="display:none"></div>
   <div id="emptyState" class="empty-state" style="display:none">No players match your filters.</div>
 </div>
 
@@ -686,13 +696,13 @@ let currentView = 'overview';
 
 // View definitions: columns to show and auto-filters
 const VIEWS = {
-  overview:   { cols: ['team','pos','depth','name','age','madden','cap'],         pos: null,      sort: 'madden' },
-  financial:  { cols: ['team','pos','depth','name','cap','years_pro','attainment'], pos: null,     sort: 'cap' },
-  madden:     { cols: ['team','pos','depth','name','madden','age'],               pos: null,      sort: 'madden' },
-  passing:    { cols: ['team','depth','name','stat1','stat2','stat3','stat4','stat5'], pos: 'QB',   sort: 'name' },
-  rushing:    { cols: ['team','depth','name','stat1','stat2','stat3','stat4'],        pos: 'RB',   sort: 'name' },
-  receiving:  { cols: ['team','depth','name','stat1','stat2','stat3','stat4'],        pos: 'WR',   sort: 'name' },
-  defense:    { cols: ['team','pos','depth','name','stat1','stat2','stat3','stat4'],  pos: null,   unit: 'defense', sort: 'name' }, 
+  overview:   { cols: ['team','ourlads_pos','pos','name','age','madden','cap'],              pos: null, sort: 'madden' },
+  financial:  { cols: ['team','ourlads_pos','pos','name','cap','years_pro','attainment'],    pos: null, sort: 'cap' },
+  madden:     { cols: ['team','ourlads_pos','pos','name','madden','age'],                    pos: null, sort: 'madden' },
+  passing:    { cols: ['team','name','stat1','stat2','stat3','stat4','stat5'],               pos: 'QB', sort: 'name' },
+  rushing:    { cols: ['team','name','stat1','stat2','stat3','stat4'],                       pos: 'RB', sort: 'name' },
+  receiving:  { cols: ['team','name','stat1','stat2','stat3','stat4'],                       pos: 'WR', sort: 'name' },
+  defense:    { cols: ['team','ourlads_pos','pos','name','stat1','stat2','stat3','stat4'],   pos: null, unit: 'defense', sort: 'name' },
 };
 
 function setView(viewKey, btn) {
@@ -729,14 +739,13 @@ function setView(viewKey, btn) {
 }
 
 function updateColumns(cols) {
-  const allCols = ['team','pos','depth','name','age','years_pro','madden','cap','stats','attainment','stat1','stat2','stat3','stat4','stat5'];
+  const allCols = ['team','ourlads_pos','pos','name','age','years_pro','madden','cap','stats','attainment','stat1','stat2','stat3','stat4','stat5'];
 
-  // Update thead visibility
   const colMap = {
-    team: 'th-team', pos: 'th-pos', depth: 'th-depth', name: 'th-name',
-    age: 'th-age', years_pro: 'th-years_pro', madden: 'th-madden',
-    cap: 'th-cap', stats: 'th-stats', attainment: 'th-attainment',
-    stat1: 'th-stat1', stat2: 'th-stat2', stat3: 'th-stat3', stat4: 'th-stat4', stat5: 'th-stat5'
+      team: 'th-team', ourlads_pos: 'th-ourlads_pos', pos: 'th-pos', name: 'th-name',
+      age: 'th-age', years_pro: 'th-years_pro', madden: 'th-madden',
+      cap: 'th-cap', stats: 'th-stats', attainment: 'th-attainment',
+      stat1: 'th-stat1', stat2: 'th-stat2', stat3: 'th-stat3', stat4: 'th-stat4', stat5: 'th-stat5'
   };
 
   allCols.forEach(col => {
@@ -765,7 +774,6 @@ async function loadAll() {
               teamName: team.name,
               teamColors: team.colors,
               ourladsPos,
-              depth: p.depth || (i + 1),
               name: p.name || '',
               jersey: p.jersey || null,
               age: p.age || null,
@@ -817,7 +825,6 @@ function applyFilters() {
   const team   = document.getElementById('teamFilter').value;
   const unit   = document.getElementById('unitFilter').value;
   const pos    = document.getElementById('posFilter').value;
-  const depth  = document.getElementById('depthFilter').value;
 
   filteredPlayers = allPlayers.filter(p => {
     if (search && !p.name.toLowerCase().includes(search)) return false;
@@ -825,8 +832,6 @@ function applyFilters() {
     if (unit === 'offense' && !OFFENSE_POS.has(p.standard_pos)) return false;
     if (unit === 'defense' && !DEFENSE_POS.has(p.standard_pos)) return false;
     if (pos && p.standard_pos !== pos) return false;
-    if (depth === '1' && p.depth !== 1) return false;
-    if (depth === '2' && p.depth > 2) return false;
     return true;
   });
 
@@ -841,7 +846,6 @@ function clearFilters() {
   document.getElementById('teamFilter').value = '';
   document.getElementById('unitFilter').value = '';
   document.getElementById('posFilter').value = '';
-  document.getElementById('depthFilter').value = '';
   applyFilters();
 }
 
@@ -871,6 +875,7 @@ function sortBy(col) {
 
   sortPlayers();
   renderTable();
+  renderMobileList();
 }
 
 function sortPlayers() {
@@ -879,7 +884,7 @@ function sortPlayers() {
     switch(sortCol) {
       case 'team':      av = a.abbr;         bv = b.abbr;         break;
       case 'pos':       av = a.standard_pos;  bv = b.standard_pos; break;
-      case 'depth':     av = a.depth;         bv = b.depth;        break;
+      case 'ourlads_pos': av = a.ourladsPos; bv = b.ourladsPos; break;
       case 'name':      av = a.name;          bv = b.name;         break;
       case 'age':       av = a.age;           bv = b.age;          break;
       case 'years_pro': av = a.years_pro;     bv = b.years_pro;    break;
@@ -949,6 +954,33 @@ function updateStatColumns(viewKey) {
 // ══════════════════════════════════════════
 // RENDER
 // ══════════════════════════════════════════
+function renderMobileList() {
+  const isMobile = window.innerWidth <= 600;
+  const list = document.getElementById('mobileList');
+  if (!list) return;
+  
+  if (!isMobile) { list.style.display = 'none'; return; }
+  
+  document.getElementById('mainTable').style.display = 'none';
+  list.style.display = 'block';
+
+  list.innerHTML = filteredPlayers.map(p => {
+    const team = TEAMS[p.abbr];
+    const mc = maddenColor(p.madden);
+    const initials = p.name.split(' ').map(w => w[0]).join('').slice(0,2);
+    return `
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
+        <div style="width:32px;height:32px;border-radius:50%;background:${team.colors[0]};display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:9px;color:#fff;flex-shrink:0">${p.abbr}</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:1px">${p.ourladsPos} · <span class="std-pos">${p.standard_pos}</span>${p.injured ? ' · <span style="color:var(--red)">INJ</span>' : ''}</div>
+        </div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:${mc};flex-shrink:0">${p.madden || '—'}</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:var(--gold);flex-shrink:0;text-align:right">${p.cap_number || '—'}</div>
+      </div>
+    `;
+  }).join('');
+}
 function renderTable() {
   const tbody = document.getElementById('tableBody');
   const empty = document.getElementById('emptyState');
@@ -964,9 +996,7 @@ function renderTable() {
     const team = TEAMS[p.abbr];
     const mc = maddenColor(p.madden);
     const initials = p.name.split(' ').map(w => w[0]).join('').slice(0, 2);
-    const depthLabel = p.depth === 1 ? '1ST' : p.depth === 2 ? '2ND' : p.depth === 3 ? '3RD' : p.depth + 'TH';
-    const isStarter = p.depth === 1;
-    const cols = window._activeCols || ['team','pos','depth','name','age','years_pro','madden','cap','stats'];
+    const cols = window._activeCols || ['team','pos','name','age','years_pro','madden','cap','stats'];
 
     const statEntries = Object.entries(p.stats || {}).slice(0, 4);
     const statHtml = statEntries.length
@@ -976,15 +1006,15 @@ function renderTable() {
     let row = '<tr>';
     if (cols.includes('team'))
       row += '<td><div class="cell-team"><div class="team-dot" style="background:' + team.colors[0] + ';color:' + team.colors[1] + '">' + p.abbr + '</div></div></td>';
+    if (cols.includes('ourlads_pos'))
+      row += '<td class="cell-pos">' + p.ourladsPos + '</td>';
     if (cols.includes('pos'))
-      row += '<td class="cell-pos"><div>' + p.ourladsPos + '</div>' + (p.standard_pos ? '<div style="margin-top:2px"><span class="std-pos">' + p.standard_pos + '</span></div>' : '') + '</td>';
-    if (cols.includes('depth'))
-      row += '<td><span class="depth-badge' + (isStarter ? ' starter' : '') + '">' + depthLabel + '</span></td>';
+      row += '<td style="text-align:center"><span class="std-pos">' + (p.standard_pos || '—') + '</span></td>';
     if (cols.includes('name'))
       row += '<td><div class="cell-player">' +
         '<div class="player-initials" style="background:' + team.colors[0] + '">' + initials + '</div>' +
         '<div class="player-name-block">' +
-          '<div class="player-name">' + (p.jersey ? '#' + p.jersey + ' ' : '') + p.name + '</div>' +
+          '<div class="player-name">' + p.name + '</div>' +
           '<div class="player-sub">' +
             (p.injured ? '<span class="tag tag-inj">INJ</span>' : '') +
             (p.years_pro === 0 ? '<span class="tag tag-rookie">R</span>' : '') +
@@ -1008,7 +1038,7 @@ function renderTable() {
         if (cols.includes(col)) {
           const key = window['_statKey' + (i+1)];
           const val = key && p.stats ? p.stats[key] : null;
-          row += '<td style="text-align:center;font-family:\'Barlow Condensed\',sans-serif;font-weight:700;font-size:14px;color:var(--text)">' + (val != null ? val : '<span style="color:var(--text-muted)">—</span>') + '</td>';
+          row += '<td style="text-align:center;font-family:\'Barlow Condensed\',sans-serif;font-weight:700;font-size:16px;color:var(--text)">' + (val != null ? val : '<span style="color:var(--text-muted)">—</span>') + '</td>';
         }
       });
     row += '</tr>';
@@ -1025,18 +1055,16 @@ function updateStickyOffset() {
   const header = document.querySelector('.header');
   const viewTabs = document.querySelector('.view-tabs');
   const filterBar = document.querySelector('.filter-bar');
-
   const headerH = header ? header.offsetHeight : 52;
   const tabsH = viewTabs ? viewTabs.offsetHeight : 42;
-  const filterTop = headerH + tabsH;
-
-  if (filterBar) filterBar.style.top = filterTop + 'px';
+  if (filterBar) filterBar.style.top = (headerH + tabsH) + 'px';
 }
 
 // ══════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════
 window._activeCols = VIEWS['overview'].cols;
+updateColumns(VIEWS['overview'].cols);
 updateStatColumns('overview');
 loadAll().then(() => {
   requestAnimationFrame(() => {
@@ -1045,6 +1073,7 @@ loadAll().then(() => {
   });
 });
 window.addEventListener('resize', updateStickyOffset);
+window.addEventListener('resize', renderMobileList);
 </script>
 </body>
 </html>
