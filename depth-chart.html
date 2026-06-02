@@ -675,13 +675,10 @@ const OFFENSE_POS = new Set(['QB','WR','RB','TE','OL']);
 const DEFENSE_POS = new Set(['EDGE','DI','LB','CB','S']);
 const ST_POS = new Set(['K','P','LS']);
 const STAT_COLS = {
-  passing:   ['CMP','ATT','YDS','TDs','INT'],
-  rushing:   ['CAR','YDS','AVG','TDs'],
-  receiving: ['REC','TGT','YDS','TDs'],
-  defense:   ['TKL','SACK','INT','PBU'],
-  overview:  null,
-  financial: null,
-  madden:    null,
+  passing:   ['CMP','ATT','PASS_YDS','PASS_TDS','INT'],
+  rushing:   ['CAR','RUSH_YDS','RUSH_TDS','REC'],
+  receiving: ['REC','TGT','REC_YDS','REC_TDS'],
+  defense:   ['TKL','SACK','INT','PBU','TFL'],
 };
 const TEAM_ABBRS = Object.keys(TEAMS);
 
