@@ -407,13 +407,13 @@
         "madden_pos_label": "LG"
       },
       {
-        "name": "Ka'ena De Cambra",
+        "name": "Ka'ena Decambra",
         "depth": 3,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "C",
         "standard_pos": "OL",
-        "cap_number": null,
+        "cap_number": "$886,666",
         "stats": {},
         "stats_season": null,
         "madden": null,
@@ -578,31 +578,8 @@
         "madden_pos_label": "TE"
       },
       {
-        "name": "Tip Reiman",
-        "depth": 2,
-        "injured": false,
-        "attainment": "24/3",
-        "standard_slot": "TE",
-        "standard_pos": "TE",
-        "cap_number": "$1,579,067",
-        "stats": {
-          "TGT": 5,
-          "REC": 3,
-          "YDS": 18,
-          "YAC": 7
-        },
-        "stats_season": 2025,
-        "madden": 65,
-        "jersey": 87,
-        "age": 23,
-        "years_pro": 1,
-        "madden_rank": 87,
-        "madden_rank_total": 126,
-        "madden_pos_label": "TE"
-      },
-      {
         "name": "Elijah Higgins",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "W/Mia",
         "standard_slot": "TE",
@@ -620,6 +597,29 @@
         "age": 24,
         "years_pro": 2,
         "madden_rank": 71,
+        "madden_rank_total": 126,
+        "madden_pos_label": "TE"
+      },
+      {
+        "name": "Tip Reiman",
+        "depth": 3,
+        "injured": false,
+        "attainment": "24/3",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": "$1,579,067",
+        "stats": {
+          "TGT": 5,
+          "REC": 3,
+          "YDS": 18,
+          "YAC": 7
+        },
+        "stats_season": 2025,
+        "madden": 65,
+        "jersey": 87,
+        "age": 23,
+        "years_pro": 1,
+        "madden_rank": 87,
         "madden_rank_total": 126,
         "madden_pos_label": "TE"
       },
@@ -967,15 +967,20 @@
         "madden_pos_label": "DT"
       },
       {
-        "name": "Zachary Carter",
+        "name": "Zach Carter",
         "depth": 4,
         "injured": false,
         "attainment": "SF25",
         "standard_slot": "LE",
         "standard_pos": "DI",
-        "cap_number": "$1,215,000",
+        "cap_number": null,
         "stats": {
-          "TKL": 5
+          "CAR": 92,
+          "RU YDS": 333,
+          "RU TDs": 1,
+          "REC": 33,
+          "RE YDS": 267,
+          "TGT": 45
         },
         "stats_season": 2025,
         "madden": null,
@@ -1600,8 +1605,27 @@
         "madden_pos_label": "FS"
       },
       {
-        "name": "Wydett Williams Jr.",
+        "name": "Isaiah Oliver",
         "depth": 3,
+        "injured": false,
+        "attainment": "U/NYJ",
+        "standard_slot": "SS",
+        "standard_pos": "S",
+        "cap_number": "$1,244,853",
+        "stats": {
+          "TKL": 29,
+          "PD": 3
+        },
+        "stats_season": 2025,
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
+      },
+      {
+        "name": "Wydett Williams Jr.",
+        "depth": 4,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "SS",

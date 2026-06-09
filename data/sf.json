@@ -836,24 +836,8 @@
         "madden_pos_label": "HB"
       },
       {
-        "name": "Jermar Jefferson",
-        "depth": 5,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": "$1,005,000",
-        "stats": {},
-        "stats_season": null,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
-      },
-      {
         "name": "Patrick Taylor Jr.",
-        "depth": 6,
+        "depth": 5,
         "injured": false,
         "attainment": "U/GB",
         "standard_slot": "RB",
@@ -871,7 +855,7 @@
       },
       {
         "name": "Jordan Mims",
-        "depth": 7,
+        "depth": 6,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "RB",
@@ -1480,24 +1464,6 @@
         "madden_rank": 152,
         "madden_rank_total": 213,
         "madden_pos_label": "CB"
-      },
-      {
-        "name": "Eli Apple",
-        "depth": 4,
-        "injured": false,
-        "attainment": "U/LAC",
-        "standard_slot": "LCB",
-        "standard_pos": "CB",
-        "cap_number": "$1,075,000",
-        "stats": {
-          "TKL": 1
-        },
-        "stats_season": 2025,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
       }
     ],
     "SS": [
@@ -1605,8 +1571,31 @@
         "madden_pos_label": "FS"
       },
       {
-        "name": "Derrick Canteen",
+        "name": "Ashtyn Davis",
         "depth": 2,
+        "injured": false,
+        "attainment": "U/Mia",
+        "standard_slot": "FS",
+        "standard_pos": "S",
+        "cap_number": "$1,880,000",
+        "stats": {
+          "TKL": 43,
+          "INTs": 1,
+          "PD": 4,
+          "TFL": 3
+        },
+        "stats_season": 2025,
+        "madden": 73,
+        "jersey": 21,
+        "age": 28,
+        "years_pro": 5,
+        "madden_rank": 46,
+        "madden_rank_total": 79,
+        "madden_pos_label": "SS"
+      },
+      {
+        "name": "Derrick Canteen",
+        "depth": 3,
         "injured": false,
         "attainment": "CF25",
         "standard_slot": "FS",
@@ -1622,7 +1611,7 @@
       },
       {
         "name": "Patrick Mcmorris",
-        "depth": 3,
+        "depth": 4,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "FS",
@@ -1678,24 +1667,22 @@
         "madden_pos_label": null
       },
       {
-        "name": "Siran Neal",
+        "name": "Eli Apple",
         "depth": 3,
         "injured": false,
-        "attainment": "U/Mia",
+        "attainment": "U/LAC",
         "standard_slot": "RCB",
         "standard_pos": "CB",
-        "cap_number": "$1,750,000",
+        "cap_number": "$1,075,000",
         "stats": {
-          "TKL": 6
+          "TKL": 1
         },
         "stats_season": 2025,
-        "madden": 66,
-        "jersey": 33,
-        "age": 31,
-        "years_pro": 7,
-        "madden_rank": 60,
-        "madden_rank_total": 78,
-        "madden_pos_label": "FS"
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "NB": [
@@ -1746,8 +1733,28 @@
         "madden_pos_label": "CB"
       },
       {
-        "name": "Jakob Robinson",
+        "name": "Siran Neal",
         "depth": 3,
+        "injured": false,
+        "attainment": "U/Mia",
+        "standard_slot": "NB",
+        "standard_pos": "CB",
+        "cap_number": "$1,750,000",
+        "stats": {
+          "TKL": 6
+        },
+        "stats_season": 2025,
+        "madden": 66,
+        "jersey": 33,
+        "age": 31,
+        "years_pro": 7,
+        "madden_rank": 60,
+        "madden_rank_total": 78,
+        "madden_pos_label": "FS"
+      },
+      {
+        "name": "Jakob Robinson",
+        "depth": 4,
         "injured": false,
         "attainment": "CF25",
         "standard_slot": "NB",

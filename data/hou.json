@@ -156,22 +156,6 @@
         "madden_rank": null,
         "madden_rank_total": null,
         "madden_pos_label": null
-      },
-      {
-        "name": "Jalen Walthall",
-        "depth": 4,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "RWR",
-        "standard_pos": "WR",
-        "cap_number": "$891,666",
-        "stats": {},
-        "stats_season": null,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
       }
     ],
     "SWR": [
@@ -319,6 +303,22 @@
         "madden_rank": null,
         "madden_rank_total": null,
         "madden_pos_label": null
+      },
+      {
+        "name": "Derrick Graham",
+        "depth": 4,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null,
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "LG": [
@@ -385,7 +385,7 @@
         "attainment": "26/1",
         "standard_slot": "C",
         "standard_pos": "OL",
-        "cap_number": "$885,000",
+        "cap_number": "$3,504,809",
         "stats": {},
         "stats_season": null,
         "madden": null,
@@ -413,26 +413,8 @@
         "madden_pos_label": "C"
       },
       {
-        "name": "Jarrett Patterson",
-        "depth": 3,
-        "injured": false,
-        "attainment": "23/6",
-        "standard_slot": "C",
-        "standard_pos": "OL",
-        "cap_number": "$3,716,494",
-        "stats": {},
-        "stats_season": 2025,
-        "madden": 70,
-        "jersey": 54,
-        "age": 26,
-        "years_pro": 2,
-        "madden_rank": 32,
-        "madden_rank_total": 61,
-        "madden_pos_label": "C"
-      },
-      {
         "name": "Eli Cox",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "CF25",
         "standard_slot": "C",
@@ -481,6 +463,24 @@
         "madden_rank": null,
         "madden_rank_total": null,
         "madden_pos_label": null
+      },
+      {
+        "name": "Jarrett Patterson",
+        "depth": 3,
+        "injured": false,
+        "attainment": "23/6",
+        "standard_slot": "RG",
+        "standard_pos": "OL",
+        "cap_number": "$3,716,494",
+        "stats": {},
+        "stats_season": 2025,
+        "madden": 70,
+        "jersey": 54,
+        "age": 26,
+        "years_pro": 2,
+        "madden_rank": 32,
+        "madden_rank_total": 61,
+        "madden_pos_label": "C"
       }
     ],
     "RT": [
@@ -626,8 +626,24 @@
         "madden_pos_label": "TE"
       },
       {
-        "name": "Brevin Jordan",
+        "name": "Layne Pryor",
         "depth": 5,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null,
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
+      },
+      {
+        "name": "Brevin Jordan",
+        "depth": 6,
         "injured": false,
         "attainment": "21/5",
         "standard_slot": "TE",
@@ -650,15 +666,17 @@
         "madden_pos_label": "TE"
       },
       {
-        "name": "Layne Pryor",
-        "depth": 6,
+        "name": "Louis Hansen",
+        "depth": 7,
         "injured": false,
-        "attainment": "SF25",
+        "attainment": "CF26",
         "standard_slot": "TE",
         "standard_pos": "TE",
-        "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null,
+        "cap_number": null,
+        "stats": {
+          "TKL": 11
+        },
+        "stats_season": 2025,
         "madden": null,
         "jersey": null,
         "madden_rank": null,
