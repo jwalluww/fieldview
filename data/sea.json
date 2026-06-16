@@ -68,22 +68,6 @@
         "madden_rank": null,
         "madden_rank_total": null,
         "madden_pos_label": null
-      },
-      {
-        "name": "Levi Wentz",
-        "depth": 4,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "LWR",
-        "standard_pos": "WR",
-        "cap_number": "$888,333",
-        "stats": {},
-        "stats_season": null,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
       }
     ],
     "RWR": [
@@ -302,20 +286,22 @@
         "madden_pos_label": "RT"
       },
       {
-        "name": "Logan Brown",
+        "name": "Bobby Hart",
         "depth": 3,
         "injured": false,
-        "attainment": "SF25",
+        "attainment": "U/LAC",
         "standard_slot": "LT",
         "standard_pos": "OL",
-        "cap_number": "$885,000",
+        "cap_number": "$1,075,000",
         "stats": {},
-        "stats_season": null,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
+        "stats_season": 2025,
+        "madden": 64,
+        "jersey": 66,
+        "age": 31,
+        "years_pro": 10,
+        "madden_rank": 59,
+        "madden_rank_total": 66,
+        "madden_pos_label": "LT"
       }
     ],
     "LG": [
@@ -354,6 +340,24 @@
         "madden_rank": 32,
         "madden_rank_total": 70,
         "madden_pos_label": "RG"
+      },
+      {
+        "name": "Bryce Cabeldue",
+        "depth": 3,
+        "injured": false,
+        "attainment": "25/6",
+        "standard_slot": "LG",
+        "standard_pos": "OL",
+        "cap_number": "$1,063,065",
+        "stats": {},
+        "stats_season": 2025,
+        "madden": 66,
+        "jersey": 77,
+        "age": 23,
+        "years_pro": 0,
+        "madden_rank": 50,
+        "madden_rank_total": 57,
+        "madden_pos_label": "LG"
       }
     ],
     "C": [
@@ -444,22 +448,22 @@
         "madden_pos_label": null
       },
       {
-        "name": "Bryce Cabeldue",
+        "name": "Mason Richman",
         "depth": 3,
         "injured": false,
-        "attainment": "25/6",
+        "attainment": "25/7",
         "standard_slot": "RG",
         "standard_pos": "OL",
-        "cap_number": "$1,063,065",
+        "cap_number": "$1,036,481",
         "stats": {},
-        "stats_season": 2025,
-        "madden": 66,
-        "jersey": 77,
+        "stats_season": null,
+        "madden": 63,
+        "jersey": 78,
         "age": 23,
         "years_pro": 0,
-        "madden_rank": 50,
-        "madden_rank_total": 57,
-        "madden_pos_label": "LG"
+        "madden_rank": 68,
+        "madden_rank_total": 79,
+        "madden_pos_label": "RT"
       }
     ],
     "RT": [
@@ -500,22 +504,20 @@
         "madden_pos_label": "LT"
       },
       {
-        "name": "Mason Richman",
+        "name": "Logan Brown",
         "depth": 3,
         "injured": false,
-        "attainment": "25/7",
+        "attainment": "SF25",
         "standard_slot": "RT",
         "standard_pos": "OL",
-        "cap_number": "$1,036,481",
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null,
-        "madden": 63,
-        "jersey": 78,
-        "age": 23,
-        "years_pro": 0,
-        "madden_rank": 68,
-        "madden_rank_total": 79,
-        "madden_pos_label": "RT"
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "TE": [
@@ -764,33 +766,8 @@
         "madden_pos_label": null
       },
       {
-        "name": "Emanuel Wilson",
-        "depth": 3,
-        "injured": false,
-        "attainment": "U/GB",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": "$1,595,000",
-        "stats": {
-          "CAR": 125,
-          "RU YDS": 496,
-          "RU TDs": 3,
-          "REC": 15,
-          "RE YDS": 99,
-          "TGT": 17
-        },
-        "stats_season": 2025,
-        "madden": 73,
-        "jersey": 23,
-        "age": 26,
-        "years_pro": 2,
-        "madden_rank": 70,
-        "madden_rank_total": 125,
-        "madden_pos_label": "HB"
-      },
-      {
         "name": "George Holani",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "CF24",
         "standard_slot": "RB",
@@ -810,6 +787,31 @@
         "age": 25,
         "years_pro": 1,
         "madden_rank": 117,
+        "madden_rank_total": 125,
+        "madden_pos_label": "HB"
+      },
+      {
+        "name": "Emanuel Wilson",
+        "depth": 4,
+        "injured": false,
+        "attainment": "U/GB",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": "$1,595,000",
+        "stats": {
+          "CAR": 125,
+          "RU YDS": 496,
+          "RU TDs": 3,
+          "REC": 15,
+          "RE YDS": 99,
+          "TGT": 17
+        },
+        "stats_season": 2025,
+        "madden": 73,
+        "jersey": 23,
+        "age": 26,
+        "years_pro": 2,
+        "madden_rank": 70,
         "madden_rank_total": 125,
         "madden_pos_label": "HB"
       },

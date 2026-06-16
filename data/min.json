@@ -70,8 +70,24 @@
         "madden_pos_label": null
       },
       {
-        "name": "Michael Briscoe",
+        "name": "Marcus Sanders Jr.",
         "depth": 4,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null,
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
+      },
+      {
+        "name": "Michael Briscoe",
+        "depth": 5,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "LWR",
@@ -113,15 +129,15 @@
         "madden_pos_label": "WR"
       },
       {
-        "name": "Jeshaun Jones",
+        "name": "Dillon Bell",
         "depth": 2,
         "injured": false,
-        "attainment": "CF24",
+        "attainment": "CF26",
         "standard_slot": "RWR",
         "standard_pos": "WR",
-        "cap_number": "$885,000",
+        "cap_number": "$893,333",
         "stats": {},
-        "stats_season": 2025,
+        "stats_season": null,
         "madden": null,
         "jersey": null,
         "madden_rank": null,
@@ -129,15 +145,15 @@
         "madden_pos_label": null
       },
       {
-        "name": "Marcus Sanders Jr.",
+        "name": "Jeshaun Jones",
         "depth": 3,
         "injured": false,
-        "attainment": "CF26",
+        "attainment": "CF24",
         "standard_slot": "RWR",
         "standard_pos": "WR",
         "cap_number": "$885,000",
         "stats": {},
-        "stats_season": null,
+        "stats_season": 2025,
         "madden": null,
         "jersey": null,
         "madden_rank": null,
@@ -205,24 +221,8 @@
         "madden_pos_label": "WR"
       },
       {
-        "name": "Dillon Bell",
-        "depth": 3,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "SWR",
-        "standard_pos": "WR",
-        "cap_number": "$893,333",
-        "stats": {},
-        "stats_season": null,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
-      },
-      {
         "name": "Luke Wysong",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "SWR",
@@ -238,7 +238,7 @@
       },
       {
         "name": "Trayvon Rudolph",
-        "depth": 5,
+        "depth": 4,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "SWR",
@@ -371,6 +371,22 @@
         "madden_rank": null,
         "madden_rank_total": null,
         "madden_pos_label": null
+      },
+      {
+        "name": "Tomas Rimac",
+        "depth": 4,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "LG",
+        "standard_pos": "OL",
+        "cap_number": "$886,666",
+        "stats": {},
+        "stats_season": null,
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "C": [
@@ -425,22 +441,6 @@
         "madden_rank": null,
         "madden_rank_total": null,
         "madden_pos_label": null
-      },
-      {
-        "name": "Delby Lemieux",
-        "depth": 4,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "C",
-        "standard_pos": "OL",
-        "cap_number": "$887,500",
-        "stats": {},
-        "stats_season": null,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
       }
     ],
     "RG": [
@@ -481,13 +481,13 @@
         "madden_pos_label": "LG"
       },
       {
-        "name": "Tomas Rimac",
+        "name": "Delby Lemieux",
         "depth": 3,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "RG",
         "standard_pos": "OL",
-        "cap_number": "$886,666",
+        "cap_number": "$887,500",
         "stats": {},
         "stats_season": null,
         "madden": null,
@@ -908,28 +908,8 @@
         "madden_pos_label": null
       },
       {
-        "name": "Elijah Williams",
-        "depth": 2,
-        "injured": false,
-        "attainment": "CF25",
-        "standard_slot": "LE",
-        "standard_pos": "DI",
-        "cap_number": "$1,005,000",
-        "stats": {
-          "TKL": 6
-        },
-        "stats_season": 2025,
-        "madden": 62,
-        "jersey": 99,
-        "age": 22,
-        "years_pro": 0,
-        "madden_rank": 190,
-        "madden_rank_total": 191,
-        "madden_pos_label": "DT"
-      },
-      {
         "name": "Isaiahh Loudermilk",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "U/Pit",
         "standard_slot": "LE",
@@ -947,7 +927,7 @@
       },
       {
         "name": "Smith Vilbert",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "LE",
@@ -1044,8 +1024,28 @@
         "madden_pos_label": "DT"
       },
       {
-        "name": "Eric Johnson II",
+        "name": "Elijah Williams",
         "depth": 2,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": "$1,005,000",
+        "stats": {
+          "TKL": 6
+        },
+        "stats_season": 2025,
+        "madden": 62,
+        "jersey": 99,
+        "age": 22,
+        "years_pro": 0,
+        "madden_rank": 190,
+        "madden_rank_total": 191,
+        "madden_pos_label": "DT"
+      },
+      {
+        "name": "Eric Johnson II",
+        "depth": 3,
         "injured": false,
         "attainment": "U/Ind",
         "standard_slot": "RE",
@@ -1066,7 +1066,7 @@
       },
       {
         "name": "Monkell Goodwine",
-        "depth": 3,
+        "depth": 4,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "RE",
@@ -1167,7 +1167,7 @@
         "madden_pos_label": null
       }
     ],
-    "LILB": [
+    "WLB": [
       {
         "name": "Eric Wilson",
         "depth": 1,
@@ -1215,24 +1215,8 @@
         "madden_pos_label": "WILL"
       },
       {
-        "name": "Jacob Roberts",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "ILB_L",
-        "standard_pos": "LB",
-        "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
-      },
-      {
         "name": "Bangally Kamara",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "ILB_L",
@@ -1245,9 +1229,25 @@
         "madden_rank": null,
         "madden_rank_total": null,
         "madden_pos_label": null
+      },
+      {
+        "name": "Keli Lawson",
+        "depth": 4,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "ILB_L",
+        "standard_pos": "LB",
+        "cap_number": "$888,333",
+        "stats": {},
+        "stats_season": null,
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
-    "RILB": [
+    "MLB": [
       {
         "name": "Blake Cashman",
         "depth": 1,
@@ -1305,13 +1305,13 @@
         "madden_pos_label": null
       },
       {
-        "name": "Keli Lawson",
+        "name": "Jacob Roberts",
         "depth": 4,
         "injured": false,
-        "attainment": "CF26",
+        "attainment": "SF26",
         "standard_slot": "ILB_R",
         "standard_pos": "LB",
-        "cap_number": "$888,333",
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null,
         "madden": null,
