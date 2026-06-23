@@ -53,10 +53,26 @@
         "madden_pos_label": "WR"
       },
       {
-        "name": "Jackson Meeks",
+        "name": "Lucky Jackson",
         "depth": 3,
         "injured": false,
-        "attainment": "CF25",
+        "attainment": "SF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": "$1,005,000",
+        "stats": {},
+        "stats_season": null,
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
+      },
+      {
+        "name": "Tarik Black",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
         "standard_slot": "LWR",
         "standard_pos": "WR",
         "cap_number": "$885,000",
@@ -96,24 +112,8 @@
         "madden_pos_label": "WR"
       },
       {
-        "name": "Kendrick Law",
-        "depth": 2,
-        "injured": false,
-        "attainment": "26/5",
-        "standard_slot": "RWR",
-        "standard_pos": "WR",
-        "cap_number": "$997,533",
-        "stats": {},
-        "stats_season": null,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
-      },
-      {
         "name": "Tom Kennedy",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "CF19",
         "standard_slot": "RWR",
@@ -135,15 +135,36 @@
         "madden_pos_label": "WR"
       },
       {
-        "name": "Kyre Duplessis",
-        "depth": 4,
+        "name": "Jackson Meeks",
+        "depth": 3,
         "injured": false,
-        "attainment": "CF26",
+        "attainment": "CF25",
         "standard_slot": "RWR",
         "standard_pos": "WR",
         "cap_number": "$885,000",
         "stats": {},
         "stats_season": null,
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
+      },
+      {
+        "name": "Tay Martin",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RWR",
+        "standard_pos": "WR",
+        "cap_number": "$1,005,000",
+        "stats": {
+          "TGT": 2,
+          "REC": 2,
+          "YDS": 23,
+          "YAC": 5
+        },
+        "stats_season": 2025,
         "madden": null,
         "jersey": null,
         "madden_rank": null,
@@ -237,6 +258,22 @@
         "madden_rank": null,
         "madden_rank_total": null,
         "madden_pos_label": null
+      },
+      {
+        "name": "Lawrence Keys",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "SWR",
+        "standard_pos": "WR",
+        "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null,
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "LT": [
@@ -313,26 +350,8 @@
         "madden_pos_label": "LG"
       },
       {
-        "name": "Miles Frazier",
-        "depth": 2,
-        "injured": false,
-        "attainment": "25/5",
-        "standard_slot": "LG",
-        "standard_pos": "OL",
-        "cap_number": "$1,085,054",
-        "stats": {},
-        "stats_season": 2025,
-        "madden": 69,
-        "jersey": 71,
-        "age": 23,
-        "years_pro": 0,
-        "madden_rank": 40,
-        "madden_rank_total": 57,
-        "madden_pos_label": "LG"
-      },
-      {
         "name": "Ben Bartch",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "U/SF",
         "standard_slot": "LG",
@@ -347,6 +366,24 @@
         "madden_rank": 28,
         "madden_rank_total": 57,
         "madden_pos_label": "LG"
+      },
+      {
+        "name": "Colby Sorsdal",
+        "depth": 3,
+        "injured": false,
+        "attainment": "23/5",
+        "standard_slot": "LG",
+        "standard_pos": "OL",
+        "cap_number": "$1,155,021",
+        "stats": {},
+        "stats_season": null,
+        "madden": 63,
+        "jersey": 75,
+        "age": 25,
+        "years_pro": 2,
+        "madden_rank": 64,
+        "madden_rank_total": 79,
+        "madden_pos_label": "RT"
       }
     ],
     "C": [
@@ -441,22 +478,22 @@
         "madden_pos_label": "RG"
       },
       {
-        "name": "Colby Sorsdal",
+        "name": "Miles Frazier",
         "depth": 2,
         "injured": false,
-        "attainment": "23/5",
+        "attainment": "25/5",
         "standard_slot": "RG",
         "standard_pos": "OL",
-        "cap_number": "$1,155,021",
+        "cap_number": "$1,085,054",
         "stats": {},
-        "stats_season": null,
-        "madden": 63,
-        "jersey": 75,
-        "age": 25,
-        "years_pro": 2,
-        "madden_rank": 64,
-        "madden_rank_total": 79,
-        "madden_pos_label": "RT"
+        "stats_season": 2025,
+        "madden": 69,
+        "jersey": 71,
+        "age": 23,
+        "years_pro": 0,
+        "madden_rank": 40,
+        "madden_rank_total": 57,
+        "madden_pos_label": "LG"
       },
       {
         "name": "Melvin Priestly",
@@ -902,20 +939,26 @@
         "madden_pos_label": null
       },
       {
-        "name": "Ahmed Hassanein",
+        "name": "Tyler Lacy",
         "depth": 4,
         "injured": false,
-        "attainment": "25/6*",
+        "attainment": "W/Jax",
         "standard_slot": "LE",
         "standard_pos": "EDGE",
-        "cap_number": "$985,000",
-        "stats": {},
-        "stats_season": null,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
+        "cap_number": "$1,145,000",
+        "stats": {
+          "TKL": 6,
+          "SACKS": 1.0,
+          "QB HIT": 2
+        },
+        "stats_season": 2025,
+        "madden": 68,
+        "jersey": 78,
+        "age": 25,
+        "years_pro": 2,
+        "madden_rank": 145,
+        "madden_rank_total": 191,
+        "madden_pos_label": "DT"
       },
       {
         "name": "Eric O'neill",
@@ -961,7 +1004,7 @@
       {
         "name": "Levi Onwuzurike",
         "depth": 2,
-        "injured": true,
+        "injured": false,
         "attainment": "21/2",
         "standard_slot": "LDT",
         "standard_pos": "DI",
@@ -1149,26 +1192,20 @@
         "madden_pos_label": "REDG"
       },
       {
-        "name": "Tyler Lacy",
+        "name": "Ahmed Hassanein",
         "depth": 3,
         "injured": false,
-        "attainment": "W/Jax",
+        "attainment": "25/6*",
         "standard_slot": "RE",
         "standard_pos": "EDGE",
-        "cap_number": "$1,145,000",
-        "stats": {
-          "TKL": 6,
-          "SACKS": 1.0,
-          "QB HIT": 2
-        },
-        "stats_season": 2025,
-        "madden": 68,
-        "jersey": 78,
-        "age": 25,
-        "years_pro": 2,
-        "madden_rank": 145,
-        "madden_rank_total": 191,
-        "madden_pos_label": "DT"
+        "cap_number": "$985,000",
+        "stats": {},
+        "stats_season": null,
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       },
       {
         "name": "Anthony Lucas",
