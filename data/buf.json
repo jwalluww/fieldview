@@ -436,26 +436,8 @@
         "madden_pos_label": "C"
       },
       {
-        "name": "Sedrick Van Pran-granger",
-        "depth": 2,
-        "injured": false,
-        "attainment": "24/5",
-        "standard_slot": "C",
-        "standard_pos": "OL",
-        "cap_number": "$1,163,813",
-        "stats": {},
-        "stats_season": 2025,
-        "madden": 66,
-        "jersey": 62,
-        "age": 23,
-        "years_pro": 1,
-        "madden_rank": 39,
-        "madden_rank_total": 61,
-        "madden_pos_label": "C"
-      },
-      {
         "name": "Lloyd Cushenberry",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "CC/Ten",
         "standard_slot": "C",
@@ -468,6 +450,24 @@
         "age": 27,
         "years_pro": 5,
         "madden_rank": 22,
+        "madden_rank_total": 61,
+        "madden_pos_label": "C"
+      },
+      {
+        "name": "Sedrick Van Pran-granger",
+        "depth": 3,
+        "injured": false,
+        "attainment": "24/5",
+        "standard_slot": "C",
+        "standard_pos": "OL",
+        "cap_number": "$1,163,813",
+        "stats": {},
+        "stats_season": 2025,
+        "madden": 66,
+        "jersey": 62,
+        "age": 23,
+        "years_pro": 1,
+        "madden_rank": 39,
         "madden_rank_total": 61,
         "madden_pos_label": "C"
       }
@@ -562,32 +562,8 @@
     ],
     "TE": [
       {
-        "name": "Dawson Knox",
-        "depth": 1,
-        "injured": false,
-        "attainment": "19/3",
-        "standard_slot": "TE",
-        "standard_pos": "TE",
-        "cap_number": "$8,551,333",
-        "stats": {
-          "TGT": 49,
-          "REC": 36,
-          "YDS": 417,
-          "TDs": 4,
-          "YAC": 183
-        },
-        "stats_season": 2025,
-        "madden": 76,
-        "jersey": 88,
-        "age": 28,
-        "years_pro": 6,
-        "madden_rank": 28,
-        "madden_rank_total": 126,
-        "madden_pos_label": "TE"
-      },
-      {
         "name": "Dalton Kincaid",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "23/1",
         "standard_slot": "TE",
@@ -606,6 +582,30 @@
         "age": 25,
         "years_pro": 2,
         "madden_rank": 16,
+        "madden_rank_total": 126,
+        "madden_pos_label": "TE"
+      },
+      {
+        "name": "Dawson Knox",
+        "depth": 2,
+        "injured": false,
+        "attainment": "19/3",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": "$8,551,333",
+        "stats": {
+          "TGT": 49,
+          "REC": 36,
+          "YDS": 417,
+          "TDs": 4,
+          "YAC": 183
+        },
+        "stats_season": 2025,
+        "madden": 76,
+        "jersey": 88,
+        "age": 28,
+        "years_pro": 6,
+        "madden_rank": 28,
         "madden_rank_total": 126,
         "madden_pos_label": "TE"
       },
@@ -1013,8 +1013,28 @@
         "madden_pos_label": "DT"
       },
       {
-        "name": "Zion Logue",
+        "name": "Phidarian Mathis",
         "depth": 3,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "NT",
+        "standard_pos": "DI",
+        "cap_number": "$1,195,000",
+        "stats": {
+          "TKL": 4
+        },
+        "stats_season": 2025,
+        "madden": 69,
+        "jersey": 72,
+        "age": 27,
+        "years_pro": 3,
+        "madden_rank": 132,
+        "madden_rank_total": 191,
+        "madden_pos_label": "DT"
+      },
+      {
+        "name": "Zion Logue",
+        "depth": 4,
         "injured": false,
         "attainment": "P/Atl",
         "standard_slot": "NT",
@@ -1074,28 +1094,8 @@
         "madden_pos_label": null
       },
       {
-        "name": "Phidarian Mathis",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF25",
-        "standard_slot": "RE",
-        "standard_pos": "DI",
-        "cap_number": "$1,195,000",
-        "stats": {
-          "TKL": 4
-        },
-        "stats_season": 2025,
-        "madden": 69,
-        "jersey": 72,
-        "age": 27,
-        "years_pro": 3,
-        "madden_rank": 132,
-        "madden_rank_total": 191,
-        "madden_pos_label": "DT"
-      },
-      {
         "name": "Tommy Akingbesote",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "SF25",
         "standard_slot": "RE",
@@ -1122,6 +1122,7 @@
         "stats": {
           "TKL": 24,
           "SACKS": 7.0,
+          "PD": 2,
           "TFL": 6,
           "QB HIT": 23
         },
@@ -1153,27 +1154,20 @@
         "madden_pos_label": "REDG"
       },
       {
-        "name": "Michael Hoecht",
+        "name": "TJ Parker",
         "depth": 3,
         "injured": false,
-        "attainment": "U/LAR",
+        "attainment": "26/2",
         "standard_slot": "LOLB",
         "standard_pos": "EDGE",
-        "cap_number": "$7,019,467",
-        "stats": {
-          "TKL": 2,
-          "SACKS": 2.0,
-          "TFL": 1,
-          "QB HIT": 2
-        },
-        "stats_season": 2025,
-        "madden": 75,
-        "jersey": 55,
-        "age": 27,
-        "years_pro": 5,
-        "madden_rank": 34,
-        "madden_rank_total": 87,
-        "madden_pos_label": "REDG"
+        "cap_number": "$2,389,226",
+        "stats": {},
+        "stats_season": null,
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       },
       {
         "name": "Cade Denhoff",
@@ -1378,20 +1372,27 @@
         "madden_pos_label": "REDG"
       },
       {
-        "name": "TJ Parker",
+        "name": "Michael Hoecht",
         "depth": 2,
         "injured": false,
-        "attainment": "26/2",
+        "attainment": "U/LAR",
         "standard_slot": "ROLB",
         "standard_pos": "EDGE",
-        "cap_number": "$2,389,226",
-        "stats": {},
-        "stats_season": null,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
+        "cap_number": "$7,019,467",
+        "stats": {
+          "TKL": 2,
+          "SACKS": 2.0,
+          "TFL": 1,
+          "QB HIT": 2
+        },
+        "stats_season": 2025,
+        "madden": 75,
+        "jersey": 55,
+        "age": 27,
+        "years_pro": 5,
+        "madden_rank": 34,
+        "madden_rank_total": 87,
+        "madden_pos_label": "REDG"
       },
       {
         "name": "Javon Solomon",

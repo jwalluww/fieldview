@@ -908,13 +908,13 @@
         "madden_pos_label": "LEDG"
       },
       {
-        "name": "Seth Coleman",
+        "name": "Mason Reiger",
         "depth": 4,
         "injured": false,
-        "attainment": "SF26",
+        "attainment": "CF26",
         "standard_slot": "LE",
         "standard_pos": "EDGE",
-        "cap_number": "$885,000",
+        "cap_number": "$893,333",
         "stats": {},
         "stats_season": null,
         "madden": null,
@@ -924,13 +924,13 @@
         "madden_pos_label": null
       },
       {
-        "name": "Mason Reiger",
+        "name": "Seth Coleman",
         "depth": 5,
         "injured": false,
-        "attainment": "CF26",
+        "attainment": "SF26",
         "standard_slot": "LE",
         "standard_pos": "EDGE",
-        "cap_number": "$893,333",
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null,
         "madden": null,
@@ -987,13 +987,13 @@
         "madden_pos_label": "DT"
       },
       {
-        "name": "Alex Huntley",
+        "name": "Rene Konga",
         "depth": 3,
         "injured": false,
-        "attainment": "CF25",
+        "attainment": "CF26",
         "standard_slot": "LDT",
         "standard_pos": "DI",
-        "cap_number": "$885,000",
+        "cap_number": "$895,000",
         "stats": {},
         "stats_season": null,
         "madden": null,
@@ -1003,13 +1003,13 @@
         "madden_pos_label": null
       },
       {
-        "name": "Rene Konga",
+        "name": "Alex Huntley",
         "depth": 4,
         "injured": false,
-        "attainment": "CF26",
+        "attainment": "CF25",
         "standard_slot": "LDT",
         "standard_pos": "DI",
-        "cap_number": "$895,000",
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null,
         "madden": null,
@@ -1250,8 +1250,24 @@
         "madden_pos_label": "WILL"
       },
       {
-        "name": "Ronnie Harrison Jr.",
+        "name": "Kyle Louis",
         "depth": 2,
+        "injured": false,
+        "attainment": "26/4",
+        "standard_slot": "WILL",
+        "standard_pos": "LB",
+        "cap_number": "$1,082,259",
+        "stats": {},
+        "stats_season": null,
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
+      },
+      {
+        "name": "Ronnie Harrison Jr.",
+        "depth": 3,
         "injured": false,
         "attainment": "U/Atl",
         "standard_slot": "WILL",
@@ -1272,22 +1288,6 @@
         "madden_rank": 46,
         "madden_rank_total": 84,
         "madden_pos_label": "WILL"
-      },
-      {
-        "name": "Kyle Louis",
-        "depth": 3,
-        "injured": false,
-        "attainment": "26/4",
-        "standard_slot": "WILL",
-        "standard_pos": "LB",
-        "cap_number": "$1,082,259",
-        "stats": {},
-        "stats_season": null,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
       }
     ],
     "MLB": [
@@ -1417,28 +1417,8 @@
         "madden_pos_label": "CB"
       },
       {
-        "name": "Marco Wilson",
-        "depth": 3,
-        "injured": false,
-        "attainment": "U/Cin",
-        "standard_slot": "LCB",
-        "standard_pos": "CB",
-        "cap_number": "$1,175,000",
-        "stats": {
-          "TKL": 3
-        },
-        "stats_season": 2025,
-        "madden": 69,
-        "jersey": 24,
-        "age": 26,
-        "years_pro": 4,
-        "madden_rank": 151,
-        "madden_rank_total": 213,
-        "madden_pos_label": "CB"
-      },
-      {
         "name": "Ethan Bonner",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "CF23",
         "standard_slot": "LCB",
@@ -1456,6 +1436,26 @@
         "age": 25,
         "years_pro": 2,
         "madden_rank": 181,
+        "madden_rank_total": 213,
+        "madden_pos_label": "CB"
+      },
+      {
+        "name": "Marco Wilson",
+        "depth": 4,
+        "injured": false,
+        "attainment": "U/Cin",
+        "standard_slot": "LCB",
+        "standard_pos": "CB",
+        "cap_number": "$1,175,000",
+        "stats": {
+          "TKL": 3
+        },
+        "stats_season": 2025,
+        "madden": 69,
+        "jersey": 24,
+        "age": 26,
+        "years_pro": 4,
+        "madden_rank": 151,
         "madden_rank_total": 213,
         "madden_pos_label": "CB"
       },
@@ -1631,29 +1631,8 @@
         "madden_pos_label": "CB"
       },
       {
-        "name": "Storm Duck",
-        "depth": 2,
-        "injured": false,
-        "attainment": "CF24",
-        "standard_slot": "RCB",
-        "standard_pos": "CB",
-        "cap_number": "$1,081,668",
-        "stats": {
-          "TKL": 1,
-          "PD": 1
-        },
-        "stats_season": 2025,
-        "madden": 63,
-        "jersey": 36,
-        "age": 24,
-        "years_pro": 1,
-        "madden_rank": 210,
-        "madden_rank_total": 213,
-        "madden_pos_label": "CB"
-      },
-      {
         "name": "Alex Austin",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "U/NE",
         "standard_slot": "RCB",
@@ -1670,6 +1649,27 @@
         "age": 24,
         "years_pro": 2,
         "madden_rank": 144,
+        "madden_rank_total": 213,
+        "madden_pos_label": "CB"
+      },
+      {
+        "name": "Storm Duck",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF24",
+        "standard_slot": "RCB",
+        "standard_pos": "CB",
+        "cap_number": "$1,081,668",
+        "stats": {
+          "TKL": 1,
+          "PD": 1
+        },
+        "stats_season": 2025,
+        "madden": 63,
+        "jersey": 36,
+        "age": 24,
+        "years_pro": 1,
+        "madden_rank": 210,
         "madden_rank_total": 213,
         "madden_pos_label": "CB"
       },

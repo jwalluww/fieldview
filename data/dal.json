@@ -789,33 +789,8 @@
         "madden_pos_label": "HB"
       },
       {
-        "name": "Malik Davis",
-        "depth": 3,
-        "injured": false,
-        "attainment": "CF22",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": "$1,145,000",
-        "stats": {
-          "CAR": 52,
-          "RU YDS": 250,
-          "RU TDs": 2,
-          "REC": 2,
-          "RE YDS": 16,
-          "TGT": 5
-        },
-        "stats_season": 2025,
-        "madden": 73,
-        "jersey": 43,
-        "age": 26,
-        "years_pro": 3,
-        "madden_rank": 76,
-        "madden_rank_total": 125,
-        "madden_pos_label": "HB"
-      },
-      {
         "name": "Phil Mafah",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "25/7",
         "standard_slot": "RB",
@@ -835,6 +810,31 @@
         "age": 22,
         "years_pro": 0,
         "madden_rank": 112,
+        "madden_rank_total": 125,
+        "madden_pos_label": "HB"
+      },
+      {
+        "name": "Malik Davis",
+        "depth": 4,
+        "injured": false,
+        "attainment": "CF22",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": "$1,145,000",
+        "stats": {
+          "CAR": 52,
+          "RU YDS": 250,
+          "RU TDs": 2,
+          "REC": 2,
+          "RE YDS": 16,
+          "TGT": 5
+        },
+        "stats_season": 2025,
+        "madden": 73,
+        "jersey": 43,
+        "age": 26,
+        "years_pro": 3,
+        "madden_rank": 76,
         "madden_rank_total": 125,
         "madden_pos_label": "HB"
       },
@@ -1106,6 +1106,7 @@
         "stats": {
           "TKL": 25,
           "SACKS": 7.5,
+          "PD": 1,
           "TFL": 7,
           "QB HIT": 20
         },
@@ -1189,6 +1190,8 @@
         "stats": {
           "TKL": 17,
           "SACKS": 3.0,
+          "INTs": 1,
+          "PD": 2,
           "TFL": 5,
           "QB HIT": 4
         },

@@ -308,29 +308,6 @@
         "madden_rank": null,
         "madden_rank_total": null,
         "madden_pos_label": null
-      },
-      {
-        "name": "Layden Robinson",
-        "depth": 4,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "LG",
-        "standard_pos": "OL",
-        "cap_number": "$1,005,000",
-        "stats": {
-          "CAR": 287,
-          "RU YDS": 1478,
-          "RU TDs": 7,
-          "REC": 79,
-          "RE YDS": 820,
-          "TGT": 103
-        },
-        "stats_season": 2025,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
       }
     ],
     "C": [
@@ -407,13 +384,13 @@
         "madden_pos_label": "RG"
       },
       {
-        "name": "Ethan Onianwa",
+        "name": "Andrew Stueber",
         "depth": 2,
         "injured": false,
-        "attainment": "26/7",
+        "attainment": "SF25",
         "standard_slot": "RG",
         "standard_pos": "OL",
-        "cap_number": "$923,982",
+        "cap_number": "$1,005,000",
         "stats": {},
         "stats_season": null,
         "madden": null,
@@ -423,15 +400,22 @@
         "madden_pos_label": null
       },
       {
-        "name": "Andrew Stueber",
+        "name": "Layden Robinson",
         "depth": 3,
         "injured": false,
-        "attainment": "SF25",
+        "attainment": "SF26",
         "standard_slot": "RG",
         "standard_pos": "OL",
         "cap_number": "$1,005,000",
-        "stats": {},
-        "stats_season": null,
+        "stats": {
+          "CAR": 287,
+          "RU YDS": 1478,
+          "RU TDs": 7,
+          "REC": 79,
+          "RE YDS": 820,
+          "TGT": 103
+        },
+        "stats_season": 2025,
         "madden": null,
         "jersey": null,
         "madden_rank": null,
@@ -475,8 +459,24 @@
         "madden_pos_label": "RT"
       },
       {
-        "name": "Jack Nelson",
+        "name": "Ethan Onianwa",
         "depth": 2,
+        "injured": false,
+        "attainment": "26/7",
+        "standard_slot": "RT",
+        "standard_pos": "OL",
+        "cap_number": "$923,982",
+        "stats": {},
+        "stats_season": null,
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
+      },
+      {
+        "name": "Jack Nelson",
+        "depth": 3,
         "injured": false,
         "attainment": "25/7",
         "standard_slot": "RT",
@@ -494,7 +494,7 @@
       },
       {
         "name": "Michael Jerrell",
-        "depth": 3,
+        "depth": 4,
         "injured": false,
         "attainment": "T/Sea",
         "standard_slot": "RT",
@@ -519,7 +519,7 @@
         "attainment": "21/1",
         "standard_slot": "TE",
         "standard_pos": "TE",
-        "cap_number": "$15,045,000",
+        "cap_number": "$4,622,000",
         "stats": {
           "TGT": 118,
           "REC": 88,
@@ -1225,9 +1225,25 @@
         "madden_pos_label": "WILL"
       },
       {
-        "name": "Troy Andersen",
+        "name": "Harold Perkins Jr.",
         "depth": 2,
         "injured": false,
+        "attainment": "26/6",
+        "standard_slot": "ILB_R",
+        "standard_pos": "LB",
+        "cap_number": "$936,633",
+        "stats": {},
+        "stats_season": null,
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
+      },
+      {
+        "name": "Troy Andersen",
+        "depth": 3,
+        "injured": true,
         "attainment": "22/2",
         "standard_slot": "ILB_R",
         "standard_pos": "LB",
@@ -1241,22 +1257,6 @@
         "madden_rank": 47,
         "madden_rank_total": 84,
         "madden_pos_label": "WILL"
-      },
-      {
-        "name": "Harold Perkins Jr.",
-        "depth": 3,
-        "injured": false,
-        "attainment": "26/6",
-        "standard_slot": "ILB_R",
-        "standard_pos": "LB",
-        "cap_number": "$936,633",
-        "stats": {},
-        "stats_season": null,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
       },
       {
         "name": "Channing Tindall",
@@ -1289,6 +1289,7 @@
         "stats": {
           "TKL": 24,
           "SACKS": 5.5,
+          "PD": 1,
           "TFL": 5,
           "QB HIT": 9
         },
@@ -1430,23 +1431,22 @@
         "madden_pos_label": "CB"
       },
       {
-        "name": "Natrone Brooks",
+        "name": "Mike Ford Jr.",
         "depth": 4,
         "injured": false,
-        "attainment": "CF23",
+        "attainment": "U/Cle",
         "standard_slot": "LCB",
         "standard_pos": "CB",
-        "cap_number": "$1,075,000",
+        "cap_number": "$2,155,000",
         "stats": {
-          "TKL": 8,
-          "PD": 2
+          "TKL": 12
         },
         "stats_season": 2025,
-        "madden": 63,
-        "jersey": 35,
-        "age": 25,
-        "years_pro": 2,
-        "madden_rank": 209,
+        "madden": 73,
+        "jersey": 28,
+        "age": 30,
+        "years_pro": 7,
+        "madden_rank": 109,
         "madden_rank_total": 213,
         "madden_pos_label": "CB"
       }
@@ -1539,28 +1539,8 @@
         "madden_pos_label": "SS"
       },
       {
-        "name": "Sydney Brown",
-        "depth": 2,
-        "injured": false,
-        "attainment": "T/Phi",
-        "standard_slot": "FS",
-        "standard_pos": "S",
-        "cap_number": "$1,533,969",
-        "stats": {
-          "TKL": 17
-        },
-        "stats_season": 2025,
-        "madden": 72,
-        "jersey": 21,
-        "age": 25,
-        "years_pro": 2,
-        "madden_rank": 47,
-        "madden_rank_total": 79,
-        "madden_pos_label": "SS"
-      },
-      {
         "name": "Jammie Robinson",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "SF25",
         "standard_slot": "FS",
@@ -1577,6 +1557,27 @@
         "madden_rank": 61,
         "madden_rank_total": 79,
         "madden_pos_label": "SS"
+      },
+      {
+        "name": "Natrone Brooks",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF23",
+        "standard_slot": "FS",
+        "standard_pos": "S",
+        "cap_number": "$1,075,000",
+        "stats": {
+          "TKL": 8,
+          "PD": 2
+        },
+        "stats_season": 2025,
+        "madden": 63,
+        "jersey": 35,
+        "age": 25,
+        "years_pro": 2,
+        "madden_rank": 209,
+        "madden_rank_total": 213,
+        "madden_pos_label": "CB"
       }
     ],
     "RCB": [
@@ -1688,8 +1689,28 @@
         "madden_pos_label": "CB"
       },
       {
-        "name": "Darnay Holmes",
+        "name": "Sydney Brown",
         "depth": 2,
+        "injured": false,
+        "attainment": "T/Phi",
+        "standard_slot": "NB",
+        "standard_pos": "CB",
+        "cap_number": "$1,533,969",
+        "stats": {
+          "TKL": 17
+        },
+        "stats_season": 2025,
+        "madden": 72,
+        "jersey": 21,
+        "age": 25,
+        "years_pro": 2,
+        "madden_rank": 47,
+        "madden_rank_total": 79,
+        "madden_pos_label": "SS"
+      },
+      {
+        "name": "Darnay Holmes",
+        "depth": 3,
         "injured": false,
         "attainment": "U/LV",
         "standard_slot": "NB",
@@ -1704,26 +1725,6 @@
         "age": 27,
         "years_pro": 5,
         "madden_rank": 121,
-        "madden_rank_total": 213,
-        "madden_pos_label": "CB"
-      },
-      {
-        "name": "Mike Ford Jr.",
-        "depth": 3,
-        "injured": false,
-        "attainment": "U/Cle",
-        "standard_slot": "NB",
-        "standard_pos": "CB",
-        "cap_number": "$2,155,000",
-        "stats": {
-          "TKL": 12
-        },
-        "stats_season": 2025,
-        "madden": 73,
-        "jersey": 28,
-        "age": 30,
-        "years_pro": 7,
-        "madden_rank": 109,
         "madden_rank_total": 213,
         "madden_pos_label": "CB"
       },

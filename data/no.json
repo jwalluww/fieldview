@@ -94,7 +94,7 @@
         "standard_pos": "WR",
         "cap_number": "$1,005,000",
         "stats": {},
-        "stats_season": null,
+        "stats_season": 2025,
         "madden": null,
         "jersey": null,
         "madden_rank": null,
@@ -868,31 +868,8 @@
         "madden_pos_label": "HB"
       },
       {
-        "name": "Audric Estim\u00e9",
-        "depth": 5,
-        "injured": false,
-        "attainment": "SF25",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": null,
-        "stats": {
-          "CAR": 46,
-          "RU YDS": 198,
-          "RU TDs": 1,
-          "REC": 12,
-          "RE YDS": 103,
-          "TGT": 13
-        },
-        "stats_season": 2025,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
-      },
-      {
         "name": "Ty Chandler",
-        "depth": 6,
+        "depth": 5,
         "injured": false,
         "attainment": "U/Min",
         "standard_slot": "RB",
@@ -913,6 +890,29 @@
         "madden_rank": 73,
         "madden_rank_total": 125,
         "madden_pos_label": "HB"
+      },
+      {
+        "name": "Audric Estim\u00e9",
+        "depth": 6,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {
+          "CAR": 46,
+          "RU YDS": 198,
+          "RU TDs": 1,
+          "REC": 12,
+          "RE YDS": 103,
+          "TGT": 13
+        },
+        "stats_season": 2025,
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       },
       {
         "name": "CJ Donaldson",
@@ -1188,6 +1188,7 @@
         "stats": {
           "TKL": 32,
           "SACKS": 10.5,
+          "PD": 2,
           "TFL": 15,
           "QB HIT": 15
         },
@@ -1211,6 +1212,7 @@
         "stats": {
           "TKL": 24,
           "SACKS": 2.0,
+          "PD": 1,
           "TFL": 3,
           "QB HIT": 4
         },
@@ -1585,27 +1587,6 @@
         "madden_rank": 35,
         "madden_rank_total": 78,
         "madden_pos_label": "FS"
-      },
-      {
-        "name": "Terrell Burgess",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF25",
-        "standard_slot": "SS",
-        "standard_pos": "S",
-        "cap_number": "$1,100,000",
-        "stats": {
-          "TKL": 10,
-          "PD": 3
-        },
-        "stats_season": 2025,
-        "madden": 72,
-        "jersey": 26,
-        "age": 26,
-        "years_pro": 5,
-        "madden_rank": 50,
-        "madden_rank_total": 79,
-        "madden_pos_label": "SS"
       }
     ],
     "FS": [
@@ -1631,20 +1612,25 @@
         "madden_pos_label": "SS"
       },
       {
-        "name": "Lorenzo Styles Jr.",
+        "name": "Terrell Burgess",
         "depth": 2,
         "injured": false,
-        "attainment": "26/5",
+        "attainment": "SF25",
         "standard_slot": "FS",
         "standard_pos": "S",
-        "cap_number": "$990,197",
-        "stats": {},
-        "stats_season": null,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
+        "cap_number": "$1,100,000",
+        "stats": {
+          "TKL": 10,
+          "PD": 3
+        },
+        "stats_season": 2025,
+        "madden": 72,
+        "jersey": 26,
+        "age": 26,
+        "years_pro": 5,
+        "madden_rank": 50,
+        "madden_rank_total": 79,
+        "madden_pos_label": "SS"
       },
       {
         "name": "Elliott Davison",
@@ -1749,8 +1735,24 @@
         "madden_pos_label": "SS"
       },
       {
-        "name": "Jayden Price",
+        "name": "Lorenzo Styles Jr.",
         "depth": 2,
+        "injured": false,
+        "attainment": "26/5",
+        "standard_slot": "NB",
+        "standard_pos": "CB",
+        "cap_number": "$990,197",
+        "stats": {},
+        "stats_season": null,
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
+      },
+      {
+        "name": "Jayden Price",
+        "depth": 3,
         "injured": false,
         "attainment": "SF25",
         "standard_slot": "NB",
@@ -1766,7 +1768,7 @@
       },
       {
         "name": "Beanie Bishop",
-        "depth": 3,
+        "depth": 4,
         "injured": false,
         "attainment": "SF25",
         "standard_slot": "NB",
