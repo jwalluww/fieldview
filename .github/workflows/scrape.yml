@@ -21,8 +21,8 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install requests beautifulsoup4 nflreadpy
-
+        run: pip install requests beautifulsoup4 nflreadpy pandas rapidfuzz
+      
       - name: Run depth chart scraper
         run: python scripts/scrape_depth.py
 
@@ -34,6 +34,9 @@ jobs:
 
       - name: Run Madden merge
         run: python scripts/merge_madden.py
+
+      - name: Build player master
+        run: python scripts/build_master.py
 
       - name: Commit updated data
         run: |

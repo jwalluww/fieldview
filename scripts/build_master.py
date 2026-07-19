@@ -23,6 +23,14 @@ NAME_ALIASES = {
     'Kj Hamler': 'K.J. Hamler',
     'Kj Osborn': 'K.J. Osborn',
     'Gus Edwards': 'Kenneth Edwards',  # common nickname mismatches
+    'Riq Woolen': 'Tariq Woolen',
+    'Dru Phillips': 'Andru Phillips',
+    'Cobie Durant': 'Decobie Durant',
+    'Vj Payne': 'V.J. Payne',
+    # Forced no-matches (wrong players in crosswalk)
+    'Matt Hibner': None,
+    'Mike Jackson': None,
+    'Joshua Metellus': None,
 }
 
 SKIP_POSITIONS = {'KR', 'PR', 'KO', 'PK', 'LS', 'K', 'P', 'PT', 'H'}
@@ -50,20 +58,12 @@ def normalize_name(name):
     name = re.sub(r"'([a-z])", lambda m: "'" + m.group(1).upper(), name)
     # Fix hyphenated
     name = re.sub(r'-([a-z])', lambda m: '-' + m.group(1).upper(), name)
-    # Fix suffixes — must run AFTER title case, strip trailing period to avoid doubles
-    def fix_suffix(m):
-        s = m.group(0).rstrip('.')  # strip any existing period
-        return {
-            'Jr': 'Jr.', 'Sr': 'Sr.',
-            'Ii': 'II', 'Iii': 'III', 'Iv': 'IV', 'Vi': 'VI'
-        }.get(s, s)
-    name = re.sub(r'\b(Jr\.?|Sr\.?|Ii|Iii|Iv|Vi)\b',
-              lambda m: fix_suffix(m), name)
-    if 'Jr' in name and name.count('.') > 1:
-        print(f"DEBUG suffix: {repr(name)}")
+    # Fix suffixes — must run AFTER title case
+    name = re.sub(r'\b(Jr|Sr)\.', r'\1', name)
+    name = re.sub(r'\b(Jr|Sr)\b', r'\1.', name)
+    name = re.sub(r'\b(Ii|Iii|Iv|Vi)\b',
+              lambda m: {'Ii': 'II', 'Iii': 'III', 'Iv': 'IV', 'Vi': 'VI'}[m.group(0)], name)
     return name
-
-print(repr(normalize_name('Cam Bynum')))
 
 def normalize_for_matching(name):
     """Strip everything except letters, lowercase, no spaces."""
@@ -151,12 +151,15 @@ def load_nflreadpy_gsis():
     """Pull GSIS IDs from nflreadpy play-by-play data."""
     try:
         import nfl_data_py as nfl
-        # roster data has gsis_id for every rostered player
-        rosters = nfl.import_rosters([2025])
+        print("Available nfl_data_py functions:", [f for f in dir(nfl) if not f.startswith('_')])
+        rosters = nfl.import_weekly_rosters(years=[2025])
+        rosters = rosters[rosters['player_id'].notna()].copy()
+        rosters = rosters.rename(columns={'player_id': 'gsis_id', 'player_name': 'player_name'})
         rosters = rosters[rosters['gsis_id'].notna()]
         rosters['name_norm'] = rosters['player_name'].apply(
             lambda n: normalize_for_matching(normalize_name(str(n))))
         rosters['team_norm'] = rosters['team'].apply(normalize_team)
+        rosters['position'] = rosters['position'].fillna('')
         print(f"Loaded nflreadpy rosters: {len(rosters)} players")
         return rosters
     except Exception as e:
@@ -174,6 +177,8 @@ def find_gsis(name, standard_pos, team, crosswalk_df, roster_df=None):
 
     # Apply alias BEFORE normalization
     lookup_name = NAME_ALIASES.get(name, name)
+    if lookup_name is None:
+        return None, None
     name_norm = normalize_for_matching(lookup_name)
 
     result = _match_in_df(name_norm, standard_pos, team, crosswalk_df,
@@ -351,6 +356,12 @@ def build_master():
     print(f"Non-OL unmatched: {len(non_ol_unmatched)}")
     print("\nNon-OL unmatched (first 30):")
     for p in non_ol_unmatched[:30]:
+        print(f"  {p['name']:35} {p['pos']:6} {p['team']}")
+
+    skill_pos = {'QB', 'WR', 'RB', 'TE'}
+    skill_unmatched = [p for p in unmatched if p['pos'] in skill_pos]
+    print(f"\nSkill position unmatched (QB/WR/RB/TE): {len(skill_unmatched)}")
+    for p in skill_unmatched[:30]:
         print(f"  {p['name']:35} {p['pos']:6} {p['team']}")
 
 if __name__ == '__main__':

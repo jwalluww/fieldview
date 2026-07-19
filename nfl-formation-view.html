@@ -754,6 +754,7 @@ let teamData = null;
 // Track current starters (overrides from depth chart default)
 let currentStarters = {}; // { formationPos: playerObject }
 let activeSubDropdown = null; // currently open dropdown pos key
+let currentOnFieldNames = new Set(); // names of players currently on the field
 
 function maddenColor(r) {
   if (!r) return '#6b7494';
@@ -835,26 +836,26 @@ function getSubCandidates(formationPos) {
     }
   }
   candidates.sort((a, b) => (b.madden || 0) - (a.madden || 0));
-  // Dedupe by name
+  // Dedupe by name, and exclude anyone already on the field
   const seen = new Set();
   return candidates.filter(p => {
     if (seen.has(p.name)) return false;
     seen.add(p.name);
+    if (currentOnFieldNames.has(p.name)) return false;
     return true;
   });
 }
 
 function buildSubDropdown(formationPos, currentPlayer) {
   const candidates = getSubCandidates(formationPos);
-  if (candidates.length <= 1) return '';
+  if (candidates.length === 0) return '';
 
   const options = candidates.map(p => {
     const mc = maddenColor(p.madden);
-    const isActive = p.name === currentPlayer?.name;
     const parts = p.name.split(' ');
     const displayName = parts.length > 1 ? parts.slice(1).join(' ') : parts[0];
     return `
-      <div class="sub-option ${isActive ? 'active-player' : ''}"
+      <div class="sub-option"
            onclick="selectSub('${formationPos}', '${p.name.replace(/'/g, "\\'")}', event)">
         <div class="sub-option-madden" style="color:${mc}">${p.madden || '—'}</div>
         <div class="sub-option-info">
@@ -1040,21 +1041,31 @@ function renderFormation() {
                 || FORMATION_COORDS[currentUnit]?.['11']
                 || {};
 
-  let html = '';
-  let delay = 0;
-
+  // First pass: resolve every slot's current player so dropdowns
+  // (built in the second pass) know the full on-field roster.
+  const slots = [];
+  currentOnFieldNames = new Set();
   for (const [pos, coords] of Object.entries(coordMap)) {
     if (pos === 'TE' && currentPersonnel === '12') {
       const players = teamData.depth_chart['TE'] || [];
-      html += buildPlayerNode(players[0] || null, 'TE',  coords,    delay, false);
-      delay += 40;
-      html += buildPlayerNode(players[1] || null, 'TE2', TE2_COORD, delay, false);
-      delay += 40;
+      const te1 = players[0] || null;
+      const te2 = players[1] || null;
+      if (te1) currentOnFieldNames.add(te1.name);
+      if (te2) currentOnFieldNames.add(te2.name);
+      slots.push({ pos: 'TE', coords, starter: te1, flip: false });
+      slots.push({ pos: 'TE2', coords: TE2_COORD, starter: te2, flip: false });
       continue;
     }
     const starter = getStarter(pos);
+    if (starter) currentOnFieldNames.add(starter.name);
     const forceFlip = ['QB', 'RB', 'FB', 'HB'].includes(pos);
-    html += buildPlayerNode(starter, pos, coords, delay, forceFlip || coords.y > 72);
+    slots.push({ pos, coords, starter, flip: forceFlip || coords.y > 72 });
+  }
+
+  let html = '';
+  let delay = 0;
+  for (const slot of slots) {
+    html += buildPlayerNode(slot.starter, slot.pos, slot.coords, delay, slot.flip);
     delay += 40;
   }
 

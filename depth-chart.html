@@ -759,40 +759,35 @@ let loaded = 0;
 // LOAD ALL TEAMS
 // ══════════════════════════════════════════
 async function loadAll() {
-  const promises = TEAM_ABBRS.map(abbr =>
-    fetch('data/' + abbr.toLowerCase() + '.json')
-      .then(r => r.json())
-      .then(data => {
-        const team = TEAMS[abbr];
-        for (const [ourladsPos, players] of Object.entries(data.depth_chart || {})) {
-          players.forEach((p, i) => {
-            allPlayers.push({
-              abbr,
-              teamName: team.name,
-              teamColors: team.colors,
-              ourladsPos,
-              name: p.name || '',
-              jersey: p.jersey || null,
-              age: p.age || null,
-              years_pro: p.years_pro != null ? p.years_pro : null,
-              madden: p.madden || null,
-              cap_number: p.cap_number || null,
-              cap_raw: parseCap(p.cap_number),
-              standard_pos: p.standard_pos || '',
-              standard_slot: p.standard_slot || ourladsPos,
-              injured: p.injured || false,
-              attainment: p.attainment || null,
-              stats: p.stats || {},
-              stats_season: p.stats_season || null,
-            });
-          });
-        }
-        loaded++;
-      })
-      .catch(() => { loaded++; })
-  );
+  const data = await fetch('data/players_master.json').then(r => r.json());
 
-  await Promise.all(promises);
+  for (const player of Object.values(data)) {
+    const team = TEAMS[player.team] || {};
+    allPlayers.push({
+      abbr: player.team,
+      teamName: player.team_name,
+      teamColors: team.colors,
+      ourladsPos: player.ourlads_pos,
+      depth: player.depth,
+      name: player.canonical_name || '',
+      jersey: player.jersey || null,
+      age: player.age || null,
+      years_pro: player.years_pro != null ? player.years_pro : null,
+      madden: player.madden || null,
+      cap_number: player.cap_number || null,
+      cap_raw: parseCap(player.cap_number),
+      standard_pos: player.standard_pos || '',
+      standard_slot: player.ourlads_pos,
+      injured: player.injured || false,
+      attainment: player.attainment || null,
+      stats: player.stats || {},
+      stats_season: player.stats_season || null,
+      madden_rank: player.madden_rank,
+      madden_rank_total: player.madden_rank_total,
+      madden_pos_label: player.madden_pos_label,
+    });
+  }
+  loaded++;
 
   // Populate team filter
   const tf = document.getElementById('teamFilter');

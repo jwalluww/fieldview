@@ -1157,7 +1157,6 @@
         "stats": {
           "TKL": 22,
           "SACKS": 3.0,
-          "PD": 2,
           "TFL": 5,
           "QB HIT": 6
         },
@@ -1224,7 +1223,6 @@
         "stats": {
           "TKL": 4,
           "SACKS": 1.5,
-          "PD": 1,
           "TFL": 2,
           "QB HIT": 2
         },
@@ -1484,24 +1482,8 @@
         "madden_pos_label": "CB"
       },
       {
-        "name": "Keydrain Calligan",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF25",
-        "standard_slot": "LCB",
-        "standard_pos": "CB",
-        "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
-      },
-      {
         "name": "Jeadyn Lukus",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "LCB",
@@ -1564,8 +1546,29 @@
         "madden_pos_label": null
       },
       {
-        "name": "Sanoussi Kane",
+        "name": "Erick Hallett II",
         "depth": 3,
+        "injured": false,
+        "attainment": "P/Det",
+        "standard_slot": "SS",
+        "standard_pos": "S",
+        "cap_number": "$1,005,000",
+        "stats": {
+          "TKL": 12,
+          "PD": 1
+        },
+        "stats_season": 2025,
+        "madden": 66,
+        "jersey": 41,
+        "age": 25,
+        "years_pro": 2,
+        "madden_rank": 67,
+        "madden_rank_total": 79,
+        "madden_pos_label": "SS"
+      },
+      {
+        "name": "Sanoussi Kane",
+        "depth": 4,
         "injured": false,
         "attainment": "P/Bal",
         "standard_slot": "SS",
@@ -1610,28 +1613,8 @@
         "madden_pos_label": "FS"
       },
       {
-        "name": "Kendell Brooks",
-        "depth": 2,
-        "injured": false,
-        "attainment": "SF24",
-        "standard_slot": "FS",
-        "standard_pos": "S",
-        "cap_number": "$1,075,000",
-        "stats": {
-          "TKL": 11
-        },
-        "stats_season": 2025,
-        "madden": 63,
-        "jersey": 30,
-        "age": 25,
-        "years_pro": 2,
-        "madden_rank": 74,
-        "madden_rank_total": 78,
-        "madden_pos_label": "FS"
-      },
-      {
         "name": "Jerrick Reed II",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "W/Sea",
         "standard_slot": "FS",
@@ -1646,6 +1629,26 @@
         "age": 25,
         "years_pro": 2,
         "madden_rank": 66,
+        "madden_rank_total": 78,
+        "madden_pos_label": "FS"
+      },
+      {
+        "name": "Kendell Brooks",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF24",
+        "standard_slot": "FS",
+        "standard_pos": "S",
+        "cap_number": "$1,075,000",
+        "stats": {
+          "TKL": 11
+        },
+        "stats_season": 2025,
+        "madden": 63,
+        "jersey": 30,
+        "age": 25,
+        "years_pro": 2,
+        "madden_rank": 74,
         "madden_rank_total": 78,
         "madden_pos_label": "FS"
       },
@@ -1751,25 +1754,20 @@
         "madden_pos_label": "CB"
       },
       {
-        "name": "Erick Hallett II",
+        "name": "Keydrain Calligan",
         "depth": 2,
         "injured": false,
-        "attainment": "P/Det",
+        "attainment": "SF25",
         "standard_slot": "NB",
         "standard_pos": "CB",
-        "cap_number": "$1,005,000",
-        "stats": {
-          "TKL": 12,
-          "PD": 1
-        },
-        "stats_season": 2025,
-        "madden": 66,
-        "jersey": 41,
-        "age": 25,
-        "years_pro": 2,
-        "madden_rank": 67,
-        "madden_rank_total": 79,
-        "madden_pos_label": "SS"
+        "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null,
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       },
       {
         "name": "Jalen Mcmurray",

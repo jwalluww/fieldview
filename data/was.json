@@ -1483,8 +1483,29 @@
         "madden_pos_label": "CB"
       },
       {
-        "name": "Darius Rush",
+        "name": "Antonio Hamilton Sr.",
         "depth": 3,
+        "injured": false,
+        "attainment": "U/Atl",
+        "standard_slot": "LCB",
+        "standard_pos": "CB",
+        "cap_number": "$1,075,000",
+        "stats": {
+          "TKL": 12,
+          "PD": 2
+        },
+        "stats_season": 2025,
+        "madden": 73,
+        "jersey": 34,
+        "age": 32,
+        "years_pro": 8,
+        "madden_rank": 113,
+        "madden_rank_total": 213,
+        "madden_pos_label": "CB"
+      },
+      {
+        "name": "Tre Hawkins III",
+        "depth": 4,
         "injured": false,
         "attainment": "SF25",
         "standard_slot": "LCB",
@@ -1500,7 +1521,7 @@
       },
       {
         "name": "Fred Davis II",
-        "depth": 4,
+        "depth": 5,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "LCB",
@@ -1581,22 +1602,6 @@
         "madden_rank": null,
         "madden_rank_total": null,
         "madden_pos_label": null
-      },
-      {
-        "name": "Malik Spencer",
-        "depth": 4,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "SS",
-        "standard_pos": "S",
-        "cap_number": "$893,333",
-        "stats": {},
-        "stats_season": null,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null
       }
     ],
     "FS": [
@@ -1624,31 +1629,8 @@
         "madden_pos_label": "FS"
       },
       {
-        "name": "Quan Martin",
-        "depth": 2,
-        "injured": false,
-        "attainment": "23/2",
-        "standard_slot": "FS",
-        "standard_pos": "S",
-        "cap_number": "$4,312,695",
-        "stats": {
-          "TKL": 52,
-          "PD": 3,
-          "TFL": 1,
-          "QB HIT": 2
-        },
-        "stats_season": 2025,
-        "madden": 77,
-        "jersey": 20,
-        "age": 25,
-        "years_pro": 2,
-        "madden_rank": 27,
-        "madden_rank_total": 78,
-        "madden_pos_label": "FS"
-      },
-      {
         "name": "Percy Butler",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "22/4",
         "standard_slot": "FS",
@@ -1665,6 +1647,22 @@
         "madden_rank": 51,
         "madden_rank_total": 79,
         "madden_pos_label": "SS"
+      },
+      {
+        "name": "Malik Spencer",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "FS",
+        "standard_pos": "S",
+        "cap_number": "$893,333",
+        "stats": {},
+        "stats_season": null,
+        "madden": null,
+        "jersey": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "RCB": [
@@ -1692,28 +1690,32 @@
         "madden_pos_label": "CB"
       },
       {
-        "name": "Antonio Hamilton Sr.",
+        "name": "Rasul Douglas",
         "depth": 2,
         "injured": false,
-        "attainment": "U/Atl",
+        "attainment": "U/Mia",
         "standard_slot": "RCB",
         "standard_pos": "CB",
-        "cap_number": "$1,075,000",
+        "cap_number": null,
         "stats": {
-          "TKL": 12,
-          "PD": 2
+          "TKL": 37,
+          "SACKS": 1.0,
+          "INTs": 2,
+          "PD": 13,
+          "TFL": 2,
+          "QB HIT": 2
         },
         "stats_season": 2025,
-        "madden": 73,
-        "jersey": 34,
-        "age": 32,
+        "madden": 82,
+        "jersey": 26,
+        "age": 30,
         "years_pro": 8,
-        "madden_rank": 113,
+        "madden_rank": 33,
         "madden_rank_total": 213,
         "madden_pos_label": "CB"
       },
       {
-        "name": "Tre Hawkins III",
+        "name": "Darius Rush",
         "depth": 3,
         "injured": false,
         "attainment": "SF25",
@@ -1770,8 +1772,31 @@
         "madden_pos_label": "CB"
       },
       {
-        "name": "Tyler Owens",
+        "name": "Quan Martin",
         "depth": 2,
+        "injured": false,
+        "attainment": "23/2",
+        "standard_slot": "NB",
+        "standard_pos": "CB",
+        "cap_number": "$4,312,695",
+        "stats": {
+          "TKL": 52,
+          "PD": 3,
+          "TFL": 1,
+          "QB HIT": 2
+        },
+        "stats_season": 2025,
+        "madden": 77,
+        "jersey": 20,
+        "age": 25,
+        "years_pro": 2,
+        "madden_rank": 27,
+        "madden_rank_total": 78,
+        "madden_pos_label": "FS"
+      },
+      {
+        "name": "Tyler Owens",
+        "depth": 3,
         "injured": false,
         "attainment": "CF24",
         "standard_slot": "NB",
@@ -1791,7 +1816,7 @@
       },
       {
         "name": "Qwuantrezz Knight",
-        "depth": 3,
+        "depth": 4,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "NB",
