@@ -248,6 +248,7 @@ def build_master():
 
         abbr = team_data.get('abbr', '')
         team_name = team_data.get('team', '')
+        base_defense = team_data.get('base_defense', '')
 
         for ourlads_pos, players in team_data.get('depth_chart', {}).items():
             if ourlads_pos in SKIP_POSITIONS:
@@ -287,7 +288,9 @@ def build_master():
                     'ourlads_name': raw_name,
                     'team': abbr,
                     'team_name': team_name,
+                    'base_defense': base_defense,
                     'ourlads_pos': ourlads_pos,
+                    'standard_slot': p.get('standard_slot', ourlads_pos),
                     'standard_pos': standard_pos,
                     'depth': p.get('depth', 99),
                     'jersey': p.get('jersey'),

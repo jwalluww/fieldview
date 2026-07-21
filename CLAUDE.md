@@ -62,7 +62,7 @@ madden_rank, madden_rank_total, madden_pos_label
 ## players_master.json Schema (canonical)
 player_id (GSIS if matched, else name-pos-team slug),
 gsis_id, match_confidence, canonical_name, ourlads_name,
-team, team_name, ourlads_pos, standard_pos, depth,
+team, team_name, base_defense, ourlads_pos, standard_slot, standard_pos, depth,
 jersey, age, years_pro, madden, madden_rank,  madden_rank_total, madden_pos_label, cap_number, attainment, injured, stats (normalized keys), stats_season, nflreadpy_name, match_source
 
 `standard_pos` values: `QB, WR, RB, TE, OL, EDGE, DI, LB, CB, S`

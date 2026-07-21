@@ -679,14 +679,15 @@ const FORMATION_COORDS = {
     '12': {
       LWR: {x:4,  y:57},
       RWR: {x:96, y:57},
-      TE:  {x:68, y:62},
-      LT:  {x:33, y:57},
-      LG:  {x:41, y:57},
+      TE:  {x:26, y:60},
+      LT:  {x:34, y:59},
+      LG:  {x:42, y:58},
       C:   {x:50, y:57},
-      RG:  {x:59, y:57},
-      RT:  {x:67, y:57},
-      QB:  {x:50, y:78},
-      RB:  {x:50, y:90},
+      RG:  {x:58, y:58},
+      RT:  {x:66, y:59},
+      TE2:  {x:74, y:60},
+      QB:  {x:50, y:80},
+      RB:  {x:62, y:78},
     },
   },
   defense: {
@@ -745,16 +746,17 @@ const FORMATION_COORDS = {
   }
 };
 
-const TE2_COORD = {x:76, y:57};
+const TE2_COORD = {x:74, y:60};
 
 let currentTeam = 'BUF';
 let currentUnit = 'offense';
 let currentPersonnel = '11';
-let teamData = null;
+let allPlayers = null; // flat array of every player, mapped from players_master.json — fetched once
+let teamData = null;   // { base_defense, players: [...] } for the currently selected team
 // Track current starters (overrides from depth chart default)
 let currentStarters = {}; // { formationPos: playerObject }
 let activeSubDropdown = null; // currently open dropdown pos key
-let currentOnFieldNames = new Set(); // names of players currently on the field
+let currentOnFieldIds = new Set(); // player_id of players currently on the field
 
 function maddenColor(r) {
   if (!r) return '#6b7494';
@@ -768,14 +770,53 @@ function maddenColor(r) {
   return `hsl(${Math.max(0,(r-55)*2)},90%,50%)`;
 }
 
-async function loadTeam(abbr) {
+function parseCap(capStr) {
+  if (!capStr) return 0;
+  return parseInt(capStr.replace(/[$,]/g, '')) || 0;
+}
+
+function mapPlayer(player) {
+  return {
+    id: player.player_id,
+    name: player.canonical_name,
+    team: player.team,
+    base_defense: player.base_defense,
+    standard_pos: player.standard_pos,
+    standard_slot: player.standard_slot,
+    depth: player.depth,
+    jersey: player.jersey,
+    age: player.age,
+    years_pro: player.years_pro,
+    madden: player.madden,
+    madden_rank: player.madden_rank,
+    madden_rank_total: player.madden_rank_total,
+    madden_pos_label: player.madden_pos_label,
+    cap_number: player.cap_number,
+    cap_raw: parseCap(player.cap_number),
+    injured: player.injured,
+    attainment: player.attainment,
+    stats: player.stats,
+    stats_season: player.stats_season,
+  };
+}
+
+async function loadAllPlayers() {
   try {
-    const res = await fetch(`data/${abbr.toLowerCase()}.json`);
-    teamData = await res.json();
+    const res = await fetch('data/players_master.json');
+    const raw = await res.json();
+    allPlayers = Object.values(raw).map(mapPlayer);
+    console.log('DEBUG loadAllPlayers: keys in raw master =', Object.keys(raw).length, ' sample player =', allPlayers[0]);
   } catch(e) {
-    console.error('Failed to load team data:', e);
-    return;
+    console.error('Failed to load players_master.json:', e);
+    allPlayers = [];
   }
+}
+
+async function loadTeam(abbr) {
+  if (!allPlayers) await loadAllPlayers();
+  const players = allPlayers.filter(p => p.team === abbr);
+  console.log('DEBUG loadTeam: abbr =', abbr, ' filtered players.length =', players.length);
+  teamData = { base_defense: players[0]?.base_defense || '', players };
   updateHeader();
   renderFormation();
   syncFieldHeight();
@@ -810,11 +851,30 @@ function getStarter(formationPos) {
   if (!teamData) return null;
   // Check if user has subbed someone in
   if (currentStarters[formationPos]) return currentStarters[formationPos];
-  // Default: find depth 1 player with matching standard_slot
-  for (const players of Object.values(teamData.depth_chart)) {
-    if (players.length && players[0].standard_slot === formationPos) {
-      return players[0];
-    }
+  // TE2 (12-personnel second tight end) isn't a real standard_slot value —
+  // it's the depth-2 player within the TE group. Handle it explicitly so
+  // it gets the same sub-candidate pool (standard_pos 'TE') as TE1.
+  if (formationPos === 'TE2') {
+    const tes = teamData.players
+      .filter(p => p.standard_slot === 'TE')
+      .sort((a, b) => (a.depth || 99) - (b.depth || 99));
+    return tes[1] || null;
+  }
+  // Default: find the depth-1 player with matching standard_slot
+  const starter = teamData.players.find(p => p.depth === 1 && p.standard_slot === formationPos);
+  if (starter) return starter;
+  // FALLBACK (2026 season) — IND, CLE, and CIN roster only WLB/MLB on
+  // OurLads with no dedicated SLB, so the base43 'SAM' slot has no
+  // player and the base package fields one short. Backfill from the
+  // backup (depth 2) WLB ('WILL'), then backup MLB ('MIKE'), so the
+  // slot is never empty. If this stops matching real rosters (e.g. a
+  // team adds a SLB group back, or the backup is no longer depth 2),
+  // adjust the standard_slot/depth checks below.
+  if (formationPos === 'SAM') {
+    const backupWill = teamData.players.find(p => p.standard_slot === 'WILL' && p.depth === 2);
+    if (backupWill) return backupWill;
+    const backupMike = teamData.players.find(p => p.standard_slot === 'MIKE' && p.depth === 2);
+    if (backupMike) return backupMike;
   }
   return null;
 }
@@ -827,21 +887,14 @@ function getSubCandidates(formationPos) {
   if (!targetPos) return [];
 
   // Collect all players with matching standard_pos, sorted by madden desc
-  const candidates = [];
-  for (const players of Object.values(teamData.depth_chart)) {
-    for (const p of players) {
-      if (p.standard_pos === targetPos) {
-        candidates.push(p);
-      }
-    }
-  }
+  const candidates = teamData.players.filter(p => p.standard_pos === targetPos);
   candidates.sort((a, b) => (b.madden || 0) - (a.madden || 0));
-  // Dedupe by name, and exclude anyone already on the field
+  // Dedupe by id, and exclude anyone already on the field
   const seen = new Set();
   return candidates.filter(p => {
-    if (seen.has(p.name)) return false;
-    seen.add(p.name);
-    if (currentOnFieldNames.has(p.name)) return false;
+    if (seen.has(p.id)) return false;
+    seen.add(p.id);
+    if (currentOnFieldIds.has(p.id)) return false;
     return true;
   });
 }
@@ -856,7 +909,7 @@ function buildSubDropdown(formationPos, currentPlayer) {
     const displayName = parts.length > 1 ? parts.slice(1).join(' ') : parts[0];
     return `
       <div class="sub-option"
-           onclick="selectSub('${formationPos}', '${p.name.replace(/'/g, "\\'")}', event)">
+           onclick="selectSub('${formationPos}', '${p.id}', event)">
         <div class="sub-option-madden" style="color:${mc}">${p.madden || '—'}</div>
         <div class="sub-option-info">
           <div class="sub-option-name">${displayName}</div>
@@ -874,18 +927,14 @@ function buildSubDropdown(formationPos, currentPlayer) {
   `;
 }
 
-function selectSub(formationPos, playerName, event) {
+function selectSub(formationPos, playerId, event) {
   event.stopPropagation();
   // Find the player object
-  for (const players of Object.values(teamData.depth_chart)) {
-    for (const p of players) {
-      if (p.name === playerName) {
-        currentStarters[formationPos] = p;
-        closeSubDropdown();
-        renderFormation();
-        return;
-      }
-    }
+  const p = teamData.players.find(p => p.id === playerId);
+  if (p) {
+    currentStarters[formationPos] = p;
+    closeSubDropdown();
+    renderFormation();
   }
 }
 
@@ -1021,6 +1070,7 @@ const POS_ALIAS = {
   'WILL': 'LOLB', 'SAM': 'ROLB', 'MIKE': 'MLB',
   // Linebackers — 3-4
   'LILB': 'WLB', 'RILB': 'MLB',
+  'RUSH': 'ROLB',
   // Corners
   'LCB': 'LCB', 'RCB': 'RCB', 'CB': 'LCB',
   // Safeties
@@ -1044,20 +1094,19 @@ function renderFormation() {
   // First pass: resolve every slot's current player so dropdowns
   // (built in the second pass) know the full on-field roster.
   const slots = [];
-  currentOnFieldNames = new Set();
+  currentOnFieldIds = new Set();
   for (const [pos, coords] of Object.entries(coordMap)) {
     if (pos === 'TE' && currentPersonnel === '12') {
-      const players = teamData.depth_chart['TE'] || [];
-      const te1 = players[0] || null;
-      const te2 = players[1] || null;
-      if (te1) currentOnFieldNames.add(te1.name);
-      if (te2) currentOnFieldNames.add(te2.name);
+      const te1 = getStarter('TE');
+      const te2 = getStarter('TE2');
+      if (te1) currentOnFieldIds.add(te1.id);
+      if (te2) currentOnFieldIds.add(te2.id);
       slots.push({ pos: 'TE', coords, starter: te1, flip: false });
       slots.push({ pos: 'TE2', coords: TE2_COORD, starter: te2, flip: false });
       continue;
     }
     const starter = getStarter(pos);
-    if (starter) currentOnFieldNames.add(starter.name);
+    if (starter) currentOnFieldIds.add(starter.id);
     const forceFlip = ['QB', 'RB', 'FB', 'HB'].includes(pos);
     slots.push({ pos, coords, starter, flip: forceFlip || coords.y > 72 });
   }
