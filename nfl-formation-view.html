@@ -309,7 +309,8 @@ body {
   opacity: 0;
   pointer-events: none;
   transition: opacity .15s, transform .15s;
-  transform: translateX(-50%) translateY(6px);
+  /* --hx: horizontal viewport-edge correction, nudged in by JS (positionHoverCard) */
+  transform: translateX(-50%) translateX(var(--hx, 0px)) translateY(6px);
   box-shadow: 0 16px 48px rgba(0,0,0,0.8);
   z-index: 500;
   overflow: hidden;
@@ -317,16 +318,16 @@ body {
 }
 .player-node:hover .hover-card {
   opacity: 1;
-  transform: translateX(-50%) translateY(0);
+  transform: translateX(-50%) translateX(var(--hx, 0px)) translateY(0);
   pointer-events: auto;
 }
 .player-node.flip-card .hover-card {
   bottom: auto;
   top: calc(100% + 12px);
-  transform: translateX(-50%) translateY(-6px);
+  transform: translateX(-50%) translateX(var(--hx, 0px)) translateY(-6px);
 }
 .player-node.flip-card:hover .hover-card {
-  transform: translateX(-50%) translateY(0);
+  transform: translateX(-50%) translateX(var(--hx, 0px)) translateY(0);
 }
 
 .card-header {
@@ -685,7 +686,6 @@ const FORMATION_COORDS = {
       C:   {x:50, y:57},
       RG:  {x:58, y:58},
       RT:  {x:66, y:59},
-      TE2:  {x:74, y:60},
       QB:  {x:50, y:80},
       RB:  {x:62, y:78},
     },
@@ -805,7 +805,6 @@ async function loadAllPlayers() {
     const res = await fetch('data/players_master.json');
     const raw = await res.json();
     allPlayers = Object.values(raw).map(mapPlayer);
-    console.log('DEBUG loadAllPlayers: keys in raw master =', Object.keys(raw).length, ' sample player =', allPlayers[0]);
   } catch(e) {
     console.error('Failed to load players_master.json:', e);
     allPlayers = [];
@@ -815,7 +814,6 @@ async function loadAllPlayers() {
 async function loadTeam(abbr) {
   if (!allPlayers) await loadAllPlayers();
   const players = allPlayers.filter(p => p.team === abbr);
-  console.log('DEBUG loadTeam: abbr =', abbr, ' filtered players.length =', players.length);
   teamData = { base_defense: players[0]?.base_defense || '', players };
   updateHeader();
   renderFormation();
@@ -964,6 +962,34 @@ function updateHeader() {
   document.getElementById('teamNameEl').textContent = team.name;
 }
 
+function positionHoverCard(node) {
+  const card = node.querySelector('.hover-card');
+  if (!card) return;
+  const margin = 8;
+
+  // Reset any previous correction before measuring fresh geometry.
+  card.style.setProperty('--hx', '0px');
+
+  // Vertical: flip above/below if the current side would run off-screen.
+  const showingBelow = node.classList.contains('flip-card');
+  const vRect = card.getBoundingClientRect();
+  if (showingBelow && vRect.bottom > window.innerHeight - margin) {
+    node.classList.remove('flip-card');
+  } else if (!showingBelow && vRect.top < margin) {
+    node.classList.add('flip-card');
+  }
+
+  // Horizontal: nudge left/right so the card stays within the viewport.
+  const hRect = card.getBoundingClientRect(); // re-measure — the flip above may have changed layout
+  let hx = 0;
+  if (hRect.right > window.innerWidth - margin) {
+    hx = (window.innerWidth - margin) - hRect.right;
+  } else if (hRect.left < margin) {
+    hx = margin - hRect.left;
+  }
+  card.style.setProperty('--hx', hx + 'px');
+}
+
 function buildHoverCard(p, pos) {
   const team = TEAMS[currentTeam];
   const initials = p.name.split(' ').map(w => w[0]).join('').slice(0, 2);
@@ -1029,7 +1055,8 @@ function buildPlayerNode(p, pos, coords, delay, flipCard) {
   return `
     <div class="player-node ${flipCard ? 'flip-card' : ''}"
          style="left:${coords.x}%;top:${coords.y}%;animation-delay:${delay}ms"
-         onclick="openSubDropdown('${pos}', event)">
+         onclick="openSubDropdown('${pos}', event)"
+         onmouseenter="positionHoverCard(this)">
       <div class="p-card" style="background:${team.colors[0]}">
         <div class="p-jersey">${p.jersey ? '#'+p.jersey : '\u00a0'}</div>
         <div class="p-lastname">${lastName}</div>
@@ -1185,22 +1212,27 @@ function toggleTeamDropdown() {
   if (dd.classList.contains('open')) buildTeamDropdown();
 }
 
-function selectTeam(abbr) {
+async function selectTeam(abbr) {
   currentTeam = abbr;
   currentStarters = {};
   localStorage.setItem('fieldview_team', abbr);
   document.getElementById('teamsDropdown').classList.remove('open');
-  // Reset to offense/11 so defense buttons rebuild cleanly on next toggle
-  currentUnit = 'offense';
-  currentPersonnel = '11';
-  document.querySelectorAll('#unitGroup .ctrl-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector('#unitGroup .ctrl-btn').classList.add('active');
-  document.getElementById('personnelGroup').innerHTML = `
-    <button class="ctrl-btn active" onclick="setPersonnel('11',this)">11 (3 WR)</button>
-    <button class="ctrl-btn" onclick="setPersonnel('12',this)">12 (2 TE)</button>
-  `;
-  document.getElementById('formationLabel').textContent = '11 Personnel · Shotgun Spread';
-  loadTeam(abbr);
+
+  // Preserve whatever unit/package the user was already viewing — only the
+  // scheme-specific key (base43/base34, nickel/nickel34) may need to change
+  // for the new team, not the unit or base-vs-nickel choice itself.
+  const preservedUnit = currentUnit;
+  const wasSecondPersonnel = currentPersonnel === '12' || currentPersonnel.startsWith('nickel');
+
+  await loadTeam(abbr);
+
+  const unitBtns = document.querySelectorAll('#unitGroup .ctrl-btn');
+  unitBtns[preservedUnit === 'defense' ? 1 : 0].click();
+  if (wasSecondPersonnel) {
+    const persBtns = document.querySelectorAll('#personnelGroup .ctrl-btn');
+    if (persBtns[1]) persBtns[1].click();
+  }
+
   syncURL(); // add this
 }
 

@@ -79,12 +79,47 @@ def build_pos_ranks(madden_by_team):
             }
     return pos_ranks
 
-def find_madden_player(name, all_madden_players):
+def find_duplicate_names(team_abbrs):
+    """Normalized names that appear in more than one team's depth chart.
+
+    For these, a Madden entry that only turns up via the cross-team
+    fallback usually belongs to the OTHER, different real person who
+    happens to share the name — not this player. Safer to leave them
+    unmatched than to risk attaching a stranger's rating.
+    """
+    teams_by_name = {}
+    for abbr in team_abbrs:
+        filepath = f"data/{abbr.lower()}.json"
+        if not os.path.exists(filepath):
+            continue
+        with open(filepath) as f:
+            team_data = json.load(f)
+        for players in team_data["depth_chart"].values():
+            for player in players:
+                key = normalize(player["name"])
+                teams_by_name.setdefault(key, set()).add(abbr)
+    return {name for name, teams in teams_by_name.items() if len(teams) > 1}
+
+def find_madden_player(name, team_madden_players, all_madden_players, allow_cross_team=True):
     target = normalize(name)
+    target_words = set(target.split())
+    # Prefer a match within the player's own team first, to avoid colliding
+    # with a different real person who happens to share the same name on
+    # another team (e.g. two different "Justin Jefferson"s).
+    for mp in team_madden_players:
+        if mp["normalized"] == target:
+            return mp
+    for mp in team_madden_players:
+        if target_words and target_words.issubset(set(mp["normalized"].split())):
+            return mp
+    if not allow_cross_team:
+        return None
+    # Fall back to a league-wide search (handles recent trades/signings not
+    # yet reflected under the right team in the Madden export). Only safe
+    # when the name isn't shared by a different real player elsewhere.
     for mp in all_madden_players:
         if mp["normalized"] == target:
             return mp
-    target_words = set(target.split())
     for mp in all_madden_players:
         if target_words and target_words.issubset(set(mp["normalized"].split())):
             return mp
@@ -94,6 +129,7 @@ def merge():
     madden_by_team = load_madden("data/madden.json")
     pos_ranks = build_pos_ranks(madden_by_team)
     all_madden_players = [p for players in madden_by_team.values() for p in players]
+    duplicate_names = find_duplicate_names(TEAM_MAP.values())
 
     matched = 0
     unmatched = 0
@@ -108,7 +144,9 @@ def merge():
 
         for pos, players in team_data["depth_chart"].items():
             for player in players:
-                mp = find_madden_player(player["name"], all_madden_players)
+                is_dup = normalize(player["name"]) in duplicate_names
+                mp = find_madden_player(player["name"], madden_by_team.get(abbr, []), all_madden_players,
+                                         allow_cross_team=not is_dup)
                 if mp:
                     player["madden"] = mp["overall"]
                     player["jersey"] = mp["jersey"]
@@ -122,6 +160,8 @@ def merge():
                 else:
                     player["madden"] = None
                     player["jersey"] = None
+                    player["age"] = None
+                    player["years_pro"] = None
                     player["madden_rank"] = None
                     player["madden_rank_total"] = None
                     player["madden_pos_label"] = None

@@ -156,6 +156,11 @@ def main():
             for player in depth_players:
                 key = normalize(player["name"])
                 sp = name_lookup.get(key)
+                # A name match on the wrong team is a different real person
+                # who happens to share the name (e.g. two "Justin Jefferson"s)
+                # — don't attach their stats, let the fallback try instead.
+                if sp and sp.get("team") != nfl_abbr:
+                    sp = None
 
                 # Fallback: match on last name only within same team
                 if not sp:
