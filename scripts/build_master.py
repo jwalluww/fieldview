@@ -5,6 +5,8 @@ import os
 import pandas as pd
 from rapidfuzz import fuzz, process
 
+SEASON = 2025  # matches scrape_stats.py's SEASON
+
 # Known name mismatches between OurLads and crosswalk
 # Format: 'ourlads_canonical_name': 'crosswalk_name'
 NAME_ALIASES = {
@@ -132,6 +134,50 @@ def normalize_stats(stats, standard_pos):
         normalized[canonical] = v
     return normalized
 
+# Spotrac position codes -> this project's standard_pos values.
+# K/P/LS intentionally excluded — special teams aren't in our standard_pos
+# set (stripped from the OurLads side via SKIP_POSITIONS too).
+SPOTRAC_POS_MAP = {
+    'QB': 'QB',
+    'RB': 'RB', 'FB': 'RB',
+    'WR': 'WR',
+    'TE': 'TE',
+    'T': 'OL', 'LT': 'OL', 'RT': 'OL', 'G': 'OL', 'C': 'OL', 'OL': 'OL',
+    'ED': 'EDGE', 'DE': 'EDGE',
+    'DL': 'DI', 'DT': 'DI',
+    'LB': 'LB', 'OLB': 'LB', 'ILB': 'LB', 'WLB': 'LB',
+    'CB': 'CB',
+    'S': 'S', 'SS': 'S',
+}
+
+def load_spotrac_contracts():
+    """Load Spotrac remaining-contract data and index it for fuzzy matching."""
+    path = os.path.join('data', 'spotrac_contracts.json')
+    if not os.path.exists(path):
+        print("Warning: data/spotrac_contracts.json not found, skipping contract merge")
+        return None
+    try:
+        with open(path, 'r') as f:
+            records = json.load(f)
+        df = pd.DataFrame(records)
+        df['standard_pos'] = df['pos'].map(SPOTRAC_POS_MAP)
+        df = df[df['standard_pos'].notna()].copy()
+        df['row_idx'] = df.index
+        print(f"Loaded Spotrac contracts: {len(df)} usable records (of {len(records)} total)")
+        return df
+    except Exception as e:
+        print(f"Warning: could not load Spotrac contracts ({e}), skipping contract merge")
+        return None
+
+def find_spotrac_contract(name, standard_pos, team, spotrac_df):
+    """Fuzzy-match a player against Spotrac contracts (no shared ID to join on)."""
+    if spotrac_df is None:
+        return None, None
+    name_norm = normalize_for_matching(name)
+    return _match_in_df(name_norm, standard_pos, team, spotrac_df,
+                         pos_col='standard_pos', name_col='name_norm',
+                         team_col='team', id_col='row_idx')
+
 def load_gsis_crosswalk():
     """Pull dynastyprocess crosswalk and index by (normalized_name, position, team)."""
     url = "https://github.com/dynastyprocess/data/raw/master/files/db_playerids.csv"
@@ -152,7 +198,7 @@ def load_nflreadpy_gsis():
     try:
         import nfl_data_py as nfl
         print("Available nfl_data_py functions:", [f for f in dir(nfl) if not f.startswith('_')])
-        rosters = nfl.import_weekly_rosters(years=[2025])
+        rosters = nfl.import_weekly_rosters(years=[SEASON])
         rosters = rosters[rosters['player_id'].notna()].copy()
         rosters = rosters.rename(columns={'player_id': 'gsis_id', 'player_name': 'player_name'})
         rosters = rosters[rosters['gsis_id'].notna()]
@@ -231,7 +277,8 @@ def _match_in_df(name_norm, standard_pos, team, df,
 def build_master():
     crosswalk = load_gsis_crosswalk()
     rosters = load_nflreadpy_gsis()
-    
+    spotrac_df = load_spotrac_contracts()
+
     master = {}
     low_confidence = []
     unmatched = []
@@ -295,7 +342,6 @@ def build_master():
                     'depth': p.get('depth', 99),
                     'jersey': p.get('jersey'),
                     'age': p.get('age'),
-                    'years_pro': p.get('years_pro'),
                     'madden': p.get('madden'),
                     'madden_rank': p.get('madden_rank'),
                     'madden_rank_total': p.get('madden_rank_total'),
@@ -327,6 +373,70 @@ def build_master():
                         'team': abbr,
                     })
 
+    # Merge draft_year/college and recompute years_pro from nflreadpy roster
+    # data — joined on the GSIS ID already resolved above, not a new
+    # name-based match. nflreadpy has no distinct "draft year" column, so
+    # entry_year (season first on an NFL roster) is used for both.
+    entry_year_by_gsis = {}
+    college_by_gsis = {}
+    if rosters is not None:
+        dedup_rosters = rosters.drop_duplicates(subset='gsis_id', keep='first')
+        for _, row in dedup_rosters.iterrows():
+            gid = row['gsis_id']
+            if not gid:
+                continue
+            entry_year = row.get('entry_year')
+            entry_year_by_gsis[gid] = int(entry_year) if pd.notna(entry_year) else None
+            college = row.get('college')
+            college_by_gsis[gid] = college if pd.notna(college) else None
+
+    draft_matched = 0
+    for entry in master.values():
+        gid = entry.get('gsis_id')
+        entry_year = entry_year_by_gsis.get(gid) if gid else None
+        entry['draft_year'] = entry_year
+        entry['college'] = college_by_gsis.get(gid) if gid else None
+        entry['years_pro'] = (SEASON - entry_year) if entry_year is not None else None
+        if entry_year is not None:
+            draft_matched += 1
+
+    # Merge Spotrac remaining-contract data — no shared ID with GSIS/OurLads,
+    # so this gets its own fuzzy-match pass, reusing the same _match_in_df
+    # logic (position match first, team as tiebreaker only) already
+    # established for the GSIS crosswalk.
+    contract_matched = 0
+    contract_unmatched = []
+
+    for entry in master.values():
+        row_idx, _ = find_spotrac_contract(
+            entry['canonical_name'], entry['standard_pos'], entry['team'], spotrac_df)
+
+        if row_idx is not None:
+            row = spotrac_df.loc[row_idx]
+            years_remaining = int(row['length_remaining']) if pd.notna(row['length_remaining']) else None
+            cash_total = float(row['cash_total_remaining']) if pd.notna(row['cash_total_remaining']) else None
+            cash_guaranteed = float(row['cash_guaranteed_remaining']) if pd.notna(row['cash_guaranteed_remaining']) else None
+
+            entry['years_remaining'] = years_remaining
+            entry['cash_total_remaining'] = cash_total
+            entry['cash_guaranteed_remaining'] = cash_guaranteed
+            entry['avg_annual_remaining'] = (
+                cash_total / years_remaining
+                if cash_total is not None and years_remaining
+                else None
+            )
+            contract_matched += 1
+        else:
+            entry['years_remaining'] = None
+            entry['cash_total_remaining'] = None
+            entry['cash_guaranteed_remaining'] = None
+            entry['avg_annual_remaining'] = None
+            contract_unmatched.append({
+                'name': entry['canonical_name'],
+                'pos': entry['standard_pos'],
+                'team': entry['team'],
+            })
+
     # Write master
     with open('data/players_master.json', 'w') as f:
         json.dump(master, f, indent=2)
@@ -335,6 +445,7 @@ def build_master():
     print(f"GSIS matched: {sum(1 for p in master.values() if p['gsis_id'])}")
     print(f"Unmatched:    {len(unmatched)}")
     print(f"Low confidence (<95%): {len(low_confidence)}")
+    print(f"draft_year/college matched (via GSIS): {draft_matched} / {len(master)}")
 
     print(f"\nUnmatched ({min(len(unmatched), 20)} shown):")
     for p in unmatched[:20]:
@@ -343,6 +454,15 @@ def build_master():
     print(f"\nLow confidence ({min(len(low_confidence), 20)} shown):")
     for p in low_confidence[:20]:
         print(f"  {p['canonical']:35} {p['pos']:6} {p['team']}  ({p['confidence']}%)")
+
+    print(f"\nSpotrac contracts matched: {contract_matched}")
+    print(f"Spotrac contracts unmatched: {len(contract_unmatched)}")
+
+    skill_pos_contracts = {'QB', 'WR', 'RB', 'TE'}
+    skill_contract_unmatched = [p for p in contract_unmatched if p['pos'] in skill_pos_contracts]
+    print(f"\nSkill position unmatched (Spotrac contracts): {len(skill_contract_unmatched)}")
+    for p in skill_contract_unmatched[:30]:
+        print(f"  {p['name']:35} {p['pos']:6} {p['team']}")
 
     # After loading crosswalk, check specific names
     check = ['Mike Jackson', 'Mitch Tinsley', 'Dax Hill', 

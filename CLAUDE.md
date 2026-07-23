@@ -63,7 +63,8 @@ madden_rank, madden_rank_total, madden_pos_label
 player_id (GSIS if matched, else name-pos-team slug),
 gsis_id, match_confidence, canonical_name, ourlads_name,
 team, team_name, base_defense, ourlads_pos, standard_slot, standard_pos, depth,
-jersey, age, years_pro, madden, madden_rank,  madden_rank_total, madden_pos_label, cap_number, attainment, injured, stats (normalized keys), stats_season, nflreadpy_name, match_source
+jersey, age, years_pro (computed: SEASON - draft_year, via nflreadpy GSIS join), draft_year, college, madden, madden_rank,  madden_rank_total, madden_pos_label, cap_number, attainment, injured, stats (normalized keys), stats_season, nflreadpy_name, match_source,
+years_remaining, cash_total_remaining, cash_guaranteed_remaining, avg_annual_remaining (all from Spotrac, fuzzy-matched — no shared ID)
 
 `standard_pos` values: `QB, WR, RB, TE, OL, EDGE, DI, LB, CB, S`
 Special teams (K, P, KR, PR, KO, PK, LS, PT, H) are stripped from pipeline entirely.
