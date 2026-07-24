@@ -360,15 +360,15 @@ body {
   <!-- Logo -->
   <div class="logo-block">
     <div class="logo" onclick="window.location='index.html'" style="cursor:pointer">Field<span>View</span></div>
-    <div class="tagline">NFL Intelligence Platform</div>
+    <div class="tagline" id="taglineEl">NFL Intelligence Platform</div>
   </div>
 
   <!-- Sport selector -->
   <div class="sport-bar">
-    <button class="sport-btn active">NFL</button>
+    <button class="sport-btn active" id="sportBtnNfl" onclick="selectSport('nfl')">NFL</button>
     <button class="sport-btn soon" title="Coming soon">MLB</button>
     <button class="sport-btn soon" title="Coming soon">NHL</button>
-    <button class="sport-btn soon" title="Coming soon">NBA</button>
+    <button class="sport-btn" id="sportBtnNba" onclick="selectSport('nba')">NBA</button>
     <button class="sport-btn soon" title="Coming soon">MLS</button>
     <button class="sport-btn soon" title="Coming soon">EPL</button>
   </div>
@@ -376,7 +376,7 @@ body {
   <!-- View cards -->
   <div class="cards">
 
-    <a href="nfl-formation-view.html" class="view-card formation">
+    <a href="nfl-formation-view.html" class="view-card formation" id="formationCard">
       <div class="card-accent"></div>
       <div class="card-icon">
         <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
@@ -390,9 +390,9 @@ body {
         </svg>
       </div>
       <div class="card-body">
-        <div class="card-label">Formation View</div>
-        <div class="card-desc">See your team lined up on the field. Real starters, Madden ratings, live substitutions.</div>
-        <div class="card-features">
+        <div class="card-label" id="formationLabel">Formation View</div>
+        <div class="card-desc" id="formationDesc">See your team lined up on the field. Real starters, Madden ratings, live substitutions.</div>
+        <div class="card-features" id="formationFeatures">
           <span class="card-feature">All 32 Teams</span>
           <span class="card-feature">Live Subs</span>
           <span class="card-feature">Madden OVR</span>
@@ -405,7 +405,7 @@ body {
       </div>
     </a>
 
-    <a href="depth-chart.html" class="view-card table">
+    <a href="depth-chart.html" class="view-card table" id="tableCard">
       <div class="card-accent"></div>
       <div class="card-icon">
         <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
@@ -415,9 +415,9 @@ body {
         </svg>
       </div>
       <div class="card-body">
-        <div class="card-label">Player Table</div>
-        <div class="card-desc">Full league roster data. Filter, sort, and search across all 32 teams and every position.</div>
-        <div class="card-features">
+        <div class="card-label" id="tableLabel">Player Table</div>
+        <div class="card-desc" id="tableDesc">Full league roster data. Filter, sort, and search across all 32 teams and every position.</div>
+        <div class="card-features" id="tableFeatures">
           <span class="card-feature">Sortable</span>
           <span class="card-feature">Filterable</span>
           <span class="card-feature">All Positions</span>
@@ -435,7 +435,7 @@ body {
   <!-- Data strip -->
   <div class="data-strip">
     <div class="data-item">
-      <div class="data-val">32</div>
+      <div class="data-val" id="teamCount">32</div>
       <div class="data-label">Teams</div>
     </div>
     <div class="data-divider"></div>
@@ -445,12 +445,12 @@ body {
     </div>
     <div class="data-divider"></div>
     <div class="data-item">
-      <div class="data-val">4</div>
+      <div class="data-val" id="sourceCount">4</div>
       <div class="data-label">Data Sources</div>
     </div>
     <div class="data-divider"></div>
     <div class="data-item">
-      <div class="data-val">Weekly</div>
+      <div class="data-val" id="updateCadence">Weekly</div>
       <div class="data-label">Updates</div>
     </div>
   </div>
@@ -463,30 +463,107 @@ body {
 </div>
 
 <script>
-// Count total players across all teams for the data strip
-const TEAMS = [
+const SPORTS = {
+  nfl: {
+    tagline: 'NFL Intelligence Platform',
+    formationHref: 'nfl-formation-view.html',
+    tableHref: 'depth-chart.html',
+    formationLabel: 'Formation View',
+    formationDesc: 'See your team lined up on the field. Real starters, Madden ratings, live substitutions.',
+    formationFeatures: ['All 32 Teams', 'Live Subs', 'Madden OVR', 'Cap Data', '2025 Stats'],
+    tableLabel: 'Player Table',
+    tableDesc: 'Full league roster data. Filter, sort, and search across all 32 teams and every position.',
+    tableFeatures: ['Sortable', 'Filterable', 'All Positions', 'Contract Data', 'Season Stats'],
+    teamCount: 32,
+    sourceCount: 4,
+    updateCadence: 'Weekly',
+  },
+  nba: {
+    tagline: 'NBA Intelligence Platform',
+    formationHref: 'nba/formation.html',
+    tableHref: 'nba/player-table.html',
+    formationLabel: 'Starting Five',
+    formationDesc: 'See the current starting five on the court, plus a rotation ranked by minutes played.',
+    formationFeatures: ['Court Zones', 'Rotation Rank', 'Overall Rating', 'Mock Data'],
+    tableLabel: 'Player Table',
+    tableDesc: 'Roster data across NBA teams. Filter, sort, and search by team, position, and role.',
+    tableFeatures: ['Sortable', 'Filterable', 'Per Game Stats', 'Contract Data'],
+    teamCount: 3,
+    sourceCount: 1,
+    updateCadence: 'Stub',
+  },
+};
+
+let currentSport = 'nfl';
+
+function selectSport(sport) {
+  currentSport = sport;
+  const cfg = SPORTS[sport];
+
+  document.getElementById('sportBtnNfl').classList.toggle('active', sport === 'nfl');
+  document.getElementById('sportBtnNba').classList.toggle('active', sport === 'nba');
+
+  document.getElementById('taglineEl').textContent = cfg.tagline;
+
+  const formationCard = document.getElementById('formationCard');
+  const tableCard = document.getElementById('tableCard');
+  formationCard.href = cfg.formationHref;
+  tableCard.href = cfg.tableHref;
+
+  document.getElementById('formationLabel').textContent = cfg.formationLabel;
+  document.getElementById('formationDesc').textContent = cfg.formationDesc;
+  document.getElementById('formationFeatures').innerHTML = cfg.formationFeatures.map(f => `<span class="card-feature">${f}</span>`).join('');
+
+  document.getElementById('tableLabel').textContent = cfg.tableLabel;
+  document.getElementById('tableDesc').textContent = cfg.tableDesc;
+  document.getElementById('tableFeatures').innerHTML = cfg.tableFeatures.map(f => `<span class="card-feature">${f}</span>`).join('');
+
+  document.getElementById('teamCount').textContent = cfg.teamCount;
+  document.getElementById('sourceCount').textContent = cfg.sourceCount;
+  document.getElementById('updateCadence').textContent = cfg.updateCadence;
+
+  updatePlayerCount(sport);
+}
+
+// Count total players for the data strip
+const NFL_TEAMS = [
   'arz','atl','bal','buf','car','chi','cin','cle','dal','den',
   'det','gb','hou','ind','jax','kc','lac','lar','lv','mia',
   'min','ne','no','nyg','nyj','phi','pit','sf','sea','tb','ten','was'
 ];
 
-let total = 0;
-let loaded = 0;
+function updatePlayerCount(sport) {
+  document.getElementById('playerCount').textContent = '—';
+  if (sport === 'nfl') {
+    let total = 0;
+    let loaded = 0;
+    NFL_TEAMS.forEach(abbr => {
+      fetch(`data/${abbr}.json`)
+        .then(r => r.json())
+        .then(d => {
+          for (const players of Object.values(d.depth_chart || {})) {
+            total += players.length;
+          }
+          loaded++;
+          if (loaded === NFL_TEAMS.length && currentSport === 'nfl') {
+            document.getElementById('playerCount').textContent = total.toLocaleString();
+          }
+        })
+        .catch(() => { loaded++; });
+    });
+  } else if (sport === 'nba') {
+    fetch('nba/data/nba_players_master.json')
+      .then(r => r.json())
+      .then(d => {
+        if (currentSport === 'nba') {
+          document.getElementById('playerCount').textContent = Object.keys(d).length.toLocaleString();
+        }
+      })
+      .catch(() => {});
+  }
+}
 
-TEAMS.forEach(abbr => {
-  fetch(`data/${abbr}.json`)
-    .then(r => r.json())
-    .then(d => {
-      for (const players of Object.values(d.depth_chart || {})) {
-        total += players.length;
-      }
-      loaded++;
-      if (loaded === TEAMS.length) {
-        document.getElementById('playerCount').textContent = total.toLocaleString();
-      }
-    })
-    .catch(() => { loaded++; });
-});
+updatePlayerCount('nfl');
 </script>
 </body>
 </html>

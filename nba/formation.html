@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FieldView — NBA Formation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #13141a;
+  --surface: #111318;
+  --surface2: #181c24;
+  --border: #1e2330;
+  --border2: #262d3d;
+  --text: #e8eaf0;
+  --text-muted: #6b7494;
+  --text-dim: #404660;
+  --accent: #00d4ff;
+  --gold: #f5a623;
+  --green: #22c55e;
+  --red: #ef4444;
+  --purple: #a855f7;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── HEADER ── */
+.header {
+  background: #0d1118;
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 52px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+
+.logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: var(--accent);
+  cursor: pointer;
+}
+.logo span { color: var(--text-muted); font-weight: 400; }
+
+.header-divider { width: 1px; height: 24px; background: var(--border2); }
+
+.team-swatch {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 900; letter-spacing: .5px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.team-selector-wrap { position: relative; }
+
+.teams-dropdown {
+  position: absolute;
+  top: 44px;
+  left: 0;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 8px;
+  z-index: 300;
+  display: none;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  width: 260px;
+  box-shadow: 0 16px 48px rgba(0,0,0,.6);
+}
+.teams-dropdown.open { display: grid; }
+
+.team-opt {
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  transition: background .15s;
+}
+.team-opt:hover { background: var(--border); color: var(--text); }
+.team-opt.selected { background: rgba(0,212,255,.1); color: var(--accent); }
+
+.view-toggle {
+  margin-left: auto;
+  display: flex;
+  gap: 2px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.view-btn {
+  background: none;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 14px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all .15s;
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 6px;
+}
+.view-btn:hover { color: var(--text); }
+.view-btn.active { background: var(--border2); color: var(--text); }
+
+/* ── COURT ── */
+.court-outer {
+  padding: 16px 24px 8px;
+}
+
+.court-label {
+  max-width: 900px;
+  margin: 0 auto 12px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.court-canvas {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  aspect-ratio: 1 / 0.94;
+  margin: 0 auto;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.court-bg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+
+.players-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+}
+
+/* ── PLAYER CARD ── */
+.player-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 20;
+}
+.player-node:hover { z-index: 100; }
+
+.p-card {
+  width: 108px;
+  border-radius: 8px 8px 0 0;
+  padding: 7px 10px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  border: 1.5px solid rgba(255,255,255,0.15);
+  border-bottom: none;
+  transition: transform .2s cubic-bezier(.34,1.56,.64,1), border-color .2s;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+}
+.player-node:hover .p-card { transform: scale(1.06); border-color: rgba(255,255,255,0.4); }
+
+.p-jersey {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1;
+  align-self: flex-start;
+}
+
+.p-lastname {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  color: #fff;
+  line-height: 1.1;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 96px;
+}
+
+.p-rating {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 27px;
+  line-height: 1;
+  text-align: center;
+}
+
+.p-ppg {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: .5px;
+  line-height: 1;
+}
+
+.p-pos-bar {
+  width: 108px;
+  background: #000;
+  border-radius: 0 0 6px 6px;
+  padding: 4px 0;
+  text-align: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.9);
+  text-transform: uppercase;
+  border: 1.5px solid rgba(255,255,255,0.15);
+  border-top: none;
+}
+
+.p-empty {
+  width: 108px;
+  border-radius: 8px;
+  padding: 16px 10px;
+  text-align: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  border: 1.5px dashed var(--border2);
+  background: rgba(255,255,255,0.02);
+}
+
+/* ── LEGEND ── */
+.legend-strip {
+  max-width: 900px;
+  margin: 12px auto 0;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 15px;
+  color: var(--text-muted);
+  letter-spacing: .5px;
+  padding: 10px 24px;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.ls-item { display: flex; align-items: center; gap: 6px; }
+.ls-dot { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+
+/* ── ROTATION LIST ── */
+.rotation-section {
+  max-width: 900px;
+  margin: 24px auto 40px;
+  padding: 0 24px;
+}
+
+.rotation-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+.rotation-list {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.rotation-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  transition: background .1s;
+}
+.rotation-row:last-child { border-bottom: none; }
+.rotation-row:hover { background: var(--surface2); }
+
+.rotation-rank {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--text-dim);
+  width: 18px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.rotation-initials {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 10px;
+  flex-shrink: 0;
+  color: #fff;
+}
+
+.rotation-name-block { flex: 1; min-width: 0; }
+
+.rotation-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rotation-meta { font-size: 11px; color: var(--text-dim); margin-top: 1px; display: flex; align-items: center; gap: 6px; }
+
+.tag {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 2px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+.tag-starter { background: rgba(34,197,94,.1); color: var(--green); border: 1px solid rgba(34,197,94,.25); }
+.tag-rotation { background: rgba(0,212,255,.1); color: var(--accent); border: 1px solid rgba(0,212,255,.25); }
+.tag-bench { background: rgba(125,135,168,.1); color: var(--text-muted); border: 1px solid rgba(125,135,168,.25); }
+
+.rotation-mpg {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text);
+  text-align: right;
+  width: 54px;
+  flex-shrink: 0;
+}
+.rotation-mpg-label { font-size: 9px; color: var(--text-dim); letter-spacing: .5px; text-transform: uppercase; }
+
+.rotation-rating {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  width: 36px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.empty-rotation {
+  padding: 24px;
+  text-align: center;
+  color: var(--text-dim);
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  .header { padding: 0 12px; }
+  .court-outer { padding: 12px 12px 8px; }
+  .court-label { padding: 0 4px; }
+  .p-card, .p-pos-bar, .p-empty { width: 82px; }
+  .p-lastname { font-size: 13px; max-width: 72px; }
+  .p-rating { font-size: 21px; }
+  .rotation-section { padding: 0 12px; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo" onclick="window.location='../index.html'">Field<span>View</span></div>
+  <div class="header-divider"></div>
+
+  <div class="team-selector-wrap">
+    <div style="display:flex;align-items:center;gap:10px;cursor:pointer;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:6px 12px" onclick="toggleTeamDropdown()">
+      <div class="team-swatch" id="teamSwatchEl">LAL</div>
+      <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:1px" id="teamNameEl">Los Angeles Lakers</span>
+    </div>
+    <div class="teams-dropdown" id="teamsDropdown"></div>
+  </div>
+
+  <div class="view-toggle">
+    <button class="view-btn active">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="2" fill="currentColor"/><circle cx="2" cy="2" r="1.5" fill="currentColor" opacity=".6"/><circle cx="10" cy="2" r="1.5" fill="currentColor" opacity=".6"/><circle cx="2" cy="10" r="1.5" fill="currentColor" opacity=".6"/><circle cx="10" cy="10" r="1.5" fill="currentColor" opacity=".6"/></svg>
+      Formation
+    </button>
+    <button class="view-btn" onclick="window.location='player-table.html'">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="3" rx="1" fill="currentColor"/><rect x="1" y="5" width="10" height="3" rx="1" fill="currentColor" opacity=".5"/><rect x="1" y="9" width="10" height="2" rx="1" fill="currentColor" opacity=".3"/></svg>
+      Table
+    </button>
+  </div>
+</header>
+
+<div class="court-outer">
+  <div class="court-label">Starting Five</div>
+
+  <div class="court-canvas">
+    <svg class="court-bg" viewBox="0 0 500 470" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <rect width="500" height="470" fill="#1b3a2b"/>
+      <rect x="8" y="8" width="484" height="454" fill="none" stroke="#ffffff" stroke-opacity="0.35" stroke-width="3"/>
+      <!-- paint -->
+      <rect x="190" y="8" width="120" height="190" fill="#245038" stroke="#ffffff" stroke-opacity="0.35" stroke-width="3"/>
+      <!-- free throw circle -->
+      <circle cx="250" cy="198" r="60" fill="none" stroke="#ffffff" stroke-opacity="0.35" stroke-width="3"/>
+      <!-- restricted arc -->
+      <path d="M 210 8 A 40 40 0 0 0 290 8" fill="none" stroke="#ffffff" stroke-opacity="0.3" stroke-width="2"/>
+      <!-- three point arc -->
+      <path d="M 30 8 L 30 128 A 220 220 0 0 0 470 128 L 470 8" fill="none" stroke="#ffffff" stroke-opacity="0.35" stroke-width="3"/>
+      <!-- half court circle -->
+      <circle cx="250" cy="462" r="60" fill="none" stroke="#ffffff" stroke-opacity="0.25" stroke-width="3"/>
+      <!-- hoop -->
+      <circle cx="250" cy="28" r="7" fill="none" stroke="#f5a623" stroke-width="3"/>
+      <rect x="230" y="4" width="40" height="4" fill="#ffffff" fill-opacity="0.6"/>
+    </svg>
+    <div class="players-layer" id="playersLayer"></div>
+  </div>
+
+  <div class="legend-strip">
+    <span style="font-family:'Barlow Condensed';font-weight:700;font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-right:4px">Overall Rating</span>
+    <div class="ls-item"><div class="ls-dot" style="background:#86efac"></div>95+</div>
+    <div class="ls-item"><div class="ls-dot" style="background:#22c55e"></div>90–94</div>
+    <div class="ls-item"><div class="ls-dot" style="background:#a3e635"></div>85–89</div>
+    <div class="ls-item"><div class="ls-dot" style="background:#facc15"></div>80–84</div>
+    <div class="ls-item"><div class="ls-dot" style="background:#fb923c"></div>70–79</div>
+    <div class="ls-item"><div class="ls-dot" style="background:#ef4444"></div>&lt;70</div>
+  </div>
+</div>
+
+<div class="rotation-section">
+  <div class="rotation-title">Rotation (by Minutes Per Game)</div>
+  <div class="rotation-list" id="rotationList"></div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// TEAMS
+// ══════════════════════════════════════════
+const TEAMS = {
+  LAL: { name: "Los Angeles Lakers", colors: ["#552583","#fdb927"] },
+  BOS: { name: "Boston Celtics",     colors: ["#007a33","#ba9653"] },
+  DEN: { name: "Denver Nuggets",     colors: ["#0e2240","#fec524"] },
+};
+const TEAM_ABBRS = Object.keys(TEAMS);
+const STATUS_LABEL = { starter: 'Starter', rotation: 'Rotation', bench: 'Bench' };
+
+// Loose half-court zones for each starting position (% of court canvas)
+const COURT_ZONES = {
+  C:  { x: 50, y: 20 },
+  PF: { x: 27, y: 32 },
+  SF: { x: 22, y: 62 },
+  SG: { x: 78, y: 62 },
+  PG: { x: 50, y: 82 },
+};
+const ZONE_ORDER = ['C','PF','SF','SG','PG'];
+
+let currentTeam = 'LAL';
+let allPlayers = [];
+let teamPlayers = [];
+
+function ratingColor(r) {
+  if (!r) return '#6b7494';
+  if (r >= 95) return '#86efac';
+  if (r >= 90) { const t=(r-90)/5; return 'hsl('+(140+t*20)+',60%,62%)'; }
+  if (r >= 85) { const t=(r-85)/5; return 'hsl('+(100+t*40)+',55%,58%)'; }
+  if (r >= 80) { const t=(r-80)/5; return 'hsl('+(75+t*25)+',55%,58%)'; }
+  if (r >= 75) { const t=(r-75)/5; return 'hsl('+(55+t*20)+',60%,58%)'; }
+  if (r >= 70) { const t=(r-70)/5; return 'hsl('+(38+t*17)+',65%,55%)'; }
+  if (r >= 65) { const t=(r-65)/5; return 'hsl('+(25+t*13)+',65%,52%)'; }
+  return 'hsl('+Math.max(0,(r-55)*2)+',70%,48%)';
+}
+
+function mapPlayer(p) {
+  return {
+    id: p.player_id,
+    name: p.name,
+    team: p.team,
+    pos: p.position,
+    jersey: p.jersey_number,
+    height: p.height,
+    weight: p.weight,
+    ppg: p.ppg,
+    rpg: p.rpg,
+    apg: p.apg,
+    mpg: p.mpg,
+    games_started: p.games_started,
+    games_played: p.games_played,
+    status: p.rotation_status,
+    rating: p.overall_rating,
+    salary: p.contract_salary,
+    years_remaining: p.contract_years_remaining,
+  };
+}
+
+async function loadAllPlayers() {
+  try {
+    const res = await fetch('data/nba_players_master.json');
+    const raw = await res.json();
+    allPlayers = Object.values(raw).map(mapPlayer);
+  } catch (e) {
+    console.error('Failed to load nba_players_master.json:', e);
+    allPlayers = [];
+  }
+}
+
+async function loadTeam(abbr) {
+  if (!allPlayers.length) await loadAllPlayers();
+  teamPlayers = allPlayers.filter(p => p.team === abbr);
+  updateHeader();
+  renderCourt();
+  renderRotation();
+}
+
+function updateHeader() {
+  const team = TEAMS[currentTeam];
+  const swatch = document.getElementById('teamSwatchEl');
+  swatch.textContent = currentTeam;
+  swatch.style.background = team.colors[0];
+  swatch.style.border = '2px solid ' + team.colors[1];
+  document.getElementById('teamNameEl').textContent = team.name;
+}
+
+// ══════════════════════════════════════════
+// STARTING FIVE (COURT)
+// ══════════════════════════════════════════
+function getStarter(pos) {
+  const candidates = teamPlayers.filter(p => p.pos === pos);
+  if (!candidates.length) return null;
+  const starter = candidates.find(p => p.status === 'starter');
+  if (starter) return starter;
+  // fall back to the highest-minutes player at the position
+  return candidates.sort((a,b) => (b.mpg||0) - (a.mpg||0))[0];
+}
+
+function renderCourt() {
+  const layer = document.getElementById('playersLayer');
+  const html = ZONE_ORDER.map(pos => {
+    const zone = COURT_ZONES[pos];
+    const p = getStarter(pos);
+    if (!p) {
+      return `
+        <div class="player-node" style="left:${zone.x}%; top:${zone.y}%">
+          <div class="p-empty">${pos}<br>No Player</div>
+        </div>
+      `;
+    }
+    const team = TEAMS[p.team];
+    const rc = ratingColor(p.rating);
+    const parts = p.name.split(' ');
+    const lastName = parts.length > 1 ? parts.slice(1).join(' ') : parts[0];
+    return `
+      <div class="player-node" style="left:${zone.x}%; top:${zone.y}%">
+        <div class="p-card" style="background:linear-gradient(160deg, ${team.colors[0]}, ${shade(team.colors[0], -25)})">
+          <div class="p-jersey">${p.jersey != null ? '#' + p.jersey : ''}</div>
+          <div class="p-rating" style="color:${rc}">${p.rating || '—'}</div>
+          <div class="p-lastname">${lastName}</div>
+          <div class="p-ppg">${p.ppg != null ? p.ppg + ' PPG' : '—'}</div>
+        </div>
+        <div class="p-pos-bar">${p.pos}</div>
+      </div>
+    `;
+  }).join('');
+  layer.innerHTML = html;
+}
+
+function shade(hex, percent) {
+  const num = parseInt(hex.replace('#',''), 16);
+  let r = (num >> 16) + Math.round(255 * (percent/100));
+  let g = ((num >> 8) & 0x00FF) + Math.round(255 * (percent/100));
+  let b = (num & 0x0000FF) + Math.round(255 * (percent/100));
+  r = Math.max(0, Math.min(255, r));
+  g = Math.max(0, Math.min(255, g));
+  b = Math.max(0, Math.min(255, b));
+  return '#' + (0x1000000 + r*0x10000 + g*0x100 + b).toString(16).slice(1);
+}
+
+// ══════════════════════════════════════════
+// ROTATION LIST
+// ══════════════════════════════════════════
+function renderRotation() {
+  const list = document.getElementById('rotationList');
+  const startingIds = new Set(ZONE_ORDER.map(pos => getStarter(pos)?.id).filter(Boolean));
+  const rotation = teamPlayers
+    .filter(p => !startingIds.has(p.id))
+    .sort((a, b) => (b.mpg || 0) - (a.mpg || 0));
+
+  if (!rotation.length) {
+    list.innerHTML = '<div class="empty-rotation">No rotation players on this roster yet.</div>';
+    return;
+  }
+
+  const team = TEAMS[currentTeam];
+  list.innerHTML = rotation.map((p, i) => {
+    const initials = p.name.split(' ').map(w => w[0]).join('').slice(0, 2);
+    const rc = ratingColor(p.rating);
+    return `
+      <div class="rotation-row">
+        <div class="rotation-rank">${i + 1}</div>
+        <div class="rotation-initials" style="background:${team.colors[0]}">${initials}</div>
+        <div class="rotation-name-block">
+          <div class="rotation-name">${p.name}</div>
+          <div class="rotation-meta">
+            <span class="std-pos" style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:10px;letter-spacing:1px;padding:2px 6px;border-radius:3px;background:var(--surface2);border:1px solid var(--border2);color:var(--text-muted)">${p.pos}</span>
+            ${p.status ? '<span class="tag tag-' + p.status + '">' + STATUS_LABEL[p.status] + '</span>' : ''}
+            <span>${p.ppg != null ? p.ppg + ' PPG' : '—'} · ${p.rpg != null ? p.rpg + ' RPG' : '—'} · ${p.apg != null ? p.apg + ' APG' : '—'}</span>
+          </div>
+        </div>
+        <div>
+          <div class="rotation-mpg">${p.mpg != null ? p.mpg : '—'}</div>
+          <div class="rotation-mpg-label">MPG</div>
+        </div>
+        <div class="rotation-rating" style="color:${rc}">${p.rating || '—'}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ══════════════════════════════════════════
+// TEAM DROPDOWN
+// ══════════════════════════════════════════
+function buildTeamsDropdown() {
+  const dd = document.getElementById('teamsDropdown');
+  dd.innerHTML = TEAM_ABBRS.map(abbr => {
+    const team = TEAMS[abbr];
+    const sel = abbr === currentTeam ? 'selected' : '';
+    return `
+      <div class="team-opt ${sel}" onclick="selectTeam('${abbr}')">
+        <div class="team-swatch" style="background:${team.colors[0]};border:2px solid ${team.colors[1]}">${abbr}</div>
+        <span>${abbr}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+function toggleTeamDropdown() {
+  document.getElementById('teamsDropdown').classList.toggle('open');
+}
+
+function selectTeam(abbr) {
+  currentTeam = abbr;
+  document.getElementById('teamsDropdown').classList.remove('open');
+  buildTeamsDropdown();
+  loadTeam(currentTeam);
+}
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.team-selector-wrap')) {
+    document.getElementById('teamsDropdown').classList.remove('open');
+  }
+});
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+buildTeamsDropdown();
+loadTeam(currentTeam);
+</script>
+</body>
+</html>

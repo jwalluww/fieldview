@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FieldView — NBA Player Table</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #1a1b23;
+  --surface: #1e2028;
+  --surface2: #23252f;
+  --border: #1e2330;
+  --border2: #262d3d;
+  --text: #c8cad4;
+  --text-muted: #7d87a8;
+  --text-dim: #404660;
+  --accent: #00d4ff;
+  --gold: #f5a623;
+  --green: #22c55e;
+  --red: #ef4444;
+  --purple: #a855f7;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#th-stat1, #th-stat2, #th-stat3, #th-stat4 {
+  text-align: center;
+}
+
+/* ── HEADER ── */
+.header {
+  background: #0d1118;
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 52px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+
+.logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.logo span { color: var(--text-muted); font-weight: 400; }
+
+.header-divider { width: 1px; height: 24px; background: var(--border2); flex-shrink: 0; }
+
+.page-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+.view-toggle {
+  margin-left: auto;
+  display: flex;
+  gap: 2px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.view-btn {
+  background: none;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 14px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all .15s;
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 6px;
+  white-space: nowrap;
+}
+.view-btn:hover { color: var(--text); }
+.view-btn.active { background: var(--border2); color: var(--text); }
+
+/* ── FILTER BAR ── */
+.filter-bar {
+  background: #0d1118;
+  border-bottom: 2px solid var(--border2);
+  padding: 8px 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 94px;
+  z-index: 190;
+}
+
+.filter-search {
+  position: relative;
+  flex: 0 0 220px;
+}
+
+.filter-search input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 7px 12px 7px 32px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  color: var(--text);
+  outline: none;
+  transition: border-color .2s;
+}
+.filter-search input::placeholder { color: var(--text-dim); }
+.filter-search input:focus { border-color: var(--accent); }
+
+.filter-search svg {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+  pointer-events: none;
+}
+
+.filter-select {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 7px 28px 7px 10px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: .5px;
+  color: var(--text-muted);
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23404660' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  transition: border-color .2s;
+}
+.filter-select:focus { border-color: var(--accent); color: var(--text); }
+.filter-select option { background: var(--surface2); }
+
+.filter-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.row-count {
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: .5px;
+  white-space: nowrap;
+}
+
+.clear-btn {
+  background: none;
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: .5px;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all .15s;
+  text-transform: uppercase;
+}
+.clear-btn:hover { color: var(--text); border-color: var(--border); }
+
+/* ── TABLE ── */
+.table-wrap {
+  padding: 0 24px 32px;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 900px;
+}
+
+.table thead th {
+  background: var(--surface);
+  border-bottom: 2px solid var(--border2);
+  padding: 12px 16px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+  z-index: 100;
+  user-select: none;
+  transition: color .15s;
+}
+.table thead th:hover { color: var(--text); }
+.table thead th.sorted { color: var(--accent); }
+.table thead th .sort-icon {
+  margin-left: 4px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+.table thead th.sorted .sort-icon { opacity: 1; }
+
+.table tbody td {
+  padding: 7px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  vertical-align: middle;
+  color: var(--text);
+}
+
+.table tbody tr:nth-child(even) {
+  background: rgba(255,255,255,0.025);
+}
+
+.table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background .1s;
+  cursor: default;
+}
+.table tbody tr:hover { background: var(--surface2); }
+
+.cell-team {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.team-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 7px;
+  flex-shrink: 0;
+  letter-spacing: .5px;
+}
+
+.cell-player {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.player-initials {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 10px;
+  flex-shrink: 0;
+  color: #fff;
+}
+
+.player-name-block { min-width: 0; }
+
+.player-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.player-sub {
+  font-size: 10px;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 1px;
+}
+
+.tag {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 2px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+.tag-starter { background: rgba(34,197,94,.1); color: var(--green); border: 1px solid rgba(34,197,94,.25); }
+.tag-rotation { background: rgba(0,212,255,.1); color: var(--accent); border: 1px solid rgba(0,212,255,.25); }
+.tag-bench { background: rgba(125,135,168,.1); color: var(--text-muted); border: 1px solid rgba(125,135,168,.25); }
+
+.cell-rating {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 31px;
+  text-align: center;
+}
+
+.cell-pos {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.std-pos {
+  display: inline-block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 10px;
+  letter-spacing: 1px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.cell-salary {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.cell-stat {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  color: var(--text-muted);
+  max-width: 180px;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 80px 24px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.loading-bar {
+  width: 200px;
+  height: 2px;
+  background: var(--border);
+  border-radius: 1px;
+  margin: 16px auto 0;
+  overflow: hidden;
+}
+
+.loading-progress {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 1px;
+  animation: loadProgress 2s ease-in-out infinite;
+}
+
+@keyframes loadProgress {
+  0% { width: 0%; margin-left: 0; }
+  50% { width: 60%; margin-left: 20%; }
+  100% { width: 0%; margin-left: 100%; }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 24px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+}
+
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+/* ── VIEW TABS ── */
+.view-tabs {
+  background: #0d1118;
+  border-bottom: 2px solid var(--border);
+  padding: 0 24px;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  position: sticky;
+  top: 52px;
+  z-index: 195;
+  overflow-x: auto;
+}
+
+.view-tab {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  padding: 10px 16px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color .15s, border-color .15s;
+}
+.view-tab:hover { color: var(--text-muted); }
+.view-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+@media (max-width: 600px) {
+  .table-wrap { padding: 0 12px 32px; }
+
+  .table { display: none; }
+
+  #mobileList { display: block; }
+
+  .filter-bar {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .filter-search { flex: 1 1 100%; }
+
+  .filter-select {
+    flex: 1 1 calc(50% - 4px);
+    font-size: 12px;
+  }
+
+  .header { padding: 0 12px; }
+
+  .view-tabs { padding: 0 12px; }
+}
+
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo" onclick="window.location='../index.html'">Field<span>View</span></div>
+  <div class="header-divider"></div>
+  <div class="page-title">NBA Player Table</div>
+  <div class="view-toggle">
+    <button class="view-btn" onclick="window.location='formation.html'">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="2" fill="currentColor"/><circle cx="2" cy="2" r="1.5" fill="currentColor" opacity=".6"/><circle cx="10" cy="2" r="1.5" fill="currentColor" opacity=".6"/><circle cx="2" cy="10" r="1.5" fill="currentColor" opacity=".6"/><circle cx="10" cy="10" r="1.5" fill="currentColor" opacity=".6"/></svg>
+      Formation
+    </button>
+    <button class="view-btn active">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="3" rx="1" fill="currentColor"/><rect x="1" y="5" width="10" height="3" rx="1" fill="currentColor" opacity=".5"/><rect x="1" y="9" width="10" height="2" rx="1" fill="currentColor" opacity=".3"/></svg>
+      Table
+    </button>
+  </div>
+</header>
+
+<!-- View tabs -->
+<div class="view-tabs" id="viewTabs">
+  <button class="view-tab active" onclick="setView('overview', this)">Overview</button>
+  <button class="view-tab" onclick="setView('pergame', this)">Per Game</button>
+  <button class="view-tab" onclick="setView('financial', this)">Financial</button>
+  <button class="view-tab" onclick="setView('bio', this)">Bio</button>
+</div>
+
+<!-- Filter bar -->
+<div class="filter-bar">
+  <div class="filter-search">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.3"/><path d="M10 10l2.5 2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+    <input type="text" id="searchInput" placeholder="Search player..." oninput="applyFilters()">
+  </div>
+
+  <select class="filter-select" id="teamFilter" onchange="applyFilters()">
+    <option value="">All Teams</option>
+  </select>
+
+  <select class="filter-select" id="posFilter" onchange="applyFilters()">
+    <option value="">All Positions</option>
+    <option value="PG">PG</option>
+    <option value="SG">SG</option>
+    <option value="SF">SF</option>
+    <option value="PF">PF</option>
+    <option value="C">C</option>
+  </select>
+
+  <select class="filter-select" id="statusFilter" onchange="applyFilters()">
+    <option value="">All Rotation</option>
+    <option value="starter">Starter</option>
+    <option value="rotation">Rotation</option>
+    <option value="bench">Bench</option>
+  </select>
+
+  <div class="filter-right">
+    <span class="row-count" id="rowCount">Loading...</span>
+    <button class="clear-btn" onclick="clearFilters()">Clear</button>
+  </div>
+</div>
+
+<!-- Table -->
+<div class="table-wrap">
+  <div id="loadingState" class="loading">
+    Loading roster data
+    <div class="loading-bar"><div class="loading-progress"></div></div>
+  </div>
+  <table class="table" id="mainTable" style="display:none">
+    <thead>
+      <tr>
+        <th onclick="sortBy('team')" id="th-team">Team <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('pos')" id="th-pos">Pos <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('name')" id="th-name">Player <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('status')" id="th-status">Role <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('rating')" id="th-rating" class="sorted">OVR <span class="sort-icon">↓</span></th>
+        <th onclick="sortBy('salary')" id="th-salary">Salary <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('years_remaining')" id="th-years_remaining" style="display:none">Yrs Left <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('height')" id="th-height" style="display:none">Height <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('weight')" id="th-weight" style="display:none">Weight <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('games_played')" id="th-games_played" style="display:none">GP <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('games_started')" id="th-games_started" style="display:none">GS <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('ppg')" id="th-ppg" style="display:none">PPG <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('rpg')" id="th-rpg" style="display:none">RPG <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('apg')" id="th-apg" style="display:none">APG <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('mpg')" id="th-mpg" style="display:none">MPG <span class="sort-icon">↕</span></th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+  <div id="mobileList" style="display:none"></div>
+  <div id="emptyState" class="empty-state" style="display:none">No players match your filters.</div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// TEAMS
+// ══════════════════════════════════════════
+const TEAMS = {
+  LAL: { name: "Los Angeles Lakers", colors: ["#552583","#fdb927"] },
+  BOS: { name: "Boston Celtics",     colors: ["#007a33","#ba9653"] },
+  DEN: { name: "Denver Nuggets",     colors: ["#0e2240","#fec524"] },
+};
+
+const TEAM_ABBRS = Object.keys(TEAMS);
+const STATUS_LABEL = { starter: 'Starter', rotation: 'Rotation', bench: 'Bench' };
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let allPlayers = [];
+let filteredPlayers = [];
+let sortCol = 'rating';
+let sortDir = 'desc';
+let currentView = 'overview';
+
+// View definitions: columns to show
+const VIEWS = {
+  overview:  { cols: ['team','pos','name','status','rating','salary'],                          sort: 'rating' },
+  pergame:   { cols: ['team','pos','name','ppg','rpg','apg','mpg'],                              sort: 'ppg' },
+  financial: { cols: ['team','pos','name','salary','years_remaining','status'],                  sort: 'salary' },
+  bio:       { cols: ['team','pos','name','height','weight','games_played','games_started'],     sort: 'name' },
+};
+
+function setView(viewKey, btn) {
+  currentView = viewKey;
+
+  document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+
+  const view = VIEWS[viewKey];
+  updateColumns(view.cols);
+
+  sortCol = view.sort;
+  sortDir = (view.sort === 'rating' || view.sort === 'salary' || view.sort === 'ppg') ? 'desc' : 'asc';
+  applyFilters();
+}
+
+function updateColumns(cols) {
+  const allCols = ['team','pos','name','status','rating','salary','years_remaining','height','weight','games_played','games_started','ppg','rpg','apg','mpg'];
+
+  const colMap = {
+    team: 'th-team', pos: 'th-pos', name: 'th-name', status: 'th-status',
+    rating: 'th-rating', salary: 'th-salary', years_remaining: 'th-years_remaining',
+    height: 'th-height', weight: 'th-weight', games_played: 'th-games_played',
+    games_started: 'th-games_started', ppg: 'th-ppg', rpg: 'th-rpg', apg: 'th-apg', mpg: 'th-mpg',
+  };
+
+  allCols.forEach(col => {
+    const th = document.getElementById(colMap[col]);
+    if (th) th.style.display = cols.includes(col) ? '' : 'none';
+  });
+
+  window._activeCols = cols;
+}
+
+// ══════════════════════════════════════════
+// LOAD
+// ══════════════════════════════════════════
+async function loadAll() {
+  const data = await fetch('data/nba_players_master.json').then(r => r.json());
+
+  for (const player of Object.values(data)) {
+    allPlayers.push({
+      id: player.player_id,
+      abbr: player.team,
+      pos: player.position,
+      name: player.name || '',
+      jersey: player.jersey_number || null,
+      height: player.height || null,
+      weight: player.weight || null,
+      ppg: player.ppg != null ? player.ppg : null,
+      rpg: player.rpg != null ? player.rpg : null,
+      apg: player.apg != null ? player.apg : null,
+      mpg: player.mpg != null ? player.mpg : null,
+      games_started: player.games_started != null ? player.games_started : null,
+      games_played: player.games_played != null ? player.games_played : null,
+      status: player.rotation_status || null,
+      rating: player.overall_rating || null,
+      salary: player.contract_salary || null,
+      salary_raw: parseSalary(player.contract_salary),
+      years_remaining: player.contract_years_remaining != null ? player.contract_years_remaining : null,
+    });
+  }
+
+  const tf = document.getElementById('teamFilter');
+  TEAM_ABBRS.forEach(abbr => {
+    const opt = document.createElement('option');
+    opt.value = abbr;
+    opt.textContent = TEAMS[abbr].name;
+    tf.appendChild(opt);
+  });
+
+  document.getElementById('loadingState').style.display = 'none';
+  document.getElementById('mainTable').style.display = 'table';
+
+  applyFilters();
+}
+
+function parseSalary(salStr) {
+  if (!salStr) return 0;
+  return parseInt(String(salStr).replace(/[$,]/g, '')) || 0;
+}
+
+// ══════════════════════════════════════════
+// FILTERS
+// ══════════════════════════════════════════
+function applyFilters() {
+  const search = document.getElementById('searchInput').value.toLowerCase().trim();
+  const team   = document.getElementById('teamFilter').value;
+  const pos    = document.getElementById('posFilter').value;
+  const status = document.getElementById('statusFilter').value;
+
+  filteredPlayers = allPlayers.filter(p => {
+    if (search && !p.name.toLowerCase().includes(search)) return false;
+    if (team && p.abbr !== team) return false;
+    if (pos && p.pos !== pos) return false;
+    if (status && p.status !== status) return false;
+    return true;
+  });
+
+  sortPlayers();
+  renderTable();
+  renderMobileList();
+  document.getElementById('rowCount').textContent = filteredPlayers.length.toLocaleString() + ' players';
+}
+
+function clearFilters() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('teamFilter').value = '';
+  document.getElementById('posFilter').value = '';
+  document.getElementById('statusFilter').value = '';
+  applyFilters();
+}
+
+// ══════════════════════════════════════════
+// SORT
+// ══════════════════════════════════════════
+function sortBy(col) {
+  if (sortCol === col) {
+    sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+  } else {
+    sortCol = col;
+    sortDir = (col === 'rating' || col === 'salary' || col === 'ppg' || col === 'rpg' || col === 'apg' || col === 'mpg') ? 'desc' : 'asc';
+  }
+
+  document.querySelectorAll('.table thead th').forEach(th => {
+    th.classList.remove('sorted');
+    const icon = th.querySelector('.sort-icon');
+    if (icon) icon.textContent = '↕';
+  });
+
+  const th = document.getElementById('th-' + col);
+  if (th) {
+    th.classList.add('sorted');
+    const icon = th.querySelector('.sort-icon');
+    if (icon) icon.textContent = sortDir === 'asc' ? '↑' : '↓';
+  }
+
+  sortPlayers();
+  renderTable();
+  renderMobileList();
+}
+
+function sortPlayers() {
+  filteredPlayers.sort((a, b) => {
+    let av, bv;
+    switch (sortCol) {
+      case 'team':            av = a.abbr;   bv = b.abbr;   break;
+      case 'pos':              av = a.pos;    bv = b.pos;    break;
+      case 'name':             av = a.name;   bv = b.name;   break;
+      case 'status':           av = a.status; bv = b.status; break;
+      case 'rating':           av = a.rating; bv = b.rating; break;
+      case 'salary':           av = a.salary_raw || null; bv = b.salary_raw || null; break;
+      case 'years_remaining':  av = a.years_remaining; bv = b.years_remaining; break;
+      case 'height':           av = a.height; bv = b.height; break;
+      case 'weight':           av = a.weight; bv = b.weight; break;
+      case 'games_played':     av = a.games_played; bv = b.games_played; break;
+      case 'games_started':    av = a.games_started; bv = b.games_started; break;
+      case 'ppg':               av = a.ppg;    bv = b.ppg;    break;
+      case 'rpg':               av = a.rpg;    bv = b.rpg;    break;
+      case 'apg':               av = a.apg;    bv = b.apg;    break;
+      case 'mpg':               av = a.mpg;    bv = b.mpg;    break;
+      default:                 av = a.rating; bv = b.rating;
+    }
+    const aNull = av == null || av === '';
+    const bNull = bv == null || bv === '';
+    if (aNull && bNull) return 0;
+    if (aNull) return 1;
+    if (bNull) return -1;
+
+    if (av < bv) return sortDir === 'asc' ? -1 : 1;
+    if (av > bv) return sortDir === 'asc' ? 1 : -1;
+    return 0;
+  });
+}
+
+// ══════════════════════════════════════════
+// RATING COLOR
+// ══════════════════════════════════════════
+function ratingColor(r) {
+  if (!r) return '#6b7494';
+  if (r >= 95) return '#86efac';
+  if (r >= 90) { const t=(r-90)/5; return 'hsl('+(140+t*20)+',60%,62%)'; }
+  if (r >= 85) { const t=(r-85)/5; return 'hsl('+(100+t*40)+',55%,58%)'; }
+  if (r >= 80) { const t=(r-80)/5; return 'hsl('+(75+t*25)+',55%,58%)'; }
+  if (r >= 75) { const t=(r-75)/5; return 'hsl('+(55+t*20)+',60%,58%)'; }
+  if (r >= 70) { const t=(r-70)/5; return 'hsl('+(38+t*17)+',65%,55%)'; }
+  if (r >= 65) { const t=(r-65)/5; return 'hsl('+(25+t*13)+',65%,52%)'; }
+  return 'hsl('+Math.max(0,(r-55)*2)+',70%,48%)';
+}
+
+// ══════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════
+function renderMobileList() {
+  const isMobile = window.innerWidth <= 600;
+  const list = document.getElementById('mobileList');
+  if (!list) return;
+
+  if (!isMobile) { list.style.display = 'none'; return; }
+
+  document.getElementById('mainTable').style.display = 'none';
+  list.style.display = 'block';
+
+  list.innerHTML = filteredPlayers.map(p => {
+    const team = TEAMS[p.abbr];
+    const rc = ratingColor(p.rating);
+    const initials = p.name.split(' ').map(w => w[0]).join('').slice(0,2);
+    return `
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
+        <div style="width:32px;height:32px;border-radius:50%;background:${team.colors[0]};display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:9px;color:#fff;flex-shrink:0">${p.abbr}</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:1px"><span class="std-pos">${p.pos}</span>${p.status ? ' · <span class="tag tag-' + p.status + '">' + STATUS_LABEL[p.status] + '</span>' : ''}</div>
+        </div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:${rc};flex-shrink:0">${p.rating || '—'}</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:var(--gold);flex-shrink:0;text-align:right">${p.salary || '—'}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderTable() {
+  const tbody = document.getElementById('tableBody');
+  const empty = document.getElementById('emptyState');
+
+  if (filteredPlayers.length === 0) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  const html = filteredPlayers.map(p => {
+    const team = TEAMS[p.abbr];
+    const rc = ratingColor(p.rating);
+    const initials = p.name.split(' ').map(w => w[0]).join('').slice(0, 2);
+    const cols = window._activeCols || VIEWS.overview.cols;
+
+    let row = '<tr>';
+    if (cols.includes('team'))
+      row += '<td><div class="cell-team"><div class="team-dot" style="background:' + team.colors[0] + ';color:' + team.colors[1] + '">' + p.abbr + '</div></div></td>';
+    if (cols.includes('pos'))
+      row += '<td style="text-align:center"><span class="std-pos">' + (p.pos || '—') + '</span></td>';
+    if (cols.includes('name'))
+      row += '<td><div class="cell-player">' +
+        '<div class="player-initials" style="background:' + team.colors[0] + '">' + initials + '</div>' +
+        '<div class="player-name-block">' +
+          '<div class="player-name">' + p.name + '</div>' +
+          '<div class="player-sub">' + (p.jersey != null ? '#' + p.jersey : '') + '</div>' +
+        '</div>' +
+      '</div></td>';
+    if (cols.includes('status'))
+      row += '<td style="text-align:center">' + (p.status ? '<span class="tag tag-' + p.status + '">' + STATUS_LABEL[p.status] + '</span>' : '—') + '</td>';
+    if (cols.includes('rating'))
+      row += '<td class="cell-rating" style="color:' + rc + '">' + (p.rating || '—') + '</td>';
+    if (cols.includes('salary'))
+      row += '<td class="cell-salary">' + (p.salary || '—') + '</td>';
+    if (cols.includes('years_remaining'))
+      row += '<td style="text-align:center;color:var(--text-muted);font-family:\'Barlow Condensed\',sans-serif;font-weight:600">' + (p.years_remaining != null ? p.years_remaining : '—') + '</td>';
+    if (cols.includes('height'))
+      row += '<td style="text-align:center;color:var(--text-muted);font-family:\'Barlow Condensed\',sans-serif;font-weight:600">' + (p.height || '—') + '</td>';
+    if (cols.includes('weight'))
+      row += '<td style="text-align:center;color:var(--text-muted);font-family:\'Barlow Condensed\',sans-serif;font-weight:600">' + (p.weight || '—') + '</td>';
+    if (cols.includes('games_played'))
+      row += '<td style="text-align:center;color:var(--text-muted);font-family:\'Barlow Condensed\',sans-serif;font-weight:600">' + (p.games_played != null ? p.games_played : '—') + '</td>';
+    if (cols.includes('games_started'))
+      row += '<td style="text-align:center;color:var(--text-muted);font-family:\'Barlow Condensed\',sans-serif;font-weight:600">' + (p.games_started != null ? p.games_started : '—') + '</td>';
+    ['ppg','rpg','apg','mpg'].forEach(col => {
+      if (cols.includes(col)) {
+        const val = p[col];
+        row += '<td style="text-align:center;font-family:\'Barlow Condensed\',sans-serif;font-weight:700;font-size:16px;color:var(--text)">' + (val != null ? val : '<span style="color:var(--text-muted)">—</span>') + '</td>';
+      }
+    });
+    row += '</tr>';
+    return row;
+  }).join('');
+
+  tbody.innerHTML = html;
+}
+
+// ══════════════════════════════════════════
+// STICKY OFFSET
+// ══════════════════════════════════════════
+function updateStickyOffset() {
+  const header = document.querySelector('.header');
+  const viewTabs = document.querySelector('.view-tabs');
+  const filterBar = document.querySelector('.filter-bar');
+  const headerH = header ? header.offsetHeight : 52;
+  const tabsH = viewTabs ? viewTabs.offsetHeight : 42;
+  if (filterBar) filterBar.style.top = (headerH + tabsH) + 'px';
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+window._activeCols = VIEWS['overview'].cols;
+updateColumns(VIEWS['overview'].cols);
+loadAll().then(() => {
+  requestAnimationFrame(() => {
+    updateStickyOffset();
+    requestAnimationFrame(() => updateStickyOffset());
+  });
+});
+window.addEventListener('resize', updateStickyOffset);
+window.addEventListener('resize', renderMobileList);
+</script>
+</body>
+</html>
