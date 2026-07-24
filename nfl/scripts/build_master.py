@@ -195,14 +195,12 @@ def load_gsis_crosswalk():
         return None
     
 def load_nflreadpy_gsis():
-    """Pull GSIS IDs from nflreadpy play-by-play data."""
+    """Pull GSIS IDs from nflreadpy roster data."""
     try:
-        import nfl_data_py as nfl
-        print("Available nfl_data_py functions:", [f for f in dir(nfl) if not f.startswith('_')])
-        rosters = nfl.import_weekly_rosters(years=[SEASON])
-        rosters = rosters[rosters['player_id'].notna()].copy()
-        rosters = rosters.rename(columns={'player_id': 'gsis_id', 'player_name': 'player_name'})
-        rosters = rosters[rosters['gsis_id'].notna()]
+        import nflreadpy as nfl
+        rosters = nfl.load_rosters([SEASON]).to_pandas()
+        rosters = rosters[rosters['gsis_id'].notna()].copy()
+        rosters = rosters.rename(columns={'full_name': 'player_name'})
         rosters['name_norm'] = rosters['player_name'].apply(
             lambda n: normalize_for_matching(normalize_name(str(n))))
         rosters['team_norm'] = rosters['team'].apply(normalize_team)
@@ -238,8 +236,8 @@ def load_snap_shares():
     independent match path — since import_snap_counts has real pfr_id
     coverage for OL where import_weekly_rosters does not."""
     try:
-        import nfl_data_py as nfl
-        snaps = nfl.import_snap_counts([SEASON])
+        import nflreadpy as nfl
+        snaps = nfl.load_snap_counts([SEASON]).to_pandas()
 
         # A player-week with 0 total snaps means they didn't play that week
         # (bye/inactive/injured) — drop those so the season average isn't

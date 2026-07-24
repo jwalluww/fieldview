@@ -21,7 +21,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install requests beautifulsoup4 nflreadpy pandas rapidfuzz
+        run: pip install requests beautifulsoup4 nflreadpy pandas pyarrow rapidfuzz
       
       - name: Run depth chart scraper
         run: python nfl/scripts/scrape_depth.py

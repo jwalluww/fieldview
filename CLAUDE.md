@@ -49,7 +49,7 @@ Run locally or via GitHub Actions in this exact order:
 3. scrape_stats.py (now uses the `nflreadpy` package, not `nfl_data_py` — switched this session)
 4. merge_madden.py
 5. scrape_contracts_spotrac.py
-6. build_master.py (pulls in nfl_data_py's import_weekly_rosters + import_snap_counts directly, plus nfl/data/spotrac_contracts.json)
+6. build_master.py (pulls in nflreadpy's load_rosters + load_snap_counts directly, plus nfl/data/spotrac_contracts.json)
 
 `resolve_names.py` and `audit_positions.py` are diagnostic only — run locally when investigating match quality, not part of the pipeline.
 
@@ -68,9 +68,9 @@ madden_rank, madden_rank_total, madden_pos_label
 player_id (GSIS if matched, else name-pos-team slug),
 gsis_id, match_confidence, canonical_name, ourlads_name,
 team, team_name, base_defense, ourlads_pos, standard_slot, standard_pos, depth,
-jersey, age, years_pro (computed: current_season - entry_year, via nfl_data_py's import_weekly_rosters; current_season resolved dynamically via nfl/scripts/season_utils.get_current_season(), not a hardcoded constant), draft_year, college, madden, madden_rank,  madden_rank_total, madden_pos_label, cap_number, attainment, injured, stats (normalized keys), stats_season, nflreadpy_name, match_source,
+jersey, age, years_pro (computed: current_season - entry_year, via nflreadpy's load_rosters; current_season resolved dynamically via nfl/scripts/season_utils.get_current_season(), not a hardcoded constant), draft_year, college, madden, madden_rank,  madden_rank_total, madden_pos_label, cap_number, attainment, injured, stats (normalized keys), stats_season, nflreadpy_name, match_source,
 years_remaining, cash_total_remaining, cash_guaranteed_remaining, avg_annual_remaining (all from Spotrac, fuzzy-matched — no shared ID),
-snap_pct (nfl_data_py import_snap_counts; matched via pfr_id — GSIS-chain first, independent name+team fuzzy match against the snap-count crosswalk as a second pass for gaps like OL, whose pfr_id is 0% populated in import_weekly_rosters)
+snap_pct (nflreadpy load_snap_counts; matched via pfr_id — GSIS-chain first, independent name+team fuzzy match against the snap-count crosswalk as a second pass for gaps like OL, whose pfr_id is 0% populated in load_rosters)
 
 `standard_pos` values: `QB, WR, RB, TE, OL, EDGE, DI, LB, CB, S`
 Special teams (K, P, KR, PR, KO, PK, LS, PT, H) are stripped from pipeline entirely.
@@ -153,7 +153,7 @@ Frontend `STAT_COLS` in `nfl/depth-chart.html` uses these canonical keys.
 2. ✅ Wire `depth-chart.html` and `nfl-formation-view.html` to `players_master.json` (each keeping its own loading strategy — depth chart loads all 32 teams at once, formation view fetches/filters per team)
 3. ✅ Fix formation view hybrid scheme bug (Colts, Seahawks missing defender)
 4. ⬜ Opponent overlay — same-team offense+defense simultaneously, then versus view
-5. ✅ Additional data sources (contracts): Spotrac remaining-contract data (years/cash/APY), snap share via nfl_data_py's import_snap_counts
+5. ✅ Additional data sources (contracts): Spotrac remaining-contract data (years/cash/APY), snap share via nflreadpy's load_snap_counts
 6. ⬜ Additional data sources (advanced metrics): PFF grades, RAS scores, combine data, EPA/DVOA
 7. ⬜ Player comparison
 8. ⬜ Historical rating trends
