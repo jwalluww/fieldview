@@ -4,8 +4,9 @@ import re
 import os
 import pandas as pd
 from rapidfuzz import fuzz, process
+from season_utils import get_current_season
 
-SEASON = 2025  # matches scrape_stats.py's SEASON
+SEASON = get_current_season()
 
 # Known name mismatches between OurLads and crosswalk
 # Format: 'ourlads_canonical_name': 'crosswalk_name'
@@ -212,6 +213,63 @@ def load_nflreadpy_gsis():
         print(f"Warning: nflreadpy roster load failed ({e})")
         return None
 
+# import_snap_counts' own position labels -> this project's standard_pos.
+# More granular than import_weekly_rosters' position column (which is only
+# QB/RB/WR/TE/OL/DL/LB/DB/K/P/LS) — needed because that coarser rosters
+# source has a 0% pfr_id fill rate for OL specifically (every other
+# position is 75-99%), so OL can never get a pfr_id through it at all.
+SNAP_POS_MAP = {
+    'QB': 'QB',
+    'RB': 'RB', 'HB': 'RB', 'FB': 'RB',
+    'WR': 'WR',
+    'TE': 'TE',
+    'T': 'OL', 'G': 'OL', 'C': 'OL', 'OL': 'OL',
+    'DE': 'EDGE',
+    'DL': 'DI', 'DT': 'DI', 'NT': 'DI',
+    'LB': 'LB',
+    'CB': 'CB', 'DB': 'CB',
+    'S': 'S', 'FS': 'S', 'SS': 'S',
+}
+
+def load_snap_shares():
+    """Aggregate weekly snap counts to a per-player season average, keyed
+    by pfr_player_id. Also returns a name+team crosswalk built from this
+    same snap-count data (player/team/position/pfr_player_id) for the
+    independent match path — since import_snap_counts has real pfr_id
+    coverage for OL where import_weekly_rosters does not."""
+    try:
+        import nfl_data_py as nfl
+        snaps = nfl.import_snap_counts([SEASON])
+
+        # A player-week with 0 total snaps means they didn't play that week
+        # (bye/inactive/injured) — drop those so the season average isn't
+        # dragged down by weeks they weren't even on the field.
+        total_snaps = (snaps['offense_snaps'].fillna(0)
+                        + snaps['defense_snaps'].fillna(0)
+                        + snaps['st_snaps'].fillna(0))
+        played = snaps[total_snaps > 0]
+
+        season_avg = played.groupby('pfr_player_id').agg(
+            offense_pct=('offense_pct', 'mean'),
+            defense_pct=('defense_pct', 'mean'),
+        )
+        print(f"Loaded snap counts: {len(snaps)} weekly rows -> "
+              f"{len(season_avg)} players with a season average")
+
+        crosswalk = snaps[snaps['pfr_player_id'].notna()][
+            ['player', 'team', 'position', 'pfr_player_id']
+        ].drop_duplicates(subset='pfr_player_id', keep='last').copy()
+        crosswalk['standard_pos'] = crosswalk['position'].map(SNAP_POS_MAP)
+        crosswalk = crosswalk[crosswalk['standard_pos'].notna()]
+        crosswalk['name_norm'] = crosswalk['player'].apply(
+            lambda n: normalize_for_matching(normalize_name(str(n))))
+        crosswalk['team_norm'] = crosswalk['team'].apply(normalize_team)
+
+        return season_avg, crosswalk
+    except Exception as e:
+        print(f"Warning: snap counts load failed ({e})")
+        return None, None
+
 # In find_gsis, add nflreadpy as fallback
 def find_gsis(name, standard_pos, team, crosswalk_df, roster_df=None):
     # OL not in fantasy crosswalk — skip entirely
@@ -242,7 +300,21 @@ def find_gsis(name, standard_pos, team, crosswalk_df, roster_df=None):
 
     return None, None
 
-def _match_in_df(name_norm, standard_pos, team, df, 
+def find_pfr_id(name, standard_pos, team, snap_crosswalk):
+    """Independent name+team fuzzy match against the import_snap_counts
+    crosswalk to find a pfr_id directly — not gated behind a GSIS match.
+    OL is skipped entirely by find_gsis() (not in the fantasy-focused GSIS
+    crosswalk) AND has 0% pfr_id coverage in import_weekly_rosters, so this
+    snap-count-sourced crosswalk is the only path that can give OL players
+    a pfr_id (and therefore a snap_pct) at all."""
+    if snap_crosswalk is None:
+        return None, None
+    name_norm = normalize_for_matching(name)
+    return _match_in_df(name_norm, standard_pos, team, snap_crosswalk,
+                         pos_col='standard_pos', name_col='name_norm',
+                         team_col='team_norm', id_col='pfr_player_id')
+
+def _match_in_df(name_norm, standard_pos, team, df,
                  pos_col, name_col, team_col, id_col):
     """Shared matching logic for any dataframe source."""
     if df is None:
@@ -278,6 +350,7 @@ def build_master():
     crosswalk = load_gsis_crosswalk()
     rosters = load_nflreadpy_gsis()
     spotrac_df = load_spotrac_contracts()
+    snap_shares, snap_crosswalk = load_snap_shares()
 
     master = {}
     low_confidence = []
@@ -379,6 +452,7 @@ def build_master():
     # entry_year (season first on an NFL roster) is used for both.
     entry_year_by_gsis = {}
     college_by_gsis = {}
+    pfr_id_by_gsis = {}
     if rosters is not None:
         dedup_rosters = rosters.drop_duplicates(subset='gsis_id', keep='first')
         for _, row in dedup_rosters.iterrows():
@@ -389,6 +463,8 @@ def build_master():
             entry_year_by_gsis[gid] = int(entry_year) if pd.notna(entry_year) else None
             college = row.get('college')
             college_by_gsis[gid] = college if pd.notna(college) else None
+            pfr_id = row.get('pfr_id')
+            pfr_id_by_gsis[gid] = pfr_id if pd.notna(pfr_id) else None
 
     draft_matched = 0
     for entry in master.values():
@@ -399,6 +475,50 @@ def build_master():
         entry['years_pro'] = (SEASON - entry_year) if entry_year is not None else None
         if entry_year is not None:
             draft_matched += 1
+
+    # Snap share — first pass: gsis_id -> pfr_id (from rosters, above) ->
+    # season snap average. This is the ORIGINAL chain, and it structurally
+    # can never reach OL: find_gsis() skips OL entirely (not in the
+    # fantasy-focused GSIS crosswalk), so OL players never get a gsis_id
+    # and always fell back to years_pro. Second pass below closes that gap
+    # with an independent name+team fuzzy match against the roster data
+    # directly (same precedence pattern already used for Spotrac matching),
+    # not gated behind a GSIS match at all.
+    def snap_pct_for(pfr_id):
+        if snap_shares is None or not pfr_id or pfr_id not in snap_shares.index:
+            return None
+        row = snap_shares.loc[pfr_id]
+        candidates = [v for v in (row['offense_pct'], row['defense_pct']) if pd.notna(v)]
+        return round(max(candidates) * 100, 1) if candidates else None
+
+    pfr_id_direct = {}
+    for key, entry in master.items():
+        gid = entry.get('gsis_id')
+        pfr_id_direct[key] = pfr_id_by_gsis.get(gid) if gid else None
+
+    ol_matched_before = sum(
+        1 for key, entry in master.items()
+        if entry['standard_pos'] == 'OL' and snap_pct_for(pfr_id_direct[key]) is not None
+    )
+
+    fuzzy_pfr_matched = 0
+    for key, entry in master.items():
+        if pfr_id_direct[key] is not None:
+            continue
+        pfr_id, _ = find_pfr_id(entry['canonical_name'], entry['standard_pos'], entry['team'], snap_crosswalk)
+        if pfr_id:
+            pfr_id_direct[key] = pfr_id
+            fuzzy_pfr_matched += 1
+
+    snap_matched = 0
+    ol_matched_after = 0
+    for key, entry in master.items():
+        pct = snap_pct_for(pfr_id_direct[key])
+        entry['snap_pct'] = pct
+        if pct is not None:
+            snap_matched += 1
+            if entry['standard_pos'] == 'OL':
+                ol_matched_after += 1
 
     # Merge Spotrac remaining-contract data — no shared ID with GSIS/OurLads,
     # so this gets its own fuzzy-match pass, reusing the same _match_in_df
@@ -446,6 +566,11 @@ def build_master():
     print(f"Unmatched:    {len(unmatched)}")
     print(f"Low confidence (<95%): {len(low_confidence)}")
     print(f"draft_year/college matched (via GSIS): {draft_matched} / {len(master)}")
+    print(f"snap_pct matched (total): {snap_matched} / {len(master)}")
+    print(f"  matched via independent name+team pfr_id fuzzy match: {fuzzy_pfr_matched}")
+    ol_total = sum(1 for e in master.values() if e['standard_pos'] == 'OL')
+    print(f"  OL snap_pct matched — before independent match: {ol_matched_before} / {ol_total}")
+    print(f"  OL snap_pct matched — after independent match:  {ol_matched_after} / {ol_total}")
 
     print(f"\nUnmatched ({min(len(unmatched), 20)} shown):")
     for p in unmatched[:20]:

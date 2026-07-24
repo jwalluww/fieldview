@@ -26,8 +26,10 @@ Repo: https://github.com/jwwalluww/fieldview (public)
 - `scripts/scrape_depth.py` — OurLads depth chart scraper
 - `scripts/merge_madden.py` — merges Madden ratings + position ranks
 - `scripts/scrape_otc.py` — Over The Cap contract data
-- `scripts/scrape_stats.py` — nflreadpy 2025 season stats
+- `scripts/scrape_stats.py` — nflreadpy season stats
+- `scripts/scrape_contracts_spotrac.py` — Spotrac remaining-contract data (years/cash/APY), single-page league-wide scrape
 - `scripts/build_master.py` — builds players_master.json with GSIS matching
+- `scripts/season_utils.py` — `get_current_season()`, resolves the active NFL season dynamically from today's date
 - `scripts/resolve_names.py` — diagnostic: fuzzy name match review
 - `scripts/audit_positions.py` — diagnostic: position mapping review
 
@@ -42,9 +44,10 @@ Repo: https://github.com/jwwalluww/fieldview (public)
 Run locally or via GitHub Actions in this exact order:
 1. scrape_depth.py
 2. scrape_otc.py
-3. scrape_stats.py
+3. scrape_stats.py (now uses the `nflreadpy` package, not `nfl_data_py` — switched this session)
 4. merge_madden.py
-5. build_master.py
+5. scrape_contracts_spotrac.py
+6. build_master.py (pulls in nfl_data_py's import_weekly_rosters + import_snap_counts directly, plus data/spotrac_contracts.json)
 
 `resolve_names.py` and `audit_positions.py` are diagnostic only — run locally when investigating match quality, not part of the pipeline.
 
@@ -63,8 +66,9 @@ madden_rank, madden_rank_total, madden_pos_label
 player_id (GSIS if matched, else name-pos-team slug),
 gsis_id, match_confidence, canonical_name, ourlads_name,
 team, team_name, base_defense, ourlads_pos, standard_slot, standard_pos, depth,
-jersey, age, years_pro (computed: SEASON - draft_year, via nflreadpy GSIS join), draft_year, college, madden, madden_rank,  madden_rank_total, madden_pos_label, cap_number, attainment, injured, stats (normalized keys), stats_season, nflreadpy_name, match_source,
-years_remaining, cash_total_remaining, cash_guaranteed_remaining, avg_annual_remaining (all from Spotrac, fuzzy-matched — no shared ID)
+jersey, age, years_pro (computed: current_season - entry_year, via nfl_data_py's import_weekly_rosters; current_season resolved dynamically via scripts/season_utils.get_current_season(), not a hardcoded constant), draft_year, college, madden, madden_rank,  madden_rank_total, madden_pos_label, cap_number, attainment, injured, stats (normalized keys), stats_season, nflreadpy_name, match_source,
+years_remaining, cash_total_remaining, cash_guaranteed_remaining, avg_annual_remaining (all from Spotrac, fuzzy-matched — no shared ID),
+snap_pct (nfl_data_py import_snap_counts; matched via pfr_id — GSIS-chain first, independent name+team fuzzy match against the snap-count crosswalk as a second pass for gaps like OL, whose pfr_id is 0% populated in import_weekly_rosters)
 
 `standard_pos` values: `QB, WR, RB, TE, OL, EDGE, DI, LB, CB, S`
 Special teams (K, P, KR, PR, KO, PK, LS, PT, H) are stripped from pipeline entirely.
@@ -84,7 +88,7 @@ Frontend `STAT_COLS` in `depth-chart.html` uses these canonical keys.
 
 ## GSIS Matching Pipeline
 - Primary source: dynastyprocess crosswalk CSV (fantasy-focused, good QB/WR/RB/TE coverage, poor OL/DI coverage)
-- Fallback: nflreadpy roster data (attribute name TBD — `import_rosters` is broken)
+- Fallback: nflreadpy roster data via `import_weekly_rosters` (was broken/TBD, resolved this session)
 - OL skipped entirely from GSIS matching (not in fantasy crosswalk)
 - Matching logic: strip to bare letters, no spaces/punctuation/suffixes, fuzzy match within position group first, team as tiebreaker only
 - Name aliases handled via `NAME_ALIASES` dict in `build_master.py`
@@ -94,9 +98,9 @@ Frontend `STAT_COLS` in `depth-chart.html` uses these canonical keys.
 `ARI→ARZ, KCC→KC, LVR→LV, TBB→TB, SFO→SF, GNB→GB, NOR→NO, NWE→NE`
 
 ### Current match results
-- 2770 total players, 1370 GSIS matched (~50%)
+- 2784 total players, 1432 GSIS matched (~51%)
 - Most unmatched are OL + defensive depth (expected, no stats anyway)
-- Skill position (QB/WR/RB/TE) unmatched count not yet measured — next diagnostic step
+- Skill position (QB/WR/RB/TE) unmatched: 107
 
 ---
 
@@ -111,13 +115,10 @@ Frontend `STAT_COLS` in `depth-chart.html` uses these canonical keys.
 - Mobile responsive (v1 — functional, not polished)
 - `syncFieldHeight()` called after render to fix mobile field scaling
 
-### Known formation bug
-Colts, Seahawks, and other hybrid-scheme teams missing a defender in formation view. OurLads lists their positions differently and `standard_slot` mapping doesn't cover all cases. Needs investigation of raw JSON vs POS_ALIAS mapping.
-
 ---
 
 ## Depth Chart Table
-- Loads all 32 teams at once from individual team JSONs (will switch to `players_master.json`)
+- Loads all 32 teams at once from `players_master.json` (wired this session — was per-team JSONs)
 - OOTP-style view tabs: Overview, Financial, Madden Ratings, Passing, Rushing, Receiving, Defense
 - Sortable columns, nulls always sort last
 - Filters: search, team, unit, position, depth
@@ -140,26 +141,21 @@ Colts, Seahawks, and other hybrid-scheme teams missing a defender in formation v
 ---
 
 ## Known Outstanding Bugs
-- `Jr./Sr.` double-period in name normalization (`Paris Johnson Jr..`)
-- Missing aliases: `Riq Woolen, Dru Phillips, Cobie Durant, Vj Payne`
-- Force no-match needed for bad crosswalk hits: `Matt Hibner, Mike Jackson, Joshua Metellus`
-- `nflreadpy import_rosters` attribute error — correct function name unknown, needs investigation
-- Skill-position unmatched count not yet run
 - `build_master.py` not yet added to `scrape.yml`
-- Frontend still reading per-team JSONs, not yet wired to `players_master.json`
-- the `nfl-formation-view.html` still loads from per-team JSONs too, not just `depth`-chart.html`. When you wire the frontend to `players_master.json`, both files need updating. Worth noting in the bug list so it doesn't get missed.
+- OL snap-share coverage sits at ~61% (306/504) — real data-source ceiling (import_snap_counts/PFR crosswalk coverage for OL specifically), not considered worth chasing further
 
 ---
 
 ## Roadmap (priority order)
 1. ⬜ Finish player identity pipeline (fix bugs above, get skill-pos unmatched count)
-2. ⬜ Wire `depth-chart.html` to `players_master.json`, but the formation view loads differently (single team at a time on demand) vs the depth chart (all 32 at once). They'll need different loading strategies even though both read from the same source. Formation view stays as single-team fetch, just hits master instead of team file.
-3. ⬜ Fix formation view hybrid scheme bug (Colts, Seahawks missing defender)
+2. ✅ Wire `depth-chart.html` and `nfl-formation-view.html` to `players_master.json` (each keeping its own loading strategy — depth chart loads all 32 teams at once, formation view fetches/filters per team)
+3. ✅ Fix formation view hybrid scheme bug (Colts, Seahawks missing defender)
 4. ⬜ Opponent overlay — same-team offense+defense simultaneously, then versus view
-5. ⬜ Additional data sources: PFF grades, RAS scores, combine data, EPA/DVOA
-6. ⬜ Player comparison
-7. ⬜ Historical rating trends
-8. ⬜ Multi-sport expansion — MLB first, then NHL/NBA/MLS/EPL
+5. ✅ Additional data sources (contracts): Spotrac remaining-contract data (years/cash/APY), snap share via nfl_data_py's import_snap_counts
+6. ⬜ Additional data sources (advanced metrics): PFF grades, RAS scores, combine data, EPA/DVOA
+7. ⬜ Player comparison
+8. ⬜ Historical rating trends
+9. ⬜ Multi-sport expansion — MLB first, then NHL/NBA/MLS/EPL
 
 **Not in FieldView scope:** League leaderboards, game reviews, highlights, replays, podcasts, tweets — these belong in a separate media/highlights page down the road. Called ReView for being able to review the past day/week of games, highlights, box scores, stats, tweets, drama, reddit posts, podcasts, etc. Just to catch up on the league and all it's action.
 
@@ -171,3 +167,7 @@ Colts, Seahawks, and other hybrid-scheme teams missing a defender in formation v
 - Front-load thinking in chat → hand Claude Code a crisp specific instruction
 - Start a new chat when switching to a new sport or major new feature area
 - Paste this CLAUDE.md at the top of any new chat to restore context
+
+---
+
+NFL v1 considered feature-complete as of 2026-07-23 — remaining polish will be driven by live usage once the season starts. Next sport: NBA.

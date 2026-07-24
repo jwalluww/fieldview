@@ -775,6 +775,13 @@ function parseCap(capStr) {
   return parseInt(capStr.replace(/[$,]/g, '')) || 0;
 }
 
+function formatMoneyShort(n) {
+  if (n == null) return null;
+  if (Math.abs(n) >= 1000000) return '$' + (n / 1000000).toFixed(1) + 'M';
+  if (Math.abs(n) >= 1000) return '$' + Math.round(n / 1000) + 'K';
+  return '$' + Math.round(n);
+}
+
 function mapPlayer(player) {
   return {
     id: player.player_id,
@@ -787,12 +794,17 @@ function mapPlayer(player) {
     jersey: player.jersey,
     age: player.age,
     years_pro: player.years_pro,
+    draft_year: player.draft_year,
+    college: player.college,
+    snap_pct: player.snap_pct,
     madden: player.madden,
     madden_rank: player.madden_rank,
     madden_rank_total: player.madden_rank_total,
     madden_pos_label: player.madden_pos_label,
     cap_number: player.cap_number,
     cap_raw: parseCap(player.cap_number),
+    years_remaining: player.years_remaining,
+    avg_annual_remaining: player.avg_annual_remaining,
     injured: player.injured,
     attainment: player.attainment,
     stats: player.stats,
@@ -1004,7 +1016,7 @@ function buildHoverCard(p, pos) {
             ${p.injured ? `<span style="background:rgba(239,68,68,.2);color:#ef4444;border:1px solid rgba(239,68,68,.4);border-radius:3px;font-size:9px;font-weight:800;padding:1px 5px;letter-spacing:1px">INJ</span>` : ''}
             ${p.years_pro === 0 ? `<span style="background:rgba(34,197,94,.1);color:#22c55e;border:1px solid rgba(34,197,94,.3);border-radius:3px;font-size:9px;font-weight:800;padding:1px 5px;letter-spacing:1px">R</span>` : ''}
           </div>
-          <div class="card-meta">${pos}${p.age ? ' · Age '+p.age : ''}${p.years_pro != null ? ' · Yr '+p.years_pro+' NFL' : ''}</div>
+          <div class="card-meta">${pos}${p.age ? ' · Age '+p.age : ''}${p.years_pro != null ? ' · Yr '+p.years_pro+' NFL' : ''}${p.draft_year ? ' · Drafted '+p.draft_year : ''}${p.college ? ' · '+p.college : ''}</div>
         </div>
       </div>
       <div class="card-ratings">
@@ -1017,8 +1029,8 @@ function buildHoverCard(p, pos) {
           <div class="crc-label">Age</div>
         </div>
         <div class="card-rating-cell">
-          <div class="crc-val" style="color:var(--text-muted)">${p.years_pro != null ? p.years_pro : '—'}</div>
-          <div class="crc-label">NFL Yr</div>
+          <div class="crc-val" style="color:var(--text-muted)">${p.snap_pct != null ? Math.round(p.snap_pct) + '%' : (p.years_pro != null ? p.years_pro : '—')}</div>
+          <div class="crc-label">${p.snap_pct != null ? 'Snaps' : 'NFL Yr'}</div>
         </div>
       </div>
       ${p.stats && Object.keys(p.stats).length > 0 ? `
@@ -1035,10 +1047,16 @@ function buildHoverCard(p, pos) {
         </div>
       ` : ''}
       <div class="card-footer" style="flex-direction:column;gap:4px;align-items:flex-start">
-        <div style="display:flex;justify-content:space-between;width:100%;align-items:center">
-          <span style="font-family:'Barlow Condensed';font-weight:700;font-size:13px;color:var(--gold)">${p.cap_number || '—'}</span>
-          <span style="font-size:10px;color:var(--text-dim)">cap hit</span>
-        </div>
+        ${p.years_remaining != null && p.avg_annual_remaining != null ? `
+          <div style="display:flex;justify-content:space-between;width:100%;align-items:center">
+            <span style="font-family:'Barlow Condensed';font-weight:700;font-size:13px;color:var(--gold)">${p.years_remaining} yrs remaining · ${formatMoneyShort(p.avg_annual_remaining)}/yr avg</span>
+          </div>
+        ` : `
+          <div style="display:flex;justify-content:space-between;width:100%;align-items:center">
+            <span style="font-family:'Barlow Condensed';font-weight:700;font-size:13px;color:var(--gold)">${p.cap_number || '—'}</span>
+            <span style="font-size:10px;color:var(--text-dim)">cap hit</span>
+          </div>
+        `}
         ${p.attainment ? `<div style="font-size:10px;color:var(--text-muted)">Attained: <span style="color:var(--text)">${p.attainment}</span></div>` : ''}
       </div>
     </div>

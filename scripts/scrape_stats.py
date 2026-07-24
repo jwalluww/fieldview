@@ -1,8 +1,9 @@
 import nflreadpy as nfl
 import json
 import os
+from season_utils import get_current_season
 
-SEASON = 2025
+SEASON = get_current_season()
 
 # OurLads team abbr -> nflreadpy team abbr
 TEAM_MAP = {
