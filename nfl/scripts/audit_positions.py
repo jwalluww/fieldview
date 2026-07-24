@@ -14,7 +14,7 @@ print(f"{'TEAM':<6} {'SCHEME':<12} {'DEF POSITIONS'}")
 print("-" * 80)
 
 for abbr in TEAMS:
-    filepath = f"data/{abbr.lower()}.json"
+    filepath = f"nfl/data/{abbr.lower()}.json"
     if not os.path.exists(filepath):
         print(f"{abbr:<6} FILE NOT FOUND")
         continue

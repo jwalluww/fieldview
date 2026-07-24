@@ -24,24 +24,24 @@ jobs:
         run: pip install requests beautifulsoup4 nflreadpy pandas rapidfuzz
       
       - name: Run depth chart scraper
-        run: python scripts/scrape_depth.py
+        run: python nfl/scripts/scrape_depth.py
 
       - name: Run OTC contract scraper
-        run: python scripts/scrape_otc.py
+        run: python nfl/scripts/scrape_otc.py
 
       - name: Run stats scraper
-        run: python scripts/scrape_stats.py
+        run: python nfl/scripts/scrape_stats.py
 
       - name: Run Madden merge
-        run: python scripts/merge_madden.py
+        run: python nfl/scripts/merge_madden.py
 
       - name: Build player master
-        run: python scripts/build_master.py
+        run: python nfl/scripts/build_master.py
 
       - name: Commit updated data
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add data/
+          git add nfl/data/
           git diff --staged --quiet || git commit -m "auto-scrape depth charts"
           git push

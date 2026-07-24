@@ -96,7 +96,7 @@ def normalize(name):
     return re.sub(r'\s+', ' ', name).strip()
 
 def merge_into_team(abbr, contracts):
-    filepath = f"data/{abbr.lower()}.json"
+    filepath = f"nfl/data/{abbr.lower()}.json"
     if not os.path.exists(filepath):
         return
 

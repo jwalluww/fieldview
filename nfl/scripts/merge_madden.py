@@ -89,7 +89,7 @@ def find_duplicate_names(team_abbrs):
     """
     teams_by_name = {}
     for abbr in team_abbrs:
-        filepath = f"data/{abbr.lower()}.json"
+        filepath = f"nfl/data/{abbr.lower()}.json"
         if not os.path.exists(filepath):
             continue
         with open(filepath) as f:
@@ -126,7 +126,7 @@ def find_madden_player(name, team_madden_players, all_madden_players, allow_cros
     return None
 
 def merge():
-    madden_by_team = load_madden("data/madden.json")
+    madden_by_team = load_madden("nfl/data/madden.json")
     pos_ranks = build_pos_ranks(madden_by_team)
     all_madden_players = [p for players in madden_by_team.values() for p in players]
     duplicate_names = find_duplicate_names(TEAM_MAP.values())
@@ -135,7 +135,7 @@ def merge():
     unmatched = 0
 
     for abbr in TEAM_MAP.values():
-        filepath = f"data/{abbr.lower()}.json"
+        filepath = f"nfl/data/{abbr.lower()}.json"
         if not os.path.exists(filepath):
             continue
 

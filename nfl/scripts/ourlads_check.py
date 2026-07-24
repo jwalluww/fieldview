@@ -24,8 +24,8 @@ for name in names_to_check:
     print(f"  ...{snippet}...")
 
 # Compare against local JSON
-print("\n=== Local data/cle.json check ===")
-with open("data/cle.json") as f:
+print("\n=== Local nfl/data/cle.json check ===")
+with open("nfl/data/cle.json") as f:
     data = json.load(f)
 if isinstance(data, list):
     data = data[0]

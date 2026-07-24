@@ -146,7 +146,7 @@ def main():
     unmatched = 0
 
     for our_abbr, nfl_abbr in TEAM_MAP.items():
-        filepath = f"data/{our_abbr.lower()}.json"
+        filepath = f"nfl/data/{our_abbr.lower()}.json"
         if not os.path.exists(filepath):
             continue
 

@@ -1,6 +1,6 @@
 import json
 
-with open('data/players_master.json') as f:
+with open('nfl/data/players_master.json') as f:
     master = json.load(f)
 
 players = list(master.values())

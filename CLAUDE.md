@@ -18,25 +18,27 @@ Repo: https://github.com/jwwalluww/fieldview (public)
 ## File Map
 
 ### Frontend
-- `index.html` — home page, entry cards
-- `nfl-formation-view.html` — formation view, player cards on field
-- `depth-chart.html` — OOTP-style data table
+- `index.html` — home page, entry cards (shared across sports)
+- `nfl/nfl-formation-view.html` — formation view, player cards on field
+- `nfl/depth-chart.html` — OOTP-style data table
 
 ### Scripts
-- `scripts/scrape_depth.py` — OurLads depth chart scraper
-- `scripts/merge_madden.py` — merges Madden ratings + position ranks
-- `scripts/scrape_otc.py` — Over The Cap contract data
-- `scripts/scrape_stats.py` — nflreadpy season stats
-- `scripts/scrape_contracts_spotrac.py` — Spotrac remaining-contract data (years/cash/APY), single-page league-wide scrape
-- `scripts/build_master.py` — builds players_master.json with GSIS matching
-- `scripts/season_utils.py` — `get_current_season()`, resolves the active NFL season dynamically from today's date
-- `scripts/resolve_names.py` — diagnostic: fuzzy name match review
-- `scripts/audit_positions.py` — diagnostic: position mapping review
+- `nfl/scripts/scrape_depth.py` — OurLads depth chart scraper
+- `nfl/scripts/merge_madden.py` — merges Madden ratings + position ranks
+- `nfl/scripts/scrape_otc.py` — Over The Cap contract data
+- `nfl/scripts/scrape_stats.py` — nflreadpy season stats
+- `nfl/scripts/scrape_contracts_spotrac.py` — Spotrac remaining-contract data (years/cash/APY), single-page league-wide scrape
+- `nfl/scripts/build_master.py` — builds players_master.json with GSIS matching
+- `nfl/scripts/season_utils.py` — `get_current_season()`, resolves the active NFL season dynamically from today's date
+- `nfl/scripts/resolve_names.py` — diagnostic: fuzzy name match review
+- `nfl/scripts/audit_positions.py` — diagnostic: position mapping review
 
 ### Data
-- `data/arz.json` ... `data/was.json` — 32 team JSON files (OurLads source)
-- `data/madden.json` — Madden ratings source
-- `data/players_master.json` — canonical player registry (GSIS-keyed)
+- `nfl/data/arz.json` ... `nfl/data/was.json` — 32 team JSON files (OurLads source)
+- `nfl/data/madden.json` — Madden ratings source
+- `nfl/data/players_master.json` — canonical player registry (GSIS-keyed)
+
+All NFL scripts are invoked from the repo root (e.g. `python nfl/scripts/scrape_depth.py`) and their internal `data/...` references are written as `nfl/data/...` accordingly — cwd stays the repo root, not `nfl/`.
 
 ---
 
@@ -47,7 +49,7 @@ Run locally or via GitHub Actions in this exact order:
 3. scrape_stats.py (now uses the `nflreadpy` package, not `nfl_data_py` — switched this session)
 4. merge_madden.py
 5. scrape_contracts_spotrac.py
-6. build_master.py (pulls in nfl_data_py's import_weekly_rosters + import_snap_counts directly, plus data/spotrac_contracts.json)
+6. build_master.py (pulls in nfl_data_py's import_weekly_rosters + import_snap_counts directly, plus nfl/data/spotrac_contracts.json)
 
 `resolve_names.py` and `audit_positions.py` are diagnostic only — run locally when investigating match quality, not part of the pipeline.
 
@@ -66,7 +68,7 @@ madden_rank, madden_rank_total, madden_pos_label
 player_id (GSIS if matched, else name-pos-team slug),
 gsis_id, match_confidence, canonical_name, ourlads_name,
 team, team_name, base_defense, ourlads_pos, standard_slot, standard_pos, depth,
-jersey, age, years_pro (computed: current_season - entry_year, via nfl_data_py's import_weekly_rosters; current_season resolved dynamically via scripts/season_utils.get_current_season(), not a hardcoded constant), draft_year, college, madden, madden_rank,  madden_rank_total, madden_pos_label, cap_number, attainment, injured, stats (normalized keys), stats_season, nflreadpy_name, match_source,
+jersey, age, years_pro (computed: current_season - entry_year, via nfl_data_py's import_weekly_rosters; current_season resolved dynamically via nfl/scripts/season_utils.get_current_season(), not a hardcoded constant), draft_year, college, madden, madden_rank,  madden_rank_total, madden_pos_label, cap_number, attainment, injured, stats (normalized keys), stats_season, nflreadpy_name, match_source,
 years_remaining, cash_total_remaining, cash_guaranteed_remaining, avg_annual_remaining (all from Spotrac, fuzzy-matched — no shared ID),
 snap_pct (nfl_data_py import_snap_counts; matched via pfr_id — GSIS-chain first, independent name+team fuzzy match against the snap-count crosswalk as a second pass for gaps like OL, whose pfr_id is 0% populated in import_weekly_rosters)
 
@@ -82,7 +84,7 @@ Stats are normalized by position in `build_master.py` via `STAT_MAP`. Canonical 
 - Receiving: `TGT, REC, REC_YDS, REC_TDS, YAC`
 - Defense: `TKL, SACK, INT, PBU, TFL, QB_HIT`
 
-Frontend `STAT_COLS` in `depth-chart.html` uses these canonical keys.
+Frontend `STAT_COLS` in `nfl/depth-chart.html` uses these canonical keys.
 
 ---
 

@@ -99,7 +99,7 @@ def main():
     records = parse_table(html)
     print(f"Parsed {len(records)} contract records")
 
-    out_path = os.path.join("data", "spotrac_contracts.json")
+    out_path = os.path.join("nfl", "data", "spotrac_contracts.json")
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(records, f, indent=2)
     print(f"Saved to {out_path}")

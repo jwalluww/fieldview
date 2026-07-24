@@ -3,7 +3,7 @@ import json
 TEAMS = ['ind', 'sea', 'cle', 'cin']
 
 for team in TEAMS:
-    with open(f'data/{team}.json') as f:
+    with open(f'nfl/data/{team}.json') as f:
         data = json.load(f)
     if isinstance(data, list):
         data = data[0]

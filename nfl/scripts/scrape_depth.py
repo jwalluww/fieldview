@@ -272,8 +272,8 @@ def scrape_depth_chart(team):
 
 
 def save_json(data, abbr):
-    os.makedirs("data", exist_ok=True)
-    filepath = f"data/{abbr.lower()}.json"
+    os.makedirs("nfl/data", exist_ok=True)
+    filepath = f"nfl/data/{abbr.lower()}.json"
     with open(filepath, "w") as f:
         json.dump(data, f, indent=2)
     print(f"Saved to {filepath}")

@@ -376,7 +376,7 @@ body {
   <!-- View cards -->
   <div class="cards">
 
-    <a href="nfl-formation-view.html" class="view-card formation" id="formationCard">
+    <a href="nfl/nfl-formation-view.html" class="view-card formation" id="formationCard">
       <div class="card-accent"></div>
       <div class="card-icon">
         <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
@@ -405,7 +405,7 @@ body {
       </div>
     </a>
 
-    <a href="depth-chart.html" class="view-card table" id="tableCard">
+    <a href="nfl/depth-chart.html" class="view-card table" id="tableCard">
       <div class="card-accent"></div>
       <div class="card-icon">
         <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
@@ -466,8 +466,8 @@ body {
 const SPORTS = {
   nfl: {
     tagline: 'NFL Intelligence Platform',
-    formationHref: 'nfl-formation-view.html',
-    tableHref: 'depth-chart.html',
+    formationHref: 'nfl/nfl-formation-view.html',
+    tableHref: 'nfl/depth-chart.html',
     formationLabel: 'Formation View',
     formationDesc: 'See your team lined up on the field. Real starters, Madden ratings, live substitutions.',
     formationFeatures: ['All 32 Teams', 'Live Subs', 'Madden OVR', 'Cap Data', '2025 Stats'],
@@ -538,7 +538,7 @@ function updatePlayerCount(sport) {
     let total = 0;
     let loaded = 0;
     NFL_TEAMS.forEach(abbr => {
-      fetch(`data/${abbr}.json`)
+      fetch(`nfl/data/${abbr}.json`)
         .then(r => r.json())
         .then(d => {
           for (const players of Object.values(d.depth_chart || {})) {

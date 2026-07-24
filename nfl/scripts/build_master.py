@@ -153,9 +153,9 @@ SPOTRAC_POS_MAP = {
 
 def load_spotrac_contracts():
     """Load Spotrac remaining-contract data and index it for fuzzy matching."""
-    path = os.path.join('data', 'spotrac_contracts.json')
+    path = os.path.join('nfl', 'data', 'spotrac_contracts.json')
     if not os.path.exists(path):
-        print("Warning: data/spotrac_contracts.json not found, skipping contract merge")
+        print("Warning: nfl/data/spotrac_contracts.json not found, skipping contract merge")
         return None
     try:
         with open(path, 'r') as f:
@@ -356,7 +356,7 @@ def build_master():
     low_confidence = []
     unmatched = []
 
-    for filepath in sorted(glob.glob(os.path.join('data', '*.json'))):
+    for filepath in sorted(glob.glob(os.path.join('nfl', 'data', '*.json'))):
         # Skip master file if it exists from a previous run
         if 'master' in filepath:
             continue
@@ -558,7 +558,7 @@ def build_master():
             })
 
     # Write master
-    with open('data/players_master.json', 'w') as f:
+    with open('nfl/data/players_master.json', 'w') as f:
         json.dump(master, f, indent=2)
 
     print(f"\nBuilt master: {len(master)} players")

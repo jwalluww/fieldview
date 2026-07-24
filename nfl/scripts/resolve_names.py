@@ -113,7 +113,7 @@ def resolve(master, external_players):
 
 if __name__ == '__main__':
     # Load master
-    with open('data/players_master.json', 'r') as f:
+    with open('nfl/data/players_master.json', 'r') as f:
         master = json.load(f)
     
     # TODO: load your external source here
@@ -127,7 +127,7 @@ if __name__ == '__main__':
     master, unmatched, low_confidence = resolve(master, external_players)
     
     # Save updated master
-    with open('data/players_master.json', 'w') as f:
+    with open('nfl/data/players_master.json', 'w') as f:
         json.dump(master, f, indent=2)
     
     # Report
