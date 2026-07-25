@@ -61,10 +61,19 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install nba_api
+        run: pip install nba_api requests beautifulsoup4
 
       - name: Run NBA stats scraper
         run: python nba/scripts/fetch_stats.py
+
+      - name: Run NBA contracts scraper
+        run: python nba/scripts/scrape_contracts_spotrac.py
+
+      - name: Run NBA 2k ratings scraper
+        run: python nba/scripts/scrape_2kratings.py
+
+      - name: Build NBA player master
+        run: python nba/scripts/build_nba_master.py
 
       - name: Commit updated data
         run: |
