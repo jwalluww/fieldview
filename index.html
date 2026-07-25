@@ -19,6 +19,11 @@
   --accent: #00d4ff;
   --gold: #f5a623;
   --green: #22c55e;
+  /* Sport-keyed ambient background texture (see SPORTS[sport].background
+     in the script below) -- defaults to NFL's field-green since that's
+     the sport shown on initial load, before any selectSport() call. */
+  --stripe-a: rgba(12,28,12,0.0);
+  --stripe-b: rgba(15,34,15,0.5);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -41,12 +46,13 @@ body {
   background:
     repeating-linear-gradient(
       180deg,
-      rgba(12,28,12,0.0) 0px,
-      rgba(12,28,12,0.0) 80px,
-      rgba(15,34,15,0.5) 80px,
-      rgba(15,34,15,0.5) 160px
+      var(--stripe-a) 0px,
+      var(--stripe-a) 80px,
+      var(--stripe-b) 80px,
+      var(--stripe-b) 160px
     );
   pointer-events: none;
+  transition: background .3s ease;
 }
 
 .hash-lines {
@@ -477,6 +483,10 @@ const SPORTS = {
     teamCount: 32,
     sourceCount: 4,
     updateCadence: 'Weekly',
+    // Field-green ambient stripe texture -- same values as the original
+    // hardcoded .field-bg gradient (nfl-formation-view.html's field uses
+    // a related but not identical green; this pair is index.html's own).
+    background: { stripeA: 'rgba(12,28,12,0.0)', stripeB: 'rgba(15,34,15,0.5)' },
   },
   nba: {
     tagline: 'NBA Intelligence Platform',
@@ -491,6 +501,32 @@ const SPORTS = {
     teamCount: 3,
     sourceCount: 1,
     updateCadence: 'Stub',
+    // Hardwood stripe texture -- same RGB identity as nba/formation.html's
+    // court fill (#2f2216 / #362819), run through the same alpha-fade
+    // treatment as NFL's stripeA/stripeB so the two sports use identical
+    // CSS technique and only the hue changes.
+    background: { stripeA: 'rgba(47,34,22,0.0)', stripeB: 'rgba(54,40,25,0.5)' },
+  },
+  // Not built yet -- sport-bar buttons for these are still .soon and have
+  // no onclick, so selectSport() is never called with these keys today.
+  // Only `background` is filled in (that's this instruction's scope);
+  // the rest of the config (tagline, hrefs, features, counts) is added
+  // when each sport is actually built.
+  nhl: {
+    // TODO: replace when NHL is built -- neutral gray placeholder
+    background: { stripeA: 'rgba(20,20,24,0.0)', stripeB: 'rgba(28,28,34,0.5)' },
+  },
+  mlb: {
+    // TODO: replace when MLB is built -- neutral gray placeholder
+    background: { stripeA: 'rgba(20,20,24,0.0)', stripeB: 'rgba(28,28,34,0.5)' },
+  },
+  mls: {
+    // TODO: replace when MLS is built -- neutral gray placeholder
+    background: { stripeA: 'rgba(20,20,24,0.0)', stripeB: 'rgba(28,28,34,0.5)' },
+  },
+  epl: {
+    // TODO: replace when EPL is built -- neutral gray placeholder
+    background: { stripeA: 'rgba(20,20,24,0.0)', stripeB: 'rgba(28,28,34,0.5)' },
   },
 };
 
@@ -502,6 +538,10 @@ function selectSport(sport) {
 
   document.getElementById('sportBtnNfl').classList.toggle('active', sport === 'nfl');
   document.getElementById('sportBtnNba').classList.toggle('active', sport === 'nba');
+
+  const root = document.documentElement.style;
+  root.setProperty('--stripe-a', cfg.background.stripeA);
+  root.setProperty('--stripe-b', cfg.background.stripeB);
 
   document.getElementById('taglineEl').textContent = cfg.tagline;
 

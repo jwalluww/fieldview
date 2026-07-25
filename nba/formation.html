@@ -435,10 +435,16 @@ body {
 
   <div class="court-canvas">
     <svg class="court-bg" viewBox="0 0 500 470" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <rect width="500" height="470" fill="#1b3a2b"/>
+      <defs>
+        <pattern id="hardwood" x="0" y="0" width="42" height="470" patternUnits="userSpaceOnUse">
+          <rect width="21" height="470" fill="#2f2216"/>
+          <rect x="21" width="21" height="470" fill="#362819"/>
+        </pattern>
+      </defs>
+      <rect width="500" height="470" fill="url(#hardwood)"/>
       <rect x="8" y="8" width="484" height="454" fill="none" stroke="#ffffff" stroke-opacity="0.35" stroke-width="3"/>
       <!-- paint -->
-      <rect x="190" y="8" width="120" height="190" fill="#245038" stroke="#ffffff" stroke-opacity="0.35" stroke-width="3"/>
+      <rect x="190" y="8" width="120" height="190" fill="#000000" fill-opacity="0.18" stroke="#ffffff" stroke-opacity="0.35" stroke-width="3"/>
       <!-- free throw circle -->
       <circle cx="250" cy="198" r="60" fill="none" stroke="#ffffff" stroke-opacity="0.35" stroke-width="3"/>
       <!-- restricted arc -->
@@ -475,9 +481,36 @@ body {
 // TEAMS
 // ══════════════════════════════════════════
 const TEAMS = {
-  LAL: { name: "Los Angeles Lakers", colors: ["#552583","#fdb927"] },
-  BOS: { name: "Boston Celtics",     colors: ["#007a33","#ba9653"] },
-  DEN: { name: "Denver Nuggets",     colors: ["#0e2240","#fec524"] },
+  ATL: { name: "Atlanta Hawks",          colors: ["#e03a3e","#c1d32f"] },
+  BOS: { name: "Boston Celtics",         colors: ["#007a33","#ba9653"] },
+  BKN: { name: "Brooklyn Nets",          colors: ["#000000","#ffffff"] },
+  CHA: { name: "Charlotte Hornets",      colors: ["#1d1160","#00788c"] },
+  CHI: { name: "Chicago Bulls",          colors: ["#ce1141","#000000"] },
+  CLE: { name: "Cleveland Cavaliers",    colors: ["#860038","#fdbb30"] },
+  DAL: { name: "Dallas Mavericks",       colors: ["#00538c","#b8c4ca"] },
+  DEN: { name: "Denver Nuggets",         colors: ["#0e2240","#fec524"] },
+  DET: { name: "Detroit Pistons",        colors: ["#c8102e","#1d42ba"] },
+  GSW: { name: "Golden State Warriors",  colors: ["#1d428a","#ffc72c"] },
+  HOU: { name: "Houston Rockets",        colors: ["#ce1141","#000000"] },
+  IND: { name: "Indiana Pacers",         colors: ["#002d62","#fdbb30"] },
+  LAC: { name: "LA Clippers",            colors: ["#c8102e","#1d428a"] },
+  LAL: { name: "Los Angeles Lakers",     colors: ["#552583","#fdb927"] },
+  MEM: { name: "Memphis Grizzlies",      colors: ["#5d76a9","#f5b112"] },
+  MIA: { name: "Miami Heat",             colors: ["#98002e","#f9a01b"] },
+  MIL: { name: "Milwaukee Bucks",        colors: ["#00471b","#eee1c6"] },
+  MIN: { name: "Minnesota Timberwolves", colors: ["#0c2340","#78be20"] },
+  NOP: { name: "New Orleans Pelicans",   colors: ["#0c2340","#b4975a"] },
+  NYK: { name: "New York Knicks",        colors: ["#006bb6","#f58426"] },
+  OKC: { name: "Oklahoma City Thunder",  colors: ["#007ac1","#ef3b24"] },
+  ORL: { name: "Orlando Magic",          colors: ["#0077c0","#c4ced4"] },
+  PHI: { name: "Philadelphia 76ers",     colors: ["#006bb6","#ed174c"] },
+  PHX: { name: "Phoenix Suns",           colors: ["#1d1160","#e56020"] },
+  POR: { name: "Portland Trail Blazers", colors: ["#e03a3e","#000000"] },
+  SAC: { name: "Sacramento Kings",       colors: ["#5a2d81","#63727a"] },
+  SAS: { name: "San Antonio Spurs",      colors: ["#c4ced4","#000000"] },
+  TOR: { name: "Toronto Raptors",        colors: ["#ce1141","#000000"] },
+  UTA: { name: "Utah Jazz",              colors: ["#002b5c","#f9a01b"] },
+  WAS: { name: "Washington Wizards",     colors: ["#002b5c","#e31837"] },
 };
 const TEAM_ABBRS = Object.keys(TEAMS);
 const STATUS_LABEL = { starter: 'Starter', rotation: 'Rotation', bench: 'Bench' };
@@ -564,10 +597,11 @@ function updateHeader() {
 function getStarter(pos) {
   const candidates = teamPlayers.filter(p => p.pos === pos);
   if (!candidates.length) return null;
-  const starter = candidates.find(p => p.status === 'starter');
-  if (starter) return starter;
-  // fall back to the highest-minutes player at the position
-  return candidates.sort((a,b) => (b.mpg||0) - (a.mpg||0))[0];
+  const starters = candidates.filter(p => p.status === 'starter');
+  // among starters at this position, take the highest-minutes one; if
+  // none are flagged starter, fall back to the highest-minutes player
+  const pool = starters.length ? starters : candidates;
+  return pool.sort((a,b) => (b.mpg||0) - (a.mpg||0))[0];
 }
 
 function renderCourt() {

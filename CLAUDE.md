@@ -40,6 +40,19 @@ Repo: https://github.com/jwwalluww/fieldview (public)
 
 All NFL scripts are invoked from the repo root (e.g. `python nfl/scripts/scrape_depth.py`) and their internal `data/...` references are written as `nfl/data/...` accordingly — cwd stays the repo root, not `nfl/`.
 
+### Frontend (NBA)
+- `nba/formation.html` — starting five in half-court zones + rotation list ranked by minutes, hardwood court background (not a re-skinned field)
+- `nba/player-table.html` — sortable/filterable player table, mirrors `nfl/depth-chart.html`'s pattern
+
+### Scripts (NBA)
+- `nba/scripts/fetch_stats.py` — nba_api season averages (`leaguedashplayerstats`) + roster bio (`commonteamroster`, all 30 teams), writes `nba/data/nba_stats.json`
+
+### Data (NBA)
+- `nba/data/nba_players_master.json` — hand-built stub (13 mock players, LAL/BOS/DEN only) used to build/verify the frontend before any real pipeline existed. **Not wired to `nba_stats.json`** — the frontend still reads this stub, not the real scrape.
+- `nba/data/nba_stats.json` — real scraped output from `fetch_stats.py`, league-wide (582 players), keyed by nba_api `PLAYER_ID`
+
+NBA scripts are also invoked from the repo root (e.g. `python nba/scripts/fetch_stats.py`), same convention as NFL.
+
 ---
 
 ## Data Pipeline Order
@@ -106,6 +119,14 @@ Frontend `STAT_COLS` in `nfl/depth-chart.html` uses these canonical keys.
 
 ---
 
+## NBA Stats Scraper (nba/scripts/fetch_stats.py)
+- stats.nba.com fingerprints on header *completeness*, not just User-Agent — a thin/hand-rolled header dict gets the connection dropped outright even with a convincing UA string. The header set in the script (full Sec-Ch-Ua/Accept-Encoding/Pragma set, not just User-Agent+Referer) was verified against a live pull — don't trim it down.
+- `games_started` has no bulk NBA stats endpoint — only `playercareerstats`, one call per player (~580 extra calls for the full league). Decided against pulling it (too slow, too much extra rate-limit exposure for one field). `rotation_status` is derived from minutes-per-game alone instead: starter if MPG >= 24, rotation if MPG >= 15, else bench. **Starting guess, not a settled rule** — revisit once real usage patterns are known.
+- Season format is `"YYYY-YY"` (e.g. `"2025-26"`), named by the year it starts (Oct–June) — before October, "current season" resolves to the prior year's, same shape as `nfl/scripts/season_utils.py` but with an October cutoff instead of September.
+- Every call goes through an exponential-backoff retry wrapper — stats.nba.com throttles/blocks aggressively, budget for retries not a single clean pull.
+
+---
+
 ## Formation View
 - Team selector persisted via localStorage, overridden by URL params
 - Formation sharing via URL: `?team=KC&unit=defense&pkg=nickel`
@@ -145,6 +166,8 @@ Frontend `STAT_COLS` in `nfl/depth-chart.html` uses these canonical keys.
 ## Known Outstanding Bugs
 - `build_master.py` not yet added to `scrape.yml`
 - OL snap-share coverage sits at ~61% (306/504) — real data-source ceiling (import_snap_counts/PFR crosswalk coverage for OL specifically), not considered worth chasing further
+- NBA: `nba_players_master.json` (3-team mock stub) and `nba_stats.json` (real 582-player scrape) are two separate files, not yet merged — no NBA equivalent of `build_master.py` exists yet, so the frontend still reads the stub
+- NBA: no contracts data yet (Spotrac NBA scraper in progress)
 
 ---
 
@@ -154,12 +177,24 @@ Frontend `STAT_COLS` in `nfl/depth-chart.html` uses these canonical keys.
 3. ✅ Fix formation view hybrid scheme bug (Colts, Seahawks missing defender)
 4. ⬜ Opponent overlay — same-team offense+defense simultaneously, then versus view
 5. ✅ Additional data sources (contracts): Spotrac remaining-contract data (years/cash/APY), snap share via nflreadpy's load_snap_counts
-6. ⬜ Additional data sources (advanced metrics): PFF grades, RAS scores, combine data, EPA/DVOA
+6. ⬜ Additional data sources (advanced metrics): PFF grades, RAS scores, combine data, EPA/DVOA (see note below about nfldatapy)
 7. ⬜ Player comparison
 8. ⬜ Historical rating trends
 9. ⬜ Multi-sport expansion — MLB first, then NHL/NBA/MLS/EPL
 
 **Not in FieldView scope:** League leaderboards, game reviews, highlights, replays, podcasts, tweets — these belong in a separate media/highlights page down the road. Called ReView for being able to review the past day/week of games, highlights, box scores, stats, tweets, drama, reddit posts, podcasts, etc. Just to catch up on the league and all it's action.
+
+---
+
+## NFLDATAPY
+nflreadpy — yes, a few of these are genuinely worth grabbing, and one of them actually shortcuts your own roadmap:
+
+load_ftn_charting() — this is the one I'd flag hardest. Your roadmap lists PFF as a future paid data source, but FTN's charted stats (pressure rate, missed tackles, target quality, that kind of PFF-style manual charting) are free and already in nflreadpy. Worth trying before you go looking for a PFF scrape.
+load_nextgen_stats() — real tracking-derived metrics (separation, time to throw, closing speed, etc.). This is exactly the kind of "surprising, layered" data that makes a player comparison view actually interesting instead of just a stat table.
+load_participation() — personnel groupings and snap-level participation. This one's relevant specifically to formation view and your planned "opponent overlay" — it's literally per-play personnel package data, which is the same shape of information your formation view already visualizes.
+load_combine() — combine results, already on your roadmap as a separate source, but it's just sitting here for free too.
+
+load_contracts() also exists here (OTC data) — you already have a working Spotrac/OTC pipeline for that, so I wouldn't switch just to consolidate, but worth knowing it's redundant with what you built rather than a gap.
 
 ---
 

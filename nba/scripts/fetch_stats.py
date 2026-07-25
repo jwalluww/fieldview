@@ -61,6 +61,20 @@ def fetch_with_retry(fn, *args, max_retries=4, base_delay=2.0, **kwargs):
             time.sleep(delay)
 
 
+def clean_str(val):
+    """NaN-safe passthrough for string bio fields -- pandas represents a
+    handful of missing NUM values as float NaN rather than "", and json.dump
+    would otherwise emit a bare NaN token that browsers can't JSON.parse."""
+    if val is None:
+        return None
+    try:
+        if val != val:  # NaN check without importing pandas/numpy here
+            return None
+    except TypeError:
+        pass
+    return val or None
+
+
 def clean_num(val):
     """Coerce a pandas scalar (numpy dtype, possibly NaN) to a plain
     JSON-safe Python number, or None."""
@@ -122,9 +136,11 @@ def fetch_rosters(season):
         for row in df.to_dict("records"):
             pid = int(row["PLAYER_ID"])
             roster_by_id[pid] = {
-                "jersey_number": row["NUM"] or None,
-                "position": row["POSITION"] or None,
-                "height": row["HEIGHT"] or None,
+                "name": row["PLAYER"] or None,
+                "team": team["abbreviation"],
+                "jersey_number": clean_str(row["NUM"]),
+                "position": clean_str(row["POSITION"]),
+                "height": clean_str(row["HEIGHT"]),
                 "weight": clean_num(row["WEIGHT"]) if row["WEIGHT"] not in (None, "") else None,
             }
         # be polite -- stats.nba.com throttles/blocks aggressively without delay
@@ -147,9 +163,25 @@ def main():
     stats_by_id = fetch_season_averages(season)
     roster_by_id = fetch_rosters(season)
 
+    # Full outer join on player_id: keep every rostered player (even 0-game
+    # guys leaguedashplayerstats drops) plus any stats-only stragglers
+    # (e.g. traded players no longer on a current roster snapshot).
     output = {}
-    for pid, entry in stats_by_id.items():
+    for pid in set(roster_by_id) | set(stats_by_id):
         bio = roster_by_id.get(pid, {})
+        entry = stats_by_id.get(pid)
+        if entry is None:
+            entry = {
+                "player_id": pid,
+                "name": bio.get("name"),
+                "team": bio.get("team"),
+                "ppg": None,
+                "rpg": None,
+                "apg": None,
+                "mpg": None,
+                "games_played": 0,
+                "games_started": None,
+            }
         entry["position"] = bio.get("position")
         entry["jersey_number"] = bio.get("jersey_number")
         entry["height"] = bio.get("height")
