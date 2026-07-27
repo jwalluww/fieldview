@@ -402,6 +402,35 @@ body {
   .p-rating { font-size: 21px; }
   .rotation-section { padding: 0 12px; }
 }
+
+/* ── PLAYER STAT POPUP ── */
+.player-popup {
+  display: none;
+  position: fixed;
+  z-index: 500;
+  width: 220px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 12px 14px;
+  box-shadow: 0 16px 48px rgba(0,0,0,.6);
+  pointer-events: none;
+}
+.popup-header { display: flex; align-items: baseline; gap: 6px; margin-bottom: 8px; }
+.popup-jersey { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 12px; color: var(--text-muted); flex-shrink: 0; }
+.popup-name {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 15px; color: var(--text);
+  flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.popup-pos { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; color: var(--text-dim); text-transform: uppercase; flex-shrink: 0; }
+.popup-stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 8px; }
+.popup-stat { text-align: center; }
+.popup-stat-val { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 16px; color: var(--text); }
+.popup-stat-label { font-size: 9px; color: var(--text-dim); letter-spacing: .5px; text-transform: uppercase; }
+.popup-divider { height: 1px; background: var(--border); margin: 6px 0; }
+.popup-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 11px; color: var(--text-muted); padding: 2px 0; }
+.popup-row-label { color: var(--text-dim); text-transform: uppercase; letter-spacing: .5px; font-size: 10px; flex-shrink: 0; }
+.popup-row-val { text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 </style>
 </head>
 <body>
@@ -475,6 +504,8 @@ body {
   <div class="rotation-title">Rotation (by Minutes Per Game)</div>
   <div class="rotation-list" id="rotationList"></div>
 </div>
+
+<div class="player-popup" id="playerPopup"></div>
 
 <script>
 // ══════════════════════════════════════════
@@ -576,6 +607,7 @@ async function loadAllPlayers() {
 
 async function loadTeam(abbr) {
   if (!allPlayers.length) await loadAllPlayers();
+  hidePopup();
   teamPlayers = allPlayers.filter(p => p.team === abbr);
   updateHeader();
   renderCourt();
@@ -621,7 +653,7 @@ function renderCourt() {
     const parts = p.name.split(' ');
     const lastName = parts.length > 1 ? parts.slice(1).join(' ') : parts[0];
     return `
-      <div class="player-node" style="left:${zone.x}%; top:${zone.y}%">
+      <div class="player-node" style="left:${zone.x}%; top:${zone.y}%" data-pid="${p.id}">
         <div class="p-card" style="background:linear-gradient(160deg, ${team.colors[0]}, ${shade(team.colors[0], -25)})">
           <div class="p-jersey">${p.jersey != null ? '#' + p.jersey : ''}</div>
           <div class="p-rating" style="color:${rc}">${p.rating || '—'}</div>
@@ -633,6 +665,7 @@ function renderCourt() {
     `;
   }).join('');
   layer.innerHTML = html;
+  attachPopupHandlers(layer);
 }
 
 function shade(hex, percent) {
@@ -666,7 +699,7 @@ function renderRotation() {
     const initials = p.name.split(' ').map(w => w[0]).join('').slice(0, 2);
     const rc = ratingColor(p.rating);
     return `
-      <div class="rotation-row">
+      <div class="rotation-row" data-pid="${p.id}">
         <div class="rotation-rank">${i + 1}</div>
         <div class="rotation-initials" style="background:${team.colors[0]}">${initials}</div>
         <div class="rotation-name-block">
@@ -685,6 +718,75 @@ function renderRotation() {
       </div>
     `;
   }).join('');
+  attachPopupHandlers(list);
+}
+
+// ══════════════════════════════════════════
+// PLAYER STAT POPUP
+// ══════════════════════════════════════════
+function attachPopupHandlers(container) {
+  container.querySelectorAll('[data-pid]').forEach(el => {
+    el.addEventListener('mouseenter', () => showPopup(el.dataset.pid, el));
+    el.addEventListener('mouseleave', hidePopup);
+  });
+}
+
+function popupHTML(p) {
+  const rc = ratingColor(p.rating);
+  const bio = [p.height, p.weight != null ? p.weight + ' lbs' : null].filter(Boolean).join(' · ');
+  const games = (p.games_played != null ? p.games_played : '—') + ' GP · ' + (p.games_started != null ? p.games_started : '—') + ' GS';
+  const contract = p.salary ? p.salary + (p.years_remaining ? ' · ' + p.years_remaining + 'y left' : '') : null;
+  return `
+    <div class="popup-header">
+      <div class="popup-jersey">${p.jersey != null ? '#' + p.jersey : ''}</div>
+      <div class="popup-name">${p.name}</div>
+      <div class="popup-pos">${p.pos || ''}</div>
+    </div>
+    <div class="popup-stat-grid">
+      <div class="popup-stat"><div class="popup-stat-val">${p.ppg != null ? p.ppg : '—'}</div><div class="popup-stat-label">PPG</div></div>
+      <div class="popup-stat"><div class="popup-stat-val">${p.rpg != null ? p.rpg : '—'}</div><div class="popup-stat-label">RPG</div></div>
+      <div class="popup-stat"><div class="popup-stat-val">${p.apg != null ? p.apg : '—'}</div><div class="popup-stat-label">APG</div></div>
+      <div class="popup-stat"><div class="popup-stat-val">${p.mpg != null ? p.mpg : '—'}</div><div class="popup-stat-label">MPG</div></div>
+    </div>
+    <div class="popup-divider"></div>
+    <div class="popup-row"><span class="popup-row-label">Games</span><span class="popup-row-val">${games}</span></div>
+    ${bio ? `<div class="popup-row"><span class="popup-row-label">Bio</span><span class="popup-row-val">${bio}</span></div>` : ''}
+    <div class="popup-row"><span class="popup-row-label">Rating</span><span class="popup-row-val" style="color:${rc};font-weight:900">${p.rating || '—'}</span></div>
+    ${contract ? `<div class="popup-row"><span class="popup-row-label">Contract</span><span class="popup-row-val">${contract}</span></div>` : ''}
+    ${p.status ? `<div class="popup-row"><span class="popup-row-label">Status</span><span class="tag tag-${p.status}">${STATUS_LABEL[p.status]}</span></div>` : ''}
+  `;
+}
+
+function positionPopup(popup, anchorEl) {
+  const rect = anchorEl.getBoundingClientRect();
+  const margin = 10;
+  const pw = popup.offsetWidth;
+  const ph = popup.offsetHeight;
+
+  let left = rect.right + margin;
+  if (left + pw > window.innerWidth - margin) {
+    left = rect.left - pw - margin; // flip to the left of the anchor
+  }
+  left = Math.max(margin, Math.min(left, window.innerWidth - pw - margin));
+
+  let top = rect.top + rect.height / 2 - ph / 2;
+  top = Math.max(margin, Math.min(top, window.innerHeight - ph - margin));
+
+  popup.style.left = left + 'px';
+  popup.style.top = top + 'px';
+}
+
+function showPopup(pid, anchorEl) {
+  const p = teamPlayers.find(pl => String(pl.id) === String(pid));
+  if (!p) return;
+  const popup = document.getElementById('playerPopup');
+  popup.innerHTML = popupHTML(p);
+  popup.style.display = 'block';
+  positionPopup(popup, anchorEl);
+}
+
+function hidePopup() {
+  document.getElementById('playerPopup').style.display = 'none';
 }
 
 // ══════════════════════════════════════════

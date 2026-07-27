@@ -15,6 +15,13 @@ NBA_NAME_ALIASES = {
     'Cameron Christie': 'Cam Christie',
     "Nah'Shon Hyland": 'Bones Hyland',
     'Cameron Thomas': 'Cam Thomas',
+    # nbadepthcharts.com spells these without the nba_api roster suffix
+    'Ron Holland': 'Ronald Holland II',
+    # nbadepthcharts.com's copy has a Cyrillic 'e' (U+0451) where nba_api
+    # has a Latin 'e with diaeresis' (U+00EB) -- visually identical, not
+    # unified by accent-folding since they're different base letters, not
+    # different accents on the same one.
+    'Egor Dёmin': 'Egor Demin',
 }
 
 
