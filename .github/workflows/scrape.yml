@@ -72,6 +72,9 @@ jobs:
       - name: Run NBA 2k ratings scraper
         run: python nba/scripts/scrape_2kratings.py
 
+      - name: Run NBA depth chart scraper
+        run: python nba/scripts/scrape_nbadepthcharts.py
+
       - name: Build NBA player master
         run: python nba/scripts/build_nba_master.py
 
