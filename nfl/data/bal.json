@@ -41,17 +41,35 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       },
       {
-        "name": "Cornelius Johnson",
+        "name": "Chris Moore",
         "depth": 3,
         "injured": false,
-        "attainment": "SF25",
+        "attainment": "U/Was",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": "$1,075,000",
+        "stats": {},
+        "stats_season": null,
+        "madden": 72,
+        "jersey": 19,
+        "age": 32,
+        "years_pro": 8,
+        "madden_rank": 129,
+        "madden_rank_total": 201,
+        "madden_pos_label": "WR"
+      },
+      {
+        "name": "Xavier Guillory",
+        "depth": 4,
+        "injured": false,
+        "attainment": "CF25",
         "standard_slot": "LWR",
         "standard_pos": "WR",
         "cap_number": "$885,000",
@@ -59,29 +77,11 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
-      },
-      {
-        "name": "Cortez Braham Jr.",
-        "depth": 4,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "LWR",
-        "standard_pos": "WR",
-        "cap_number": "$887,500",
-        "stats": {},
-        "stats_season": null,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       }
     ],
     "RWR": [
@@ -121,17 +121,17 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       },
       {
-        "name": "Xavier Guillory",
+        "name": "Cornelius Johnson",
         "depth": 3,
         "injured": false,
-        "attainment": "CF25",
+        "attainment": "SF25",
         "standard_slot": "RWR",
         "standard_pos": "WR",
         "cap_number": "$885,000",
@@ -139,11 +139,29 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
+        "madden_pos_label": null
+      },
+      {
+        "name": "Cortez Braham Jr.",
+        "depth": 4,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "RWR",
+        "standard_pos": "WR",
+        "cap_number": "$887,500",
+        "stats": {},
+        "stats_season": null,
+        "madden": null,
+        "jersey": null,
         "age": null,
-        "years_pro": null
+        "years_pro": null,
+        "madden_rank": null,
+        "madden_rank_total": null,
+        "madden_pos_label": null
       }
     ],
     "SWR": [
@@ -202,11 +220,11 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       },
       {
         "name": "Octavian Smith Jr.",
@@ -225,11 +243,11 @@
         "stats_season": 2025,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       }
     ],
     "LT": [
@@ -281,31 +299,37 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       }
     ],
     "LG": [
       {
-        "name": "Olaivavega Ioane",
+        "name": "John Simpson",
         "depth": 1,
         "injured": false,
-        "attainment": "26/1",
+        "attainment": "U/NYJ",
         "standard_slot": "LG",
         "standard_pos": "OL",
-        "cap_number": "$4,405,860",
-        "stats": {},
-        "stats_season": null,
+        "cap_number": "$5,000,000",
+        "stats": {
+          "TKL": 34,
+          "SACKS": 2.5,
+          "PD": 1,
+          "TFL": 4,
+          "QB HIT": 4
+        },
+        "stats_season": 2025,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       },
       {
         "name": "Andrew Vorhees",
@@ -326,22 +350,22 @@
         "madden_pos_label": "LG"
       },
       {
-        "name": "Jared Penning",
+        "name": "Hakeem Adeniji",
         "depth": 3,
         "injured": false,
-        "attainment": "CF25",
+        "attainment": "U/Dal",
         "standard_slot": "LG",
         "standard_pos": "OL",
-        "cap_number": "$885,000",
+        "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden": 63,
+        "jersey": 75,
+        "age": 27,
+        "years_pro": 5,
+        "madden_rank": 70,
+        "madden_rank_total": 79,
+        "madden_pos_label": "RT"
       }
     ],
     "C": [
@@ -352,7 +376,7 @@
         "attainment": "U/Cle",
         "standard_slot": "C",
         "standard_pos": "OL",
-        "cap_number": null,
+        "cap_number": "$0",
         "stats": {},
         "stats_season": null,
         "madden": 72,
@@ -411,37 +435,31 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       }
     ],
     "RG": [
       {
-        "name": "John Simpson",
+        "name": "Olaivavega Ioane",
         "depth": 1,
         "injured": false,
-        "attainment": "U/NYJ",
+        "attainment": "26/1",
         "standard_slot": "RG",
         "standard_pos": "OL",
-        "cap_number": "$5,000,000",
-        "stats": {
-          "TKL": 34,
-          "SACKS": 2.5,
-          "PD": 1,
-          "TFL": 4,
-          "QB HIT": 4
-        },
-        "stats_season": 2025,
+        "cap_number": "$4,405,860",
+        "stats": {},
+        "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       },
       {
         "name": "Evan Beerntsen",
@@ -455,16 +473,16 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       },
       {
         "name": "Corey Bullock",
         "depth": 3,
-        "injured": false,
+        "injured": true,
         "attainment": "CF24",
         "standard_slot": "RG",
         "standard_pos": "OL",
@@ -529,11 +547,11 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       }
     ],
     "TE": [
@@ -592,11 +610,11 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       },
       {
         "name": "Josh Cuevas",
@@ -610,11 +628,11 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       },
       {
         "name": "Ty Pezza",
@@ -628,11 +646,11 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       }
     ],
     "QB": [
@@ -706,7 +724,7 @@
         "madden_pos_label": "QB"
       },
       {
-        "name": "Diego Pavia",
+        "name": "Joe Fagnano",
         "depth": 4,
         "injured": false,
         "attainment": "CF26",
@@ -717,29 +735,11 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
-      },
-      {
-        "name": "Joe Fagnano",
-        "depth": 5,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "QB",
-        "standard_pos": "QB",
-        "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       }
     ],
     "RB": [
@@ -829,11 +829,11 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       },
       {
         "name": "Dontae Mcmillan",
@@ -847,11 +847,11 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       },
       {
         "name": "Elijah Tau-tolliver",
@@ -865,11 +865,11 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       }
     ],
     "FB": [
@@ -885,11 +885,11 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       }
     ],
     "DE": [
@@ -946,18 +946,18 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       }
     ],
     "NT": [
       {
         "name": "Travis Jones",
         "depth": 1,
-        "injured": false,
+        "injured": true,
         "attainment": "22/3",
         "standard_slot": "NT",
         "standard_pos": "DI",
@@ -980,7 +980,7 @@
       {
         "name": "John Jenkins",
         "depth": 2,
-        "injured": false,
+        "injured": true,
         "attainment": "U/LV",
         "standard_slot": "NT",
         "standard_pos": "DI",
@@ -1034,11 +1034,11 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       }
     ],
     "DT": [
@@ -1095,11 +1095,11 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       },
       {
         "name": "Dion Wilson Jr.",
@@ -1113,11 +1113,11 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       }
     ],
     "LOLB": [
@@ -1157,16 +1157,16 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       },
       {
         "name": "Adisa Isaac",
         "depth": 3,
-        "injured": false,
+        "injured": true,
         "attainment": "24/3",
         "standard_slot": "LOLB",
         "standard_pos": "EDGE",
@@ -1193,11 +1193,11 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       }
     ],
     "WLB": [
@@ -1261,11 +1261,11 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       }
     ],
     "MLB": [
@@ -1344,11 +1344,11 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       }
     ],
     "ROLB": [
@@ -1405,11 +1405,11 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       }
     ],
     "LCB": [
@@ -1470,11 +1470,11 @@
         "stats_season": 2025,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       },
       {
         "name": "Marquise Robinson",
@@ -1494,11 +1494,11 @@
         "stats_season": 2025,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       },
       {
         "name": "Lardarius Webb Jr.",
@@ -1512,11 +1512,11 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       }
     ],
     "SS": [
@@ -1582,11 +1582,11 @@
         "stats_season": 2025,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       },
       {
         "name": "Jahquez Robinson",
@@ -1606,11 +1606,11 @@
         "stats_season": 2025,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       }
     ],
     "FS": [
@@ -1668,11 +1668,11 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       }
     ],
     "RCB": [
@@ -1710,16 +1710,16 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       },
       {
         "name": "Bilhal Kone",
         "depth": 3,
-        "injured": false,
+        "injured": true,
         "attainment": "25/6",
         "standard_slot": "RCB",
         "standard_pos": "CB",
@@ -1746,11 +1746,11 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       }
     ],
     "NB": [
@@ -1835,29 +1835,11 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
-      },
-      {
-        "name": "Luke Elzinga",
-        "depth": 2,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "PT",
-        "standard_pos": "DEF",
-        "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       }
     ],
     "H": [
@@ -1873,29 +1855,11 @@
         "stats_season": null,
         "madden": null,
         "jersey": null,
+        "age": null,
+        "years_pro": null,
         "madden_rank": null,
         "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
-      },
-      {
-        "name": "Luke Elzinga",
-        "depth": 2,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "H",
-        "standard_pos": "DEF",
-        "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null,
-        "madden": null,
-        "jersey": null,
-        "madden_rank": null,
-        "madden_rank_total": null,
-        "madden_pos_label": null,
-        "age": null,
-        "years_pro": null
+        "madden_pos_label": null
       }
     ]
   }
