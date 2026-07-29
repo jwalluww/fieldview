@@ -46,10 +46,17 @@ def get_current_nba_season():
     return f"{start_year}-{str(start_year + 1)[-2:]}"
 
 
-def fetch_with_retry(fn, *args, max_retries=4, base_delay=2.0, **kwargs):
+def fetch_with_retry(fn, *args, max_retries=6, base_delay=2.0, **kwargs):
     """Call an nba_api endpoint with exponential backoff on transient
     failures. stats.nba.com throttles/blocks aggressively -- budget for
-    retries, not a single clean pull."""
+    retries, not a single clean pull.
+
+    max_retries bumped 4 -> 6 after a real GitHub Actions run
+    (scrape-nba job) exhausted all 4 attempts on ReadTimeout, every one
+    stalling the full per-request timeout before failing -- a pattern
+    that looks more like persistent throttling of the runner's IP than
+    one-off network flakiness, so this alone may not fully fix it, but
+    it's the cheap first thing to try."""
     for attempt in range(1, max_retries + 1):
         try:
             return fn(*args, **kwargs)
@@ -97,7 +104,7 @@ def fetch_season_averages(season):
         season=season,
         per_mode_detailed="PerGame",
         headers=HEADERS,
-        timeout=30,
+        timeout=60,
     )
     df = resp.get_data_frames()[0]
     print(f"  {len(df)} players")
@@ -130,7 +137,7 @@ def fetch_rosters(season):
             team_id=team["id"],
             season=season,
             headers=HEADERS,
-            timeout=30,
+            timeout=60,
         )
         df = resp.get_data_frames()[0]
         for row in df.to_dict("records"):
