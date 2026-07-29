@@ -490,9 +490,9 @@ const SPORTS = {
   },
   nba: {
     tagline: 'NBA Intelligence Platform',
-    formationHref: 'nba/formation.html',
+    formationHref: 'nba/court-view.html',
     tableHref: 'nba/player-table.html',
-    formationLabel: 'Starting Five',
+    formationLabel: 'CourtView',
     formationDesc: 'See the current starting five on the court, plus a rotation ranked by minutes played.',
     formationFeatures: ['Court Zones', 'Rotation Rank', 'Overall Rating', 'Mock Data'],
     tableLabel: 'Player Table',
@@ -501,7 +501,7 @@ const SPORTS = {
     teamCount: 3,
     sourceCount: 1,
     updateCadence: 'Stub',
-    // Hardwood stripe texture -- same RGB identity as nba/formation.html's
+    // Hardwood stripe texture -- same RGB identity as nba/court-view.html's
     // court fill (#2f2216 / #362819), run through the same alpha-fade
     // treatment as NFL's stripeA/stripeB so the two sports use identical
     // CSS technique and only the hue changes.
@@ -603,7 +603,16 @@ function updatePlayerCount(sport) {
   }
 }
 
-updatePlayerCount('nfl');
+// Static markup already defaults to the NFL state; only re-run
+// selectSport() when a page linked here (e.g. CourtView's back button)
+// asks for a specific sport via ?sport=, so a plain visit to index.html
+// keeps behaving exactly as it did before this param existed.
+const requestedSport = new URLSearchParams(window.location.search).get('sport');
+if (requestedSport === 'nba') {
+  selectSport('nba');
+} else {
+  updatePlayerCount('nfl');
+}
 </script>
 </body>
 </html>

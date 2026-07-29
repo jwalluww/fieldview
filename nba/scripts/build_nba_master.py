@@ -9,7 +9,7 @@ OUT_PATH = os.path.join("nba", "data", "nba_players_master.json")
 
 # nbadepthcharts.com's own STARTERS/2ND STRING/3RD STRING/OTHER tiers,
 # mapped onto the existing 3-value rotation_status enum the frontend
-# already renders (formation.html/player-table.html STATUS_LABEL).
+# already renders (court-view.html/player-table.html STATUS_LABEL).
 DEPTH_RANK_TO_STATUS = {
     1: "starter",
     2: "rotation",
@@ -21,7 +21,7 @@ DEPTH_RANK_TO_STATUS = {
 GRANULAR_POSITIONS = {"PG", "SG", "SF", "PF", "C"}
 
 # nba_api's roster endpoint only reports coarse groups (G/F/C, plus
-# hybrids). formation.html's court view needs a specific slot per player,
+# hybrids). court-view.html's court needs a specific slot per player,
 # so this is the last-resort guess when neither nba_stats nor Spotrac has
 # a granular position -- not a real position determination.
 COARSE_POSITION_FALLBACK = {

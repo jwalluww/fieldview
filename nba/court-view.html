@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FieldView — NBA Formation</title>
+<title>FieldView — CourtView</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -60,13 +60,14 @@ body {
 
 .header-divider { width: 1px; height: 24px; background: var(--border2); }
 
-.team-swatch {
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 9px; font-weight: 900; letter-spacing: .5px;
-  color: #fff;
-  flex-shrink: 0;
+.team-logo { object-fit: contain; flex-shrink: 0; }
+.team-logo-header { width: 34px; height: 34px; }
+.team-logo-opt {
+  width: 52px; height: 52px;
+  padding: 6px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
 }
 
 .team-selector-wrap { position: relative; }
@@ -78,12 +79,12 @@ body {
   background: var(--surface2);
   border: 1px solid var(--border2);
   border-radius: 10px;
-  padding: 8px;
+  padding: 10px;
   z-index: 300;
   display: none;
   grid-template-columns: repeat(3, 1fr);
-  gap: 4px;
-  width: 260px;
+  gap: 6px;
+  width: 300px;
   box-shadow: 0 16px 48px rgba(0,0,0,.6);
 }
 .teams-dropdown.open { display: grid; }
@@ -141,11 +142,23 @@ body {
 .court-label {
   max-width: 900px;
   margin: 0 auto 12px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
   font-size: 16px;
   letter-spacing: 2px;
   text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.depth-chart-updated {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: .2px;
+  text-transform: none;
   color: var(--text-dim);
 }
 
@@ -309,6 +322,7 @@ body {
   border-bottom: 1px solid var(--border);
   background: var(--surface);
   transition: background .1s;
+  cursor: pointer;
 }
 .rotation-row:last-child { border-bottom: none; }
 .rotation-row:hover { background: var(--surface2); }
@@ -436,12 +450,12 @@ body {
 <body>
 
 <header class="header">
-  <div class="logo" onclick="window.location='../index.html'">Field<span>View</span></div>
+  <div class="logo" onclick="window.location='../index.html?sport=nba'">Field<span>View</span></div>
   <div class="header-divider"></div>
 
   <div class="team-selector-wrap">
     <div style="display:flex;align-items:center;gap:10px;cursor:pointer;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:6px 12px" onclick="toggleTeamDropdown()">
-      <div class="team-swatch" id="teamSwatchEl">LAL</div>
+      <img class="team-logo team-logo-header" id="teamLogoEl" alt="LAL">
       <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:1px" id="teamNameEl">Los Angeles Lakers</span>
     </div>
     <div class="teams-dropdown" id="teamsDropdown"></div>
@@ -450,7 +464,7 @@ body {
   <div class="view-toggle">
     <button class="view-btn active">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="2" fill="currentColor"/><circle cx="2" cy="2" r="1.5" fill="currentColor" opacity=".6"/><circle cx="10" cy="2" r="1.5" fill="currentColor" opacity=".6"/><circle cx="2" cy="10" r="1.5" fill="currentColor" opacity=".6"/><circle cx="10" cy="10" r="1.5" fill="currentColor" opacity=".6"/></svg>
-      Formation
+      CourtView
     </button>
     <button class="view-btn" onclick="window.location='player-table.html'">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="3" rx="1" fill="currentColor"/><rect x="1" y="5" width="10" height="3" rx="1" fill="currentColor" opacity=".5"/><rect x="1" y="9" width="10" height="2" rx="1" fill="currentColor" opacity=".3"/></svg>
@@ -460,7 +474,10 @@ body {
 </header>
 
 <div class="court-outer">
-  <div class="court-label">Starting Five</div>
+  <div class="court-label">
+    <span>Starting Five</span>
+    <span class="depth-chart-updated" id="depthChartUpdated"></span>
+  </div>
 
   <div class="court-canvas">
     <svg class="court-bg" viewBox="0 0 500 470" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
@@ -546,6 +563,25 @@ const TEAMS = {
 const TEAM_ABBRS = Object.keys(TEAMS);
 const STATUS_LABEL = { starter: 'Starter', rotation: 'Rotation', bench: 'Bench' };
 
+// ESPN's team-logo CDN. cdn.nba.com (the official source) was tried
+// first but fails with a real HTTP/2 protocol error in actual browser
+// navigation, not just headless testing -- would break for real
+// visitors, so not usable regardless of being the "proper" source.
+// ESPN's own short codes mostly match our TEAM_ABBRS, except New Orleans
+// ("no", not "nop") and Utah ("utah", not "uta") -- verified against the
+// live CDN, not guessed.
+const ESPN_TEAM_CODES = {
+  ATL: 'atl', BOS: 'bos', CLE: 'cle', NOP: 'no', CHI: 'chi',
+  DAL: 'dal', DEN: 'den', GSW: 'gsw', HOU: 'hou', LAC: 'lac',
+  LAL: 'lal', MIA: 'mia', MIL: 'mil', MIN: 'min', BKN: 'bkn',
+  NYK: 'nyk', ORL: 'orl', IND: 'ind', PHI: 'phi', PHX: 'phx',
+  POR: 'por', SAC: 'sac', SAS: 'sas', OKC: 'okc', TOR: 'tor',
+  UTA: 'utah', MEM: 'mem', WAS: 'was', DET: 'det', CHA: 'cha',
+};
+function teamLogoUrl(abbr) {
+  return `https://a.espncdn.com/i/teamlogos/nba/500/${ESPN_TEAM_CODES[abbr]}.png`;
+}
+
 // Loose half-court zones for each starting position (% of court canvas)
 const COURT_ZONES = {
   C:  { x: 50, y: 20 },
@@ -559,6 +595,10 @@ const ZONE_ORDER = ['C','PF','SF','SG','PG'];
 let currentTeam = 'LAL';
 let allPlayers = [];
 let teamPlayers = [];
+// Frontend-only view state for manual bench->court substitutions -- keyed
+// by court zone, never written back to nba_players_master.json, reset on
+// every team switch (see loadTeam()).
+let manualStarters = {};
 
 function ratingColor(r) {
   if (!r) return '#6b7494';
@@ -605,9 +645,27 @@ async function loadAllPlayers() {
   }
 }
 
+// Purely informational -- silently omit if the file, the field, or the
+// date fails to parse, rather than surface an error state for a small
+// staleness caption.
+async function loadDepthChartMeta() {
+  try {
+    const res = await fetch('data/nba_depth_chart.json');
+    const raw = await res.json();
+    if (!raw.last_changed) return;
+    const d = new Date(raw.last_changed + 'T00:00:00');
+    if (isNaN(d.getTime())) return;
+    const formatted = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+    document.getElementById('depthChartUpdated').textContent = `Depth chart as of ${formatted}`;
+  } catch (e) {
+    // no-op
+  }
+}
+
 async function loadTeam(abbr) {
   if (!allPlayers.length) await loadAllPlayers();
   hidePopup();
+  manualStarters = {};
   teamPlayers = allPlayers.filter(p => p.team === abbr);
   updateHeader();
   renderCourt();
@@ -616,10 +674,9 @@ async function loadTeam(abbr) {
 
 function updateHeader() {
   const team = TEAMS[currentTeam];
-  const swatch = document.getElementById('teamSwatchEl');
-  swatch.textContent = currentTeam;
-  swatch.style.background = team.colors[0];
-  swatch.style.border = '2px solid ' + team.colors[1];
+  const logo = document.getElementById('teamLogoEl');
+  logo.src = teamLogoUrl(currentTeam);
+  logo.alt = currentTeam;
   document.getElementById('teamNameEl').textContent = team.name;
 }
 
@@ -627,6 +684,10 @@ function updateHeader() {
 // STARTING FIVE (COURT)
 // ══════════════════════════════════════════
 function getStarter(pos) {
+  if (manualStarters[pos] != null) {
+    const manual = teamPlayers.find(p => p.id === manualStarters[pos]);
+    if (manual) return manual;
+  }
   const candidates = teamPlayers.filter(p => p.pos === pos);
   if (!candidates.length) return null;
   const starters = candidates.filter(p => p.status === 'starter');
@@ -719,6 +780,7 @@ function renderRotation() {
     `;
   }).join('');
   attachPopupHandlers(list);
+  attachSubstitutionHandlers(list);
 }
 
 // ══════════════════════════════════════════
@@ -729,6 +791,26 @@ function attachPopupHandlers(container) {
     el.addEventListener('mouseenter', () => showPopup(el.dataset.pid, el));
     el.addEventListener('mouseleave', hidePopup);
   });
+}
+
+// ══════════════════════════════════════════
+// SUBSTITUTIONS (bench -> court, view-only)
+// ══════════════════════════════════════════
+function attachSubstitutionHandlers(container) {
+  container.querySelectorAll('[data-pid]').forEach(el => {
+    el.addEventListener('click', () => substitutePlayer(el.dataset.pid));
+  });
+}
+
+function substitutePlayer(pid) {
+  const p = teamPlayers.find(pl => String(pl.id) === String(pid));
+  // A player with no resolved granular position (PG/SG/SF/PF/C) has no
+  // court zone to swap into -- nothing to do.
+  if (!p || !ZONE_ORDER.includes(p.pos)) return;
+  manualStarters[p.pos] = p.id;
+  hidePopup();
+  renderCourt();
+  renderRotation();
 }
 
 function popupHTML(p) {
@@ -795,11 +877,10 @@ function hidePopup() {
 function buildTeamsDropdown() {
   const dd = document.getElementById('teamsDropdown');
   dd.innerHTML = TEAM_ABBRS.map(abbr => {
-    const team = TEAMS[abbr];
     const sel = abbr === currentTeam ? 'selected' : '';
     return `
       <div class="team-opt ${sel}" onclick="selectTeam('${abbr}')">
-        <div class="team-swatch" style="background:${team.colors[0]};border:2px solid ${team.colors[1]}">${abbr}</div>
+        <img class="team-logo team-logo-opt" src="${teamLogoUrl(abbr)}" alt="${abbr}" loading="lazy">
         <span>${abbr}</span>
       </div>
     `;
@@ -828,6 +909,7 @@ document.addEventListener('click', (e) => {
 // ══════════════════════════════════════════
 buildTeamsDropdown();
 loadTeam(currentTeam);
+loadDepthChartMeta();
 </script>
 </body>
 </html>
