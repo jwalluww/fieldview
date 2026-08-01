@@ -32,8 +32,8 @@ jobs:
       - name: Run stats scraper
         run: python nfl/scripts/scrape_stats.py
 
-      - name: Run Madden merge
-        run: python nfl/scripts/merge_madden.py
+      - name: Run Madden scraper
+        run: python nfl/scripts/scrape_madden.py
 
       - name: Build player master
         run: python nfl/scripts/build_master.py

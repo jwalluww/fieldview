@@ -43,7 +43,7 @@ TEAMS = [
 
 # maddenratings.com's team roster table only has jersey/position/OVR/GEN/TOTAL --
 # no age or years_pro (those only live on ~2,000 individual player pages, not
-# worth the extra crawl). merge_madden.py's load_madden() already reads age/
+# worth the extra crawl). build_master.py's load_madden() already reads age/
 # years_pro via .get() with no default, so leaving them off each player dict
 # here is a no-op there, not a crash. years_pro gets recomputed independently
 # from nflreadpy in build_master.py anyway.

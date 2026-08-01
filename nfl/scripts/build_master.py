@@ -5,6 +5,7 @@ import os
 import pandas as pd
 from rapidfuzz import fuzz, process
 from season_utils import get_current_season
+from name_utils import normalize_name, normalize_for_matching, normalize_madden
 
 SEASON = get_current_season()
 
@@ -47,37 +48,133 @@ TEAM_ABB_MAP = {
 def normalize_team(abbr):
     return TEAM_ABB_MAP.get(abbr, abbr)
 
-def normalize_name(name):
-    if not name:
-        return name
-    name = name.strip()
-    # Fix true initials (AJ, BJ, CJ) BEFORE title case
-    # But NOT roman numerals (II, III) — exclude repeated same letter
-    name = re.sub(r'\b([A-Z])([A-Z])\b',
-                  lambda m: m.group(1) + '.' + m.group(2) + '.'
-                  if m.group(1) != m.group(2) else m.group(0), name)
-    name = name.title()
-    # Fix apostrophe casing
-    name = re.sub(r"'([a-z])", lambda m: "'" + m.group(1).upper(), name)
-    # Fix hyphenated
-    name = re.sub(r'-([a-z])', lambda m: '-' + m.group(1).upper(), name)
-    # Fix suffixes — must run AFTER title case
-    name = re.sub(r'\b(Jr|Sr)\.', r'\1', name)
-    name = re.sub(r'\b(Jr|Sr)\b', r'\1.', name)
-    name = re.sub(r'\b(Ii|Iii|Iv|Vi)\b',
-              lambda m: {'Ii': 'II', 'Iii': 'III', 'Iv': 'IV', 'Vi': 'VI'}[m.group(0)], name)
-    return name
+# Full team name -> our abbreviation, as used in madden.json's team.label
+# field. Ported from the old merge_madden.py's TEAM_MAP.
+MADDEN_TEAM_MAP = {
+    "Arizona Cardinals": "ARZ",
+    "Atlanta Falcons": "ATL",
+    "Baltimore Ravens": "BAL",
+    "Buffalo Bills": "BUF",
+    "Carolina Panthers": "CAR",
+    "Chicago Bears": "CHI",
+    "Cincinnati Bengals": "CIN",
+    "Cleveland Browns": "CLE",
+    "Dallas Cowboys": "DAL",
+    "Denver Broncos": "DEN",
+    "Detroit Lions": "DET",
+    "Green Bay Packers": "GB",
+    "Houston Texans": "HOU",
+    "Indianapolis Colts": "IND",
+    "Jacksonville Jaguars": "JAX",
+    "Kansas City Chiefs": "KC",
+    "Las Vegas Raiders": "LV",
+    "Los Angeles Chargers": "LAC",
+    "Los Angeles Rams": "LAR",
+    "Miami Dolphins": "MIA",
+    "Minnesota Vikings": "MIN",
+    "New England Patriots": "NE",
+    "New Orleans Saints": "NO",
+    "New York Giants": "NYG",
+    "New York Jets": "NYJ",
+    "Philadelphia Eagles": "PHI",
+    "Pittsburgh Steelers": "PIT",
+    "San Francisco 49ers": "SF",
+    "Seattle Seahawks": "SEA",
+    "Tampa Bay Buccaneers": "TB",
+    "Tennessee Titans": "TEN",
+    "Washington Commanders": "WAS",
+}
 
-def normalize_for_matching(name):
-    """Strip everything except letters, lowercase, no spaces."""
-    if not name:
-        return ''
-    name = name.lower()
-    # Remove suffixes entirely before stripping
-    name = re.sub(r'\b(jr|sr|ii|iii|iv|vi|v)\b', '', name)
-    # Strip everything that isn't a letter
-    name = re.sub(r'[^a-z]', '', name)
-    return name
+def load_madden(path):
+    """Load madden.json and bucket by team abbr. Ported from the old
+    merge_madden.py's load_madden()."""
+    if not os.path.exists(path):
+        print(f"Warning: {path} not found, skipping Madden merge")
+        return {}
+    with open(path) as f:
+        players = json.load(f)
+
+    by_team = {}
+    for p in players:
+        team_label = p.get("team", {}).get("label", "")
+        abbr = MADDEN_TEAM_MAP.get(team_label)
+        if not abbr:
+            continue
+        by_team.setdefault(abbr, []).append({
+            "full_name": f"{p['firstName']} {p['lastName']}",
+            "normalized": normalize_madden(f"{p['firstName']} {p['lastName']}"),
+            "overall": p["overallRating"],
+            "jersey": p.get("jerseyNum"),
+            "age": p.get("age"),
+            "years_pro": p.get("yearsPro"),
+            "position": p.get("position", {}).get("shortLabel", ""),
+        })
+    return by_team
+
+def build_madden_pos_ranks(madden_by_team):
+    """Ported from the old merge_madden.py's build_pos_ranks()."""
+    all_players = [p for players in madden_by_team.values() for p in players]
+    by_position = {}
+    for p in all_players:
+        by_position.setdefault(p["position"], []).append(p)
+    pos_ranks = {}
+    for pos, players in by_position.items():
+        sorted_players = sorted(players, key=lambda x: x["overall"], reverse=True)
+        for rank, player in enumerate(sorted_players, 1):
+            pos_ranks[player["normalized"]] = {
+                "rank": rank,
+                "total": len(sorted_players),
+                "pos": pos
+            }
+    return pos_ranks
+
+def find_madden_duplicate_names(team_abbrs):
+    """Normalized names that appear in more than one team's depth chart.
+
+    For these, a Madden entry that only turns up via the cross-team
+    fallback usually belongs to the OTHER, different real person who
+    happens to share the name — not this player. Safer to leave them
+    unmatched than to risk attaching a stranger's rating.
+
+    Ported from the old merge_madden.py's find_duplicate_names()."""
+    teams_by_name = {}
+    for abbr in team_abbrs:
+        filepath = f"nfl/data/{abbr.lower()}.json"
+        if not os.path.exists(filepath):
+            continue
+        with open(filepath) as f:
+            team_data = json.load(f)
+        for players in team_data["depth_chart"].values():
+            for player in players:
+                key = normalize_madden(player["name"])
+                teams_by_name.setdefault(key, set()).add(abbr)
+    return {name for name, teams in teams_by_name.items() if len(teams) > 1}
+
+def find_madden_player(name, team_madden_players, all_madden_players, allow_cross_team=True):
+    """Ported from the old merge_madden.py's find_madden_player()."""
+    target = normalize_madden(name)
+    target_words = set(target.split())
+    # Prefer a match within the player's own team first, to avoid colliding
+    # with a different real person who happens to share the same name on
+    # another team (e.g. two different "Justin Jefferson"s).
+    for mp in team_madden_players:
+        if mp["normalized"] == target:
+            return mp
+    for mp in team_madden_players:
+        if target_words and target_words.issubset(set(mp["normalized"].split())):
+            return mp
+    if not allow_cross_team:
+        return None
+    # Fall back to a league-wide search (handles recent trades/signings not
+    # yet reflected under the right team in the Madden export). Only safe
+    # when the name isn't shared by a different real player elsewhere.
+    for mp in all_madden_players:
+        if mp["normalized"] == target:
+            return mp
+    for mp in all_madden_players:
+        if target_words and target_words.issubset(set(mp["normalized"].split())):
+            return mp
+    return None
 
 STAT_MAP = {
     'QB': {
@@ -350,6 +447,11 @@ def build_master():
     spotrac_df = load_spotrac_contracts()
     snap_shares, snap_crosswalk = load_snap_shares()
 
+    madden_by_team = load_madden(os.path.join('nfl', 'data', 'madden.json'))
+    madden_pos_ranks = build_madden_pos_ranks(madden_by_team)
+    all_madden_players = [p for players in madden_by_team.values() for p in players]
+    madden_duplicate_names = find_madden_duplicate_names(MADDEN_TEAM_MAP.values())
+
     master = {}
     low_confidence = []
     unmatched = []
@@ -398,6 +500,15 @@ def build_master():
                     if p.get('depth', 99) >= master[player_key].get('depth', 99):
                         continue
 
+                # Madden lookup — team-scoped first, cross-team fallback
+                # only when this name isn't shared by another team's player
+                # (find_madden_duplicate_names). Matched against raw_name,
+                # same input the old merge_madden.py used, not canonical_name.
+                madden_is_dup = normalize_madden(raw_name) in madden_duplicate_names
+                mp = find_madden_player(raw_name, madden_by_team.get(abbr, []), all_madden_players,
+                                         allow_cross_team=not madden_is_dup)
+                madden_rank_info = madden_pos_ranks.get(mp["normalized"]) if mp else None
+
                 entry = {
                     'player_id': player_key,
                     'gsis_id': gsis_id,
@@ -411,12 +522,12 @@ def build_master():
                     'standard_slot': p.get('standard_slot', ourlads_pos),
                     'standard_pos': standard_pos,
                     'depth': p.get('depth', 99),
-                    'jersey': p.get('jersey'),
-                    'age': p.get('age'),
-                    'madden': p.get('madden'),
-                    'madden_rank': p.get('madden_rank'),
-                    'madden_rank_total': p.get('madden_rank_total'),
-                    'madden_pos_label': p.get('madden_pos_label'),
+                    'jersey': mp['jersey'] if mp else None,
+                    'age': mp['age'] if mp else None,
+                    'madden': mp['overall'] if mp else None,
+                    'madden_rank': madden_rank_info['rank'] if madden_rank_info else None,
+                    'madden_rank_total': madden_rank_info['total'] if madden_rank_info else None,
+                    'madden_pos_label': madden_rank_info['pos'] if madden_rank_info else None,
                     'cap_number': p.get('cap_number'),
                     'attainment': p.get('attainment'),
                     'injured': p.get('injured', False),
@@ -561,6 +672,7 @@ def build_master():
 
     print(f"\nBuilt master: {len(master)} players")
     print(f"GSIS matched: {sum(1 for p in master.values() if p['gsis_id'])}")
+    print(f"Madden matched: {sum(1 for p in master.values() if p['madden'] is not None)} / {len(master)}")
     print(f"Unmatched:    {len(unmatched)}")
     print(f"Low confidence (<95%): {len(low_confidence)}")
     print(f"draft_year/college matched (via GSIS): {draft_matched} / {len(master)}")
