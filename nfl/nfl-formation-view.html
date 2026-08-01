@@ -59,13 +59,14 @@ body {
 
 .header-divider { width: 1px; height: 24px; background: var(--border2); }
 
-.team-swatch {
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 9px; font-weight: 900; letter-spacing: .5px;
-  color: #fff;
-  flex-shrink: 0;
+.team-logo { object-fit: contain; flex-shrink: 0; }
+.team-logo-header { width: 28px; height: 28px; }
+.team-logo-opt {
+  width: 52px; height: 52px;
+  padding: 6px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
 }
 
 .ctrl-group {
@@ -553,7 +554,7 @@ body {
 
   <div class="team-selector-wrap">
     <div style="display:flex;align-items:center;gap:10px;cursor:pointer;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:6px 12px" onclick="toggleTeamDropdown()">
-      <div class="team-swatch" id="teamSwatchEl" style="background:#003087;border:2px solid #c8102e">BUF</div>
+      <img class="team-logo team-logo-header" id="teamLogoEl" alt="BUF">
       <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:1px" id="teamNameEl">Buffalo Bills</span>
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="color:var(--text-muted);margin-left:4px"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
     </div>
@@ -661,6 +662,24 @@ const TEAMS = {
   TEN: { name: "Tennessee Titans",     colors: ["#0c2340","#4b92db"] },
   WAS: { name: "Washington Commanders",colors: ["#5a1414","#ffb612"] },
 };
+
+// ESPN's own short codes mostly match our TEAM abbreviations, except
+// Arizona ("ari", not "arz" -- OurLads-vs-ESPN mismatch, same one noted
+// for JAX/JAC elsewhere) and Washington ("wsh", not "was" -- "was" still
+// 200s but serves a stale 2022 logo; "wsh" is the current one ESPN's own
+// site uses) -- verified against the live CDN, not guessed.
+const ESPN_TEAM_CODES = {
+  ARZ: 'ari', ATL: 'atl', BAL: 'bal', BUF: 'buf', CAR: 'car',
+  CHI: 'chi', CIN: 'cin', CLE: 'cle', DAL: 'dal', DEN: 'den',
+  DET: 'det', GB: 'gb',   HOU: 'hou', IND: 'ind', JAX: 'jax',
+  KC: 'kc',   LAC: 'lac', LAR: 'lar', LV: 'lv',   MIA: 'mia',
+  MIN: 'min', NE: 'ne',   NO: 'no',   NYG: 'nyg', NYJ: 'nyj',
+  PHI: 'phi', PIT: 'pit', SF: 'sf',   SEA: 'sea', TB: 'tb',
+  TEN: 'ten', WAS: 'wsh',
+};
+function teamLogoUrl(abbr) {
+  return `https://a.espncdn.com/i/teamlogos/nfl/500/${ESPN_TEAM_CODES[abbr]}.png`;
+}
 
 const FORMATION_COORDS = {
   offense: {
@@ -967,10 +986,9 @@ function closeSubDropdown() {
 
 function updateHeader() {
   const team = TEAMS[currentTeam];
-  const swatch = document.getElementById('teamSwatchEl');
-  swatch.textContent = currentTeam;
-  swatch.style.background = team.colors[0];
-  swatch.style.borderColor = team.colors[1];
+  const logo = document.getElementById('teamLogoEl');
+  logo.src = teamLogoUrl(currentTeam);
+  logo.alt = currentTeam;
   document.getElementById('teamNameEl').textContent = team.name;
 }
 
@@ -1218,7 +1236,7 @@ function setPersonnel(pers, btn) {
 function buildTeamDropdown() {
   document.getElementById('teamsDropdown').innerHTML = Object.entries(TEAMS).map(([abbr, t]) => `
     <div class="team-opt ${abbr === currentTeam ? 'selected' : ''}" onclick="selectTeam('${abbr}')">
-      <div style="width:28px;height:28px;border-radius:50%;background:${t.colors[0]};border:2px solid ${t.colors[1]};display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:9px;color:#fff">${abbr}</div>
+      <img class="team-logo team-logo-opt" src="${teamLogoUrl(abbr)}" alt="${abbr}" loading="lazy">
       ${t.name.split(' ').pop()}
     </div>
   `).join('');
