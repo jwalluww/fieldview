@@ -1047,8 +1047,8 @@ function buildHoverCard(p, pos) {
           <div class="crc-label">Age</div>
         </div>
         <div class="card-rating-cell">
-          <div class="crc-val" style="color:var(--text-muted)">${p.snap_pct != null ? Math.round(p.snap_pct) + '%' : (p.years_pro != null ? p.years_pro : '—')}</div>
-          <div class="crc-label">${p.snap_pct != null ? 'Snaps' : 'NFL Yr'}</div>
+          <div class="crc-val" style="color:var(--text-muted)">${p.snap_pct != null ? Math.round(p.snap_pct) + '%' : '—'}</div>
+          <div class="crc-label">${p.snap_pct != null ? 'Snaps' : ''}</div>
         </div>
       </div>
       ${p.stats && Object.keys(p.stats).length > 0 ? `

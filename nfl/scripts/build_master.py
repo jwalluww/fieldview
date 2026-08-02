@@ -4,7 +4,7 @@ import re
 import os
 import pandas as pd
 from rapidfuzz import fuzz, process
-from season_utils import get_current_season
+from season_utils import get_current_season, calculate_age
 from name_utils import normalize_name, normalize_for_matching, normalize_madden
 
 SEASON = get_current_season()
@@ -151,8 +151,21 @@ def find_madden_duplicate_names(team_abbrs):
     return {name for name, teams in teams_by_name.items() if len(teams) > 1}
 
 def find_madden_player(name, team_madden_players, all_madden_players, allow_cross_team=True):
-    """Ported from the old merge_madden.py's find_madden_player()."""
-    target = normalize_madden(name)
+    """Ported from the old merge_madden.py's find_madden_player(). Applies
+    NAME_ALIASES the same short-name substitution find_gsis() does (e.g.
+    "Pat Surtain II" -> "Patrick Surtain II") -- without it, players whose
+    OurLads name is a nickname/short form never match here even though
+    find_gsis() resolves them fine via the same alias.
+
+    Deliberately does NOT honor NAME_ALIASES' None ("forced no-match")
+    entries the way find_gsis() does -- those exist because the GSIS
+    crosswalk specifically has the wrong player under that name, which
+    says nothing about whether Madden's own roster has the same problem.
+    Confirmed at least one (Mike Jackson, CAR) already matches correctly
+    in Madden despite being a forced GSIS no-match; honoring None here
+    would have silently regressed him from matched to unmatched."""
+    lookup_name = NAME_ALIASES.get(name)
+    target = normalize_madden(lookup_name if lookup_name is not None else name)
     target_words = set(target.split())
     # Prefer a match within the player's own team first, to avoid colliding
     # with a different real person who happens to share the same name on
@@ -292,10 +305,27 @@ def load_gsis_crosswalk():
         return None
     
 def load_nflreadpy_gsis():
-    """Pull GSIS IDs from nflreadpy roster data."""
+    """Pull GSIS IDs from nflreadpy roster data.
+
+    Pulls SEASON and SEASON+1 together, not just SEASON. get_current_season()
+    resolves to the last COMPLETED season until September, so anyone who
+    entered the league after that snapshot (rookies, UDFAs, offseason
+    signings) structurally can't be in it -- even though nflreadpy's own
+    SEASON+1 roster pull is often already populated well before kickoff.
+    Confirmed directly: of a sample of "no real candidate anywhere" players
+    against the SEASON-only pool, ~90% resolved to an exact name+team match
+    once SEASON+1 was included. Duplicate gsis_id rows across the two
+    seasons for continuing players are harmless here -- they just match to
+    the same real person twice."""
     try:
         import nflreadpy as nfl
-        rosters = nfl.load_rosters([SEASON]).to_pandas()
+        try:
+            rosters = nfl.load_rosters([SEASON, SEASON + 1]).to_pandas()
+        except Exception:
+            # SEASON+1 may not have any roster data yet this early in the
+            # offseason -- fall back to SEASON alone rather than losing
+            # the whole load over it.
+            rosters = nfl.load_rosters([SEASON]).to_pandas()
         rosters = rosters[rosters['gsis_id'].notna()].copy()
         rosters = rosters.rename(columns={'full_name': 'player_name'})
         rosters['name_norm'] = rosters['player_name'].apply(
@@ -366,6 +396,25 @@ def load_snap_shares():
         return None, None
 
 # In find_gsis, add nflreadpy as fallback
+# Our scheme-aware EDGE/DI split doesn't exist in either external source's
+# own position taxonomy -- an exact-string position filter returns zero
+# candidates for every EDGE/DI player regardless of name quality (confirmed:
+# Micah Parsons, Aidan Hutchinson, Nick Bosa, and Joey Bosa are all in the
+# crosswalk with valid GSIS IDs, all tagged position='DE'). Same pattern
+# already used for the snap-count crosswalk's SNAP_POS_MAP above, just as
+# an alias LIST here instead of a load-time column translation, because
+# nflreadpy rosters' single 'DL' bucket can't be split 1:1 into EDGE vs DI
+# the way a straight .map() column translation would need.
+CROSSWALK_POS_ALIASES = {
+    'EDGE': ['DE'],
+    'DI': ['DT', 'DL'],  # crosswalk's own 'DL' is a tiny (~10-row) legacy bucket
+}
+ROSTERS_POS_ALIASES = {
+    'EDGE': ['DL'],
+    'DI': ['DL'],  # rosters can't distinguish EDGE from DI at all -- both
+                   # share the one 'DL' bucket, so both search the same pool
+}
+
 def find_gsis(name, standard_pos, team, crosswalk_df, roster_df=None):
     # OL not in fantasy crosswalk — skip entirely
     if standard_pos == 'OL':
@@ -382,14 +431,16 @@ def find_gsis(name, standard_pos, team, crosswalk_df, roster_df=None):
 
     result = _match_in_df(name_norm, standard_pos, team, crosswalk_df,
                           pos_col='position', name_col='name_norm',
-                          team_col='team_norm', id_col='gsis_id')
+                          team_col='team_norm', id_col='gsis_id',
+                          pos_aliases=CROSSWALK_POS_ALIASES)
     if result[0]:
         return result
 
     if roster_df is not None:
         result = _match_in_df(name_norm, standard_pos, team, roster_df,
                               pos_col='position', name_col='name_norm',
-                              team_col='team_norm', id_col='gsis_id')
+                              team_col='team_norm', id_col='gsis_id',
+                              pos_aliases=ROSTERS_POS_ALIASES)
         if result[0]:
             return result
 
@@ -410,12 +461,20 @@ def find_pfr_id(name, standard_pos, team, snap_crosswalk):
                          team_col='team_norm', id_col='pfr_player_id')
 
 def _match_in_df(name_norm, standard_pos, team, df,
-                 pos_col, name_col, team_col, id_col):
-    """Shared matching logic for any dataframe source."""
+                 pos_col, name_col, team_col, id_col, pos_aliases=None):
+    """Shared matching logic for any dataframe source.
+
+    pos_aliases, if given, maps standard_pos -> the literal position
+    value(s) this specific source's pos_col actually uses (see
+    CROSSWALK_POS_ALIASES / ROSTERS_POS_ALIASES above). Sources that
+    already pre-translate their own position column to our standard_pos
+    values at load time (Spotrac, snap-counts) don't pass this and keep
+    the plain exact-match behavior."""
     if df is None:
         return None, None
 
-    pos_df = df[df[pos_col] == standard_pos]
+    pos_values = pos_aliases.get(standard_pos, [standard_pos]) if pos_aliases else [standard_pos]
+    pos_df = df[df[pos_col].isin(pos_values)]
     if pos_df.empty:
         return None, None
 
@@ -523,7 +582,9 @@ def build_master():
                     'standard_pos': standard_pos,
                     'depth': p.get('depth', 99),
                     'jersey': mp['jersey'] if mp else None,
-                    'age': mp['age'] if mp else None,
+                    # 'age' is added later, from nflreadpy's birth_date (see
+                    # the draft_year/college pass below) -- Madden's roster
+                    # page doesn't expose age at all.
                     'madden': mp['overall'] if mp else None,
                     'madden_rank': madden_rank_info['rank'] if madden_rank_info else None,
                     'madden_rank_total': madden_rank_info['total'] if madden_rank_info else None,
@@ -562,6 +623,7 @@ def build_master():
     entry_year_by_gsis = {}
     college_by_gsis = {}
     pfr_id_by_gsis = {}
+    birth_date_by_gsis = {}
     if rosters is not None:
         dedup_rosters = rosters.drop_duplicates(subset='gsis_id', keep='first')
         for _, row in dedup_rosters.iterrows():
@@ -574,8 +636,11 @@ def build_master():
             college_by_gsis[gid] = college if pd.notna(college) else None
             pfr_id = row.get('pfr_id')
             pfr_id_by_gsis[gid] = pfr_id if pd.notna(pfr_id) else None
+            birth_date = row.get('birth_date')
+            birth_date_by_gsis[gid] = birth_date if pd.notna(birth_date) else None
 
     draft_matched = 0
+    age_matched = 0
     for entry in master.values():
         gid = entry.get('gsis_id')
         entry_year = entry_year_by_gsis.get(gid) if gid else None
@@ -584,6 +649,16 @@ def build_master():
         entry['years_pro'] = (SEASON - entry_year) if entry_year is not None else None
         if entry_year is not None:
             draft_matched += 1
+        # age (real calendar age, from nflreadpy's birth_date) replaces what
+        # used to come from Madden's own age field -- Madden's team-roster
+        # page doesn't expose age (only ~2,000 individual player pages do,
+        # not worth that crawl), but nflreadpy has 94.9% birth_date coverage
+        # among GSIS-matched rosters, so this is the same GSIS join already
+        # used for draft_year/college, not a new match pass.
+        birth_date = birth_date_by_gsis.get(gid) if gid else None
+        entry['age'] = calculate_age(birth_date)
+        if entry['age'] is not None:
+            age_matched += 1
 
     # Snap share — first pass: gsis_id -> pfr_id (from rosters, above) ->
     # season snap average. This is the ORIGINAL chain, and it structurally
@@ -676,6 +751,7 @@ def build_master():
     print(f"Unmatched:    {len(unmatched)}")
     print(f"Low confidence (<95%): {len(low_confidence)}")
     print(f"draft_year/college matched (via GSIS): {draft_matched} / {len(master)}")
+    print(f"age matched (via GSIS/nflreadpy birth_date): {age_matched} / {len(master)}")
     print(f"snap_pct matched (total): {snap_matched} / {len(master)}")
     print(f"  matched via independent name+team pfr_id fuzzy match: {fuzzy_pfr_matched}")
     ol_total = sum(1 for e in master.values() if e['standard_pos'] == 'OL')

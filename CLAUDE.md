@@ -2,7 +2,9 @@
 
 Multi-Sport intelligence platform.
 Live at https://jwalluww.github.io/fieldview/
-Repo: https://github.com/jwalluww/fieldview (private)
+Repo: https://github.com/jwalluww/fieldview (public)
+Purpose: FieldView is the primary website for sports analytics. Each sport will have a FieldView and a TableView. NFL has FormationView, NBA has CourtView, NHL has IceView, MLB has DiamondView, MLS has PitchView (EPL will also have PitchView). This view will show all the players in their positions on the playing field with important metrics & statistics and substitutions. TableView for each sport will be a table with statistics. Eventually, ReView will be created for each sport. FieldView is for before the game - understanding where players play on the field. ReView is for after the game - replays, highlights, tweets, stats, box scores, etc. - a one-stop-shop for what happened last night or last week in the sport in general.
+Flow: As of 8/1, I am working on NFL & NBA for FormationView & CourtView and getting rosters lined up and stats together. Would love to get these cleaner before moving on. Next step after these look good will be other sports and the table views. Then I will hit up ReView.
 
 ---
 
@@ -256,7 +258,3 @@ load_contracts() also exists here (OTC data) — you already have a working Spot
 - Front-load thinking in chat → hand Claude Code a crisp specific instruction
 - Start a new chat when switching to a new sport or major new feature area
 - Paste this CLAUDE.md at the top of any new chat to restore context
-
----
-
-NFL v1 considered feature-complete as of 2026-07-23 — remaining polish will be driven by live usage once the season starts. Next sport: NBA.
