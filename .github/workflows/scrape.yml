@@ -67,7 +67,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install nba_api requests beautifulsoup4
+        run: pip install nba_api requests beautifulsoup4 pandas duckdb
 
       - name: Run NBA stats scraper
         run: python nba/scripts/fetch_stats.py
@@ -81,8 +81,14 @@ jobs:
       - name: Run NBA depth chart scraper
         run: python nba/scripts/scrape_nbadepthcharts.py
 
-      - name: Build NBA player master
-        run: python nba/scripts/build_nba_master.py
+      - name: Load raw sources into DuckDB
+        run: python nba/scripts/build_nba_db.py
+
+      - name: Run matching
+        run: python nba/scripts/build_nba_match.py
+
+      - name: Export player master
+        run: python nba/scripts/export_nba_master.py nba/data/nba_players_master.json
 
       - name: Commit updated data
         run: |

@@ -26,11 +26,14 @@ Flow: As of 8/1, I am working on NFL & NBA for FormationView & CourtView and get
 
 ### Scripts
 - `nfl/scripts/scrape_depth.py` — OurLads depth chart scraper
-- `nfl/scripts/merge_madden.py` — merges Madden ratings + position ranks
+- `nfl/scripts/scrape_madden.py` — Madden ratings scraper, writes `nfl/data/madden.json` (replaced `merge_madden.py`, which no longer exists in the repo — this File Map entry was stale)
 - `nfl/scripts/scrape_otc.py` — Over The Cap contract data
 - `nfl/scripts/scrape_stats.py` — nflreadpy season stats
 - `nfl/scripts/scrape_contracts_spotrac.py` — Spotrac remaining-contract data (years/cash/APY), single-page league-wide scrape
-- `nfl/scripts/build_master.py` — builds players_master.json with GSIS matching
+- `nfl/scripts/build_db.py` — DuckDB raw ingestion: loads every scraper's current output into `nfl/data/fieldview.duckdb`, unmodified (one table per source, `row_id` + `loaded_at`). Also fetches the GSIS crosswalk CSV and nflreadpy rosters/snap counts live and caches them as tables instead of re-fetching per run.
+- `nfl/scripts/build_match.py` — matching. Imports `find_gsis`/`find_madden_player`/`find_pfr_id`/`find_spotrac_contract` and alias/position-map constants **directly from `build_master.py`** (not reimplemented) and runs them against the DB tables `build_db.py` loaded, writing a `player_match` table.
+- `nfl/scripts/export_master.py` — joins `player_match` back to the raw `ourlads_players` table and writes `players_master.json` in the production schema. Takes an output path as its first CLI arg.
+- `nfl/scripts/build_master.py` — **not run by the production pipeline anymore** (see `nfl/PIPELINE.md`). Kept only because `build_match.py` imports its matching functions directly; still runs standalone and produces byte-identical output to the DB path.
 - `nfl/scripts/season_utils.py` — `get_current_season()`, resolves the active NFL season dynamically from today's date
 - `nfl/scripts/resolve_names.py` — diagnostic: fuzzy name match review
 - `nfl/scripts/audit_positions.py` — diagnostic: position mapping review
@@ -39,6 +42,9 @@ Flow: As of 8/1, I am working on NFL & NBA for FormationView & CourtView and get
 - `nfl/data/arz.json` ... `nfl/data/was.json` — 32 team JSON files (OurLads source)
 - `nfl/data/madden.json` — Madden ratings source
 - `nfl/data/players_master.json` — canonical player registry (GSIS-keyed)
+- `nfl/data/fieldview.duckdb` — gitignored, rebuilt by `build_db.py` every run; holds the raw per-source tables `build_match.py`/`export_master.py` read
+
+Full pipeline detail (sources, join keys, execution order, current match-rate numbers): `nfl/PIPELINE.md`.
 
 All NFL scripts are invoked from the repo root (e.g. `python nfl/scripts/scrape_depth.py`) and their internal `data/...` references are written as `nfl/data/...` accordingly — cwd stays the repo root, not `nfl/`.
 
@@ -51,37 +57,43 @@ All NFL scripts are invoked from the repo root (e.g. `python nfl/scripts/scrape_
 - `nba/scripts/scrape_2kratings.py` — 2kratings.com per-team pages (table `id="lists-table"`, no all-players index — 30 separate team-page fetches), writes `nba/data/nba_ratings_2k.json`
 - `nba/scripts/scrape_contracts_spotrac.py` (NBA version, distinct file from `nfl/scripts/scrape_contracts_spotrac.py`) — spotrac.com/nba/contracts/remaining, single-page league-wide scrape, writes `nba/data/contracts_nba.json`
 - `nba/scripts/scrape_nbadepthcharts.py` — nbadepthcharts.com's published Google Sheet (CSV export), writes `nba/data/nba_depth_chart.json`. See "NBA Depth Chart Source" below.
-- `nba/scripts/build_nba_master.py` — merges `nba_stats.json` + `contracts_nba.json` + `nba_ratings_2k.json` + `nba_depth_chart.json` into `nba/data/nba_players_master.json`, the canonical file both frontend pages read. See "NBA Two-Tier Resolution" below.
-- `nba/scripts/name_utils.py` — shared `normalize_name()`/`normalize_for_matching()`/`NBA_NAME_ALIASES`, used by every NBA scraper that fuzzy-matches against `nba_stats.json` (2k ratings, Spotrac contracts, depth chart)
+- `nba/scripts/build_nba_db.py` — DuckDB raw ingestion: loads `nba_stats.json`/`contracts_nba.json`/`nba_ratings_2k.json`/`nba_depth_chart.json` into `nba/data/fieldview.duckdb`, unmodified (one table per source, `row_id` + `loaded_at`). No live pulls here — every NBA source is already a static file by this point.
+- `nba/scripts/build_nba_match.py` — matching (join + resolve). Imports `resolve_position`/`resolve_rotation`/`resolve_team`/`format_salary` **directly from `build_nba_master.py`** (not reimplemented) and runs them against the DB tables `build_nba_db.py` loaded, writing a `player_match` table. Note: the actual fuzzy name matching for NBA already happened upstream, inside each scraper (see below) — this script only joins already-matched sources by `player_id`.
+- `nba/scripts/export_nba_master.py` — joins `player_match` back to `nba_stats` and writes `nba_players_master.json` in the production schema. Takes an output path as its first CLI arg.
+- `nba/scripts/build_nba_master.py` — **not run by the production pipeline anymore** (see `nba/PIPELINE.md`). Kept only because `build_nba_match.py` imports its resolution functions directly; still runs standalone and produces byte-identical output to the DB path. See "NBA Two-Tier Resolution" below for what it (and now `build_nba_match.py`) actually resolves.
+- `nba/scripts/name_utils.py` — shared `normalize_name()`/`normalize_for_matching()`/`NBA_NAME_ALIASES`, used by every NBA scraper that fuzzy-matches against `nba_stats.json` (2k ratings, Spotrac contracts, depth chart) — this is where NBA's real name matching lives, not in the master-build step
 
 ### Data (NBA)
 - `nba/data/nba_stats.json` — real scraped output from `fetch_stats.py`, league-wide (587 players as of the last run), keyed by nba_api `PLAYER_ID`
 - `nba/data/nba_ratings_2k.json` — `{ratings: [...], unmatched: [...]}`, 2K overall ratings matched to `player_id`
 - `nba/data/contracts_nba.json` — `{contracts: [...], unmatched: [...]}`, Spotrac remaining-contract data matched to `player_id`
 - `nba/data/nba_depth_chart.json` — `{last_changed, depth_chart: [...], unmatched: [...]}`, nbadepthcharts.com starter/rotation tiers matched to `player_id`
-- `nba/data/nba_players_master.json` — canonical merged player registry, keyed by `player_id` (string). **No longer a stub** — this is real data produced by `build_nba_master.py`, and it's what both `court-view.html` and `player-table.html` read. Fields: `player_id, name, team, position, jersey_number, height, weight, ppg, rpg, apg, mpg, games_played, games_started, rotation_status, rotation_source, depth_rank, overall_rating, contract_salary, contract_years_remaining`
+- `nba/data/nba_players_master.json` — canonical merged player registry, keyed by `player_id` (string). This is real data produced by the DB pipeline (`build_nba_db.py` → `build_nba_match.py` → `export_nba_master.py`), and it's what both `court-view.html` and `player-table.html` read. Fields: `player_id, name, team, position, jersey_number, height, weight, ppg, rpg, apg, mpg, games_played, games_started, rotation_status, rotation_source, depth_rank, overall_rating, contract_salary, contract_years_remaining`
+- `nba/data/fieldview.duckdb` — gitignored, rebuilt by `build_nba_db.py` every run; holds the raw per-source tables `build_nba_match.py`/`export_nba_master.py` read
+
+Full pipeline detail (sources, join keys, execution order, current match-rate numbers): `nba/PIPELINE.md`.
 
 NBA scripts are also invoked from the repo root (e.g. `python nba/scripts/fetch_stats.py`), same convention as NFL.
 
 ### NBA Data Pipeline Order
-`fetch_stats.py` first (everything else matches against its player universe), then `scrape_contracts_spotrac.py` / `scrape_2kratings.py` / `scrape_nbadepthcharts.py` in any order (all independent of each other), then `build_nba_master.py` last. Mirrors `.github/workflows/scrape.yml`'s `scrape-nba` job — **except that job does not yet run `scrape_nbadepthcharts.py`** (see Known Outstanding Bugs).
+`fetch_stats.py` first (everything else matches against its player universe), then `scrape_contracts_spotrac.py` / `scrape_2kratings.py` / `scrape_nbadepthcharts.py` in any order (all independent of each other), then **`build_nba_db.py` → `build_nba_match.py` → `export_nba_master.py nba/data/nba_players_master.json`** last. Matches `.github/workflows/scrape.yml`'s `scrape-nba` job exactly — confirmed against the live workflow file, including that `scrape_nbadepthcharts.py` **is** in that job (a prior version of this doc claimed it wasn't; that was stale, not current).
 
 ---
 
 ## Data Pipeline Order
-Run locally or via GitHub Actions in this exact order:
+Run locally or via GitHub Actions in this exact order (matches `scrape.yml`'s `scrape` job, confirmed against the live workflow file):
 1. scrape_depth.py
 2. scrape_otc.py
-3. scrape_stats.py (now uses the `nflreadpy` package, not `nfl_data_py` — switched this session)
-4. merge_madden.py
+3. scrape_stats.py (uses the `nflreadpy` package, not `nfl_data_py`)
+4. scrape_madden.py
 5. scrape_contracts_spotrac.py
-6. build_master.py (pulls in nflreadpy's load_rosters + load_snap_counts directly, plus nfl/data/spotrac_contracts.json)
+6. **build_db.py** — raw ingestion into `nfl/data/fieldview.duckdb` (also fetches the GSIS crosswalk + nflreadpy rosters/snap counts live, caching them as DB tables)
+7. **build_match.py** — matching, importing functions from `build_master.py` directly
+8. **export_master.py nfl/data/players_master.json** — writes the final production file
 
-`resolve_names.py` and `audit_positions.py` are diagnostic only — run locally when investigating match quality, not part of the pipeline.
+`resolve_names.py` and `audit_positions.py` are diagnostic only — run locally when investigating match quality, not part of the pipeline. `build_master.py` itself is no longer a pipeline step — see `nfl/PIPELINE.md` §0 for why it's still in the repo.
 
-No need to delete JSONs before running — scrapers overwrite cleanly. `build_master.py` skips any file with "master" in the name.
-
-**Note:** `build_master.py` is in `scrape.yml` (positioned after the `merge_madden` step, with `pandas rapidfuzz` in the pip install line, exactly as previously planned here) — confirmed against the current workflow file, this note previously said "not yet added" and was stale.
+No need to delete JSONs before running — scrapers overwrite cleanly.
 
 ---
 
@@ -115,20 +127,24 @@ Frontend `STAT_COLS` in `nfl/depth-chart.html` uses these canonical keys.
 ---
 
 ## GSIS Matching Pipeline
+- GSIS ID is the NFL's own official player-ID system, not something inherently weak on any position — what's actually weak on OL/DI is the **dynastyprocess crosswalk**, the one community-maintained, fantasy-oriented CSV this pipeline uses as its primary GSIS *source*. That distinction matters: it's a source-quality limitation, not a GSIS limitation.
 - Primary source: dynastyprocess crosswalk CSV (fantasy-focused, good QB/WR/RB/TE coverage, poor OL/DI coverage)
-- Fallback: nflreadpy roster data via `import_weekly_rosters` (was broken/TBD, resolved this session)
-- OL skipped entirely from GSIS matching (not in fantasy crosswalk)
+- Fallback: nflreadpy roster data via `import_weekly_rosters`
+- OL skipped entirely from GSIS matching by design (not in the fantasy crosswalk) — 0% OL match rate is intentional, not a gap
 - Matching logic: strip to bare letters, no spaces/punctuation/suffixes, fuzzy match within position group first, team as tiebreaker only
+- Both the crosswalk and the nflreadpy-rosters fallback get their own `EDGE`/`DI` position-alias translation (`CROSSWALK_POS_ALIASES`/`ROSTERS_POS_ALIASES` in `build_master.py`) before filtering — neither source uses this project's EDGE/DI split natively (crosswalk tags `DE`/small `DL`; rosters collapses both into one `DL` bucket), so without the alias a position-filtered search would silently return zero candidates regardless of name quality. This fix is responsible for most of the match-rate jump below.
 - Name aliases handled via `NAME_ALIASES` dict in `build_master.py`
 - `None` alias value = force no-match (wrong player in crosswalk)
 
 ### Team abbreviation map (dynastyprocess → OurLads)
 `ARI→ARZ, KCC→KC, LVR→LV, TBB→TB, SFO→SF, GNB→GB, NOR→NO, NWE→NE`
 
-### Current match results
-- 2784 total players, 1432 GSIS matched (~51%)
-- Most unmatched are OL + defensive depth (expected, no stats anyway)
-- Skill position (QB/WR/RB/TE) unmatched: 107
+### Current match results (2026-08-03 run — re-run `build_match.py` for current figures)
+- 2,782 total players, 2,082 GSIS matched (74.8%) — up from ~51% before the EDGE/DI alias fix above
+- Madden: 2,218/2,782 (79.7%), matched independently by name+team, not gated behind GSIS
+- Most remaining unmatched are OL (skipped by design) + defensive depth
+- Skill position (QB/WR/RB/TE) unmatched: 15
+- **CB/S has the same taxonomy-collapse problem EDGE/DI had, currently unfixed**: nflreadpy rosters (the GSIS fallback source) has *zero* rows tagged `CB` or `S` — all defensive backs use a generic `DB` tag there, so the fallback path can never match a CB/S player at all. A known, accepted limitation, not yet addressed. Full detail: `nfl/PIPELINE.md` §5.
 
 ---
 
@@ -155,7 +171,7 @@ Frontend `STAT_COLS` in `nfl/depth-chart.html` uses these canonical keys.
 
 ---
 
-## NBA Two-Tier Resolution (build_nba_master.py)
+## NBA Two-Tier Resolution (build_nba_master.py, imported by build_nba_match.py)
 - `resolve_rotation()` and `resolve_team()` both follow the same layering: if a player has a `nba_depth_chart.json` match (by `player_id`), that source wins — `rotation_status` maps the sheet's tier onto the existing 3-value enum (`DEPTH_RANK_TO_STATUS`: 1→starter, 2→rotation, 3/4→bench), `rotation_source` is `"nbadepthchart.com"`, and `depth_rank` (1-4) is populated. Otherwise it falls back to `nba_stats.json`'s MPG-derived `rotation_status` / roster-snapshot `team`, with `rotation_source: "mpg_derived"` and `depth_rank: null`.
 - Not a flat replacement — both tiers coexist by design, so `rotation_source` is always debuggable per player rather than silently ambiguous. Every player gets a non-null `rotation_status`.
 - Concrete reason this matters: nbadepthcharts.com reflects trades faster than `nba_stats.json`'s roster snapshot. As of the last merge, 87 players had their `team` corrected this way (e.g. a mid-offseason trade showing the player's new team instead of the stale snapshot team) — that number will drift as both sources update, it's illustrative, not a fixed constant.
@@ -221,10 +237,10 @@ Frontend `STAT_COLS` in `nfl/depth-chart.html` uses these canonical keys.
 
 ## Known Outstanding Bugs
 - OL snap-share coverage sits at ~61% (306/504) — real data-source ceiling (import_snap_counts/PFR crosswalk coverage for OL specifically), not considered worth chasing further
-- NBA: `scrape_nbadepthcharts.py` is not yet in `.github/workflows/scrape.yml`'s `scrape-nba` job — `nba_depth_chart.json` won't auto-refresh via the Tuesday cron, only via manual local runs, so `last_changed` can silently drift from actual staleness until this is added
+- NFL: CB/S has the same position-taxonomy-collapse problem EDGE/DI had (see GSIS Matching Pipeline) — nflreadpy rosters (the GSIS fallback source) tags all defensive backs generically as `DB`, with no `CB`/`S` split at all, so that fallback path structurally can never match a CB/S player. Known, not fixed — same bug class as EDGE/DI, just not yet addressed for this position group.
 - NBA: no undo path for a single court substitution short of switching teams away and back (see CourtView Frontend Interactions) — deferred, not forgotten
 
-**Note on this list:** `build_master.py` was previously listed here as "not yet added to `scrape.yml`" — checked the current workflow file directly and it's already there (the `scrape` job's "Build player master" step). Removed rather than left stale. Likewise, the two NBA entries about the mock stub and missing contracts data are gone because `build_nba_master.py` and `contracts_nba.json` both now exist and were verified against the live repo, not assumed fixed.
+**Note on this list:** the previous version of this entry claimed `scrape_nbadepthcharts.py` "is not yet in `scrape.yml`'s `scrape-nba` job" — checked the live workflow file directly and it's already there (has been since the job was last edited). That claim was stale, not current; removed rather than left in place. Both NFL and NBA also moved off a single build-script pipeline this round (`build_master.py`/`build_nba_master.py` → DB-backed multi-script pipelines) — see `nfl/PIPELINE.md` / `nba/PIPELINE.md` for the current architecture, not the file map history above.
 
 ---
 
