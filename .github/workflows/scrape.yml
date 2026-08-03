@@ -21,8 +21,8 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install requests beautifulsoup4 nflreadpy pandas pyarrow rapidfuzz
-      
+        run: pip install requests beautifulsoup4 nflreadpy pandas pyarrow rapidfuzz duckdb
+
       - name: Run depth chart scraper
         run: python nfl/scripts/scrape_depth.py
 
@@ -35,8 +35,14 @@ jobs:
       - name: Run Madden scraper
         run: python nfl/scripts/scrape_madden.py
 
-      - name: Build player master
-        run: python nfl/scripts/build_master.py
+      - name: Load raw sources into DuckDB
+        run: python nfl/scripts/build_db.py
+
+      - name: Run matching
+        run: python nfl/scripts/build_match.py
+
+      - name: Export player master
+        run: python nfl/scripts/export_master.py nfl/data/players_master.json
 
       - name: Commit updated data
         run: |

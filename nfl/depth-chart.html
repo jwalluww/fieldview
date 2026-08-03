@@ -300,6 +300,21 @@ body {
   letter-spacing: .5px;
 }
 
+.team-logo-cell {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.cell-team span {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: .5px;
+}
+
 /* Player cell */
 .cell-player {
   display: flex;
@@ -682,6 +697,22 @@ const STAT_COLS = {
 };
 const TEAM_ABBRS = Object.keys(TEAMS);
 
+// Same ESPN logo CDN + code mapping as nfl-formation-view.html (ARZ->ari,
+// WAS->wsh mismatches and all) -- reusing that mechanism rather than a
+// third one, per project convention.
+const ESPN_TEAM_CODES = {
+  ARZ: 'ari', ATL: 'atl', BAL: 'bal', BUF: 'buf', CAR: 'car',
+  CHI: 'chi', CIN: 'cin', CLE: 'cle', DAL: 'dal', DEN: 'den',
+  DET: 'det', GB: 'gb',   HOU: 'hou', IND: 'ind', JAX: 'jax',
+  KC: 'kc',   LAC: 'lac', LAR: 'lar', LV: 'lv',   MIA: 'mia',
+  MIN: 'min', NE: 'ne',   NO: 'no',   NYG: 'nyg', NYJ: 'nyj',
+  PHI: 'phi', PIT: 'pit', SF: 'sf',   SEA: 'sea', TB: 'tb',
+  TEN: 'ten', WAS: 'wsh',
+};
+function teamLogoUrl(abbr) {
+  return `https://a.espncdn.com/i/teamlogos/nfl/500/${ESPN_TEAM_CODES[abbr]}.png`;
+}
+
 // ══════════════════════════════════════════
 // STATE
 // ══════════════════════════════════════════
@@ -997,7 +1028,7 @@ function renderTable() {
 
     let row = '<tr>';
     if (cols.includes('team'))
-      row += '<td><div class="cell-team"><div class="team-dot" style="background:' + team.colors[0] + ';color:' + team.colors[1] + '">' + p.abbr + '</div></div></td>';
+      row += '<td><div class="cell-team"><img class="team-logo-cell" src="' + teamLogoUrl(p.abbr) + '" alt="' + p.abbr + '" loading="lazy"><span>' + p.abbr + '</span></div></td>';
     if (cols.includes('ourlads_pos'))
       row += '<td class="cell-pos">' + p.ourladsPos + '</td>';
     if (cols.includes('pos'))
