@@ -167,6 +167,91 @@ body {
 .filter-select:focus { border-color: var(--accent); color: var(--text); }
 .filter-select option { background: var(--surface2); }
 
+/* Multi-select dropdown (team / position filters) */
+.multiselect {
+  position: relative;
+}
+
+.multiselect-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: .5px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color .2s;
+}
+.multiselect-trigger:hover { color: var(--text); }
+.multiselect-trigger .chevron { flex-shrink: 0; opacity: .6; }
+.multiselect.open .multiselect-trigger { border-color: var(--accent); color: var(--text); }
+
+.multiselect-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 240px;
+  max-height: 360px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  box-shadow: 0 12px 24px rgba(0,0,0,.4);
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.multiselect-actions {
+  display: flex;
+  gap: 6px;
+  padding: 8px;
+  border-bottom: 1px solid var(--border2);
+  flex-shrink: 0;
+}
+
+.multiselect-group-btn {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 5px;
+  padding: 5px 8px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .5px;
+  color: var(--text-muted);
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all .15s;
+}
+.multiselect-group-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+.multiselect-list {
+  overflow-y: auto;
+  padding: 4px;
+}
+
+.multiselect-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text);
+  user-select: none;
+}
+.multiselect-item:hover { background: var(--border); }
+.multiselect-item input[type="checkbox"] { flex-shrink: 0; accent-color: var(--accent); cursor: pointer; }
+
 .filter-chip {
   display: flex;
   align-items: center;
@@ -408,29 +493,6 @@ body {
   white-space: nowrap;
 }
 
-/* Stat cell */
-.cell-stat {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 12px;
-  color: var(--text-muted);
-  max-width: 180px;
-}
-
-.stat-pair {
-  display: inline-flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.stat-item {
-  white-space: nowrap;
-}
-
-.stat-item strong {
-  color: var(--text);
-  font-weight: 700;
-}
-
 /* Loading */
 .loading {
   text-align: center;
@@ -540,6 +602,22 @@ body {
     font-size: 12px;
   }
 
+  .multiselect {
+    flex: 1 1 calc(50% - 4px);
+  }
+
+  .multiselect-trigger {
+    width: 100%;
+    justify-content: space-between;
+    font-size: 12px;
+  }
+
+  .multiselect-panel {
+    left: auto;
+    right: 0;
+    min-width: 200px;
+  }
+
   .header { padding: 0 12px; }
   
   .view-tabs { padding: 0 12px; }
@@ -584,31 +662,33 @@ body {
     <input type="text" id="searchInput" placeholder="Search player..." oninput="applyFilters()">
   </div>
 
-  <select class="filter-select" id="teamFilter" onchange="applyFilters()">
-    <option value="">All Teams</option>
-  </select>
+  <div class="multiselect" id="teamMultiselect">
+    <button type="button" class="multiselect-trigger" onclick="toggleTeamPanel(event)">
+      <span id="teamMultiselectLabel">All Teams</span>
+      <svg class="chevron" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="multiselect-panel" id="teamPanel" style="display:none">
+      <div class="multiselect-actions">
+        <button type="button" class="multiselect-group-btn" onclick="toggleTeamGroup('AFC')">All AFC</button>
+        <button type="button" class="multiselect-group-btn" onclick="toggleTeamGroup('NFC')">All NFC</button>
+      </div>
+      <div class="multiselect-list" id="teamPanelList"></div>
+    </div>
+  </div>
 
-  <select class="filter-select" id="unitFilter" onchange="applyFilters()">
-    <option value="">Both Units</option>
-    <option value="offense">Offense</option>
-    <option value="defense">Defense</option>
-  </select>
-
-  <select class="filter-select" id="posFilter" onchange="applyFilters()">
-    <option value="">All Positions</option>
-    <option value="QB">QB</option>
-    <option value="WR">WR</option>
-    <option value="RB">RB</option>
-    <option value="TE">TE</option>
-    <option value="OL">OL</option>
-    <option value="EDGE">EDGE</option>
-    <option value="DI">DI</option>
-    <option value="LB">LB</option>
-    <option value="CB">CB</option>
-    <option value="S">S</option>
-    <option value="K">K</option>
-    <option value="P">P</option>
-  </select>
+  <div class="multiselect" id="posMultiselect">
+    <button type="button" class="multiselect-trigger" onclick="togglePosPanel(event)">
+      <span id="posMultiselectLabel">All Positions</span>
+      <svg class="chevron" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="multiselect-panel" id="posPanel" style="display:none">
+      <div class="multiselect-actions">
+        <button type="button" class="multiselect-group-btn" onclick="togglePosGroup('OFFENSE')">All Offense</button>
+        <button type="button" class="multiselect-group-btn" onclick="togglePosGroup('DEFENSE')">All Defense</button>
+      </div>
+      <div class="multiselect-list" id="posPanelList"></div>
+    </div>
+  </div>
 
   <div class="filter-right">
     <span class="row-count" id="rowCount">Loading...</span>
@@ -630,10 +710,15 @@ body {
         <th onclick="sortBy('pos')" id="th-pos">Group <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('name')" id="th-name">Player <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('age')" id="th-age">Age <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('college')" id="th-college" style="display:none">College <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('draft_year')" id="th-draft_year" style="display:none">Draft Yr <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('years_pro')" id="th-years_pro">NFL Yr <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('madden')" id="th-madden" class="sorted">Madden <span class="sort-icon">↓</span></th>
         <th onclick="sortBy('cap')" id="th-cap">Cap Hit <span class="sort-icon">↕</span></th>
-        <th onclick="sortBy('cap')" id="th-attainment" style="display:none">Attainment <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('years_remaining')" id="th-years_remaining" style="display:none">Yrs Left <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('cash_total_remaining')" id="th-cash_total_remaining" style="display:none">Cash Remaining <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('cash_guaranteed_remaining')" id="th-cash_guaranteed_remaining" style="display:none">Gtd Remaining <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('avg_annual_remaining')" id="th-avg_annual_remaining" style="display:none">APY Remaining <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('stat1')" id="th-stat1" style="display:none"><span class="sort-icon">↕</span></th>
         <th onclick="sortBy('stat2')" id="th-stat2" style="display:none"><span class="sort-icon">↕</span></th>
         <th onclick="sortBy('stat3')" id="th-stat3" style="display:none"><span class="sort-icon">↕</span></th>
@@ -691,11 +776,16 @@ const DEFENSE_POS = new Set(['EDGE','DI','LB','CB','S']);
 const ST_POS = new Set(['K','P','LS']);
 const STAT_COLS = {
   passing:   ['CMP','ATT','PASS_YDS','PASS_TDS','INT'],
-  rushing:   ['CAR','RUSH_YDS','RUSH_TDS','REC'],
+  rushing:   ['CAR','RUSH_YDS','RUSH_TDS'],
   receiving: ['REC','TGT','REC_YDS','REC_TDS'],
   defense:   ['TKL','SACK','INT','PBU','TFL'],
 };
 const TEAM_ABBRS = Object.keys(TEAMS);
+const ALL_POSITIONS = ['QB','WR','RB','TE','OL','EDGE','DI','LB','CB','S','K','P'];
+
+// AFC/NFC alignment, for the "All AFC"/"All NFC" team-filter shortcuts.
+const AFC_TEAMS = new Set(['BAL','BUF','CIN','CLE','DEN','HOU','IND','JAX','KC','LAC','LV','MIA','NE','NYJ','PIT','TEN']);
+const NFC_TEAMS = new Set(['ARZ','ATL','CAR','CHI','DAL','DET','GB','LAR','MIN','NO','NYG','PHI','SF','SEA','TB','WAS']);
 
 // Same ESPN logo CDN + code mapping as nfl-formation-view.html (ARZ->ari,
 // WAS->wsh mismatches and all) -- reusing that mechanism rather than a
@@ -722,15 +812,22 @@ let sortCol = 'madden';
 let sortDir = 'desc';
 let currentView = 'overview';
 
-// View definitions: columns to show and auto-filters
+// Multi-select filter state. Empty set = no filter (show all) -- same
+// semantics as the old selects' "" / "All ..." option.
+let selectedTeams = new Set();
+let selectedPositions = new Set();
+
+// View definitions: columns to show and auto-filters. `pos` is now the
+// set of standard_pos values to auto-select in the position multi-select
+// (replacing individual selections), not a single posFilter value.
 const VIEWS = {
-  overview:   { cols: ['team','ourlads_pos','pos','name','age','madden','cap'],              pos: null, sort: 'madden' },
-  financial:  { cols: ['team','ourlads_pos','pos','name','cap','years_pro','attainment'],    pos: null, sort: 'cap' },
+  overview:   { cols: ['team','ourlads_pos','pos','name','age','college','draft_year','madden','cap'], pos: null, sort: 'madden' },
+  financial:  { cols: ['team','ourlads_pos','pos','name','cap','years_pro','years_remaining','cash_total_remaining','cash_guaranteed_remaining','avg_annual_remaining'], pos: null, sort: 'cap' },
   madden:     { cols: ['team','ourlads_pos','pos','name','madden','age'],                    pos: null, sort: 'madden' },
-  passing:    { cols: ['team','name','stat1','stat2','stat3','stat4','stat5'],               pos: 'QB', sort: 'name' },
-  rushing:    { cols: ['team','name','stat1','stat2','stat3','stat4'],                       pos: 'RB', sort: 'name' },
-  receiving:  { cols: ['team','name','stat1','stat2','stat3','stat4'],                       pos: 'WR', sort: 'name' },
-  defense:    { cols: ['team','ourlads_pos','pos','name','stat1','stat2','stat3','stat4'],   pos: null, unit: 'defense', sort: 'name' },
+  passing:    { cols: ['team','name','stat1','stat2','stat3','stat4','stat5'],               pos: ['QB'], sort: 'name' },
+  rushing:    { cols: ['team','name','stat1','stat2','stat3'],                                pos: ['RB'], sort: 'name' },
+  receiving:  { cols: ['team','name','stat1','stat2','stat3','stat4'],                       pos: ['WR'], sort: 'name' },
+  defense:    { cols: ['team','ourlads_pos','pos','name','stat1','stat2','stat3','stat4'],   pos: [...DEFENSE_POS], sort: 'name' },
 };
 
 function setView(viewKey, btn) {
@@ -742,17 +839,14 @@ function setView(viewKey, btn) {
 
   const view = VIEWS[viewKey];
 
-  // Apply auto-filters
+  // Auto-filter: replace the position selection with this view's position
+  // set (e.g. Defense tab selects all of DEFENSE_POS). Views with no
+  // `pos` (overview/financial/madden) leave the current selection alone,
+  // same as the old posFilter behavior.
   if (view.pos) {
-    document.getElementById('posFilter').value = view.pos;
-  } else if (!['financial','madden'].includes(viewKey)) {
-    // Only clear pos filter for views that don't auto-set it
-    // leave it alone so user can still override
-  }
-  if (view.unit) {
-    document.getElementById('unitFilter').value = view.unit;
-  } else {
-    document.getElementById('unitFilter').value = '';
+    selectedPositions = new Set(view.pos);
+    syncPosCheckboxes();
+    updatePosLabel();
   }
 
   // Update visible columns
@@ -767,12 +861,14 @@ function setView(viewKey, btn) {
 }
 
 function updateColumns(cols) {
-  const allCols = ['team','ourlads_pos','pos','name','age','years_pro','madden','cap','stats','attainment','stat1','stat2','stat3','stat4','stat5'];
+  const allCols = ['team','ourlads_pos','pos','name','age','college','draft_year','years_pro','madden','cap','years_remaining','cash_total_remaining','cash_guaranteed_remaining','avg_annual_remaining','stat1','stat2','stat3','stat4','stat5'];
 
   const colMap = {
       team: 'th-team', ourlads_pos: 'th-ourlads_pos', pos: 'th-pos', name: 'th-name',
-      age: 'th-age', years_pro: 'th-years_pro', madden: 'th-madden',
-      cap: 'th-cap', stats: 'th-stats', attainment: 'th-attainment',
+      age: 'th-age', college: 'th-college', draft_year: 'th-draft_year',
+      years_pro: 'th-years_pro', madden: 'th-madden', cap: 'th-cap',
+      years_remaining: 'th-years_remaining', cash_total_remaining: 'th-cash_total_remaining',
+      cash_guaranteed_remaining: 'th-cash_guaranteed_remaining', avg_annual_remaining: 'th-avg_annual_remaining',
       stat1: 'th-stat1', stat2: 'th-stat2', stat3: 'th-stat3', stat4: 'th-stat4', stat5: 'th-stat5'
   };
 
@@ -801,33 +897,25 @@ async function loadAll() {
       ourladsPos: player.ourlads_pos,
       depth: player.depth,
       name: player.canonical_name || '',
-      jersey: player.jersey || null,
       age: player.age || null,
+      college: player.college || null,
+      draft_year: player.draft_year || null,
       years_pro: player.years_pro != null ? player.years_pro : null,
       madden: player.madden || null,
       cap_number: player.cap_number || null,
       cap_raw: parseCap(player.cap_number),
+      years_remaining: player.years_remaining != null ? player.years_remaining : null,
+      cash_total_remaining: player.cash_total_remaining != null ? player.cash_total_remaining : null,
+      cash_guaranteed_remaining: player.cash_guaranteed_remaining != null ? player.cash_guaranteed_remaining : null,
+      avg_annual_remaining: player.avg_annual_remaining != null ? player.avg_annual_remaining : null,
       standard_pos: player.standard_pos || '',
       standard_slot: player.ourlads_pos,
       injured: player.injured || false,
       attainment: player.attainment || null,
       stats: player.stats || {},
-      stats_season: player.stats_season || null,
-      madden_rank: player.madden_rank,
-      madden_rank_total: player.madden_rank_total,
-      madden_pos_label: player.madden_pos_label,
     });
   }
   loaded++;
-
-  // Populate team filter
-  const tf = document.getElementById('teamFilter');
-  TEAM_ABBRS.forEach(abbr => {
-    const opt = document.createElement('option');
-    opt.value = abbr;
-    opt.textContent = TEAMS[abbr].name;
-    tf.appendChild(opt);
-  });
 
   document.getElementById('loadingState').style.display = 'none';
   document.getElementById('mainTable').style.display = 'table';
@@ -840,21 +928,130 @@ function parseCap(capStr) {
   return parseInt(capStr.replace(/[$,]/g, '')) || 0;
 }
 
+function formatMoney(n) {
+  if (n == null) return null;
+  return '$' + Math.round(n).toLocaleString('en-US');
+}
+
+// ══════════════════════════════════════════
+// TEAM / POSITION MULTI-SELECT
+// ══════════════════════════════════════════
+function renderTeamPanel() {
+  document.getElementById('teamPanelList').innerHTML = TEAM_ABBRS.map(abbr => `
+    <label class="multiselect-item">
+      <input type="checkbox" id="team-chk-${abbr}" onchange="toggleTeamItem('${abbr}')">
+      ${TEAMS[abbr].name}
+    </label>
+  `).join('');
+}
+
+function renderPosPanel() {
+  document.getElementById('posPanelList').innerHTML = ALL_POSITIONS.map(pos => `
+    <label class="multiselect-item">
+      <input type="checkbox" id="pos-chk-${pos}" onchange="togglePosItem('${pos}')">
+      ${pos}
+    </label>
+  `).join('');
+}
+
+function toggleTeamItem(abbr) {
+  if (selectedTeams.has(abbr)) selectedTeams.delete(abbr); else selectedTeams.add(abbr);
+  updateTeamLabel();
+  applyFilters();
+}
+
+function togglePosItem(pos) {
+  if (selectedPositions.has(pos)) selectedPositions.delete(pos); else selectedPositions.add(pos);
+  updatePosLabel();
+  applyFilters();
+}
+
+// "All AFC"/"All NFC"/"All Offense"/"All Defense": select every item in
+// the group as if picked one by one, unless they're all already selected
+// (in which case it acts as a clear-group toggle).
+function toggleTeamGroup(which) {
+  const group = which === 'AFC' ? AFC_TEAMS : NFC_TEAMS;
+  const allSelected = [...group].every(a => selectedTeams.has(a));
+  group.forEach(a => allSelected ? selectedTeams.delete(a) : selectedTeams.add(a));
+  syncTeamCheckboxes();
+  updateTeamLabel();
+  applyFilters();
+}
+
+function togglePosGroup(which) {
+  const group = which === 'OFFENSE' ? OFFENSE_POS : DEFENSE_POS;
+  const allSelected = [...group].every(p => selectedPositions.has(p));
+  group.forEach(p => allSelected ? selectedPositions.delete(p) : selectedPositions.add(p));
+  syncPosCheckboxes();
+  updatePosLabel();
+  applyFilters();
+}
+
+function syncTeamCheckboxes() {
+  TEAM_ABBRS.forEach(abbr => {
+    const el = document.getElementById('team-chk-' + abbr);
+    if (el) el.checked = selectedTeams.has(abbr);
+  });
+}
+
+function syncPosCheckboxes() {
+  ALL_POSITIONS.forEach(pos => {
+    const el = document.getElementById('pos-chk-' + pos);
+    if (el) el.checked = selectedPositions.has(pos);
+  });
+}
+
+function updateTeamLabel() {
+  const el = document.getElementById('teamMultiselectLabel');
+  if (selectedTeams.size === 0) el.textContent = 'All Teams';
+  else if (selectedTeams.size === 1) el.textContent = TEAMS[[...selectedTeams][0]].name;
+  else el.textContent = selectedTeams.size + ' Teams';
+}
+
+function updatePosLabel() {
+  const el = document.getElementById('posMultiselectLabel');
+  if (selectedPositions.size === 0) el.textContent = 'All Positions';
+  else if (selectedPositions.size === 1) el.textContent = [...selectedPositions][0];
+  else el.textContent = selectedPositions.size + ' Positions';
+}
+
+function toggleTeamPanel() {
+  const panel = document.getElementById('teamPanel');
+  const opening = panel.style.display === 'none';
+  panel.style.display = opening ? 'flex' : 'none';
+  document.getElementById('teamMultiselect').classList.toggle('open', opening);
+}
+
+function togglePosPanel() {
+  const panel = document.getElementById('posPanel');
+  const opening = panel.style.display === 'none';
+  panel.style.display = opening ? 'flex' : 'none';
+  document.getElementById('posMultiselect').classList.toggle('open', opening);
+}
+
+// Close any open panel when clicking outside its own multiselect --
+// clicks on checkboxes/group buttons inside an open panel are contained
+// within it, so they don't trigger this.
+document.addEventListener('click', (e) => {
+  document.querySelectorAll('.multiselect').forEach(ms => {
+    if (!ms.contains(e.target)) {
+      ms.classList.remove('open');
+      const panel = ms.querySelector('.multiselect-panel');
+      if (panel) panel.style.display = 'none';
+    }
+  });
+});
+
 // ══════════════════════════════════════════
 // FILTERS
 // ══════════════════════════════════════════
 function applyFilters() {
   const search = document.getElementById('searchInput').value.toLowerCase().trim();
-  const team   = document.getElementById('teamFilter').value;
-  const unit   = document.getElementById('unitFilter').value;
-  const pos    = document.getElementById('posFilter').value;
 
   filteredPlayers = allPlayers.filter(p => {
     if (search && !p.name.toLowerCase().includes(search)) return false;
-    if (team && p.abbr !== team) return false;
-    if (unit === 'offense' && !OFFENSE_POS.has(p.standard_pos)) return false;
-    if (unit === 'defense' && !DEFENSE_POS.has(p.standard_pos)) return false;
-    if (pos && p.standard_pos !== pos) return false;
+    if (selectedTeams.size && !selectedTeams.has(p.abbr)) return false;
+    if (selectedPositions.size && !selectedPositions.has(p.standard_pos)) return false;
     return true;
   });
 
@@ -866,9 +1063,12 @@ function applyFilters() {
 
 function clearFilters() {
   document.getElementById('searchInput').value = '';
-  document.getElementById('teamFilter').value = '';
-  document.getElementById('unitFilter').value = '';
-  document.getElementById('posFilter').value = '';
+  selectedTeams = new Set();
+  selectedPositions = new Set();
+  syncTeamCheckboxes();
+  syncPosCheckboxes();
+  updateTeamLabel();
+  updatePosLabel();
   applyFilters();
 }
 
@@ -910,9 +1110,15 @@ function sortPlayers() {
       case 'ourlads_pos': av = a.ourladsPos; bv = b.ourladsPos; break;
       case 'name':      av = a.name;          bv = b.name;         break;
       case 'age':       av = a.age;           bv = b.age;          break;
+      case 'college':   av = a.college;       bv = b.college;      break;
+      case 'draft_year': av = a.draft_year;   bv = b.draft_year;   break;
       case 'years_pro': av = a.years_pro;     bv = b.years_pro;    break;
       case 'madden':    av = a.madden;        bv = b.madden;       break;
       case 'cap':       av = a.cap_raw || null; bv = b.cap_raw || null; break;
+      case 'years_remaining':            av = a.years_remaining;            bv = b.years_remaining;            break;
+      case 'cash_total_remaining':       av = a.cash_total_remaining;       bv = b.cash_total_remaining;       break;
+      case 'cash_guaranteed_remaining':  av = a.cash_guaranteed_remaining;  bv = b.cash_guaranteed_remaining;  break;
+      case 'avg_annual_remaining':       av = a.avg_annual_remaining;       bv = b.avg_annual_remaining;       break;
       case 'stat1': av = getStatVal(a, window._statKey1); bv = getStatVal(b, window._statKey1); break;
       case 'stat2': av = getStatVal(a, window._statKey2); bv = getStatVal(b, window._statKey2); break;
       case 'stat3': av = getStatVal(a, window._statKey3); bv = getStatVal(b, window._statKey3); break;
@@ -969,9 +1175,6 @@ function updateStatColumns(viewKey) {
       window['_statKey' + (i+1)] = null;
     }
   });
-
-  const thStats = document.getElementById('th-stats');
-  if (thStats) thStats.style.display = keys ? 'none' : '';
 }
 
 // ══════════════════════════════════════════
@@ -1019,12 +1222,7 @@ function renderTable() {
     const team = TEAMS[p.abbr];
     const mc = maddenColor(p.madden);
     const initials = p.name.split(' ').map(w => w[0]).join('').slice(0, 2);
-    const cols = window._activeCols || ['team','pos','name','age','years_pro','madden','cap','stats'];
-
-    const statEntries = Object.entries(p.stats || {}).slice(0, 4);
-    const statHtml = statEntries.length
-      ? statEntries.map(([k,v]) => '<span class="stat-item"><strong>' + v + '</strong> ' + k + '</span>').join('')
-      : '<span style="color:var(--text-dim)">—</span>';
+    const cols = window._activeCols || ['team','pos','name','age','years_pro','madden','cap'];
 
     let row = '<tr>';
     if (cols.includes('team'))
@@ -1047,16 +1245,24 @@ function renderTable() {
       '</div></td>';
     if (cols.includes('age'))
       row += '<td style="text-align:center;color:var(--text-muted);font-family:\'Barlow Condensed\',sans-serif;font-weight:600">' + (p.age || '—') + '</td>';
+    if (cols.includes('college'))
+      row += '<td style="color:var(--text-muted);font-family:\'Barlow Condensed\',sans-serif;font-weight:600">' + (p.college || '—') + '</td>';
+    if (cols.includes('draft_year'))
+      row += '<td style="text-align:center;color:var(--text-muted);font-family:\'Barlow Condensed\',sans-serif;font-weight:600">' + (p.draft_year || '—') + '</td>';
     if (cols.includes('years_pro'))
       row += '<td style="text-align:center;color:var(--text-muted);font-family:\'Barlow Condensed\',sans-serif;font-weight:600">' + (p.years_pro != null ? p.years_pro : '—') + '</td>';
     if (cols.includes('madden'))
       row += '<td class="cell-madden" style="color:' + mc + '">' + (p.madden || '—') + '</td>';
     if (cols.includes('cap'))
       row += '<td class="cell-cap">' + (p.cap_number || '—') + '</td>';
-    if (cols.includes('attainment'))
-      row += '<td style="font-family:\'Barlow Condensed\',sans-serif;font-size:12px;color:var(--text-muted)">' + (p.attainment || '—') + '</td>';
-    if (cols.includes('stats'))
-        row += '<td class="cell-stat"><div class="stat-pair">' + statHtml + '</div></td>';
+    if (cols.includes('years_remaining'))
+      row += '<td style="text-align:center;color:var(--text-muted);font-family:\'Barlow Condensed\',sans-serif;font-weight:600">' + (p.years_remaining != null ? p.years_remaining : '—') + '</td>';
+    if (cols.includes('cash_total_remaining'))
+      row += '<td style="font-family:\'Barlow Condensed\',sans-serif;font-weight:700;color:var(--text)">' + (formatMoney(p.cash_total_remaining) || '—') + '</td>';
+    if (cols.includes('cash_guaranteed_remaining'))
+      row += '<td style="font-family:\'Barlow Condensed\',sans-serif;font-weight:700;color:var(--text)">' + (formatMoney(p.cash_guaranteed_remaining) || '—') + '</td>';
+    if (cols.includes('avg_annual_remaining'))
+      row += '<td style="font-family:\'Barlow Condensed\',sans-serif;font-weight:700;color:var(--gold)">' + (formatMoney(p.avg_annual_remaining) || '—') + '</td>';
       ['stat1','stat2','stat3','stat4','stat5'].forEach((col, i) => {
         if (cols.includes(col)) {
           const key = window['_statKey' + (i+1)];
@@ -1089,6 +1295,8 @@ function updateStickyOffset() {
 window._activeCols = VIEWS['overview'].cols;
 updateColumns(VIEWS['overview'].cols);
 updateStatColumns('overview');
+renderTeamPanel();
+renderPosPanel();
 loadAll().then(() => {
   requestAnimationFrame(() => {
     updateStickyOffset();
