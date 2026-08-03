@@ -138,14 +138,14 @@ body {
 .wrap {
   display: flex;
   gap: 20px;
-  max-width: 980px;
+  max-width: 1300px;
   margin: 16px auto;
   padding: 0 16px;
   align-items: flex-start;
 }
 
 /* ── LEFT: compact court ── */
-.left-col { width: 300px; flex-shrink: 0; }
+.left-col { width: 480px; flex-shrink: 0; }
 
 .court-label {
   display: flex;
@@ -192,18 +192,18 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 3px;
-  width: 64px;
+  width: 90px;
   cursor: pointer;
   z-index: 20;
 }
 .player-card:hover { z-index: 100; }
 
 .player-dot {
-  width: 34px; height: 34px;
+  width: 48px; height: 48px;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900; font-size: 11px;
+  font-weight: 900; font-size: 15px;
   color: #05261a;
   border: 2px solid rgba(0,0,0,.25);
   transition: transform .1s;
@@ -220,7 +220,7 @@ body {
 .player-name {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
-  font-size: 10px;
+  font-size: 13px;
   text-align: center;
   white-space: nowrap;
   color: var(--text);
