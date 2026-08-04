@@ -138,14 +138,14 @@ body {
 .wrap {
   display: flex;
   gap: 20px;
-  max-width: 1300px;
+  max-width: 1130px;
   margin: 16px auto;
   padding: 0 16px;
   align-items: flex-start;
 }
 
 /* ── LEFT: compact court ── */
-.left-col { width: 480px; flex-shrink: 0; }
+.left-col { width: 598px; flex-shrink: 0; }
 
 .court-label {
   display: flex;
@@ -199,11 +199,11 @@ body {
 .player-card:hover { z-index: 100; }
 
 .player-dot {
-  width: 48px; height: 48px;
+  width: 64px; height: 64px;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900; font-size: 15px;
+  font-weight: 900; font-size: 20px;
   color: #05261a;
   border: 2px solid rgba(0,0,0,.25);
   transition: transform .1s;
@@ -220,10 +220,20 @@ body {
 .player-name {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
-  font-size: 13px;
+  font-size: 16px;
   text-align: center;
   white-space: nowrap;
   color: var(--text);
+}
+
+.player-rank {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: .3px;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--text-dim);
 }
 
 .court-hint { font-size: 10px; color: var(--text-dim); margin-top: 8px; font-style: italic; }
@@ -261,9 +271,9 @@ body {
 .bench-row { display: flex; align-items: center; gap: 10px; padding: 6px 12px; border-bottom: 1px solid var(--border); background: var(--surface); }
 .bench-row:last-child { border-bottom: none; }
 .bench-rank { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; color: var(--text-dim); width: 14px; text-align: center; flex-shrink: 0; }
-.bench-dot { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 10px; color: #05261a; flex-shrink: 0; }
+.bench-dot { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 16px; color: #05261a; flex-shrink: 0; }
 .bench-name-block { flex: 1; min-width: 80px; }
-.bench-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 12px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bench-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 16px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .bench-meta { font-size: 9px; color: var(--text-dim); display: flex; gap: 5px; align-items: center; }
 
 .tag {
@@ -278,8 +288,8 @@ body {
 .tag-rotation { background: rgba(0,212,255,.1); color: var(--accent); border: 1px solid rgba(0,212,255,.25); }
 .tag-bench { background: rgba(125,135,168,.1); color: var(--text-muted); border: 1px solid rgba(125,135,168,.25); }
 
-.bench-stat { width: 34px; flex-shrink: 0; text-align: center; }
-.bench-stat-val { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; color: var(--text); }
+.bench-stat { width: 46px; flex-shrink: 0; text-align: center; }
+.bench-stat-val { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 16px; color: var(--text); }
 .bench-stat-label { font-size: 7px; color: var(--text-dim); letter-spacing: .3px; text-transform: uppercase; }
 
 .bench-empty {
@@ -459,17 +469,21 @@ function teamLogoUrl(abbr) {
 
 // Loose half-court zones for each starting position (% of court canvas)
 const COURT_ZONES = {
-  C:  { x: 50, y: 20 },
-  PF: { x: 27, y: 32 },
-  SF: { x: 22, y: 62 },
-  SG: { x: 78, y: 62 },
-  PG: { x: 50, y: 82 },
+  C:  { x: 66, y: 21 },   // post, offset — not dead-center under the hoop
+  PF: { x: 34, y: 21 },   // opposite post
+  SF: { x: 76, y: 49 },
+  SG: { x: 24, y: 49 },
+  PG: { x: 50, y: 72 },
 };
 const ZONE_ORDER = ['C','PF','SF','SG','PG'];
 
 let currentTeam = 'LAL';
 let allPlayers = [];
 let teamPlayers = [];
+// id -> "PF 3/46", league-wide rank within position group by 2K overall_rating.
+// Computed once in loadAllPlayers() since allPlayers is already the full
+// league, not per-team -- same scope as NFL's madden_rank/madden_rank_total.
+let positionRanks = {};
 // Frontend-only view state for manual bench->court substitutions -- keyed
 // by court zone, never written back to nba_players_master.json, reset on
 // every team switch (see loadTeam()).
@@ -509,11 +523,30 @@ function mapPlayer(p) {
   };
 }
 
+// Players with no 2K rating get no entry here -- rendering code must
+// check for a missing key and skip the badge, not show a placeholder.
+function computePositionRanks(players) {
+  const byPos = {};
+  players.forEach(p => {
+    if (p.rating == null) return; // no 2K rating, no badge
+    (byPos[p.pos] ||= []).push(p);
+  });
+  const rankMap = {}; // id -> "PF 3/46"
+  Object.entries(byPos).forEach(([pos, group]) => {
+    group.sort((a, b) => b.rating - a.rating);
+    group.forEach((p, i) => {
+      rankMap[p.id] = `${pos} ${i + 1}/${group.length}`;
+    });
+  });
+  return rankMap;
+}
+
 async function loadAllPlayers() {
   try {
     const res = await fetch('data/nba_players_master.json');
     const raw = await res.json();
     allPlayers = Object.values(raw).map(mapPlayer);
+    positionRanks = computePositionRanks(allPlayers);
   } catch (e) {
     console.error('Failed to load nba_players_master.json:', e);
     allPlayers = [];
@@ -586,10 +619,12 @@ function renderCourt() {
       `;
     }
     const rc = ratingColor(p.rating);
+    const rank = positionRanks[p.id];
     return `
       <div class="player-card" data-pos="${pos}" data-pid="${p.id}" style="left:${zone.x}%; top:${zone.y}%">
         <div class="player-dot" style="background:${rc}">${p.rating || '—'}</div>
         <div class="player-name">${p.name}</div>
+        ${rank ? `<div class="player-rank">${rank}</div>` : ''}
       </div>
     `;
   }).join('');
@@ -625,7 +660,7 @@ function renderBenchList() {
         <div class="bench-dot" style="background:${rc}">${p.rating || '—'}</div>
         <div class="bench-name-block">
           <div class="bench-name">${p.name}</div>
-          <div class="bench-meta">${p.pos || ''} ${p.status ? '<span class="tag tag-' + p.status + '">' + STATUS_LABEL[p.status] + '</span>' : ''}</div>
+          <div class="bench-meta">${positionRanks[p.id] || p.pos || ''} ${p.status ? '<span class="tag tag-' + p.status + '">' + STATUS_LABEL[p.status] + '</span>' : ''}</div>
         </div>
         <div class="bench-stat"><div class="bench-stat-val">${p.ppg != null ? p.ppg : '—'}</div><div class="bench-stat-label">ppg</div></div>
         <div class="bench-stat"><div class="bench-stat-val">${p.rpg != null ? p.rpg : '—'}</div><div class="bench-stat-label">rpg</div></div>

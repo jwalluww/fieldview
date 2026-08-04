@@ -244,13 +244,30 @@ Frontend `STAT_COLS` in `nfl/depth-chart.html` uses these canonical keys.
 
 ---
 
-## Roadmap (priority order)
-1. ⬜ Finish player identity pipeline (fix bugs above, get skill-pos unmatched count)
-4. ⬜ Opponent overlay — same-team offense+defense simultaneously, then versus view
-6. ⬜ Additional data sources (advanced metrics): PFF grades, RAS scores, combine data, EPA/DVOA (see note below about nfldatapy)
-7. ⬜ Player comparison
-8. ⬜ Historical rating trends
-9. ⬜ Multi-sport expansion — MLB/NHL/MLS/EPL
+## Roadmap
+
+**In Progress**
+- ⬜ NBA CourtView zone alignment — replace dead-center-under-hoop `COURT_ZONES` with offset post positions (fix drafted, pending Claude Code apply + verify)
+- ⬜ Guard/Wing/Big data source — researching Cleaning the Glass's G/W/B convention; verify `nba_api`'s `commonplayerinfo` endpoint's coarser `POSITION` field as a possible existing source before building a manual mapping
+- ⬜ Rank NBA players by position, surfaced on court — mirrors the NFL depth-chart-by-position ranking, applied to CourtView
+- ⬜ Tactical stat selection — figuring out which few stats actually matter per view; feeds both CourtView hover/bench cards and TableView columns, so solve once and both inherit it
+
+**Up Next**
+- ⬜ Opponent overlay (NFL) — same-team offense+defense on the field simultaneously first, then a real versus view (your team's offense against an actual opponent's defense)
+- ⬜ Additional data sources (advanced metrics): PFF grades, RAS scores, combine data, EPA/DVOA — via `nflreadpy` (see PIPELINE notes: `load_ftn_charting()`, `load_nextgen_stats()`, `load_participation()`, `load_combine()` are all already free and unused)
+- ⬜ TableView stat/view-package refinement — right stat columns and filter presets to actually run an analysis or scan the league quickly, not just look at a roster
+- ⬜ Popover `.subs-name` truncation fix — small, same width/font treatment `.bench-name` already got
+- ⬜ NBA Big/Wing/Guard bucket UI — once the data source item above is settled
+
+**Backlog**
+- ⬜ Multi-sport expansion — MLB/NHL/MLS/EPL (once NFL/NBA are genuinely the finished template to copy, not before)
+- ⬜ ReView overview — replays, highlights, box scores, tweets, podcasts; comes after FormationView/CourtView/TableView are dialed in, per original sequencing
+- ⬜ Mobile responsiveness pass — desktop-only is the explicit call for now
+- ⬜ NBA table view column cleanup (same treatment NFL's table view already got)
+
+**Wish List**
+- ⬜ Player comparison
+- ⬜ Historical rating trends
 
 **Not in FieldView - called ReView:** League leaderboards, game reviews, highlights, replays, podcasts, tweets — these belong in a separate media/highlights page down the road. Called ReView for being able to review the past day/week of games, highlights, box scores, stats, tweets, drama, reddit posts, podcasts, etc. Just to catch up on the league and all it's action.
 
