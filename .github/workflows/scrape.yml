@@ -69,8 +69,8 @@ jobs:
       - name: Install dependencies
         run: pip install nba_api requests beautifulsoup4 pandas duckdb
 
-      - name: Run NBA stats scraper
-        run: python nba/scripts/fetch_stats.py
+      # - name: Run NBA stats scraper
+      #   run: python nba/scripts/fetch_stats.py
 
       - name: Run NBA contracts scraper
         run: python nba/scripts/scrape_contracts_spotrac.py
