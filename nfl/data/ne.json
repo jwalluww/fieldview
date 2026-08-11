@@ -43,6 +43,17 @@
         "cap_number": "$888,333",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Tejhaun Palmer",
+        "depth": 4,
+        "injured": false,
+        "attainment": "W/Arz",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RWR": [
@@ -302,17 +313,6 @@
         "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Caedan Wallace",
-        "depth": 3,
-        "injured": false,
-        "attainment": "24/3",
-        "standard_slot": "RG",
-        "standard_pos": "OL",
-        "cap_number": "$1,648,174",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "RT": [
@@ -382,7 +382,7 @@
       {
         "name": "CJ Dippre",
         "depth": 3,
-        "injured": true,
+        "injured": false,
         "attainment": "CF25",
         "standard_slot": "TE",
         "standard_pos": "TE",
@@ -402,19 +402,8 @@
         "stats_season": null
       },
       {
-        "name": "Mitch Van Vooren",
-        "depth": 5,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "TE",
-        "standard_pos": "TE",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Jack Westover",
-        "depth": 6,
+        "depth": 5,
         "injured": false,
         "attainment": "SF24",
         "standard_slot": "TE",
@@ -427,13 +416,13 @@
         "stats_season": 2025
       },
       {
-        "name": "Jeremiah Franklin",
-        "depth": 7,
+        "name": "Mitch Van Vooren",
+        "depth": 6,
         "injured": false,
-        "attainment": "CF26",
+        "attainment": "SF26",
         "standard_slot": "TE",
         "standard_pos": "TE",
-        "cap_number": "$885,000",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -615,28 +604,13 @@
         "stats_season": 2025
       },
       {
-        "name": "Jeremiah Pharms Jr.",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF22",
-        "standard_slot": "LE",
-        "standard_pos": "DI",
-        "cap_number": "$1,145,000",
-        "stats": {
-          "TKL": 1,
-          "TFL": 1,
-          "QB HIT": 1
-        },
-        "stats_season": 2025
-      },
-      {
         "name": "Casey Rogers",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "LE",
         "standard_pos": "DI",
-        "cap_number": null,
+        "cap_number": "$1,005,000",
         "stats": {},
         "stats_season": null
       }
@@ -671,15 +645,19 @@
         "stats_season": 2025
       },
       {
-        "name": "David Blay Jr.",
+        "name": "Jeremiah Pharms Jr.",
         "depth": 3,
         "injured": false,
-        "attainment": "CF26",
+        "attainment": "SF22",
         "standard_slot": "NT",
         "standard_pos": "DI",
-        "cap_number": "$888,333",
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$1,145,000",
+        "stats": {
+          "TKL": 1,
+          "TFL": 1,
+          "QB HIT": 1
+        },
+        "stats_season": 2025
       }
     ],
     "RDE": [
@@ -1124,6 +1102,19 @@
         "cap_number": "$891,666",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Kenneth Harris",
+        "depth": 4,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "RCB",
+        "standard_pos": "CB",
+        "cap_number": "$887,500",
+        "stats": {
+          "TKL": 2
+        },
+        "stats_season": 2025
       }
     ],
     "NB": [
@@ -1171,17 +1162,15 @@
         "stats_season": null
       },
       {
-        "name": "Kenneth Harris",
+        "name": "Eric Butler",
         "depth": 4,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "NB",
         "standard_pos": "CB",
-        "cap_number": "$887,500",
-        "stats": {
-          "TKL": 2
-        },
-        "stats_season": 2025
+        "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "PT": [

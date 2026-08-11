@@ -106,6 +106,17 @@
         "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "D.j. Montgomery",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF23",
+        "standard_slot": "RWR",
+        "standard_pos": "WR",
+        "cap_number": "$1,075,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "SWR": [
@@ -164,17 +175,6 @@
         "standard_slot": "SWR",
         "standard_pos": "WR",
         "cap_number": "$888,333",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Liam Clifford",
-        "depth": 5,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "SWR",
-        "standard_pos": "WR",
-        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       }
@@ -423,24 +423,24 @@
         "stats_season": 2025
       },
       {
-        "name": "Sean Mckeon",
-        "depth": 5,
-        "injured": false,
-        "attainment": "SF24",
-        "standard_slot": "TE",
-        "standard_pos": "TE",
-        "cap_number": "$1,075,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Carson Towt",
-        "depth": 6,
+        "depth": 5,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "TE",
         "standard_pos": "TE",
         "cap_number": "$888,333",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Pharaoh Brown",
+        "depth": 6,
+        "injured": false,
+        "attainment": "U/Arz",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
       }
@@ -466,24 +466,8 @@
         "stats_season": 2025
       },
       {
-        "name": "Anthony Richardson Sr.",
-        "depth": 2,
-        "injured": false,
-        "attainment": "23/1",
-        "standard_slot": "QB",
-        "standard_pos": "QB",
-        "cap_number": "$10,816,282",
-        "stats": {
-          "CMP": 1,
-          "ATT": 2,
-          "YDS": 9,
-          "RU YDS": -1
-        },
-        "stats_season": 2025
-      },
-      {
         "name": "Riley Leonard",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "25/6",
         "standard_slot": "QB",
@@ -497,6 +481,22 @@
           "INTs": 3,
           "SACKS": 2,
           "RU YDS": 27
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Anthony Richardson Sr.",
+        "depth": 3,
+        "injured": false,
+        "attainment": "23/1",
+        "standard_slot": "QB",
+        "standard_pos": "QB",
+        "cap_number": "$10,816,282",
+        "stats": {
+          "CMP": 1,
+          "ATT": 2,
+          "YDS": 9,
+          "RU YDS": -1
         },
         "stats_season": 2025
       },
@@ -915,19 +915,16 @@
         "stats_season": 2025
       },
       {
-        "name": "Mekhi Blackmon",
+        "name": "Johnathan Edwards",
         "depth": 2,
         "injured": false,
-        "attainment": "T/Min",
+        "attainment": "CF25",
         "standard_slot": "LCB",
         "standard_pos": "CB",
-        "cap_number": "$3,674,000",
+        "cap_number": "$1,015,000",
         "stats": {
-          "TKL": 50,
-          "SACKS": 1.0,
-          "INTs": 2,
-          "PD": 7,
-          "TFL": 2
+          "TKL": 19,
+          "PD": 3
         },
         "stats_season": 2025
       },
@@ -947,10 +944,10 @@
         "stats_season": 2025
       },
       {
-        "name": "Rob Carter Jr.",
+        "name": "Mekhi Rodgers",
         "depth": 4,
         "injured": false,
-        "attainment": "SF26",
+        "attainment": "CF26",
         "standard_slot": "LCB",
         "standard_pos": "CB",
         "cap_number": "$885,000",
@@ -1080,7 +1077,7 @@
       {
         "name": "Cam Taylor-britt",
         "depth": 2,
-        "injured": false,
+        "injured": true,
         "attainment": "U/Cin",
         "standard_slot": "RCB",
         "standard_pos": "CB",
@@ -1089,27 +1086,13 @@
         "stats_season": null
       },
       {
-        "name": "Johnathan Edwards",
+        "name": "Rob Carter Jr.",
         "depth": 3,
         "injured": false,
-        "attainment": "CF25",
+        "attainment": "SF26",
         "standard_slot": "RCB",
         "standard_pos": "CB",
-        "cap_number": "$1,015,000",
-        "stats": {
-          "TKL": 19,
-          "PD": 3
-        },
-        "stats_season": 2025
-      },
-      {
-        "name": "Mekhi Rodgers",
-        "depth": 4,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "RCB",
-        "standard_pos": "CB",
-        "cap_number": null,
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       }
@@ -1127,8 +1110,25 @@
         "stats_season": null
       },
       {
-        "name": "Austin Brown",
+        "name": "Mekhi Blackmon",
         "depth": 2,
+        "injured": false,
+        "attainment": "T/Min",
+        "standard_slot": "NB",
+        "standard_pos": "CB",
+        "cap_number": "$3,674,000",
+        "stats": {
+          "TKL": 50,
+          "SACKS": 1.0,
+          "INTs": 2,
+          "PD": 7,
+          "TFL": 2
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Austin Brown",
+        "depth": 3,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "NB",
@@ -1139,7 +1139,7 @@
       },
       {
         "name": "Jai'onte' Mcmillan",
-        "depth": 3,
+        "depth": 4,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "NB",

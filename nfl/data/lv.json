@@ -6,18 +6,20 @@
   "depth_chart": {
     "LWR": [
       {
-        "name": "Jack Bech",
+        "name": "Tre Tucker",
         "depth": 1,
         "injured": false,
-        "attainment": "25/2",
+        "attainment": "23/3",
         "standard_slot": "LWR",
         "standard_pos": "WR",
-        "cap_number": "$1,717,914",
+        "cap_number": "$3,888,378",
         "stats": {
-          "TGT": 29,
-          "REC": 20,
-          "YDS": 224,
-          "YAC": 68
+          "TGT": 92,
+          "REC": 57,
+          "YDS": 696,
+          "TDs": 5,
+          "YAC": 291,
+          "CAR": 11
         },
         "stats_season": 2025
       },
@@ -65,22 +67,15 @@
     ],
     "RWR": [
       {
-        "name": "Tre Tucker",
+        "name": "Jalen Nailor",
         "depth": 1,
         "injured": false,
-        "attainment": "23/3",
+        "attainment": "U/Min",
         "standard_slot": "RWR",
         "standard_pos": "WR",
-        "cap_number": "$3,888,378",
-        "stats": {
-          "TGT": 92,
-          "REC": 57,
-          "YDS": 696,
-          "TDs": 5,
-          "YAC": 291,
-          "CAR": 11
-        },
-        "stats_season": 2025
+        "cap_number": "$8,010,000",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Malik Benson",
@@ -125,15 +120,20 @@
     ],
     "SWR": [
       {
-        "name": "Jalen Nailor",
+        "name": "Jack Bech",
         "depth": 1,
         "injured": false,
-        "attainment": "U/Min",
+        "attainment": "25/2",
         "standard_slot": "SWR",
         "standard_pos": "WR",
-        "cap_number": "$8,010,000",
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$1,717,914",
+        "stats": {
+          "TGT": 29,
+          "REC": 20,
+          "YDS": 224,
+          "YAC": 68
+        },
+        "stats_season": 2025
       },
       {
         "name": "Dareke Young",
@@ -464,13 +464,13 @@
         "stats_season": 2025
       },
       {
-        "name": "Zack Kuntz",
+        "name": "Chris Myarick",
         "depth": 7,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "TE",
         "standard_pos": "TE",
-        "cap_number": "$885,000",
+        "cap_number": "$1,145,000",
         "stats": {},
         "stats_season": null
       }
@@ -582,6 +582,17 @@
         "standard_slot": "RB",
         "standard_pos": "RB",
         "cap_number": "$891,666",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Dare Ogunbowale",
+        "depth": 5,
+        "injured": false,
+        "attainment": "U/Hou",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
       }
@@ -1067,17 +1078,6 @@
           "TFL": 2
         },
         "stats_season": 2025
-      },
-      {
-        "name": "Tanner Wall",
-        "depth": 3,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "FS",
-        "standard_pos": "S",
-        "cap_number": "$891,000",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "RCB": [

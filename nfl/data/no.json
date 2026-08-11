@@ -112,7 +112,7 @@
       {
         "name": "Brock Rechsteiner",
         "depth": 4,
-        "injured": false,
+        "injured": true,
         "attainment": "CF26",
         "standard_slot": "RWR",
         "standard_pos": "WR",
@@ -223,7 +223,7 @@
       {
         "name": "Dillon Radunz",
         "depth": 2,
-        "injured": false,
+        "injured": true,
         "attainment": "U/Ten",
         "standard_slot": "LG",
         "standard_pos": "OL",
@@ -524,7 +524,7 @@
         "attainment": "17/3",
         "standard_slot": "RB",
         "standard_pos": "RB",
-        "cap_number": "$10,447,471",
+        "cap_number": "$11,378,471",
         "stats": {
           "CAR": 131,
           "RU YDS": 471,
@@ -614,24 +614,8 @@
     ],
     "DE": [
       {
-        "name": "Bryan Bresee",
-        "depth": 1,
-        "injured": true,
-        "attainment": "23/1",
-        "standard_slot": "LE",
-        "standard_pos": "DI",
-        "cap_number": "$3,902,039",
-        "stats": {
-          "TKL": 15,
-          "SACKS": 2.5,
-          "TFL": 5,
-          "QB HIT": 8
-        },
-        "stats_season": 2025
-      },
-      {
         "name": "Vernon Broughton",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "25/3",
         "standard_slot": "LE",
@@ -642,7 +626,7 @@
       },
       {
         "name": "Myles Cole",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "LE",
@@ -650,6 +634,24 @@
         "cap_number": "$1,005,000",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Brien Taylor Jr.",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "LE",
+        "standard_pos": "DI",
+        "cap_number": "$885,000",
+        "stats": {
+          "TKL": 59,
+          "SACKS": 2.0,
+          "INTs": 2,
+          "PD": 11,
+          "TFL": 7,
+          "QB HIT": 3
+        },
+        "stats_season": 2025
       }
     ],
     "NT": [
@@ -699,17 +701,6 @@
           "QB HIT": 1
         },
         "stats_season": 2025
-      },
-      {
-        "name": "Keeshawn Silver",
-        "depth": 4,
-        "injured": true,
-        "attainment": "CF26",
-        "standard_slot": "NT",
-        "standard_pos": "DI",
-        "cap_number": "$893,333",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "DT": [
@@ -745,19 +736,8 @@
         "stats_season": 2025
       },
       {
-        "name": "Zxavian Harris",
-        "depth": 3,
-        "injured": true,
-        "attainment": "CF26",
-        "standard_slot": "RE",
-        "standard_pos": "DI",
-        "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Jay'viar Suggs",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "RE",
@@ -826,6 +806,17 @@
         "standard_slot": "LOLB",
         "standard_pos": "EDGE",
         "cap_number": "$891,666",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Garrett Nelson",
+        "depth": 5,
+        "injured": false,
+        "attainment": "W/Sea",
+        "standard_slot": "LOLB",
+        "standard_pos": "EDGE",
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       }
@@ -914,6 +905,17 @@
           "TKL": 5
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Deion Jones",
+        "depth": 4,
+        "injured": false,
+        "attainment": "U/TB",
+        "standard_slot": "ILB_R",
+        "standard_pos": "LB",
+        "cap_number": "$1,075,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "ROLB": [
@@ -964,6 +966,22 @@
         "standard_pos": "EDGE",
         "cap_number": "$1,005,000",
         "stats": {},
+        "stats_season": 2025
+      },
+      {
+        "name": "Malakai Williams",
+        "depth": 5,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "ROLB",
+        "standard_pos": "EDGE",
+        "cap_number": "$885,000",
+        "stats": {
+          "TKL": 8,
+          "SACKS": 3.0,
+          "TFL": 5,
+          "QB HIT": 5
+        },
         "stats_season": 2025
       }
     ],

@@ -12,6 +12,7 @@
         "attainment": "25/1",
         "standard_slot": "LWR",
         "standard_pos": "WR",
+        "cap_number": "$6,347,816",
         "stats": {
           "TGT": 122,
           "REC": 70,
@@ -22,66 +23,13 @@
         "stats_season": 2025
       },
       {
-        "name": "John Metchie III",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/NYJ",
-        "standard_slot": "LWR",
-        "standard_pos": "WR",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Brycen Tremayne",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF25",
-        "standard_slot": "LWR",
-        "standard_pos": "WR",
-        "stats": {
-          "TGT": 18,
-          "REC": 14,
-          "YDS": 160,
-          "YAC": 58
-        },
-        "stats_season": 2025
-      },
-      {
-        "name": "Casey Washington",
-        "depth": 4,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "LWR",
-        "standard_pos": "WR",
-        "stats": {},
-        "stats_season": null
-      }
-    ],
-    "RWR": [
-      {
-        "name": "Xavier Legette",
-        "depth": 1,
-        "injured": false,
-        "attainment": "24/1",
-        "standard_slot": "RWR",
-        "standard_pos": "WR",
-        "stats": {
-          "TGT": 64,
-          "REC": 35,
-          "YDS": 363,
-          "TDs": 3,
-          "YAC": 75,
-          "CAR": 1
-        },
-        "stats_season": 2025
-      },
-      {
         "name": "David Moore",
         "depth": 2,
         "injured": false,
         "attainment": "U/TB",
-        "standard_slot": "RWR",
+        "standard_slot": "LWR",
         "standard_pos": "WR",
+        "cap_number": "$1,262,500",
         "stats": {
           "TGT": 1,
           "REC": 1,
@@ -95,18 +43,67 @@
         "depth": 3,
         "injured": false,
         "attainment": "SF25",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "RWR": [
+      {
+        "name": "Xavier Legette",
+        "depth": 1,
+        "injured": false,
+        "attainment": "24/1",
         "standard_slot": "RWR",
         "standard_pos": "WR",
+        "cap_number": "$3,370,139",
+        "stats": {
+          "TGT": 64,
+          "REC": 35,
+          "YDS": 363,
+          "TDs": 3,
+          "YAC": 75,
+          "CAR": 1
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Brycen Tremayne",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "RWR",
+        "standard_pos": "WR",
+        "cap_number": "$1,005,000",
+        "stats": {
+          "TGT": 18,
+          "REC": 14,
+          "YDS": 160,
+          "YAC": 58
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Casey Washington",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RWR",
+        "standard_pos": "WR",
+        "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
       },
       {
-        "name": "Malick Meiga",
+        "name": "Elijah Cooks",
         "depth": 4,
         "injured": false,
-        "attainment": "CF26",
+        "attainment": "SF26",
         "standard_slot": "RWR",
         "standard_pos": "WR",
+        "cap_number": "$1,005,000",
         "stats": {},
         "stats_season": null
       }
@@ -119,6 +116,7 @@
         "attainment": "CF24",
         "standard_slot": "SWR",
         "standard_pos": "WR",
+        "cap_number": "$3,846,250",
         "stats": {
           "TGT": 43,
           "REC": 33,
@@ -135,6 +133,7 @@
         "attainment": "25/6",
         "standard_slot": "SWR",
         "standard_pos": "WR",
+        "cap_number": "$1,053,860",
         "stats": {
           "TGT": 15,
           "REC": 11,
@@ -145,22 +144,24 @@
         "stats_season": 2025
       },
       {
-        "name": "Ainias Smith",
+        "name": "John Metchie III",
         "depth": 3,
         "injured": false,
-        "attainment": "SF25",
+        "attainment": "U/NYJ",
         "standard_slot": "SWR",
         "standard_pos": "WR",
+        "cap_number": "$1,900,000",
         "stats": {},
         "stats_season": null
       },
       {
-        "name": "Gabriel Benyard",
+        "name": "Roc Taylor",
         "depth": 4,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "SWR",
         "standard_pos": "WR",
+        "cap_number": "$1,005,000",
         "stats": {},
         "stats_season": null
       }
@@ -173,6 +174,7 @@
         "attainment": "22/1",
         "standard_slot": "LT",
         "standard_pos": "OL",
+        "cap_number": "$17,560,000",
         "stats": {},
         "stats_season": 2025
       },
@@ -183,6 +185,7 @@
         "attainment": "U/GB",
         "standard_slot": "LT",
         "standard_pos": "OL",
+        "cap_number": "$4,000,000",
         "stats": {},
         "stats_season": null
       },
@@ -193,16 +196,18 @@
         "attainment": "U/LV",
         "standard_slot": "LT",
         "standard_pos": "OL",
+        "cap_number": "$2,000,000",
         "stats": {},
         "stats_season": null
       },
       {
-        "name": "Isaia Glass",
+        "name": "Ryan Hayes",
         "depth": 4,
         "injured": false,
-        "attainment": "CF26",
+        "attainment": "W/Ten",
         "standard_slot": "LT",
         "standard_pos": "OL",
+        "cap_number": "$1,005,000",
         "stats": {},
         "stats_season": null
       }
@@ -215,6 +220,7 @@
         "attainment": "U/Sea",
         "standard_slot": "LG",
         "standard_pos": "OL",
+        "cap_number": "$16,720,000",
         "stats": {},
         "stats_season": 2025
       },
@@ -225,16 +231,29 @@
         "attainment": "21/3",
         "standard_slot": "LG",
         "standard_pos": "OL",
+        "cap_number": "$1,215,000",
         "stats": {},
         "stats_season": 2025
       },
       {
-        "name": "Saahdiq Charles",
+        "name": "Ja'tyre Carter",
         "depth": 3,
         "injured": false,
-        "attainment": "SF25",
+        "attainment": "22/7",
         "standard_slot": "LG",
         "standard_pos": "OL",
+        "cap_number": "$1,075,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Joshua Gray",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LG",
+        "standard_pos": "OL",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -247,6 +266,7 @@
         "attainment": "U/NO",
         "standard_slot": "C",
         "standard_pos": "OL",
+        "cap_number": "$2,750,000",
         "stats": {},
         "stats_season": null
       },
@@ -257,6 +277,7 @@
         "attainment": "26/5",
         "standard_slot": "C",
         "standard_pos": "OL",
+        "cap_number": "$1,023,504",
         "stats": {},
         "stats_season": null
       },
@@ -267,6 +288,7 @@
         "attainment": "P/Bal",
         "standard_slot": "C",
         "standard_pos": "OL",
+        "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
       }
@@ -279,6 +301,7 @@
         "attainment": "U/Mia",
         "standard_slot": "RG",
         "standard_pos": "OL",
+        "cap_number": "$24,300,000",
         "stats": {},
         "stats_season": 2025
       },
@@ -289,16 +312,29 @@
         "attainment": "23/4",
         "standard_slot": "RG",
         "standard_pos": "OL",
+        "cap_number": "$1,337,934",
         "stats": {},
         "stats_season": 2025
       },
       {
-        "name": "Ja'tyre Carter",
+        "name": "Jake Curhan",
         "depth": 3,
         "injured": false,
-        "attainment": "22/7",
+        "attainment": "U/Arz",
         "standard_slot": "RG",
         "standard_pos": "OL",
+        "cap_number": "$1,075,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Isaia Glass",
+        "depth": 4,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "RG",
+        "standard_pos": "OL",
+        "cap_number": "$890,000",
         "stats": {},
         "stats_season": null
       }
@@ -311,6 +347,7 @@
         "attainment": "17/2",
         "standard_slot": "RT",
         "standard_pos": "OL",
+        "cap_number": "$21,103,088",
         "stats": {},
         "stats_season": 2025
       },
@@ -321,6 +358,7 @@
         "attainment": "26/1",
         "standard_slot": "RT",
         "standard_pos": "OL",
+        "cap_number": "$3,805,157",
         "stats": {},
         "stats_season": null
       },
@@ -331,16 +369,7 @@
         "attainment": "CF26",
         "standard_slot": "RT",
         "standard_pos": "OL",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Ryan Hayes",
-        "depth": 4,
-        "injured": false,
-        "attainment": "W/Ten",
-        "standard_slot": "RT",
-        "standard_pos": "OL",
+        "cap_number": "$891,666",
         "stats": {},
         "stats_season": null
       }
@@ -353,6 +382,7 @@
         "attainment": "21/3",
         "standard_slot": "TE",
         "standard_pos": "TE",
+        "cap_number": "$8,000,000",
         "stats": {
           "TGT": 37,
           "REC": 27,
@@ -369,6 +399,7 @@
         "attainment": "24/4",
         "standard_slot": "TE",
         "standard_pos": "TE",
+        "cap_number": "$1,293,559",
         "stats": {
           "TGT": 34,
           "REC": 29,
@@ -385,6 +416,7 @@
         "attainment": "25/5",
         "standard_slot": "TE",
         "standard_pos": "TE",
+        "cap_number": "$1,102,742",
         "stats": {
           "TGT": 25,
           "REC": 19,
@@ -402,26 +434,18 @@
         "attainment": "U/Atl",
         "standard_slot": "TE",
         "standard_pos": "TE",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Caden Prieskorn",
-        "depth": 5,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "TE",
-        "standard_pos": "TE",
+        "cap_number": "$1,125,000",
         "stats": {},
         "stats_season": null
       },
       {
         "name": "James Mitchell",
-        "depth": 6,
+        "depth": 5,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "TE",
         "standard_pos": "TE",
+        "cap_number": "$1,295,000",
         "stats": {
           "TGT": 3,
           "REC": 3,
@@ -431,12 +455,13 @@
         "stats_season": 2025
       },
       {
-        "name": "Chamon Metayer",
-        "depth": 7,
+        "name": "Caden Prieskorn",
+        "depth": 6,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "TE",
         "standard_pos": "TE",
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       }
@@ -449,6 +474,7 @@
         "attainment": "23/1",
         "standard_slot": "QB",
         "standard_pos": "QB",
+        "cap_number": "$12,076,615",
         "stats": {
           "CMP": 304,
           "ATT": 478,
@@ -467,6 +493,7 @@
         "attainment": "U/LV",
         "standard_slot": "QB",
         "standard_pos": "QB",
+        "cap_number": "$4,000,000",
         "stats": {},
         "stats_season": null
       },
@@ -477,6 +504,18 @@
         "attainment": "CF26",
         "standard_slot": "QB",
         "standard_pos": "QB",
+        "cap_number": "$888,333",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Kyle Trask",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "QB",
+        "standard_pos": "QB",
+        "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
       }
@@ -489,6 +528,7 @@
         "attainment": "21/4",
         "standard_slot": "RB",
         "standard_pos": "RB",
+        "cap_number": "$7,476,100",
         "stats": {
           "CAR": 134,
           "RU YDS": 511,
@@ -506,6 +546,7 @@
         "attainment": "24/2",
         "standard_slot": "RB",
         "standard_pos": "RB",
+        "cap_number": "$2,295,568",
         "stats": {},
         "stats_season": null
       },
@@ -516,6 +557,7 @@
         "attainment": "25/4",
         "standard_slot": "RB",
         "standard_pos": "RB",
+        "cap_number": "$1,257,186",
         "stats": {
           "CAR": 20,
           "RU YDS": 94,
@@ -532,6 +574,7 @@
         "attainment": "U/Phi",
         "standard_slot": "RB",
         "standard_pos": "RB",
+        "cap_number": "$1,262,500",
         "stats": {},
         "stats_season": null
       },
@@ -542,6 +585,7 @@
         "attainment": "SF25",
         "standard_slot": "RB",
         "standard_pos": "RB",
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       },
@@ -552,6 +596,7 @@
         "attainment": "CF26",
         "standard_slot": "RB",
         "standard_pos": "RB",
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       }
@@ -564,6 +609,7 @@
         "attainment": "20/1",
         "standard_slot": "LE",
         "standard_pos": "DI",
+        "cap_number": "$10,952,000",
         "stats": {
           "TKL": 33,
           "SACKS": 5.0,
@@ -579,6 +625,7 @@
         "attainment": "CF25",
         "standard_slot": "LE",
         "standard_pos": "DI",
+        "cap_number": "$1,005,000",
         "stats": {},
         "stats_season": null
       },
@@ -589,6 +636,7 @@
         "attainment": "CF26",
         "standard_slot": "LE",
         "standard_pos": "DI",
+        "cap_number": "$893,333",
         "stats": {},
         "stats_season": null
       },
@@ -599,6 +647,7 @@
         "attainment": "SF26",
         "standard_slot": "LE",
         "standard_pos": "DI",
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       }
@@ -611,6 +660,7 @@
         "attainment": "U/LAR",
         "standard_slot": "NT",
         "standard_pos": "DI",
+        "cap_number": "$8,033,333",
         "stats": {
           "TKL": 13,
           "SACKS": 0.5,
@@ -620,26 +670,28 @@
         "stats_season": 2025
       },
       {
-        "name": "Lee Hunter",
-        "depth": 2,
-        "injured": false,
-        "attainment": "26/2",
-        "standard_slot": "NT",
-        "standard_pos": "DI",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Cam Jackson",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "25/5",
         "standard_slot": "NT",
         "standard_pos": "DI",
+        "cap_number": null,
         "stats": {
           "TKL": 2
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Parker Petersen",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "NT",
+        "standard_pos": "DI",
+        "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RDE": [
@@ -650,6 +702,7 @@
         "attainment": "U/KC",
         "standard_slot": "RE",
         "standard_pos": "DI",
+        "cap_number": "$18,643,333",
         "stats": {
           "TKL": 11,
           "SACKS": 2.0,
@@ -659,16 +712,15 @@
         "stats_season": 2025
       },
       {
-        "name": "Labryan Ray",
+        "name": "Lee Hunter",
         "depth": 2,
         "injured": false,
-        "attainment": "SF23",
+        "attainment": "26/2",
         "standard_slot": "RE",
         "standard_pos": "DI",
-        "stats": {
-          "TKL": 7
-        },
-        "stats_season": 2025
+        "cap_number": "$1,831,435",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Tywone Malone",
@@ -677,6 +729,7 @@
         "attainment": "CF26",
         "standard_slot": "RE",
         "standard_pos": "DI",
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       },
@@ -687,6 +740,7 @@
         "attainment": "SF26",
         "standard_slot": "RE",
         "standard_pos": "DI",
+        "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
       }
@@ -699,6 +753,7 @@
         "attainment": "U/Phi",
         "standard_slot": "LOLB",
         "standard_pos": "EDGE",
+        "cap_number": "$9,990,000",
         "stats": {},
         "stats_season": null
       },
@@ -709,6 +764,7 @@
         "attainment": "25/3",
         "standard_slot": "LOLB",
         "standard_pos": "EDGE",
+        "cap_number": "$1,477,396",
         "stats": {
           "TKL": 13,
           "SACKS": 1.5,
@@ -718,22 +774,24 @@
         "stats_season": 2025
       },
       {
-        "name": "Nick Hampton",
-        "depth": 3,
-        "injured": false,
-        "attainment": "U/LAR",
-        "standard_slot": "LOLB",
-        "standard_pos": "EDGE",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Isaiah Smith",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "LOLB",
         "standard_pos": "EDGE",
+        "cap_number": "$888,333",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Jeremiah Moon",
+        "depth": 4,
+        "injured": false,
+        "attainment": "U/Pit",
+        "standard_slot": "LOLB",
+        "standard_pos": "EDGE",
+        "cap_number": "$1,145,000",
         "stats": {},
         "stats_season": null
       }
@@ -746,6 +804,7 @@
         "attainment": "24/3",
         "standard_slot": "ILB_L",
         "standard_pos": "LB",
+        "cap_number": "$1,625,410",
         "stats": {
           "TKL": 36,
           "SACKS": 2.0,
@@ -756,47 +815,13 @@
         "stats_season": 2025
       },
       {
-        "name": "Bam Martin-scott",
-        "depth": 2,
-        "injured": false,
-        "attainment": "CF25",
-        "standard_slot": "ILB_L",
-        "standard_pos": "LB",
-        "stats": {
-          "TKL": 7,
-          "TFL": 1
-        },
-        "stats_season": 2025
-      },
-      {
-        "name": "Jackson Kuwatch",
-        "depth": 3,
-        "injured": false,
-        "attainment": "26/7",
-        "standard_slot": "ILB_L",
-        "standard_pos": "LB",
-        "stats": {},
-        "stats_season": null
-      }
-    ],
-    "RILB": [
-      {
-        "name": "Devin Lloyd",
-        "depth": 1,
-        "injured": false,
-        "attainment": "U/Jax",
-        "standard_slot": "ILB_R",
-        "standard_pos": "LB",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Claudin Cherelus",
         "depth": 2,
         "injured": false,
         "attainment": "W/NYJ",
-        "standard_slot": "ILB_R",
+        "standard_slot": "ILB_L",
         "standard_pos": "LB",
+        "cap_number": "$1,295,000",
         "stats": {
           "TKL": 14,
           "PD": 1
@@ -808,12 +833,51 @@
         "depth": 3,
         "injured": false,
         "attainment": "P/Cin",
-        "standard_slot": "ILB_R",
+        "standard_slot": "ILB_L",
         "standard_pos": "LB",
+        "cap_number": "$1,075,000",
         "stats": {
           "TKL": 4
         },
         "stats_season": 2025
+      }
+    ],
+    "RILB": [
+      {
+        "name": "Devin Lloyd",
+        "depth": 1,
+        "injured": false,
+        "attainment": "U/Jax",
+        "standard_slot": "ILB_R",
+        "standard_pos": "LB",
+        "cap_number": "$6,773,333",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Bam Martin-scott",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "ILB_R",
+        "standard_pos": "LB",
+        "cap_number": "$1,010,000",
+        "stats": {
+          "TKL": 7,
+          "TFL": 1
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Jackson Kuwatch",
+        "depth": 3,
+        "injured": false,
+        "attainment": "26/7",
+        "standard_slot": "ILB_R",
+        "standard_pos": "LB",
+        "cap_number": "$924,770",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Mapalo Mwansa",
@@ -822,6 +886,7 @@
         "attainment": "SF25*",
         "standard_slot": "ILB_R",
         "standard_pos": "LB",
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       }
@@ -834,6 +899,7 @@
         "attainment": "U/Min",
         "standard_slot": "ROLB",
         "standard_pos": "EDGE",
+        "cap_number": "$10,115,000",
         "stats": {
           "TKL": 6,
           "SACKS": 1.0,
@@ -850,6 +916,7 @@
         "attainment": "P/SF",
         "standard_slot": "ROLB",
         "standard_pos": "EDGE",
+        "cap_number": "$1,262,500",
         "stats": {
           "TKL": 6,
           "SACKS": 1.0,
@@ -865,6 +932,7 @@
         "attainment": "SF24",
         "standard_slot": "ROLB",
         "standard_pos": "EDGE",
+        "cap_number": "$2,000,000",
         "stats": {
           "TKL": 9
         },
@@ -877,6 +945,7 @@
         "attainment": "SF26",
         "standard_slot": "ROLB",
         "standard_pos": "EDGE",
+        "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
       }
@@ -889,6 +958,7 @@
         "attainment": "T/Sea",
         "standard_slot": "LCB",
         "standard_pos": "CB",
+        "cap_number": null,
         "stats": {
           "TKL": 54,
           "INTs": 4,
@@ -898,14 +968,17 @@
         "stats_season": 2025
       },
       {
-        "name": "Will Lee III",
+        "name": "Akayleb Evans",
         "depth": 2,
         "injured": false,
-        "attainment": "26/4",
+        "attainment": "W/Min",
         "standard_slot": "LCB",
         "standard_pos": "CB",
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$1,262,500",
+        "stats": {
+          "TKL": 6
+        },
+        "stats_season": 2025
       },
       {
         "name": "Tyrek Funderburk",
@@ -914,6 +987,7 @@
         "attainment": "SF26",
         "standard_slot": "LCB",
         "standard_pos": "CB",
+        "cap_number": "$1,005,000",
         "stats": {},
         "stats_season": null
       },
@@ -924,6 +998,7 @@
         "attainment": "SF26",
         "standard_slot": "LCB",
         "standard_pos": "CB",
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       }
@@ -936,6 +1011,7 @@
         "attainment": "U/LV",
         "standard_slot": "SS",
         "standard_pos": "S",
+        "cap_number": "$21,270,000",
         "stats": {
           "TKL": 65,
           "SACKS": 3.0,
@@ -947,14 +1023,22 @@
         "stats_season": 2025
       },
       {
-        "name": "Zakee Wheatley",
+        "name": "Lathan Ransom",
         "depth": 2,
         "injured": false,
-        "attainment": "26/5",
+        "attainment": "25/4",
         "standard_slot": "SS",
         "standard_pos": "S",
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$1,244,279",
+        "stats": {
+          "TKL": 21,
+          "SACKS": 1.0,
+          "INTs": 1,
+          "PD": 2,
+          "TFL": 2,
+          "QB HIT": 1
+        },
+        "stats_season": 2025
       },
       {
         "name": "Isaiah Simmons",
@@ -963,6 +1047,7 @@
         "attainment": "SF25",
         "standard_slot": "SS",
         "standard_pos": "S",
+        "cap_number": "$1,262,500",
         "stats": {
           "TKL": 1
         },
@@ -977,6 +1062,7 @@
         "attainment": "CC/Cin",
         "standard_slot": "FS",
         "standard_pos": "S",
+        "cap_number": "$2,000,000",
         "stats": {
           "TKL": 64,
           "INTs": 1,
@@ -985,21 +1071,15 @@
         "stats_season": 2025
       },
       {
-        "name": "Lathan Ransom",
+        "name": "Zakee Wheatley",
         "depth": 2,
         "injured": false,
-        "attainment": "25/4",
+        "attainment": "26/5",
         "standard_slot": "FS",
         "standard_pos": "S",
-        "stats": {
-          "TKL": 21,
-          "SACKS": 1.0,
-          "INTs": 1,
-          "PD": 2,
-          "TFL": 2,
-          "QB HIT": 1
-        },
-        "stats_season": 2025
+        "cap_number": "$1,012,613",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Demani Richardson",
@@ -1008,6 +1088,7 @@
         "attainment": "CF24",
         "standard_slot": "FS",
         "standard_pos": "S",
+        "cap_number": "$1,075,000",
         "stats": {
           "TKL": 3
         },
@@ -1022,6 +1103,7 @@
         "attainment": "21/1",
         "standard_slot": "RCB",
         "standard_pos": "CB",
+        "cap_number": "$10,899,400",
         "stats": {
           "TKL": 26,
           "INTs": 5,
@@ -1031,16 +1113,15 @@
         "stats_season": 2025
       },
       {
-        "name": "Akayleb Evans",
+        "name": "Will Lee III",
         "depth": 2,
         "injured": false,
-        "attainment": "W/Min",
+        "attainment": "26/4",
         "standard_slot": "RCB",
         "standard_pos": "CB",
-        "stats": {
-          "TKL": 6
-        },
-        "stats_season": 2025
+        "cap_number": "$1,147,858",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Robert Rochell",
@@ -1049,6 +1130,7 @@
         "attainment": "P/Dal",
         "standard_slot": "RCB",
         "standard_pos": "CB",
+        "cap_number": "$1,075,000",
         "stats": {
           "TKL": 2
         },
@@ -1061,6 +1143,7 @@
         "attainment": "CF26",
         "standard_slot": "RCB",
         "standard_pos": "CB",
+        "cap_number": "$891,666",
         "stats": {},
         "stats_season": null
       }
@@ -1073,6 +1156,7 @@
         "attainment": "24/5",
         "standard_slot": "NB",
         "standard_pos": "CB",
+        "cap_number": "$1,155,996",
         "stats": {
           "TKL": 43,
           "INTs": 1,
@@ -1088,6 +1172,7 @@
         "attainment": "CF25",
         "standard_slot": "NB",
         "standard_pos": "CB",
+        "cap_number": "$1,008,333",
         "stats": {
           "TKL": 8,
           "PD": 3
@@ -1101,6 +1186,7 @@
         "attainment": "CF26",
         "standard_slot": "NB",
         "standard_pos": "CB",
+        "cap_number": "$893,333",
         "stats": {},
         "stats_season": null
       }
@@ -1113,6 +1199,7 @@
         "attainment": "CC/Buf",
         "standard_slot": "PT",
         "standard_pos": "DEF",
+        "cap_number": "$1,650,000",
         "stats": {
           "FG%": "\u2014"
         },
@@ -1127,6 +1214,7 @@
         "attainment": "CC/Buf",
         "standard_slot": "H",
         "standard_pos": "DEF",
+        "cap_number": "$1,650,000",
         "stats": {
           "FG%": "\u2014"
         },
