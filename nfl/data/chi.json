@@ -139,13 +139,13 @@
         "stats_season": null
       },
       {
-        "name": "Ray-ray Mccloud",
+        "name": "Ray-ray Mccloud III",
         "depth": 4,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "SWR",
         "standard_pos": "WR",
-        "cap_number": null,
+        "cap_number": "$0",
         "stats": {
           "TKL": 18,
           "PD": 2
@@ -186,6 +186,17 @@
         "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Kiran Amegadjie",
+        "depth": 4,
+        "injured": false,
+        "attainment": "24/3",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": "$1,612,997",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LG": [
@@ -212,19 +223,8 @@
         "stats_season": null
       },
       {
-        "name": "Kiran Amegadjie",
-        "depth": 3,
-        "injured": false,
-        "attainment": "24/3",
-        "standard_slot": "LG",
-        "standard_pos": "OL",
-        "cap_number": "$1,612,997",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Kyle Hergel",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "SF25",
         "standard_slot": "LG",
@@ -265,6 +265,17 @@
         "standard_slot": "C",
         "standard_pos": "OL",
         "cap_number": "$890,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Wesley French",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "C",
+        "standard_pos": "OL",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -387,15 +398,15 @@
         "stats_season": null
       },
       {
-        "name": "Nikola Kalinic",
+        "name": "Stephen Carlson",
         "depth": 4,
         "injured": false,
-        "attainment": "SF25",
+        "attainment": "U/Cle",
         "standard_slot": "TE",
         "standard_pos": "TE",
-        "cap_number": "$1,005,000",
+        "cap_number": "$1,145,000",
         "stats": {},
-        "stats_season": 2025
+        "stats_season": null
       },
       {
         "name": "Qadir Ismail",
@@ -409,15 +420,15 @@
         "stats_season": null
       },
       {
-        "name": "Stephen Carlson",
+        "name": "Nikola Kalinic",
         "depth": 6,
         "injured": false,
-        "attainment": "U/Cle",
+        "attainment": "SF25",
         "standard_slot": "TE",
         "standard_pos": "TE",
-        "cap_number": "$1,145,000",
+        "cap_number": "$1,005,000",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2025
       },
       {
         "name": "Hayden Large",
@@ -621,33 +632,22 @@
         "cap_number": "$1,005,000",
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Jeremiah Martin",
-        "depth": 4,
-        "injured": false,
-        "attainment": "SF25",
-        "standard_slot": "LE",
-        "standard_pos": "EDGE",
-        "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "LDT": [
       {
-        "name": "Gervon Dexter Sr.",
+        "name": "Grady Jarrett",
         "depth": 1,
         "injured": false,
-        "attainment": "23/2",
+        "attainment": "CC/Atl",
         "standard_slot": "LDT",
         "standard_pos": "DI",
-        "cap_number": "$2,139,369",
+        "cap_number": "$18,925,000",
         "stats": {
-          "TKL": 21,
-          "SACKS": 6.0,
-          "TFL": 6,
-          "QB HIT": 11
+          "TKL": 14,
+          "SACKS": 1.5,
+          "TFL": 1,
+          "QB HIT": 8
         },
         "stats_season": 2025
       },
@@ -672,33 +672,22 @@
         "cap_number": "$1,175,000",
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Jayden Loving",
-        "depth": 4,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "LDT",
-        "standard_pos": "DI",
-        "cap_number": "$891,666",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "RDT": [
       {
-        "name": "Grady Jarrett",
+        "name": "Gervon Dexter Sr.",
         "depth": 1,
         "injured": false,
-        "attainment": "CC/Atl",
+        "attainment": "23/2",
         "standard_slot": "RDT",
         "standard_pos": "DI",
-        "cap_number": "$18,925,000",
+        "cap_number": "$2,139,369",
         "stats": {
-          "TKL": 14,
-          "SACKS": 1.5,
-          "TFL": 1,
-          "QB HIT": 8
+          "TKL": 21,
+          "SACKS": 6.0,
+          "TFL": 6,
+          "QB HIT": 11
         },
         "stats_season": 2025
       },
@@ -721,6 +710,17 @@
         "standard_slot": "RDT",
         "standard_pos": "DI",
         "cap_number": "$942,902",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Jayden Loving",
+        "depth": 4,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": "$891,666",
         "stats": {},
         "stats_season": null
       }
@@ -771,6 +771,17 @@
           "TFL": 2
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Jeremiah Martin",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "RE",
+        "standard_pos": "EDGE",
+        "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "WLB": [
@@ -960,6 +971,23 @@
         "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "William Wright",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LCB",
+        "standard_pos": "CB",
+        "cap_number": "$885,000",
+        "stats": {
+          "TKL": 54,
+          "INTs": 5,
+          "PD": 11,
+          "TFL": 3,
+          "QB HIT": 1
+        },
+        "stats_season": 2025
       }
     ],
     "SS": [
@@ -1015,17 +1043,6 @@
           "QB HIT": 6
         },
         "stats_season": 2025
-      },
-      {
-        "name": "Brandon Hill",
-        "depth": 5,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "SS",
-        "standard_pos": "S",
-        "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "FS": [
@@ -1105,21 +1122,15 @@
         "stats_season": null
       },
       {
-        "name": "William Wright",
+        "name": "Beanie Bishop Jr.",
         "depth": 3,
-        "injured": false,
+        "injured": true,
         "attainment": "SF26",
         "standard_slot": "RCB",
         "standard_pos": "CB",
-        "cap_number": "$885,000",
-        "stats": {
-          "TKL": 54,
-          "INTs": 5,
-          "PD": 11,
-          "TFL": 3,
-          "QB HIT": 1
-        },
-        "stats_season": 2025
+        "cap_number": "$1,005,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "NB": [
@@ -1162,17 +1173,6 @@
           "TKL": 3
         },
         "stats_season": 2025
-      },
-      {
-        "name": "Beanie Bishop",
-        "depth": 4,
-        "injured": true,
-        "attainment": "SF26",
-        "standard_slot": "NB",
-        "standard_pos": "CB",
-        "cap_number": "$1,005,000",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "PT": [
