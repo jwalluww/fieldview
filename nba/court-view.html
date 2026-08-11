@@ -596,7 +596,10 @@ function getStarter(pos) {
     const manual = teamPlayers.find(p => p.id === manualStarters[pos]);
     if (manual) return manual;
   }
-  const candidates = teamPlayers.filter(p => p.pos === pos);
+  const usedElsewhere = new Set(
+    Object.entries(manualStarters).filter(([k]) => k !== pos).map(([, id]) => id)
+  );
+  const candidates = teamPlayers.filter(p => p.pos === pos && !usedElsewhere.has(p.id));
   if (!candidates.length) return null;
   const starters = candidates.filter(p => p.status === 'starter');
   // among starters at this position, take the highest-minutes one; if
@@ -699,18 +702,18 @@ function attachSubsPopoverHandlers(layer) {
         openPopoverPos = null;
         return;
       }
-      const starter = getStarter(pos);
+      const allStarterIds = new Set(ZONE_ORDER.map(z => getStarter(z)?.id).filter(Boolean));
       const subs = teamPlayers
-        .filter(p => p.pos === pos && (!starter || p.id !== starter.id))
+        .filter(p => !allStarterIds.has(p.id))
         .sort((a, b) => (b.mpg || 0) - (a.mpg || 0));
 
-      popover.innerHTML = `<div class="subs-pop-label">Sub in at ${pos}</div>` +
+      popover.innerHTML = `<div class="subs-pop-label">Sub in (any position)</div>` +
         (subs.length ? subs.map(s => `
           <div class="subs-row" data-pid="${s.id}">
             <div class="subs-dot" style="background:${ratingColor(s.rating)}">${s.rating || '—'}</div>
             <div class="subs-name">${s.name}</div>
             <div class="subs-mpg">${s.mpg != null ? s.mpg : '—'}</div>
-          </div>`).join('') : `<div class="subs-empty">No other ${pos} available</div>`);
+          </div>`).join('') : `<div class="subs-empty">No bench players available</div>`);
 
       const courtCanvas = card.closest('.court-canvas');
       const rect = card.getBoundingClientRect();
@@ -723,7 +726,7 @@ function attachSubsPopoverHandlers(layer) {
       popover.querySelectorAll('.subs-row').forEach(row => {
         row.addEventListener('click', (ev) => {
           ev.stopPropagation();
-          substitutePlayer(row.dataset.pid);
+          substitutePlayer(row.dataset.pid, pos);
           popover.classList.remove('open');
           openPopoverPos = null;
         });
@@ -732,12 +735,10 @@ function attachSubsPopoverHandlers(layer) {
   });
 }
 
-function substitutePlayer(pid) {
+function substitutePlayer(pid, targetPos) {
   const p = teamPlayers.find(pl => String(pl.id) === String(pid));
-  // A player with no resolved granular position (PG/SG/SF/PF/C) has no
-  // court zone to swap into -- nothing to do.
-  if (!p || !ZONE_ORDER.includes(p.pos)) return;
-  manualStarters[p.pos] = p.id;
+  if (!p) return;
+  manualStarters[targetPos] = p.id;
   hidePopup();
   renderCourt();
   renderBenchList();

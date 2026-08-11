@@ -4,7 +4,7 @@ Multi-Sport intelligence platform.
 Live at https://jwalluww.github.io/fieldview/
 Repo: https://github.com/jwalluww/fieldview (public)
 Purpose: FieldView is the primary website for sports analytics. Each sport will have a FieldView and a TableView. NFL has FormationView, NBA has CourtView, NHL has IceView, MLB has DiamondView, MLS has PitchView (EPL will also have PitchView). This view will show all the players in their positions on the playing field with important metrics & statistics and substitutions. TableView for each sport will be a table with statistics. Eventually, ReView will be created for each sport. FieldView is for before the game - understanding where players play on the field. ReView is for after the game - replays, highlights, tweets, stats, box scores, etc. - a one-stop-shop for what happened last night or last week in the sport in general.
-Flow: As of 8/1, I am working on NFL & NBA for FormationView & CourtView and getting rosters lined up and stats together. Would love to get these cleaner before moving on. Next step after these look good will be other sports and the table views. Then I will hit up ReView.
+Flow: NFL and NBA FormationView/CourtView are in good shape — layout, sizing, backgrounds, and substitution UX have all been through real design-and-ship rounds. Branching into MLB now (DiamondView) as the next sport, ahead of the original "finish NFL/NBA fully first" sequencing — an intentional call, not drift, made because NFL/NBA are stable enough to serve as a real template.
 
 ---
 
@@ -12,7 +12,7 @@ Flow: As of 8/1, I am working on NFL & NBA for FormationView & CourtView and get
 - Frontend: Plain HTML/CSS/JS — no React, no frameworks
 - Backend: Python 3.11 scrapers
 - Hosting: GitHub Pages
-- Automation: GitHub Actions (runs Tuesdays at 10am UTC)
+- Automation: GitHub Actions (runs Tuesdays at 10am UTC) — note `fetch_stats.py` (NBA) is no longer part of the cloud job, see NBA Stats Scraper section below
 - Dev environment: Windows, VS Code + Claude Code extension (chat panel)
 
 ---
@@ -53,8 +53,8 @@ All NFL scripts are invoked from the repo root (e.g. `python nfl/scripts/scrape_
 - `nba/player-table.html` — sortable/filterable player table, mirrors `nfl/depth-chart.html`'s pattern
 
 ### Scripts (NBA)
-- `nba/scripts/fetch_stats.py` — nba_api season averages (`leaguedashplayerstats`) + roster bio (`commonteamroster`, all 30 teams), writes `nba/data/nba_stats.json`. Also computes the MPG-derived `rotation_status` fallback (starter >=24 MPG, rotation >=15, else bench) that `build_nba_master.py` uses when a player isn't covered by the depth chart.
-- `nba/scripts/scrape_2kratings.py` — 2kratings.com per-team pages (table `id="lists-table"`, no all-players index — 30 separate team-page fetches), writes `nba/data/nba_ratings_2k.json`
+- `nba/scripts/fetch_stats.py` — nba_api season averages (`leaguedashplayerstats`) + roster bio (`commonteamroster`, all 30 teams), writes `nba/data/nba_stats.json`. **Runs locally/manually only as of this round — removed from the GitHub Actions `scrape-nba` job.** See NBA Stats Scraper section below for why.
+- `nba/scripts/scrape_2kratings.py` — 2kratings.com per-team pages (table `id="lists-table"`, no all-players index — 30 separate team-page fetches), writes `nba/data/nba_ratings_2k.json`. **Currently blocked by TLS fingerprinting mid-fix — see 2K Ratings Scraper section below, this is an open issue, not resolved.**
 - `nba/scripts/scrape_contracts_spotrac.py` (NBA version, distinct file from `nfl/scripts/scrape_contracts_spotrac.py`) — spotrac.com/nba/contracts/remaining, single-page league-wide scrape, writes `nba/data/contracts_nba.json`
 - `nba/scripts/scrape_nbadepthcharts.py` — nbadepthcharts.com's published Google Sheet (CSV export), writes `nba/data/nba_depth_chart.json`. See "NBA Depth Chart Source" below.
 - `nba/scripts/build_nba_db.py` — DuckDB raw ingestion: loads `nba_stats.json`/`contracts_nba.json`/`nba_ratings_2k.json`/`nba_depth_chart.json` into `nba/data/fieldview.duckdb`, unmodified (one table per source, `row_id` + `loaded_at`). No live pulls here — every NBA source is already a static file by this point.
@@ -76,11 +76,11 @@ Full pipeline detail (sources, join keys, execution order, current match-rate nu
 NBA scripts are also invoked from the repo root (e.g. `python nba/scripts/fetch_stats.py`), same convention as NFL.
 
 ### NBA Data Pipeline Order
-`fetch_stats.py` first (everything else matches against its player universe), then `scrape_contracts_spotrac.py` / `scrape_2kratings.py` / `scrape_nbadepthcharts.py` in any order (all independent of each other), then **`build_nba_db.py` → `build_nba_match.py` → `export_nba_master.py nba/data/nba_players_master.json`** last. Matches `.github/workflows/scrape.yml`'s `scrape-nba` job exactly — confirmed against the live workflow file, including that `scrape_nbadepthcharts.py` **is** in that job (a prior version of this doc claimed it wasn't; that was stale, not current).
+`fetch_stats.py` first — **now run locally/manually, not in the cloud job** — then `scrape_contracts_spotrac.py` / `scrape_2kratings.py` / `scrape_nbadepthcharts.py` in any order (all independent of each other), then **`build_nba_db.py` → `build_nba_match.py` → `export_nba_master.py nba/data/nba_players_master.json`** last, still in the cloud job. The `scrape-nba` job in `scrape.yml` runs off whatever `nba_stats.json` is currently committed rather than a fresh cloud pull.
 
 ---
 
-## Data Pipeline Order
+## Data Pipeline Order (NFL)
 Run locally or via GitHub Actions in this exact order (matches `scrape.yml`'s `scrape` job, confirmed against the live workflow file):
 1. scrape_depth.py
 2. scrape_otc.py
@@ -150,9 +150,40 @@ Frontend `STAT_COLS` in `nfl/depth-chart.html` uses these canonical keys.
 
 ## NBA Stats Scraper (nba/scripts/fetch_stats.py)
 - stats.nba.com fingerprints on header *completeness*, not just User-Agent — a thin/hand-rolled header dict gets the connection dropped outright even with a convincing UA string. The header set in the script (full Sec-Ch-Ua/Accept-Encoding/Pragma set, not just User-Agent+Referer) was verified against a live pull — don't trim it down.
+- **GitHub Actions IP block (resolved):** the script started failing exclusively on the hosted Actions runner — read-timeout after 6 retries, no successful requests at all that run — while working perfectly when run locally on the same day with the same code. Confirmed as an IP-level issue (cloud/datacenter IPs like GitHub-hosted runners get treated worse by stats.nba.com than residential IPs), not a header/code problem, since identical code succeeded locally and failed only on the runner. Fixed by pulling `fetch_stats.py` out of the cloud `scrape-nba` job — it now runs locally/manually only, with the rest of the NBA pipeline (`build_nba_db.py` → `build_nba_match.py` → `export_nba_master.py`) continuing in the cloud off whichever `nba_stats.json` is currently committed. Confirmed working again as of this round.
 - `games_started` has no bulk NBA stats endpoint — only `playercareerstats`, one call per player (~580 extra calls for the full league). Decided against pulling it (too slow, too much extra rate-limit exposure for one field). `rotation_status` is derived from minutes-per-game alone instead: starter if MPG >= 24, rotation if MPG >= 15, else bench. **Starting guess, not a settled rule** — revisit once real usage patterns are known.
 - Season format is `"YYYY-YY"` (e.g. `"2025-26"`), named by the year it starts (Oct–June) — before October, "current season" resolves to the prior year's, same shape as `nfl/scripts/season_utils.py` but with an October cutoff instead of September.
 - Every call goes through an exponential-backoff retry wrapper — stats.nba.com throttles/blocks aggressively, budget for retries not a single clean pull.
+
+---
+
+## 2K Ratings Scraper (nba/scripts/scrape_2kratings.py) — OPEN ISSUE, not resolved
+- Started failing with 403 Forbidden mid-run (8/30 teams succeeded, then blocked for the rest of that run) — a different failure signature than `fetch_stats.py`'s timeout (a hard rejection, not a hang).
+- Ruled out request speed (existing ~1–1.5s delay between requests was already reasonable) and thin headers (added a full browser-realistic header set + `requests.Session()` for cookie persistence) — neither fixed it. A rerun immediately after actually failed *faster* (blocked on request 1), which pointed at an active IP-level cooldown from the first failed run, not a header gap.
+- **Confirmed via direct browser test that the site itself loads fine from the same machine/IP** while the script still gets 403'd even with a full session and complete headers — this rules out a site-wide block or outage and points specifically at **TLS fingerprinting**: Cloudflare-class protection checks the TLS handshake (cipher order, extensions, JA3 signature) before HTTP headers are even read, and Python's `requests`/`urllib3` has a detectably different handshake than real Chrome regardless of what headers are set on top.
+- Fix in progress: swapped to `curl_cffi` (`session = requests.Session(impersonate="chrome120")` from the `curl_cffi.requests` module), which mimics Chrome's real TLS/HTTP2 fingerprint rather than just its headers. A single-page test came back clean (real HTML, no 403).
+- **Status as of this session: still not fully working.** A full 30-team run with the `curl_cffi` fix got through only 1 team before a 403, worse than the original 8-team run. Suspected cause: repeated debugging attempts within the same day (original run, immediate retry, isolated test, full run) likely compounded/extended whatever IP-level block or reputation flag got triggered, rather than the fix itself being wrong.
+- **Next steps, not yet done:** (1) stop testing entirely for several hours / overnight before trying again — every attempt during an active block, including failed ones, likely extends it; (2) added diagnostic logging on 403s to print `server`, `retry-after`, and `cf-ray` response headers so the next attempt has real data instead of another guess; (3) reduced 403-specific retry count from 4 to 2 so a future blocked run fails fast instead of hammering the block further.
+- Don't consider this fixed until a full 30-team run completes clean after a genuine cooldown period.
+
+---
+
+## NBA Position Ranking (court-view.html)
+- `computePositionRanks(players)` computes each player's league-wide rank within their position group (`PG/SG/SF/PF/C`) by 2K `overall_rating`, e.g. `PF 3/46` — mirrors NFL's `madden_pos_label` convention exactly. Computed once, client-side, in `loadAllPlayers()` right after `allPlayers` is built — league-wide across all 30 teams, not per-team.
+- Displayed under the player name on court starters, and replacing the plain position letter in `.bench-meta` for bench rows (falls back to plain `p.pos` if no rank exists, never blank).
+- Players with no `overall_rating` get no badge at all — not an "NR" placeholder. Confirmed for real: **LeBron James currently has `rating: null`** and gets no badge. This is very likely a data bug, not a real gap — 2kratings.com rates every rotation player, so a total unknown missing a rating is expected but the actual GOAT-tier active superstar missing one is a canary, same shape as the Surtain/Woolen NFL alias bugs already fixed in this project. **Not yet investigated** — check `nba_ratings_2k.json`'s `unmatched` array for his name before trusting the position-rank feature's edge cases further; if found there, it's likely a one-line `NBA_NAME_ALIASES` fix.
+- Ties (equal ratings) get sequential ranks based on JS's stable sort order, not a shared "tied" rank — intentional, not a bug.
+- 514/587 league players ranked as of the last run; the other 73 have no 2K rating (LeBron included, see above).
+
+---
+
+## NBA Substitution — positionless (in progress, not yet confirmed shipped)
+- Original click-to-sub only offered same-position bench players. Abandoned the Guard/Wing/Big bucket idea after research turned up no usable existing data source (`nba_api`'s `commonplayerinfo` coarse `POSITION` field and Cleaning the Glass's G/W/B convention were the two candidates considered; neither panned out as buildable within the current pipeline). **Positionless subbing was chosen as the replacement**, not an addition — any bench player can sub into any court slot now, which also fits the earlier project conclusion that NBA position labels matter less than NFL's.
+- This requires more than deleting the position filter, because of a real duplicate-player bug the filter was accidentally preventing: without it, a manually-placed player could also get auto-selected again for their *natural* position elsewhere on court. Fix design (drafted, not yet confirmed applied):
+  - `getStarter(pos)`'s natural-fallback path now excludes any player id already placed via `manualStarters` in a *different* zone.
+  - The subs popover excludes all 5 currently-resolved starters (not just the clicked zone's own starter), computed via `getStarter()` across `ZONE_ORDER`.
+  - `substitutePlayer(pid, targetPos)` now takes the target zone explicitly (the clicked slot) rather than deriving it from the incoming player's own position, since that assumption breaks once positions aren't required to match.
+- The position-rank badge (`PG 5/90` etc.) still shows the player's *real* position regardless of which zone they're standing in — useful now, since you can see at a glance that the player in the C slot is actually a point guard.
 
 ---
 
@@ -189,13 +220,16 @@ Frontend `STAT_COLS` in `nfl/depth-chart.html` uses these canonical keys.
 - `index.html` defaults to the NFL state (`currentSport = 'nfl'` in static markup) and now reads `?sport=` from the URL at load to initialize into NBA state instead, via the existing `selectSport()` function — a plain visit to `index.html` is unaffected.
 - Both NBA pages' logo/back buttons link to `../index.html?sport=nba` (previously bare `../index.html`, which always landed on the NFL-default hub regardless of which sport you came from). NFL's own back button deliberately untouched.
 - `formation.html` renamed to `court-view.html` (page title, nav button labels, index.html's card label/href all updated). Cross-links fixed in `player-table.html`, `index.html`, and comments in `build_nba_master.py`.
+- **Index page background:** replaced the old abstract same-shape-different-color stripe gradient with literal per-sport texture, generated at runtime as inline SVG data URIs — real yard-line ticks for NFL, vertical wood-grain planks + a faint free-throw-key/circle accent for NBA (`nflTexture()`/`nbaTexture()`/`placeholderTexture()`/`applyFieldBackground(sport)`). `SPORTS` config's old `background: {stripeA, stripeB}` fields were removed as dead weight — nothing reads them anymore.
 
 ---
 
 ## CourtView Frontend Interactions (court-view.html)
+- **Layout:** two-column — `.left-col` (compact court, currently 598px wide, 64px starter dots) + `.right-col` (full bench/rotation list, all players visible with zero scroll at 1280×900). Bench rows show PPG/RPG/APG/MPG per player, not just minutes.
+- **Court zone alignment (resolved):** `COURT_ZONES` was a "loose" percentage approximation that looked fine small but became visibly off once the court render doubled in size. Corrected to offset post positions instead of a dead-center-under-the-hoop `C` — confirmed good by direct visual check against the real render.
+- **Substitution — now positionless**, see "NBA Substitution" section above for the full design and current (unconfirmed-shipped) status. `manualStarters` (`{pos: playerId}`) remains pure frontend view state — reset on every team switch, never written back to `nba_players_master.json`.
 - **Hover stat popup**: `mouseenter`/`mouseleave` attached directly per rendered node (both court cards and rotation rows) rather than event delegation — avoids the mouseover/mouseout bubbling-flicker problem. Re-attached after every `renderCourt()`/`renderRotation()` call via `attachPopupHandlers()`. Positioning (`positionPopup()`) anchors right of the hovered element, flips left if it would clip the right edge, clamps both axes to the viewport.
-- **Click-to-substitute**: clicking a rotation-list player swaps them into their position's court slot. `manualStarters` (`{pos: playerId}`) is pure frontend view state — reset on every team switch, never written back to `nba_players_master.json`. `getStarter(pos)` checks it before falling back to the existing MPG-based starter logic, so the swapped-out starter's return to the rotation list (re-sorted by MPG) falls out of the existing reactive render pipeline for free.
-- **Known gap, not forgotten**: no undo path for a single substitution short of switching teams away and back. Deferred to a future instruction that will also rework starter layout and substitution mechanics more generally.
+- **Known gap, not forgotten**: `.subs-name` in the substitution popover still truncates long names ("Sandro Mamuk...") — a separate, smaller class from `.bench-name` that didn't get the same width/font treatment in the sizing round. Small follow-up, not urgent.
 
 ---
 
@@ -232,35 +266,38 @@ Frontend `STAT_COLS` in `nfl/depth-chart.html` uses these canonical keys.
 - No speculative features or config beyond what's asked
 - Plain HTML/CSS/JS only — no React, no build tools
 - Live Server (VS Code extension by Ritwick Dey) for local dev preview
+- **Scraper hardening pattern (new):** two separate scraper incidents this round (stats.nba.com IP-blocking cloud runners, 2kratings.com TLS-fingerprinting `requests`) reinforce the same lesson already documented for stats.nba.com — anti-bot protection increasingly operates below the HTTP-header layer (source IP reputation, TLS handshake fingerprint) where header tuning alone can't fix it. When a new sport's scrapers hit similar walls, check IP/TLS-layer causes before re-tuning headers a third or fourth time.
 
 ---
 
 ## Known Outstanding Bugs
 - OL snap-share coverage sits at ~61% (306/504) — real data-source ceiling (import_snap_counts/PFR crosswalk coverage for OL specifically), not considered worth chasing further
 - NFL: CB/S has the same position-taxonomy-collapse problem EDGE/DI had (see GSIS Matching Pipeline) — nflreadpy rosters (the GSIS fallback source) tags all defensive backs generically as `DB`, with no `CB`/`S` split at all, so that fallback path structurally can never match a CB/S player. Known, not fixed — same bug class as EDGE/DI, just not yet addressed for this position group.
-- NBA: no undo path for a single court substitution short of switching teams away and back (see CourtView Frontend Interactions) — deferred, not forgotten
-
-**Note on this list:** the previous version of this entry claimed `scrape_nbadepthcharts.py` "is not yet in `scrape.yml`'s `scrape-nba` job" — checked the live workflow file directly and it's already there (has been since the job was last edited). That claim was stale, not current; removed rather than left in place. Both NFL and NBA also moved off a single build-script pipeline this round (`build_master.py`/`build_nba_master.py` → DB-backed multi-script pipelines) — see `nfl/PIPELINE.md` / `nba/PIPELINE.md` for the current architecture, not the file map history above.
+- NBA: no undo path for a single court substitution short of switching teams away and back — deferred, not forgotten
+- NBA: `.subs-name` popover text truncation — see CourtView Frontend Interactions above
+- NBA: LeBron James `rating: null` in `nba_players_master.json` — suspected 2kratings.com name-match bug, same class as previously-fixed Surtain/Woolen/Cyrillic-character bugs. Not yet checked against `nba_ratings_2k.json`'s `unmatched` array.
+- NBA: `scrape_2kratings.py` currently blocked mid-fix (TLS fingerprinting) — see 2K Ratings Scraper section above. Not resolved as of this round.
 
 ---
 
 ## Roadmap
 
 **In Progress**
-- ⬜ NBA CourtView zone alignment — replace dead-center-under-hoop `COURT_ZONES` with offset post positions (fix drafted, pending Claude Code apply + verify)
-- ⬜ Guard/Wing/Big data source — researching Cleaning the Glass's G/W/B convention; verify `nba_api`'s `commonplayerinfo` endpoint's coarser `POSITION` field as a possible existing source before building a manual mapping
-- ⬜ Rank NBA players by position, surfaced on court — mirrors the NFL depth-chart-by-position ranking, applied to CourtView
-- ⬜ Tactical stat selection — figuring out which few stats actually matter per view; feeds both CourtView hover/bench cards and TableView columns, so solve once and both inherit it
+- ⬜ MLB expansion kickoff — DiamondView + stats/ratings pipeline, following the same 5-script shape as NFL/NBA (scrape rosters/stats → scrape ratings → build_mlb_db → build_mlb_match → export_mlb_master). Intentionally jumps ahead of the original "finish NFL/NBA fully first" sequencing.
+- ⬜ NBA positionless substitution — design drafted (see section above), not yet confirmed applied/verified
+- ⬜ 2K ratings scraper TLS block — `curl_cffi` fix in progress, full run not yet confirmed clean after a real cooldown period
+- ⬜ Tactical stat selection — still just ongoing thinking; feeds both CourtView hover/bench cards and TableView columns, so solve once and both inherit it
 
 **Up Next**
+- ⬜ NHL expansion — second sport after MLB; public NHL stats API is the cleanest data layer of the remaining candidates, structurally closer to NBA (fluid positions, bench-heavy) than to NFL/MLB. Open question, not yet verified: whether a 2K-ratings-equivalent fan site exists for EA's NHL game.
 - ⬜ Opponent overlay (NFL) — same-team offense+defense on the field simultaneously first, then a real versus view (your team's offense against an actual opponent's defense)
-- ⬜ Additional data sources (advanced metrics): PFF grades, RAS scores, combine data, EPA/DVOA — via `nflreadpy` (see PIPELINE notes: `load_ftn_charting()`, `load_nextgen_stats()`, `load_participation()`, `load_combine()` are all already free and unused)
+- ⬜ Additional NFL data sources (advanced metrics): PFF grades, RAS scores, combine data, EPA/DVOA — via `nflreadpy` (see PIPELINE notes: `load_ftn_charting()`, `load_nextgen_stats()`, `load_participation()`, `load_combine()` are all already free and unused)
 - ⬜ TableView stat/view-package refinement — right stat columns and filter presets to actually run an analysis or scan the league quickly, not just look at a roster
 - ⬜ Popover `.subs-name` truncation fix — small, same width/font treatment `.bench-name` already got
-- ⬜ NBA Big/Wing/Guard bucket UI — once the data source item above is settled
+- ⬜ LeBron James `rating: null` investigation — check `nba_ratings_2k.json`'s `unmatched` array before trusting the position-rank feature's edge cases further
 
 **Backlog**
-- ⬜ Multi-sport expansion — MLB/NHL/MLS/EPL (once NFL/NBA are genuinely the finished template to copy, not before)
+- ⬜ MLS/EPL expansion (soccer) — last of the four remaining sports, after MLB and NHL. Ratings side is actually the strongest candidate of all four (sofifa.com/EA FC is a large, well-known, scrapable database), but the free stats/roster API landscape is more fragmented than pybaseball/NHL's API/nba_api — pick after the other two sports prove out the process.
 - ⬜ ReView overview — replays, highlights, box scores, tweets, podcasts; comes after FormationView/CourtView/TableView are dialed in, per original sequencing
 - ⬜ Mobile responsiveness pass — desktop-only is the explicit call for now
 - ⬜ NBA table view column cleanup (same treatment NFL's table view already got)
@@ -268,6 +305,9 @@ Frontend `STAT_COLS` in `nfl/depth-chart.html` uses these canonical keys.
 **Wish List**
 - ⬜ Player comparison
 - ⬜ Historical rating trends
+
+**Dropped**
+- ~~NBA Big/Wing/Guard bucket UI~~ — no usable existing data source found after checking `nba_api`'s `commonplayerinfo` coarse position field and Cleaning the Glass's convention. Superseded by positionless substitution instead of built as originally planned.
 
 **Not in FieldView - called ReView:** League leaderboards, game reviews, highlights, replays, podcasts, tweets — these belong in a separate media/highlights page down the road. Called ReView for being able to review the past day/week of games, highlights, box scores, stats, tweets, drama, reddit posts, podcasts, etc. Just to catch up on the league and all it's action.
 

@@ -22,8 +22,22 @@ from name_utils import normalize_name, normalize_for_matching, NBA_NAME_ALIASES
 BASE_URL = "https://www.2kratings.com/teams/"
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                  "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+                  "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Referer": "https://www.2kratings.com/",
+    "Upgrade-Insecure-Requests": "1",
+    "Sec-Ch-Ua": '"Chromium";v="120", "Not_A Brand";v="8"',
+    "Sec-Ch-Ua-Mobile": "?0",
+    "Sec-Ch-Ua-Platform": '"Windows"',
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "same-origin",
 }
+
+session = requests.Session()
+session.headers.update(HEADERS)
 
 STATS_PATH = os.path.join("nba", "data", "nba_stats.json")
 OUT_PATH = os.path.join("nba", "data", "nba_ratings_2k.json")
@@ -66,18 +80,46 @@ TEAM_SLUGS = {
 }
 
 
+# def fetch_with_retry(url, max_retries=4, base_delay=2.0):
+#     for attempt in range(1, max_retries + 1):
+#         try:
+#             resp = session.get(url, timeout=20)
+#             resp.raise_for_status()
+#             return resp.text
+#         except requests.exceptions.HTTPError as e:
+#             is_blocked = getattr(e.response, "status_code", None) == 403
+#             if attempt == max_retries:
+#                 raise
+#             # a 403 means we're actively blocked, not a transient blip --
+#             # retrying in a few seconds does nothing, so back off much
+#             # harder than the normal exponential schedule.
+#             delay = (30 * attempt if is_blocked else base_delay * (2 ** (attempt - 1))) + random.uniform(0, 3)
+#             print(f"  retry {attempt}/{max_retries} after error ({e}); sleeping {delay:.1f}s")
+#             time.sleep(delay)
+
+from curl_cffi import requests
+
+session = requests.Session(impersonate="chrome120")
+
 def fetch_with_retry(url, max_retries=4, base_delay=2.0):
     for attempt in range(1, max_retries + 1):
         try:
-            resp = requests.get(url, headers=HEADERS, timeout=20)
+            resp = session.get(url, timeout=20)
             resp.raise_for_status()
             return resp.text
+        # except Exception as e:
+        #     is_blocked = getattr(getattr(e, "response", None), "status_code", None) == 403
+        #     if attempt == max_retries:
+        #         raise
+        #     delay = (30 * attempt if is_blocked else base_delay * (2 ** (attempt - 1))) + random.uniform(0, 3)
+        #     print(f"  retry {attempt}/{max_retries} after error ({e}); sleeping {delay:.1f}s")
+        #     time.sleep(delay)
         except Exception as e:
-            if attempt == max_retries:
-                raise
-            delay = base_delay * (2 ** (attempt - 1)) + random.uniform(0, 1)
-            print(f"  retry {attempt}/{max_retries} after error ({e}); sleeping {delay:.1f}s")
-            time.sleep(delay)
+            resp = getattr(e, "response", None)
+            if resp is not None and getattr(resp, "status_code", None) == 403:
+                print(f"  blocked -- server: {resp.headers.get('server')}, "
+                    f"retry-after: {resp.headers.get('retry-after')}, "
+                    f"cf-ray: {resp.headers.get('cf-ray')}")
 
 
 def parse_int(text):
@@ -218,3 +260,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+# if __name__ == "__main__":
+#     print(fetch_with_retry(BASE_URL + "atlanta-hawks")[:200])
