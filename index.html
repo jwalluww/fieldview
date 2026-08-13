@@ -363,7 +363,7 @@ body {
   <!-- Sport selector -->
   <div class="sport-bar">
     <button class="sport-btn active" id="sportBtnNfl" onclick="selectSport('nfl')">NFL</button>
-    <button class="sport-btn soon" title="Coming soon">MLB</button>
+    <button class="sport-btn" id="sportBtnMlb" onclick="selectSport('mlb')">MLB</button>
     <button class="sport-btn soon" title="Coming soon">NHL</button>
     <button class="sport-btn" id="sportBtnNba" onclick="selectSport('nba')">NBA</button>
     <button class="sport-btn soon" title="Coming soon">MLS</button>
@@ -489,12 +489,25 @@ const SPORTS = {
     sourceCount: 1,
     updateCadence: 'Stub',
   },
+  mlb: {
+    tagline: 'MLB Intelligence Platform',
+    formationHref: 'mlb/diamond-view.html',
+    tableHref: 'mlb/player-table.html',
+    formationLabel: 'DiamondView',
+    formationDesc: 'See the current defensive alignment on the diamond, plus batting order and bench.',
+    formationFeatures: ['Team Logos', 'Defensive Alignment', 'Batting Order', 'Mock Data'],
+    tableLabel: 'Player Table',
+    tableDesc: 'Roster data across MLB teams. Filter, sort, and search by team, position, and role.',
+    tableFeatures: ['Sortable', 'Filterable', 'Batting Stats', 'Pitching Stats'],
+    teamCount: 30,
+    sourceCount: 1,
+    updateCadence: 'Stub',
+  },
   // Not built yet -- sport-bar buttons for these are still .soon and have
   // no onclick, so selectSport() is never called with these keys today.
   // The rest of the config (tagline, hrefs, features, counts) is added
   // when each sport is actually built.
   nhl: {},
-  mlb: {},
   mls: {},
   epl: {},
 };
@@ -523,6 +536,14 @@ function nbaTexture() {
   return `url("data:image/svg+xml,${encodeURIComponent(accent)}") no-repeat center 70%, repeating-linear-gradient(90deg, rgba(47,34,22,0.4) 0px, rgba(47,34,22,0.4) 21px, rgba(54,40,25,0.4) 21px, rgba(54,40,25,0.4) 42px)`;
 }
 
+function mlbTexture() {
+  const accent = `<svg xmlns="http://www.w3.org/2000/svg" width="700" height="700">
+    <rect x="250" y="250" width="300" height="300" fill="none" stroke="white" stroke-opacity="0.05" stroke-width="3" transform="rotate(45 400 400)"/>
+    <circle cx="400" cy="620" r="9" fill="white" fill-opacity="0.06"/>
+  </svg>`;
+  return `url("data:image/svg+xml,${encodeURIComponent(accent)}") no-repeat center 68%, repeating-linear-gradient(90deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 79px, transparent 79px, transparent 160px), linear-gradient(180deg, rgba(10,25,10,0) 0%, rgba(12,28,12,0.4) 100%)`;
+}
+
 function placeholderTexture() {
   return `repeating-linear-gradient(180deg, rgba(20,20,24,0) 0px, rgba(20,20,24,0) 80px, rgba(28,28,34,0.5) 80px, rgba(28,28,34,0.5) 160px)`;
 }
@@ -531,6 +552,7 @@ function applyFieldBackground(sport) {
   const bg = document.querySelector('.field-bg');
   if (sport === 'nfl') bg.style.background = nflTexture();
   else if (sport === 'nba') bg.style.background = nbaTexture();
+  else if (sport === 'mlb') bg.style.background = mlbTexture();
   else bg.style.background = placeholderTexture();
 }
 
@@ -540,6 +562,7 @@ function selectSport(sport) {
 
   document.getElementById('sportBtnNfl').classList.toggle('active', sport === 'nfl');
   document.getElementById('sportBtnNba').classList.toggle('active', sport === 'nba');
+  document.getElementById('sportBtnMlb').classList.toggle('active', sport === 'mlb');
 
   applyFieldBackground(sport);
 
