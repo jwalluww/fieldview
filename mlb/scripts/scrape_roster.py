@@ -13,27 +13,13 @@ hardcoded, so we're not trusting anyone's memory of MLB's numeric team IDs.
 """
 import duckdb
 import pandas as pd
-import requests
 import time
 from datetime import datetime, timezone
+from statsapi_utils import fetch_with_retry
 
 DB_PATH = "mlb/data/fieldview.duckdb"
 BASE_URL = "https://statsapi.mlb.com/api/v1"
 TEST_ABBR = "NYY"  # swap or remove once the shape is confirmed
-
-
-def fetch_with_retry(url, params=None, retries=3, backoff=2):
-    for attempt in range(retries):
-        try:
-            resp = requests.get(url, params=params, timeout=30)
-            resp.raise_for_status()
-            return resp
-        except requests.RequestException as e:
-            if attempt == retries - 1:
-                raise
-            wait = backoff ** attempt
-            print(f"  retry {attempt+1}/{retries} after error: {e} (waiting {wait}s)")
-            time.sleep(wait)
 
 
 def chunk_list(lst, size):
