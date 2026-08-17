@@ -771,6 +771,11 @@ function subEligiblePlayers(zone) {
   let pool;
   if (ZONE_GROUP[zone]) {
     pool = teamPlayers.filter(p => p.positionGroup === ZONE_GROUP[zone]);
+  } else if (zone === 'P') {
+    // Two-way players (Ohtani) carry position 'TWP', not 'P' -- exact-position
+    // gating alone would wrongly exclude a real pitcher from the P-zone pool.
+    // Scoped to P only: doesn't extend to C or any other standalone zone.
+    pool = teamPlayers.filter(p => p.position === zone || p.playerType === 'two_way');
   } else {
     pool = teamPlayers.filter(p => p.position === zone);
   }

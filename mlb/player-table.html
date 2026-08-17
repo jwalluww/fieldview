@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FieldView — Player Table</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #1a1b23;
+  --surface: #1e2028;
+  --surface2: #23252f;
+  --border: #1e2330;
+  --border2: #262d3d;
+  --text: #c8cad4;
+  --text-muted: #7d87a8;
+  --text-dim: #404660;
+  --accent: #00d4ff;
+  --gold: #f5a623;
+  --green: #22c55e;
+  --red: #ef4444;
+  --purple: #a855f7;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── HEADER ── */
+.header {
+  background: #0d1118;
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 52px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+
+.logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.logo span { color: var(--text-muted); font-weight: 400; }
+
+.header-divider { width: 1px; height: 24px; background: var(--border2); flex-shrink: 0; }
+
+.page-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+.view-toggle {
+  margin-left: auto;
+  display: flex;
+  gap: 2px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.view-btn {
+  background: none;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 14px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all .15s;
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 6px;
+  white-space: nowrap;
+}
+.view-btn:hover { color: var(--text); }
+.view-btn.active { background: var(--border2); color: var(--text); }
+
+/* ── FILTER BAR ── */
+.filter-bar {
+  background: #0d1118;
+  border-bottom: 2px solid var(--border2);
+  padding: 8px 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 94px;
+  z-index: 190;
+}
+
+.filter-search {
+  position: relative;
+  flex: 0 0 220px;
+}
+
+.filter-search input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 7px 12px 7px 32px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  color: var(--text);
+  outline: none;
+  transition: border-color .2s;
+}
+.filter-search input::placeholder { color: var(--text-dim); }
+.filter-search input:focus { border-color: var(--accent); }
+
+.filter-search svg {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+  pointer-events: none;
+}
+
+/* Multi-select dropdown (team / position filters) */
+.multiselect {
+  position: relative;
+}
+
+.multiselect-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: .5px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color .2s;
+}
+.multiselect-trigger:hover { color: var(--text); }
+.multiselect-trigger .chevron { flex-shrink: 0; opacity: .6; }
+.multiselect.open .multiselect-trigger { border-color: var(--accent); color: var(--text); }
+
+.multiselect-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 240px;
+  max-height: 360px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  box-shadow: 0 12px 24px rgba(0,0,0,.4);
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.multiselect-list {
+  overflow-y: auto;
+  padding: 4px;
+}
+
+.multiselect-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text);
+  user-select: none;
+}
+.multiselect-item:hover { background: var(--border); }
+.multiselect-item input[type="checkbox"] { flex-shrink: 0; accent-color: var(--accent); cursor: pointer; }
+
+.filter-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.row-count {
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: .5px;
+  white-space: nowrap;
+}
+
+.clear-btn {
+  background: none;
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: .5px;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all .15s;
+  text-transform: uppercase;
+}
+.clear-btn:hover { color: var(--text); border-color: var(--border); }
+
+/* ── TABLE ── */
+.table-wrap {
+  padding: 0 24px 32px;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 900px;
+}
+
+.table thead th {
+  background: var(--surface);
+  border-bottom: 2px solid var(--border2);
+  padding: 12px 16px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+  z-index: 100;
+  user-select: none;
+  transition: color .15s;
+}
+.table thead th:hover { color: var(--text); }
+.table thead th.sorted { color: var(--accent); }
+.table thead th .sort-icon {
+  margin-left: 4px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+.table thead th.sorted .sort-icon { opacity: 1; }
+
+.table tbody td {
+  padding: 7px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  vertical-align: middle;
+  color: var(--text);
+}
+
+.table tbody tr:nth-child(even) {
+  background: rgba(255,255,255,0.025);
+}
+
+.table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background .1s;
+  cursor: default;
+}
+.table tbody tr:hover { background: var(--surface2); }
+
+/* Team cell */
+.cell-team {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.team-logo-cell {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.cell-team span {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: .5px;
+}
+
+/* Player cell */
+.cell-player {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.player-initials {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 10px;
+  flex-shrink: 0;
+  color: #05261a;
+  background: var(--accent);
+}
+
+.player-name-block { min-width: 0; }
+
+.player-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.tag {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 2px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+.tag-two-way { background: rgba(0,212,255,.1); color: var(--accent); border: 1px solid rgba(0,212,255,.25); }
+
+/* Position cell */
+.cell-pos {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* Numeric stat cell */
+.cell-stat {
+  text-align: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text);
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 80px 24px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.loading-bar {
+  width: 200px;
+  height: 2px;
+  background: var(--border);
+  border-radius: 1px;
+  margin: 16px auto 0;
+  overflow: hidden;
+}
+
+.loading-progress {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 1px;
+  animation: loadProgress 2s ease-in-out infinite;
+}
+
+@keyframes loadProgress {
+  0% { width: 0%; margin-left: 0; }
+  50% { width: 60%; margin-left: 20%; }
+  100% { width: 0%; margin-left: 100%; }
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 60px 24px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+/* ── VIEW TABS ── */
+.view-tabs {
+  background: #0d1118;
+  border-bottom: 2px solid var(--border);
+  padding: 0 24px;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  position: sticky;
+  top: 52px;
+  z-index: 195;
+  overflow-x: auto;
+}
+
+.view-tab {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  padding: 10px 16px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color .15s, border-color .15s;
+}
+.view-tab:hover { color: var(--text-muted); }
+.view-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+@media (max-width: 600px) {
+  .table-wrap { padding: 0 12px 32px; }
+  .table { display: none; }
+  #mobileList { display: block; }
+  .filter-bar { padding: 8px 12px; gap: 8px; }
+  .filter-search { flex: 1 1 100%; }
+  .multiselect { flex: 1 1 calc(50% - 4px); }
+  .multiselect-trigger { width: 100%; justify-content: space-between; font-size: 12px; }
+  .multiselect-panel { left: auto; right: 0; min-width: 200px; }
+  .header { padding: 0 12px; }
+  .view-tabs { padding: 0 12px; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo" onclick="window.location='../index.html?sport=mlb'">Field<span>View</span></div>
+  <div class="header-divider"></div>
+  <div class="page-title">Player Table</div>
+  <div class="view-toggle">
+    <button class="view-btn" onclick="window.location='diamond-view.html'">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="4" y="0" width="4" height="4" fill="currentColor" transform="rotate(45 6 2)"/><rect x="4" y="4" width="4" height="4" fill="currentColor" transform="rotate(45 6 6)" opacity=".6"/><rect x="0" y="4" width="4" height="4" fill="currentColor" transform="rotate(45 2 6)" opacity=".6"/><rect x="8" y="4" width="4" height="4" fill="currentColor" transform="rotate(45 10 6)" opacity=".6"/></svg>
+      DiamondView
+    </button>
+    <button class="view-btn active">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="3" rx="1" fill="currentColor"/><rect x="1" y="5" width="10" height="3" rx="1" fill="currentColor" opacity=".5"/><rect x="1" y="9" width="10" height="2" rx="1" fill="currentColor" opacity=".3"/></svg>
+      Table
+    </button>
+  </div>
+</header>
+
+<!-- View tabs -->
+<div class="view-tabs" id="viewTabs">
+  <button class="view-tab active" onclick="setView('overview', this)">Overview</button>
+  <button class="view-tab" onclick="setView('batting', this)">Batting</button>
+  <button class="view-tab" onclick="setView('pitching', this)">Pitching</button>
+</div>
+
+<!-- Filter bar -->
+<div class="filter-bar">
+  <div class="filter-search">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.3"/><path d="M10 10l2.5 2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+    <input type="text" id="searchInput" placeholder="Search player..." oninput="applyFilters()">
+  </div>
+
+  <div class="multiselect" id="teamMultiselect">
+    <button type="button" class="multiselect-trigger" onclick="toggleTeamPanel(event)">
+      <span id="teamMultiselectLabel">All Teams</span>
+      <svg class="chevron" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="multiselect-panel" id="teamPanel" style="display:none">
+      <div class="multiselect-list" id="teamPanelList"></div>
+    </div>
+  </div>
+
+  <div class="multiselect" id="posMultiselect">
+    <button type="button" class="multiselect-trigger" onclick="togglePosPanel(event)">
+      <span id="posMultiselectLabel">All Positions</span>
+      <svg class="chevron" width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="multiselect-panel" id="posPanel" style="display:none">
+      <div class="multiselect-list" id="posPanelList"></div>
+    </div>
+  </div>
+
+  <div class="filter-right">
+    <span class="row-count" id="rowCount">Loading...</span>
+    <button class="clear-btn" onclick="clearFilters()">Clear</button>
+  </div>
+</div>
+
+<!-- Table -->
+<div class="table-wrap">
+  <div id="loadingState" class="loading">
+    Loading all 30 teams
+    <div class="loading-bar"><div class="loading-progress"></div></div>
+  </div>
+  <table class="table" id="mainTable" style="display:none">
+    <thead>
+      <tr>
+        <th onclick="sortBy('team')" id="th-team">Team <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('position')" id="th-position">Pos <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('name')" id="th-name" class="sorted">Player <span class="sort-icon">↑</span></th>
+        <th onclick="sortBy('age')" id="th-age" style="display:none">Age <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('jersey_number')" id="th-jersey_number" style="display:none">No. <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('player_type')" id="th-player_type" style="display:none">Type <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('pa')" id="th-pa" style="display:none">PA <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('avg')" id="th-avg" style="display:none">AVG <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('hr')" id="th-hr" style="display:none">HR <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('rbi')" id="th-rbi" style="display:none">RBI <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('obp')" id="th-obp" style="display:none">OBP <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('slg')" id="th-slg" style="display:none">SLG <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('ops')" id="th-ops" style="display:none">OPS <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('w')" id="th-w" style="display:none">W <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('l')" id="th-l" style="display:none">L <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('era')" id="th-era" style="display:none">ERA <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('whip')" id="th-whip" style="display:none">WHIP <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('so')" id="th-so" style="display:none">SO <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('ip')" id="th-ip" style="display:none">IP <span class="sort-icon">↕</span></th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+  <div id="mobileList" style="display:none"></div>
+  <div id="emptyState" class="empty-state" style="display:none">No players match your filters.</div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// TEAMS
+// ══════════════════════════════════════════
+const TEAMS = {
+  ATH: { name: "Athletics" },
+  ATL: { name: "Atlanta Braves" },
+  AZ:  { name: "Arizona Diamondbacks" },
+  BAL: { name: "Baltimore Orioles" },
+  BOS: { name: "Boston Red Sox" },
+  CHC: { name: "Chicago Cubs" },
+  CIN: { name: "Cincinnati Reds" },
+  CLE: { name: "Cleveland Guardians" },
+  COL: { name: "Colorado Rockies" },
+  CWS: { name: "Chicago White Sox" },
+  DET: { name: "Detroit Tigers" },
+  HOU: { name: "Houston Astros" },
+  KC:  { name: "Kansas City Royals" },
+  LAA: { name: "Los Angeles Angels" },
+  LAD: { name: "Los Angeles Dodgers" },
+  MIA: { name: "Miami Marlins" },
+  MIL: { name: "Milwaukee Brewers" },
+  MIN: { name: "Minnesota Twins" },
+  NYM: { name: "New York Mets" },
+  NYY: { name: "New York Yankees" },
+  PHI: { name: "Philadelphia Phillies" },
+  PIT: { name: "Pittsburgh Pirates" },
+  SD:  { name: "San Diego Padres" },
+  SEA: { name: "Seattle Mariners" },
+  SF:  { name: "San Francisco Giants" },
+  STL: { name: "St. Louis Cardinals" },
+  TB:  { name: "Tampa Bay Rays" },
+  TEX: { name: "Texas Rangers" },
+  TOR: { name: "Toronto Blue Jays" },
+  WSH: { name: "Washington Nationals" },
+};
+const TEAM_ABBRS = Object.keys(TEAMS);
+
+// The 9 real position_abbreviation values from mlb_players_master.json,
+// plus DH (which fields no position but is still a real roster slot).
+// 'OF' (one generic-OF player) and 'TWP' (Ohtani) are real data values too
+// but deliberately not offered as filter checkboxes -- both are single-
+// player edge cases, same "don't over-engineer" call the data layer was
+// built under.
+const ALL_POSITIONS = ['1B','2B','3B','SS','C','LF','CF','RF','P','DH'];
+
+// Reused verbatim from diamond-view.html, ari/chw fixes included -- same
+// ESPN logo CDN mechanism, not rebuilt a second time.
+const ESPN_TEAM_CODES = {
+  ATH: 'ath', ATL: 'atl', AZ: 'ari', BAL: 'bal', BOS: 'bos',
+  CHC: 'chc', CIN: 'cin', CLE: 'cle', COL: 'col', CWS: 'chw',
+  DET: 'det', HOU: 'hou', KC: 'kc', LAA: 'laa', LAD: 'lad',
+  MIA: 'mia', MIL: 'mil', MIN: 'min', NYM: 'nym', NYY: 'nyy',
+  PHI: 'phi', PIT: 'pit', SD: 'sd', SEA: 'sea', SF: 'sf',
+  STL: 'stl', TB: 'tb', TEX: 'tex', TOR: 'tor', WSH: 'wsh',
+};
+function teamLogoUrl(abbr) {
+  return `https://a.espncdn.com/i/teamlogos/mlb/500/${ESPN_TEAM_CODES[abbr]}.png`;
+}
+
+const PLAYER_TYPE_LABEL = { batter: 'Batter', pitcher: 'Pitcher', two_way: 'Two-Way' };
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let allPlayers = [];
+let filteredPlayers = [];
+let sortCol = 'name';
+let sortDir = 'asc';
+let currentView = 'overview';
+
+let selectedTeams = new Set();
+let selectedPositions = new Set();
+
+// View definitions: columns to show, an auto player_type filter (distinct
+// from the user-facing position multi-select -- this one isn't exposed as
+// checkboxes, it's what makes the Batting/Pitching tabs mean anything),
+// and a default sort. Mirrors nfl/depth-chart.html's VIEWS/cols-visibility
+// pattern -- MLB's batting/pitching column sets are each fixed and used by
+// exactly one tab, so real named columns do the job NFL's generic stat1-5
+// slots solve there (needed because NFL reuses 5 header slots across four
+// different stat-bearing views); no equivalent reuse happens here.
+const VIEWS = {
+  overview: { cols: ['team','position','name','age','jersey_number','player_type'], playerTypes: null, sort: 'name' },
+  batting:  { cols: ['team','position','name','pa','avg','hr','rbi','obp','slg','ops'], playerTypes: ['batter','two_way'], sort: 'hr' },
+  pitching: { cols: ['team','position','name','w','l','era','whip','so','ip'], playerTypes: ['pitcher','two_way'], sort: 'era' },
+};
+
+const ALL_COLS = ['team','position','name','age','jersey_number','player_type','pa','avg','hr','rbi','obp','slg','ops','w','l','era','whip','so','ip'];
+
+function setView(viewKey, btn) {
+  currentView = viewKey;
+
+  document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+
+  const view = VIEWS[viewKey];
+  updateColumns(view.cols);
+
+  sortCol = view.sort;
+  sortDir = (view.sort === 'era') ? 'asc' : (view.sort === 'name' ? 'asc' : 'desc');
+  document.querySelectorAll('.table thead th').forEach(th => {
+    th.classList.remove('sorted');
+    const icon = th.querySelector('.sort-icon');
+    if (icon) icon.textContent = '↕';
+  });
+  const th = document.getElementById('th-' + sortCol);
+  if (th) {
+    th.classList.add('sorted');
+    const icon = th.querySelector('.sort-icon');
+    if (icon) icon.textContent = sortDir === 'asc' ? '↑' : '↓';
+  }
+
+  applyFilters();
+  updateStickyOffset();
+}
+
+function updateColumns(cols) {
+  const colMap = {};
+  ALL_COLS.forEach(c => colMap[c] = 'th-' + c);
+
+  ALL_COLS.forEach(col => {
+    const th = document.getElementById(colMap[col]);
+    if (th) th.style.display = cols.includes(col) ? '' : 'none';
+  });
+
+  window._activeCols = cols;
+}
+
+// ══════════════════════════════════════════
+// LOAD ALL TEAMS
+// ══════════════════════════════════════════
+async function loadAll() {
+  const data = await fetch('data/mlb_players_master.json').then(r => r.json());
+
+  for (const player of Object.values(data)) {
+    const bs = player.batting_stats || null;
+    const ps = player.pitching_stats || null;
+    // No top-level age field in mlb_players_master.json -- derive from
+    // whichever stats block is present (checked directly against the real
+    // file before writing this, not assumed). A roster_only player with
+    // neither block (no 2026 games yet) correctly gets null.
+    const age = (bs && bs.age != null) ? bs.age : (ps && ps.age != null) ? ps.age : null;
+
+    allPlayers.push({
+      id: player.player_id,
+      abbr: player.team_abbr,
+      teamName: player.team,
+      position: player.position,
+      playerType: player.player_type,
+      name: player.name || '',
+      age: age,
+      jersey: player.jersey_number || null,
+      pa: bs ? bs.plateAppearances : null,
+      avg: bs ? bs.avg : null,
+      hr: bs ? bs.homeRuns : null,
+      rbi: bs ? bs.rbi : null,
+      obp: bs ? bs.obp : null,
+      slg: bs ? bs.slg : null,
+      ops: bs ? bs.ops : null,
+      w: ps ? ps.wins : null,
+      l: ps ? ps.losses : null,
+      era: ps ? ps.era : null,
+      whip: ps ? ps.whip : null,
+      so: ps ? ps.strikeOuts : null,
+      ip: ps ? ps.inningsPitched : null,
+    });
+  }
+
+  document.getElementById('loadingState').style.display = 'none';
+  document.getElementById('mainTable').style.display = 'table';
+
+  applyFilters();
+}
+
+// ══════════════════════════════════════════
+// TEAM / POSITION MULTI-SELECT
+// ══════════════════════════════════════════
+function renderTeamPanel() {
+  document.getElementById('teamPanelList').innerHTML = TEAM_ABBRS.map(abbr => `
+    <label class="multiselect-item">
+      <input type="checkbox" id="team-chk-${abbr}" onchange="toggleTeamItem('${abbr}')">
+      ${TEAMS[abbr].name}
+    </label>
+  `).join('');
+}
+
+function renderPosPanel() {
+  document.getElementById('posPanelList').innerHTML = ALL_POSITIONS.map(pos => `
+    <label class="multiselect-item">
+      <input type="checkbox" id="pos-chk-${pos}" onchange="togglePosItem('${pos}')">
+      ${pos}
+    </label>
+  `).join('');
+}
+
+function toggleTeamItem(abbr) {
+  if (selectedTeams.has(abbr)) selectedTeams.delete(abbr); else selectedTeams.add(abbr);
+  updateTeamLabel();
+  applyFilters();
+}
+
+function togglePosItem(pos) {
+  if (selectedPositions.has(pos)) selectedPositions.delete(pos); else selectedPositions.add(pos);
+  updatePosLabel();
+  applyFilters();
+}
+
+function updateTeamLabel() {
+  const el = document.getElementById('teamMultiselectLabel');
+  if (selectedTeams.size === 0) el.textContent = 'All Teams';
+  else if (selectedTeams.size === 1) el.textContent = TEAMS[[...selectedTeams][0]].name;
+  else el.textContent = selectedTeams.size + ' Teams';
+}
+
+function updatePosLabel() {
+  const el = document.getElementById('posMultiselectLabel');
+  if (selectedPositions.size === 0) el.textContent = 'All Positions';
+  else if (selectedPositions.size === 1) el.textContent = [...selectedPositions][0];
+  else el.textContent = selectedPositions.size + ' Positions';
+}
+
+function toggleTeamPanel() {
+  const panel = document.getElementById('teamPanel');
+  const opening = panel.style.display === 'none';
+  panel.style.display = opening ? 'flex' : 'none';
+  document.getElementById('teamMultiselect').classList.toggle('open', opening);
+}
+
+function togglePosPanel() {
+  const panel = document.getElementById('posPanel');
+  const opening = panel.style.display === 'none';
+  panel.style.display = opening ? 'flex' : 'none';
+  document.getElementById('posMultiselect').classList.toggle('open', opening);
+}
+
+document.addEventListener('click', (e) => {
+  document.querySelectorAll('.multiselect').forEach(ms => {
+    if (!ms.contains(e.target)) {
+      ms.classList.remove('open');
+      const panel = ms.querySelector('.multiselect-panel');
+      if (panel) panel.style.display = 'none';
+    }
+  });
+});
+
+// ══════════════════════════════════════════
+// FILTERS
+// ══════════════════════════════════════════
+function applyFilters() {
+  const search = document.getElementById('searchInput').value.toLowerCase().trim();
+  const view = VIEWS[currentView];
+
+  filteredPlayers = allPlayers.filter(p => {
+    if (search && !p.name.toLowerCase().includes(search)) return false;
+    if (selectedTeams.size && !selectedTeams.has(p.abbr)) return false;
+    if (selectedPositions.size && !selectedPositions.has(p.position)) return false;
+    if (view.playerTypes && !view.playerTypes.includes(p.playerType)) return false;
+    return true;
+  });
+
+  sortPlayers();
+  renderTable();
+  renderMobileList();
+  document.getElementById('rowCount').textContent = filteredPlayers.length.toLocaleString() + ' players';
+}
+
+function clearFilters() {
+  document.getElementById('searchInput').value = '';
+  selectedTeams = new Set();
+  selectedPositions = new Set();
+  syncTeamCheckboxes();
+  syncPosCheckboxes();
+  updateTeamLabel();
+  updatePosLabel();
+  applyFilters();
+}
+
+function syncTeamCheckboxes() {
+  TEAM_ABBRS.forEach(abbr => {
+    const el = document.getElementById('team-chk-' + abbr);
+    if (el) el.checked = selectedTeams.has(abbr);
+  });
+}
+
+function syncPosCheckboxes() {
+  ALL_POSITIONS.forEach(pos => {
+    const el = document.getElementById('pos-chk-' + pos);
+    if (el) el.checked = selectedPositions.has(pos);
+  });
+}
+
+// ══════════════════════════════════════════
+// SORT
+// ══════════════════════════════════════════
+// avg/obp/slg/ops/era/whip/ip are VARCHAR in the source data (the API
+// returns rate stats as formatted strings like ".312", not floats) --
+// a plain `<`/`>` comparison would sort them alphabetically, not
+// numerically. ip (inningsPitched) isn't in the task's explicit list but
+// is the same VARCHAR shape ("80.2") and would hit the identical bug, so
+// it gets the same parseFloat treatment.
+const FLOAT_SORT_COLS = new Set(['avg','obp','slg','ops','era','whip','ip']);
+
+function toSortVal(p, col) {
+  const raw = p[col];
+  if (FLOAT_SORT_COLS.has(col)) {
+    if (raw == null) return null;
+    const n = parseFloat(raw);
+    return isNaN(n) ? null : n;
+  }
+  return raw;
+}
+
+function sortBy(col) {
+  if (sortCol === col) {
+    sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+  } else {
+    sortCol = col;
+    sortDir = (col === 'era' || col === 'whip' || col === 'l') ? 'asc' : 'desc';
+  }
+
+  document.querySelectorAll('.table thead th').forEach(th => {
+    th.classList.remove('sorted');
+    const icon = th.querySelector('.sort-icon');
+    if (icon) icon.textContent = '↕';
+  });
+
+  const th = document.getElementById('th-' + col);
+  if (th) {
+    th.classList.add('sorted');
+    const icon = th.querySelector('.sort-icon');
+    icon.textContent = sortDir === 'asc' ? '↑' : '↓';
+  }
+
+  sortPlayers();
+  renderTable();
+  renderMobileList();
+}
+
+function sortPlayers() {
+  filteredPlayers.sort((a, b) => {
+    const av = toSortVal(a, sortCol);
+    const bv = toSortVal(b, sortCol);
+
+    // Nulls always sort last regardless of direction. Unlike NFL's table,
+    // 0 is NOT treated as null here -- a real 0 HR / 0 SO is meaningful
+    // MLB data, not a missing-data placeholder, so it must sort in place.
+    const aNull = av == null || av === '';
+    const bNull = bv == null || bv === '';
+    if (aNull && bNull) return 0;
+    if (aNull) return 1;
+    if (bNull) return -1;
+
+    if (av < bv) return sortDir === 'asc' ? -1 : 1;
+    if (av > bv) return sortDir === 'asc' ? 1 : -1;
+    return 0;
+  });
+}
+
+// ══════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════
+function playerTypeCell(p) {
+  if (p.playerType === 'two_way') return '<span class="tag tag-two-way">TWO-WAY</span>';
+  return PLAYER_TYPE_LABEL[p.playerType] || p.playerType || '—';
+}
+
+function renderMobileList() {
+  const isMobile = window.innerWidth <= 600;
+  const list = document.getElementById('mobileList');
+  if (!list) return;
+
+  if (!isMobile) { list.style.display = 'none'; return; }
+
+  document.getElementById('mainTable').style.display = 'none';
+  list.style.display = 'block';
+
+  list.innerHTML = filteredPlayers.map(p => {
+    const initials = p.name.split(' ').map(w => w[0]).join('').slice(0, 2);
+    return `
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
+        <img class="team-logo-cell" src="${teamLogoUrl(p.abbr)}" alt="${p.abbr}" loading="lazy">
+        <div style="flex:1;min-width:0">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:1px">${p.position || '—'} · ${playerTypeCell(p)}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderTable() {
+  const tbody = document.getElementById('tableBody');
+  const empty = document.getElementById('emptyState');
+
+  if (filteredPlayers.length === 0) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  const cols = window._activeCols || VIEWS.overview.cols;
+
+  const html = filteredPlayers.map(p => {
+    const initials = p.name.split(' ').map(w => w[0]).join('').slice(0, 2);
+
+    let row = '<tr>';
+    if (cols.includes('team'))
+      row += '<td><div class="cell-team"><img class="team-logo-cell" src="' + teamLogoUrl(p.abbr) + '" alt="' + p.abbr + '" loading="lazy"><span>' + p.abbr + '</span></div></td>';
+    if (cols.includes('position'))
+      row += '<td class="cell-pos">' + (p.position || '—') + '</td>';
+    if (cols.includes('name'))
+      row += '<td><div class="cell-player">' +
+        '<div class="player-initials">' + initials + '</div>' +
+        '<div class="player-name-block"><div class="player-name">' + p.name + '</div></div>' +
+      '</div></td>';
+    if (cols.includes('age'))
+      row += '<td class="cell-pos">' + (p.age != null ? p.age : '—') + '</td>';
+    if (cols.includes('jersey_number'))
+      row += '<td class="cell-pos">' + (p.jersey || '—') + '</td>';
+    if (cols.includes('player_type'))
+      row += '<td class="cell-pos">' + playerTypeCell(p) + '</td>';
+    if (cols.includes('pa'))
+      row += '<td class="cell-stat">' + (p.pa != null ? p.pa : '—') + '</td>';
+    if (cols.includes('avg'))
+      row += '<td class="cell-stat">' + (p.avg != null ? p.avg : '—') + '</td>';
+    if (cols.includes('hr'))
+      row += '<td class="cell-stat">' + (p.hr != null ? p.hr : '—') + '</td>';
+    if (cols.includes('rbi'))
+      row += '<td class="cell-stat">' + (p.rbi != null ? p.rbi : '—') + '</td>';
+    if (cols.includes('obp'))
+      row += '<td class="cell-stat">' + (p.obp != null ? p.obp : '—') + '</td>';
+    if (cols.includes('slg'))
+      row += '<td class="cell-stat">' + (p.slg != null ? p.slg : '—') + '</td>';
+    if (cols.includes('ops'))
+      row += '<td class="cell-stat">' + (p.ops != null ? p.ops : '—') + '</td>';
+    if (cols.includes('w'))
+      row += '<td class="cell-stat">' + (p.w != null ? p.w : '—') + '</td>';
+    if (cols.includes('l'))
+      row += '<td class="cell-stat">' + (p.l != null ? p.l : '—') + '</td>';
+    if (cols.includes('era'))
+      row += '<td class="cell-stat">' + (p.era != null ? p.era : '—') + '</td>';
+    if (cols.includes('whip'))
+      row += '<td class="cell-stat">' + (p.whip != null ? p.whip : '—') + '</td>';
+    if (cols.includes('so'))
+      row += '<td class="cell-stat">' + (p.so != null ? p.so : '—') + '</td>';
+    if (cols.includes('ip'))
+      row += '<td class="cell-stat">' + (p.ip != null ? p.ip : '—') + '</td>';
+    row += '</tr>';
+    return row;
+  }).join('');
+
+  tbody.innerHTML = html;
+}
+
+// ══════════════════════════════════════════
+// STICKY OFFSET
+// ══════════════════════════════════════════
+function updateStickyOffset() {
+  const header = document.querySelector('.header');
+  const viewTabs = document.querySelector('.view-tabs');
+  const filterBar = document.querySelector('.filter-bar');
+  const headerH = header ? header.offsetHeight : 52;
+  const tabsH = viewTabs ? viewTabs.offsetHeight : 42;
+  if (filterBar) filterBar.style.top = (headerH + tabsH) + 'px';
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+window._activeCols = VIEWS['overview'].cols;
+updateColumns(VIEWS['overview'].cols);
+renderTeamPanel();
+renderPosPanel();
+loadAll().then(() => {
+  requestAnimationFrame(() => {
+    updateStickyOffset();
+    requestAnimationFrame(() => updateStickyOffset());
+  });
+});
+window.addEventListener('resize', updateStickyOffset);
+window.addEventListener('resize', renderMobileList);
+</script>
+</body>
+</html>
