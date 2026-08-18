@@ -4,7 +4,8 @@ Multi-Sport intelligence platform.
 Live at https://jwalluww.github.io/fieldview/
 Repo: https://github.com/jwalluww/fieldview (public)
 Purpose: FieldView is the primary website for sports analytics. Each sport will have a FieldView and a TableView. NFL has FormationView, NBA has CourtView, NHL has IceView, MLB has DiamondView, MLS has PitchView (EPL will also have PitchView). This view will show all the players in their positions on the playing field with important metrics & statistics and substitutions. TableView for each sport will be a table with statistics. Eventually, ReView will be created for each sport. FieldView is for before the game - understanding where players play on the field. ReView is for after the game - replays, highlights, tweets, stats, box scores, etc. - a one-stop-shop for what happened last night or last week in the sport in general.
-Flow: NFL and NBA FormationView/CourtView are in good shape — layout, sizing, backgrounds, and substitution UX have all been through real design-and-ship rounds. Branching into MLB now (DiamondView) as the next sport, ahead of the original "finish NFL/NBA fully first" sequencing — an intentional call, not drift, made because NFL/NBA are stable enough to serve as a real template.
+
+Flow: NFL and NBA FormationView/CourtView are in good shape — layout, sizing, backgrounds, and substitution UX have all been through real design-and-ship rounds. MLB (DiamondView) shipped a full first pass this round — roster, stats, and both views built and verified; ratings blocked pending a Cloudflare cooldown, same status class as NBA's 2K ratings. NHL (IceView) recon is complete — one-team roster and league-wide skater/goalie stats verified in the DB, season-resolution logic built and confirmed live; still ahead is scaling the roster pull to all 32 teams and building the match/export pipeline.
 
 ---
 
@@ -14,6 +15,29 @@ Flow: NFL and NBA FormationView/CourtView are in good shape — layout, sizing, 
 - Hosting: GitHub Pages
 - Automation: GitHub Actions (runs Tuesdays at 10am UTC) — note `fetch_stats.py` (NBA) is no longer part of the cloud job, see NBA Stats Scraper section below
 - Dev environment: Windows, VS Code + Claude Code extension (chat panel)
+- Data pipelines land in DuckDB directly where the source is a live API (statsapi.mlb.com, nhl-api-py) — no intermediate JSON dump. Where the source is a scrape needing careful parsing (theshowratings.com), same DuckDB-first approach once past the network layer.
+
+---
+
+## Workflow Notes
+- Use this chat (claude.ai) for architecture decisions, debugging with context, pushback.
+- Use Claude Code (VS Code chat panel) for implementation, real data verification, and live reconnaissance against external sites/APIs.
+- **Reconnaissance against live external systems belongs in Claude Code, handed off as one broader investigation task — not run as a sequence of probe scripts round-tripped through chat.** This chat's sandbox has no working browser and a locked-down network (package registries only, not arbitrary sites/APIs), so any live fact-finding has to go through Claude Code anyway. Splitting it into one probe-per-question wastes round trips; Claude Code can investigate, adjust, and retry inside its own loop and report back once. (MLB's stats-endpoint and ratings-site recon both got done this way properly late in that build; NHL's kickoff recon was handed off as one combined task from the start.)
+- **For real scripts, give Claude Code a precise spec with verified facts and named edge cases, rather than full verbatim code written blind in chat.** Chat can't execute or test what it writes — a real bug shipped this way mid-MLB-build (a `fetch_with_retry` helper written without a `timeout` parameter, then called with `timeout=30` anyway, would've thrown immediately). Claude Code, writing and testing its own implementation, independently caught two more substantive bugs later in the same build with zero chat involvement: a blanket-zero `batting_stats` block leaking pure pitchers into batting orders, and a `position_group` mislabel (`'CF'` instead of the group `'OF'`) that would've silently broken one player's substitution eligibility. Neither would've been caught by chat writing code blind.
+- Chat's actual value-add on the implementation side is cross-cutting consistency a per-file view might miss: flagging "extract this into a shared file, a second script needs it now" (this is what produced `nfl/scripts/season_utils.py`, `nba/scripts/name_utils.py`, and `mlb/scripts/statsapi_utils.py`), or "these two tables aren't 1:1, don't treat a mismatch as a bug" ahead of time.
+- Front-load thinking in chat → hand Claude Code a crisp specific instruction (spec, not code, where the code needs testing to be trusted).
+- Start a new chat when switching to a new sport or major new feature area.
+- Paste this CLAUDE.md at the top of any new chat to restore context.
+
+---
+
+## Key Cross-Sport Learnings
+- **"Verify the real field/column names before writing normalize logic" has paid off on every sport so far** — NFL's EDGE/DI position-alias gap, MLB's stats endpoint field names, NHL's roster/stats shapes were all confirmed against real source code or real API responses before a matching script got written, not assumed from memory or documentation summaries.
+- **Silent bulk-endpoint truncation is 3-for-3, but the fix mechanism isn't always the same**: NFL/MLB's `/v1/stats` just needed a bigger `limit`/`playerPool=all` param. NHL's skater/goalie stats endpoints are different — confirmed live that they hard-cap each response at 100 rows server-side *regardless* of the `limit` value passed (tried up to 100000, still 100 back), so the real fix was pagination via the `start` param, not a bigger limit. Worth checking which kind of cap a new bulk endpoint has, not just whether one exists.
+- **`curl_cffi` with `impersonate="chrome120"` is the standing fix for Cloudflare/TLS-fingerprint blocks**, now confirmed working on two separate fan-ratings sites (theshowratings.com, and originally attempted on 2kratings.com) after plain `requests` got 403'd on both. Confirmed the block operates at the TLS-handshake layer, not the HTTP-header layer — header tuning alone doesn't fix it.
+- **Anti-bot cooldowns are real and compounding**: repeated attempts during an active block extend it rather than get past it, on both 2kratings.com and theshowratings.com. Standing rule: one clean test, then stop and wait hours/overnight if blocked — don't retry same-day.
+- **A "population mismatch" between a roster snapshot and a season-stats pull is expected, not a bug**: MLB's `statsapi_stats_hitting`/`statsapi_stats_pitching` (702/799 players, includes anyone who played in 2026 at all — including traded/released players) don't 1:1 match `statsapi_roster` (782 players, today's snapshot only). `mlb_players_master.json` uses roster as the base population deliberately, since DiamondView's job is showing today's team, not full-season history.
+- **A numeric ID buried in an unrelated-looking asset URL can be a real, reliable join key** — theshowratings.com's player photo `data-src` (`ketel-marte-606466-80x80.png`) embeds the actual MLB Advanced Media `person_id`, confirmed by direct match against `statsapi_roster`. If MLB ratings ever gets unblocked, that means zero fuzzy name matching needed — a cleaner situation than NBA's 2K ratings ever achieved. Worth checking for the same pattern on any new fan-ratings site (NHL's candidates included).
 
 ---
 
@@ -162,8 +186,8 @@ Frontend `STAT_COLS` in `nfl/depth-chart.html` uses these canonical keys.
 - Ruled out request speed (existing ~1–1.5s delay between requests was already reasonable) and thin headers (added a full browser-realistic header set + `requests.Session()` for cookie persistence) — neither fixed it. A rerun immediately after actually failed *faster* (blocked on request 1), which pointed at an active IP-level cooldown from the first failed run, not a header gap.
 - **Confirmed via direct browser test that the site itself loads fine from the same machine/IP** while the script still gets 403'd even with a full session and complete headers — this rules out a site-wide block or outage and points specifically at **TLS fingerprinting**: Cloudflare-class protection checks the TLS handshake (cipher order, extensions, JA3 signature) before HTTP headers are even read, and Python's `requests`/`urllib3` has a detectably different handshake than real Chrome regardless of what headers are set on top.
 - Fix in progress: swapped to `curl_cffi` (`session = requests.Session(impersonate="chrome120")` from the `curl_cffi.requests` module), which mimics Chrome's real TLS/HTTP2 fingerprint rather than just its headers. A single-page test came back clean (real HTML, no 403).
-- **Status as of this session: still not fully working.** A full 30-team run with the `curl_cffi` fix got through only 1 team before a 403, worse than the original 8-team run. Suspected cause: repeated debugging attempts within the same day (original run, immediate retry, isolated test, full run) likely compounded/extended whatever IP-level block or reputation flag got triggered, rather than the fix itself being wrong.
-- **Next steps, not yet done:** (1) stop testing entirely for several hours / overnight before trying again — every attempt during an active block, including failed ones, likely extends it; (2) added diagnostic logging on 403s to print `server`, `retry-after`, and `cf-ray` response headers so the next attempt has real data instead of another guess; (3) reduced 403-specific retry count from 4 to 2 so a future blocked run fails fast instead of hammering the block further.
+- **Status: still not fully working as of the last attempt.** A full 30-team run with the `curl_cffi` fix got through only 1 team before a 403, worse than the original 8-team run. Suspected cause: repeated debugging attempts within the same day likely compounded/extended an IP-level block or reputation flag, rather than the fix itself being wrong. Confirmed elsewhere in this project (MLB's ratings scraper hit the same pattern — see below) that `curl_cffi` genuinely does work on this class of block when given a real cooldown first.
+- **Next steps, not yet done:** stop testing entirely for several hours / overnight before trying again — every attempt during an active block, including failed ones, likely extends it. Diagnostic logging on 403s (server/retry-after/cf-ray headers) already added. 403-specific retry count already reduced to 2.
 - Don't consider this fixed until a full 30-team run completes clean after a genuine cooldown period.
 
 ---
@@ -220,7 +244,7 @@ Frontend `STAT_COLS` in `nfl/depth-chart.html` uses these canonical keys.
 - `index.html` defaults to the NFL state (`currentSport = 'nfl'` in static markup) and now reads `?sport=` from the URL at load to initialize into NBA state instead, via the existing `selectSport()` function — a plain visit to `index.html` is unaffected.
 - Both NBA pages' logo/back buttons link to `../index.html?sport=nba` (previously bare `../index.html`, which always landed on the NFL-default hub regardless of which sport you came from). NFL's own back button deliberately untouched.
 - `formation.html` renamed to `court-view.html` (page title, nav button labels, index.html's card label/href all updated). Cross-links fixed in `player-table.html`, `index.html`, and comments in `build_nba_master.py`.
-- **Index page background:** replaced the old abstract same-shape-different-color stripe gradient with literal per-sport texture, generated at runtime as inline SVG data URIs — real yard-line ticks for NFL, vertical wood-grain planks + a faint free-throw-key/circle accent for NBA (`nflTexture()`/`nbaTexture()`/`placeholderTexture()`/`applyFieldBackground(sport)`). `SPORTS` config's old `background: {stripeA, stripeB}` fields were removed as dead weight — nothing reads them anymore.
+- **Index page background:** per-sport texture, generated at runtime as inline SVG data URIs — real yard-line ticks for NFL, vertical wood-grain planks + a faint free-throw-key/circle accent for NBA, a rotated dirt-tan infield diamond + home plate dot + mow-line stripes for MLB (`nflTexture()`/`nbaTexture()`/`mlbTexture()`/`placeholderTexture()`/`applyFieldBackground(sport)`). `SPORTS` config's old `background: {stripeA, stripeB}` fields were removed as dead weight — nothing reads them anymore.
 
 ---
 
@@ -258,6 +282,92 @@ Frontend `STAT_COLS` in `nfl/depth-chart.html` uses these canonical keys.
 
 ---
 
+## MLB (DiamondView) — first pass shipped
+
+### Data sources, verified before building anything
+- **Roster + bio**: `statsapi.mlb.com` (MLB's own public API, no key required). Verified real via the actively-maintained `MLB-StatsAPI` Python wrapper (841 stars, commits into 2025) before writing anything against it — endpoint definitions confirmed from its actual source, not docs summaries.
+  - `GET /v1/teams` — team list, real `abbreviation` field
+  - `GET /v1/teams/{teamId}/roster?rosterType=active` — roster, jersey number, position code/abbreviation/name, status
+  - `GET /v1/people?personIds=...` (bulk) — height, weight, birth date, `batSide`/`pitchHand` codes, primary position
+- **Stats**: same `statsapi.mlb.com`, `GET /v1/stats?stats=season&group=hitting|pitching&sportIds=1&season=YYYY&limit=2000&playerPool=all`. **`playerPool=all` is load-bearing** — without it, the endpoint silently returns only "qualified" players (142 hitters / 55 pitchers in a real test), not the full league. With it: 702 hitters, 799 pitchers, in 2 calls total instead of ~780 individual per-player hydrate calls (the only pattern the wrapper library's own source code proved out).
+- **pybaseball**: confirmed active on GitHub (commits into 2026) but PyPI release is stale (2.2.7, Sept 2023 — install from git if ever used). Not used as primary source: pybaseball has no bulk roster/bio function (no `commonteamroster` equivalent), so `statsapi.mlb.com` covers both roster+bio and stats in one source, closer to nba_api's dual role than pybaseball's stats-only role.
+- **Ratings**: `theshowratings.com`. Confirmed base/live ratings only — no Diamond Dynasty content anywhere in a full 325-link nav dump, exactly what was wanted. Official `theshow.com/roster_updates` page intentionally not scraped (first-party licensed data, higher legal exposure than a fan site). OOTP ruled out entirely — extracting ratings from a paid game's files for redistribution in a public repo was judged too legally exposed, dropped as a source before any code was written.
+
+### Real column names confirmed (don't assume, these came from live `DESCRIBE` output)
+- Hitting (41 cols): `avg, obp, slg, ops, babip, stolenBasePercentage` are VARCHAR; `homeRuns, rbi, hits, runs, strikeOuts, stolenBases`, etc. are BIGINT. `plateAppearances` is the real PA field name.
+- Pitching (69 cols): `era, whip, inningsPitched, strikeoutsPer9Inn, walksPer9Inn, winPercentage` are VARCHAR; `wins, losses, saves, strikeOuts, battersFaced`, etc. are BIGINT.
+- Both stats tables' own `team` object lacks an `abbreviation` field (unlike the roster endpoint's) — resolved via join to `statsapi_teams.abbreviation` on `team_id` where needed, though the final master JSON sources `team`/`team_abbr` from the roster join instead, since roster reflects today's team and a mid-season-traded player's stats-table team could be stale.
+
+### Position taxonomy — clean, no EDGE/DI-style collapse
+Real distribution from `statsapi_roster` (782 rows): `P 390, C 63, CF 48, 2B 48, RF 45, LF 44, SS 42, 3B 41, 1B 38, DH 21`, plus two real singleton edge cases:
+- `TWP` (1 player, Ohtani) — MLB Stats API's actual official two-way-player tag. `player_type: "two_way"`, `position_group: null` (doesn't force a fielding slot).
+- `OF` (1 player, Cristian Pache) — generic outfield tag, not LF/CF/RF specific. `position_group` stays `"OF"` (the clean group value, so OF-zone substitution gating works normally for him) with `position_group_source: "defaulted"` flagging that his specific field zone wasn't in the source data — DiamondView defaults his on-field zone display to CF specifically. (An earlier version of this pipeline wrote `position_group` itself as the literal string `"CF"`, which would have broken his OF-zone substitution eligibility; caught and fixed — see `mlb/scripts/` pipeline below.)
+
+`position_group` mapping used throughout: IF = `1B/2B/3B/SS`, OF = `LF/CF/RF` (defaulted-OF included), standalone = `C/P/DH`.
+
+### mlb/scripts/ pipeline
+- `scrape_roster.py` — all 30 teams, 780 roster rows / 780 people rows (exact parity). Retry/backoff wrapper originally local, extracted to `mlb/scripts/statsapi_utils.py`'s `fetch_with_retry()` once `scrape_stats.py` needed it too — same pattern as `season_utils.py`/`name_utils.py`.
+- `scrape_stats.py` — bulk `playerPool=all` pull, 702 hitting / 799 pitching rows.
+- `build_mlb_match.py` — joins `statsapi_roster` + `statsapi_people` (bio) + left-joins hitting/pitching stats on `person_id`. Roster is the base population (not the full roster∪stats union, which is 1,382 distinct players — most of the extra ~600 are players no longer on any current roster). Derives `position_group` (with the Pache/TWP handling above) and `player_type` (`batter`/`pitcher`/`two_way`, keyed off `position_abbreviation`). One real bug found and fixed here mid-project: Pache's `position_group` was originally written as the literal string `'CF'` instead of the group `'OF'`, silently breaking his OF-zone substitution eligibility — caught, fixed, pipeline re-run, verified.
+- `export_mlb_master.py <output_path>` — writes `mlb/data/mlb_players_master.json`. 782 players. Fields: `player_id, name, team, team_abbr, position, position_group, position_group_source, player_type, jersey_number, height, weight, bats, throws, batting_stats, pitching_stats, match_source`. Match rate: 779/782 = 99.6% have a stats match (either group), better than NFL's or NBA's first-pass match rates.
+- `scrape_ratings.py` — written, not yet run to completion. Reuses the `curl_cffi` Chrome-120 session confirmed working against `theshowratings.com` (see below). **Real discovery**: the player photo `data-src` on each team page embeds the actual MLB Advanced Media `person_id` (e.g. `ketel-marte-606466-80x80.png` → `606466`, confirmed by direct match against `statsapi_roster`) — meaning ratings can join on a plain numeric ID with zero fuzzy name matching once unblocked. Currently Cloudflare-blocked (0/30 teams on the last attempt, same IP-cooldown pattern as 2K ratings) — script is correct and ready, just waiting on a genuine multi-hour/overnight cooldown before the next attempt. **Do not retry same-day.**
+
+### theshowratings.com Scraper — OPEN ISSUE, blocked pending cooldown (same status class as 2K ratings)
+- Plain `requests` gets a real Cloudflare 403 block page (not a JS-shell — 75KB of styled HTML, `Server: cloudflare`, real `cf-ray` header).
+- `curl_cffi` with `impersonate="chrome120"` confirmed working on a single clean test (200 OK, real content, 30 team links + Top 100 list found, static server-rendered HTML — no headless browser needed for parsing once past the TLS check).
+- Team page structure: `table.table-striped`, columns `#, Player, OVR, POT` (POT is a letter grade, not numeric — handle separately from OVR). 50 rows per team (full org depth, not just active 26-man). `Player` cell is nested markup (photo `data-src` with the ID, name in an `<a>`, jersey/team/position/handedness in a `<span class="entry-subtext-font">`) — parse by real element, not by mashed-together `.text`.
+- Got Cloudflare-blocked again mid-session on a full run attempt, even from a previously-working URL path, confirming an IP-level cooldown rather than anything path-specific. Standing rule going forward: one clean test only, then stop for hours/overnight if blocked — repeated attempts during an active block compound it (same lesson already learned from 2K ratings).
+
+### MLB Team Logos (diamond-view.html, player-table.html)
+- ESPN's MLB CDN (`a.espncdn.com/i/teamlogos/mlb/500/{code}.png`) — same pattern as NBA, verified live rather than assumed. Two real exceptions found: Arizona is `ari` (not `az`), Chicago White Sox is `chw` (not `cws`) — same class of exception as NBA's `no`/`utah`. Athletics' `ath` and legacy `oak` codes are byte-identical images, either works. All 30 codes verified returning 200 before wiring in.
+
+### DiamondView Frontend (mlb/diamond-view.html)
+- Mirrors `court-view.html`'s real patterns rather than reinventing: `DIAMOND_ZONES` (percentage-offset positioning, analog to `COURT_ZONES`), `ZONE_ORDER`, `ESPN_TEAM_CODES`/`teamLogoUrl()`, `getStarter()`/`substitutePlayer()`, `attachPopupHandlers()`'s per-node hover pattern, two-column `.left-col`/`.right-col` layout.
+- 9 fielding zones (P/C/1B/2B/3B/SS/LF/CF/RF) — **held up correctly on the first real render**, no retuning needed (unlike NBA's `COURT_ZONES`, which needed a real correction once rendered at size). DH is not a field zone by design — bats but fields no position, appears in the batting-order sidebar only.
+- **Substitution gated by `position_group`**: IF-for-IF, OF-for-OF (using the position_group values resolved in the data layer — Pache's stays the clean `"OF"` group value, so he participates in OF-zone subbing like any other outfielder), C/P/DH standalone (no cross-group subbing). Mirrors `substitutePlayer()`'s explicit-target-zone approach.
+- **Batting order** — no real daily-lineup source exists (would need a separate scraper, out of scope for now), so it's derived: batters ranked by plate appearances descending, pitchers split into starters (`gamesStarted > 0`) vs. bullpen. Validated against two real teams (NYY, LAD) — order and starter/bullpen split matched real rotations. Same "derived, not sourced" category as NBA's MPG-based `rotation_status` before real depth-chart data existed.
+- **Ohtani (`TWP`) P-zone fix**: originally excluded from the P-zone substitution pool entirely (gated on exact `position === 'P'`, and his position is `'TWP'`) despite a real ERA. Fixed by additionally allowing `player_type === 'two_way'`, scoped to the P-zone pool only — verified he now appears and can be placed there, and verified C/SS zone pools are unaffected (no two_way leak into standalone or other group pools).
+- **Real bug found and fixed during this build (data-layer symptom, not a design flaw)**: `statsapi.mlb.com` gives every rostered player, including pure pitchers, a present `batting_stats` block — all zeros, since it's a blanket per-roster-player hitting line rather than omitted for non-hitters. Was leaking 3 zero-stat pitchers into each team's batting order. Fixed with a `pa > 0` gate, and the hover-popup's batter/pitcher branching was rebased on `player_type` instead of "does a stats object exist," since the latter is unreliable given this quirk.
+
+### PlayerTable (mlb/player-table.html)
+- Mirrors `nfl/depth-chart.html`'s `VIEWS`/`STAT_COLS` position-dependent-columns pattern, **not** `nba/player-table.html`'s flat single-column-set approach — MLB's batting/pitching stats are as disjoint as NFL's passing/rushing/receiving/defense split, unlike NBA's uniform PPG/RPG/APG block.
+- **Deliberate simplification from NFL's pattern**: used real named columns per tab instead of NFL's generic `stat1`–`stat5` slot mechanism. NFL's genericity earns its complexity by reusing one column-rendering path across 4 different views; MLB only has 2 stat-bearing tabs (Batting, Pitching) that never share columns, so the abstraction wouldn't pay for itself — direct application of the project's own "no abstraction for single-use code" rule.
+- 3 tabs: Overview / Batting / Pitching. Real field names confirmed against live records before wiring: `pa→plateAppearances, hr→homeRuns, rbi, avg, obp, slg, ops` (batting); `w→wins, l→losses, era, whip, so→strikeOuts, ip→inningsPitched` (pitching).
+- **Sort fix, tested both ways, not just implemented**: `avg/obp/slg/ops/era/whip` (and proactively `ip`, same VARCHAR shape) need `parseFloat()`, not string comparison. AVG/OBP/SLG/OPS showed no visible difference in practice (values are consistently `.XXX`/`1.XXX` shaped, so ASCII ordering happens to coincide with numeric ordering here) — but ERA and IP showed real, serious divergence: naive string-sort ranked ERAs of 10.13/10.50/11.57/19.29 directly ahead of legitimate 2.00–2.08 arms, and IP's naive "top 10" was topped by a 9.0-inning reliever ahead of every 140+ inning starter. `ip` added to the float-sort set even though it wasn't in the original ask, based on recognizing the same underlying VARCHAR-decimal shape.
+- **Null handling deliberately diverges from NFL's**: NFL treats `0` as null for sort-last purposes; MLB does not — a real `0 HR` or `0 SO` is meaningful data, not missing data. Only true `null`/`''` sorts last here.
+- Reuses `diamond-view.html`'s already-corrected `ESPN_TEAM_CODES` map verbatim (ari/chw fixes included) rather than rediscovering it.
+
+### MLB Index Page Texture
+- `mlbTexture()` in `index.html`: rotated infield-diamond shape with dirt-tan fill (`#c9995f`, `fill-opacity: 0.05`), home-plate dot, faint mow-line stripes across the field. Enlarged from an initial pass (viewBox 700→900, diamond rect 300×300→500×500) and given real fill instead of an empty outline, per direct feedback that the first version was too small/bland. `stroke-linejoin="round"` applied proactively, reusing the same miter-join-artifact fix already found and applied to `diamond-view.html`'s own infield dirt shape — same shape, same bug, fixed once it was recognized rather than waiting for it to resurface a second time.
+
+---
+
+## NHL (IceView) — kickoff, in progress
+
+### Data sources, verified before building anything
+- **Package**: `nhl-api-py` (PyPI, own summary says "Updated for 2025/2026"). GitHub `coreyjs/nhl-api-py`, not archived, active commits into May 2026, 146 stars — confirmed real and current before designing anything, same discipline as MLB's kickoff.
+- **Two API bases confirmed from the wrapper's real source**: `api-web.nhle.com/v1/` (modern web API — roster, standings, player landing pages) and `api.nhle.com/stats/rest/` (dedicated stats REST API, uses a `cayenneExp` filter-expression query language unique to this API).
+- **Roster**: `GET /v1/roster/{team_abbr}/{season}` — returns players grouped into `forwards`/`defensemen`/`goalies`, **not** a flat list. This confirms the project's original NBA-analog hypothesis for real, not just structurally guessed. Real fields per the library's docstrings: `id, firstName.default, lastName.default, sweaterNumber, positionCode, birthDate, birthCountry`.
+- **Bulk stats**: `skater_stats_summary()` → `GET .../en/skater/summary` with a `cayenneExp` filter (e.g. `gameTypeId=2 and seasonId<=20252026 and seasonId>=20252026`), league-wide but **not** in one call — see the Gotcha below. Goalies get a separate `goalie_stats_summary()` / `en/goalie/{type}` — same batting/pitching-style split logic as MLB, since save percentage/GAA aren't skater stats.
+- **Gotcha, a different shape than MLB's**: confirmed live that both stats endpoints hard-cap each response at **100 rows server-side regardless of the `limit` value passed** (tried up to 100000, still 100 back) — this isn't a settable default like NFL/MLB's `limit=50`, it's a real page-size ceiling. Full coverage requires paging with `start` in increments of 100 until an empty page comes back. Confirmed real: 940 skaters / 98 goalies league-wide for the 2025-26 season this way.
+- **Season format is `YYYYYYYY`** (e.g. `"20252026"`) — different from MLB's plain year and NBA's `"YYYY-YY"`. `nhl/scripts/season_utils.py`'s `resolve_seasons()` is built and confirmed live: it calls `standings.season_standing_manifest()` (real per-season end dates) and picks the most recently completed season, rather than guessing an Oct/April cutoff. **Real, non-obvious finding**: roster and stats need two *different* season ids during the offseason — confirmed live on 2026-08-18 (~6 weeks before 2026-27 puck drop) that TOR's roster under the prior season id (`20252026`) returns a stale 18 players (departed UFAs still listed, incoming signees not yet added), while the upcoming season id (`20262027`) returns the fuller/current 25-player roster. Stats endpoints are the mirror image — the upcoming season id returns zero rows until games are actually played, so stats has to use the prior/completed season id. `resolve_seasons()` returns both (`roster_season`, `stats_season`) so each script uses the right one.
+
+### Ratings sources — two candidates found, neither verified in structure yet
+- **Official**: `ea.com/games/nhl/ratings` — reported populated only starting with NHL 27; currently empty/not useful as a source.
+- **Fan-made**: `nhlratings.net` — reported populated now. Structure (per-team pages vs. single table, static HTML vs. JS-rendered, any Cloudflare-class protection) is **completely unverified** — no probe has been run against it yet. Same discipline as MLB's `theshowratings.com` applies before any scraper gets designed: confirm real HTML structure, and specifically check for the same "numeric ID embedded in a photo/asset URL" pattern that gave MLB a clean join key, before assuming fuzzy name matching is needed.
+
+### Status
+Recon complete this session — real findings below, confirmed directly against `nhl/data/fieldview.duckdb` (not taken from the scripts' own docstrings alone).
+
+- **`nhl_roster`**: 25 rows — Toronto Maple Leafs only, `scrape_roster.py` is still explicitly `TEST_ABBR`-gated to one team ("TEST MODE: only pulls one team (TOR)" per its own docstring), not yet scaled to all 32. Real columns: `row_id, team_abbr, season, position_group, player_id, first_name, last_name, sweater_number, position_code, shoots_catches, height_in_inches, weight_in_pounds, birth_date, birth_city, birth_country, birth_state_province, loaded_at`. `position_group` (forward/defenseman/goalie, from the API's own forwards/defensemen/goalies grouping) confirmed real: 15 forwards, 8 defensemen, 2 goalies for TOR. Season resolved to `20262027`.
+- **`nhl_stats_skaters`**: 940 rows, league-wide, season `20252026`. Real columns: `assists, evGoals, evPoints, faceoffWinPct, gameWinningGoals, gamesPlayed, goals, lastName, otGoals, penaltyMinutes, playerId, plusMinus, points, pointsPerGame, positionCode, ppGoals, ppPoints, seasonId, shGoals, shPoints, shootingPct, shootsCatches, shots, skaterFullName, teamAbbrevs, timeOnIcePerGame, row_id, loaded_at`.
+- **`nhl_stats_goalies`**: 98 rows, league-wide, season `20252026`. Real columns: `assists, gamesPlayed, gamesStarted, goalieFullName, goals, goalsAgainst, goalsAgainstAverage, lastName, losses, otLosses, penaltyMinutes, playerId, points, savePct, saves, seasonId, shootsCatches, shotsAgainst, shutouts, teamAbbrevs, ties, timeOnIce, wins, row_id, loaded_at`.
+- **Coverage/limit finding — a different fix than NFL/MLB's**: both stats endpoints hard-cap at 100 rows per response no matter what `limit` value is passed (tested up to 100000). `scrape_stats.py` achieves full coverage via real pagination (`fetch_all_pages()`, `start` incrementing by 100 until an empty page returns), not a bigger limit value. See the corrected Key Cross-Sport Learnings entry above.
+- **Season resolution — two different, both-correct answers, confirmed live on 2026-08-18**: `season_utils.py`'s `resolve_seasons()` returns `("20262027", "20252026")` as `(roster_season, stats_season)`. Roster uses the *upcoming* season id (`20262027`) because during the NHL offseason it's the fuller/more current roster — confirmed on TOR specifically: the prior season id returned only 18 players (stale, missing incoming signees) vs. 25 under the upcoming id. Stats uses the *prior/completed* season id (`20252026`) because the upcoming season id returns zero stat rows until games are actually played. This isn't a mismatch to reconcile later — both scripts already pull the correct season for their own endpoint.
+- **Still ahead, not started**: scaling `scrape_roster.py` from TOR-only to all 32 teams, `build_nhl_match.py`/`export_nhl_master.py`, `ice-view.html`/`player-table.html`, and the `nhlratings.net` structure probe (completely unstarted — no request has been made against it yet).
+
+---
+
 ## Conventions & Gotchas
 - OurLads abbreviations: `ARZ` (not ARI), `JAX` (not JAC)
 - Team JSON can come out as a list or dict — normalize with `if type(team_data) is list: team_data = team_data[0]`
@@ -266,7 +376,8 @@ Frontend `STAT_COLS` in `nfl/depth-chart.html` uses these canonical keys.
 - No speculative features or config beyond what's asked
 - Plain HTML/CSS/JS only — no React, no build tools
 - Live Server (VS Code extension by Ritwick Dey) for local dev preview
-- **Scraper hardening pattern (new):** two separate scraper incidents this round (stats.nba.com IP-blocking cloud runners, 2kratings.com TLS-fingerprinting `requests`) reinforce the same lesson already documented for stats.nba.com — anti-bot protection increasingly operates below the HTTP-header layer (source IP reputation, TLS handshake fingerprint) where header tuning alone can't fix it. When a new sport's scrapers hit similar walls, check IP/TLS-layer causes before re-tuning headers a third or fourth time.
+- **Scraper hardening pattern**: stats.nba.com (IP-blocking cloud runners), 2kratings.com and theshowratings.com (both TLS-fingerprinting `requests`, both fixed the same way with `curl_cffi`) all point at the same lesson — anti-bot protection increasingly operates below the HTTP-header layer (source IP reputation, TLS handshake fingerprint) where header tuning alone can't fix it. Check IP/TLS-layer causes before re-tuning headers a third or fourth time on any new source.
+- **Silent bulk-endpoint truncation** is 3-for-3, but not always the same fix: NFL/MLB's `/v1/stats` just needs a bigger `limit`/`playerPool=all`; NHL's `/stats/rest` skater/goalie endpoints hard-cap at 100 rows per response regardless of `limit`, requiring real pagination via `start`. Check which kind of cap a new bulk endpoint has, not just whether one exists.
 
 ---
 
@@ -276,31 +387,33 @@ Frontend `STAT_COLS` in `nfl/depth-chart.html` uses these canonical keys.
 - NBA: no undo path for a single court substitution short of switching teams away and back — deferred, not forgotten
 - NBA: `.subs-name` popover text truncation — see CourtView Frontend Interactions above
 - NBA: LeBron James `rating: null` in `nba_players_master.json` — suspected 2kratings.com name-match bug, same class as previously-fixed Surtain/Woolen/Cyrillic-character bugs. Not yet checked against `nba_ratings_2k.json`'s `unmatched` array.
-- NBA: `scrape_2kratings.py` currently blocked mid-fix (TLS fingerprinting) — see 2K Ratings Scraper section above. Not resolved as of this round.
+- NBA: `scrape_2kratings.py` currently blocked mid-fix (TLS fingerprinting) — see 2K Ratings Scraper section above. Not resolved.
+- MLB: `scrape_ratings.py` (theshowratings.com) blocked pending a genuine cooldown — script is correct and ready, see MLB Ratings section above. Not resolved.
 
 ---
 
 ## Roadmap
 
 **In Progress**
-- ⬜ MLB expansion kickoff — DiamondView + stats/ratings pipeline, following the same 5-script shape as NFL/NBA (scrape rosters/stats → scrape ratings → build_mlb_db → build_mlb_match → export_mlb_master). Intentionally jumps ahead of the original "finish NFL/NBA fully first" sequencing.
-- ⬜ NBA positionless substitution — design drafted (see section above), not yet confirmed applied/verified
-- ⬜ 2K ratings scraper TLS block — `curl_cffi` fix in progress, full run not yet confirmed clean after a real cooldown period
-- ⬜ Tactical stat selection — still just ongoing thinking; feeds both CourtView hover/bench cards and TableView columns, so solve once and both inherit it
+- ⬜ NHL expansion — recon complete: one-team roster (TOR, 25 players) and league-wide stats (940 skaters, 98 goalies) verified in `nhl/data/fieldview.duckdb`, season-resolution utility (`season_utils.py`) built and confirmed live. Still ahead: scale `scrape_roster.py` from one team to all 32, `build_nhl_match.py`/`export_nhl_master.py`, `ice-view.html`/`player-table.html`, and probing `nhlratings.net`'s structure (completely unstarted).
+- ⬜ 2K ratings scraper TLS block — `curl_cffi` fix confirmed working in principle (proven out on MLB's ratings site this round), full 30-team NBA run still not confirmed clean after a real cooldown period.
+- ⬜ MLB ratings scraper (theshowratings.com) — same TLS-block status as 2K, script ready, waiting on cooldown.
+- ⬜ Tactical stat selection — still just ongoing thinking; feeds both CourtView/DiamondView hover/bench cards and TableView columns, so solve once and all sports inherit it.
 
 **Up Next**
-- ⬜ NHL expansion — second sport after MLB; public NHL stats API is the cleanest data layer of the remaining candidates, structurally closer to NBA (fluid positions, bench-heavy) than to NFL/MLB. Open question, not yet verified: whether a 2K-ratings-equivalent fan site exists for EA's NHL game.
 - ⬜ Opponent overlay (NFL) — same-team offense+defense on the field simultaneously first, then a real versus view (your team's offense against an actual opponent's defense)
 - ⬜ Additional NFL data sources (advanced metrics): PFF grades, RAS scores, combine data, EPA/DVOA — via `nflreadpy` (see PIPELINE notes: `load_ftn_charting()`, `load_nextgen_stats()`, `load_participation()`, `load_combine()` are all already free and unused)
+- ⬜ NFL age source swap — switch primary age field from OurLads to Spotrac contract data; Spotrac's contract pages likely carry better OL age/bio coverage than OurLads' depth-chart pages do, worth testing against the current 74.8% GSIS match context once picked up.
 - ⬜ TableView stat/view-package refinement — right stat columns and filter presets to actually run an analysis or scan the league quickly, not just look at a roster
 - ⬜ Popover `.subs-name` truncation fix — small, same width/font treatment `.bench-name` already got
 - ⬜ LeBron James `rating: null` investigation — check `nba_ratings_2k.json`'s `unmatched` array before trusting the position-rank feature's edge cases further
+- ⬜ NBA positionless substitution — design drafted, not yet confirmed applied/verified
 
 **Backlog**
-- ⬜ MLS/EPL expansion (soccer) — last of the four remaining sports, after MLB and NHL. Ratings side is actually the strongest candidate of all four (sofifa.com/EA FC is a large, well-known, scrapable database), but the free stats/roster API landscape is more fragmented than pybaseball/NHL's API/nba_api — pick after the other two sports prove out the process.
-- ⬜ ReView overview — replays, highlights, box scores, tweets, podcasts; comes after FormationView/CourtView/TableView are dialed in, per original sequencing
+- ⬜ MLS/EPL expansion (soccer) — last of the four remaining sports, after NHL. Ratings side is actually the strongest candidate of all four (sofifa.com/EA FC is a large, well-known, scrapable database), but the free stats/roster API landscape is more fragmented than pybaseball/NHL's API/nba_api — pick after NHL proves out the process a third time.
+- ⬜ ReView overview — replays, highlights, box scores, tweets, podcasts; comes after FormationView/CourtView/DiamondView/TableView are dialed in, per original sequencing
 - ⬜ Mobile responsiveness pass — desktop-only is the explicit call for now
-- ⬜ NBA table view column cleanup (same treatment NFL's table view already got)
+- ⬜ NBA table view column cleanup (same treatment NFL's and MLB's table views already got)
 
 **Wish List**
 - ⬜ Player comparison
@@ -308,6 +421,7 @@ Frontend `STAT_COLS` in `nfl/depth-chart.html` uses these canonical keys.
 
 **Dropped**
 - ~~NBA Big/Wing/Guard bucket UI~~ — no usable existing data source found after checking `nba_api`'s `commonplayerinfo` coarse position field and Cleaning the Glass's convention. Superseded by positionless substitution instead of built as originally planned.
+- ~~OOTP as an MLB ratings source~~ — extracting ratings data from a paid commercial game's local files for redistribution in a public repo judged too legally exposed. Dropped before any code was written, in favor of theshowratings.com (a fan site already redistributing that data, same legal category as 2kratings.com).
 
 **Not in FieldView - called ReView:** League leaderboards, game reviews, highlights, replays, podcasts, tweets — these belong in a separate media/highlights page down the road. Called ReView for being able to review the past day/week of games, highlights, box scores, stats, tweets, drama, reddit posts, podcasts, etc. Just to catch up on the league and all it's action.
 
@@ -322,12 +436,3 @@ load_participation() — personnel groupings and snap-level participation. This 
 load_combine() — combine results, already on your roadmap as a separate source, but it's just sitting here for free too.
 
 load_contracts() also exists here (OTC data) — you already have a working Spotrac/OTC pipeline for that, so I wouldn't switch just to consolidate, but worth knowing it's redundant with what you built rather than a gap.
-
----
-
-## Workflow Notes
-- Use this chat (claude.ai) for architecture decisions, debugging with context, pushback
-- Use Claude Code (VS Code chat panel) for direct file edits
-- Front-load thinking in chat → hand Claude Code a crisp specific instruction
-- Start a new chat when switching to a new sport or major new feature area
-- Paste this CLAUDE.md at the top of any new chat to restore context
