@@ -364,7 +364,7 @@ body {
   <div class="sport-bar">
     <button class="sport-btn active" id="sportBtnNfl" onclick="selectSport('nfl')">NFL</button>
     <button class="sport-btn" id="sportBtnMlb" onclick="selectSport('mlb')">MLB</button>
-    <button class="sport-btn soon" title="Coming soon">NHL</button>
+    <button class="sport-btn" id="sportBtnNhl" onclick="selectSport('nhl')">NHL</button>
     <button class="sport-btn" id="sportBtnNba" onclick="selectSport('nba')">NBA</button>
     <button class="sport-btn soon" title="Coming soon">MLS</button>
     <button class="sport-btn soon" title="Coming soon">EPL</button>
@@ -503,11 +503,28 @@ const SPORTS = {
     sourceCount: 1,
     updateCadence: 'Stub',
   },
+  nhl: {
+    tagline: 'NHL Intelligence Platform',
+    formationHref: 'nhl/ice-view.html',
+    tableHref: 'nhl/player-table.html',
+    formationLabel: 'IceView',
+    formationDesc: 'See the current line on the ice -- forwards, defense, and starting goalie -- plus a bench ranked by time on ice.',
+    formationFeatures: ['Team Logos', 'Ice Zones', 'TOI Rotation', 'Skater + Goalie Stats'],
+    tableLabel: 'Player Table',
+    tableDesc: 'Roster data across NHL teams. Filter, sort, and search by team, position, and role.',
+    tableFeatures: ['Sortable', 'Filterable', 'Skater Stats', 'Goalie Stats'],
+    teamCount: 32,
+    sourceCount: 1,
+    // Not in scrape.yml -- only `scrape` (NFL) and `scrape-nba` jobs exist
+    // there, no NHL job at all. 'Stub', matching MLB's same honest
+    // self-labeling (also absent from scrape.yml), not assumed 'Weekly'
+    // just because NFL's cloud job says that.
+    updateCadence: 'Stub',
+  },
   // Not built yet -- sport-bar buttons for these are still .soon and have
   // no onclick, so selectSport() is never called with these keys today.
   // The rest of the config (tagline, hrefs, features, counts) is added
   // when each sport is actually built.
-  nhl: {},
   mls: {},
   epl: {},
 };
@@ -573,6 +590,7 @@ function selectSport(sport) {
   document.getElementById('sportBtnNfl').classList.toggle('active', sport === 'nfl');
   document.getElementById('sportBtnNba').classList.toggle('active', sport === 'nba');
   document.getElementById('sportBtnMlb').classList.toggle('active', sport === 'mlb');
+  document.getElementById('sportBtnNhl').classList.toggle('active', sport === 'nhl');
 
   applyFieldBackground(sport);
 
@@ -633,16 +651,41 @@ function updatePlayerCount(sport) {
         }
       })
       .catch(() => {});
+  } else if (sport === 'mlb') {
+    fetch('mlb/data/mlb_players_master.json')
+      .then(r => r.json())
+      .then(d => {
+        if (currentSport === 'mlb') {
+          document.getElementById('playerCount').textContent = Object.keys(d).length.toLocaleString();
+        }
+      })
+      .catch(() => {});
+  } else if (sport === 'nhl') {
+    fetch('nhl/data/nhl_players_master.json')
+      .then(r => r.json())
+      .then(d => {
+        if (currentSport === 'nhl') {
+          document.getElementById('playerCount').textContent = Object.keys(d).length.toLocaleString();
+        }
+      })
+      .catch(() => {});
   }
 }
 
 // Static markup already defaults to the NFL state; only re-run
 // selectSport() when a page linked here (e.g. CourtView's back button)
 // asks for a specific sport via ?sport=, so a plain visit to index.html
-// keeps behaving exactly as it did before this param existed.
+// keeps behaving exactly as it did before this param existed. Checked
+// against SPORTS[requestedSport].tagline (not just key presence) so an
+// unbuilt sport like mls/epl (still `{}`) falls through to the NFL
+// default instead of selectSport() crashing on undefined config --
+// generalized from a single hardcoded `=== 'nba'` check so newly-built
+// sports (this round: NHL) don't need a matching edit here too, and so
+// MLB's own back-link (previously broken the same way NHL's would have
+// been) is fixed by the same change.
 const requestedSport = new URLSearchParams(window.location.search).get('sport');
-if (requestedSport === 'nba') {
-  selectSport('nba');
+if (requestedSport && SPORTS[requestedSport] && SPORTS[requestedSport].tagline) {
+  selectSport(requestedSport);
 } else {
   applyFieldBackground('nfl');
   updatePlayerCount('nfl');
