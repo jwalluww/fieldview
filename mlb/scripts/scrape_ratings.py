@@ -18,11 +18,22 @@ already has all of it cleanly from statsapi.mlb.com.
 
 Pacing: this site blocked after ~4 requests earlier in the same
 session that discovered the curl_cffi fix -- more sensitive than
-statsapi.mlb.com's 0.3s tolerance. 2.5s between team pages, and a
-403 gets only 2 retries (not the general 3) so a block fails fast
-instead of hammering an active cooldown, same fix already flagged as
-still-needed for the open 2kratings.com NBA issue.
+statsapi.mlb.com's 0.3s tolerance. Bumped from an original 2.5s to
+8-15s between team pages -- this script only needs to run roughly
+weekly and ratings barely move day to day, so there's no reason to
+hurry. This is NOT expected to fix the real TLS-fingerprint block by
+itself (confirmed live this project: theshowratings.com re-blocked a
+curl_cffi run at 0/30 teams even with the original pacing -- curl_cffi
+is the actual fix for that class of block, pacing isn't). It's cheap
+insurance against a *second*, independent failure mode -- a fresh
+request-volume-triggered cooldown layered on top, the same signature
+that hit nhlratings.net mid-probe this session even under plain
+requests with no TLS issue at all. A 403 still gets only 2 retries
+(not the general 3) so a block fails fast instead of hammering an
+active cooldown, same fix already flagged as still-needed for the
+open 2kratings.com NBA issue.
 """
+import random
 import re
 import time
 from datetime import datetime, timezone
@@ -172,7 +183,7 @@ if __name__ == "__main__":
             print(f"{team_name}: {len(rows)} rows{note}")
 
             if i < len(TEAM_URLS) - 1:
-                time.sleep(2.5)
+                time.sleep(random.uniform(8, 15))
 
     except BlockedError as e:
         print(f"\nBLOCKED: {e}")

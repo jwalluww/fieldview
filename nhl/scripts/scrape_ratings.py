@@ -47,6 +47,7 @@ signature, not a first-request rejection). Do not run this script
 again same-day; give it a real multi-hour/overnight cooldown first.
 """
 import os
+import random
 import re
 import sys
 import time
@@ -276,7 +277,18 @@ if __name__ == '__main__':
             completed_teams += 1
             print(f"{abbr}: {len(rows)} rows")
             if i < len(TEAM_SLUGS) - 1:
-                time.sleep(1.5)
+                # This scraper runs roughly weekly and ratings barely move
+                # day to day, so there's no reason to hurry -- 8-15s between
+                # team pages (up from an original 1.5s) meaningfully cuts
+                # the odds of tripping a fresh volume-based cooldown, which
+                # is what this project's own findings point at for the 403
+                # that hit mid-session here (see module docstring). This is
+                # NOT expected to fix a real TLS-fingerprint block by itself
+                # -- confirmed elsewhere in this project (2kratings.com,
+                # theshowratings.com) that pacing alone doesn't get past
+                # that class of block, curl_cffi does. It's cheap insurance
+                # against the *other*, request-volume-triggered kind.
+                time.sleep(random.uniform(8, 15))
     except BlockedError as e:
         print(f"\nBLOCKED: {e}")
         print(f"Stopping -- {completed_teams}/{len(TEAM_SLUGS)} teams completed before the block. Not retrying today.")
