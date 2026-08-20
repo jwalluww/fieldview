@@ -227,7 +227,15 @@ def main():
         html = fetch_with_retry(url)
         team_records = parse_team_roster(html, abbr)
         all_records.extend(team_records)
-        time.sleep(1.0 + random.uniform(0, 0.5))
+        # Bumped to match NHL/MLB's ratings-scraper pacing fix (this one
+        # was missed that round) -- 8-15s between team pages, since this
+        # only needs to run roughly weekly and ratings barely move day to
+        # day. Not expected to fix a real TLS-fingerprint block by itself
+        # (curl_cffi is the actual fix for that, already in use here) --
+        # this is insurance against a separate, request-volume-triggered
+        # cooldown, same reasoning as nhl/scripts/scrape_ratings.py and
+        # mlb/scripts/scrape_ratings.py.
+        time.sleep(random.uniform(8, 15))
 
     print(f"\nParsed {len(all_records)} rated players across {len(TEAM_SLUGS)} teams")
 

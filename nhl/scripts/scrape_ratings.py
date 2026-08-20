@@ -55,8 +55,8 @@ from datetime import datetime, timezone
 
 import duckdb
 import pandas as pd
-import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests as cffi_requests
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from name_utils import normalize_name, normalize_for_matching, NHL_NAME_ALIASES
@@ -258,7 +258,12 @@ def find_match(raw_name, team_abbr, by_name, by_name_team):
 
 
 if __name__ == '__main__':
-    session = requests.Session()
+    # Switched to curl_cffi's Chrome-120 impersonation for this run, on
+    # top of the existing 8-15s pacing -- the prior 403 looked
+    # volume-triggered, not TLS-fingerprint (see module docstring), but
+    # curl_cffi is cheap insurance either way and is the project's
+    # confirmed fix for the other block class if this turns out to be that.
+    session = cffi_requests.Session(impersonate='chrome120')
     session.headers.update(HEADERS)
 
     players = load_roster_players()
