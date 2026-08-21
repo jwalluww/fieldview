@@ -7,14 +7,43 @@
 # (e.g. https://www.2kratings.com/teams/los-angeles-lakers) and re-verify
 # the table id and column structure before assuming the parser is still
 # right -- don't just bump a selector and hope.
+#
+# RUN LOCALLY ONLY -- NOT IN GITHUB ACTIONS. Cloud/datacenter IPs get
+# treated worse by this class of anti-bot protection than residential
+# IPs -- already confirmed the hard way in this project on
+# nba/scripts/fetch_stats.py (stats.nba.com started failing exclusively
+# on the hosted Actions runner with clean local runs on the same code,
+# same day -- see CLAUDE.md's "NBA Stats Scraper" section). Don't
+# "helpfully" move this into scrape.yml's scrape-nba job; run it locally
+# via schedule_2kratings_scrape.bat (see bottom of this file for the
+# suggested -- not registered -- schtasks command).
+#
+# PART 1 -- retry + fallback (mirrors nfl/scripts/scrape_madden.py's
+# actual pattern): each team gets a per-request retry+backoff attempt
+# (fetch_with_retry, which now actually raises on total failure instead
+# of silently falling through to None -- that was a real bug, fixed as
+# part of this rebuild). Any team still empty after that gets ONE retry
+# pass after a 20s cooldown. Whatever's still empty after both passes
+# falls back to that team's existing rows already in nba_ratings_2k.json,
+# rather than writing empty/null and erasing known-good data over a
+# transient block. Logged as fresh / stale-carryover / missing.
+#
+# PART 2 -- daily-trickle mode: 2kratings.com has never completed a full
+# 30-team run in this project (best result: 8/30 before a block). Each
+# run instead pulls only 3 random teams from a persisted rolling pool
+# (nba/data/ratings_2k_scrape_state.json) and upserts them into
+# nba_ratings_2k.json immediately, rather than waiting for a full cycle.
+# When the pool empties, it's reshuffled and refilled for the next
+# cycle -- a continuous rolling refresh, not a one-time build.
 import json
 import os
 import random
 import sys
 import time
+from datetime import datetime, timezone
 
-import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests as cffi_requests
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from name_utils import normalize_name, normalize_for_matching, NBA_NAME_ALIASES
@@ -36,11 +65,10 @@ HEADERS = {
     "Sec-Fetch-Site": "same-origin",
 }
 
-session = requests.Session()
-session.headers.update(HEADERS)
-
 STATS_PATH = os.path.join("nba", "data", "nba_stats.json")
 OUT_PATH = os.path.join("nba", "data", "nba_ratings_2k.json")
+STATE_PATH = os.path.join("nba", "data", "ratings_2k_scrape_state.json")
+TEAMS_PER_RUN = 3
 
 # nba_api abbreviation -> 2kratings team-page slug. Built by cross
 # referencing 2kratings' own team nav against nba_api's static team list
@@ -80,46 +108,31 @@ TEAM_SLUGS = {
 }
 
 
-# def fetch_with_retry(url, max_retries=4, base_delay=2.0):
-#     for attempt in range(1, max_retries + 1):
-#         try:
-#             resp = session.get(url, timeout=20)
-#             resp.raise_for_status()
-#             return resp.text
-#         except requests.exceptions.HTTPError as e:
-#             is_blocked = getattr(e.response, "status_code", None) == 403
-#             if attempt == max_retries:
-#                 raise
-#             # a 403 means we're actively blocked, not a transient blip --
-#             # retrying in a few seconds does nothing, so back off much
-#             # harder than the normal exponential schedule.
-#             delay = (30 * attempt if is_blocked else base_delay * (2 ** (attempt - 1))) + random.uniform(0, 3)
-#             print(f"  retry {attempt}/{max_retries} after error ({e}); sleeping {delay:.1f}s")
-#             time.sleep(delay)
-
-from curl_cffi import requests
-
-session = requests.Session(impersonate="chrome120")
-
-def fetch_with_retry(url, max_retries=4, base_delay=2.0):
+def fetch_with_retry(session, url, max_retries=4, base_delay=2.0):
+    """Raises on total failure -- never returns None. The prior version
+    of this function caught exceptions, logged 403s, and fell through the
+    loop with no raise/return on exhaustion, which crashed the caller's
+    BeautifulSoup(None, ...) call with a TypeError instead of failing
+    cleanly. Fixed here as part of the Part 1 rebuild."""
+    last_exc = None
     for attempt in range(1, max_retries + 1):
         try:
             resp = session.get(url, timeout=20)
             resp.raise_for_status()
             return resp.text
-        # except Exception as e:
-        #     is_blocked = getattr(getattr(e, "response", None), "status_code", None) == 403
-        #     if attempt == max_retries:
-        #         raise
-        #     delay = (30 * attempt if is_blocked else base_delay * (2 ** (attempt - 1))) + random.uniform(0, 3)
-        #     print(f"  retry {attempt}/{max_retries} after error ({e}); sleeping {delay:.1f}s")
-        #     time.sleep(delay)
         except Exception as e:
+            last_exc = e
             resp = getattr(e, "response", None)
             if resp is not None and getattr(resp, "status_code", None) == 403:
-                print(f"  blocked -- server: {resp.headers.get('server')}, "
-                    f"retry-after: {resp.headers.get('retry-after')}, "
-                    f"cf-ray: {resp.headers.get('cf-ray')}")
+                print(f"    blocked -- server: {resp.headers.get('server')}, "
+                      f"retry-after: {resp.headers.get('retry-after')}, "
+                      f"cf-ray: {resp.headers.get('cf-ray')}")
+            if attempt == max_retries:
+                raise
+            delay = base_delay * (2 ** (attempt - 1)) + random.uniform(0, 3)
+            print(f"    retry {attempt}/{max_retries} after error ({e}); sleeping {delay:.1f}s")
+            time.sleep(delay)
+    raise last_exc
 
 
 def parse_int(text):
@@ -181,12 +194,41 @@ def parse_team_roster(html, team_abbr):
     return records
 
 
+def scrape_team(session, abbr):
+    """Returns [] on any failure -- network error, exhausted retries, a
+    real block, or a parse failure (missing table) -- so one team's
+    failure never crashes the run for the others. Mirrors
+    nfl/scripts/scrape_madden.py's scrape_team()."""
+    url = BASE_URL + TEAM_SLUGS[abbr]
+    try:
+        html = fetch_with_retry(session, url)
+        return parse_team_roster(html, abbr)
+    except Exception as e:
+        print(f"    ERROR scraping {abbr}: {e}")
+        return []
+
+
 def load_nba_players():
     """Real scraped player universe -- see scrape_contracts_spotrac.py for
     why nba_players_master.json (fictional stub) isn't the match target."""
     with open(STATS_PATH, encoding="utf-8") as f:
         stats = json.load(f)
     return list(stats.values())
+
+
+def load_existing_ratings_by_team():
+    """Base population for both the stale-carryover fallback and the
+    merge step -- reads whatever's currently in nba_ratings_2k.json
+    (built up incrementally by prior trickle runs), grouped by team.
+    Empty dict if the file doesn't exist yet (first run ever)."""
+    if not os.path.exists(OUT_PATH):
+        return {}
+    with open(OUT_PATH, encoding="utf-8") as f:
+        data = json.load(f)
+    by_team = {}
+    for record in data.get("ratings", []):
+        by_team.setdefault(record["team"], []).append(record)
+    return by_team
 
 
 def build_match_index(players):
@@ -215,58 +257,142 @@ def find_match(record, by_name, by_name_team):
     return None
 
 
+def load_state():
+    if os.path.exists(STATE_PATH):
+        with open(STATE_PATH, encoding="utf-8") as f:
+            state = json.load(f)
+        if state.get("remaining_pool"):
+            return state
+    pool = list(TEAM_SLUGS.keys())
+    random.shuffle(pool)
+    return {"remaining_pool": pool, "cycle": 1, "cycle_started": datetime.now(timezone.utc).isoformat()}
+
+
+def save_state(state):
+    os.makedirs(os.path.dirname(STATE_PATH), exist_ok=True)
+    with open(STATE_PATH, "w", encoding="utf-8") as f:
+        json.dump(state, f, indent=2)
+
+
 def main():
+    session = cffi_requests.Session(impersonate="chrome120")
+    session.headers.update(HEADERS)
+
+    state = load_state()
+    remaining = state["remaining_pool"]
+    chosen = remaining[:TEAMS_PER_RUN]
+    print(f"Cycle {state.get('cycle', 1)}: {len(remaining)} teams remaining before this run. "
+          f"Picked: {chosen}")
+
     players = load_nba_players()
     by_name, by_name_team = build_match_index(players)
     print(f"Matching against {len(players)} players from nba_stats.json")
+    existing_by_team = load_existing_ratings_by_team()
 
-    all_records = []
-    for i, (abbr, slug) in enumerate(TEAM_SLUGS.items(), 1):
-        url = BASE_URL + slug
-        print(f"[{i}/{len(TEAM_SLUGS)}] {abbr} -- {url}")
-        html = fetch_with_retry(url)
-        team_records = parse_team_roster(html, abbr)
-        all_records.extend(team_records)
-        # Bumped to match NHL/MLB's ratings-scraper pacing fix (this one
-        # was missed that round) -- 8-15s between team pages, since this
-        # only needs to run roughly weekly and ratings barely move day to
-        # day. Not expected to fix a real TLS-fingerprint block by itself
-        # (curl_cffi is the actual fix for that, already in use here) --
-        # this is insurance against a separate, request-volume-triggered
-        # cooldown, same reasoning as nhl/scripts/scrape_ratings.py and
-        # mlb/scripts/scrape_ratings.py.
+    by_team = {}
+    for abbr in chosen:
+        by_team[abbr] = scrape_team(session, abbr)
+        print(f"{abbr}: {len(by_team[abbr])} rows")
         time.sleep(random.uniform(8, 15))
 
-    print(f"\nParsed {len(all_records)} rated players across {len(TEAM_SLUGS)} teams")
+    failed = [abbr for abbr in chosen if not by_team[abbr]]
+    if failed:
+        print(f"\n{len(failed)} team(s) failed in-run, retrying after a cooldown: {failed}")
+        time.sleep(20)
+        for abbr in failed:
+            by_team[abbr] = scrape_team(session, abbr)
+            print(f"{abbr}: {len(by_team[abbr])} rows (retry)")
+            time.sleep(random.uniform(8, 15))
 
-    matched = 0
-    unmatched = []
-    for record in all_records:
-        p = find_match(record, by_name, by_name_team)
-        if p:
-            record["player_id"] = p["player_id"]
-            matched += 1
+    fresh, stale, missing = [], [], []
+    for abbr in chosen:
+        if by_team[abbr]:
+            fresh.append(abbr)
+            continue
+        fallback = existing_by_team.get(abbr)
+        if fallback:
+            by_team[abbr] = fallback
+            stale.append(abbr)
         else:
-            record["player_id"] = None
-            unmatched.append({
-                "2k_name": record["2k_name"],
-                "team": record["team"],
-                "positions": record["positions"],
-            })
+            missing.append(abbr)
 
-    output = {"ratings": all_records, "unmatched": unmatched}
+    if stale:
+        print(f"\nWARNING: kept previous data for (fresh scrape failed both attempts): {stale}")
+    if missing:
+        print(f"\nWARNING: no data at all for (fresh scrape failed, no prior data to fall back to): {missing}")
 
-    os.makedirs(os.path.join("nba", "data"), exist_ok=True)
-    with open(OUT_PATH, "w", encoding="utf-8") as f:
-        json.dump(output, f, indent=2)
+    # Only freshly-scraped records need (re)matching -- stale/carried-over
+    # records already have player_id from their last successful match.
+    matched_fresh = 0
+    for abbr in fresh:
+        for record in by_team[abbr]:
+            p = find_match(record, by_name, by_name_team)
+            record["player_id"] = p["player_id"] if p else None
+            if p:
+                matched_fresh += 1
 
-    pct = (matched / len(all_records) * 100) if all_records else 0
-    print(f"\nMatched: {matched} / {len(all_records)} ({pct:.1f}%)")
-    print(f"Unmatched: {len(unmatched)}")
-    print(f"Saved to {OUT_PATH}")
+    # Upsert: keep every existing record for teams NOT touched this run,
+    # replace records only for the teams we did touch (fresh or
+    # stale-fallback) -- a 3-team-per-run trickle must never wipe out the
+    # other 27 teams' already-collected data.
+    chosen_set = set(chosen)
+    merged_records = []
+    for abbr, records in existing_by_team.items():
+        if abbr not in chosen_set:
+            merged_records.extend(records)
+    for abbr in chosen:
+        merged_records.extend(by_team.get(abbr, []))
+
+    unmatched = [
+        {"2k_name": r["2k_name"], "team": r["team"], "positions": r.get("positions")}
+        for r in merged_records if r.get("player_id") is None
+    ]
+
+    if merged_records:
+        output = {"ratings": merged_records, "unmatched": unmatched}
+        os.makedirs(os.path.join("nba", "data"), exist_ok=True)
+        with open(OUT_PATH, "w", encoding="utf-8") as f:
+            json.dump(output, f, indent=2)
+        teams_covered = len({r["team"] for r in merged_records})
+        matched_total = len(merged_records) - len(unmatched)
+        print(f"\n{OUT_PATH}: {len(merged_records)} total records across {teams_covered}/{len(TEAM_SLUGS)} teams "
+              f"({len(fresh)} fresh this run, {len(stale)} stale-carryover, {len(missing)} missing)")
+        print(f"Matched: {matched_total} / {len(merged_records)} "
+              f"({matched_total / len(merged_records) * 100:.1f}%)")
+    else:
+        print(f"\nNo records at all (fresh or stale) -- {OUT_PATH} not written.")
+
+    # Advance the rolling pool -- refill+reshuffle once it empties so this
+    # is a continuous rolling refresh, not a one-time 10-run build.
+    state["remaining_pool"] = [a for a in remaining if a not in chosen_set]
+    if not state["remaining_pool"]:
+        new_pool = list(TEAM_SLUGS.keys())
+        random.shuffle(new_pool)
+        state["remaining_pool"] = new_pool
+        state["cycle"] = state.get("cycle", 1) + 1
+        state["cycle_started"] = datetime.now(timezone.utc).isoformat()
+        print(f"\nCycle complete -- starting cycle {state['cycle']} with a freshly shuffled 30-team pool.")
+    save_state(state)
+    print(f"{len(state['remaining_pool'])} teams remaining in current cycle.")
 
 
 if __name__ == "__main__":
     main()
-# if __name__ == "__main__":
-#     print(fetch_with_retry(BASE_URL + "atlanta-hawks")[:200])
+
+# ══════════════════════════════════════════════════════════════════════
+# SCHEDULING (local machine only -- see the "RUN LOCALLY ONLY" note at
+# the top of this file). This is a suggested command, NOT registered by
+# this script or by Claude Code -- run it yourself if you want the daily
+# trickle automated:
+#
+#   schtasks /create /tn "FieldView NBA 2K Ratings Scrape" ^
+#     /tr "C:\Users\wallj\DS_Projects\fieldview\nba\scripts\schedule_2kratings_scrape.bat" ^
+#     /sc daily /st 09:15
+#
+# schedule_2kratings_scrape.bat (see that file, same directory) adds its
+# own random 0-30 minute delay before invoking this script, so the
+# actual run time still drifts day to day even though the scheduled
+# trigger itself fires at a fixed clock time -- schtasks' basic CLI has
+# no native random-delay trigger option. Staggered 15 minutes from the
+# NHL scraper's suggested 09:00 so the two don't fire in the same window.
+# ══════════════════════════════════════════════════════════════════════
