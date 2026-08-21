@@ -3,49 +3,54 @@ nhl/scripts/scrape_ratings.py
 
 Pulls NHL 27 (video game) player ratings from nhlratings.net's 32 team
 pages, loads them into nhl/data/fieldview.duckdb as a raw nhl_ratings
-table. Confirmed live (this session) that the site is plain static
-HTML behind Cloudflare with no TLS-fingerprint challenge -- a normal
-`requests.get()` with a realistic browser UA gets a clean 200 with the
-full roster table already server-rendered, no curl_cffi needed here
-(unlike mlb/scripts/scrape_ratings.py's theshowratings.com, which
-really is TLS-fingerprint-blocked for plain requests).
+table. Site structure confirmed live: static HTML behind Cloudflare,
+two `<table class="table-striped ...">` blocks per page (main roster +
+a small reserve/IR table). Per row: player name (`.entry-font a`),
+position code (`a[href^="/lists/"]`, single letter C/L/R/D/G), jersey
+number (plain text `#NN`, absent for some reserve/incoming players --
+not an error), OVR (int or `--`), POT (a letter grade like "Exact",
+not numeric -- kept as text, mirrors MLB's POT handling).
 
-No clean numeric join key, unlike MLB: the photo `data-src` URL does
-embed a number (`{name-slug}-{NUMBER}-80x80.png`), but it's confirmed
-NOT the NHL API's `playerId` -- checked 2 real players live (William
-Nylander: site `3114736` vs. API `8477939`; Auston Matthews: site
-`4024123` vs. API `8479318`), different id spaces entirely. So this
-matches by name+team instead, same approach as
-nba/scripts/scrape_2kratings.py, using nhl/scripts/name_utils.py
-(ported from NBA's) against nhl_roster (already loaded in the DB) as
-the match target rather than a live nba_stats.json-equivalent file.
+No clean numeric join key, unlike MLB: the photo `data-src` URL embeds
+a number (`{name-slug}-{NUMBER}-80x80.png`), confirmed NOT the NHL
+API's `playerId` (checked live: William Nylander site `3114736` vs.
+API `8477939`). Matches by name+team instead, via name_utils.py against
+nhl_roster (already in the DB).
 
-Team page structure, confirmed live: two `<table class="table-striped
-...">` blocks per page -- the main roster and a small reserve/IR table
-(same shape, just fewer/blank stat cells) -- both parsed the same way
-and combined. Per row: player name (`.entry-font a`), position code
-(`a[href^="/lists/"]`, single letter C/L/R/D/G), jersey number (plain
-text `#NN` inside `.entry-subtext-font`, absent for some reserve/
-incoming players -- not an error), OVR (`.attribute-box` in the 3rd
-`<td>`, int or `--`), POT (`.attribute-box` in the 4th `<td>`, a
-letter grade like "Exact"/"A+", not numeric -- kept as text, mirrors
-MLB's POT handling in mlb/scripts/scrape_ratings.py).
+RUN LOCALLY ONLY -- NOT IN GITHUB ACTIONS. Cloud/datacenter IPs get
+treated worse by this class of anti-bot protection than residential
+IPs -- already confirmed the hard way in this project on
+nba/scripts/fetch_stats.py (stats.nba.com started failing exclusively
+on the hosted Actions runner with clean local runs on the same code,
+same day -- see CLAUDE.md's "NBA Stats Scraper" section). Don't
+"helpfully" move this into scrape.yml; run it locally via
+schedule_ratings_scrape.bat (see bottom of this file for the suggested
+-- not registered -- schtasks command).
 
-STATUS AS OF THIS SESSION: this script has NOT been run to completion.
-While confirming the ID-space finding above (a handful of plain
-requests against the homepage + one team page), the site started
-returning a real Cloudflare 403 (Server: cloudflare, cf-ray present,
-cf-cache-status: BYPASS -- a freshly-computed block, not a cached
-page) on a follow-up request to a *different* team page that had never
-been hit before. Same rate-triggered-cooldown pattern already seen
-twice on this project (2kratings.com, theshowratings.com) -- standing
-rule is one clean test then stop, not a retry loop, and NOT an
-automatic reach for curl_cffi (this doesn't look like a TLS
-fingerprint block -- it started passing, then failed after repeated
-requests from the same IP in a short window, which is a rate/volume
-signature, not a first-request rejection). Do not run this script
-again same-day; give it a real multi-hour/overnight cooldown first.
+PART 1 -- retry + fallback (mirrors nfl/scripts/scrape_madden.py's
+actual pattern, not reinvented): each team gets a per-request
+retry+backoff attempt (fetch_with_retry). Any team that still has no
+rows after that gets ONE retry pass after a 20s cooldown. Whatever's
+still empty after both passes falls back to that team's most recent
+successful scrape already sitting in the nhl_ratings table, rather
+than writing empty/null and erasing known-good data over a transient
+block. Logged as fresh / stale-carryover / missing (no fallback
+available either), same three-way breakdown Madden's script prints.
+
+PART 2 -- daily-trickle mode: nhlratings.net's rate-limit-style
+cooldown (confirmed last session -- 1/32 teams before a fresh 403,
+after this same site worked cleanly earlier the same probe) means a
+30-team run in one sitting is the wrong shape for this site. Instead,
+each run pulls only 3 random teams from a persisted rolling pool
+(nhl/data/ratings_scrape_state.json) and upserts them into
+nhl_ratings immediately -- it does NOT wait for a full cycle before
+writing anything, so a script that never finishes a 32-team cycle
+still leaves real, fresh data behind after every run. When the pool
+empties (every team pulled at least once), it's reshuffled and
+refilled for the next cycle -- a continuous rolling refresh, not a
+one-time build.
 """
+import json
 import os
 import random
 import re
@@ -62,6 +67,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from name_utils import normalize_name, normalize_for_matching, NHL_NAME_ALIASES
 
 DB_PATH = "nhl/data/fieldview.duckdb"
+STATE_PATH = "nhl/data/ratings_scrape_state.json"
+TEAMS_PER_RUN = 3
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -71,12 +78,10 @@ HEADERS = {
     "Referer": "https://www.nhlratings.net/",
 }
 
-# abbr (matches nhl_roster.team_abbr, from the same live teams.teams()
-# call scrape_roster.py uses) -> nhlratings.net team-page slug. Cross
-# referenced live: slugified full team names from teams.teams() against
-# the real 32 /teams/ links found on the site's own homepage nav -- 31/32
-# auto-matched, Montreal needed a manual fix (site drops the accent:
-# "montreal-canadiens", not a slugified "Montréal").
+# abbr (matches nhl_roster.team_abbr) -> nhlratings.net team-page slug.
+# Cross referenced live against the site's own homepage nav -- 31/32
+# auto-matched by slugifying teams.teams()'s full names, Montreal
+# needed a manual fix (site drops the accent: "montreal-canadiens").
 TEAM_SLUGS = {
     'ANA': 'anaheim-ducks',
     'BOS': 'boston-bruins',
@@ -116,11 +121,11 @@ JERSEY_RE = re.compile(r'#(\d+)')
 PHOTO_ID_RE = re.compile(r'-(\d+)-80x80\.png')
 
 
-class BlockedError(RuntimeError):
-    pass
-
-
 def fetch_with_retry(session, url, retries=3, retries_403=2, backoff=2):
+    """Raises on total failure (network error after `retries` attempts,
+    or a 403 after `retries_403` attempts) -- never returns None. Callers
+    (scrape_team) are responsible for catching and turning that into an
+    empty-list failure signal, same shape as Madden's scrape_team()."""
     attempt = 0
     attempt_403 = 0
     while True:
@@ -130,19 +135,18 @@ def fetch_with_retry(session, url, retries=3, retries_403=2, backoff=2):
             attempt += 1
             if attempt >= retries:
                 raise
-            print(f"  network error ({e}), retry {attempt}/{retries}")
+            print(f"    network error ({e}), retry {attempt}/{retries}")
             time.sleep(backoff ** attempt)
             continue
 
         if resp.status_code == 403:
             attempt_403 += 1
-            print(f"  403 -- server: {resp.headers.get('server')}, "
+            print(f"    403 -- server: {resp.headers.get('server')}, "
                   f"cf-ray: {resp.headers.get('cf-ray')}, "
                   f"cf-cache-status: {resp.headers.get('cf-cache-status')}")
             if attempt_403 >= retries_403:
-                raise BlockedError(f"403 Forbidden after {attempt_403} attempts: {url}")
-            wait = backoff ** attempt_403
-            time.sleep(wait)
+                raise RuntimeError(f"403 Forbidden after {attempt_403} attempts: {url}")
+            time.sleep(backoff ** attempt_403)
             continue
 
         resp.raise_for_status()
@@ -208,13 +212,27 @@ def parse_team_page(html, team_abbr, loaded_at):
     soup = BeautifulSoup(html, 'html.parser')
     tables = soup.find_all('table', class_='table-striped')
     if not tables:
-        print(f"  WARNING: no ratings table found for {team_abbr}")
+        print(f"    WARNING: no ratings table found for {team_abbr}")
         return []
 
     rows = []
     for table in tables:
         rows.extend(parse_roster_table(table, team_abbr, loaded_at))
     return rows
+
+
+def scrape_team(session, abbr, slug):
+    """Returns [] on any failure -- network error, exhausted retries, or a
+    real block -- so one team's failure never crashes the run for the
+    others. Mirrors scrape_madden.py's scrape_team()."""
+    url = f"https://www.nhlratings.net/teams/{slug}"
+    try:
+        resp = fetch_with_retry(session, url)
+    except Exception as e:
+        print(f"    ERROR scraping {abbr}: {e}")
+        return []
+    loaded_at = datetime.now(timezone.utc).isoformat()
+    return parse_team_page(resp.text, abbr, loaded_at)
 
 
 def load_roster_players():
@@ -229,6 +247,26 @@ def load_roster_players():
             'team': r['team_abbr'],
         })
     return players
+
+
+def load_existing_ratings_by_team():
+    """Base population for both the stale-carryover fallback and the
+    merge step -- reads whatever's currently in nhl_ratings (built up
+    incrementally by prior trickle runs), grouped by team. Empty dict if
+    the table doesn't exist yet (first run ever)."""
+    con = duckdb.connect(DB_PATH)
+    exists = con.execute(
+        "SELECT 1 FROM information_schema.tables WHERE table_name = 'nhl_ratings'"
+    ).fetchone() is not None
+    if not exists:
+        con.close()
+        return {}
+    df = con.execute("SELECT * FROM nhl_ratings").fetchdf()
+    con.close()
+    by_team = {}
+    for _, r in df.iterrows():
+        by_team.setdefault(r['team_abbr'], []).append(r.to_dict())
+    return by_team
 
 
 def build_match_index(players):
@@ -257,67 +295,126 @@ def find_match(raw_name, team_abbr, by_name, by_name_team):
     return None
 
 
+def load_state():
+    if os.path.exists(STATE_PATH):
+        with open(STATE_PATH, encoding='utf-8') as f:
+            state = json.load(f)
+        if state.get('remaining_pool'):
+            return state
+    pool = list(TEAM_SLUGS.keys())
+    random.shuffle(pool)
+    return {'remaining_pool': pool, 'cycle': 1, 'cycle_started': datetime.now(timezone.utc).isoformat()}
+
+
+def save_state(state):
+    os.makedirs(os.path.dirname(STATE_PATH), exist_ok=True)
+    with open(STATE_PATH, 'w', encoding='utf-8') as f:
+        json.dump(state, f, indent=2)
+
+
 if __name__ == '__main__':
-    # Switched to curl_cffi's Chrome-120 impersonation for this run, on
-    # top of the existing 8-15s pacing -- the prior 403 looked
-    # volume-triggered, not TLS-fingerprint (see module docstring), but
-    # curl_cffi is cheap insurance either way and is the project's
-    # confirmed fix for the other block class if this turns out to be that.
     session = cffi_requests.Session(impersonate='chrome120')
     session.headers.update(HEADERS)
 
+    state = load_state()
+    remaining = state['remaining_pool']
+    chosen = remaining[:TEAMS_PER_RUN]
+    print(f"Cycle {state.get('cycle', 1)}: {len(remaining)} teams remaining before this run. "
+          f"Picked: {chosen}")
+
     players = load_roster_players()
     by_name, by_name_team = build_match_index(players)
-    print(f"Matching against {len(players)} players from nhl_roster")
+    existing_by_team = load_existing_ratings_by_team()
 
-    all_rows = []
-    completed_teams = 0
-    try:
-        for i, (abbr, slug) in enumerate(TEAM_SLUGS.items()):
-            url = f"https://www.nhlratings.net/teams/{slug}"
-            resp = fetch_with_retry(session, url)
-            loaded_at = datetime.now(timezone.utc).isoformat()
-            rows = parse_team_page(resp.text, abbr, loaded_at)
-            all_rows.extend(rows)
-            completed_teams += 1
-            print(f"{abbr}: {len(rows)} rows")
-            if i < len(TEAM_SLUGS) - 1:
-                # This scraper runs roughly weekly and ratings barely move
-                # day to day, so there's no reason to hurry -- 8-15s between
-                # team pages (up from an original 1.5s) meaningfully cuts
-                # the odds of tripping a fresh volume-based cooldown, which
-                # is what this project's own findings point at for the 403
-                # that hit mid-session here (see module docstring). This is
-                # NOT expected to fix a real TLS-fingerprint block by itself
-                # -- confirmed elsewhere in this project (2kratings.com,
-                # theshowratings.com) that pacing alone doesn't get past
-                # that class of block, curl_cffi does. It's cheap insurance
-                # against the *other*, request-volume-triggered kind.
-                time.sleep(random.uniform(8, 15))
-    except BlockedError as e:
-        print(f"\nBLOCKED: {e}")
-        print(f"Stopping -- {completed_teams}/{len(TEAM_SLUGS)} teams completed before the block. Not retrying today.")
+    by_team = {}
+    for abbr in chosen:
+        by_team[abbr] = scrape_team(session, abbr, TEAM_SLUGS[abbr])
+        print(f"{abbr}: {len(by_team[abbr])} rows")
+        time.sleep(random.uniform(8, 15))
 
-    matched = 0
-    unmatched = []
-    for row in all_rows:
-        p = find_match(row['raw_name'], row['team_abbr'], by_name, by_name_team)
-        if p:
-            row['player_id'] = p['player_id']
-            matched += 1
+    failed = [abbr for abbr in chosen if not by_team[abbr]]
+    if failed:
+        print(f"\n{len(failed)} team(s) failed in-run, retrying after a cooldown: {failed}")
+        time.sleep(20)
+        for abbr in failed:
+            by_team[abbr] = scrape_team(session, abbr, TEAM_SLUGS[abbr])
+            print(f"{abbr}: {len(by_team[abbr])} rows (retry)")
+            time.sleep(random.uniform(8, 15))
+
+    fresh, stale, missing = [], [], []
+    for abbr in chosen:
+        if by_team[abbr]:
+            fresh.append(abbr)
+            continue
+        fallback = existing_by_team.get(abbr)
+        if fallback:
+            by_team[abbr] = fallback
+            stale.append(abbr)
         else:
-            row['player_id'] = None
-            unmatched.append({'raw_name': row['raw_name'], 'team_abbr': row['team_abbr'], 'position': row['position']})
-        row['row_id'] = f"{row['team_abbr']}_{normalize_for_matching(row['raw_name'])}"
+            missing.append(abbr)
+
+    if stale:
+        print(f"\nWARNING: kept previous data for (fresh scrape failed both attempts): {stale}")
+    if missing:
+        print(f"\nWARNING: no data at all for (fresh scrape failed, no prior data to fall back to): {missing}")
+
+    # Only freshly-scraped rows need (re)matching -- stale/carried-over
+    # rows already have player_id from their last successful match.
+    for abbr in fresh:
+        for row in by_team[abbr]:
+            p = find_match(row['raw_name'], row['team_abbr'], by_name, by_name_team)
+            row['player_id'] = p['player_id'] if p else None
+            row['row_id'] = f"{row['team_abbr']}_{normalize_for_matching(row['raw_name'])}"
+
+    # Upsert: keep every existing row for teams NOT touched this run,
+    # replace rows only for the teams we did touch (fresh or
+    # stale-fallback) -- a 3-team-per-run trickle must never wipe out
+    # the other 29 teams' already-collected data.
+    chosen_set = set(chosen)
+    merged_rows = []
+    for abbr, rows in existing_by_team.items():
+        if abbr not in chosen_set:
+            merged_rows.extend(rows)
+    for abbr in chosen:
+        merged_rows.extend(by_team.get(abbr, []))
 
     conn = duckdb.connect(DB_PATH)
-    if all_rows:
-        df = pd.DataFrame(all_rows)
+    if merged_rows:
+        df = pd.DataFrame(merged_rows)
         conn.execute("CREATE OR REPLACE TABLE nhl_ratings AS SELECT * FROM df")
-        pct = matched / len(all_rows) * 100
-        print(f"\nnhl_ratings: {len(df)} rows loaded from {completed_teams}/{len(TEAM_SLUGS)} teams")
-        print(f"Matched: {matched} / {len(all_rows)} ({pct:.1f}%)")
-        print(f"Unmatched ({len(unmatched)}): {unmatched}")
+        teams_covered = df['team_abbr'].nunique()
+        print(f"\nnhl_ratings: {len(df)} total rows across {teams_covered}/{len(TEAM_SLUGS)} teams "
+              f"({len(fresh)} fresh this run, {len(stale)} stale-carryover, {len(missing)} missing)")
     else:
-        print("\nNo rows collected -- nhl_ratings table not created.")
+        print("\nNo rows at all (fresh or stale) -- nhl_ratings table not written.")
     conn.close()
+
+    # Advance the rolling pool -- refill+reshuffle once it empties so this
+    # is a continuous rolling refresh, not a one-time 11-run build.
+    state['remaining_pool'] = [a for a in remaining if a not in chosen_set]
+    if not state['remaining_pool']:
+        new_pool = list(TEAM_SLUGS.keys())
+        random.shuffle(new_pool)
+        state['remaining_pool'] = new_pool
+        state['cycle'] = state.get('cycle', 1) + 1
+        state['cycle_started'] = datetime.now(timezone.utc).isoformat()
+        print(f"\nCycle complete -- starting cycle {state['cycle']} with a freshly shuffled 32-team pool.")
+    save_state(state)
+    print(f"{len(state['remaining_pool'])} teams remaining in current cycle.")
+
+# ══════════════════════════════════════════════════════════════════════
+# SCHEDULING (local machine only -- see the "RUN LOCALLY ONLY" note in
+# the module docstring). This is a suggested command, NOT registered by
+# this script or by Claude Code -- run it yourself if you want the daily
+# trickle automated:
+#
+#   schtasks /create /tn "FieldView NHL Ratings Scrape" ^
+#     /tr "C:\Users\wallj\DS_Projects\fieldview\nhl\scripts\schedule_ratings_scrape.bat" ^
+#     /sc daily /st 09:00
+#
+# schedule_ratings_scrape.bat (see that file, same directory) adds its
+# own random 0-30 minute delay before invoking this script, so the
+# actual run time still drifts day to day even though the scheduled
+# trigger itself fires at a fixed clock time -- schtasks' basic CLI has
+# no native random-delay trigger option.
+# ══════════════════════════════════════════════════════════════════════
