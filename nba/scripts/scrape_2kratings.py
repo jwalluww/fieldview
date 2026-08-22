@@ -140,7 +140,7 @@ def parse_int(text):
     return int(text) if text.lstrip('-').isdigit() else None
 
 
-def parse_team_roster(html, team_abbr):
+def parse_team_roster(html, team_abbr, loaded_at):
     soup = BeautifulSoup(html, "html.parser")
     table = soup.find("table", id="lists-table")
     if table is None:
@@ -176,6 +176,11 @@ def parse_team_roster(html, team_abbr):
             "positions": positions,
             "overall_rating": overall_rating,
             "profile_url": name_tag.get("href"),
+            # Added so a future session can tell fresh-this-run rows from
+            # stale-carryover ones by inspecting the file alone, without
+            # having to trust a console log that's already scrolled away --
+            # matches nhl/scripts/scrape_ratings.py's per-row loaded_at.
+            "loaded_at": loaded_at,
         }
 
         # Attribute columns (3PT, DNK, etc.) vary in count/label by page
@@ -202,7 +207,8 @@ def scrape_team(session, abbr):
     url = BASE_URL + TEAM_SLUGS[abbr]
     try:
         html = fetch_with_retry(session, url)
-        return parse_team_roster(html, abbr)
+        loaded_at = datetime.now(timezone.utc).isoformat()
+        return parse_team_roster(html, abbr, loaded_at)
     except Exception as e:
         print(f"    ERROR scraping {abbr}: {e}")
         return []
