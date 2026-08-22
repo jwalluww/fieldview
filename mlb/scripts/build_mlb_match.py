@@ -32,6 +32,19 @@ match_source records where each player's stat rows came from -- the
 useful "provenance" signal here, since (unlike NFL/NBA) there's only
 one vendor and no fuzzy name matching, just data availability:
 'both', 'hitting', 'pitching', or 'roster_only' (no 2026 games yet).
+
+Ratings (show_ratings, from theshowratings.com via scrape_ratings.py's
+ScraperAPI proxy -- see CLAUDE.md's theshowratings.com Scraper section)
+are left-joined onto the roster population by person_id, same clean-ID
+join theshowratings.com already gave this pipeline. Checked live before
+joining: zero duplicate person_id rows in the current show_ratings
+pull, but a traded player could plausibly appear on two teams' org-
+depth pages in a future run, so the dedup (keep the row with the max
+loaded_at per person_id) runs unconditionally rather than only after a
+duplicate is actually observed. Unmatched roster players get
+overall_rating/potential = null, same convention as batting_stats/
+pitching_stats for a player with no stats yet -- never dropped, never
+defaulted.
 """
 import os
 
@@ -107,10 +120,28 @@ def build_match():
         LEFT JOIN statsapi_teams t ON t.id = pt.team_id
     """).fetchdf()
 
+    ratings_exists = con.execute(
+        "SELECT 1 FROM information_schema.tables WHERE table_name = 'show_ratings'"
+    ).fetchone() is not None
+    ratings = con.execute("SELECT * FROM show_ratings").fetchdf() if ratings_exists else pd.DataFrame()
+
     con.close()
 
     hitting_by_id = {int(r['person_id']): r for _, r in hitting.iterrows()}
     pitching_by_id = {int(r['person_id']): r for _, r in pitching.iterrows()}
+
+    ratings_by_id = {}
+    ratings_dupes = 0
+    if not ratings.empty:
+        # Pick one row per person_id deterministically (most recent
+        # loaded_at) rather than let a duplicate silently fan the join
+        # out into multiple output rows for the same player.
+        ratings_sorted = ratings.sort_values('loaded_at')
+        for _, r in ratings_sorted.iterrows():
+            pid = int(r['person_id'])
+            if pid in ratings_by_id:
+                ratings_dupes += 1
+            ratings_by_id[pid] = r  # later (more recent) row wins
 
     matches = []
     for _, r in roster.iterrows():
@@ -120,6 +151,7 @@ def build_match():
 
         hit_row = hitting_by_id.get(pid)
         pitch_row = pitching_by_id.get(pid)
+        rating_row = ratings_by_id.get(pid)
         if hit_row is not None and pitch_row is not None:
             match_source = 'both'
         elif hit_row is not None:
@@ -147,6 +179,8 @@ def build_match():
             'batting_stats': stats_dict(hit_row) if hit_row is not None else None,
             'pitching_stats': stats_dict(pitch_row) if pitch_row is not None else None,
             'match_source': match_source,
+            'overall_rating': clean(rating_row['ovr']) if rating_row is not None else None,
+            'potential': clean(rating_row['pot']) if rating_row is not None else None,
         })
 
     match_df = pd.DataFrame(matches)
@@ -158,10 +192,16 @@ def build_match():
 
     total = len(match_df)
     matched_stats = (match_df['match_source'] != 'roster_only').sum()
+    matched_ratings = match_df['overall_rating'].notna().sum()
     twp = match_df[match_df['player_type'] == 'two_way']['name'].tolist()
     defaulted = match_df[match_df['position_group_source'] == 'defaulted']['name'].tolist()
     print(f"player_match: {total} players")
     print(f"Matched to hitting and/or pitching stats: {matched_stats} / {total} ({matched_stats / total:.1%})")
+    if ratings_exists:
+        print(f"Matched to show_ratings: {matched_ratings} / {total} ({matched_ratings / total:.1%})"
+              + (f" -- {ratings_dupes} duplicate person_id row(s) in show_ratings resolved by most-recent loaded_at" if ratings_dupes else ""))
+    else:
+        print("show_ratings table not present -- overall_rating/potential are null for everyone")
     print(f"two_way players: {twp}")
     print(f"defaulted position_group (generic OF -> CF): {defaulted}")
 

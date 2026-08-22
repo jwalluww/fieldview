@@ -16,7 +16,7 @@ import pandas as pd
 DB_PATH = os.path.join('mlb', 'data', 'fieldview.duckdb')
 DEFAULT_OUT_PATH = os.path.join('mlb', 'data', 'mlb_players_master_db.json')
 
-INT_FIELDS = {'weight'}
+INT_FIELDS = {'weight', 'overall_rating'}
 
 
 def clean(field, v):
@@ -54,6 +54,8 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             'batting_stats': r['batting_stats'] if isinstance(r['batting_stats'], dict) else None,
             'pitching_stats': r['pitching_stats'] if isinstance(r['pitching_stats'], dict) else None,
             'match_source': clean('match_source', r['match_source']),
+            'overall_rating': clean('overall_rating', r['overall_rating']),
+            'potential': clean('potential', r['potential']),
         }
         master[str(pid)] = entry
 
