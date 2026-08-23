@@ -495,7 +495,10 @@ const SPORTS = {
     tableFeatures: ['Sortable', 'Filterable', 'Per Game Stats', 'Contract Data'],
     teamCount: 3,
     sourceCount: 1,
-    updateCadence: 'Stub',
+    // scrape-nba has been a real automated job in scrape.yml since before
+    // this label was last touched -- was stale at 'Stub', corrected here
+    // alongside MLB/NHL's same fix so the cadence label matches reality.
+    updateCadence: 'Weekly',
   },
   mlb: {
     tagline: 'MLB Intelligence Platform',
@@ -509,7 +512,9 @@ const SPORTS = {
     tableFeatures: ['Sortable', 'Filterable', 'Batting Stats', 'Pitching Stats'],
     teamCount: 30,
     sourceCount: 1,
-    updateCadence: 'Stub',
+    // scrape-mlb added to scrape.yml (roster/stats/match/export; ratings
+    // still local-only pending the ScraperAPI cloud-cost decision).
+    updateCadence: 'Weekly',
   },
   nhl: {
     tagline: 'NHL Intelligence Platform',
@@ -523,11 +528,9 @@ const SPORTS = {
     tableFeatures: ['Sortable', 'Filterable', 'Skater Stats', 'Goalie Stats'],
     teamCount: 32,
     sourceCount: 1,
-    // Not in scrape.yml -- only `scrape` (NFL) and `scrape-nba` jobs exist
-    // there, no NHL job at all. 'Stub', matching MLB's same honest
-    // self-labeling (also absent from scrape.yml), not assumed 'Weekly'
-    // just because NFL's cloud job says that.
-    updateCadence: 'Stub',
+    // scrape-nhl added to scrape.yml (roster/stats/match/export; ratings
+    // still local-only pending the ScraperAPI cloud-cost decision).
+    updateCadence: 'Weekly',
   },
   // Not built yet -- sport-bar buttons for these are still .soon and have
   // no onclick, so selectSport() is never called with these keys today.

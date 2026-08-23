@@ -97,3 +97,87 @@ jobs:
           git add nba/data/
           git diff --staged --quiet || git commit -m "auto-scrape nba stats"
           git push
+
+  scrape-mlb:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests pandas duckdb
+
+      # scrape_ratings.py (theshowratings.com via the ScraperAPI proxy) is
+      # deliberately NOT run here yet -- stays local-only pending a decision
+      # on whether the proxy's cost/quota is worth spending on a weekly cloud
+      # run too. build_mlb_match.py already ships correctly without it (see
+      # mlb/PIPELINE.md) -- ratings just won't refresh from this job.
+      - name: Run MLB roster scraper
+        run: python mlb/scripts/scrape_roster.py
+
+      - name: Run MLB stats scraper
+        run: python mlb/scripts/scrape_stats.py
+
+      - name: Run matching
+        run: python mlb/scripts/build_mlb_match.py
+
+      - name: Export player master
+        run: python mlb/scripts/export_mlb_master.py mlb/data/mlb_players_master.json
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add mlb/data/
+          git diff --staged --quiet || git commit -m "auto-scrape mlb stats"
+          git push
+
+  scrape-nhl:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install nhl-api-py pandas duckdb
+
+      # scrape_ratings.py (nhlratings.net) is deliberately NOT run here yet --
+      # stays local-only, same reasoning as MLB's ratings scraper above.
+      # build_nhl_match.py already ships correctly without it (joins
+      # nhl_ratings automatically once that table exists) -- ratings just
+      # won't refresh from this job.
+      - name: Run NHL roster scraper
+        run: python nhl/scripts/scrape_roster.py
+
+      - name: Run NHL stats scraper
+        run: python nhl/scripts/scrape_stats.py
+
+      - name: Run matching
+        run: python nhl/scripts/build_nhl_match.py
+
+      - name: Export player master
+        run: python nhl/scripts/export_nhl_master.py nhl/data/nhl_players_master.json
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add nhl/data/
+          git diff --staged --quiet || git commit -m "auto-scrape nhl stats"
+          git push
