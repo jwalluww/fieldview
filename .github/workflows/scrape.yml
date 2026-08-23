@@ -50,7 +50,7 @@ jobs:
           git config user.email "github-actions@github.com"
           git add nfl/data/
           git diff --staged --quiet || git commit -m "auto-scrape depth charts"
-          git push
+          git pull --rebase && git push
 
   scrape-nba:
     runs-on: ubuntu-latest
@@ -96,7 +96,7 @@ jobs:
           git config user.email "github-actions@github.com"
           git add nba/data/
           git diff --staged --quiet || git commit -m "auto-scrape nba stats"
-          git push
+          git pull --rebase && git push
 
   scrape-mlb:
     runs-on: ubuntu-latest
@@ -138,7 +138,7 @@ jobs:
           git config user.email "github-actions@github.com"
           git add mlb/data/
           git diff --staged --quiet || git commit -m "auto-scrape mlb stats"
-          git push
+          git pull --rebase && git push
 
   scrape-nhl:
     runs-on: ubuntu-latest
@@ -180,4 +180,4 @@ jobs:
           git config user.email "github-actions@github.com"
           git add nhl/data/
           git diff --staged --quiet || git commit -m "auto-scrape nhl stats"
-          git push
+          git pull --rebase && git push
