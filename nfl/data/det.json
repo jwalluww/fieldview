@@ -451,7 +451,7 @@
         "attainment": "CC/NE",
         "standard_slot": "QB",
         "standard_pos": "QB",
-        "cap_number": "$0",
+        "cap_number": "$1,200,000",
         "stats": {},
         "stats_season": null
       },
@@ -526,13 +526,13 @@
         "stats_season": 2025
       },
       {
-        "name": "Kye Robichaux",
+        "name": "Raheem Blackshear",
         "depth": 5,
         "injured": false,
-        "attainment": "CF25",
+        "attainment": "SF26",
         "standard_slot": "RB",
         "standard_pos": "RB",
-        "cap_number": "$886,666",
+        "cap_number": "$1,145,000",
         "stats": {},
         "stats_season": null
       },
@@ -548,15 +548,20 @@
         "stats_season": null
       },
       {
-        "name": "Raheem Blackshear",
+        "name": "Trayveon Williams",
         "depth": 7,
         "injured": false,
-        "attainment": "SF26",
+        "attainment": "U/Cle",
         "standard_slot": "RB",
         "standard_pos": "RB",
-        "cap_number": "$1,145,000",
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$1,075,000",
+        "stats": {
+          "TKL": 8,
+          "SACKS": 1.0,
+          "TFL": 2,
+          "QB HIT": 3
+        },
+        "stats_season": 2025
       }
     ],
     "LDE": [
@@ -918,7 +923,7 @@
         "attainment": "CC/Chi",
         "standard_slot": "SAM",
         "standard_pos": "LB",
-        "cap_number": "$0",
+        "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
       }
@@ -963,6 +968,17 @@
           "PD": 3
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Ekow Boye-doe",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LCB",
+        "standard_pos": "CB",
+        "cap_number": "$1,005,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "SS": [
@@ -1064,19 +1080,6 @@
           "TFL": 1
         },
         "stats_season": 2025
-      },
-      {
-        "name": "Loren Strickland",
-        "depth": 4,
-        "injured": false,
-        "attainment": "CF24",
-        "standard_slot": "FS",
-        "standard_pos": "S",
-        "cap_number": "$1,075,000",
-        "stats": {
-          "TKL": 1
-        },
-        "stats_season": 2025
       }
     ],
     "RCB": [
@@ -1109,13 +1112,13 @@
         "stats_season": 2025
       },
       {
-        "name": "Ryan Cooper Jr.",
+        "name": "Bump Cooper Jr.",
         "depth": 3,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "RCB",
         "standard_pos": "CB",
-        "cap_number": "$885,000",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }

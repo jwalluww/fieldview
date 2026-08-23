@@ -299,19 +299,8 @@
         "stats_season": 2025
       },
       {
-        "name": "Chase Bisontis",
-        "depth": 2,
-        "injured": false,
-        "attainment": "26/2",
-        "standard_slot": "RG",
-        "standard_pos": "OL",
-        "cap_number": "$2,410,678",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Oli Udoh",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "U/Ten",
         "standard_slot": "RG",
@@ -418,13 +407,13 @@
         "stats_season": null
       },
       {
-        "name": "Jameson Geers",
+        "name": "Shawn Bowman",
         "depth": 5,
         "injured": false,
-        "attainment": "CF26",
+        "attainment": "SF26",
         "standard_slot": "TE",
         "standard_pos": "TE",
-        "cap_number": "$890,000",
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       },
@@ -440,7 +429,7 @@
         "stats_season": null
       },
       {
-        "name": "Shawn Bowman",
+        "name": "Baylor Cupp",
         "depth": 7,
         "injured": false,
         "attainment": "SF26",
@@ -513,7 +502,7 @@
       {
         "name": "Jeremiyah Love",
         "depth": 1,
-        "injured": false,
+        "injured": true,
         "attainment": "26/1",
         "standard_slot": "RB",
         "standard_pos": "RB",
@@ -551,42 +540,8 @@
         "stats_season": 2025
       },
       {
-        "name": "Trey Benson",
-        "depth": 4,
-        "injured": false,
-        "attainment": "24/3",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": "$1,652,620",
-        "stats": {
-          "CAR": 29,
-          "RU YDS": 160,
-          "REC": 13,
-          "RE YDS": 64,
-          "TGT": 16
-        },
-        "stats_season": 2025
-      },
-      {
-        "name": "Corey Kiner",
-        "depth": 5,
-        "injured": false,
-        "attainment": "P/Min",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": "$1,005,000",
-        "stats": {
-          "CAR": 12,
-          "RU YDS": 58,
-          "REC": 2,
-          "RE YDS": 15,
-          "TGT": 3
-        },
-        "stats_season": 2025
-      },
-      {
         "name": "Bam Knight",
-        "depth": 6,
+        "depth": 4,
         "injured": false,
         "attainment": "SF25",
         "standard_slot": "RB",
@@ -604,12 +559,57 @@
       },
       {
         "name": "Evan Hull",
-        "depth": 7,
+        "depth": 5,
         "injured": false,
         "attainment": "W/Hou",
         "standard_slot": "RB",
         "standard_pos": "RB",
         "cap_number": "$1,075,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Trey Benson",
+        "depth": 6,
+        "injured": false,
+        "attainment": "24/3",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": "$1,652,620",
+        "stats": {
+          "CAR": 29,
+          "RU YDS": 160,
+          "REC": 13,
+          "RE YDS": 64,
+          "TGT": 16
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Corey Kiner",
+        "depth": 7,
+        "injured": false,
+        "attainment": "P/Min",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": "$1,005,000",
+        "stats": {
+          "CAR": 12,
+          "RU YDS": 58,
+          "REC": 2,
+          "RE YDS": 15,
+          "TGT": 3
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Tre Stewart",
+        "depth": 8,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       }
@@ -720,6 +720,17 @@
         "standard_slot": "NT",
         "standard_pos": "DI",
         "cap_number": "$1,005,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Keveion'ta Spears",
+        "depth": 5,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "NT",
+        "standard_pos": "DI",
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       }
@@ -907,19 +918,8 @@
         "stats_season": null
       },
       {
-        "name": "Austin Keys",
-        "depth": 3,
-        "injured": false,
-        "attainment": "W/Min",
-        "standard_slot": "ILB_R",
-        "standard_pos": "LB",
-        "cap_number": "$1,005,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Eugene Asante",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "ILB_R",
@@ -1189,7 +1189,7 @@
       {
         "name": "Garrett Williams",
         "depth": 1,
-        "injured": true,
+        "injured": false,
         "attainment": "23/3",
         "standard_slot": "NB",
         "standard_pos": "CB",

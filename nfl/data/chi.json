@@ -49,6 +49,17 @@
         "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Kaden Davis",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RWR": [
@@ -93,15 +104,18 @@
         "stats_season": null
       },
       {
-        "name": "Kaden Davis",
+        "name": "Ray-ray Mccloud III",
         "depth": 4,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "RWR",
         "standard_pos": "WR",
-        "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$1,075,000",
+        "stats": {
+          "TKL": 18,
+          "PD": 2
+        },
+        "stats_season": 2025
       }
     ],
     "SWR": [
@@ -137,20 +151,6 @@
         "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Ray-ray Mccloud III",
-        "depth": 4,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "SWR",
-        "standard_pos": "WR",
-        "cap_number": "$0",
-        "stats": {
-          "TKL": 18,
-          "PD": 2
-        },
-        "stats_season": 2025
       }
     ],
     "LT": [
@@ -168,7 +168,7 @@
       {
         "name": "Ozzy Trapilo",
         "depth": 2,
-        "injured": true,
+        "injured": false,
         "attainment": "25/2",
         "standard_slot": "LT",
         "standard_pos": "OL",
@@ -275,7 +275,7 @@
         "attainment": "SF26",
         "standard_slot": "C",
         "standard_pos": "OL",
-        "cap_number": null,
+        "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
       }
@@ -420,19 +420,8 @@
         "stats_season": null
       },
       {
-        "name": "Nikola Kalinic",
-        "depth": 6,
-        "injured": false,
-        "attainment": "SF25",
-        "standard_slot": "TE",
-        "standard_pos": "TE",
-        "cap_number": "$1,005,000",
-        "stats": {},
-        "stats_season": 2025
-      },
-      {
         "name": "Hayden Large",
-        "depth": 7,
+        "depth": 6,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "TE",
@@ -458,7 +447,7 @@
           "TDs": 27,
           "INTs": 7,
           "SACKS": 24,
-          "RU YDS": 383
+          "RU YDS": 388
         },
         "stats_season": 2025
       },
@@ -578,17 +567,6 @@
         "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Coleman Bennett",
-        "depth": 6,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": "$891,666",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "LDE": [
@@ -623,8 +601,19 @@
         "stats_season": 2025
       },
       {
-        "name": "Jamree Kromah",
+        "name": "Marcus Davenport",
         "depth": 3,
+        "injured": false,
+        "attainment": "U/Det",
+        "standard_slot": "LE",
+        "standard_pos": "EDGE",
+        "cap_number": "$1,075,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Jamree Kromah",
+        "depth": 4,
         "injured": false,
         "attainment": "SF24",
         "standard_slot": "LE",
@@ -1075,7 +1064,7 @@
         "attainment": "CC/Ten",
         "standard_slot": "FS",
         "standard_pos": "S",
-        "cap_number": null,
+        "cap_number": "$1,125,000",
         "stats": {},
         "stats_season": null
       },
@@ -1125,6 +1114,17 @@
         "name": "Beanie Bishop Jr.",
         "depth": 3,
         "injured": true,
+        "attainment": "SF26",
+        "standard_slot": "RCB",
+        "standard_pos": "CB",
+        "cap_number": "$1,005,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Deantre Prince",
+        "depth": 4,
+        "injured": false,
         "attainment": "SF26",
         "standard_slot": "RCB",
         "standard_pos": "CB",

@@ -18,11 +18,16 @@ available to callers as a secondary lookup key, not used as the primary
 match key, since several real FPL players share the same web_name
 across different teams.
 
-SOCCER_NAME_ALIASES starts empty -- populated from real unmatched-name
-review the same way NBA_NAME_ALIASES was (build_epl_match.py's actual
-unmatched list), not guessed ahead of time. Format matches NBA's: keys
-are the sofifa `name` as scraped, values are the corresponding FPL full
-name; a None value forces a no-match (wrong player, don't guess).
+SOCCER_NAME_ALIASES is populated from real unmatched-name review, same
+way NBA_NAME_ALIASES was, not guessed ahead of time. Format matches
+NBA's: keys are the BASE-POPULATION source's name as looked up by the
+matcher (FPL's constructed full name for EPL, ESPN's `full_name` for
+MLS), values are the corresponding name on whichever source is being
+matched against (sofifa for both leagues; ASA for MLS's second join).
+A None value forces a no-match (wrong player, don't guess). (Correcting
+an earlier version of this docstring that had the key/value direction
+backwards -- the actual lookup in both build_epl_match.py and
+build_mls_match.py is `SOCCER_NAME_ALIASES.get(base_population_name, ...)`.)
 """
 import re
 import unicodedata
@@ -47,6 +52,42 @@ SOCCER_NAME_ALIASES = {
     'Nico González Iglesias': 'Nicolás González Iglesias',
     'Diogo Dalot Teixeira': 'José Diogo Dalot Teixeira',
     'Djiamgone Jocelin Ta Bi': 'Jocelin Ta Bi',
+
+    # MLS (ESPN full_name -> sofifa name), found the same way: reviewed
+    # build_mls_match.py's real unmatched-sofifa list, cross-checked each
+    # candidate against sofifa's real per-team roster before adding it
+    # here -- every entry below is a same-team confirmation (ESPN's team
+    # and sofifa's team, resolved through ESPN_TO_SOFIFA_TEAM, actually
+    # agree), not just a plausible-looking surname match. A same-surname,
+    # different-team, different-first-name pair (e.g. ESPN's "Cavan
+    # Sullivan" vs sofifa's "Quinn Sullivan", both Philadelphia Union)
+    # was deliberately left OUT -- almost certainly two different real
+    # players who happen to share a surname and a club, not a name
+    # variant of the same person.
+    'Matt Edwards': 'Matthew Edwards',
+    'Benjamin Lundt': 'Ben Lundt',
+    'Alexey Miranchuk': 'Aleksey Miranchuk',
+    'Christopher Durkin': 'Chris Durkin',
+    'Samual Rogers': 'Samuel Rogers',
+    'Daniel Musovski': 'Danny Musovski',
+    'Samuel Junqua': 'Sam Junqua',
+    'Shapi Suleymanov': 'Magomed-Shapi Suleymanov',
+    'Cheick Sabaly': 'Cheikh Sabaly',
+    'Jean-Claude Ngando': 'J.C. Ngando',
+    'Joshua Atencio': 'Josh Atencio',
+    'Matthew Longstaff': 'Matty Longstaff',
+    'Jacob Davis': 'Jake Davis',
+    'Ted Ku-Dipietro': 'Theodore Ku-DiPietro',
+    'William Kumado': 'Willy Kumado',
+    'William Sands': 'Will Sands',
+    'Nickseon Gomis': 'Nicksoen Gomis',
+    'Maxi Carrizo': 'Máximo Carrizo',
+    'Augustin Anello': 'Agustín Anello',
+    'Andrew Baiera': 'Drew Baiera',
+    'JD Gunn': 'John David Gunn',
+    'Chris Applewhite': 'Christopher Applewhite',
+    'Gio Villa': 'Juan Giovanni Villa',
+    'Jeisson Palacios': 'Jeison Palacios',
 }
 
 

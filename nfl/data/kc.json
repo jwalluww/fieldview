@@ -133,7 +133,7 @@
         "attainment": "CF26",
         "standard_slot": "RWR",
         "standard_pos": "WR",
-        "cap_number": null,
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       }
@@ -142,7 +142,7 @@
       {
         "name": "Rashee Rice",
         "depth": 1,
-        "injured": true,
+        "injured": false,
         "attainment": "23/2",
         "standard_slot": "SWR",
         "standard_pos": "WR",
@@ -228,6 +228,17 @@
         "standard_slot": "LT",
         "standard_pos": "OL",
         "cap_number": "$1,018,334",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Kellen Diesch",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       }
@@ -324,17 +335,6 @@
         "cap_number": "$1,350,000",
         "stats": {},
         "stats_season": 2025
-      },
-      {
-        "name": "Matt Waletzko",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF25",
-        "standard_slot": "RG",
-        "standard_pos": "OL",
-        "cap_number": "$1,075,000",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "RT": [
@@ -380,7 +380,7 @@
         "attainment": "13/3",
         "standard_slot": "TE",
         "standard_pos": "TE",
-        "cap_number": "$4,896,667",
+        "cap_number": "$4,896,666",
         "stats": {
           "TGT": 108,
           "REC": 76,
@@ -647,7 +647,7 @@
         "attainment": "U/Jax",
         "standard_slot": "LE",
         "standard_pos": "EDGE",
-        "cap_number": null,
+        "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
       },
@@ -659,17 +659,6 @@
         "standard_slot": "LE",
         "standard_pos": "EDGE",
         "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Ethan Hurkett",
-        "depth": 5,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "LE",
-        "standard_pos": "EDGE",
-        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       }
@@ -822,7 +811,7 @@
         "stats_season": 2025
       },
       {
-        "name": "Anthony Dunn",
+        "name": "Ethan Hurkett",
         "depth": 4,
         "injured": false,
         "attainment": "CF26",
@@ -885,6 +874,22 @@
         "cap_number": "$888,333",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Cam Jones",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "WILL",
+        "standard_pos": "LB",
+        "cap_number": "$1,145,000",
+        "stats": {
+          "TKL": 15,
+          "SACKS": 7.0,
+          "TFL": 12,
+          "QB HIT": 25
+        },
+        "stats_season": 2025
       }
     ],
     "MLB": [
@@ -1006,17 +1011,6 @@
         "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Zelmar Vedder",
-        "depth": 5,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "LCB",
-        "standard_pos": "CB",
-        "cap_number": "$888,333",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "SS": [
@@ -1136,13 +1130,13 @@
         "stats_season": null
       },
       {
-        "name": "Bryce Phillips",
+        "name": "Zelmar Vedder",
         "depth": 4,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "RCB",
         "standard_pos": "CB",
-        "cap_number": "$891,666",
+        "cap_number": "$888,333",
         "stats": {},
         "stats_season": null
       }

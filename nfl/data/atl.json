@@ -34,24 +34,24 @@
         "stats_season": 2025
       },
       {
-        "name": "Vinny Anthony II",
+        "name": "Antwane Wells Jr.",
         "depth": 3,
         "injured": false,
-        "attainment": "CF26",
+        "attainment": "SF26",
         "standard_slot": "LWR",
         "standard_pos": "WR",
-        "cap_number": "$890,000",
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       },
       {
-        "name": "Kristian Wilkerson",
+        "name": "Beaux Collins",
         "depth": 4,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "LWR",
         "standard_pos": "WR",
-        "cap_number": "$1,145,000",
+        "cap_number": "$1,005,000",
         "stats": {},
         "stats_season": null
       }
@@ -69,15 +69,20 @@
         "stats_season": null
       },
       {
-        "name": "Antwane Wells Jr.",
+        "name": "Dylan Drummond",
         "depth": 2,
         "injured": false,
-        "attainment": "SF26",
+        "attainment": "SF24",
         "standard_slot": "RWR",
         "standard_pos": "WR",
-        "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$1,005,000",
+        "stats": {
+          "TGT": 11,
+          "REC": 7,
+          "YDS": 42,
+          "YAC": 14
+        },
+        "stats_season": 2025
       },
       {
         "name": "Keelan Marion",
@@ -115,20 +120,15 @@
         "stats_season": null
       },
       {
-        "name": "Dylan Drummond",
+        "name": "Vinny Anthony II",
         "depth": 3,
         "injured": false,
-        "attainment": "SF24",
+        "attainment": "CF26",
         "standard_slot": "SWR",
         "standard_pos": "WR",
-        "cap_number": "$1,005,000",
-        "stats": {
-          "TGT": 11,
-          "REC": 7,
-          "YDS": 42,
-          "YAC": 14
-        },
-        "stats_season": 2025
+        "cap_number": "$890,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LT": [
@@ -199,24 +199,6 @@
         "cap_number": "$890,000",
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Layden Robinson",
-        "depth": 4,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "LG",
-        "standard_pos": "OL",
-        "cap_number": "$1,005,000",
-        "stats": {
-          "CAR": 287,
-          "RU YDS": 1478,
-          "RU TDs": 7,
-          "REC": 79,
-          "RE YDS": 820,
-          "TGT": 103
-        },
-        "stats_season": 2025
       }
     ],
     "C": [
@@ -232,24 +214,24 @@
         "stats_season": 2025
       },
       {
-        "name": "James Brockermeyer",
-        "depth": 2,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "C",
-        "standard_pos": "OL",
-        "cap_number": "$895,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Corey Levin",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "U/Ten",
         "standard_slot": "C",
         "standard_pos": "OL",
         "cap_number": "$1,260,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "James Brockermeyer",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "C",
+        "standard_pos": "OL",
+        "cap_number": "$895,000",
         "stats": {},
         "stats_season": null
       }
@@ -267,19 +249,8 @@
         "stats_season": 2025
       },
       {
-        "name": "Ethan Onianwa",
-        "depth": 2,
-        "injured": false,
-        "attainment": "26/7",
-        "standard_slot": "RG",
-        "standard_pos": "OL",
-        "cap_number": "$923,982",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Andrew Stueber",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "SF25",
         "standard_slot": "RG",
@@ -290,12 +261,12 @@
       },
       {
         "name": "Jaeden Roberts",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "RG",
         "standard_pos": "OL",
-        "cap_number": null,
+        "cap_number": "$885,000",
         "stats": {
           "TKL": 6,
           "SACKS": 1.0,
@@ -320,8 +291,19 @@
         "stats_season": 2025
       },
       {
-        "name": "Michael Jerrell",
+        "name": "Ethan Onianwa",
         "depth": 2,
+        "injured": false,
+        "attainment": "26/7",
+        "standard_slot": "RT",
+        "standard_pos": "OL",
+        "cap_number": "$923,982",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Michael Jerrell",
+        "depth": 3,
         "injured": false,
         "attainment": "T/Sea",
         "standard_slot": "RT",
@@ -332,7 +314,7 @@
       },
       {
         "name": "Brandon Walton",
-        "depth": 3,
+        "depth": 4,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "RT",
@@ -416,7 +398,7 @@
         "attainment": "SF26",
         "standard_slot": "TE",
         "standard_pos": "TE",
-        "cap_number": null,
+        "cap_number": "$1,145,000",
         "stats": {},
         "stats_season": null
       }
@@ -453,24 +435,24 @@
         "stats_season": null
       },
       {
-        "name": "Cooper Rush",
-        "depth": 3,
-        "injured": false,
-        "attainment": "CC/Bal",
-        "standard_slot": "QB",
-        "standard_pos": "QB",
-        "cap_number": "$1,075,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Jack Strand",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "QB",
         "standard_pos": "QB",
         "cap_number": "$890,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Cooper Rush",
+        "depth": 4,
+        "injured": false,
+        "attainment": "CC/Bal",
+        "standard_slot": "QB",
+        "standard_pos": "QB",
+        "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
       }
@@ -483,7 +465,7 @@
         "attainment": "23/1",
         "standard_slot": "RB",
         "standard_pos": "RB",
-        "cap_number": "$9,986,810",
+        "cap_number": "$10,036,810",
         "stats": {
           "CAR": 287,
           "RU YDS": 1478,
@@ -545,17 +527,6 @@
         "standard_slot": "RB",
         "standard_pos": "RB",
         "cap_number": "$890,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Trey Sermon",
-        "depth": 6,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -638,6 +609,17 @@
         "cap_number": "$888,333",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Eric Johnson II",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "NT",
+        "standard_pos": "DI",
+        "cap_number": "$1,075,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "DT": [
@@ -695,7 +677,7 @@
       {
         "name": "James Pearce Jr.",
         "depth": 1,
-        "injured": false,
+        "injured": true,
         "attainment": "25/1",
         "standard_slot": "LOLB",
         "standard_pos": "EDGE",
@@ -709,24 +691,24 @@
         "stats_season": 2025
       },
       {
-        "name": "Cameron Thomas",
+        "name": "Samson Ebukam",
         "depth": 2,
         "injured": false,
-        "attainment": "U/Cle",
+        "attainment": "U/Ind",
         "standard_slot": "LOLB",
         "standard_pos": "EDGE",
-        "cap_number": "$3,095,000",
+        "cap_number": "$2,630,000",
         "stats": {},
         "stats_season": null
       },
       {
-        "name": "Bralen Trice",
+        "name": "Azeez Ojulari",
         "depth": 3,
         "injured": false,
-        "attainment": "24/3",
+        "attainment": "U/Phi",
         "standard_slot": "LOLB",
         "standard_pos": "EDGE",
-        "cap_number": "$1,617,202",
+        "cap_number": "$1,262,500",
         "stats": {},
         "stats_season": null
       },
@@ -848,30 +830,41 @@
     ],
     "ROLB": [
       {
-        "name": "Samson Ebukam",
+        "name": "Za'darius Smith",
         "depth": 1,
         "injured": false,
-        "attainment": "U/Ind",
+        "attainment": "SF26",
         "standard_slot": "ROLB",
         "standard_pos": "EDGE",
-        "cap_number": "$2,630,000",
+        "cap_number": "$5,294,118",
         "stats": {},
         "stats_season": null
       },
       {
-        "name": "Azeez Ojulari",
+        "name": "Cameron Thomas",
         "depth": 2,
         "injured": false,
-        "attainment": "U/Phi",
+        "attainment": "U/Cle",
         "standard_slot": "ROLB",
         "standard_pos": "EDGE",
-        "cap_number": "$1,262,500",
+        "cap_number": "$3,095,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Bralen Trice",
+        "depth": 3,
+        "injured": false,
+        "attainment": "24/3",
+        "standard_slot": "ROLB",
+        "standard_pos": "EDGE",
+        "cap_number": "$1,617,202",
         "stats": {},
         "stats_season": null
       },
       {
         "name": "Keshawn Banks",
-        "depth": 3,
+        "depth": 4,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "ROLB",
@@ -1162,17 +1155,6 @@
         "cap_number": "$2,221,666",
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Matthew Hayball",
-        "depth": 2,
-        "injured": false,
-        "attainment": "SF26*",
-        "standard_slot": "PT",
-        "standard_pos": "DEF",
-        "cap_number": "$1,005,000",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "H": [
@@ -1184,17 +1166,6 @@
         "standard_slot": "H",
         "standard_pos": "DEF",
         "cap_number": "$2,221,666",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Matthew Hayball",
-        "depth": 2,
-        "injured": false,
-        "attainment": "SF26*",
-        "standard_slot": "H",
-        "standard_pos": "DEF",
-        "cap_number": "$1,005,000",
         "stats": {},
         "stats_season": null
       }
