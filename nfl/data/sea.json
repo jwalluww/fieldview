@@ -58,7 +58,7 @@
         "attainment": "SF26",
         "standard_slot": "LWR",
         "standard_pos": "WR",
-        "cap_number": null,
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       }
@@ -538,22 +538,8 @@
         "stats_season": null
       },
       {
-        "name": "Jacardia Wright",
-        "depth": 5,
-        "injured": false,
-        "attainment": "CF25",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": "$885,000",
-        "stats": {
-          "CAR": 5,
-          "RU YDS": 20
-        },
-        "stats_season": 2025
-      },
-      {
         "name": "Velus Jones Jr.",
-        "depth": 6,
+        "depth": 5,
         "injured": false,
         "attainment": "SF25",
         "standard_slot": "RB",
@@ -565,15 +551,18 @@
         "stats_season": 2025
       },
       {
-        "name": "Anthony Hankerson",
-        "depth": 7,
+        "name": "Jacardia Wright",
+        "depth": 6,
         "injured": false,
-        "attainment": "SF26",
+        "attainment": "CF25",
         "standard_slot": "RB",
         "standard_pos": "RB",
         "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "CAR": 5,
+          "RU YDS": 20
+        },
+        "stats_season": 2025
       }
     ],
     "FB": [
@@ -1136,7 +1125,7 @@
       {
         "name": "Bud Clark",
         "depth": 2,
-        "injured": false,
+        "injured": true,
         "attainment": "26/2",
         "standard_slot": "FS",
         "standard_pos": "S",

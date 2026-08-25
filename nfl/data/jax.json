@@ -224,24 +224,24 @@
     ],
     "LG": [
       {
-        "name": "Ezra Cleveland",
-        "depth": 1,
-        "injured": false,
-        "attainment": "T/Min",
-        "standard_slot": "LG",
-        "standard_pos": "OL",
-        "cap_number": "$11,420,588",
-        "stats": {},
-        "stats_season": 2025
-      },
-      {
         "name": "Emmanuel Pregnon",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "26/3",
         "standard_slot": "LG",
         "standard_pos": "OL",
         "cap_number": "$1,242,906",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Daniel Faalele",
+        "depth": 2,
+        "injured": false,
+        "attainment": "T/NYG",
+        "standard_slot": "LG",
+        "standard_pos": "OL",
+        "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
       },
@@ -294,8 +294,19 @@
     ],
     "RG": [
       {
-        "name": "Patrick Mekari",
+        "name": "Ezra Cleveland",
         "depth": 1,
+        "injured": false,
+        "attainment": "T/Min",
+        "standard_slot": "RG",
+        "standard_pos": "OL",
+        "cap_number": "$11,420,588",
+        "stats": {},
+        "stats_season": 2025
+      },
+      {
+        "name": "Patrick Mekari",
+        "depth": 2,
         "injured": true,
         "attainment": "U/Bal",
         "standard_slot": "RG",
@@ -306,23 +317,12 @@
       },
       {
         "name": "Wyatt Milum",
-        "depth": 2,
+        "depth": 3,
         "injured": false,
         "attainment": "25/3",
         "standard_slot": "RG",
         "standard_pos": "OL",
         "cap_number": "$1,426,660",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Daniel Faalele",
-        "depth": 3,
-        "injured": false,
-        "attainment": "T/NYG",
-        "standard_slot": "RG",
-        "standard_pos": "OL",
-        "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
       },
@@ -362,7 +362,7 @@
         "stats_season": 2025
       },
       {
-        "name": "Geron Christian",
+        "name": "Geron Christian Sr.",
         "depth": 3,
         "injured": false,
         "attainment": "SF26",
@@ -775,6 +775,17 @@
         "cap_number": "$888,333",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Tommy Akingbesote",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RDE": [
@@ -914,7 +925,7 @@
       {
         "name": "Jack Kiser",
         "depth": 2,
-        "injured": true,
+        "injured": false,
         "attainment": "25/4",
         "standard_slot": "MIKE",
         "standard_pos": "LB",
@@ -998,7 +1009,7 @@
       {
         "name": "Christian Braswell",
         "depth": 2,
-        "injured": true,
+        "injured": false,
         "attainment": "23/6",
         "standard_slot": "LCB",
         "standard_pos": "CB",
@@ -1164,17 +1175,6 @@
         "standard_slot": "RCB",
         "standard_pos": "CB",
         "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Devon Marshall",
-        "depth": 3,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "RCB",
-        "standard_pos": "CB",
-        "cap_number": "$888,333",
         "stats": {},
         "stats_season": null
       }

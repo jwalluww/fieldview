@@ -356,7 +356,7 @@
       {
         "name": "George Kittle",
         "depth": 1,
-        "injured": true,
+        "injured": false,
         "attainment": "17/5",
         "standard_slot": "TE",
         "standard_pos": "TE",
@@ -419,19 +419,8 @@
         "stats_season": 2025
       },
       {
-        "name": "Josiah Deguara",
-        "depth": 5,
-        "injured": false,
-        "attainment": "U/Arz",
-        "standard_slot": "TE",
-        "standard_pos": "TE",
-        "cap_number": "$1,075,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Hayden Rucci",
-        "depth": 6,
+        "depth": 5,
         "injured": false,
         "attainment": "SF25",
         "standard_slot": "TE",
@@ -442,12 +431,12 @@
       },
       {
         "name": "Khalil Dinkins",
-        "depth": 7,
+        "depth": 6,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "TE",
         "standard_pos": "TE",
-        "cap_number": null,
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       }
@@ -569,24 +558,8 @@
         "stats_season": 2025
       },
       {
-        "name": "Zamir White",
-        "depth": 5,
-        "injured": false,
-        "attainment": "U/LV",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": "$1,075,000",
-        "stats": {
-          "TKL": 7,
-          "SACKS": 1.5,
-          "TFL": 2,
-          "QB HIT": 6
-        },
-        "stats_season": 2025
-      },
-      {
         "name": "Sincere Mccormick",
-        "depth": 6,
+        "depth": 5,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "RB",
@@ -597,7 +570,7 @@
       },
       {
         "name": "Khalil Herbert",
-        "depth": 7,
+        "depth": 6,
         "injured": false,
         "attainment": "U/NYJ",
         "standard_slot": "RB",
@@ -678,6 +651,17 @@
         "standard_slot": "LE",
         "standard_pos": "EDGE",
         "cap_number": "$0",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Viliami Fehoko Jr.",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LE",
+        "standard_pos": "EDGE",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -949,8 +933,27 @@
         "stats_season": null
       },
       {
-        "name": "Jalen Graham",
+        "name": "Deion Jones",
         "depth": 4,
+        "injured": false,
+        "attainment": "T/NO",
+        "standard_slot": "MIKE",
+        "standard_pos": "LB",
+        "cap_number": null,
+        "stats": {
+          "CMP": 201,
+          "ATT": 289,
+          "YDS": 2151,
+          "TDs": 13,
+          "INTs": 6,
+          "SACKS": 16,
+          "RU YDS": 60
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Jalen Graham",
+        "depth": 5,
         "injured": false,
         "attainment": "P/Was",
         "standard_slot": "MIKE",
