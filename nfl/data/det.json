@@ -243,6 +243,7 @@
       {
         "name": "Seth Mclaughlin",
         "depth": 3,
+<<<<<<< HEAD
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "C",
@@ -265,11 +266,24 @@
       {
         "name": "Gus Hartwig",
         "depth": 5,
+=======
+>>>>>>> ae2490e72aedfa992408f585b07b5fce541eef49
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "C",
         "standard_pos": "OL",
         "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Michael Niese",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF23",
+        "standard_slot": "C",
+        "standard_pos": "OL",
+        "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
       }
@@ -559,7 +573,11 @@
         "attainment": "SF26",
         "standard_slot": "RB",
         "standard_pos": "RB",
+<<<<<<< HEAD
         "cap_number": "$885,000",
+=======
+        "cap_number": null,
+>>>>>>> ae2490e72aedfa992408f585b07b5fce541eef49
         "stats": {
           "TKL": 8,
           "SACKS": 1.0,
@@ -787,10 +805,28 @@
     ],
     "WLB": [
       {
+<<<<<<< HEAD
         "name": "Derrick Barnes",
         "depth": 1,
         "injured": false,
         "attainment": "21/4",
+=======
+        "name": "Devin White",
+        "depth": 1,
+        "injured": false,
+        "attainment": "U/LV",
+        "standard_slot": "WILL",
+        "standard_pos": "LB",
+        "cap_number": "$1,075,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Malcolm Rodriguez",
+        "depth": 2,
+        "injured": false,
+        "attainment": "22/6",
+>>>>>>> ae2490e72aedfa992408f585b07b5fce541eef49
         "standard_slot": "WILL",
         "standard_pos": "LB",
         "cap_number": "$9,764,000",
@@ -805,6 +841,7 @@
         "stats_season": 2025
       },
       {
+<<<<<<< HEAD
         "name": "Devin White",
         "depth": 2,
         "injured": false,
@@ -817,6 +854,9 @@
       },
       {
         "name": "Trevor Nowaske",
+=======
+        "name": "Damone Clark",
+>>>>>>> ae2490e72aedfa992408f585b07b5fce541eef49
         "depth": 3,
         "injured": false,
         "attainment": "CF23",
@@ -991,15 +1031,20 @@
         "stats_season": 2025
       },
       {
-        "name": "Chuck Clark",
+        "name": "Avonte Maddox",
         "depth": 2,
         "injured": false,
-        "attainment": "U/Pit",
+        "attainment": "U/Phi",
         "standard_slot": "SS",
         "standard_pos": "S",
         "cap_number": "$1,262,500",
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "TKL": 23,
+          "INTs": 1,
+          "PD": 4,
+          "TFL": 1
+        },
+        "stats_season": 2025
       },
       {
         "name": "Thomas Harper",
@@ -1053,12 +1098,29 @@
         "stats_season": 2025
       },
       {
+<<<<<<< HEAD
         "name": "Avonte Maddox",
         "depth": 2,
+=======
+        "name": "Chuck Clark",
+        "depth": 2,
         "injured": false,
-        "attainment": "U/Phi",
+        "attainment": "U/Pit",
         "standard_slot": "FS",
         "standard_pos": "S",
+        "cap_number": "$1,262,500",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Dan Jackson",
+        "depth": 3,
+>>>>>>> ae2490e72aedfa992408f585b07b5fce541eef49
+        "injured": false,
+        "attainment": "25/7",
+        "standard_slot": "FS",
+        "standard_pos": "S",
+<<<<<<< HEAD
         "cap_number": "$1,262,500",
         "stats": {
           "TKL": 23,
@@ -1075,6 +1137,8 @@
         "attainment": "25/7",
         "standard_slot": "FS",
         "standard_pos": "S",
+=======
+>>>>>>> ae2490e72aedfa992408f585b07b5fce541eef49
         "cap_number": "$917,906",
         "stats": {},
         "stats_season": null
@@ -1086,7 +1150,11 @@
         "attainment": "SF26",
         "standard_slot": "FS",
         "standard_pos": "S",
+<<<<<<< HEAD
         "cap_number": "$1,005,000",
+=======
+        "cap_number": null,
+>>>>>>> ae2490e72aedfa992408f585b07b5fce541eef49
         "stats": {},
         "stats_season": null
       }
