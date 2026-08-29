@@ -374,8 +374,8 @@ body {
     <button class="sport-btn" id="sportBtnMlb" onclick="selectSport('mlb')">MLB</button>
     <button class="sport-btn" id="sportBtnNhl" onclick="selectSport('nhl')">NHL</button>
     <button class="sport-btn" id="sportBtnNba" onclick="selectSport('nba')">NBA</button>
-    <button class="sport-btn soon" title="Coming soon">MLS</button>
-    <button class="sport-btn soon" title="Coming soon">EPL</button>
+    <button class="sport-btn" id="sportBtnMls" onclick="selectSport('mls')">MLS</button>
+    <button class="sport-btn" id="sportBtnEpl" onclick="selectSport('epl')">EPL</button>
   </div>
 
   <!-- View cards -->
@@ -532,12 +532,42 @@ const SPORTS = {
     // still local-only pending the ScraperAPI cloud-cost decision).
     updateCadence: 'Weekly',
   },
-  // Not built yet -- sport-bar buttons for these are still .soon and have
-  // no onclick, so selectSport() is never called with these keys today.
-  // The rest of the config (tagline, hrefs, features, counts) is added
-  // when each sport is actually built.
-  mls: {},
-  epl: {},
+  epl: {
+    tagline: 'EPL Intelligence Platform',
+    formationHref: 'epl/pitch-view.html',
+    tableHref: 'epl/player-table.html',
+    formationLabel: 'PitchView',
+    formationDesc: 'See the current starting XI in a fixed 4-3-3 -- ranked by real minutes played, plus a bench ranked the same way.',
+    formationFeatures: ['4-3-3 Formation', 'Minutes Rank', 'sofifa Ratings', 'Live Subs'],
+    tableLabel: 'Player Table',
+    tableDesc: 'Roster data across all 20 EPL clubs. Filter, sort, and search by team, position, and role.',
+    tableFeatures: ['Sortable', 'Filterable', 'FPL Season Stats', 'sofifa Ratings'],
+    teamCount: 20,
+    sourceCount: 2,
+    // No cloud automation yet for EPL -- fantasy.premierleague.com's
+    // bootstrap-static and the shared sofifa scraper are both still
+    // manual/local runs, same honest 'Stub' MLB/NHL carried before their
+    // own scrape.yml jobs shipped (see SPORTS.mlb/nhl's updateCadence
+    // comments above).
+    updateCadence: 'Stub',
+  },
+  mls: {
+    tagline: 'MLS Intelligence Platform',
+    formationHref: 'mls/pitch-view.html',
+    tableHref: 'mls/player-table.html',
+    formationLabel: 'PitchView',
+    formationDesc: 'See the current starting XI in a fixed 4-3-3 -- ranked by real minutes played, plus a bench ranked the same way.',
+    formationFeatures: ['4-3-3 Formation', 'Minutes Rank', 'sofifa Ratings', 'ASA Advanced Stats'],
+    tableLabel: 'Player Table',
+    tableDesc: 'Roster data across all 30 MLS clubs. Filter, sort, and search by team, position, and role.',
+    tableFeatures: ['Sortable', 'Filterable', 'ASA xG/xA Stats', 'sofifa Ratings'],
+    teamCount: 30,
+    sourceCount: 3,
+    // No cloud automation yet for MLS -- the ESPN roster scraper, ASA
+    // stats pull (itscalledsoccer), and shared sofifa scraper are all
+    // still manual/local runs, same honest 'Stub' EPL carries above.
+    updateCadence: 'Stub',
+  },
 };
 
 let currentSport = 'nfl';
@@ -581,6 +611,24 @@ function nhlTexture() {
   return `url("data:image/svg+xml,${encodeURIComponent(accent)}") no-repeat center 60%, repeating-linear-gradient(135deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 2px, transparent 2px, transparent 40px), linear-gradient(180deg, rgba(10,20,30,0) 0%, rgba(12,26,38,0.4) 100%)`;
 }
 
+function eplTexture() {
+  const accent = `<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900">
+    <circle cx="450" cy="620" r="150" fill="none" stroke="white" stroke-opacity="0.045" stroke-width="3"/>
+    <rect x="270" y="770" width="360" height="160" fill="none" stroke="white" stroke-opacity="0.045" stroke-width="3"/>
+    <circle cx="450" cy="620" r="4" fill="white" fill-opacity="0.07"/>
+  </svg>`;
+  return `url("data:image/svg+xml,${encodeURIComponent(accent)}") no-repeat center 60%, repeating-linear-gradient(180deg, rgba(255,255,255,0.014) 0px, rgba(255,255,255,0.014) 36px, transparent 36px, transparent 72px), linear-gradient(180deg, rgba(10,25,12,0) 0%, rgba(12,28,14,0.4) 100%)`;
+}
+
+function mlsTexture() {
+  const accent = `<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900">
+    <circle cx="450" cy="620" r="150" fill="none" stroke="white" stroke-opacity="0.045" stroke-width="3"/>
+    <rect x="270" y="770" width="360" height="160" fill="none" stroke="white" stroke-opacity="0.045" stroke-width="3"/>
+    <circle cx="450" cy="620" r="4" fill="white" fill-opacity="0.07"/>
+  </svg>`;
+  return `url("data:image/svg+xml,${encodeURIComponent(accent)}") no-repeat center 60%, repeating-linear-gradient(180deg, rgba(255,255,255,0.014) 0px, rgba(255,255,255,0.014) 36px, transparent 36px, transparent 72px), linear-gradient(180deg, rgba(10,16,30,0) 0%, rgba(12,18,34,0.4) 100%)`;
+}
+
 function placeholderTexture() {
   return `repeating-linear-gradient(180deg, rgba(20,20,24,0) 0px, rgba(20,20,24,0) 80px, rgba(28,28,34,0.5) 80px, rgba(28,28,34,0.5) 160px)`;
 }
@@ -591,6 +639,8 @@ function applyFieldBackground(sport) {
   else if (sport === 'nba') bg.style.background = nbaTexture();
   else if (sport === 'mlb') bg.style.background = mlbTexture();
   else if (sport === 'nhl') bg.style.background = nhlTexture();
+  else if (sport === 'epl') bg.style.background = eplTexture();
+  else if (sport === 'mls') bg.style.background = mlsTexture();
   else bg.style.background = placeholderTexture();
 }
 
@@ -602,6 +652,8 @@ function selectSport(sport) {
   document.getElementById('sportBtnNba').classList.toggle('active', sport === 'nba');
   document.getElementById('sportBtnMlb').classList.toggle('active', sport === 'mlb');
   document.getElementById('sportBtnNhl').classList.toggle('active', sport === 'nhl');
+  document.getElementById('sportBtnEpl').classList.toggle('active', sport === 'epl');
+  document.getElementById('sportBtnMls').classList.toggle('active', sport === 'mls');
 
   applyFieldBackground(sport);
 
@@ -676,6 +728,24 @@ function updatePlayerCount(sport) {
       .then(r => r.json())
       .then(d => {
         if (currentSport === 'nhl') {
+          document.getElementById('playerCount').textContent = Object.keys(d).length.toLocaleString();
+        }
+      })
+      .catch(() => {});
+  } else if (sport === 'epl') {
+    fetch('epl/data/epl_players_master.json')
+      .then(r => r.json())
+      .then(d => {
+        if (currentSport === 'epl') {
+          document.getElementById('playerCount').textContent = Object.keys(d).length.toLocaleString();
+        }
+      })
+      .catch(() => {});
+  } else if (sport === 'mls') {
+    fetch('mls/data/mls_players_master.json')
+      .then(r => r.json())
+      .then(d => {
+        if (currentSport === 'mls') {
           document.getElementById('playerCount').textContent = Object.keys(d).length.toLocaleString();
         }
       })

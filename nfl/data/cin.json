@@ -153,8 +153,19 @@
         "stats_season": 2025
       },
       {
-        "name": "Ke'shawn Williams",
+        "name": "Dohnte Meyers",
         "depth": 3,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "SWR",
+        "standard_pos": "WR",
+        "cap_number": "$888,333",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Ke'shawn Williams",
+        "depth": 4,
         "injured": false,
         "attainment": "W/Pit",
         "standard_slot": "SWR",
@@ -167,17 +178,6 @@
           "CAR": 2
         },
         "stats_season": 2025
-      },
-      {
-        "name": "Dohnte Meyers",
-        "depth": 4,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "SWR",
-        "standard_pos": "WR",
-        "cap_number": "$888,333",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "LT": [
@@ -193,19 +193,8 @@
         "stats_season": 2025
       },
       {
-        "name": "Cody Ford",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/Arz",
-        "standard_slot": "LT",
-        "standard_pos": "OL",
-        "cap_number": "$1,800,000",
-        "stats": {},
-        "stats_season": 2025
-      },
-      {
         "name": "Javon Foster",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "SF25",
         "standard_slot": "LT",
@@ -216,7 +205,7 @@
       },
       {
         "name": "Corey Robinson II",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "LT",
@@ -883,38 +872,27 @@
         "stats_season": 2025
       },
       {
-        "name": "Liam Anderson",
+        "name": "Joe Giles-harris",
         "depth": 3,
         "injured": false,
-        "attainment": "SF25",
+        "attainment": "U/Jax",
         "standard_slot": "WILL",
         "standard_pos": "LB",
-        "cap_number": "$1,005,000",
+        "cap_number": "$1,235,000",
         "stats": {
-          "TKL": 10,
-          "PD": 1
+          "TKL": 14,
+          "PD": 2
         },
         "stats_season": 2025
       },
       {
-        "name": "Jack Dingle",
+        "name": "Eric Gentry",
         "depth": 4,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "WILL",
         "standard_pos": "LB",
         "cap_number": "$890,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Swayze Bozeman",
-        "depth": 5,
-        "injured": false,
-        "attainment": "W/NYG",
-        "standard_slot": "WILL",
-        "standard_pos": "LB",
-        "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
       }
@@ -938,18 +916,15 @@
         "stats_season": 2025
       },
       {
-        "name": "Joe Giles-harris",
+        "name": "Swayze Bozeman",
         "depth": 2,
         "injured": false,
-        "attainment": "U/Jax",
+        "attainment": "W/NYG",
         "standard_slot": "MIKE",
         "standard_pos": "LB",
-        "cap_number": "$1,235,000",
-        "stats": {
-          "TKL": 14,
-          "PD": 2
-        },
-        "stats_season": 2025
+        "cap_number": "$1,075,000",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Shaka Heyward",
@@ -966,8 +941,22 @@
         "stats_season": 2025
       },
       {
-        "name": "Eric Gentry",
+        "name": "Liam Anderson",
         "depth": 4,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "MIKE",
+        "standard_pos": "LB",
+        "cap_number": "$1,005,000",
+        "stats": {
+          "TKL": 10,
+          "PD": 1
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Jack Dingle",
+        "depth": 5,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "MIKE",
@@ -1133,15 +1122,18 @@
         "stats_season": 2025
       },
       {
-        "name": "Ja'sir Taylor",
+        "name": "DJ Ivey",
         "depth": 2,
         "injured": false,
-        "attainment": "U/NYJ",
+        "attainment": "23/7",
         "standard_slot": "RCB",
         "standard_pos": "CB",
-        "cap_number": "$1,075,000",
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$1,165,164",
+        "stats": {
+          "TKL": 10,
+          "PD": 3
+        },
+        "stats_season": 2025
       },
       {
         "name": "Josh Newton",
@@ -1191,18 +1183,15 @@
         "stats_season": 2025
       },
       {
-        "name": "DJ Ivey",
+        "name": "Ja'sir Taylor",
         "depth": 2,
         "injured": false,
-        "attainment": "23/7",
+        "attainment": "U/NYJ",
         "standard_slot": "NB",
         "standard_pos": "CB",
-        "cap_number": "$1,165,164",
-        "stats": {
-          "TKL": 10,
-          "PD": 3
-        },
-        "stats_season": 2025
+        "cap_number": "$1,075,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "PT": [

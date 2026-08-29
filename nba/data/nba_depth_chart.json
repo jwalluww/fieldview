@@ -1,5 +1,5 @@
 {
-  "last_changed": "2026-08-23",
+  "last_changed": "2026-08-27",
   "depth_chart": [
     {
       "player_id": 1630168,
@@ -1309,7 +1309,7 @@
     {
       "player_id": null,
       "team": "DEN",
-      "position": "SF",
+      "position": "SF/PF",
       "depth_rank": 4,
       "status_flags": [
         "rookie"
@@ -1585,6 +1585,24 @@
       "draft_pick": null
     },
     {
+      "player_id": null,
+      "team": "GSW",
+      "position": "PF/SF",
+      "depth_rank": 3,
+      "status_flags": [],
+      "sheet_name": "Georges Niang",
+      "draft_pick": null
+    },
+    {
+      "player_id": 1630314,
+      "team": "GSW",
+      "position": "PG",
+      "depth_rank": 3,
+      "status_flags": [],
+      "sheet_name": "Brandon Williams",
+      "draft_pick": null
+    },
+    {
       "player_id": 1627780,
       "team": "GSW",
       "position": "PG/SG",
@@ -1762,19 +1780,19 @@
     {
       "player_id": null,
       "team": "HOU",
+      "position": "PF/C",
+      "depth_rank": 4,
+      "status_flags": [],
+      "sheet_name": "Rafael Castro",
+      "draft_pick": null
+    },
+    {
+      "player_id": null,
+      "team": "HOU",
       "position": "PG/SG",
       "depth_rank": 4,
       "status_flags": [],
       "sheet_name": "Quadir Copeland",
-      "draft_pick": null
-    },
-    {
-      "player_id": 1641803,
-      "team": "HOU",
-      "position": "SG",
-      "depth_rank": 4,
-      "status_flags": [],
-      "sheet_name": "Tristen Newton",
       "draft_pick": null
     },
     {
@@ -2826,6 +2844,15 @@
       "draft_pick": null
     },
     {
+      "player_id": 1630228,
+      "team": "MIN",
+      "position": "PF",
+      "depth_rank": 1,
+      "status_flags": [],
+      "sheet_name": "Jonathan Kuminga",
+      "draft_pick": null
+    },
+    {
       "player_id": 1630163,
       "team": "MIN",
       "position": "PG",
@@ -2841,15 +2868,6 @@
       "depth_rank": 1,
       "status_flags": [],
       "sheet_name": "Jaden McDaniels",
-      "draft_pick": null
-    },
-    {
-      "player_id": 1630245,
-      "team": "MIN",
-      "position": "SG/PG",
-      "depth_rank": 1,
-      "status_flags": [],
-      "sheet_name": "Ayo Dosunmu",
       "draft_pick": null
     },
     {
@@ -2880,21 +2898,21 @@
       "draft_pick": null
     },
     {
+      "player_id": 1630245,
+      "team": "MIN",
+      "position": "SG/PG",
+      "depth_rank": 2,
+      "status_flags": [],
+      "sheet_name": "Ayo Dosunmu",
+      "draft_pick": null
+    },
+    {
       "player_id": 1628978,
       "team": "MIN",
       "position": "SG/PG",
       "depth_rank": 2,
       "status_flags": [],
       "sheet_name": "Donte DiVincenzo",
-      "draft_pick": null
-    },
-    {
-      "player_id": 1630182,
-      "team": "MIN",
-      "position": "SG/SF",
-      "depth_rank": 2,
-      "status_flags": [],
-      "sheet_name": "Josh Green",
       "draft_pick": null
     },
     {
@@ -2933,6 +2951,15 @@
       "depth_rank": 3,
       "status_flags": [],
       "sheet_name": "Jaylen Clark",
+      "draft_pick": null
+    },
+    {
+      "player_id": 1630182,
+      "team": "MIN",
+      "position": "SG/SF",
+      "depth_rank": 3,
+      "status_flags": [],
+      "sheet_name": "Josh Green",
       "draft_pick": null
     },
     {
@@ -3028,15 +3055,6 @@
       "draft_pick": null
     },
     {
-      "player_id": 1631255,
-      "team": "NOP",
-      "position": "PF/C",
-      "depth_rank": 2,
-      "status_flags": [],
-      "sheet_name": "Karlo Matković",
-      "draft_pick": null
-    },
-    {
       "player_id": 1642847,
       "team": "NOP",
       "position": "PG",
@@ -3052,6 +3070,15 @@
       "depth_rank": 2,
       "status_flags": [],
       "sheet_name": "Saddiq Bey",
+      "draft_pick": null
+    },
+    {
+      "player_id": 1631097,
+      "team": "NOP",
+      "position": "SF/SG",
+      "depth_rank": 2,
+      "status_flags": [],
+      "sheet_name": "Bennedict Mathurin",
       "draft_pick": null
     },
     {
@@ -3073,12 +3100,12 @@
       "draft_pick": null
     },
     {
-      "player_id": 1630570,
+      "player_id": 1631255,
       "team": "NOP",
-      "position": "PF",
+      "position": "PF/C",
       "depth_rank": 3,
       "status_flags": [],
-      "sheet_name": "Trendon Watford",
+      "sheet_name": "Karlo Matković",
       "draft_pick": null
     },
     {
@@ -3115,6 +3142,15 @@
       "depth_rank": 4,
       "status_flags": [],
       "sheet_name": "Malik Dia",
+      "draft_pick": null
+    },
+    {
+      "player_id": 1630570,
+      "team": "NOP",
+      "position": "PF",
+      "depth_rank": 4,
+      "status_flags": [],
+      "sheet_name": "Trendon Watford",
       "draft_pick": null
     },
     {
@@ -4959,7 +4995,7 @@
     {
       "sheet_name": "Bryce Hopkins",
       "team": "DEN",
-      "position": "SF",
+      "position": "SF/PF",
       "draft_pick": 49
     },
     {
@@ -4993,10 +5029,22 @@
       "draft_pick": 11
     },
     {
+      "sheet_name": "Georges Niang",
+      "team": "GSW",
+      "position": "PF/SF",
+      "draft_pick": null
+    },
+    {
       "sheet_name": "Lajae Jones",
       "team": "GSW",
       "position": "SG",
       "draft_pick": 54
+    },
+    {
+      "sheet_name": "Rafael Castro",
+      "team": "HOU",
+      "position": "PF/C",
+      "draft_pick": null
     },
     {
       "sheet_name": "Bruce Thornton",

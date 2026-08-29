@@ -40,24 +40,27 @@
         "stats_season": 2025
       },
       {
-        "name": "Hakeem Butler",
+        "name": "Dane Key",
         "depth": 3,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "LWR",
-        "standard_pos": "WR",
-        "cap_number": "$1,005,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Joseph Manjack",
-        "depth": 4,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "LWR",
         "standard_pos": "WR",
         "cap_number": "$888,333",
+        "stats": {
+          "TKL": 19,
+          "PD": 1
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Kyrese Rowan",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       }
@@ -93,22 +96,8 @@
         "stats_season": 2025
       },
       {
-        "name": "Dane Key",
-        "depth": 3,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "RWR",
-        "standard_pos": "WR",
-        "cap_number": "$888,333",
-        "stats": {
-          "TKL": 19,
-          "PD": 1
-        },
-        "stats_season": 2025
-      },
-      {
         "name": "Kolbe Katsis",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "RWR",
@@ -118,13 +107,13 @@
         "stats_season": null
       },
       {
-        "name": "Kyre Duplessis",
-        "depth": 5,
+        "name": "Cameron Ross",
+        "depth": 4,
         "injured": false,
-        "attainment": "SF26",
+        "attainment": "CF26",
         "standard_slot": "RWR",
         "standard_pos": "WR",
-        "cap_number": "$885,000",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -183,24 +172,13 @@
         "stats_season": 2025
       },
       {
-        "name": "Cameron Ross",
+        "name": "Joseph Manjack",
         "depth": 4,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "SWR",
         "standard_pos": "WR",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Kyrese Rowan",
-        "depth": 5,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "SWR",
-        "standard_pos": "WR",
-        "cap_number": "$885,000",
+        "cap_number": "$888,333",
         "stats": {},
         "stats_season": null
       }
@@ -236,6 +214,17 @@
         "standard_slot": "LT",
         "standard_pos": "OL",
         "cap_number": "$893,333",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Foster Sarell",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -694,6 +683,17 @@
           "QB HIT": 1
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Israel Antwine",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LE",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "NT": [
@@ -843,6 +843,17 @@
         "cap_number": "$891,666",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Ron Stone Jr.",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LOLB",
+        "standard_pos": "EDGE",
+        "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LILB": [
@@ -872,6 +883,17 @@
         "standard_slot": "ILB_L",
         "standard_pos": "LB",
         "cap_number": "$915,122",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Taurean York",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "ILB_L",
+        "standard_pos": "LB",
+        "cap_number": "$893,333",
         "stats": {},
         "stats_season": null
       }
@@ -920,17 +942,6 @@
           "QB HIT": 1
         },
         "stats_season": 2025
-      },
-      {
-        "name": "Taurean York",
-        "depth": 4,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "ILB_R",
-        "standard_pos": "LB",
-        "cap_number": "$893,333",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "ROLB": [
@@ -1057,19 +1068,8 @@
         "stats_season": 2025
       },
       {
-        "name": "Taylor Rapp",
-        "depth": 2,
-        "injured": false,
-        "attainment": "CC/Buf",
-        "standard_slot": "SS",
-        "standard_pos": "S",
-        "cap_number": "$1,075,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Jl Skinner",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "23/6",
         "standard_slot": "SS",
@@ -1082,7 +1082,7 @@
       },
       {
         "name": "Tycen Anderson",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "U/Cin",
         "standard_slot": "SS",

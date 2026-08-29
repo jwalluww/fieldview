@@ -410,24 +410,8 @@
         "stats_season": null
       },
       {
-        "name": "Dae'quan Wright",
-        "depth": 6,
-        "injured": false,
-        "attainment": "W/Phi",
-        "standard_slot": "TE",
-        "standard_pos": "TE",
-        "cap_number": "$885,000",
-        "stats": {
-          "TKL": 21,
-          "SACKS": 5.5,
-          "TFL": 12,
-          "QB HIT": 9
-        },
-        "stats_season": 2025
-      },
-      {
         "name": "Drew Biber",
-        "depth": 7,
+        "depth": 6,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "TE",
@@ -439,8 +423,19 @@
     ],
     "QB": [
       {
-        "name": "Shedeur Sanders",
+        "name": "Deshaun Watson",
         "depth": 1,
+        "injured": false,
+        "attainment": "T/Hou",
+        "standard_slot": "QB",
+        "standard_pos": "QB",
+        "cap_number": "$40,959,128",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Shedeur Sanders",
+        "depth": 2,
         "injured": false,
         "attainment": "25/5",
         "standard_slot": "QB",
@@ -456,17 +451,6 @@
           "RU YDS": 169
         },
         "stats_season": 2025
-      },
-      {
-        "name": "Deshaun Watson",
-        "depth": 2,
-        "injured": false,
-        "attainment": "T/Hou",
-        "standard_slot": "QB",
-        "standard_pos": "QB",
-        "cap_number": "$40,959,128",
-        "stats": {},
-        "stats_season": null
       },
       {
         "name": "Dillon Gabriel",
@@ -591,24 +575,8 @@
     ],
     "LDE": [
       {
-        "name": "Alex Wright",
-        "depth": 1,
-        "injured": false,
-        "attainment": "22/3",
-        "standard_slot": "LE",
-        "standard_pos": "EDGE",
-        "cap_number": "$3,970,995",
-        "stats": {
-          "TKL": 21,
-          "SACKS": 5.5,
-          "TFL": 12,
-          "QB HIT": 9
-        },
-        "stats_season": 2025
-      },
-      {
         "name": "Isaiah Mcguire",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "23/4",
         "standard_slot": "LE",
@@ -621,6 +589,17 @@
           "QB HIT": 6
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Derek Barnett",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/Hou",
+        "standard_slot": "LE",
+        "standard_pos": "EDGE",
+        "cap_number": "$1,776,000",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Tyreak Sapp",
@@ -643,24 +622,13 @@
         "cap_number": "$894,166",
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Jamil Muhammad",
-        "depth": 5,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "LE",
-        "standard_pos": "EDGE",
-        "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "LDT": [
       {
         "name": "Maliek Collins",
         "depth": 1,
-        "injured": true,
+        "injured": false,
         "attainment": "CC/SF",
         "standard_slot": "LDT",
         "standard_pos": "DI",
@@ -837,13 +805,13 @@
         "stats_season": null
       },
       {
-        "name": "Benton Whitley",
+        "name": "Jamil Muhammad",
         "depth": 4,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "RE",
         "standard_pos": "EDGE",
-        "cap_number": "$1,145,000",
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       }

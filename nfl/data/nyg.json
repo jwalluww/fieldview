@@ -8,7 +8,7 @@
       {
         "name": "Malik Nabers",
         "depth": 1,
-        "injured": true,
+        "injured": false,
         "attainment": "24/1",
         "standard_slot": "LWR",
         "standard_pos": "WR",
@@ -23,19 +23,8 @@
         "stats_season": 2025
       },
       {
-        "name": "Malachi Fields",
-        "depth": 2,
-        "injured": false,
-        "attainment": "26/3",
-        "standard_slot": "LWR",
-        "standard_pos": "WR",
-        "cap_number": "$1,307,547",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Odell Beckham Jr.",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "LWR",
@@ -46,7 +35,7 @@
       },
       {
         "name": "Isaiah Hodgins",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "P/Pit",
         "standard_slot": "LWR",
@@ -81,19 +70,30 @@
         "stats_season": 2025
       },
       {
-        "name": "Darnell Mooney",
+        "name": "Malachi Fields",
         "depth": 2,
         "injured": false,
-        "attainment": "CC/Atl",
+        "attainment": "26/3",
         "standard_slot": "RWR",
         "standard_pos": "WR",
-        "cap_number": "$3,000,000",
+        "cap_number": "$1,307,547",
         "stats": {},
         "stats_season": null
       },
       {
-        "name": "Jalin Hyatt",
+        "name": "Dalen Cambre",
         "depth": 3,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "RWR",
+        "standard_pos": "WR",
+        "cap_number": "$1,005,000",
+        "stats": {},
+        "stats_season": 2025
+      },
+      {
+        "name": "Jalin Hyatt",
+        "depth": 4,
         "injured": false,
         "attainment": "23/3",
         "standard_slot": "RWR",
@@ -106,28 +106,17 @@
           "YAC": 2
         },
         "stats_season": 2025
-      },
-      {
-        "name": "Ryan Miller",
-        "depth": 4,
-        "injured": false,
-        "attainment": "W/TB",
-        "standard_slot": "RWR",
-        "standard_pos": "WR",
-        "cap_number": "$1,075,000",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "SWR": [
       {
-        "name": "Calvin Austin III",
+        "name": "Darnell Mooney",
         "depth": 1,
         "injured": false,
-        "attainment": "U/Pit",
+        "attainment": "CC/Atl",
         "standard_slot": "SWR",
         "standard_pos": "WR",
-        "cap_number": "$1,500,000",
+        "cap_number": "$3,000,000",
         "stats": {},
         "stats_season": null
       },
@@ -143,24 +132,24 @@
         "stats_season": null
       },
       {
-        "name": "Dalen Cambre",
-        "depth": 3,
-        "injured": false,
-        "attainment": "CF25",
-        "standard_slot": "SWR",
-        "standard_pos": "WR",
-        "cap_number": "$1,005,000",
-        "stats": {},
-        "stats_season": 2025
-      },
-      {
         "name": "Xavier Gipson",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "SF25",
         "standard_slot": "SWR",
         "standard_pos": "WR",
         "cap_number": "$1,145,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Kobe Prentice",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "SWR",
+        "standard_pos": "WR",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -189,19 +178,8 @@
         "stats_season": null
       },
       {
-        "name": "Joshua Ezeudu",
-        "depth": 3,
-        "injured": false,
-        "attainment": "22/3",
-        "standard_slot": "LT",
-        "standard_pos": "OL",
-        "cap_number": "$1,250,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Jarrod Gray",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "CF26*",
         "standard_slot": "LT",
@@ -224,19 +202,8 @@
         "stats_season": 2025
       },
       {
-        "name": "Aaron Stinnie",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/TB",
-        "standard_slot": "LG",
-        "standard_pos": "OL",
-        "cap_number": "$1,262,500",
-        "stats": {},
-        "stats_season": 2025
-      },
-      {
         "name": "Jake Kubas",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "CF24",
         "standard_slot": "LG",
@@ -305,8 +272,19 @@
         "stats_season": null
       },
       {
-        "name": "Evan Neal",
+        "name": "Aaron Stinnie",
         "depth": 2,
+        "injured": false,
+        "attainment": "U/TB",
+        "standard_slot": "RG",
+        "standard_pos": "OL",
+        "cap_number": "$1,262,500",
+        "stats": {},
+        "stats_season": 2025
+      },
+      {
+        "name": "Evan Neal",
+        "depth": 3,
         "injured": false,
         "attainment": "22/1",
         "standard_slot": "RG",
@@ -417,6 +395,17 @@
         "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Josiah Deguara",
+        "depth": 6,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "QB": [
@@ -485,7 +474,7 @@
       {
         "name": "Cam Skattebo",
         "depth": 1,
-        "injured": true,
+        "injured": false,
         "attainment": "25/4",
         "standard_slot": "RB",
         "standard_pos": "RB",

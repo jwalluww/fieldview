@@ -378,17 +378,17 @@
         "stats_season": null
       },
       {
-        "name": "Moliki Matavao",
+        "name": "Zaire Mitchell-paden",
         "depth": 4,
         "injured": false,
-        "attainment": "25/7",
+        "attainment": "W/Bal",
         "standard_slot": "TE",
         "standard_pos": "TE",
         "cap_number": "$1,005,000",
         "stats": {
-          "TGT": 2,
+          "TGT": 3,
           "REC": 2,
-          "YDS": 10,
+          "YDS": 17,
           "YAC": 5
         },
         "stats_season": 2025
@@ -405,24 +405,8 @@
         "stats_season": null
       },
       {
-        "name": "Zaire Mitchell-paden",
-        "depth": 6,
-        "injured": false,
-        "attainment": "W/Bal",
-        "standard_slot": "TE",
-        "standard_pos": "TE",
-        "cap_number": "$1,005,000",
-        "stats": {
-          "TGT": 3,
-          "REC": 2,
-          "YDS": 17,
-          "YAC": 5
-        },
-        "stats_season": 2025
-      },
-      {
         "name": "Cody Hardy",
-        "depth": 7,
+        "depth": 6,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "TE",
@@ -561,10 +545,10 @@
         "stats_season": 2025
       },
       {
-        "name": "Ty Chandler",
+        "name": "Zamir White",
         "depth": 5,
         "injured": false,
-        "attainment": "U/Min",
+        "attainment": "T/SF",
         "standard_slot": "RB",
         "standard_pos": "RB",
         "cap_number": "$1,075,000",
@@ -793,25 +777,8 @@
         "stats_season": null
       },
       {
-        "name": "Chris Rumph II",
-        "depth": 4,
-        "injured": false,
-        "attainment": "U/LAC",
-        "standard_slot": "LOLB",
-        "standard_pos": "EDGE",
-        "cap_number": "$2,000,000",
-        "stats": {
-          "TKL": 24,
-          "SACKS": 2.0,
-          "PD": 1,
-          "TFL": 3,
-          "QB HIT": 4
-        },
-        "stats_season": 2025
-      },
-      {
         "name": "Garrett Nelson",
-        "depth": 5,
+        "depth": 4,
         "injured": false,
         "attainment": "W/Sea",
         "standard_slot": "LOLB",
@@ -819,6 +786,22 @@
         "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Malakai Williams",
+        "depth": 5,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "LOLB",
+        "standard_pos": "EDGE",
+        "cap_number": "$885,000",
+        "stats": {
+          "TKL": 8,
+          "SACKS": 3.0,
+          "TFL": 5,
+          "QB HIT": 5
+        },
+        "stats_season": 2025
       }
     ],
     "WLB": [
@@ -851,26 +834,21 @@
         "stats_season": 2025
       },
       {
-        "name": "Deion Jones",
+        "name": "Chris Rumph II",
         "depth": 3,
         "injured": false,
-        "attainment": "U/TB",
+        "attainment": "U/LAC",
         "standard_slot": "ILB_L",
         "standard_pos": "LB",
-        "cap_number": "$1,075,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Jackson Sirmon",
-        "depth": 4,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "ILB_L",
-        "standard_pos": "LB",
-        "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$2,000,000",
+        "stats": {
+          "TKL": 24,
+          "SACKS": 2.0,
+          "PD": 1,
+          "TFL": 3,
+          "QB HIT": 4
+        },
+        "stats_season": 2025
       }
     ],
     "MLB": [
@@ -916,6 +894,17 @@
           "TKL": 5
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Jackson Sirmon",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "ILB_R",
+        "standard_pos": "LB",
+        "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "ROLB": [
@@ -967,22 +956,6 @@
         "cap_number": "$1,005,000",
         "stats": {},
         "stats_season": 2025
-      },
-      {
-        "name": "Malakai Williams",
-        "depth": 5,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "ROLB",
-        "standard_pos": "EDGE",
-        "cap_number": "$885,000",
-        "stats": {
-          "TKL": 8,
-          "SACKS": 3.0,
-          "TFL": 5,
-          "QB HIT": 5
-        },
-        "stats_season": 2025
       }
     ],
     "LCB": [
@@ -1014,15 +987,28 @@
         "stats_season": null
       },
       {
-        "name": "Rejzohn Wright",
+        "name": "Dalys Beanum",
         "depth": 3,
         "injured": false,
-        "attainment": "SF24",
+        "attainment": "CF25",
         "standard_slot": "LCB",
         "standard_pos": "CB",
-        "cap_number": "$1,005,000",
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Michael Davis",
+        "depth": 4,
+        "injured": false,
+        "attainment": "U/Was",
+        "standard_slot": "LCB",
+        "standard_pos": "CB",
+        "cap_number": null,
+        "stats": {
+          "TKL": 2
+        },
+        "stats_season": 2025
       }
     ],
     "SS": [
@@ -1160,13 +1146,13 @@
         "stats_season": null
       },
       {
-        "name": "Dalys Beanum",
+        "name": "David Long Jr.",
         "depth": 4,
         "injured": false,
-        "attainment": "CF25",
+        "attainment": "SF26",
         "standard_slot": "RCB",
         "standard_pos": "CB",
-        "cap_number": "$885,000",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -1189,24 +1175,24 @@
         "stats_season": 2025
       },
       {
-        "name": "Lorenzo Styles Jr.",
-        "depth": 2,
-        "injured": false,
-        "attainment": "26/5",
-        "standard_slot": "NB",
-        "standard_pos": "CB",
-        "cap_number": "$990,197",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Jayden Price",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "SF25",
         "standard_slot": "NB",
         "standard_pos": "CB",
         "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Lorenzo Styles Jr.",
+        "depth": 3,
+        "injured": false,
+        "attainment": "26/5",
+        "standard_slot": "NB",
+        "standard_pos": "CB",
+        "cap_number": "$990,197",
         "stats": {},
         "stats_season": null
       }
