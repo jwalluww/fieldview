@@ -123,18 +123,20 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install requests pandas duckdb
+        run: pip install requests beautifulsoup4 pandas duckdb
 
-      # scrape_ratings.py (theshowratings.com via the ScraperAPI proxy) is
-      # deliberately NOT run here yet -- stays local-only pending a decision
-      # on whether the proxy's cost/quota is worth spending on a weekly cloud
-      # run too. build_mlb_match.py already ships correctly without it (see
-      # mlb/PIPELINE.md) -- ratings just won't refresh from this job.
       - name: Run MLB roster scraper
         run: python mlb/scripts/scrape_roster.py
 
       - name: Run MLB stats scraper
         run: python mlb/scripts/scrape_stats.py
+
+      # theshowratings.com via the ScraperAPI proxy -- same proxy NHL's
+      # ratings scraper uses, requires SCRAPERAPI_KEY as a repo secret.
+      - name: Run MLB ratings scraper
+        env:
+          SCRAPERAPI_KEY: ${{ secrets.SCRAPERAPI_KEY }}
+        run: python mlb/scripts/scrape_ratings.py
 
       - name: Run matching
         run: python mlb/scripts/build_mlb_match.py
