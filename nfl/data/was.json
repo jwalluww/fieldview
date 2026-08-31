@@ -23,35 +23,11 @@
         "stats_season": 2025
       },
       {
-        "name": "Antonio Williams",
-        "depth": 2,
-        "injured": false,
-        "attainment": "26/3",
-        "standard_slot": "LWR",
-        "standard_pos": "WR",
-        "cap_number": "$1,319,767",
-        "stats": {},
-        "stats_season": null
-      }
-    ],
-    "RWR": [
-      {
-        "name": "Stefon Diggs",
-        "depth": 1,
-        "injured": false,
-        "attainment": "CC/NE",
-        "standard_slot": "RWR",
-        "standard_pos": "WR",
-        "cap_number": "$8,000,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Treylon Burks",
         "depth": 2,
         "injured": false,
         "attainment": "SF25",
-        "standard_slot": "RWR",
+        "standard_slot": "LWR",
         "standard_pos": "WR",
         "cap_number": "$1,990,000",
         "stats": {
@@ -68,7 +44,7 @@
         "depth": 3,
         "injured": false,
         "attainment": "U/Jax",
-        "standard_slot": "RWR",
+        "standard_slot": "LWR",
         "standard_pos": "WR",
         "cap_number": "$1,720,000",
         "stats": {
@@ -78,6 +54,30 @@
           "YAC": 11
         },
         "stats_season": 2025
+      }
+    ],
+    "RWR": [
+      {
+        "name": "Stefon Diggs",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CC/NE",
+        "standard_slot": "RWR",
+        "standard_pos": "WR",
+        "cap_number": "$8,000,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Antonio Williams",
+        "depth": 2,
+        "injured": false,
+        "attainment": "26/3",
+        "standard_slot": "RWR",
+        "standard_pos": "WR",
+        "cap_number": "$1,319,767",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "SWR": [
@@ -179,7 +179,7 @@
       {
         "name": "Nick Allegretti",
         "depth": 1,
-        "injured": true,
+        "injured": false,
         "attainment": "U/KC",
         "standard_slot": "C",
         "standard_pos": "OL",
@@ -210,17 +210,6 @@
         "cap_number": null,
         "stats": {},
         "stats_season": 2025
-      },
-      {
-        "name": "Andrew Wylie",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/KC",
-        "standard_slot": "RG",
-        "standard_pos": "OL",
-        "cap_number": "$3,200,000",
-        "stats": {},
-        "stats_season": 2025
       }
     ],
     "RT": [
@@ -234,20 +223,17 @@
         "cap_number": "$3,563,885",
         "stats": {},
         "stats_season": 2025
-<<<<<<< HEAD
       },
       {
-        "name": "Trent Scott",
+        "name": "Andrew Wylie",
         "depth": 2,
         "injured": false,
-        "attainment": "U/Pit",
+        "attainment": "U/KC",
         "standard_slot": "RT",
         "standard_pos": "OL",
-        "cap_number": null,
+        "cap_number": "$3,200,000",
         "stats": {},
         "stats_season": 2025
-=======
->>>>>>> f75a903f57349bfed7eeb51cdc71885d3cda959a
       }
     ],
     "TE": [
@@ -619,39 +605,6 @@
           "QB HIT": 1
         },
         "stats_season": 2025
-<<<<<<< HEAD
-      },
-      {
-        "name": "D.j. Johnson",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF25",
-        "standard_slot": "ROLB",
-        "standard_pos": "EDGE",
-        "cap_number": "$1,145,000",
-        "stats": {
-          "CMP": 34,
-          "ATT": 54,
-          "YDS": 372,
-          "TDs": 1,
-          "INTs": 2,
-          "SACKS": 2,
-          "RU YDS": 55
-        },
-        "stats_season": 2025
-      },
-      {
-        "name": "Boogie Basham",
-        "depth": 4,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "ROLB",
-        "standard_pos": "EDGE",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-=======
->>>>>>> f75a903f57349bfed7eeb51cdc71885d3cda959a
       }
     ],
     "LCB": [
@@ -691,20 +644,6 @@
           "TKL": 8
         },
         "stats_season": 2025
-<<<<<<< HEAD
-      },
-      {
-        "name": "Joshuah Bledsoe",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "SS",
-        "standard_pos": "S",
-        "cap_number": "$1,005,000",
-        "stats": {},
-        "stats_season": null
-=======
->>>>>>> f75a903f57349bfed7eeb51cdc71885d3cda959a
       }
     ],
     "FS": [
@@ -741,28 +680,6 @@
           "QB HIT": 2
         },
         "stats_season": 2025
-<<<<<<< HEAD
-      },
-      {
-        "name": "Quindell Johnson",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "FS",
-        "standard_pos": "S",
-        "cap_number": "$1,005,000",
-        "stats": {
-          "CMP": 34,
-          "ATT": 54,
-          "YDS": 372,
-          "TDs": 1,
-          "INTs": 2,
-          "SACKS": 2,
-          "RU YDS": 55
-        },
-        "stats_season": 2025
-=======
->>>>>>> f75a903f57349bfed7eeb51cdc71885d3cda959a
       }
     ],
     "RCB": [
