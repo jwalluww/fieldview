@@ -113,13 +113,13 @@
         "stats_season": 2025
       },
       {
-        "name": "Cole Van Lanen",
+        "name": "Walker Little",
         "depth": 2,
         "injured": false,
-        "attainment": "T/GB",
+        "attainment": "21/2",
         "standard_slot": "LT",
         "standard_pos": "OL",
-        "cap_number": "$5,185,294",
+        "cap_number": "$14,499,953",
         "stats": {},
         "stats_season": 2025
       }
@@ -198,13 +198,13 @@
     ],
     "RT": [
       {
-        "name": "Walker Little",
+        "name": "Cole Van Lanen",
         "depth": 1,
         "injured": false,
-        "attainment": "21/2",
+        "attainment": "T/GB",
         "standard_slot": "RT",
         "standard_pos": "OL",
-        "cap_number": "$14,499,953",
+        "cap_number": "$5,185,294",
         "stats": {},
         "stats_season": 2025
       }
@@ -509,6 +509,24 @@
           "QB HIT": 1
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Bryan Thomas Jr.",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "RE",
+        "standard_pos": "EDGE",
+        "cap_number": "$895,000",
+        "stats": {
+          "TGT": 91,
+          "REC": 48,
+          "YDS": 707,
+          "TDs": 2,
+          "YAC": 159,
+          "CAR": 3
+        },
+        "stats_season": 2025
       }
     ],
     "WLB": [
@@ -528,25 +546,8 @@
         "stats_season": 2025
       },
       {
-        "name": "Dennis Gardeck",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/Arz",
-        "standard_slot": "WILL",
-        "standard_pos": "LB",
-        "cap_number": "$2,100,000",
-        "stats": {
-          "TKL": 28,
-          "SACKS": 2.5,
-          "PD": 2,
-          "TFL": 6,
-          "QB HIT": 9
-        },
-        "stats_season": 2025
-      },
-      {
         "name": "Branson Combs",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "CF25",
         "standard_slot": "WILL",
@@ -587,6 +588,25 @@
         "cap_number": "$1,110,294",
         "stats": {},
         "stats_season": null
+      }
+    ],
+    "SLB": [
+      {
+        "name": "Dennis Gardeck",
+        "depth": 1,
+        "injured": false,
+        "attainment": "U/Arz",
+        "standard_slot": "SAM",
+        "standard_pos": "LB",
+        "cap_number": "$2,100,000",
+        "stats": {
+          "TKL": 28,
+          "SACKS": 2.5,
+          "PD": 2,
+          "TFL": 6,
+          "QB HIT": 9
+        },
+        "stats_season": 2025
       }
     ],
     "LCB": [
@@ -641,15 +661,19 @@
         "stats_season": 2025
       },
       {
-        "name": "Caleb Ransaw",
+        "name": "Rayuan Lane III",
         "depth": 2,
         "injured": false,
-        "attainment": "25/3",
+        "attainment": "25/6",
         "standard_slot": "SS",
         "standard_pos": "S",
-        "cap_number": "$1,427,518",
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$1,060,544",
+        "stats": {
+          "TKL": 12,
+          "PD": 1,
+          "TFL": 1
+        },
+        "stats_season": 2025
       }
     ],
     "FS": [
@@ -672,19 +696,15 @@
         "stats_season": 2025
       },
       {
-        "name": "Rayuan Lane III",
+        "name": "Caleb Ransaw",
         "depth": 2,
         "injured": false,
-        "attainment": "25/6",
+        "attainment": "25/3",
         "standard_slot": "FS",
         "standard_pos": "S",
-        "cap_number": "$1,060,544",
-        "stats": {
-          "TKL": 12,
-          "PD": 1,
-          "TFL": 1
-        },
-        "stats_season": 2025
+        "cap_number": "$1,427,518",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Jalen Huskey",
