@@ -45,6 +45,11 @@ Purpose: each sport gets a FieldView (players on the field/court/pitch in their 
 - **Long-running local verification (e.g. a full multi-sport `run_all.bat` pass) should be run in the foreground, watched directly by the user** — backgrounding it through a tool session risks the process getting silently killed by a session/host restart mid-run, which happened twice in a row with zero pipeline-level cause. A background run that dies early looks identical to a hang; don't assume the pipeline itself is at fault before checking whether the process even survived.
 - Chat's real value-add: cross-cutting consistency a per-file view might miss — "extract this into a shared file, a second sport needs it now" (`nfl/scripts/season_utils.py`, `nba/scripts/name_utils.py`, `mlb/scripts/statsapi_utils.py`, `shared/scripts/scrape_sofifa.py` + `shared/scripts/soccer_name_utils.py`, deliberately built shared from the start since EPL/MLS both needed the same sofifa scraper and name-matching approach).
 - Start a new chat when switching to a new sport or major new feature area.
+- End every investigation or implementation task (in this chat or in Claude
+  Code) with a short plain-language TLDR: what was broken, what changed, why
+  it matters — a few sentences, no jargon or file names, something a
+  non-technical read could follow. This is IN ADDITION to the full technical
+  report, not a replacement for it. Label it 'TLDR:' at the very end.
 
 ---
 

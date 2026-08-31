@@ -68,7 +68,17 @@ HEADERS = {
 STATS_PATH = os.path.join("nba", "data", "nba_stats.json")
 OUT_PATH = os.path.join("nba", "data", "nba_ratings_2k.json")
 STATE_PATH = os.path.join("nba", "data", "ratings_2k_scrape_state.json")
+ERROR_LOG_PATH = os.path.join("nba", "data", "2kratings_errors.log")
 TEAMS_PER_RUN = 3
+
+
+def log_error(context, exc):
+    """Appends the actual exception message before it's re-raised, so an
+    unattended Task Scheduler run that dies leaves a trail -- Task
+    Scheduler's own history only ever shows a bare non-zero exit code."""
+    os.makedirs(os.path.dirname(ERROR_LOG_PATH), exist_ok=True)
+    with open(ERROR_LOG_PATH, "a", encoding="utf-8") as f:
+        f.write(f"[{datetime.now(timezone.utc).isoformat()}] {context}: {exc}\n")
 
 # nba_api abbreviation -> 2kratings team-page slug. Built by cross
 # referencing 2kratings' own team nav against nba_api's static team list
@@ -290,7 +300,11 @@ def main():
     print(f"Cycle {state.get('cycle', 1)}: {len(remaining)} teams remaining before this run. "
           f"Picked: {chosen}")
 
-    players = load_nba_players()
+    try:
+        players = load_nba_players()
+    except Exception as e:
+        log_error("load_nba_players", e)
+        raise
     by_name, by_name_team = build_match_index(players)
     print(f"Matching against {len(players)} players from nba_stats.json")
     existing_by_team = load_existing_ratings_by_team()
@@ -357,8 +371,12 @@ def main():
     if merged_records:
         output = {"ratings": merged_records, "unmatched": unmatched}
         os.makedirs(os.path.join("nba", "data"), exist_ok=True)
-        with open(OUT_PATH, "w", encoding="utf-8") as f:
-            json.dump(output, f, indent=2)
+        try:
+            with open(OUT_PATH, "w", encoding="utf-8") as f:
+                json.dump(output, f, indent=2)
+        except Exception as e:
+            log_error("write nba_ratings_2k.json", e)
+            raise
         teams_covered = len({r["team"] for r in merged_records})
         matched_total = len(merged_records) - len(unmatched)
         print(f"\n{OUT_PATH}: {len(merged_records)} total records across {teams_covered}/{len(TEAM_SLUGS)} teams "
@@ -378,7 +396,11 @@ def main():
         state["cycle"] = state.get("cycle", 1) + 1
         state["cycle_started"] = datetime.now(timezone.utc).isoformat()
         print(f"\nCycle complete -- starting cycle {state['cycle']} with a freshly shuffled 30-team pool.")
-    save_state(state)
+    try:
+        save_state(state)
+    except Exception as e:
+        log_error("save_state", e)
+        raise
     print(f"{len(state['remaining_pool'])} teams remaining in current cycle.")
 
 
