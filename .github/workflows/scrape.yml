@@ -199,3 +199,103 @@ jobs:
           git add nhl/data/
           git diff --staged --quiet || git commit -m "auto-scrape nhl stats"
           git pull --rebase && git push
+
+  scrape-epl:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4 pandas duckdb
+
+      # Mirrors run_epl.bat's step order and fail-and-continue behavior
+      # (confirmed clean twice standalone locally, see CLAUDE.md) --
+      # continue-on-error on each step so one broken scraper doesn't kill
+      # the rest of the pipeline, same as the .bat's per-step FAIL_COUNT
+      # logging without stopping.
+      - name: Run FPL scraper
+        continue-on-error: true
+        run: python epl/scripts/scrape_fpl.py
+
+      - name: Run sofifa scraper
+        continue-on-error: true
+        run: python shared/scripts/scrape_sofifa.py 13 epl/data/sofifa_epl.json
+
+      - name: Load raw sources into DuckDB
+        continue-on-error: true
+        run: python epl/scripts/build_epl_db.py
+
+      - name: Run matching
+        continue-on-error: true
+        run: python epl/scripts/build_epl_match.py
+
+      - name: Export player master
+        continue-on-error: true
+        run: python epl/scripts/export_epl_master.py epl/data/epl_players_master.json
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add epl/data/
+          git diff --staged --quiet || git commit -m "auto-scrape epl stats"
+          git pull --rebase && git push
+
+  scrape-mls:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests itscalledsoccer
+
+      # Mirrors run_mls.bat's step order and fail-and-continue behavior
+      # (confirmed clean twice standalone locally, including a real
+      # transient ASA API timeout absorbed via this same fail-and-continue
+      # pattern -- see CLAUDE.md). continue-on-error on each step so that
+      # kind of failure never kills the rest of the pipeline.
+      - name: Run ESPN roster scraper
+        continue-on-error: true
+        run: python mls/scripts/scrape_espn_roster.py
+
+      - name: Run ASA stats fetcher
+        continue-on-error: true
+        run: python mls/scripts/fetch_asa_stats.py
+
+      - name: Run sofifa scraper
+        continue-on-error: true
+        run: python shared/scripts/scrape_sofifa.py 39 mls/data/mls_sofifa.json
+
+      - name: Run matching
+        continue-on-error: true
+        run: python mls/scripts/build_mls_match.py
+
+      - name: Export player master
+        continue-on-error: true
+        run: python mls/scripts/export_mls_master.py mls/data/mls_players_master.json
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add mls/data/
+          git diff --staged --quiet || git commit -m "auto-scrape mls stats"
+          git pull --rebase && git push
