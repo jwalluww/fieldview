@@ -154,27 +154,6 @@ body {
   pointer-events: none;
 }
 
-.filter-select {
-  background: var(--surface2);
-  border: 1px solid var(--border2);
-  border-radius: 6px;
-  padding: 7px 28px 7px 10px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 600;
-  font-size: 13px;
-  letter-spacing: .5px;
-  color: var(--text-muted);
-  outline: none;
-  cursor: pointer;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23404660' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  transition: border-color .2s;
-}
-.filter-select:focus { border-color: var(--accent); color: var(--text); }
-.filter-select option { background: var(--surface2); }
-
 /* Multi-select dropdown (team / position filters) */
 .multiselect {
   position: relative;
@@ -604,11 +583,6 @@ body {
   }
   
   .filter-search { flex: 1 1 100%; }
-  
-  .filter-select {
-    flex: 1 1 calc(50% - 4px);
-    font-size: 12px;
-  }
 
   .multiselect {
     flex: 1 1 calc(50% - 4px);
@@ -1066,6 +1040,7 @@ function applyFilters() {
   // Apply sort
   sortPlayers();
   renderTable();
+  renderMobileList();
   document.getElementById('rowCount').textContent = filteredPlayers.length.toLocaleString() + ' players';
 }
 

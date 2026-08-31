@@ -218,6 +218,22 @@ body {
 }
 .player-card:hover .player-dot { transform: scale(1.1); }
 
+.player-undo {
+  position: absolute;
+  top: -4px; right: 4px;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--text-dim);
+  cursor: pointer;
+  z-index: 30;
+}
+.player-undo:hover { color: var(--text); border-color: var(--border); }
+
 .player-dot-empty {
   background: transparent !important;
   border: 2px dashed var(--border2);
@@ -250,7 +266,7 @@ body {
 .subs-pop {
   position: absolute; z-index: 50;
   background: var(--surface2); border: 1px solid var(--border2); border-radius: 8px;
-  padding: 6px; width: 150px; box-shadow: 0 8px 20px rgba(0,0,0,.4);
+  padding: 6px; width: 184px; box-shadow: 0 8px 20px rgba(0,0,0,.4);
   display: none;
 }
 .subs-pop.open { display: block; }
@@ -496,6 +512,12 @@ let positionRanks = {};
 // by court zone, never written back to nba_players_master.json, reset on
 // every team switch (see loadTeam()).
 let manualStarters = {};
+// Single-level undo, keyed by zone: manualStarters[pos]'s value right before
+// the most recent substitutePlayer() call for that zone (undefined if the
+// zone had no manual starter yet). A zone key here means "show Undo"; using
+// undo or subbing that zone again clears/overwrites the entry. Same
+// lifecycle as manualStarters -- reset on every team switch.
+let subUndo = {};
 
 function ratingColor(r) {
   if (!r) return '#6b7494';
@@ -582,6 +604,7 @@ async function loadTeam(abbr) {
   if (!allPlayers.length) await loadAllPlayers();
   hidePopup();
   manualStarters = {};
+  subUndo = {};
   teamPlayers = allPlayers.filter(p => p.team === abbr);
   updateHeader();
   renderCourt();
@@ -636,12 +659,14 @@ function renderCourt() {
         <div class="player-dot" style="background:${rc}">${p.rating || '—'}</div>
         <div class="player-name">${p.name}</div>
         ${rank ? `<div class="player-rank">${rank}</div>` : ''}
+        ${pos in subUndo ? `<div class="player-undo" data-undo-pos="${pos}" title="Undo substitution">↺</div>` : ''}
       </div>
     `;
   }).join('');
   layer.innerHTML = html;
   attachPopupHandlers(layer);
   attachSubsPopoverHandlers(layer);
+  attachUndoHandlers(layer);
 
   const popover = document.getElementById('subsPop');
   popover.classList.remove('open');
@@ -746,10 +771,37 @@ function attachSubsPopoverHandlers(layer) {
 function substitutePlayer(pid, targetPos) {
   const p = teamPlayers.find(pl => String(pl.id) === String(pid));
   if (!p) return;
+  subUndo[targetPos] = manualStarters[targetPos];
   manualStarters[targetPos] = p.id;
   hidePopup();
   renderCourt();
   renderBenchList();
+}
+
+// Single-level undo: puts the zone back to whatever it was immediately
+// before the most recent substitutePlayer() call for that zone, then
+// clears the undo entry so the affordance disappears (no undo-of-undo).
+function undoSubstitution(pos) {
+  if (!(pos in subUndo)) return;
+  const prev = subUndo[pos];
+  delete subUndo[pos];
+  if (prev == null) {
+    delete manualStarters[pos];
+  } else {
+    manualStarters[pos] = prev;
+  }
+  hidePopup();
+  renderCourt();
+  renderBenchList();
+}
+
+function attachUndoHandlers(layer) {
+  layer.querySelectorAll('.player-undo').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      undoSubstitution(el.dataset.undoPos);
+    });
+  });
 }
 
 function popupHTML(p) {

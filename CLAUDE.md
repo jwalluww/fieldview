@@ -6,9 +6,9 @@ Repo: https://github.com/jwalluww/fieldview (public)
 
 Purpose: each sport gets a FieldView (players on the field/court/pitch in their real positions, with substitutions) and a TableView (sortable/filterable stat table). A future ReView (replays, box scores, highlights) comes after every sport's FieldView/TableView are dialed in — not started yet, tracked in Roadmap only.
 
-**Current status, verified against the real repo (2026-08-29), not carried forward from any prior summary:**
-- **NFL, NBA, MLB, NHL** — FieldView + TableView shipped, real data, **all four now have real GitHub Actions automation** (`scrape.yml`'s `scrape`/`scrape-nba`/`scrape-mlb`/`scrape-nhl` jobs). NFL/NBA's ratings sources (Madden, 2K) are fully or partially live; MLB's and NHL's fan-ratings scrapers (theshowratings.com, nhlratings.net) are real and built but only theshowratings.com has actually cleared its site's block — NHL's is still fully blocked at the site level, shipped without ratings.
-- **EPL, MLS** — FieldView + TableView shipped, real data (fantasy.premierleague.com + sofifa.com for EPL; ESPN's core API + American Soccer Analysis + sofifa.com for MLS). **Local orchestrators now exist** (`run_epl.bat`, `run_mls.bat`), each individually verified clean (EPL: 2/2 standalone runs; MLS: 2/2 standalone runs, one absorbing a real transient ASA API timeout via fail-and-continue exactly as designed) and both added as steps 5–6 of `run_all.bat`. **Not yet confirmed**: a full six-sport `run_all.bat` chain has never completed in one sitting — two attempts were killed by session/host restarts before finishing, not by a pipeline error, so this remains genuinely open, not resolved. **No `scrape.yml` job exists for either sport yet.**
+**Current status, verified against the real repo (2026-08-31), not carried forward from any prior summary:**
+- **NFL, NBA, MLB, NHL** — FieldView + TableView shipped, real data, **all six sports now have real GitHub Actions automation** (`scrape.yml`'s `scrape`/`scrape-nba`/`scrape-mlb`/`scrape-nhl`/`scrape-epl`/`scrape-mls` jobs). NFL/NBA's ratings sources (Madden, 2K) are fully or partially live. **MLB's and NHL's fan-ratings scrapers (theshowratings.com, nhlratings.net) are now both live in the cloud job too**, both routed through the ScraperAPI proxy — MLB confirmed 728/779 (93.5%) and NHL confirmed 855/1266 (67.5%) `overall_rating` coverage from real cloud runs.
+- **EPL, MLS** — FieldView + TableView shipped, real data (fantasy.premierleague.com + sofifa.com for EPL; ESPN's core API + American Soccer Analysis + sofifa.com for MLS). **Local orchestrators now exist** (`run_epl.bat`, `run_mls.bat`), each individually verified clean (EPL: 2/2 standalone runs; MLS: 2/2 standalone runs, one absorbing a real transient ASA API timeout via fail-and-continue exactly as designed) and both added as steps 5–6 of `run_all.bat`. **Not yet confirmed**: a full six-sport `run_all.bat` chain has never completed in one sitting — two attempts were killed by session/host restarts before finishing, not by a pipeline error, so this remains genuinely open, not resolved. **`scrape-epl` and `scrape-mls` jobs now exist in scrape.yml, confirmed via a live `workflow_dispatch` run** (both completed clean, numbers matched known baselines within normal week-to-week drift).
 - **ReView** — not started, any sport.
 
 ---
@@ -17,10 +17,15 @@ Purpose: each sport gets a FieldView (players on the field/court/pitch in their 
 - Frontend: Plain HTML/CSS/JS — no React, no build tools
 - Backend: Python 3.11 scrapers, `duckdb`/`pandas` for the match/join layer
 - Hosting: GitHub Pages
-- Automation: GitHub Actions, `.github/workflows/scrape.yml`, one workflow file holding four jobs (`scrape`=NFL, `scrape-nba`, `scrape-mlb`, `scrape-nhl`), all triggered by a **single shared schedule** (`cron: '0 10 * * 2'` — every Tuesday 10am UTC) plus manual `workflow_dispatch`. No per-job stagger exists — all four fire at the same time.
-  - **Push resilience**: all four jobs now do `git pull --rebase && git push` instead of a bare push, added after a real collision was traced to the repo owner's own manual local commit script (an old morning `git add . && commit && push` habit, since retired) landing mid-run. This substantially reduces the collision risk but doesn't eliminate the category — any other future ad-hoc local push during a run window could still theoretically collide.
+- Automation: GitHub Actions, `.github/workflows/scrape.yml`, one workflow file holding six jobs (`scrape`=NFL, `scrape-nba`, `scrape-mlb`, `scrape-nhl`, `scrape-epl`, `scrape-mls`), all triggered by a **single shared schedule** (`cron: '0 10 * * 2'` — every Tuesday 10am UTC) plus manual `workflow_dispatch`. No per-job stagger exists — all six fire at the same time.
+  - **Push resilience**: all six jobs now do `git pull --rebase && git push` instead of a bare push, added after a real collision was traced to the repo owner's own manual local commit script (an old morning `git add . && commit && push` habit, since retired) landing mid-run. This substantially reduces the collision risk but doesn't eliminate the category — any other future ad-hoc local push during a run window could still theoretically collide.
 - Local orchestration: `run_nfl.bat` / `run_nba.bat` / `run_mlb.bat` / `run_nhl.bat` / `run_epl.bat` / `run_mls.bat` each run that sport's full pipeline end-to-end locally (fail-and-continue per step, never git add/commit/push); `run_all.bat` chains all six and prints one aggregate summary. `run_epl.bat` and `run_mls.bat` are newly built and each individually confirmed clean standalone — but the full six-sport `run_all.bat` chain has not yet completed successfully end-to-end (two attempts were interrupted by session/host restarts before finishing; not a code-level failure, but still unverified as a full chain).
-- Task Scheduler (Windows, local machine only): two real, currently-registered scheduled tasks — `FieldView NBA 2K Ratings Scrape` (daily 09:15, via `nba/scripts/schedule_2kratings_scrape.bat`) and `FieldView NHL Ratings Scrape` (daily 09:00, via `nhl/scripts/schedule_ratings_scrape.bat`). Both confirmed via live `schtasks /query`, not assumed from either script's own comments.
+  - **Local vs. cloud dependency, post-automation status**: now that all six sports have real scrape.yml jobs, most local .bat orchestrators are redundant for regular use but still valuable for testing script changes before pushing (this is how every fix this session got verified pre-cloud). Three pieces of data are genuinely load-bearing locally, not just redundant, and must NOT be deleted or allowed to stop running:
+    - NFL Spotrac contract data (`scrape_contracts_spotrac.py`) — never wired into the `scrape` cloud job; `years_remaining`/`cash_total_remaining`/etc. only refresh via a local `run_nfl.bat`.
+    - NBA real stats (`fetch_stats.py`) — permanently local-only by structural necessity, stats.nba.com blocks the GitHub-hosted runner's IP specifically, not a temporary limitation.
+    - NBA 2K ratings (`scrape_2kratings.py` via Task Scheduler) — local by choice, not necessity; cloud has no fallback for this data at all.
+  Everything else (`run_mlb.bat`, `run_nhl.bat`, `run_epl.bat`, `run_mls.bat`) is now fully covered by its cloud job — safe to stop running regularly, but keep the files for local pre-push testing rather than deleting them. Pattern for retiring a redundant local job: disable, don't delete (see NHL's ratings Task Scheduler job as the precedent) — costs nothing to leave in place, everything to rebuild from scratch if a cloud path ever breaks.
+- Task Scheduler (Windows, local machine only): two real scheduled tasks exist — `FieldView NBA 2K Ratings Scrape` (daily 09:15, via `nba/scripts/schedule_2kratings_scrape.bat`) is still Enabled/Ready. `FieldView NHL Ratings Scrape` (daily 09:00, via `nhl/scripts/schedule_ratings_scrape.bat`) is now **Disabled** (not deleted — task still exists, just switched off) now that NHL ratings run via the cloud job instead. Both confirmed via live `schtasks /query`, not assumed from either script's own comments.
 - Data pipelines land in DuckDB directly where the source is a live API (statsapi.mlb.com, nhl-api-py) — no intermediate JSON dump for the *join* layer, though the raw scrape output is still written to JSON first in every sport. EPL/MLS deviate further: **EPL has a DuckDB layer** (`epl/data/fieldview.duckdb`, `build_epl_db.py` → `build_epl_match.py` → `export_epl_master.py`) but **MLS has none** — `mls/scripts/build_mls_match.py` reads/writes JSON directly, no DB step, by design (a two-way name join doesn't need SQL).
 
 ---
@@ -63,6 +68,7 @@ Purpose: each sport gets a FieldView (players on the field/court/pitch in their 
 - **A per-zone-independent "pick the best player for this slot" function silently breaks the moment two zones share one candidate pool.** NHL's `ice-view.html` computes each rink zone's starter independently; harmless there because its forward trio each maps to a distinct position code. EPL/MLS's 4-3-3 formation has 4 DEF and 3 MID/FWD zones each sharing one pool — copying that pattern verbatim would have shown the *same* player 3-4 times per team. Fixed with a `computeStarters()` that resolves the whole XI in one pass, claiming players zone-by-zone. **Any future FieldView with more than one zone per position-group pool needs this pattern, not the older per-zone one.**
 - **A join population is never automatically "the roster" just because a bulk endpoint returned it — check for contamination before trusting the count.** MLS's ESPN bulk athlete list returned raw rows that included Arsenal FC's actual EPL squad under a stray `team_id`, plus rows tagged to fake exhibition teams. **Always sanity-check a bulk population's team/league tags before treating its row count as ground truth.**
 - **A live re-run of the same pipeline will produce different real numbers than the original build, and that's expected, not a regression.** EPL's FPL roster grew from 604 to 623 players and its sofifa match rate shifted from 65.7% to 64.2% between the original build and a later orchestrator run — same for MLS's ESPN roster (1057→1065 raw) and both its match rates. Live sports rosters and third-party databases both update continuously; don't chase small drift as a bug unless it's a large or directional shift.
+- **Any table view with a separate mobile card-list rendering path needs every function that changes the filtered result set to trigger that mobile re-render, not just the sort function.** NFL's `depth-chart.html` had `applyFilters()` update the desktop table correctly but never call `renderMobileList()` — changing a filter on mobile silently failed to refresh the visible cards until the next resize event. Caught while porting NBA's filter pattern to NFL's, fixed by mirroring NBA's `applyFilters()`, which already called both. Worth checking this explicitly on every sport's TableView, not just assuming parity.
 
 ---
 
@@ -95,7 +101,7 @@ Purpose: each sport gets a FieldView (players on the field/court/pitch in their 
 - Madden: 2,099 (75.3%)
 - `snap_pct`: 1,709 (61.3%) — OL alone: 302/503 (60.0%), consistent with the documented real ceiling
 - `age`: 2,030 (72.9%); `draft_year`: 2,040 (73.2%); Spotrac remaining contract: 2,575 (92.4%)
-- **Real, newly-confirmed gap**: `cap_number` is entirely absent (0 players) in 12/32 team files (ARZ, CAR, CHI, GB, HOU, IND, JAX, MIA, NYJ, PIT, SF, TB) — `scrape_otc.py` isn't currently covering these teams. Not yet investigated.
+- **`cap_number` 0%-coverage gap (12/32 teams) is fixed**: `scrape_otc.py` now also parses each team's Injured Reserve / Physically Unable to Perform tables (found by `<h5>` heading text, not CSS class — those rows use a simpler two-`<td>` structure than the main cap table), and matches them through a shared `NAME_ALIASES` constant in `name_utils.py`. All 32 team files now have non-zero `cap_number` coverage (e.g. MIA: 50/50, 100%).
 
 ### Schema
 `players_master.json` top-level keys (30): `player_id, gsis_id, match_confidence, canonical_name, ourlads_name, team, team_name, base_defense, ourlads_pos, standard_slot, standard_pos, depth, jersey, madden, madden_rank, madden_rank_total, madden_pos_label, cap_number, attainment, injured, stats, stats_season, nflreadpy_name, match_source, draft_year, college, years_pro, age, snap_pct, years_remaining, cash_total_remaining, cash_guaranteed_remaining, avg_annual_remaining`.
@@ -146,9 +152,12 @@ The subs-popover pool has no position filter at all. Any bench player can fill a
 ### NBA Position Ranking (court-view.html)
 `computePositionRanks(players)` computes each player's league-wide rank within their position group by 2K `overall_rating` (e.g. `PF 3/46`). Players with no rating get no badge at all — never a placeholder. This exact convention was carried forward into EPL/MLS's PitchView.
 
+### Table Filters (player-table.html)
+Team and Position filters upgraded from single-value `<select>` dropdowns to NFL `depth-chart.html`'s multiselect checkbox pattern (multiple teams/positions selectable at once). Group shortcuts: Team → All Eastern/All Western (15/15 split); Position → Guards (PG/SG)/Wings (SF)/Bigs (PF/C). Status filter (Starter/Rotation/Bench) left as single-select — NBA-only, no NFL equivalent to match.
+
 ---
 
-## MLB (DiamondView) — shipped, ratings real but local-only
+## MLB (DiamondView) — shipped, ratings now live in the cloud
 
 ### File Map
 - `mlb/diamond-view.html`, `mlb/player-table.html`
@@ -161,10 +170,12 @@ The subs-popover pool has no position filter at all. Any bench player can fill a
 - `statsapi_utils.py` — shared `fetch_with_retry`
 
 ### Real pipeline order (`scrape-mlb` job, verbatim)
-`scrape_roster.py` → `scrape_stats.py` → `build_mlb_match.py` → `export_mlb_master.py mlb/data/mlb_players_master.json` → commit (rebase-safe push). **`scrape_ratings.py` is deliberately excluded** from this cloud job — stays local-only pending a decision on whether it's worth the added complexity, now that ScraperAPI's real cost is confirmed a non-issue at this volume.
+`scrape_roster.py` → `scrape_stats.py` → `scrape_ratings.py` → `build_mlb_match.py` → `export_mlb_master.py mlb/data/mlb_players_master.json` → commit (rebase-safe push). `scrape_ratings.py` now runs here too, same ScraperAPI-proxy pattern as NHL's — confirmed via a real triggered `workflow_dispatch` run: 28/30 teams scraped fresh through the proxy, 2 (San Francisco, Texas) fell back to their existing stale rows after both fresh attempts failed, exactly as the retry+fallback design intends.
 
-### Real current numbers (780 total players)
-`overall_rating` (theshowratings.com match): 730 (93.6%). Stats present (batting or pitching): 777 (99.6%).
+### Real current numbers (779 total players, confirmed from a live cloud run)
+`overall_rating` (theshowratings.com match): 728 (93.5%). Stats present (batting or pitching): comparable to the prior local baseline (777/780, 99.6%), not re-verified this pass.
+
+**SF Giants coverage outlier, investigated**: SF sits at 61.5% (16/26) matched, well below the rest of the league (88–100%). Confirmed via a real person_id-level diff (the join key here is `mlbam_id`, not fuzzy name matching) that this isn't a matching bug: theshowratings.com's own "San Francisco Giants" team page carries 41 rows, several of them players statsapi's roster currently has on other teams entirely (e.g. Aroldis Chapman/BOS, Luis Arraez/PHI, Robbie Ray/SD) — a real source-vs-source roster-snapshot lag, same shape as EPL's FPL-vs-sofifa mismatch. No fix proposed yet — this is a source-freshness question, not a code defect.
 
 ### Schema
 `mlb_players_master.json` keys: `player_id, name, team, team_abbr, position, position_group, position_group_source, player_type, jersey_number, height, weight, bats, throws, batting_stats, pitching_stats, match_source, overall_rating, potential`.
@@ -173,26 +184,29 @@ The subs-popover pool has no position filter at all. Any bench player can fill a
 
 ---
 
-## NHL (IceView) — shipped, ratings fully blocked at the site level
+## NHL (IceView) — shipped, ratings now live via ScraperAPI
 
 ### File Map
 - `nhl/ice-view.html`, `nhl/player-table.html`
 
 ### Scripts (`nhl/scripts/`)
-- `scrape_roster.py` — all 32 teams via nhl-api-py, uses the **upcoming** season id
-- `scrape_stats.py` — league-wide skater/goalie stats, uses the **prior completed** season id, paginated via `start`
+- `scrape_roster.py` — all 32 teams via nhl-api-py, uses `season_utils.resolve_seasons()`'s roster-season id
+- `scrape_stats.py` — league-wide skater/goalie stats, uses `resolve_seasons()`'s stats-season id, paginated via `start`
 - `build_nhl_match.py` → `export_nhl_master.py <output_path>`
-- `scrape_ratings.py` — nhlratings.net, retry+fallback+daily-trickle (mirrors Madden's pattern)
-- `schedule_ratings_scrape.bat` — Task Scheduler entry point
+- `scrape_ratings.py` — nhlratings.net, now a full 32-team pull in one run via the ScraperAPI proxy (replaced an earlier retry+fallback+daily-trickle design — no more 3-team-a-day sampling needed now that the proxy actually clears the block)
+- `schedule_ratings_scrape.bat` — Task Scheduler entry point; the registered task now sits **Disabled** (not deleted) since ratings run via the cloud job instead
+
+### Season resolution (`season_utils.py`, fixed 2026-08-31)
+`resolve_seasons()` finds the real "current" season by querying the API's standings manifest directly, not by guessing from today's date, and can return roster/stats seasons a cycle apart during the offseason gap (rosters move to the upcoming season as free agency/trades happen; stats stay on the season that just ended until the new one has actually played games). Replaces an earlier version that only advanced `stats_season` once a season fully finished (~June) — which would have kept serving the *prior* season's stats for the entire ~8-month span of every new NHL season, a real staleness bug, not just an inconvenience.
 
 ### Real pipeline order (`scrape-nhl` job, verbatim)
-`scrape_roster.py` → `scrape_stats.py` → `build_nhl_match.py` → `export_nhl_master.py nhl/data/nhl_players_master.json` → commit (rebase-safe push). `scrape_ratings.py` is deliberately excluded, same local-only reasoning as MLB's ratings scraper.
+`scrape_roster.py` → `scrape_stats.py` → `scrape_ratings.py` (via ScraperAPI, `SCRAPERAPI_KEY` secret) → `build_nhl_match.py` → `export_nhl_master.py nhl/data/nhl_players_master.json` → commit (rebase-safe push).
 
-### Ratings — still genuinely, currently blocked
-No `nhl_ratings` table exists. Every player's `overall_rating` field exists on the schema but is currently always `null`. The Task Scheduler entry is genuinely registered and active. A ScraperAPI-style proxy hasn't been tried here yet, but is now confirmed a cheap option (see ScraperAPI section) — the recurring 1,000 free credits/month comfortably covers a weekly ~32-team run.
+### Ratings — no longer blocked
+`nhlratings.net` is cleared via the same ScraperAPI proxy MLB's ratings scraper uses, confirmed live across all 32 teams. `overall_rating` populated: 855/1266 (67.5%).
 
-### Real current numbers (1,268 total players)
-Matched to skater/goalie stats: 895 (70.6%). Roster-vs-stats team disagreement remains real and current (different-season snapshot design), not a new problem.
+### Real current numbers (1,266 total players)
+Matched to skater/goalie stats: 896 (70.8%). Roster-vs-stats team disagreement remains real and current (different-season snapshot design), not a new problem.
 
 ### Schema
 `nhl_players_master.json` keys: `player_id, name, team_abbr, position_group, position_code, jersey_number, shoots_catches, height_in_inches, weight_in_pounds, birth_date, birth_city, birth_country, birth_state_province, skater_stats, goalie_stats, stats_source, overall_rating, potential`.
@@ -212,10 +226,14 @@ Matched to skater/goalie stats: 895 (70.6%). Roster-vs-stats team disagreement r
 - `shared/scripts/soccer_name_utils.py` — **shared with MLS**, `normalize_name()`/`normalize_for_matching()`/`SOCCER_NAME_ALIASES`.
 - `epl/scripts/build_epl_db.py` → `build_epl_match.py` → `export_epl_master.py <output_path>` — the only soccer sport with a real DuckDB layer. Matching is 3-tier: exact name+team → unique name-only → team-scoped token-overlap.
 
+### Real pipeline order (`scrape-epl` job, verbatim)
+Mirrors `run_epl.bat`'s step order exactly. Confirmed via a live `workflow_dispatch` run: 626 FPL players, 400 matched to sofifa (63.9%) — consistent with prior baselines, normal week-to-week drift.
+
 ### Real current numbers
 Confirmed via two separate live runs — numbers drift between them, which is expected (live rosters and sofifa's own database both update; see Key Cross-Sport Learnings), not a regression:
 - **Original build**: 604 FPL players, 397 matched to sofifa (65.7%).
 - **Latest orchestrator run** (`run_epl.bat`): 623 FPL players, 400 matched to sofifa (64.2%) — 328 via name+team, 37 via unique name-only, 35 via team-scoped token overlap, 223 unmatched.
+- The cloud run above (626/400, 63.9%) sits in this same range — no meaningful shift.
 
 Of the original build's unmatched pool, 99 sat on 3 clubs (Coventry/Hull/Ipswich) sofifa's FC26 database didn't carry that season; the rest were a mix of genuine academy/fringe players and real transfer/loan-timing mismatches (spot-checked several, confirmed genuinely absent, not a matching bug). Not re-verified against the newer 223-unmatched count — worth re-checking if this becomes a focus.
 
@@ -240,6 +258,9 @@ Fixed 4-3-3 for every team. Starting XI ranked by real `stats.minutes` within ea
 - `mls/scripts/build_mls_match.py` — **two independent joins** against the ESPN roster base population: ESPN↔ASA (by name) and ESPN↔sofifa (by name), each with its own separately-reported match rate. No DuckDB layer — reads/writes JSON directly.
 - `mls/scripts/export_mls_master.py <output_path>`
 
+### Real pipeline order (`scrape-mls` job, verbatim)
+Mirrors `run_mls.bat`'s step order exactly. Confirmed via a live `workflow_dispatch` run: 1019 base population, ESPN↔ASA 753/1019 (73.9%), ESPN↔sofifa 780/1019 (76.5%) — consistent with prior baselines.
+
 ### Real current numbers
 Confirmed via two separate live runs — same expected drift pattern as EPL:
 - **Original build**: 1057 raw ESPN athletes → 1010 base population after filtering. ESPN↔ASA 747/1010 (74.0%). ESPN↔sofifa 780/1010 (77.2%).
@@ -257,13 +278,14 @@ Same fixed-4-3-3, single-pass `computeStarters()`, same-group-only substitution,
 
 ## ScraperAPI — real status
 
-**Used by exactly one script in the entire repo**: `mlb/scripts/scrape_ratings.py` (theshowratings.com). **Not used anywhere else** — NHL's ratings scraper does not use it or any other proxy; it's still fully blocked at the site level with no proxy attempt made yet.
+**Used by two scripts now**: `mlb/scripts/scrape_ratings.py` (theshowratings.com) and `nhl/scripts/scrape_ratings.py` (nhlratings.net), both now running in their sport's cloud job (`scrape-mlb`, `scrape-nhl`).
 
 - Key handling: read via `os.environ.get("SCRAPERAPI_KEY")` only, raises immediately if unset. No hardcoded key anywhere.
 - Proxy URL pattern: `http://api.scraperapi.com?api_key={key}&url={target}`.
 - **Real free-tier terms, corrected**: the free plan is **1,000 credits per month, recurring** — not one-time as a prior pass of this doc claimed. No card on file, so no charge risk either way.
-- **What that means for the "worth running weekly via cloud" question**: MLB's ~30 requests/week (one per team page) is roughly ~130 requests/month — comfortably under the 1,000/month recurring cap, indefinitely, not a depleting pool with an end date. Same math would apply to a similarly-sized NHL run (32 teams/week ≈ ~139/month) if a proxy is ever tried there. Cost is not the blocker for either sport at these volumes — the real decision is just whether it's worth the added complexity.
-- **User preference, explicit**: no credit card on file, staying on the free tier by choice, not by necessity — NBA/2K and NHL ratings stay local/manual/Task-Scheduler rather than migrating to a paid plan, even though the free tier turned out more generous (recurring, not one-time) than first thought.
+- **Real combined volume**: MLB's ~30 requests/week (one per team page) is roughly ~130 requests/month; NHL's 32-team weekly run is roughly ~139 requests/month. Combined, well under the 1,000/month recurring cap, indefinitely, not a depleting pool with an end date. NBA's 2K ratings remain on the local Task Scheduler trickle by choice, not because ScraperAPI's volume would be a problem there too.
+- **User preference, explicit**: no credit card on file, staying on the free tier by choice, not by necessity.
+- NBA 2K ratings' local-only status is a "by choice" designation, not a leftover — see the Stack section's "Local vs. cloud dependency" bullet.
 
 ---
 
@@ -283,34 +305,25 @@ Same fixed-4-3-3, single-pass `computeStarters()`, same-group-only substitution,
 ---
 
 ## Known Outstanding Bugs
-*(retired since the last pass, confirmed resolved: NBA positionless substitution; LeBron James `overall_rating: null` (now 91); `index.html`'s stale 'Mock Data' tags (now 'Live Subs'); MLB's dead `probe_*.py` files (deleted))*
+*(retired since the last pass, confirmed resolved: NBA positionless substitution; LeBron James `overall_rating: null` (now 91); `index.html`'s stale 'Mock Data' tags (now 'Live Subs'); MLB's dead `probe_*.py` files (deleted); NFL's 12/32-team `cap_number` gap (IR/PUP parsing + shared name aliases added); NHL's ratings block (ScraperAPI proxy clears it, all 32 teams); NHL's stats-season staleness bug (`resolve_seasons()` would have served the prior season's stats for ~8 months after each new season started — fixed 2026-08-31); EPL/MLS's scrape.yml automation added and confirmed live (scrape-epl, scrape-mls jobs); NBA's `.subs-name` popover truncation (widened `.subs-pop` to 184px); NBA's no-undo-path for court substitutions (single-level undo added, zone-keyed, clears on team switch); NBA's Team/Position filters upgraded from single-select to NFL's multiselect pattern (with Eastern/Western and Guards/Wings/Bigs group shortcuts); NFL's dead `.filter-select` CSS removed; NFL's mobile filter-refresh bug fixed as a bonus find during that same investigation (`applyFilters()` now calls `renderMobileList()`, matching NBA's existing pattern))*
 
 - **NFL**: OL snap-share coverage sits at ~60% (302/503) — real data-source ceiling, not worth chasing further.
 - **NFL**: CB/S taxonomy gap in the nflreadpy-rosters GSIS fallback (all DBs tagged generically `DB`) — real but low-impact.
-- **NFL**: `cap_number` is 0% populated in 12/32 team files — `scrape_otc.py` isn't covering these teams. Not yet investigated.
-- **NBA**: no undo path for a single court substitution short of switching teams away and back.
-- **NBA**: `.subs-name` popover text truncation on long names.
-- **NBA**: 2K ratings Task Scheduler job's last recorded run had a non-zero result code — task is registered and Enabled/Ready, but worth checking why the last run didn't report clean success. Not yet investigated.
+- **NBA**: 2K ratings Task Scheduler job's last recorded run had a non-zero result code — task is registered and Enabled/Ready, but worth checking why the last run didn't report clean success. **Genuinely unresolved**: Task Scheduler history logging was checked and found disabled (`Microsoft-Windows-TaskScheduler/Operational` log, `IsEnabled: False`) — both `schtasks /query` and `Get-ScheduledTaskInfo` only expose the *most recent* run's result, not a history, so the specific past non-zero code isn't recoverable. A manual re-run (including one under a full 3-team block) reproduced a clean exit 0, and the script has no `sys.exit()` call anywhere in it — whatever caused the historical non-zero code was most likely a one-off unhandled exception, not a reproducible bug. Added basic error logging (`nba/data/2kratings_errors.log`) so a future occurrence leaves a trail. Worth enabling Task Scheduler history logging (needs an elevated/admin session) if this recurs.
 - **NBA**: `scrape_2kratings.py` has never completed a full 30-team run in one pass — cumulative trickle coverage across cycles has reached all 30 teams, but no single run has.
-- **NHL**: ratings scraper (nhlratings.net) is still fully blocked at the site level — a real trickle test got 0/32 teams with nothing to fall back to. A ScraperAPI-style proxy hasn't been tried here yet; now confirmed as a genuinely cheap option (recurring 1,000 free credits/month easily covers a weekly run).
-- **EPL/MLS**: local orchestrators (`run_epl.bat`, `run_mls.bat`) now exist and are individually confirmed clean, but a full six-sport `run_all.bat` chain has never completed successfully in one sitting — two attempts were interrupted by session/host restarts before finishing. Needs a real, watched, foreground run to close out. No `scrape.yml` job exists for either sport yet.
+- **MLB**: SF Giants sits at 61.5% `overall_rating` coverage vs. the league's 88-100% — confirmed a real theshowratings.com roster-snapshot lag, not a matching bug (see MLB section). Decision: no sport-specific fix. `overall_rating`/`potential` aren't currently rendered anywhere in MLB's frontend to begin with — `diamond-view.html`'s field dot uses AVG/ERA, not the Show rating, and `player-table.html` has no rating column — so there's no user-visible gap for SF's lower coverage to actually show up in yet, and the underlying source-snapshot lag is expected to self-correct regardless. Not treated as an open bug going forward.
+- **EPL/MLS**: cloud automation now exists and is confirmed working independently for both sports. The full six-sport `run_all.bat` chain has still never completed in one sitting (two attempts interrupted by session/host restarts, not a pipeline error) — lower priority now that each sport also refreshes independently via its own cloud job regardless of whether the full local chain ever completes.
 
 ---
 
 ## Roadmap
 
 **Up Next**
-- ⬜ Confirm a full six-sport `run_all.bat` chain completes end-to-end in one watched, foreground run (not yet achieved — two attempts interrupted by session/host restarts, unrelated to the pipeline itself)
-- ⬜ `scrape.yml` automation for EPL and MLS, once the above is confirmed — no jobs exist yet, the two newest sports are the two least automated
-- ⬜ NHL ratings via a ScraperAPI-style proxy — confirmed cheap (recurring 1,000 free credits/month comfortably covers a weekly ~32-team run), no longer a cost question, just an implementation one
-- ⬜ Decide whether MLB's ratings scraper is worth running weekly via the cloud too — cost is confirmed a non-issue at current volume, so this is purely a "worth the added complexity" call
-- ⬜ NFL `cap_number` 0%-coverage gap on 12/32 teams — not yet investigated
-- ⬜ NBA 2K Task Scheduler job's non-zero last-run result code — not yet investigated
+- ⬜ Confirm a full six-sport `run_all.bat` chain completes end-to-end in one watched, foreground run (not yet achieved — two attempts interrupted by session/host restarts, unrelated to the pipeline itself) — note this is no longer a freshness blocker for EPL/MLS specifically, both now refresh weekly via their own independent cloud jobs regardless
+- ⬜ NBA 2K Task Scheduler job's non-zero last-run result code — root cause not fully resolved (see Known Outstanding Bugs); enabling Task Scheduler history logging would help if it recurs, needs an elevated/admin session to turn on
 - ⬜ Opponent overlay (NFL)
 - ⬜ Additional NFL data sources via `nflreadpy`: `load_ftn_charting()`, `load_nextgen_stats()`, `load_participation()`, `load_combine()` — all free, unused
 - ⬜ TableView stat/view-package refinement across all sports
-- ⬜ Popover `.subs-name` truncation fix (NBA)
-- ⬜ NBA table view column cleanup
 
 **Future State**
 - ⬜ ReView — replays, highlights, box scores, tweets, podcasts; comes after every sport's FieldView/TableView are dialed in. Not started for any sport.
@@ -323,5 +336,6 @@ Same fixed-4-3-3, single-pass `computeStarters()`, same-group-only substitution,
 - Historical rating trends - not a part of the scope or goal of this website
 - Player comparison - not a part of the scope or goal of this website
 - A `CNAME` at the repo root pointing the custom domain `www.fieldview.com` — didn't work, someone else appears to own `fieldview.com` and there was no clear path to buy it; DNS check just ran forever. Site stays on the default GitHub Pages URL.
+- MLB SF Giants ratings-coverage gap — decided not to build a source-specific fix; `overall_rating` isn't currently displayed anywhere in MLB's frontend, so there's no user-visible gap to address, and it's a source-side snapshot lag expected to self-correct.
 
 **Not in FieldView — called ReView:** League leaderboards, game reviews, highlights, replays, podcasts, tweets.
