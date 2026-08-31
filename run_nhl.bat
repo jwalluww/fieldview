@@ -1,24 +1,33 @@
 @echo off
 REM run_nhl.bat -- runs the full NHL data pipeline locally, end to end.
 REM
-REM Real step order confirmed by reading nhl\scripts\ directly (2026-08-23)
-REM -- there is no nhl\PIPELINE.md and no cloud job for NHL (CLAUDE.md:
-REM manual/local only). scrape_roster.py and scrape_stats.py each load
-REM straight into nhl\data\fieldview.duckdb themselves (no separate
-REM build_db.py step, same pattern as MLB) -- confirmed by reading both
-REM scripts. scrape_ratings.py genuinely DOES depend on scrape_roster.py
+REM Real step order confirmed by reading nhl\scripts\ directly (2026-08-23,
+REM cloud-job note updated 2026-08-31) -- there is no nhl\PIPELINE.md, but
+REM a real scrape-nhl job in .github\workflows\scrape.yml IS confirmed
+REM running successfully in the cloud (as of 2026-08-25), now including
+REM scrape_ratings.py too (moved into the cloud job 2026-08-31, see below):
+REM scrape_roster.py -> scrape_stats.py -> scrape_ratings.py ->
+REM build_nhl_match.py -> export_nhl_master.py. This script is the local/
+REM manual counterpart for the same full end-to-end run -- not the only
+REM way the pipeline runs, one of two places it can run from.
+REM
+REM scrape_roster.py and scrape_stats.py each load straight into
+REM nhl\data\fieldview.duckdb themselves (no separate build_db.py step,
+REM same pattern as MLB) -- confirmed by reading both scripts.
+REM scrape_ratings.py genuinely DOES depend on scrape_roster.py
 REM having already run -- it queries the nhl_roster table directly
 REM (SELECT player_id, first_name, last_name, team_abbr FROM nhl_roster)
 REM to build its name-matching index, since nhlratings.net has no clean
 REM numeric join key the way MLB's photo URLs do. Roster must run first.
 REM
-REM scrape_ratings.py is still the real daily-trickle scraper (3 random
-REM teams/run against its own rolling pool state file, currently blocked
-REM at the site level per CLAUDE.md) -- running it here does one more
-REM trickle attempt, not a full 32-team pull. That's its real current
-REM behavior, not a limitation of this orchestrator. build_nhl_match.py
+REM scrape_ratings.py now pulls all 32 teams every run via ScraperAPI
+REM (fixed 2026-08-31 -- the block was a static per-IP WAF rule, not a
+REM TLS-fingerprint or cloud-vs-residential issue, so ScraperAPI's proxy
+REM pool clears it same as it does for MLB). The old daily-trickle design
+REM (3 random teams/run, local-only) is gone -- this is a full run every
+REM time now, same shape as MLB's ratings scraper. build_nhl_match.py
 REM joins nhl_ratings in automatically if the table exists, and ships
-REM without it otherwise, so a fully-blocked trickle attempt here doesn't
+REM without it otherwise, so a rare fully-blocked run here still doesn't
 REM break the rest of the pipeline.
 REM
 REM Does NOT git add/commit/push anything -- this only regenerates local

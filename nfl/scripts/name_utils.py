@@ -4,6 +4,39 @@ import re
 # this file's original home (build_master.py) -- this is the NFL side of
 # that shared pattern, extracted the same way.
 
+# Genuine person-level aliases (nickname/short-form <-> legal name) --
+# shared across every matcher that needs to resolve an OurLads short name
+# to whatever full-name form a source uses (GSIS crosswalk, Madden,
+# OTC contracts, ...). Originally lived only in build_master.py's
+# NAME_ALIASES; moved here so scrape_otc.py's contract matching can use
+# the same table instead of silently missing the same players GSIS/Madden
+# matching already learned to handle (e.g. Juju Brents -> Julius Brents).
+# Crosswalk-specific "forced no-match" entries (wrong player in a
+# particular source, not a real alias) stay local to build_master.py --
+# they say nothing about whether other sources have the same problem.
+NAME_ALIASES = {
+    'Kam Curl': 'Kamren Curl',
+    'Juju Brents': 'Julius Brents',
+    'Chig Okonkwo': 'Chigoziem Okonkwo',
+    'Pat Surtain II': 'Patrick Surtain II',
+    'Cam Bynum': 'Cameron Bynum',
+    'C.J. Gardner-Johnson': 'C.J. Gardner-Johnson',  # check exact crosswalk spelling
+    'Cj Stroud': 'C.J. Stroud',
+    'Aj Brown': 'A.J. Brown',
+    'Tj Hockenson': 'T.J. Hockenson',
+    'Tj Watt': 'T.J. Watt',
+    'Dj Moore': 'D.J. Moore',
+    'Dj Reader': 'D.J. Reader',
+    'Kj Hamler': 'K.J. Hamler',
+    'Kj Osborn': 'K.J. Osborn',
+    'Gus Edwards': 'Kenneth Edwards',  # common nickname mismatches
+    'Riq Woolen': 'Tariq Woolen',
+    'Dru Phillips': 'Andru Phillips',
+    'Cobie Durant': 'Decobie Durant',
+    'Vj Payne': 'V.J. Payne',
+    'Josh Uche': 'Joshua Uche',
+}
+
 def normalize_name(name):
     """Title-case a raw OurLads name, fixing initials (A.J.), apostrophes,
     hyphens, and Jr./Sr./II-IV suffixes."""

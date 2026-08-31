@@ -165,18 +165,24 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install nhl-api-py pandas duckdb
+        run: pip install nhl-api-py requests beautifulsoup4 pandas duckdb
 
-      # scrape_ratings.py (nhlratings.net) is deliberately NOT run here yet --
-      # stays local-only, same reasoning as MLB's ratings scraper above.
-      # build_nhl_match.py already ships correctly without it (joins
-      # nhl_ratings automatically once that table exists) -- ratings just
-      # won't refresh from this job.
       - name: Run NHL roster scraper
         run: python nhl/scripts/scrape_roster.py
 
       - name: Run NHL stats scraper
         run: python nhl/scripts/scrape_stats.py
+
+      # nhlratings.net was previously blocked at the site level for every
+      # direct request (confirmed a static per-IP WAF rule, not a TLS
+      # fingerprint or cloud-vs-residential issue) -- routed through
+      # ScraperAPI instead (same proxy MLB's ratings scraper uses), which
+      # clears it. Requires SCRAPERAPI_KEY as a repo secret -- see the
+      # commit/PR notes for confirmation it's set.
+      - name: Run NHL ratings scraper
+        env:
+          SCRAPERAPI_KEY: ${{ secrets.SCRAPERAPI_KEY }}
+        run: python nhl/scripts/scrape_ratings.py
 
       - name: Run matching
         run: python nhl/scripts/build_nhl_match.py

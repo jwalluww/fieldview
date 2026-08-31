@@ -1,8 +1,9 @@
 @echo off
-REM run_all.bat -- runs all four sports' pipelines locally, in sequence:
-REM run_nfl.bat, run_nba.bat, run_mlb.bat, run_nhl.bat. Each is fully
-REM self-contained (sets its own cwd/venv), so this file just calls them
-REM and aggregates their results into one final summary.
+REM run_all.bat -- runs all six sports' pipelines locally, in sequence:
+REM run_nfl.bat, run_nba.bat, run_mlb.bat, run_nhl.bat, run_epl.bat,
+REM run_mls.bat. Each is fully self-contained (sets its own cwd/venv), so
+REM this file just calls them and aggregates their results into one final
+REM summary.
 REM
 REM Does NOT git add/commit/push anything, same as each individual
 REM run_<sport>.bat. Committing stays a separate manual step so nothing
@@ -17,7 +18,7 @@ setlocal enabledelayedexpansion
 cd /d "%~dp0"
 
 echo ################################################
-echo  FieldView -- full pipeline run (all 4 sports)
+echo  FieldView -- full pipeline run (all 6 sports)
 echo ################################################
 
 call "%~dp0run_nfl.bat"
@@ -32,7 +33,13 @@ set MLB_FAILS=%errorlevel%
 call "%~dp0run_nhl.bat"
 set NHL_FAILS=%errorlevel%
 
-set /a TOTAL_FAILS=NFL_FAILS+NBA_FAILS+MLB_FAILS+NHL_FAILS
+call "%~dp0run_epl.bat"
+set EPL_FAILS=%errorlevel%
+
+call "%~dp0run_mls.bat"
+set MLS_FAILS=%errorlevel%
+
+set /a TOTAL_FAILS=NFL_FAILS+NBA_FAILS+MLB_FAILS+NHL_FAILS+EPL_FAILS+MLS_FAILS
 
 echo.
 echo ################################################
@@ -43,6 +50,8 @@ call :print_sport_summary "NFL" %NFL_FAILS% "%TEMP%\fieldview_run_nfl_results.tx
 call :print_sport_summary "NBA" %NBA_FAILS% "%TEMP%\fieldview_run_nba_results.txt"
 call :print_sport_summary "MLB" %MLB_FAILS% "%TEMP%\fieldview_run_mlb_results.txt"
 call :print_sport_summary "NHL" %NHL_FAILS% "%TEMP%\fieldview_run_nhl_results.txt"
+call :print_sport_summary "EPL" %EPL_FAILS% "%TEMP%\fieldview_run_epl_results.txt"
+call :print_sport_summary "MLS" %MLS_FAILS% "%TEMP%\fieldview_run_mls_results.txt"
 
 echo.
 if %TOTAL_FAILS% GTR 0 (

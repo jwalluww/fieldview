@@ -5,32 +5,22 @@ import os
 import pandas as pd
 from rapidfuzz import fuzz, process
 from season_utils import get_current_season, calculate_age
-from name_utils import normalize_name, normalize_for_matching, normalize_madden
+from name_utils import (
+    normalize_name, normalize_for_matching, normalize_madden,
+    NAME_ALIASES as SHARED_NAME_ALIASES,
+)
 
 SEASON = get_current_season()
 
-# Known name mismatches between OurLads and crosswalk
-# Format: 'ourlads_canonical_name': 'crosswalk_name'
+# Known name mismatches between OurLads and crosswalk.
+# Genuine nickname/legal-name aliases live in name_utils.NAME_ALIASES
+# (shared with scrape_otc.py's OTC contract matching) -- only the
+# crosswalk-specific "forced no-match" entries stay local here, since
+# they mean "this OurLads name matches the WRONG player in the GSIS
+# crosswalk specifically," which says nothing about whether other
+# sources (Madden, OTC) have the same problem.
 NAME_ALIASES = {
-    'Kam Curl': 'Kamren Curl',
-    'Juju Brents': 'Julius Brents',
-    'Chig Okonkwo': 'Chigoziem Okonkwo',
-    'Pat Surtain II': 'Patrick Surtain II',
-    'Cam Bynum': 'Cameron Bynum',
-    'C.J. Gardner-Johnson': 'C.J. Gardner-Johnson',  # check exact crosswalk spelling
-    'Cj Stroud': 'C.J. Stroud',
-    'Aj Brown': 'A.J. Brown',
-    'Tj Hockenson': 'T.J. Hockenson',
-    'Tj Watt': 'T.J. Watt',
-    'Dj Moore': 'D.J. Moore',
-    'Dj Reader': 'D.J. Reader',
-    'Kj Hamler': 'K.J. Hamler',
-    'Kj Osborn': 'K.J. Osborn',
-    'Gus Edwards': 'Kenneth Edwards',  # common nickname mismatches
-    'Riq Woolen': 'Tariq Woolen',
-    'Dru Phillips': 'Andru Phillips',
-    'Cobie Durant': 'Decobie Durant',
-    'Vj Payne': 'V.J. Payne',
+    **SHARED_NAME_ALIASES,
     # Forced no-matches (wrong players in crosswalk)
     'Matt Hibner': None,
     'Mike Jackson': None,

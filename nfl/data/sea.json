@@ -211,13 +211,13 @@
         "stats_season": null
       },
       {
-        "name": "Derrick Graham",
+        "name": "Kellen Diesch",
         "depth": 4,
         "injured": false,
-        "attainment": "SF26",
+        "attainment": "W/KC",
         "standard_slot": "LT",
         "standard_pos": "OL",
-        "cap_number": null,
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       }
@@ -553,7 +553,6 @@
       {
         "name": "Jacardia Wright",
         "depth": 6,
-<<<<<<< HEAD
         "injured": false,
         "attainment": "CF25",
         "standard_slot": "RB",
@@ -572,7 +571,7 @@
         "attainment": "CF26",
         "standard_slot": "RB",
         "standard_pos": "RB",
-        "cap_number": null,
+        "cap_number": "$885,000",
         "stats": {
           "TKL": 60,
           "SACKS": 0.5,
@@ -580,16 +579,6 @@
           "PD": 7,
           "TFL": 4,
           "QB HIT": 1
-=======
-        "injured": false,
-        "attainment": "CF25",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": "$885,000",
-        "stats": {
-          "CAR": 5,
-          "RU YDS": 20
->>>>>>> ae2490e72aedfa992408f585b07b5fce541eef49
         },
         "stats_season": 2025
       }
@@ -933,19 +922,8 @@
         "stats_season": 2025
       },
       {
-        "name": "Chris Paul Jr.",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF25",
-        "standard_slot": "ILB_R",
-        "standard_pos": "LB",
-        "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Power Echols",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "ILB_R",
@@ -1070,6 +1048,17 @@
         "cap_number": "$1,215,000",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Michael Dansby",
+        "depth": 4,
+        "injured": false,
+        "attainment": "26/7",
+        "standard_slot": "LCB",
+        "standard_pos": "CB",
+        "cap_number": "$915,122",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "SS": [
@@ -1141,13 +1130,8 @@
       {
         "name": "AJ Finley",
         "depth": 2,
-<<<<<<< HEAD
         "injured": false,
         "attainment": "W/LAC",
-=======
-        "injured": true,
-        "attainment": "26/2",
->>>>>>> ae2490e72aedfa992408f585b07b5fce541eef49
         "standard_slot": "FS",
         "standard_pos": "S",
         "cap_number": "$1,075,000",
@@ -1179,7 +1163,7 @@
         "attainment": "SF26",
         "standard_slot": "FS",
         "standard_pos": "S",
-        "cap_number": null,
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       }
@@ -1214,15 +1198,23 @@
         "stats_season": null
       },
       {
-        "name": "Michael Dansby",
+        "name": "Terrion Arnold",
         "depth": 3,
         "injured": false,
-        "attainment": "26/7",
+        "attainment": "SF26",
         "standard_slot": "RCB",
         "standard_pos": "CB",
-        "cap_number": "$915,122",
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$0",
+        "stats": {
+          "CMP": 323,
+          "ATT": 477,
+          "YDS": 4048,
+          "TDs": 25,
+          "INTs": 14,
+          "SACKS": 27,
+          "RU YDS": 95
+        },
+        "stats_season": 2025
       },
       {
         "name": "Jordan Washington",
