@@ -235,7 +235,10 @@ body {
   letter-spacing: .3px;
   text-align: center;
   white-space: nowrap;
-  color: var(--text-muted);
+  /* var(--text-muted) is low-contrast against the green pitch --
+     switched to var(--text), matching how NBA's court-view.html
+     already handles this same line against its wood court. */
+  color: var(--text);
 }
 
 .court-hint { font-size: 10px; color: var(--text-dim); margin-top: 8px; font-style: italic; }

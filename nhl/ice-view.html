@@ -222,7 +222,12 @@ body {
   font-size: 15px;
   text-align: center;
   white-space: nowrap;
-  color: var(--text);
+  /* var(--text) is a light dark-theme color and is unreadable against
+     the pale ice background -- every other sport's field/court/pitch
+     is dark enough for it to work, ice isn't. Reusing .player-dot's
+     existing dark color from this same file instead of inventing a
+     new one. */
+  color: #05261a;
 }
 
 .player-rank {

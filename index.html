@@ -544,12 +544,10 @@ const SPORTS = {
     tableFeatures: ['Sortable', 'Filterable', 'FPL Season Stats', 'sofifa Ratings'],
     teamCount: 20,
     sourceCount: 2,
-    // No cloud automation yet for EPL -- fantasy.premierleague.com's
-    // bootstrap-static and the shared sofifa scraper are both still
-    // manual/local runs, same honest 'Stub' MLB/NHL carried before their
-    // own scrape.yml jobs shipped (see SPORTS.mlb/nhl's updateCadence
-    // comments above).
-    updateCadence: 'Stub',
+    // scrape-epl added to scrape.yml -- was stale at 'Stub', corrected
+    // here alongside MLS's same fix (see SPORTS.nba/mlb/nhl's
+    // updateCadence comments above for the same pattern).
+    updateCadence: 'Weekly',
   },
   mls: {
     tagline: 'MLS Intelligence Platform',
@@ -563,10 +561,9 @@ const SPORTS = {
     tableFeatures: ['Sortable', 'Filterable', 'ASA xG/xA Stats', 'sofifa Ratings'],
     teamCount: 30,
     sourceCount: 3,
-    // No cloud automation yet for MLS -- the ESPN roster scraper, ASA
-    // stats pull (itscalledsoccer), and shared sofifa scraper are all
-    // still manual/local runs, same honest 'Stub' EPL carries above.
-    updateCadence: 'Stub',
+    // scrape-mls added to scrape.yml -- was stale at 'Stub', corrected
+    // here alongside EPL's same fix above.
+    updateCadence: 'Weekly',
   },
 };
 

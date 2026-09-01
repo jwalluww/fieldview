@@ -45,7 +45,7 @@ Purpose: each sport gets a FieldView (players on the field/court/pitch in their 
 ## Workflow Notes
 - Use this chat (claude.ai) for architecture decisions, debugging with context, pushback.
 - Use Claude Code (VS Code chat panel) for implementation, real data verification, and live reconnaissance against external sites/APIs.
-- **Reconnaissance against live external systems belongs in Claude Code, handed off as one broader investigation task** — this chat's sandbox has no working browser and a locked-down network. Splitting recon into one probe-per-question wastes round trips; hand off one combined investigation and let Claude Code adjust/retry in its own loop.
+- **Reconnaissance against live external systems belongs in Claude Code, handed off as one broader investigation task** — Splitting recon into one probe-per-question wastes round trips; hand off one combined investigation and let Claude Code adjust/retry in its own loop.
 - **For real scripts, give Claude Code a precise spec with verified facts and named edge cases, rather than full verbatim code written blind in chat.** Chat can't execute or test what it writes. Real bugs caught only because Claude Code tested its own code, across every sport built so far: MLB's blanket-zero `batting_stats` leaking pitchers into batting orders, a `position_group` mislabel, NHL's silent bulk-endpoint truncation, and a sofifa pagination bug plus a token-overlap name-matcher that normalized before tokenizing, both caught by actually running the code against real data rather than trusting it on inspection.
 - **Long-running local verification (e.g. a full multi-sport `run_all.bat` pass) should be run in the foreground, watched directly by the user** — backgrounding it through a tool session risks the process getting silently killed by a session/host restart mid-run, which happened twice in a row with zero pipeline-level cause. A background run that dies early looks identical to a hang; don't assume the pipeline itself is at fault before checking whether the process even survived.
 - Chat's real value-add: cross-cutting consistency a per-file view might miss — "extract this into a shared file, a second sport needs it now" (`nfl/scripts/season_utils.py`, `nba/scripts/name_utils.py`, `mlb/scripts/statsapi_utils.py`, `shared/scripts/scrape_sofifa.py` + `shared/scripts/soccer_name_utils.py`, deliberately built shared from the start since EPL/MLS both needed the same sofifa scraper and name-matching approach).
@@ -55,6 +55,16 @@ Purpose: each sport gets a FieldView (players on the field/court/pitch in their 
   it matters — a few sentences, no jargon or file names, something a
   non-technical read could follow. This is IN ADDITION to the full technical
   report, not a replacement for it. Label it 'TLDR:' at the very end.
+  - **Claude Code sessions don't carry this requirement forward on their own.**
+  Pasting CLAUDE.md at the top of a session isn't reliable enough on its
+  own, especially with frequent chat switching — every task handed to
+  Claude Code from this chat must restate the requirement explicitly
+  inside the instruction block itself: end the response with a summary
+  of changes made in relation to what was asked, plus a plain-language
+  TLDR (see above), even if CLAUDE.md was already pasted this session.
+- **Every set of Claude Code instructions from this chat is delivered as
+  a single fenced code block**, so it can be copy-pasted into Claude
+  Code in one motion rather than reassembled from prose.
 
 ---
 
@@ -140,8 +150,6 @@ The subs-popover pool has no position filter at all. Any bench player can fill a
 
 ### 2K Ratings — real current status
 `nba_ratings_2k.json`: 500 records, 482 matched (96.4%), spanning all 30 teams cumulatively across trickle cycles. The Task Scheduler job is genuinely registered and Enabled/Ready, though its last recorded run result code was non-zero — not yet investigated.
-
-**LeBron James's `rating: null` issue is resolved** — his real current record shows `overall_rating: 91`.
 
 ### Real current numbers (587 total players)
 `overall_rating`: 478 (81.4%). `contract_salary`: 438 (74.6%). `rotation_source`: `nbadepthchart.com` 444 (75.6%), `mpg_derived` 143 (24.4%).
