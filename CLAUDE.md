@@ -55,7 +55,7 @@ Purpose: each sport gets a FieldView (players on the field/court/pitch in their 
   it matters — a few sentences, no jargon or file names, something a
   non-technical read could follow. This is IN ADDITION to the full technical
   report, not a replacement for it. Label it 'TLDR:' at the very end.
-  - **Claude Code sessions don't carry this requirement forward on their own.**
+- **Claude Code sessions don't carry this requirement forward on their own.**
   Pasting CLAUDE.md at the top of a session isn't reliable enough on its
   own, especially with frequent chat switching — every task handed to
   Claude Code from this chat must restate the requirement explicitly

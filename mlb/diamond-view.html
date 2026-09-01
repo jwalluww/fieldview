@@ -516,27 +516,20 @@ let teamPlayers = [];
 // every team switch (see loadTeam()), same convention as NBA's manualStarters.
 let manualStarters = {};
 
-// First-pass color heuristics, same spirit as NBA's ratingColor() -- MLB
-// has no single 0-99 "overall" rating source yet, so AVG/ERA (the two
-// most fan-recognizable rate stats) drive both the dot's color and its
-// displayed number, batter vs. pitcher.
-function battingColor(avgStr) {
-  const avg = parseFloat(avgStr);
-  if (avgStr == null || isNaN(avg)) return '#6b7494';
-  if (avg >= .300) return '#86efac';
-  if (avg >= .275) { const t=(avg-.275)/.025; return 'hsl('+(100+t*40)+',55%,58%)'; }
-  if (avg >= .250) { const t=(avg-.250)/.025; return 'hsl('+(60+t*40)+',55%,58%)'; }
-  if (avg >= .220) { const t=(avg-.220)/.030; return 'hsl('+(30+t*30)+',65%,55%)'; }
-  return 'hsl('+Math.max(0, (avg/.220)*30)+',65%,50%)';
-}
-function pitchingColor(eraStr) {
-  const era = parseFloat(eraStr);
-  if (eraStr == null || isNaN(era)) return '#6b7494';
-  if (era <= 2.80) return '#86efac';
-  if (era <= 3.50) { const t=(era-2.80)/.70; return 'hsl('+(140-t*40)+',55%,58%)'; }
-  if (era <= 4.20) { const t=(era-3.50)/.70; return 'hsl('+(100-t*40)+',55%,58%)'; }
-  if (era <= 5.00) { const t=(era-4.20)/.80; return 'hsl('+(60-t*30)+',65%,55%)'; }
-  return 'hsl('+Math.max(0,30-(era-5.00)*10)+',65%,50%)';
+// Shared 0-99 rating color scale, identical to nba/court-view.html and
+// epl/pitch-view.html's ratingColor() -- MLB ratings are live now via
+// theshowratings.com (ScraperAPI), so the dot switches from an AVG/ERA
+// heuristic to the same rating-driven convention every other sport uses.
+function ratingColor(r) {
+  if (r == null) return '#6b7494';
+  if (r >= 95) return '#86efac';
+  if (r >= 90) { const t=(r-90)/5; return 'hsl('+(140+t*20)+',60%,62%)'; }
+  if (r >= 85) { const t=(r-85)/5; return 'hsl('+(100+t*40)+',55%,58%)'; }
+  if (r >= 80) { const t=(r-80)/5; return 'hsl('+(75+t*25)+',55%,58%)'; }
+  if (r >= 75) { const t=(r-75)/5; return 'hsl('+(55+t*20)+',60%,58%)'; }
+  if (r >= 70) { const t=(r-70)/5; return 'hsl('+(38+t*17)+',65%,55%)'; }
+  if (r >= 65) { const t=(r-65)/5; return 'hsl('+(25+t*13)+',65%,52%)'; }
+  return 'hsl('+Math.max(0,(r-55)*2)+',70%,48%)';
 }
 
 function mapPlayer(p) {
@@ -571,6 +564,7 @@ function mapPlayer(p) {
     losses: ps ? ps.losses : null,
     so: ps ? ps.strikeOuts : null,
     inningsPitched: ps ? ps.inningsPitched : null,
+    rating: p.overall_rating,
     hasBatting: !!bs,
     hasPitching: !!ps,
   };
@@ -650,12 +644,9 @@ function renderField() {
         </div>
       `;
     }
-    const isPitcherZone = zone === 'P';
-    const statVal = isPitcherZone ? (p.era || '—') : (p.avg || '—');
-    const dotColor = isPitcherZone ? pitchingColor(p.era) : battingColor(p.avg);
     return `
       <div class="player-card" data-pos="${zone}" data-pid="${p.id}" style="left:${dz.x}%; top:${dz.y}%">
-        <div class="player-dot" style="background:${dotColor}">${statVal}</div>
+        <div class="player-dot" style="background:${ratingColor(p.rating)}">${p.rating != null ? p.rating : '—'}</div>
         <div class="player-name">${p.name}</div>
         <div class="player-rank">${zone}${p.jersey != null ? ' · #' + p.jersey : ''}</div>
       </div>
@@ -692,11 +683,11 @@ function renderBattingOrder() {
   }
 
   list.innerHTML = batters.map((p, i) => {
-    const rc = battingColor(p.avg);
+    const rc = ratingColor(p.rating);
     return `
       <div class="bench-row" data-pid="${p.id}">
         <div class="bench-rank">${i + 1}</div>
-        <div class="bench-dot" style="background:${rc}">${p.avg || '—'}</div>
+        <div class="bench-dot" style="background:${rc}">${p.rating != null ? p.rating : '—'}</div>
         <div class="bench-name-block">
           <div class="bench-name">${p.name}</div>
           <div class="bench-meta">${p.position || ''}${p.playerType === 'two_way' ? ' <span class="tag tag-rotation">TWP</span>' : ''}</div>
@@ -731,11 +722,11 @@ function renderPitchingStaff() {
   }
 
   function pitcherRow(p) {
-    const rc = pitchingColor(p.era);
+    const rc = ratingColor(p.rating);
     const wl = (p.wins != null && p.losses != null) ? `${p.wins}-${p.losses}` : '—';
     return `
       <div class="bench-row" data-pid="${p.id}">
-        <div class="bench-dot" style="background:${rc}">${p.era || '—'}</div>
+        <div class="bench-dot" style="background:${rc}">${p.rating != null ? p.rating : '—'}</div>
         <div class="bench-name-block">
           <div class="bench-name">${p.name}</div>
           <div class="bench-meta">${p.gamesStarted > 0 ? '<span class="tag tag-starter">SP</span>' : '<span class="tag tag-bench">RP</span>'}${p.playerType === 'two_way' ? ' <span class="tag tag-rotation">TWP</span>' : ''}</div>
@@ -820,7 +811,7 @@ function attachSubsPopoverHandlers(layer) {
       popover.innerHTML = `<div class="subs-pop-label">${subsLabel(zone)}</div>` +
         (subs.length ? subs.map(s => `
           <div class="subs-row" data-pid="${s.id}">
-            <div class="subs-dot" style="background:${isPitcherZone ? pitchingColor(s.era) : battingColor(s.avg)}">${isPitcherZone ? (s.era || '—') : (s.avg || '—')}</div>
+            <div class="subs-dot" style="background:${ratingColor(s.rating)}">${s.rating != null ? s.rating : '—'}</div>
             <div class="subs-name">${s.name}</div>
             <div class="subs-mpg">${isPitcherZone ? (s.gamesStarted || 0) + ' gs' : (s.pa || 0) + ' pa'}</div>
           </div>`).join('') : `<div class="subs-empty">No eligible bench players</div>`);
