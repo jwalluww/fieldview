@@ -163,6 +163,37 @@ def find_token_overlap_match(fpl_name, sofifa_team_norm, by_team):
     return hits[0] if len(hits) == 1 else None
 
 
+def find_token_set_match(fpl_name, sofifa_team_norm, by_team):
+    """Catches a genuine full name-order swap (e.g. FPL's "Mitoma
+    Kaoru" vs sofifa's "Kaoru Mitoma") that find_token_overlap_match()
+    can't reach -- that function requires the first word of both names
+    to match before checking further overlap, which is correct for its
+    own documented cases (same first name, different tail) but breaks
+    completely when the two words are simply reversed, since neither
+    first word matches the other's first word at all. This checks the
+    full token SET for exact equality regardless of order, scoped to
+    the player's own team, only accepted if exactly one candidate
+    qualifies -- same ambiguity bar as find_token_overlap_match.
+    """
+    candidates = by_team.get(sofifa_team_norm, [])
+    if not candidates:
+        return None
+    fpl_tokens = {normalize_for_matching(w) for w in fpl_name.split()}
+    if not fpl_tokens:
+        return None
+
+    hits = []
+    for r in candidates:
+        sofifa_words = clean(r['name']).split()
+        if not sofifa_words:
+            continue
+        sofifa_tokens = {normalize_for_matching(w) for w in sofifa_words}
+        if sofifa_tokens == fpl_tokens:
+            hits.append(r)
+
+    return hits[0] if len(hits) == 1 else None
+
+
 def find_sofifa_match(fpl_name, fpl_team, by_name, by_name_team, by_team):
     lookup_name = SOCCER_NAME_ALIASES.get(fpl_name, fpl_name)
     if lookup_name is None:
@@ -184,6 +215,10 @@ def find_sofifa_match(fpl_name, fpl_team, by_name, by_name_team, by_team):
     if token_match is not None:
         return token_match, 'token_overlap'
 
+    swap_match = find_token_set_match(lookup_name, team_norm, by_team)
+    if swap_match is not None:
+        return swap_match, 'token_set_swap'
+
     return None, None
 
 
@@ -196,7 +231,7 @@ def build_match():
     by_name, by_name_team, by_team = build_sofifa_index(sofifa)
 
     matches = []
-    match_source_counts = {'name_team': 0, 'name_only': 0, 'token_overlap': 0, 'unmatched': 0}
+    match_source_counts = {'name_team': 0, 'name_only': 0, 'token_overlap': 0, 'token_set_swap': 0, 'unmatched': 0}
     unmatched_rows = []
 
     for _, r in fpl.iterrows():
@@ -238,6 +273,7 @@ def build_match():
     print(f"  via name+team: {match_source_counts['name_team']}")
     print(f"  via name only (unique): {match_source_counts['name_only']}")
     print(f"  via team-scoped token overlap (partial-legal-name match): {match_source_counts['token_overlap']}")
+    print(f"  via team-scoped token set match (full name-order swap): {match_source_counts['token_set_swap']}")
     print(f"  unmatched: {match_source_counts['unmatched']}")
     with open(os.path.join('epl', 'data', 'unmatched_epl.txt'), 'w', encoding='utf-8') as f:
         for u in unmatched_rows:

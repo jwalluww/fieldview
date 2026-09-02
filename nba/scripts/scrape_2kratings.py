@@ -363,6 +363,32 @@ def main():
     for abbr in chosen:
         merged_records.extend(by_team.get(abbr, []))
 
+    # Real bug found and fixed here: matching above only ever ran for
+    # teams freshly scraped THIS run -- a team that's a stale-carryover
+    # or simply wasn't picked today keeps whatever player_id (including
+    # None) it had from its last successful fresh scrape, forever, even
+    # though nba_stats.json (the match target) is an independently
+    # updated source that can start agreeing with a name/team long after
+    # the ratings side stops changing. Confirmed concretely on Damian
+    # Lillard: both sources already agree on (name="Damian Lillard",
+    # team="POR"), yet his record sat with player_id: None because POR
+    # hadn't been freshly re-scraped since before that agreement existed.
+    # Fixed by re-attempting a match for every currently-unmatched record
+    # on every run, not just ones from a freshly-scraped team -- this is
+    # a pure in-memory lookup against the index already built above, no
+    # extra network cost, so there's no reason to gate it behind a fresh
+    # scrape at all.
+    rematched_stale_unmatched = 0
+    for record in merged_records:
+        if record.get("player_id") is None:
+            p = find_match(record, by_name, by_name_team)
+            if p:
+                record["player_id"] = p["player_id"]
+                rematched_stale_unmatched += 1
+    if rematched_stale_unmatched:
+        print(f"\nRe-matched {rematched_stale_unmatched} previously-unmatched record(s) "
+              f"against current nba_stats.json data (no fresh scrape needed).")
+
     unmatched = [
         {"2k_name": r["2k_name"], "team": r["team"], "positions": r.get("positions")}
         for r in merged_records if r.get("player_id") is None
