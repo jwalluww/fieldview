@@ -404,6 +404,9 @@ ROSTERS_POS_ALIASES = {
     'EDGE': ['DL'],
     'DI': ['DL'],  # rosters can't distinguish EDGE from DI at all -- both
                    # share the one 'DL' bucket, so both search the same pool
+    'OL': ['OL'],  # confirmed against real nflreadpy roster data --
+                   # position is already the coarse 'OL' bucket here (T/G/C
+                   # aren't split out), unlike Spotrac/snap-count's raw data
 }
 
 def find_gsis(name, standard_pos, team, crosswalk_df, roster_df=None):
@@ -436,6 +439,26 @@ def find_gsis(name, standard_pos, team, crosswalk_df, roster_df=None):
             return result
 
     return None, None
+
+def find_roster_gsis_for_ol(name, team, roster_df):
+    """Independent name+team fuzzy match against nflreadpy's own roster
+    data to recover an OL player's real gsis_id directly -- not gated
+    behind find_gsis()'s hard OL skip. nflreadpy's raw data has real
+    gsis_ids for OL players; our own matching just never looks them up
+    for this position. Returns a gsis_id (or None), meant to feed the
+    SAME entry_year_by_gsis/college_by_gsis/birth_date_by_gsis dicts
+    already used for every other position -- not a separate lookup
+    path, and NOT written back into entry['gsis_id'] itself (that field
+    should keep accurately reflecting that OL was never primarily
+    GSIS-matched; this is a secondary, bio-only recovery)."""
+    if roster_df is None:
+        return None
+    name_norm = normalize_for_matching(name)
+    gid, _ = _match_in_df(name_norm, 'OL', team, roster_df,
+                          pos_col='position', name_col='name_norm',
+                          team_col='team_norm', id_col='gsis_id',
+                          pos_aliases=ROSTERS_POS_ALIASES)
+    return gid
 
 def find_pfr_id(name, standard_pos, team, snap_crosswalk):
     """Independent name+team fuzzy match against the import_snap_counts
@@ -632,8 +655,22 @@ def build_master():
 
     draft_matched = 0
     age_matched = 0
+    ol_bio_recovered = 0
     for entry in master.values():
         gid = entry.get('gsis_id')
+        # OL never has a gsis_id from our own matching (find_gsis() skips
+        # OL entirely) -- recover one via an independent name+team match
+        # against nflreadpy's own roster data instead, so OL can reach
+        # the exact same entry_year_by_gsis/college_by_gsis/
+        # birth_date_by_gsis dicts every other position already uses.
+        # This is a LOCAL variable only, used just for this bio lookup --
+        # entry['gsis_id'] itself is untouched, so match_source/
+        # match_confidence keep accurately reflecting that OL was never
+        # primarily GSIS-matched.
+        if gid is None and entry['standard_pos'] == 'OL':
+            gid = find_roster_gsis_for_ol(entry['canonical_name'], entry['team'], rosters)
+            if gid is not None:
+                ol_bio_recovered += 1
         entry_year = entry_year_by_gsis.get(gid) if gid else None
         entry['draft_year'] = entry_year
         entry['college'] = college_by_gsis.get(gid) if gid else None
@@ -748,6 +785,10 @@ def build_master():
     print(f"Low confidence (<95%): {len(low_confidence)}")
     print(f"draft_year/college matched (via GSIS): {draft_matched} / {len(master)}")
     print(f"age matched (via GSIS/nflreadpy birth_date): {age_matched} / {len(master)}")
+    ol_total_bio = sum(1 for e in master.values() if e['standard_pos'] == 'OL')
+    ol_age_matched = sum(1 for e in master.values() if e['standard_pos'] == 'OL' and e['age'] is not None)
+    print(f"  OL bio recovered via independent name+team match: {ol_bio_recovered} / {ol_total_bio}")
+    print(f"  OL age matched — after independent match: {ol_age_matched} / {ol_total_bio}")
     print(f"snap_pct matched (total): {snap_matched} / {len(master)}")
     print(f"  matched via independent name+team pfr_id fuzzy match: {fuzzy_pfr_matched}")
     ol_total = sum(1 for e in master.values() if e['standard_pos'] == 'OL')
