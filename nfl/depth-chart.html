@@ -806,10 +806,10 @@ const VIEWS = {
   overview:   { cols: ['team','ourlads_pos','pos','name','age','college','draft_year','madden','cap'], pos: null, sort: 'madden' },
   financial:  { cols: ['team','ourlads_pos','pos','name','cap','years_pro','years_remaining','cash_total_remaining','cash_guaranteed_remaining','avg_annual_remaining'], pos: null, sort: 'cap' },
   madden:     { cols: ['team','ourlads_pos','pos','name','madden','age'],                    pos: null, sort: 'madden' },
-  passing:    { cols: ['team','name','stat1','stat2','stat3','stat4','stat5'],               pos: ['QB'], sort: 'name' },
-  rushing:    { cols: ['team','name','stat1','stat2','stat3'],                                pos: ['RB'], sort: 'name' },
-  receiving:  { cols: ['team','name','stat1','stat2','stat3','stat4'],                       pos: ['WR'], sort: 'name' },
-  defense:    { cols: ['team','ourlads_pos','pos','name','stat1','stat2','stat3','stat4'],   pos: [...DEFENSE_POS], sort: 'name' },
+  passing:    { cols: ['team','name','stat1','stat2','stat3','stat4','stat5'],               pos: ['QB'], sort: 'stat3' },
+  rushing:    { cols: ['team','name','stat1','stat2','stat3'],                                pos: ['RB'], sort: 'stat2' },
+  receiving:  { cols: ['team','name','stat1','stat2','stat3','stat4'],                       pos: ['WR'], sort: 'stat3' },
+  defense:    { cols: ['team','ourlads_pos','pos','name','stat1','stat2','stat3','stat4'],   pos: [...DEFENSE_POS], sort: 'stat1' },
 };
 
 function setView(viewKey, btn) {
@@ -836,7 +836,11 @@ function setView(viewKey, btn) {
 
   // Apply sort
   sortCol = view.sort;
-  sortDir = (view.sort === 'madden' || view.sort === 'cap') ? 'desc' : 'asc';
+  // passing/rushing/receiving/defense now default-sort by a real
+  // production stat (see VIEWS above) instead of name -- all four are
+  // "higher is better" counting stats (yards/tackles), so they need
+  // desc here same as madden/cap, or the tab would load worst-to-best.
+  sortDir = (view.sort === 'madden' || view.sort === 'cap' || viewKey === 'passing' || viewKey === 'rushing' || viewKey === 'receiving' || viewKey === 'defense') ? 'desc' : 'asc';
   updateStatColumns(viewKey);
   applyFilters();
   updateStickyOffset();
@@ -1110,8 +1114,8 @@ function sortPlayers() {
       default:          av = a.madden;        bv = b.madden;
     }
     // Nulls always last regardless of sort direction
-    const aNull = av == null || av === '' || av === 0 && sortCol !== 'depth';
-    const bNull = bv == null || bv === '' || bv === 0 && sortCol !== 'depth';
+    const aNull = av == null || av === '';
+    const bNull = bv == null || bv === '';
     if (aNull && bNull) return 0;
     if (aNull) return 1;
     if (bNull) return -1;

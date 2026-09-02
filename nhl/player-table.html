@@ -535,12 +535,14 @@ body {
         <th onclick="sortBy('team')" id="th-team">Team <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('position')" id="th-position">Pos <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('name')" id="th-name" class="sorted">Player <span class="sort-icon">↑</span></th>
+        <th onclick="sortBy('rating')" id="th-rating" style="display:none">Rating <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('jersey_number')" id="th-jersey_number" style="display:none">No. <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('shoots_catches')" id="th-shoots_catches" style="display:none">S/C <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('gp')" id="th-gp" style="display:none">GP <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('goals')" id="th-goals" style="display:none">G <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('assists')" id="th-assists" style="display:none">A <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('points')" id="th-points" style="display:none">P <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('shootingPct')" id="th-shootingPct" style="display:none">S% <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('plusMinus')" id="th-plusMinus" style="display:none">+/- <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('toi')" id="th-toi" style="display:none">TOI/G <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('gamesStarted')" id="th-gamesStarted" style="display:none">GS <span class="sort-icon">↕</span></th>
@@ -650,12 +652,12 @@ let selectedPositions = new Set();
 // MLB's batting/pitching, so real columns earn their keep the same way
 // (unlike NBA's flat single-column-set, which has no such split).
 const VIEWS = {
-  overview: { cols: ['team','position','name','jersey_number','shoots_catches'], statsGroup: null, sort: 'name' },
-  skaters:  { cols: ['team','position','name','gp','goals','assists','points','plusMinus','toi'], statsGroup: 'skater', sort: 'points' },
-  goalies:  { cols: ['team','position','name','gp','gamesStarted','wins','losses','gaa','savePct','shutouts'], statsGroup: 'goalie', sort: 'wins' },
+  overview: { cols: ['team','position','name','rating','jersey_number','shoots_catches'], statsGroup: null, sort: 'rating' },
+  skaters:  { cols: ['team','position','name','gp','goals','assists','points','shootingPct','plusMinus','toi'], statsGroup: 'skater', sort: 'points' },
+  goalies:  { cols: ['team','position','name','gp','gamesStarted','wins','losses','gaa','savePct','shutouts'], statsGroup: 'goalie', sort: 'savePct' },
 };
 
-const ALL_COLS = ['team','position','name','jersey_number','shoots_catches','gp','goals','assists','points','plusMinus','toi','gamesStarted','wins','losses','gaa','savePct','shutouts'];
+const ALL_COLS = ['team','position','name','rating','jersey_number','shoots_catches','gp','goals','assists','points','shootingPct','plusMinus','toi','gamesStarted','wins','losses','gaa','savePct','shutouts'];
 
 function setView(viewKey, btn) {
   currentView = viewKey;
@@ -712,12 +714,14 @@ async function loadAll() {
       position: player.position_code,
       positionGroup: player.position_group,
       name: player.name || '',
+      rating: player.overall_rating,
       jersey: player.jersey_number || null,
       shoots_catches: player.shoots_catches || null,
       gp: ss ? ss.gamesPlayed : (gs ? gs.gamesPlayed : null),
       goals: ss ? ss.goals : null,
       assists: ss ? ss.assists : null,
       points: ss ? ss.points : null,
+      shootingPct: ss ? ss.shootingPct : null,
       plusMinus: ss ? ss.plusMinus : null,
       toi: ss ? ss.timeOnIcePerGame : null,
       gamesStarted: gs ? gs.gamesStarted : null,
@@ -966,6 +970,8 @@ function renderTable() {
         '<div class="player-initials">' + initials + '</div>' +
         '<div class="player-name-block"><div class="player-name">' + p.name + '</div></div>' +
       '</div></td>';
+    if (cols.includes('rating'))
+      row += '<td class="cell-stat">' + (p.rating != null ? p.rating : '—') + '</td>';
     if (cols.includes('jersey_number'))
       row += '<td class="cell-pos">' + (p.jersey || '—') + '</td>';
     if (cols.includes('shoots_catches'))
@@ -978,6 +984,8 @@ function renderTable() {
       row += '<td class="cell-stat">' + (p.assists != null ? p.assists : '—') + '</td>';
     if (cols.includes('points'))
       row += '<td class="cell-stat">' + (p.points != null ? p.points : '—') + '</td>';
+    if (cols.includes('shootingPct'))
+      row += '<td class="cell-stat">' + (p.shootingPct != null ? (p.shootingPct * 100).toFixed(1) + '%' : '—') + '</td>';
     if (cols.includes('plusMinus'))
       row += '<td class="cell-stat">' + (p.plusMinus != null ? p.plusMinus : '—') + '</td>';
     if (cols.includes('toi'))

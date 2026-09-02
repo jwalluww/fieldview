@@ -488,6 +488,7 @@ body {
   <button class="view-tab active" onclick="setView('overview', this)">Overview</button>
   <button class="view-tab" onclick="setView('stats', this)">Stats</button>
   <button class="view-tab" onclick="setView('fantasy', this)">Fantasy</button>
+  <button class="view-tab" onclick="setView('advanced', this)">Advanced</button>
 </div>
 
 <!-- Filter bar -->
@@ -545,6 +546,11 @@ body {
         <th onclick="sortBy('nowCost')" id="th-nowCost" style="display:none">Price <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('selectedBy')" id="th-selectedBy" style="display:none">Sel% <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('totalPoints')" id="th-totalPoints" style="display:none">Pts <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('xg')" id="th-xg" style="display:none">xG <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('xa')" id="th-xa" style="display:none">xA <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('ictIndex')" id="th-ictIndex" style="display:none">ICT <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('defContribution')" id="th-defContribution" style="display:none">Def <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('tackles')" id="th-tackles" style="display:none">Tkl <span class="sort-icon">↕</span></th>
       </tr>
     </thead>
     <tbody id="tableBody"></tbody>
@@ -623,9 +629,10 @@ const VIEWS = {
   overview: { cols: ['team','position','name','rating','minutes'], sort: 'rating' },
   stats:    { cols: ['team','position','name','goals','assists','cleanSheets','minutes','form'], sort: 'goals' },
   fantasy:  { cols: ['team','position','name','nowCost','selectedBy','bonus','totalPoints'], sort: 'totalPoints' },
+  advanced: { cols: ['team','position','name','xg','xa','ictIndex','defContribution','tackles'], sort: 'xg' },
 };
 
-const ALL_COLS = ['team','position','name','rating','minutes','goals','assists','cleanSheets','form','bonus','nowCost','selectedBy','totalPoints'];
+const ALL_COLS = ['team','position','name','rating','minutes','goals','assists','cleanSheets','form','bonus','nowCost','selectedBy','totalPoints','xg','xa','ictIndex','defContribution','tackles'];
 
 function setView(viewKey, btn) {
   currentView = viewKey;
@@ -694,6 +701,15 @@ async function loadAll() {
       nowCost: s.now_cost != null ? s.now_cost / 10 : null,  // FPL prices in tenths (e.g. 155 = £15.5m)
       selectedBy: s.selected_by_percent != null ? parseFloat(s.selected_by_percent) : null,
       totalPoints: s.total_points,
+      // expected_goals/expected_assists/ict_index come back from FPL
+      // as strings (e.g. "0.05"), same as form above -- parsed here
+      // so sortPlayers()'s plain `<`/`>` comparison works, matching
+      // this file's existing convention (see toSortVal's comment).
+      xg: s.expected_goals != null ? parseFloat(s.expected_goals) : null,
+      xa: s.expected_assists != null ? parseFloat(s.expected_assists) : null,
+      ictIndex: s.ict_index != null ? parseFloat(s.ict_index) : null,
+      defContribution: s.defensive_contribution,
+      tackles: s.tackles,
     });
   }
 
@@ -949,6 +965,16 @@ function renderTable() {
       row += '<td class="cell-stat">' + (p.selectedBy != null ? p.selectedBy.toFixed(1) + '%' : '—') + '</td>';
     if (cols.includes('totalPoints'))
       row += '<td class="cell-stat">' + (p.totalPoints != null ? p.totalPoints : '—') + '</td>';
+    if (cols.includes('xg'))
+      row += '<td class="cell-stat">' + (p.xg != null ? p.xg.toFixed(2) : '—') + '</td>';
+    if (cols.includes('xa'))
+      row += '<td class="cell-stat">' + (p.xa != null ? p.xa.toFixed(2) : '—') + '</td>';
+    if (cols.includes('ictIndex'))
+      row += '<td class="cell-stat">' + (p.ictIndex != null ? p.ictIndex.toFixed(1) : '—') + '</td>';
+    if (cols.includes('defContribution'))
+      row += '<td class="cell-stat">' + (p.defContribution != null ? p.defContribution : '—') + '</td>';
+    if (cols.includes('tackles'))
+      row += '<td class="cell-stat">' + (p.tackles != null ? p.tackles : '—') + '</td>';
     row += '</tr>';
     return row;
   }).join('');

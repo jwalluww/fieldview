@@ -545,6 +545,7 @@ body {
         <th onclick="sortBy('team')" id="th-team">Team <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('position')" id="th-position">Pos <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('name')" id="th-name" class="sorted">Player <span class="sort-icon">↑</span></th>
+        <th onclick="sortBy('rating')" id="th-rating" style="display:none">Rating <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('age')" id="th-age" style="display:none">Age <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('jersey_number')" id="th-jersey_number" style="display:none">No. <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('player_type')" id="th-player_type" style="display:none">Type <span class="sort-icon">↕</span></th>
@@ -555,12 +556,14 @@ body {
         <th onclick="sortBy('obp')" id="th-obp" style="display:none">OBP <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('slg')" id="th-slg" style="display:none">SLG <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('ops')" id="th-ops" style="display:none">OPS <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('babip')" id="th-babip" style="display:none">BABIP <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('w')" id="th-w" style="display:none">W <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('l')" id="th-l" style="display:none">L <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('era')" id="th-era" style="display:none">ERA <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('whip')" id="th-whip" style="display:none">WHIP <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('so')" id="th-so" style="display:none">SO <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('ip')" id="th-ip" style="display:none">IP <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('strikeoutWalkRatio')" id="th-strikeoutWalkRatio" style="display:none">K/BB <span class="sort-icon">↕</span></th>
       </tr>
     </thead>
     <tbody id="tableBody"></tbody>
@@ -652,12 +655,12 @@ let selectedPositions = new Set();
 // slots solve there (needed because NFL reuses 5 header slots across four
 // different stat-bearing views); no equivalent reuse happens here.
 const VIEWS = {
-  overview: { cols: ['team','position','name','age','jersey_number','player_type'], playerTypes: null, sort: 'name' },
-  batting:  { cols: ['team','position','name','pa','avg','hr','rbi','obp','slg','ops'], playerTypes: ['batter','two_way'], sort: 'hr' },
-  pitching: { cols: ['team','position','name','w','l','era','whip','so','ip'], playerTypes: ['pitcher','two_way'], sort: 'era' },
+  overview: { cols: ['team','position','name','rating','age','jersey_number','player_type'], playerTypes: null, sort: 'rating' },
+  batting:  { cols: ['team','position','name','pa','avg','hr','rbi','obp','slg','ops','babip'], playerTypes: ['batter','two_way'], sort: 'hr' },
+  pitching: { cols: ['team','position','name','w','l','era','whip','so','ip','strikeoutWalkRatio'], playerTypes: ['pitcher','two_way'], sort: 'era' },
 };
 
-const ALL_COLS = ['team','position','name','age','jersey_number','player_type','pa','avg','hr','rbi','obp','slg','ops','w','l','era','whip','so','ip'];
+const ALL_COLS = ['team','position','name','rating','age','jersey_number','player_type','pa','avg','hr','rbi','obp','slg','ops','babip','w','l','era','whip','so','ip','strikeoutWalkRatio'];
 
 function setView(viewKey, btn) {
   currentView = viewKey;
@@ -735,6 +738,9 @@ async function loadAll() {
       whip: ps ? ps.whip : null,
       so: ps ? ps.strikeOuts : null,
       ip: ps ? ps.inningsPitched : null,
+      rating: player.overall_rating,
+      babip: bs ? bs.babip : null,
+      strikeoutWalkRatio: ps ? ps.strikeoutWalkRatio : null,
     });
   }
 
@@ -870,7 +876,7 @@ function syncPosCheckboxes() {
 // numerically. ip (inningsPitched) isn't in the task's explicit list but
 // is the same VARCHAR shape ("80.2") and would hit the identical bug, so
 // it gets the same parseFloat treatment.
-const FLOAT_SORT_COLS = new Set(['avg','obp','slg','ops','era','whip','ip']);
+const FLOAT_SORT_COLS = new Set(['avg','obp','slg','ops','era','whip','ip','babip','strikeoutWalkRatio']);
 
 function toSortVal(p, col) {
   const raw = p[col];
@@ -986,6 +992,8 @@ function renderTable() {
         '<div class="player-initials">' + initials + '</div>' +
         '<div class="player-name-block"><div class="player-name">' + p.name + '</div></div>' +
       '</div></td>';
+    if (cols.includes('rating'))
+      row += '<td class="cell-stat">' + (p.rating != null ? p.rating : '—') + '</td>';
     if (cols.includes('age'))
       row += '<td class="cell-pos">' + (p.age != null ? p.age : '—') + '</td>';
     if (cols.includes('jersey_number'))
@@ -1006,6 +1014,8 @@ function renderTable() {
       row += '<td class="cell-stat">' + (p.slg != null ? p.slg : '—') + '</td>';
     if (cols.includes('ops'))
       row += '<td class="cell-stat">' + (p.ops != null ? p.ops : '—') + '</td>';
+    if (cols.includes('babip'))
+      row += '<td class="cell-stat">' + (p.babip != null ? p.babip : '—') + '</td>';
     if (cols.includes('w'))
       row += '<td class="cell-stat">' + (p.w != null ? p.w : '—') + '</td>';
     if (cols.includes('l'))
@@ -1018,6 +1028,8 @@ function renderTable() {
       row += '<td class="cell-stat">' + (p.so != null ? p.so : '—') + '</td>';
     if (cols.includes('ip'))
       row += '<td class="cell-stat">' + (p.ip != null ? p.ip : '—') + '</td>';
+    if (cols.includes('strikeoutWalkRatio'))
+      row += '<td class="cell-stat">' + (p.strikeoutWalkRatio != null ? p.strikeoutWalkRatio : '—') + '</td>';
     row += '</tr>';
     return row;
   }).join('');
