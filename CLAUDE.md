@@ -65,6 +65,11 @@ Purpose: each sport gets a FieldView (players on the field/court/pitch in their 
 - **Every set of Claude Code instructions from this chat is delivered as
   a single fenced code block**, so it can be copy-pasted into Claude
   Code in one motion rather than reassembled from prose.
+- **Every Claude Code instruction block also explicitly asks Claude Code
+  to commit and push its changes when done.** Chat verifies against the
+  live repo after every task, so an applied-but-unpushed change reads as
+  if nothing happened and wastes a round trip. Easy to forget without
+  saying it every time — say it every time.
 
 ---
 
