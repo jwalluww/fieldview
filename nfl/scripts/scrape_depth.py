@@ -51,6 +51,10 @@ SLOT_MAP_34 = {
     'LOLB': ('LOLB',  'EDGE'),
     'ROLB': ('ROLB',  'EDGE'),
     'RUSH': ('ROLB',  'EDGE'),  # SEA
+    'SLB':  ('LOLB',  'EDGE'),  # SEA — RUSH already claims ROLB, so
+                                # SLB is the complementary outside
+                                # backer on the other edge, not a
+                                # generic 4-3-style SAM
     'WLB':  ('ILB_L', 'LB'),
     'MLB':  ('ILB_R', 'LB'),
     'LILB': ('ILB_L', 'LB'),
