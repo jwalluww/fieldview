@@ -246,16 +246,17 @@ body {
 .subs-pop {
   position: absolute; z-index: 50;
   background: var(--surface2); border: 1px solid var(--border2); border-radius: 8px;
-  padding: 6px; width: 150px; box-shadow: 0 8px 20px rgba(0,0,0,.4);
+  padding: 6px; width: 200px; max-height: 280px; overflow-y: auto;
+  box-shadow: 0 8px 20px rgba(0,0,0,.4);
   display: none;
 }
 .subs-pop.open { display: block; }
 .subs-pop-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 9px; letter-spacing: .5px; text-transform: uppercase; color: var(--text-dim); padding: 2px 4px 5px; }
-.subs-row { display: flex; align-items: center; gap: 6px; padding: 5px 4px; border-radius: 5px; cursor: pointer; }
+.subs-row { display: flex; align-items: center; gap: 8px; padding: 6px 5px; border-radius: 5px; cursor: pointer; }
 .subs-row:hover { background: var(--border); }
-.subs-dot { width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0; display:flex; align-items:center; justify-content:center; font-size:7px; font-weight:900; color:#05261a; font-family:'Barlow Condensed'; }
-.subs-name { font-size: 11px; font-weight: 600; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.subs-mpg { font-size: 9px; color: var(--text-dim); flex-shrink: 0; }
+.subs-dot { width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0; display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:900; color:#05261a; font-family:'Barlow Condensed'; }
+.subs-name { font-size: 13px; font-weight: 600; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.subs-mpg { font-size: 11px; color: var(--text-dim); flex-shrink: 0; }
 .subs-empty { font-size: 10px; color: var(--text-dim); padding: 4px; }
 
 /* ── RIGHT: full bench list, no scroll ── */
@@ -684,8 +685,12 @@ function renderBenchList() {
   // Goalies carry no timeOnIcePerGame (that's a skater-only stat) --
   // they sink to the bottom of a TOI-sorted list, which is fine for a
   // single-team roster with usually one backup goalie.
+  // Same organizational-roster filter as subEligiblePlayers() above --
+  // exclude anyone with zero games played this season, since they have
+  // no real stats and were making this list needlessly long.
   const bench = teamPlayers
     .filter(p => !startingIds.has(p.id))
+    .filter(p => (p.gamesPlayedSkater || 0) > 0 || (p.gamesPlayedGoalie || 0) > 0)
     .sort((a, b) => (b.toiPerGame || 0) - (a.toiPerGame || 0));
 
   if (!bench.length) {
@@ -753,6 +758,12 @@ function subEligiblePlayers(zone) {
     pool = teamPlayers.filter(p => p.positionCode === ZONE_POSCODE[zone]);
   }
   pool = pool.filter(p => !allStarterIds.has(p.id));
+  // Roster data includes the full organization -- prospects, AHL
+  // players, recent draft picks who've never appeared in an NHL game.
+  // These have no real stats to compare and just add noise to the
+  // substitution list, so exclude anyone with zero games played this
+  // season (skater or goalie) from being a sub candidate at all.
+  pool = pool.filter(p => (p.gamesPlayedSkater || 0) > 0 || (p.gamesPlayedGoalie || 0) > 0);
   if (zone === 'G') {
     return pool.sort((a,b) => (b.gamesStarted||0) - (a.gamesStarted||0));
   }
