@@ -623,6 +623,18 @@ function getStarter(zone) {
   const usedElsewhere = new Set(
     Object.entries(manualStarters).filter(([k]) => k !== zone).map(([, id]) => id)
   );
+  // D1 and D2 share the same position code ('D' in ZONE_POSCODE), so
+  // resolving them independently can pick the same top-TOI defenseman
+  // for both slots. When D2 is resolving naturally (no manual override
+  // on D1), also exclude whoever D1 naturally resolves to. Safe from
+  // recursion/cycles: D1's own resolution never looks at D2, and this
+  // only recurses one level deep. If D1 IS manually set, this branch is
+  // skipped entirely -- that case is already covered by the general
+  // manualStarters exclusion above.
+  if (zone === 'D2' && manualStarters['D1'] == null) {
+    const d1 = getStarter('D1');
+    if (d1) usedElsewhere.add(d1.id);
+  }
   const candidates = naturalCandidates(zone).filter(p => !usedElsewhere.has(p.id));
   if (!candidates.length) return null;
   if (zone === 'G') {
