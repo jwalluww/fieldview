@@ -570,13 +570,13 @@ body {
   </div>
 
   <div style="display:flex;gap:8px;align-items:center;margin-left:12px">
-    <div class="ctrl-group" id="unitGroup">
-      <button class="ctrl-btn active" onclick="setUnit('offense',this)">Offense</button>
-      <button class="ctrl-btn" onclick="setUnit('defense',this)">Defense</button>
+    <div class="ctrl-group" id="offPersonnelGroup">
+      <button class="ctrl-btn active" onclick="setOffPersonnel('11',this)">11 (3 WR)</button>
+      <button class="ctrl-btn" onclick="setOffPersonnel('12',this)">12 (2 TE)</button>
     </div>
-    <div class="ctrl-group" id="personnelGroup">
-      <button class="ctrl-btn active" onclick="setPersonnel('11',this)">11 (3 WR)</button>
-      <button class="ctrl-btn" onclick="setPersonnel('12',this)">12 (2 TE)</button>
+    <div class="ctrl-group" id="defPersonnelGroup">
+      <!-- rebuilt per-team by updateDefPersonnelButtons(), same
+           base/nickel key logic the old setUnit('defense', ...) used -->
     </div>
   </div>
 
@@ -594,7 +594,9 @@ body {
 
 <div class="field-outer">
   <div class="formation-bar">
-    <div class="formation-label" id="formationLabel">11 Personnel · Shotgun Spread</div>
+    <div class="formation-label" id="offFormationLabel">11 Personnel · Shotgun Spread</div>
+    <span class="formation-label" style="opacity:.5; letter-spacing:0; text-transform:none; font-size:13px;">vs</span>
+    <div class="formation-label" id="defFormationLabel">Base 4-3</div>
   </div>
 
   <div class="field-canvas">
@@ -776,8 +778,8 @@ const FORMATION_COORDS = {
 const TE2_COORD = {x:74, y:60};
 
 let currentTeam = 'BUF';
-let currentUnit = 'offense';
-let currentPersonnel = '11';
+let currentOffPersonnel = '11';
+let currentDefPersonnel = 'base43'; // real default computed per-team in loadTeam()
 let allPlayers = null; // flat array of every player, mapped from players_master.json — fetched once
 let teamData = null;   // { base_defense, players: [...] } for the currently selected team
 // Track current starters (overrides from depth chart default)
@@ -855,6 +857,7 @@ async function loadTeam(abbr) {
   const players = allPlayers.filter(p => p.team === abbr);
   teamData = { base_defense: players[0]?.base_defense || '', players };
   updateHeader();
+  updateDefPersonnelButtons();
   renderFormation();
   syncFieldHeight();
 }
@@ -862,8 +865,8 @@ async function loadTeam(abbr) {
 function syncURL() {
   const params = new URLSearchParams({
     team: currentTeam,
-    unit: currentUnit,
-    pkg: currentPersonnel
+    off: currentOffPersonnel,
+    def: currentDefPersonnel
   });
   history.replaceState(null, '', '?' + params.toString());
 }
@@ -877,12 +880,6 @@ function syncFieldHeight() {
 }
 
 window.addEventListener('resize', syncFieldHeight);
-// Call after render
-function renderFormation() {
-  // ... existing code ...
-  layer.innerHTML = html;
-  syncFieldHeight(); // add this line at the end
-}
 
 function getStarter(formationPos) {
   if (!teamData) return null;
@@ -1154,20 +1151,10 @@ function resolvePos(ourladsPos) {
   return POS_ALIAS[ourladsPos] || ourladsPos;
 }
 
-function renderFormation() {
-  const layer = document.getElementById('playersLayer');
-  if (!teamData) { layer.innerHTML = ''; return; }
-
-  const coordMap = FORMATION_COORDS[currentUnit]?.[currentPersonnel]
-                || FORMATION_COORDS[currentUnit]?.['11']
-                || {};
-
-  // First pass: resolve every slot's current player so dropdowns
-  // (built in the second pass) know the full on-field roster.
+function buildFormationSlots(coordMap, personnel) {
   const slots = [];
-  currentOnFieldIds = new Set();
   for (const [pos, coords] of Object.entries(coordMap)) {
-    if (pos === 'TE' && currentPersonnel === '12') {
+    if (pos === 'TE' && personnel === '12') {
       const te1 = getStarter('TE');
       const te2 = getStarter('TE2');
       if (te1) currentOnFieldIds.add(te1.id);
@@ -1181,6 +1168,21 @@ function renderFormation() {
     const forceFlip = ['QB', 'RB', 'FB', 'HB'].includes(pos);
     slots.push({ pos, coords, starter, flip: forceFlip || coords.y > 72 });
   }
+  return slots;
+}
+
+function renderFormation() {
+  const layer = document.getElementById('playersLayer');
+  if (!teamData) { layer.innerHTML = ''; return; }
+
+  const offCoordMap = FORMATION_COORDS.offense[currentOffPersonnel] || FORMATION_COORDS.offense['11'];
+  const defCoordMap = FORMATION_COORDS.defense[currentDefPersonnel] || {};
+
+  currentOnFieldIds = new Set();
+  const slots = [
+    ...buildFormationSlots(offCoordMap, currentOffPersonnel),
+    ...buildFormationSlots(defCoordMap, currentDefPersonnel),
+  ];
 
   let html = '';
   let delay = 0;
@@ -1192,53 +1194,46 @@ function renderFormation() {
   layer.innerHTML = html;
 }
 
-function setUnit(unit, btn) {
-  currentUnit = unit;
-  currentStarters = {};
-  document.querySelectorAll('#unitGroup .ctrl-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-
-  const pg = document.getElementById('personnelGroup');
-
-  if (unit === 'offense') {
-    pg.innerHTML = `
-      <button class="ctrl-btn active" onclick="setPersonnel('11',this)">11 (3 WR)</button>
-      <button class="ctrl-btn" onclick="setPersonnel('12',this)">12 (2 TE)</button>
-    `;
-    currentPersonnel = '11';
-    document.getElementById('formationLabel').textContent = '11 Personnel · Shotgun Spread';
-  } else {
-    const baseScheme = teamData?.base_defense || 'Base 4-3';
-    const isThreeFour = baseScheme.includes('3-4');
-    const baseKey    = isThreeFour ? 'base34'   : 'base43';
-    const nickelKey  = isThreeFour ? 'nickel34' : 'nickel';
-    const baseLabel  = isThreeFour ? '3-4 Base' : '4-3 Base';
-    pg.innerHTML = `
-      <button class="ctrl-btn active" onclick="setPersonnel('${baseKey}',this)">${baseLabel}</button>
-      <button class="ctrl-btn" onclick="setPersonnel('${nickelKey}',this)">Nickel</button>
-    `;
-    currentPersonnel = baseKey;
-    document.getElementById('formationLabel').textContent = baseScheme;
-  }
-
-  renderFormation();
-  syncURL(); // add this
-}
-
-function setPersonnel(pers, btn) {
-  currentPersonnel = pers;
-  document.querySelectorAll('#personnelGroup .ctrl-btn').forEach(b => b.classList.remove('active'));
+function setOffPersonnel(pers, btn) {
+  currentOffPersonnel = pers;
+  document.querySelectorAll('#offPersonnelGroup .ctrl-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   const labels = {
     '11': '11 Personnel · Shotgun Spread',
     '12': '12 Personnel · 2 TE Set',
-    'base43': teamData?.base_defense || 'Base 4-3',
-    'base34': teamData?.base_defense || 'Base 3-4',
-    'nickel': 'Nickel Package',
   };
-  document.getElementById('formationLabel').textContent = labels[pers] || pers;
+  document.getElementById('offFormationLabel').textContent = labels[pers] || pers;
   renderFormation();
-  syncURL(); // add this
+  syncURL();
+}
+
+function setDefPersonnel(pers, btn) {
+  currentDefPersonnel = pers;
+  document.querySelectorAll('#defPersonnelGroup .ctrl-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const isNickel = pers.startsWith('nickel');
+  document.getElementById('defFormationLabel').textContent =
+    isNickel ? 'Nickel Package' : (teamData?.base_defense || 'Base 4-3');
+  renderFormation();
+  syncURL();
+}
+
+// Called once per team load (teams differ on 3-4 vs 4-3 base scheme via
+// base_defense) -- replaces the key-computation that used to live
+// inside setUnit('defense', ...), since there's no more unit toggle to
+// trigger it from.
+function updateDefPersonnelButtons() {
+  const baseScheme = teamData?.base_defense || 'Base 4-3';
+  const isThreeFour = baseScheme.includes('3-4');
+  const baseKey    = isThreeFour ? 'base34'   : 'base43';
+  const nickelKey  = isThreeFour ? 'nickel34' : 'nickel';
+  const baseLabel  = isThreeFour ? '3-4 Base' : '4-3 Base';
+  document.getElementById('defPersonnelGroup').innerHTML = `
+    <button class="ctrl-btn active" onclick="setDefPersonnel('${baseKey}',this)">${baseLabel}</button>
+    <button class="ctrl-btn" onclick="setDefPersonnel('${nickelKey}',this)">Nickel</button>
+  `;
+  currentDefPersonnel = baseKey;
+  document.getElementById('defFormationLabel').textContent = baseScheme;
 }
 
 function buildTeamDropdown() {
@@ -1262,22 +1257,22 @@ async function selectTeam(abbr) {
   localStorage.setItem('fieldview_team', abbr);
   document.getElementById('teamsDropdown').classList.remove('open');
 
-  // Preserve whatever unit/package the user was already viewing — only the
-  // scheme-specific key (base43/base34, nickel/nickel34) may need to change
-  // for the new team, not the unit or base-vs-nickel choice itself.
-  const preservedUnit = currentUnit;
-  const wasSecondPersonnel = currentPersonnel === '12' || currentPersonnel.startsWith('nickel');
+  // Preserve the *choice* of Nickel on defense across a team switch --
+  // updateDefPersonnelButtons() inside loadTeam() already recomputes the
+  // correct scheme-specific key (base43/base34/nickel/nickel34) for the
+  // new team, so just re-click Nickel by button position if that's what
+  // was selected. Offense's 11/12 choice is preserved automatically
+  // since currentOffPersonnel isn't touched by a team switch.
+  const wasNickel = currentDefPersonnel.startsWith('nickel');
 
   await loadTeam(abbr);
 
-  const unitBtns = document.querySelectorAll('#unitGroup .ctrl-btn');
-  unitBtns[preservedUnit === 'defense' ? 1 : 0].click();
-  if (wasSecondPersonnel) {
-    const persBtns = document.querySelectorAll('#personnelGroup .ctrl-btn');
+  if (wasNickel) {
+    const persBtns = document.querySelectorAll('#defPersonnelGroup .ctrl-btn');
     if (persBtns[1]) persBtns[1].click();
   }
 
-  syncURL(); // add this
+  syncURL();
 }
 
 document.addEventListener('click', e => {
@@ -1291,24 +1286,24 @@ document.addEventListener('click', e => {
 
 const params = new URLSearchParams(window.location.search);
 const urlTeam = params.get('team');
-const urlUnit = params.get('unit');
-const urlPkg  = params.get('pkg');
+const urlOff  = params.get('off');
+const urlDef  = params.get('def');
 
 currentTeam = (urlTeam && TEAMS[urlTeam]) ? urlTeam : (localStorage.getItem('fieldview_team') || 'BUF');
 
 loadTeam(currentTeam).then(() => {
   syncFieldHeight();
-  if (urlUnit && urlPkg) {
-    const unitBtns = document.querySelectorAll('#unitGroup .ctrl-btn');
-    unitBtns.forEach(btn => {
-      if (btn.textContent.toLowerCase().includes(urlUnit)) btn.click();
+  if (urlOff) {
+    const offBtns = document.querySelectorAll('#offPersonnelGroup .ctrl-btn');
+    offBtns.forEach(btn => {
+      if (btn.getAttribute('onclick')?.includes(urlOff)) btn.click();
     });
-    setTimeout(() => {
-      const persBtns = document.querySelectorAll('#personnelGroup .ctrl-btn');
-      persBtns.forEach(btn => {
-        if (btn.getAttribute('onclick')?.includes(urlPkg)) btn.click();
-      });
-    }, 50);
+  }
+  if (urlDef) {
+    const defBtns = document.querySelectorAll('#defPersonnelGroup .ctrl-btn');
+    defBtns.forEach(btn => {
+      if (btn.getAttribute('onclick')?.includes(urlDef)) btn.click();
+    });
   }
 });
 </script>
