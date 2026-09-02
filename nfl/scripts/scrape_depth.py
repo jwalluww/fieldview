@@ -159,8 +159,17 @@ def enrich_positions(depth_chart, base_defense):
             continue
 
         # Defense — standard map
-        if ourlads_pos in slot_map:
-            standard_slot, standard_pos = slot_map[ourlads_pos]
+        # Some teams' OurLads scheme label doesn't match the position
+        # vocabulary their own depth chart actually uses -- Seattle is
+        # tagged "Base 3-4" but still labels linebackers SLB/WLB/MLB,
+        # the 4-3 convention, and SLOT_MAP_34 has no SLB key. Falling
+        # back to the other scheme's map before giving up avoids real
+        # players silently landing in the generic 'DEF' bucket instead
+        # of a real position.
+        other_map = SLOT_MAP_43 if is_34 else SLOT_MAP_34
+        effective_map = slot_map if ourlads_pos in slot_map else other_map
+        if ourlads_pos in effective_map:
+            standard_slot, standard_pos = effective_map[ourlads_pos]
             for p in players:
                 p['standard_slot'] = standard_slot
                 # NB: use Madden position if available, else default

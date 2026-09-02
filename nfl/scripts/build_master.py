@@ -25,6 +25,7 @@ NAME_ALIASES = {
     'Matt Hibner': None,
     'Mike Jackson': None,
     'Joshua Metellus': None,
+    'Greg Rousseau': 'Gregory Rousseau',
 }
 
 SKIP_POSITIONS = {'KR', 'PR', 'KO', 'PK', 'LS', 'K', 'P', 'PT', 'H'}
@@ -636,7 +637,12 @@ def build_master():
         entry_year = entry_year_by_gsis.get(gid) if gid else None
         entry['draft_year'] = entry_year
         entry['college'] = college_by_gsis.get(gid) if gid else None
-        entry['years_pro'] = (SEASON - entry_year) if entry_year is not None else None
+        # Clamp to 0 -- a player whose entry_year is the season that
+        # technically hasn't "started" yet by get_current_season()'s
+        # Sept 1 rule (e.g. drafted into next season, pipeline runs in
+        # late August) is still a real rookie with 0 years of
+        # experience, not a player with negative experience.
+        entry['years_pro'] = max(0, SEASON - entry_year) if entry_year is not None else None
         if entry_year is not None:
             draft_matched += 1
         # age (real calendar age, from nflreadpy's birth_date) replaces what
