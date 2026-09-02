@@ -481,12 +481,17 @@ function teamLogoUrl(abbr) {
 // generic defenseman slots, not L/R-specific -- confirmed nhl_roster's
 // position_code has no L-D/R-D split, just a single 'D' value.
 const ICE_ZONES = {
-  LW: { x: 22, y: 12 },
-  C:  { x: 50, y: 8 },
-  RW: { x: 78, y: 12 },
-  D1: { x: 30, y: 42 },
-  D2: { x: 70, y: 42 },
-  G:  { x: 50, y: 78 },
+  // Reordered by actual depth against the rink's real drawn markings
+  // (crease ~3-10%, near blue line 32%, center line 51%, far blue line
+  // 70%) -- goalie now sits in the crease, defense in the defensive
+  // zone between the crease and the blue line, forwards up near center
+  // ice, instead of the previous reversed layout.
+  G:  { x: 50, y: 7 },
+  D1: { x: 30, y: 26 },
+  D2: { x: 70, y: 26 },
+  LW: { x: 22, y: 55 },
+  C:  { x: 50, y: 50 },
+  RW: { x: 78, y: 55 },
 };
 const ZONE_ORDER = ['LW','C','RW','D1','D2','G'];
 const ZONE_LABEL = { LW: 'LW', C: 'C', RW: 'RW', D1: 'D', D2: 'D', G: 'G' };
