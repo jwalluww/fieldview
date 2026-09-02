@@ -167,6 +167,19 @@ body {
   color: var(--text-dim);
   margin-bottom: 10px;
 }
+.formation-select {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: none;
+  letter-spacing: normal;
+  cursor: pointer;
+}
 
 .court-canvas {
   position: relative;
@@ -371,7 +384,15 @@ body {
 <div class="wrap">
   <div class="left-col">
     <div class="court-label">
-      <span>Starting XI (4-3-3)</span>
+      <span id="formationLabel">Starting XI (4-3-3)</span>
+      <select id="formationSelect" class="formation-select" onchange="setFormation(this.value)">
+        <option value="433">4-3-3</option>
+        <option value="442">4-4-2</option>
+        <option value="352">3-5-2</option>
+        <option value="343">3-4-3</option>
+        <option value="451">4-5-1</option>
+        <option value="532">5-3-2</option>
+      </select>
     </div>
 
     <div class="court-canvas">
@@ -476,33 +497,65 @@ function teamLogoUrl(abbr) {
 // each pool their own 4/3/3 players by minutes) --
 // same convention as NHL's forward trio / D1-D2 pair.
 // ══════════════════════════════════════════
-const PITCH_ZONES = {
-  GK:   { x: 50, y: 90 },
-  DEF1: { x: 14, y: 74 },
-  DEF2: { x: 38, y: 79 },
-  DEF3: { x: 62, y: 79 },
-  DEF4: { x: 86, y: 74 },
-  MID1: { x: 25, y: 50 },
-  MID2: { x: 50, y: 55 },
-  MID3: { x: 75, y: 50 },
-  FWD1: { x: 18, y: 20 },
-  FWD2: { x: 50, y: 13 },
-  FWD3: { x: 82, y: 20 },
+// Formation registry -- each formation is just a different set of
+// zones/coordinates. computeStarters()/rankedGroupPool()/
+// subEligiblePlayers() below all iterate over whatever ZONE_ORDER
+// currently is, so none of that logic needs to know formations exist
+// at all -- switching formations just swaps which zone set is active.
+const FORMATIONS = {
+  '433': { label: '4-3-3', zones: {
+    GK:   { x: 50, y: 90 },
+    DEF1: { x: 14, y: 74 }, DEF2: { x: 38, y: 79 }, DEF3: { x: 62, y: 79 }, DEF4: { x: 86, y: 74 },
+    MID1: { x: 25, y: 50 }, MID2: { x: 50, y: 55 }, MID3: { x: 75, y: 50 },
+    FWD1: { x: 18, y: 20 }, FWD2: { x: 50, y: 13 }, FWD3: { x: 82, y: 20 },
+  }},
+  '442': { label: '4-4-2', zones: {
+    GK:   { x: 50, y: 90 },
+    DEF1: { x: 14, y: 74 }, DEF2: { x: 38, y: 79 }, DEF3: { x: 62, y: 79 }, DEF4: { x: 86, y: 74 },
+    MID1: { x: 12, y: 48 }, MID2: { x: 38, y: 52 }, MID3: { x: 62, y: 52 }, MID4: { x: 88, y: 48 },
+    FWD1: { x: 35, y: 16 }, FWD2: { x: 65, y: 16 },
+  }},
+  '352': { label: '3-5-2', zones: {
+    GK:   { x: 50, y: 90 },
+    DEF1: { x: 25, y: 78 }, DEF2: { x: 50, y: 82 }, DEF3: { x: 75, y: 78 },
+    MID1: { x: 8,  y: 52 }, MID2: { x: 30, y: 56 }, MID3: { x: 50, y: 58 }, MID4: { x: 70, y: 56 }, MID5: { x: 92, y: 52 },
+    FWD1: { x: 35, y: 16 }, FWD2: { x: 65, y: 16 },
+  }},
+  '343': { label: '3-4-3', zones: {
+    GK:   { x: 50, y: 90 },
+    DEF1: { x: 25, y: 78 }, DEF2: { x: 50, y: 82 }, DEF3: { x: 75, y: 78 },
+    MID1: { x: 12, y: 50 }, MID2: { x: 38, y: 54 }, MID3: { x: 62, y: 54 }, MID4: { x: 88, y: 50 },
+    FWD1: { x: 18, y: 18 }, FWD2: { x: 50, y: 12 }, FWD3: { x: 82, y: 18 },
+  }},
+  '451': { label: '4-5-1', zones: {
+    GK:   { x: 50, y: 90 },
+    DEF1: { x: 14, y: 74 }, DEF2: { x: 38, y: 79 }, DEF3: { x: 62, y: 79 }, DEF4: { x: 86, y: 74 },
+    MID1: { x: 8,  y: 48 }, MID2: { x: 29, y: 53 }, MID3: { x: 50, y: 56 }, MID4: { x: 71, y: 53 }, MID5: { x: 92, y: 48 },
+    FWD1: { x: 50, y: 14 },
+  }},
+  '532': { label: '5-3-2', zones: {
+    GK:   { x: 50, y: 90 },
+    DEF1: { x: 8,  y: 70 }, DEF2: { x: 28, y: 78 }, DEF3: { x: 50, y: 81 }, DEF4: { x: 72, y: 78 }, DEF5: { x: 92, y: 70 },
+    MID1: { x: 25, y: 50 }, MID2: { x: 50, y: 55 }, MID3: { x: 75, y: 50 },
+    FWD1: { x: 35, y: 16 }, FWD2: { x: 65, y: 16 },
+  }},
 };
-const ZONE_ORDER = ['GK','DEF1','DEF2','DEF3','DEF4','MID1','MID2','MID3','FWD1','FWD2','FWD3'];
 
-// Zone -> FPL's coarse position_group (element_type resolved to
-// GKP/DEF/MID/FWD in epl_players_master.json). Gates BOTH starting-XI
-// assignment (ranked by minutes within group, positionless within it)
-// AND substitution eligibility -- same-group subbing only, no
-// positionless subbing across groups. Confirmed real field values live
-// against epl_players_master.json before coding this.
-const ZONE_GROUP = {
-  GK: 'GKP',
-  DEF1: 'DEF', DEF2: 'DEF', DEF3: 'DEF', DEF4: 'DEF',
-  MID1: 'MID', MID2: 'MID', MID3: 'MID',
-  FWD1: 'FWD', FWD2: 'FWD', FWD3: 'FWD',
-};
+// Derives the position-group from a zone's name prefix instead of
+// hand-maintaining a separate ZONE_GROUP dict per formation (6 of
+// those would just be six ways to write the same GK/DEF/MID/FWD
+// pattern with more chances for a typo).
+function groupForZone(zone) {
+  if (zone === 'GK') return 'GKP';
+  if (zone.startsWith('DEF')) return 'DEF';
+  if (zone.startsWith('MID')) return 'MID';
+  return 'FWD';
+}
+
+let currentFormation = localStorage.getItem('fieldview_epl_formation') || '433';
+if (!FORMATIONS[currentFormation]) currentFormation = '433';
+let PITCH_ZONES = FORMATIONS[currentFormation].zones;
+let ZONE_ORDER = Object.keys(PITCH_ZONES);
 
 let currentTeam = 'ARS';
 let allPlayers = [];
@@ -613,7 +666,7 @@ function computeStarters() {
 
   for (const zone of ZONE_ORDER) {
     if (starters[zone]) continue;
-    const pool = rankedGroupPool(ZONE_GROUP[zone]).filter(p => !claimed.has(p.id));
+    const pool = rankedGroupPool(groupForZone(zone)).filter(p => !claimed.has(p.id));
     starters[zone] = pool.length ? pool[0] : null;
     if (starters[zone]) claimed.add(starters[zone].id);
   }
@@ -716,7 +769,7 @@ let openPopoverPos = null;
 
 function subEligiblePlayers(zone) {
   const allStarterIds = new Set(Object.values(currentStarters).filter(Boolean).map(p => p.id));
-  const group = ZONE_GROUP[zone];
+  const group = groupForZone(zone);
   return teamPlayers
     .filter(p => p.positionGroup === group && !allStarterIds.has(p.id))
     .sort((a,b) => (b.minutes||0) - (a.minutes||0));
@@ -724,7 +777,7 @@ function subEligiblePlayers(zone) {
 
 const GROUP_LABEL = { GKP: 'goalkeepers', DEF: 'defenders', MID: 'midfielders', FWD: 'forwards' };
 function subsLabel(zone) {
-  return `Sub in (${GROUP_LABEL[ZONE_GROUP[zone]] || ZONE_GROUP[zone]})`;
+  return `Sub in (${GROUP_LABEL[groupForZone(zone)] || groupForZone(zone)})`;
 }
 
 function attachSubsPopoverHandlers(layer) {
@@ -856,6 +909,21 @@ function selectTeam(abbr) {
   loadTeam(currentTeam);
 }
 
+function setFormation(key) {
+  if (!FORMATIONS[key] || key === currentFormation) return;
+  currentFormation = key;
+  PITCH_ZONES = FORMATIONS[key].zones;
+  ZONE_ORDER = Object.keys(PITCH_ZONES);
+  manualStarters = {};
+  localStorage.setItem('fieldview_epl_formation', key);
+  document.getElementById('formationLabel').textContent = 'Starting XI (' + FORMATIONS[key].label + ')';
+  hidePopup();
+  document.getElementById('subsPop').classList.remove('open');
+  openPopoverPos = null;
+  renderPitch();
+  renderBenchList();
+}
+
 document.addEventListener('click', (e) => {
   if (!e.target.closest('.team-selector-wrap')) {
     document.getElementById('teamsDropdown').classList.remove('open');
@@ -870,6 +938,8 @@ document.addEventListener('click', (e) => {
 // INIT
 // ══════════════════════════════════════════
 buildTeamsDropdown();
+document.getElementById('formationSelect').value = currentFormation;
+document.getElementById('formationLabel').textContent = 'Starting XI (' + FORMATIONS[currentFormation].label + ')';
 loadTeam(currentTeam);
 </script>
 </body>
