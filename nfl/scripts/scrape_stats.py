@@ -102,9 +102,22 @@ def build_stat_summary(row, position_group):
     return {k: v for k, v in stats.items() if v not in (0, None, "0/0")}
 
 def main():
+    actual_season = SEASON
     print(f"Loading {SEASON} weekly data...")
-    weekly = nfl.load_player_stats([SEASON], 'reg')
-    print(f"  {len(weekly)} rows loaded")
+    try:
+        weekly = nfl.load_player_stats([SEASON], 'reg')
+    except ConnectionError as e:
+        # nflverse doesn't publish a season's stats file until that
+        # season has actually started playing games -- SEASON flips on
+        # Sept 1 (season_utils.get_current_season()), but the real file
+        # doesn't exist until Week 1 games are played. Same underlying
+        # gap already handled for NHL's resolve_seasons(). Fall back to
+        # the most recently completed season's real stats instead of
+        # crashing the whole pipeline.
+        print(f"  {SEASON} stats not published yet ({e}) -- falling back to {SEASON - 1}")
+        actual_season = SEASON - 1
+        weekly = nfl.load_player_stats([actual_season], 'reg')
+    print(f"  {len(weekly)} rows loaded (season {actual_season})")
 
     # Aggregate to season totals per player
     agg = {}
@@ -173,7 +186,7 @@ def main():
 
                 if sp:
                     player["stats"] = build_stat_summary(sp, sp.get("position_group", ""))
-                    player["stats_season"] = SEASON
+                    player["stats_season"] = actual_season
                     matched += 1
                 else:
                     player["stats"] = {}
