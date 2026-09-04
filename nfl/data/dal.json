@@ -167,6 +167,17 @@
         "cap_number": "$5,767,000",
         "stats": {},
         "stats_season": 2025
+      },
+      {
+        "name": "Nick Leverett",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "C",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RG": [
@@ -268,6 +279,28 @@
           "YAC": 82
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Michael Trigg",
+        "depth": 4,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "James Mitchell",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "QB": [
@@ -291,13 +324,24 @@
         "stats_season": 2025
       },
       {
-        "name": "Joe Milton III",
+        "name": "Sam Howell",
         "depth": 2,
+        "injured": false,
+        "attainment": "U/Phi",
+        "standard_slot": "QB",
+        "standard_pos": "QB",
+        "cap_number": "$2,500,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Joe Milton III",
+        "depth": 3,
         "injured": false,
         "attainment": "T/NE",
         "standard_slot": "QB",
         "standard_pos": "QB",
-        "cap_number": "$1,075,000",
+        "cap_number": null,
         "stats": {
           "CMP": 15,
           "ATT": 24,
@@ -307,17 +351,6 @@
           "RU YDS": 50
         },
         "stats_season": 2025
-      },
-      {
-        "name": "Sam Howell",
-        "depth": 3,
-        "injured": false,
-        "attainment": "U/Phi",
-        "standard_slot": "QB",
-        "standard_pos": "QB",
-        "cap_number": "$2,500,000",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "RB": [
@@ -356,6 +389,28 @@
           "TGT": 5
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Emari Demercado",
+        "depth": 3,
+        "injured": false,
+        "attainment": "W/KC",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Israel Abanikanda",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "FB": [
@@ -444,6 +499,39 @@
         "standard_slot": "RE",
         "standard_pos": "DI",
         "cap_number": "$1,941,176",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Tommy Dunn",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Elijah Garcia",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Adedayo Odeleye",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF25*",
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -766,6 +854,126 @@
         "cap_number": "$4,100,000",
         "stats": {
           "FG%": "\u2014"
+        },
+        "stats_season": 2025
+      }
+    ],
+    "WR": [
+      {
+        "name": "Anthony Smith",
+        "depth": 1,
+        "injured": false,
+        "attainment": "26/7",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": 2025
+      },
+      {
+        "name": "Jordan Hudson",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "OT": [
+      {
+        "name": "Marcellus Johnson",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Wanya Morris",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "ED": [
+      {
+        "name": "Isaiah Land",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 45,
+          "INTs": 1,
+          "PD": 6,
+          "TFL": 3
+        },
+        "stats_season": 2025
+      }
+    ],
+    "LB": [
+      {
+        "name": "Justin Barron",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Curtis Robinson",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/SF",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "CB": [
+      {
+        "name": "Derion Kendrick",
+        "depth": 1,
+        "injured": false,
+        "attainment": "U/LAR",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Reddy Steward",
+        "depth": 2,
+        "injured": false,
+        "attainment": "W/Min",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 40,
+          "SACKS": 1.5,
+          "PD": 3,
+          "TFL": 5,
+          "QB HIT": 2
         },
         "stats_season": 2025
       }

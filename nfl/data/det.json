@@ -124,13 +124,13 @@
         "stats_season": null
       },
       {
-        "name": "Seth Mclaughlin",
+        "name": "Elijah Klein",
         "depth": 2,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "C",
         "standard_pos": "OL",
-        "cap_number": "$885,000",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -219,13 +219,35 @@
         "stats_season": 2025
       },
       {
-        "name": "Jackson Meeks",
+        "name": "Tyler Conklin",
         "depth": 3,
+        "injured": false,
+        "attainment": "U/LAC",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": "$1,075,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Jackson Meeks",
+        "depth": 4,
         "injured": false,
         "attainment": "CF25",
         "standard_slot": "TE",
         "standard_pos": "TE",
         "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Thomas Gordon",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -260,6 +282,17 @@
         "cap_number": "$1,200,000",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Luke Altmyer",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "QB",
+        "standard_pos": "QB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RB": [
@@ -282,19 +315,8 @@
         "stats_season": 2025
       },
       {
-        "name": "Isiah Pacheco",
-        "depth": 2,
-        "injured": true,
-        "attainment": "U/KC",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": "$1,810,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Jacob Saylors",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "SF25",
         "standard_slot": "RB",
@@ -308,7 +330,7 @@
       },
       {
         "name": "Sione Vaki",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "24/4",
         "standard_slot": "RB",
@@ -319,17 +341,6 @@
           "RU YDS": 4
         },
         "stats_season": 2025
-      },
-      {
-        "name": "Jabari Small",
-        "depth": 5,
-        "injured": false,
-        "attainment": "SF25",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "LDE": [
@@ -741,6 +752,178 @@
         "cap_number": "$3,975,000",
         "stats": {
           "FG%": "\u2014"
+        },
+        "stats_season": 2025
+      }
+    ],
+    "WR": [
+      {
+        "name": "Lucky Jackson",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Tom Kennedy",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF19",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {
+          "TGT": 4,
+          "REC": 4,
+          "YDS": 36,
+          "YAC": 4
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Dominic Lovett",
+        "depth": 3,
+        "injured": false,
+        "attainment": "25/7",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": 2025
+      }
+    ],
+    "OT": [
+      {
+        "name": "Devin Cochran",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "OG": [
+      {
+        "name": "Mason Miller",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "OG",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "ED": [
+      {
+        "name": "Anthony Lucas",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "DT": [
+      {
+        "name": "Chris Smith",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF23",
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Ben Stille",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Tyre West",
+        "depth": 3,
+        "injured": false,
+        "attainment": "26/7",
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "LB": [
+      {
+        "name": "Amen Ogbongbemiga",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CC/Chi",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Joe Bachie",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/Ten",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "CB": [
+      {
+        "name": "Aamaris Brown",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TGT": 172,
+          "REC": 117,
+          "YDS": 1401,
+          "TDs": 11,
+          "YAC": 570,
+          "CAR": 3
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Nick Whiteside",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 3,
+          "PD": 3
         },
         "stats_season": 2025
       }

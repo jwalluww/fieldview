@@ -154,6 +154,17 @@
         "cap_number": "$1,539,669",
         "stats": {},
         "stats_season": 2025
+      },
+      {
+        "name": "Kyle Hergel",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "C",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RG": [
@@ -252,13 +263,24 @@
         "stats_season": null
       },
       {
-        "name": "Hayden Large",
+        "name": "Stephen Carlson",
         "depth": 4,
         "injured": false,
-        "attainment": "CF26",
+        "attainment": "U/Cle",
         "standard_slot": "TE",
         "standard_pos": "TE",
-        "cap_number": "$887,500",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Qadir Ismail",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -333,7 +355,7 @@
       {
         "name": "Kyle Monangai",
         "depth": 2,
-        "injured": false,
+        "injured": true,
         "attainment": "25/7",
         "standard_slot": "RB",
         "standard_pos": "RB",
@@ -361,6 +383,28 @@
           "RU YDS": 17
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Salvon Ahmed",
+        "depth": 4,
+        "injured": false,
+        "attainment": "U/Ind",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Zavier Scott",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LDE": [
@@ -424,13 +468,13 @@
         "stats_season": 2025
       },
       {
-        "name": "Jordan Van Den Berg",
+        "name": "James Lynch",
         "depth": 2,
         "injured": false,
-        "attainment": "26/6",
+        "attainment": "U/Ten",
         "standard_slot": "LDT",
         "standard_pos": "DI",
-        "cap_number": "$942,902",
+        "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
       },
@@ -466,6 +510,17 @@
         "standard_slot": "RDT",
         "standard_pos": "DI",
         "cap_number": "$1,255,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Jordan Van Den Berg",
+        "depth": 3,
+        "injured": false,
+        "attainment": "26/6",
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": "$942,902",
         "stats": {},
         "stats_season": null
       }
@@ -555,8 +610,19 @@
         "stats_season": null
       },
       {
-        "name": "Keyshaun Elliott",
+        "name": "Jack Sanborn",
         "depth": 2,
+        "injured": false,
+        "attainment": "U/Dal",
+        "standard_slot": "MIKE",
+        "standard_pos": "LB",
+        "cap_number": "$1,075,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Keyshaun Elliott",
+        "depth": 3,
         "injured": false,
         "attainment": "26/5",
         "standard_slot": "MIKE",
@@ -623,19 +689,8 @@
     ],
     "FS": [
       {
-        "name": "Coby Bryant",
-        "depth": 1,
-        "injured": true,
-        "attainment": "U/Sea",
-        "standard_slot": "FS",
-        "standard_pos": "S",
-        "cap_number": "$5,960,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Xavier Woods",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "CC/Ten",
         "standard_slot": "FS",
@@ -646,7 +701,7 @@
       },
       {
         "name": "Skyler Thomas",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "FS",
@@ -679,7 +734,7 @@
         "attainment": "T/Atl",
         "standard_slot": "RCB",
         "standard_pos": "CB",
-        "cap_number": "$3,674,000",
+        "cap_number": "$2,149,000",
         "stats": {},
         "stats_season": null
       }
@@ -736,6 +791,140 @@
         "cap_number": "$1,261,975",
         "stats": {
           "FG%": "\u2014"
+        },
+        "stats_season": 2025
+      }
+    ],
+    "WR": [
+      {
+        "name": "Kaden Davis",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Scotty Miller",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/Pit",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Jp Richardson",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "OT": [
+      {
+        "name": "Christian Jones",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": 2025
+      }
+    ],
+    "OG": [
+      {
+        "name": "Caden Barnett",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "OG",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "ED": [
+      {
+        "name": "Marcus Davenport",
+        "depth": 1,
+        "injured": false,
+        "attainment": "U/Det",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "LB": [
+      {
+        "name": "Wayne Matthews III",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Buddy Johnson",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 46,
+          "SACKS": 3.0,
+          "INTs": 2,
+          "PD": 4,
+          "TFL": 5,
+          "QB HIT": 6
+        },
+        "stats_season": 2025
+      }
+    ],
+    "CB": [
+      {
+        "name": "Deantre Prince",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "S": [
+      {
+        "name": "Marlen Sewell",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "S",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 33,
+          "TFL": 3
         },
         "stats_season": 2025
       }

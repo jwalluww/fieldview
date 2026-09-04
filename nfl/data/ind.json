@@ -191,17 +191,6 @@
         "cap_number": "$1,235,317",
         "stats": {},
         "stats_season": 2025
-      },
-      {
-        "name": "Luke Tenuta",
-        "depth": 2,
-        "injured": false,
-        "attainment": "SF25",
-        "standard_slot": "RT",
-        "standard_pos": "OL",
-        "cap_number": "$1,155,000",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "TE": [
@@ -256,6 +245,17 @@
           "YAC": 9
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Pharaoh Brown",
+        "depth": 4,
+        "injured": false,
+        "attainment": "U/Arz",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "QB": [
@@ -279,8 +279,24 @@
         "stats_season": 2025
       },
       {
-        "name": "Riley Leonard",
+        "name": "Anthony Richardson Sr.",
         "depth": 2,
+        "injured": false,
+        "attainment": "23/1",
+        "standard_slot": "QB",
+        "standard_pos": "QB",
+        "cap_number": "$10,816,282",
+        "stats": {
+          "CMP": 1,
+          "ATT": 2,
+          "YDS": 9,
+          "RU YDS": -1
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Riley Leonard",
+        "depth": 3,
         "injured": false,
         "attainment": "25/6",
         "standard_slot": "QB",
@@ -294,22 +310,6 @@
           "INTs": 3,
           "SACKS": 2,
           "RU YDS": 27
-        },
-        "stats_season": 2025
-      },
-      {
-        "name": "Anthony Richardson Sr.",
-        "depth": 3,
-        "injured": false,
-        "attainment": "23/1",
-        "standard_slot": "QB",
-        "standard_pos": "QB",
-        "cap_number": "$10,816,282",
-        "stats": {
-          "CMP": 1,
-          "ATT": 2,
-          "YDS": 9,
-          "RU YDS": -1
         },
         "stats_season": 2025
       }
@@ -358,6 +358,28 @@
           "TGT": 2
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Anderson Castle",
+        "depth": 4,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Davon Booth",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": "$247,500",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LDE": [
@@ -469,6 +491,17 @@
         "standard_slot": "RDT",
         "standard_pos": "DI",
         "cap_number": "$1,262,500",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Cam Ball",
+        "depth": 4,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -713,6 +746,17 @@
         "cap_number": "$1,464,549",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Kapena Gushiken",
+        "depth": 2,
+        "injured": false,
+        "attainment": "W/Phi",
+        "standard_slot": "NB",
+        "standard_pos": "CB",
+        "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "PT": [
@@ -742,6 +786,170 @@
         "stats": {
           "FG%": "\u2014"
         },
+        "stats_season": 2025
+      }
+    ],
+    "WR": [
+      {
+        "name": "Anthony Gould",
+        "depth": 1,
+        "injured": false,
+        "attainment": "24/5",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {
+          "TGT": 2,
+          "REC": 2,
+          "YDS": 6,
+          "YAC": 8
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Nick Westbrook-ikhine",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CC/Mia",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "OT": [
+      {
+        "name": "Roy Mbaeteka",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF26*",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Nolan Rucci",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Luke Tenuta",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Reid Holskey",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "OG": [
+      {
+        "name": "Josh Sills",
+        "depth": 1,
+        "injured": false,
+        "attainment": "W/Phi",
+        "standard_slot": "OG",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "ED": [
+      {
+        "name": "Mitchell Melton",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "LB": [
+      {
+        "name": "West Weeks",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "CB": [
+      {
+        "name": "Rob Carter Jr.",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Kenneth Harris",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "S": [
+      {
+        "name": "Daniel Scott",
+        "depth": 1,
+        "injured": false,
+        "attainment": "23/5",
+        "standard_slot": "S",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 2
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Trey Washington",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "S",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
         "stats_season": 2025
       }
     ],

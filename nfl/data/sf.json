@@ -160,6 +160,17 @@
         "cap_number": "$1,395,000",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Drake Nugent",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF24",
+        "standard_slot": "C",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RG": [
@@ -264,6 +275,17 @@
           "TGT": 1
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Khalil Dinkins",
+        "depth": 5,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "QB": [
@@ -355,6 +377,17 @@
         "standard_slot": "RB",
         "standard_pos": "RB",
         "cap_number": "$1,241,686",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Sincere Mccormick",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -523,21 +556,8 @@
         "stats_season": null
       },
       {
-        "name": "Nick Martin",
-        "depth": 2,
-        "injured": false,
-        "attainment": "25/3",
-        "standard_slot": "WILL",
-        "standard_pos": "LB",
-        "cap_number": "$1,491,288",
-        "stats": {
-          "TKL": 8
-        },
-        "stats_season": 2025
-      },
-      {
         "name": "Garret Wallow",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "W/Den",
         "standard_slot": "WILL",
@@ -677,6 +697,22 @@
           "TFL": 1
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Ashtyn Davis",
+        "depth": 3,
+        "injured": false,
+        "attainment": "U/Mia",
+        "standard_slot": "SS",
+        "standard_pos": "S",
+        "cap_number": "$1,445,000",
+        "stats": {
+          "TKL": 10,
+          "SACKS": 0.5,
+          "TFL": 4,
+          "QB HIT": 2
+        },
+        "stats_season": 2025
       }
     ],
     "FS": [
@@ -756,15 +792,196 @@
           "QB HIT": 2
         },
         "stats_season": 2025
+      }
+    ],
+    "PT": [
+      {
+        "name": "Corliss Waitman",
+        "depth": 1,
+        "injured": false,
+        "attainment": "U/Pit",
+        "standard_slot": "PT",
+        "standard_pos": "DEF",
+        "cap_number": "$1,075,000",
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "H": [
+      {
+        "name": "Corliss Waitman",
+        "depth": 1,
+        "injured": false,
+        "attainment": "U/Pit",
+        "standard_slot": "H",
+        "standard_pos": "DEF",
+        "cap_number": "$1,075,000",
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "WR": [
+      {
+        "name": "Khadarel Hodge",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       },
       {
-        "name": "Nate Hobbs",
+        "name": "Will Pauling",
         "depth": 2,
         "injured": false,
-        "attainment": "CC/GB",
-        "standard_slot": "NB",
-        "standard_pos": "CB",
-        "cap_number": "$3,380,000",
+        "attainment": "CF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Wesley Grimes",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "OT": [
+      {
+        "name": "Isaac Alarcon",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF24*",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Foster Sarell",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "ED": [
+      {
+        "name": "Ogbo Okoronkwo",
+        "depth": 1,
+        "injured": false,
+        "attainment": "U/Phi",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Vj Anthony",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "DT": [
+      {
+        "name": "Sebastian Valdez",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Kevin Givens",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF19",
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {
+          "TKL": 1
+        },
+        "stats_season": 2025
+      }
+    ],
+    "LB": [
+      {
+        "name": "Jalen Graham",
+        "depth": 1,
+        "injured": false,
+        "attainment": "P/Was",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": 2025
+      }
+    ],
+    "CB": [
+      {
+        "name": "Jakob Robinson",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TGT": 35,
+          "REC": 22,
+          "YDS": 276,
+          "TDs": 1,
+          "YAC": 36,
+          "CAR": 1
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Brandon Codrington",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "S": [
+      {
+        "name": "Jalen Stroman",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "S",
+        "standard_pos": "DEF",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }

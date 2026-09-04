@@ -113,17 +113,6 @@
         "cap_number": "$1,798,753",
         "stats": {},
         "stats_season": 2025
-      },
-      {
-        "name": "Nathan Thomas",
-        "depth": 3,
-        "injured": false,
-        "attainment": "T/Dal",
-        "standard_slot": "LT",
-        "standard_pos": "OL",
-        "cap_number": "$1,005,000",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "LG": [
@@ -172,6 +161,17 @@
         "cap_number": "$3,674,000",
         "stats": {},
         "stats_season": 2025
+      },
+      {
+        "name": "Ka'ena De Cambra",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "C",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RG": [
@@ -211,26 +211,13 @@
         "stats_season": 2025
       },
       {
-        "name": "Braden Smith",
+        "name": "Nate Thomas",
         "depth": 2,
-        "injured": true,
-        "attainment": "U/Ind",
-        "standard_slot": "RT",
-        "standard_pos": "OL",
-        "cap_number": "$5,007,353",
-        "stats": {
-          "TKL": 3
-        },
-        "stats_season": 2025
-      },
-      {
-        "name": "Sam Hagen",
-        "depth": 3,
         "injured": false,
-        "attainment": "CF26",
+        "attainment": "T/Dal",
         "standard_slot": "RT",
         "standard_pos": "OL",
-        "cap_number": "$891,666",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -291,6 +278,34 @@
           "CAR": 4
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Brevin Jordan",
+        "depth": 5,
+        "injured": false,
+        "attainment": "21/5",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": "$1,170,000",
+        "stats": {
+          "CAR": 43,
+          "RU YDS": 193,
+          "REC": 7,
+          "RE YDS": 34,
+          "TGT": 7
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Zaire Mitchell-paden",
+        "depth": 6,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "QB": [
@@ -362,6 +377,34 @@
           "TGT": 36
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Jawhar Jordan",
+        "depth": 3,
+        "injured": false,
+        "attainment": "24/6",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {
+          "CAR": 43,
+          "RU YDS": 193,
+          "REC": 7,
+          "RE YDS": 34,
+          "TGT": 7
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Noah Whittington",
+        "depth": 4,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "FB": [
@@ -405,6 +448,17 @@
         "standard_slot": "LE",
         "standard_pos": "EDGE",
         "cap_number": "$5,264,706",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Sabastian Harsh",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "LE",
+        "standard_pos": "EDGE",
+        "cap_number": "$890,000",
         "stats": {},
         "stats_season": null
       }
@@ -501,13 +555,13 @@
         "stats_season": 2025
       },
       {
-        "name": "Sabastian Harsh",
+        "name": "Dominique Robinson",
         "depth": 2,
         "injured": false,
-        "attainment": "CF26",
+        "attainment": "U/Chi",
         "standard_slot": "RE",
         "standard_pos": "EDGE",
-        "cap_number": "$890,000",
+        "cap_number": "$1,877,941",
         "stats": {},
         "stats_season": null
       }
@@ -758,6 +812,169 @@
         "standard_slot": "H",
         "standard_pos": "DEF",
         "cap_number": "$1,005,000",
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "WR": [
+      {
+        "name": "Lewis Bond",
+        "depth": 1,
+        "injured": false,
+        "attainment": "26/6",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Josh Kelly",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Daniel Sobkowicz",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Mitchell Tinsley",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "OT": [
+      {
+        "name": "James Neal III",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Max Pircher",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26*",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "ED": [
+      {
+        "name": "Chris Braswell",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "DT": [
+      {
+        "name": "Dominic Bailey",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Junior Tafuna",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "LB": [
+      {
+        "name": "Jamal Hill",
+        "depth": 1,
+        "injured": false,
+        "attainment": "24/6",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 5
+        },
+        "stats_season": 2025
+      }
+    ],
+    "CB": [
+      {
+        "name": "Bryce Hall",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Alijah Huzzie",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 3,
+          "INTs": 1,
+          "PD": 1
+        },
+        "stats_season": 2025
+      }
+    ],
+    "S": [
+      {
+        "name": "George Odum",
+        "depth": 1,
+        "injured": false,
+        "attainment": "U/Ind",
+        "standard_slot": "S",
+        "standard_pos": "DEF",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }

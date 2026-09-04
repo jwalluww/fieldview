@@ -54,7 +54,7 @@
         "attainment": "U/Buf",
         "standard_slot": "RWR",
         "standard_pos": "WR",
-        "cap_number": "$5,550,000",
+        "cap_number": "$4,950,000",
         "stats": {
           "TGT": 65,
           "REC": 46,
@@ -170,9 +170,20 @@
         "attainment": "P/LV",
         "standard_slot": "C",
         "standard_pos": "OL",
-        "cap_number": "$1,966,666",
+        "cap_number": "$1,370,000",
         "stats": {},
         "stats_season": 2025
+      },
+      {
+        "name": "Jacob Rizy",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "C",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RG": [
@@ -260,6 +271,28 @@
         "standard_slot": "TE",
         "standard_pos": "TE",
         "cap_number": "$890,833",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Cameron Latu",
+        "depth": 4,
+        "injured": false,
+        "attainment": "W/Phi",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": "$1,005,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Shane Zylstra",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -352,6 +385,28 @@
         "standard_slot": "RB",
         "standard_pos": "RB",
         "cap_number": "$1,005,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Hassan Haskins",
+        "depth": 4,
+        "injured": false,
+        "attainment": "U/LAC",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Lan Larison",
+        "depth": 5,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -501,21 +556,21 @@
         "stats_season": 2025
       },
       {
-        "name": "K.j. Britt",
+        "name": "Darius Muasau",
         "depth": 2,
         "injured": false,
-        "attainment": "U/Mia",
+        "attainment": "W/NYG",
         "standard_slot": "ILB_L",
         "standard_pos": "LB",
-        "cap_number": "$1,262,500",
+        "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
       },
       {
-        "name": "Khalil Jacobs",
+        "name": "Erick Hunter",
         "depth": 3,
         "injured": false,
-        "attainment": "CF26",
+        "attainment": "SF26",
         "standard_slot": "ILB_L",
         "standard_pos": "LB",
         "cap_number": "$885,000",
@@ -729,34 +784,171 @@
         "stats_season": 2025
       }
     ],
-    "PT": [
+    "WR": [
       {
-        "name": "Bryce Baringer",
+        "name": "Kyle Dixon",
         "depth": 1,
         "injured": false,
-        "attainment": "23/6",
-        "standard_slot": "PT",
+        "attainment": "CF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Cameron Dorner",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "OT": [
+      {
+        "name": "Lorenz Metz",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF25*",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "OG": [
+      {
+        "name": "Jake Kubas",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "OG",
         "standard_pos": "DEF",
-        "cap_number": "$1,189,614",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "ED": [
+      {
+        "name": "Riley Wilson",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": 2025
+      },
+      {
+        "name": "Jose Ramirez",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "DT": [
+      {
+        "name": "Eric Gregory",
+        "depth": 1,
+        "injured": false,
+        "attainment": "W/Cin",
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": null,
         "stats": {
-          "FG%": "\u2014"
+          "TKL": 1
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Jeremiah Pharms Jr.",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF22",
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {
+          "TKL": 1,
+          "TFL": 1,
+          "QB HIT": 1
         },
         "stats_season": 2025
       }
     ],
-    "H": [
+    "LB": [
       {
-        "name": "Bryce Baringer",
+        "name": "K.j. Britt",
         "depth": 1,
         "injured": false,
-        "attainment": "23/6",
-        "standard_slot": "H",
+        "attainment": "U/Mia",
+        "standard_slot": "LB",
         "standard_pos": "DEF",
-        "cap_number": "$1,189,614",
-        "stats": {
-          "FG%": "\u2014"
-        },
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "CB": [
+      {
+        "name": "Kindle Vildor",
+        "depth": 1,
+        "injured": false,
+        "attainment": "U/TB",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "S": [
+      {
+        "name": "Mike Brown",
+        "depth": 1,
+        "injured": false,
+        "attainment": "U/Ten",
+        "standard_slot": "S",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
         "stats_season": 2025
+      },
+      {
+        "name": "Elliott Davison",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "S",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "PT": [
+      {
+        "name": "Mitch Wishnowsky",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "PT",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ]
   }

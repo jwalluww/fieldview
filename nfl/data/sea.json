@@ -179,6 +179,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": 2025
+      },
+      {
+        "name": "Federico Maranges",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF25*",
+        "standard_slot": "C",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RG": [
@@ -374,6 +385,33 @@
         "cap_number": "$1,595,000",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Velus Jones Jr.",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {
+          "CAR": 4
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Jacardia Wright",
+        "depth": 5,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {
+          "CAR": 5,
+          "RU YDS": 20
+        },
+        "stats_season": 2025
       }
     ],
     "FB": [
@@ -484,6 +522,17 @@
           "TKL": 1
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Deven Eastern",
+        "depth": 3,
+        "injured": false,
+        "attainment": "26/7",
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RUSH": [
@@ -613,8 +662,8 @@
         "depth": 1,
         "injured": false,
         "attainment": "U/LAC",
-        "standard_slot": "SLB",
-        "standard_pos": "DEF",
+        "standard_slot": "LOLB",
+        "standard_pos": "EDGE",
         "cap_number": "$20,018,334",
         "stats": {
           "TKL": 17,
@@ -630,8 +679,8 @@
         "depth": 2,
         "injured": false,
         "attainment": "U/Dal",
-        "standard_slot": "SLB",
-        "standard_pos": "DEF",
+        "standard_slot": "LOLB",
+        "standard_pos": "EDGE",
         "cap_number": "$2,500,000",
         "stats": {},
         "stats_season": null
@@ -641,8 +690,8 @@
         "depth": 3,
         "injured": false,
         "attainment": "CF25",
-        "standard_slot": "SLB",
-        "standard_pos": "DEF",
+        "standard_slot": "LOLB",
+        "standard_pos": "EDGE",
         "cap_number": "$1,015,000",
         "stats": {
           "TKL": 3
@@ -813,6 +862,179 @@
           "FG%": "\u2014"
         },
         "stats_season": 2025
+      }
+    ],
+    "WR": [
+      {
+        "name": "Emmanuel Henderson Jr.",
+        "depth": 1,
+        "injured": false,
+        "attainment": "26/6",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Ricky White III",
+        "depth": 2,
+        "injured": false,
+        "attainment": "25/7",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {
+          "TGT": 4,
+          "REC": 3,
+          "YDS": 90,
+          "TDs": 1,
+          "YAC": 58
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Julian Hicks",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "OT": [
+      {
+        "name": "Logan Brown",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Bobby Hart",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/LAC",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "ED": [
+      {
+        "name": "Aidan Hubbard",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Marvin Jones Jr.",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 60,
+          "SACKS": 0.5,
+          "INTs": 5,
+          "PD": 7,
+          "TFL": 4,
+          "QB HIT": 1
+        },
+        "stats_season": 2025
+      }
+    ],
+    "CB": [
+      {
+        "name": "Michael Dansby",
+        "depth": 1,
+        "injured": false,
+        "attainment": "26/7",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Andre Fuller",
+        "depth": 2,
+        "injured": false,
+        "attainment": "26/7",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Trevon Diggs",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "S": [
+      {
+        "name": "AJ Finley",
+        "depth": 1,
+        "injured": false,
+        "attainment": "W/LAC",
+        "standard_slot": "S",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Rodney Thomas II",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/Ind",
+        "standard_slot": "S",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 47,
+          "SACKS": 3.5,
+          "INTs": 1,
+          "PD": 8,
+          "TFL": 10,
+          "QB HIT": 6
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Maxen Hook",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "S",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "CE": [

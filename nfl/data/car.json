@@ -143,15 +143,15 @@
         "stats_season": 2025
       },
       {
-        "name": "Chandler Zavala",
+        "name": "Corey Bullock",
         "depth": 2,
         "injured": false,
-        "attainment": "23/4",
+        "attainment": "W/Bal",
         "standard_slot": "LG",
         "standard_pos": "OL",
-        "cap_number": "$1,337,934",
+        "cap_number": "$1,005,000",
         "stats": {},
-        "stats_season": 2025
+        "stats_season": null
       }
     ],
     "C": [
@@ -176,6 +176,17 @@
         "cap_number": "$1,023,504",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Torricelli Simpkins III",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "C",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RG": [
@@ -187,17 +198,6 @@
         "standard_slot": "RG",
         "standard_pos": "OL",
         "cap_number": "$24,300,000",
-        "stats": {},
-        "stats_season": 2025
-      },
-      {
-        "name": "Brady Christensen",
-        "depth": 2,
-        "injured": false,
-        "attainment": "21/3",
-        "standard_slot": "RG",
-        "standard_pos": "OL",
-        "cap_number": "$1,215,000",
         "stats": {},
         "stats_season": 2025
       }
@@ -385,6 +385,28 @@
         "cap_number": "$1,262,500",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Anthony Tyus III",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Ahmani Marshall",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LDE": [
@@ -508,7 +530,7 @@
         "attainment": "CC/NYG",
         "standard_slot": "ILB_L",
         "standard_pos": "LB",
-        "cap_number": null,
+        "cap_number": "$1,500,000",
         "stats": {},
         "stats_season": null
       },
@@ -769,6 +791,184 @@
         "cap_number": "$1,650,000",
         "stats": {
           "FG%": "\u2014"
+        },
+        "stats_season": 2025
+      }
+    ],
+    "WR": [
+      {
+        "name": "David Moore",
+        "depth": 1,
+        "injured": false,
+        "attainment": "U/TB",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {
+          "TGT": 1,
+          "REC": 1,
+          "YDS": 5,
+          "CAR": 1
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Ja'seem Reed",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Casey Washington",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "OG": [
+      {
+        "name": "Jake Curhan",
+        "depth": 1,
+        "injured": false,
+        "attainment": "U/Arz",
+        "standard_slot": "OG",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Chandler Zavala",
+        "depth": 2,
+        "injured": false,
+        "attainment": "23/4",
+        "standard_slot": "OG",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": 2025
+      }
+    ],
+    "ED": [
+      {
+        "name": "Cam Gill",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "DT": [
+      {
+        "name": "Parker Petersen",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Anthony Goodlow",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "LB": [
+      {
+        "name": "Mapalo Mwansa",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF25*",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Tyrel Dodson",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "CB": [
+      {
+        "name": "Devonta Smith",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Corey Thornton",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 8,
+          "PD": 3
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Zion Childress",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "S": [
+      {
+        "name": "Isaiah Simmons",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "S",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 1
         },
         "stats_season": 2025
       }

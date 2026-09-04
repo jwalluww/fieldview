@@ -58,17 +58,6 @@
           "CAR": 2
         },
         "stats_season": 2025
-      },
-      {
-        "name": "Dillon Bell",
-        "depth": 2,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "RWR",
-        "standard_pos": "WR",
-        "cap_number": "$893,333",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "SWR": [
@@ -130,6 +119,17 @@
         "cap_number": "$3,903,876",
         "stats": {},
         "stats_season": 2025
+      },
+      {
+        "name": "Trevor Keegan",
+        "depth": 2,
+        "injured": false,
+        "attainment": "W/Dal",
+        "standard_slot": "LG",
+        "standard_pos": "OL",
+        "cap_number": "$1,075,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "C": [
@@ -143,6 +143,17 @@
         "cap_number": "$4,466,668",
         "stats": {},
         "stats_season": 2025
+      },
+      {
+        "name": "Nick Samac",
+        "depth": 2,
+        "injured": false,
+        "attainment": "W/Car",
+        "standard_slot": "C",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RG": [
@@ -255,6 +266,17 @@
         "cap_number": "$1,058,956",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Cam Grandy",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "QB": [
@@ -314,7 +336,7 @@
         "attainment": "CF25",
         "standard_slot": "QB",
         "standard_pos": "QB",
-        "cap_number": "$1,008,333",
+        "cap_number": null,
         "stats": {
           "CMP": 47,
           "ATT": 71,
@@ -371,6 +393,17 @@
         "standard_slot": "RB",
         "standard_pos": "RB",
         "cap_number": "$953,395",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Deejay Dallas",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -474,6 +507,28 @@
         "stats": {
           "TKL": 6
         },
+        "stats_season": 2025
+      },
+      {
+        "name": "Jahvaree Ritzie",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Naquan Jones",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
         "stats_season": 2025
       }
     ],
@@ -760,7 +815,7 @@
         "name": "Brett Thorson",
         "depth": 1,
         "injured": false,
-        "attainment": "CF26*",
+        "attainment": "CF26",
         "standard_slot": "PT",
         "standard_pos": "DEF",
         "cap_number": "$890,000",
@@ -773,12 +828,149 @@
         "name": "Brett Thorson",
         "depth": 1,
         "injured": false,
-        "attainment": "CF26*",
+        "attainment": "CF26",
         "standard_slot": "H",
         "standard_pos": "DEF",
         "cap_number": "$890,000",
         "stats": {},
         "stats_season": null
+      }
+    ],
+    "WR": [
+      {
+        "name": "Michael Briscoe",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Trayvon Rudolph",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Dillon Bell",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "OT": [
+      {
+        "name": "Jack Nelson",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "OG": [
+      {
+        "name": "Henry Byrd",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF23",
+        "standard_slot": "OG",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "ED": [
+      {
+        "name": "Kyle Van Noy",
+        "depth": 1,
+        "injured": false,
+        "attainment": "U/Bal",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "LB": [
+      {
+        "name": "Bangally Kamara",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "CB": [
+      {
+        "name": "Da'veawn Armstead",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Bryce Phillips",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "S": [
+      {
+        "name": "Kahlef Hailassie",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "S",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Tavierre Thomas",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/TB",
+        "standard_slot": "S",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 11
+        },
+        "stats_season": 2025
       }
     ],
     "SUS": [

@@ -136,17 +136,6 @@
         "cap_number": "$3,970,000",
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Kohl Levao",
-        "depth": 2,
-        "injured": false,
-        "attainment": "SF24",
-        "standard_slot": "LG",
-        "standard_pos": "OL",
-        "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "C": [
@@ -168,7 +157,18 @@
         "attainment": "T/LV",
         "standard_slot": "C",
         "standard_pos": "OL",
-        "cap_number": "$3,520,000",
+        "cap_number": "$2,358,824",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Xavier Newman",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF23",
+        "standard_slot": "C",
+        "standard_pos": "OL",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -297,6 +297,17 @@
         "cap_number": "$1,189,669",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Bailey Zappe",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "QB",
+        "standard_pos": "QB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RB": [
@@ -368,6 +379,17 @@
           "TGT": 1
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Al-jay Henderson",
+        "depth": 5,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "FB": [
@@ -456,6 +478,31 @@
           "SACKS": 0.5,
           "TFL": 5,
           "QB HIT": 1
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Jack Heflin",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Payton Page",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {
+          "TKL": 5,
+          "TFL": 1
         },
         "stats_season": 2025
       }
@@ -569,6 +616,17 @@
           "TKL": 16
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Trevin Wallace",
+        "depth": 3,
+        "injured": false,
+        "attainment": "W/Car",
+        "standard_slot": "ILB_R",
+        "standard_pos": "LB",
+        "cap_number": "$1,261,804",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "ROLB": [
@@ -765,6 +823,144 @@
         "cap_number": "$1,005,000",
         "stats": {
           "FG%": "\u2014"
+        },
+        "stats_season": 2025
+      }
+    ],
+    "WR": [
+      {
+        "name": "Malik Mcclain",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Jamaal Pritchett",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "OT": [
+      {
+        "name": "Brant Banks",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "OG": [
+      {
+        "name": "Kohl Levao",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF24",
+        "standard_slot": "OG",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "ED": [
+      {
+        "name": "Paschal Ekeji",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF25*",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Nate Lynn",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "LB": [
+      {
+        "name": "Jaden Keller",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Troy Reeder",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "CB": [
+      {
+        "name": "Mory Bamba",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Jordan Clark",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 7
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Samuel Womack III",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 6,
+          "PD": 2
         },
         "stats_season": 2025
       }

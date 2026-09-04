@@ -178,6 +178,17 @@
         "cap_number": "$888,333",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Josh Kaltenberger",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "C",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RG": [
@@ -278,6 +289,36 @@
         "cap_number": "$2,950,000",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Evan Svoboda",
+        "depth": 4,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Patrick Herbert",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": null,
+        "stats": {
+          "CMP": 340,
+          "ATT": 512,
+          "YDS": 3727,
+          "TDs": 26,
+          "INTs": 13,
+          "SACKS": 54,
+          "RU YDS": 498
+        },
+        "stats_season": 2025
       }
     ],
     "QB": [
@@ -317,6 +358,17 @@
           "RU YDS": 85
         },
         "stats_season": 2025
+      },
+      {
+        "name": "DJ Uiagalelei",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "QB",
+        "standard_pos": "QB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RB": [
@@ -364,6 +416,32 @@
           "REC": 16,
           "RE YDS": 136,
           "TGT": 22
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Gregory Desrosiers",
+        "depth": 4,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Amar Johnson",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {
+          "CAR": 2,
+          "RU YDS": 8,
+          "TGT": 1
         },
         "stats_season": 2025
       }
@@ -454,6 +532,34 @@
           "QB HIT": 1
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Terry Webb",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Jordan Jefferson",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {
+          "TKL": 37,
+          "INTs": 4,
+          "PD": 7,
+          "TFL": 1,
+          "QB HIT": 2
+        },
+        "stats_season": 2025
       }
     ],
     "LOLB": [
@@ -494,39 +600,25 @@
     ],
     "LILB": [
       {
-        "name": "Denzel Perryman",
+        "name": "Troy Dye",
         "depth": 1,
         "injured": false,
-        "attainment": "U/Hou",
+        "attainment": "U/Min",
         "standard_slot": "ILB_L",
         "standard_pos": "LB",
-        "cap_number": "$2,300,000",
+        "cap_number": "$3,400,000",
         "stats": {
-          "TKL": 30,
-          "PD": 3,
-          "TFL": 4
-        },
-        "stats_season": 2025
-      },
-      {
-        "name": "Del'shawn Phillips",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/Hou",
-        "standard_slot": "ILB_L",
-        "standard_pos": "LB",
-        "cap_number": "$2,750,000",
-        "stats": {
-          "TKL": 16,
+          "TKL": 28,
           "SACKS": 1.0,
-          "TFL": 1,
-          "QB HIT": 2
+          "PD": 4,
+          "TFL": 5,
+          "QB HIT": 1
         },
         "stats_season": 2025
       },
       {
         "name": "Marlowe Wax",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "CF25",
         "standard_slot": "ILB_L",
@@ -559,19 +651,18 @@
         "stats_season": 2025
       },
       {
-        "name": "Troy Dye",
+        "name": "Del'shawn Phillips",
         "depth": 2,
         "injured": false,
-        "attainment": "U/Min",
+        "attainment": "U/Hou",
         "standard_slot": "ILB_R",
         "standard_pos": "LB",
-        "cap_number": "$3,400,000",
+        "cap_number": "$2,750,000",
         "stats": {
-          "TKL": 28,
+          "TKL": 16,
           "SACKS": 1.0,
-          "PD": 4,
-          "TFL": 5,
-          "QB HIT": 1
+          "TFL": 1,
+          "QB HIT": 2
         },
         "stats_season": 2025
       }
@@ -780,6 +871,148 @@
           "QB HIT": 8
         },
         "stats_season": 2025
+      }
+    ],
+    "PT": [
+      {
+        "name": "Jk Scott",
+        "depth": 1,
+        "injured": false,
+        "attainment": "U/Jax",
+        "standard_slot": "PT",
+        "standard_pos": "DEF",
+        "cap_number": "$2,350,000",
+        "stats": {
+          "FG%": "\u2014"
+        },
+        "stats_season": 2025
+      }
+    ],
+    "H": [
+      {
+        "name": "Jk Scott",
+        "depth": 1,
+        "injured": false,
+        "attainment": "U/Jax",
+        "standard_slot": "H",
+        "standard_pos": "DEF",
+        "cap_number": "$2,350,000",
+        "stats": {
+          "FG%": "\u2014"
+        },
+        "stats_season": 2025
+      }
+    ],
+    "WR": [
+      {
+        "name": "Gary Jennings",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Theo Wease Jr.",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "OT": [
+      {
+        "name": "Laekin Vakalahi",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF26*",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "ED": [
+      {
+        "name": "Andre Carter II",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Caleb Murphy",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "LB": [
+      {
+        "name": "Junior Colson",
+        "depth": 1,
+        "injured": false,
+        "attainment": "24/3",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Lander Barton",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "CB": [
+      {
+        "name": "Nikko Reed",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 1,
+          "PD": 1
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Kaiir Elam",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ]
   }

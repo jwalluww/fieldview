@@ -170,6 +170,17 @@
         "cap_number": "$1,041,077",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Eli Cox",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "C",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RG": [
@@ -265,6 +276,17 @@
           "YAC": 21
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Hayden Rucci",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "QB": [
@@ -295,6 +317,33 @@
         "standard_slot": "QB",
         "standard_pos": "QB",
         "cap_number": "$1,005,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Nick Mullens",
+        "depth": 3,
+        "injured": false,
+        "attainment": "U/Min",
+        "standard_slot": "QB",
+        "standard_pos": "QB",
+        "cap_number": null,
+        "stats": {
+          "CMP": 3,
+          "ATT": 3,
+          "YDS": 19,
+          "RU YDS": -8
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Joey Aguilar",
+        "depth": 4,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "QB",
+        "standard_pos": "QB",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -358,6 +407,17 @@
           "TKL": 6
         },
         "stats_season": 2025
+      },
+      {
+        "name": "J'mari Taylor",
+        "depth": 5,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LDE": [
@@ -473,6 +533,17 @@
         "standard_slot": "RDT",
         "standard_pos": "DI",
         "cap_number": "$1,696,466",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "T.j. Bollers",
+        "depth": 4,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -798,6 +869,151 @@
           "FG%": "\u2014"
         },
         "stats_season": 2025
+      }
+    ],
+    "WR": [
+      {
+        "name": "Tim Jones",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {
+          "TGT": 1,
+          "REC": 1,
+          "YDS": 15,
+          "YAC": 11
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Austin Trammell",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/LAR",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {
+          "TGT": 10,
+          "REC": 3,
+          "YDS": 46,
+          "YAC": 2
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Trebor Pe\u00f1a",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Michael Wortham",
+        "depth": 4,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "OT": [
+      {
+        "name": "Kilian Zierer",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF25*",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Geron Christian Sr.",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "LB": [
+      {
+        "name": "Jalen Mcleod",
+        "depth": 1,
+        "injured": false,
+        "attainment": "25/6",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Jack Kiser",
+        "depth": 2,
+        "injured": false,
+        "attainment": "25/4",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 5
+        },
+        "stats_season": 2025
+      }
+    ],
+    "CB": [
+      {
+        "name": "Jabbar Muhammad",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "S": [
+      {
+        "name": "Cam'ron Silmon-craig",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "S",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 2
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Kaevon Merriweather",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "S",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ]
   }
