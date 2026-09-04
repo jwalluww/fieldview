@@ -112,7 +112,11 @@ def load_gsis_crosswalk():
 
 def load_snap_counts():
     import nflreadpy as nfl
-    return nfl.load_snap_counts([SEASON]).to_pandas()
+    try:
+        return nfl.load_snap_counts([SEASON]).to_pandas()
+    except ValueError as e:
+        print(f"  {SEASON} snap counts not published yet ({e}) -- falling back to {SEASON - 1}")
+        return nfl.load_snap_counts([SEASON - 1]).to_pandas()
 
 
 def build_db():

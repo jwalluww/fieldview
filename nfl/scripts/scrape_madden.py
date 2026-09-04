@@ -61,7 +61,8 @@ def fetch_with_retry(url, max_retries=5, base_delay=3.0):
             response = requests.get(url, headers=HEADERS, timeout=10)
             if response.status_code == 200:
                 return response
-            raise requests.exceptions.HTTPError(f"Status {response.status_code}")
+            diag = {h: response.headers.get(h) for h in ('server', 'retry-after', 'cf-ray') if response.headers.get(h)}
+            raise requests.exceptions.HTTPError(f"Status {response.status_code} {diag}")
         except requests.exceptions.RequestException as e:
             if attempt == max_retries:
                 raise
