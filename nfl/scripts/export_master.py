@@ -29,6 +29,7 @@ DEFAULT_OUT_PATH = os.path.join('nfl', 'data', 'players_master_db.json')
 INT_FIELDS = {
     'depth', 'jersey', 'madden', 'madden_rank', 'madden_rank_total',
     'draft_year', 'years_pro', 'age', 'years_remaining', 'stats_season',
+    'penalty_count',
 }
 FLOAT_FIELDS = {
     'match_confidence', 'snap_pct', 'cash_total_remaining',
@@ -83,7 +84,8 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             pm.years_remaining,
             pm.cash_total_remaining,
             pm.cash_guaranteed_remaining,
-            pm.avg_annual_remaining
+            pm.avg_annual_remaining,
+            pm.penalty_count
         FROM player_match pm
         JOIN ourlads_players op ON pm.row_id = op.row_id
         ORDER BY pm.row_id
@@ -129,6 +131,7 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             'cash_total_remaining': clean('cash_total_remaining', r['cash_total_remaining']),
             'cash_guaranteed_remaining': clean('cash_guaranteed_remaining', r['cash_guaranteed_remaining']),
             'avg_annual_remaining': clean('avg_annual_remaining', r['avg_annual_remaining']),
+            'penalty_count': clean('penalty_count', r['penalty_count']),
         }
         master[r['player_id']] = entry
 

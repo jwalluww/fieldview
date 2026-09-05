@@ -119,6 +119,23 @@ def load_snap_counts():
         return nfl.load_snap_counts([SEASON - 1]).to_pandas()
 
 
+def load_penalties():
+    """Season penalty counts, filtered to the two types overwhelmingly
+    attributable to a specific offensive lineman (Offensive Holding,
+    False Start). penalty_player_id is already in the same 00-XXXXXXX
+    gsis_id format used everywhere else in this pipeline. Same
+    current-season-not-published-yet gap as load_snap_counts() above."""
+    import nflreadpy as nfl
+    try:
+        pbp = nfl.load_pbp([SEASON]).to_pandas()
+    except ValueError as e:
+        print(f"  {SEASON} play-by-play not published yet ({e}) -- falling back to {SEASON - 1}")
+        pbp = nfl.load_pbp([SEASON - 1]).to_pandas()
+    pen = pbp[(pbp['penalty'] == 1) &
+              (pbp['penalty_type'].isin(['Offensive Holding', 'False Start']))]
+    return pen[['penalty_player_id', 'penalty_type']].dropna(subset=['penalty_player_id'])
+
+
 def build_db():
     con = duckdb.connect(DB_PATH)
     try:
@@ -139,6 +156,9 @@ def build_db():
 
         print("Loading snap_counts...")
         write_table(con, 'snap_counts', load_snap_counts())
+
+        print("Loading penalties...")
+        write_table(con, 'penalties', load_penalties())
     finally:
         con.close()
 

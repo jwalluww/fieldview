@@ -22,7 +22,7 @@ from build_master import (
     SEASON, NAME_ALIASES, SKIP_POSITIONS, MADDEN_TEAM_MAP, SNAP_POS_MAP,
     SPOTRAC_POS_MAP, CROSSWALK_POS_ALIASES, ROSTERS_POS_ALIASES,
     normalize_team, build_madden_pos_ranks, find_madden_player, find_gsis,
-    find_pfr_id, find_spotrac_contract,
+    find_pfr_id, find_spotrac_contract, find_roster_gsis_for_ol,
 )
 from name_utils import normalize_name, normalize_for_matching, normalize_madden
 
@@ -118,6 +118,14 @@ def load_snap_shares_from_db(con):
     return season_avg, crosswalk
 
 
+def load_penalties_from_db(con):
+    """Season penalty counts (Offensive Holding + False Start only --
+    see build_db.py's load_penalties()) keyed by gsis_id -- already in
+    the right format, no name/team matching needed."""
+    df = con.execute("SELECT * FROM penalties").fetchdf()
+    return df.groupby('penalty_player_id').size().to_dict()
+
+
 def build_match():
     con = duckdb.connect(DB_PATH)
 
@@ -125,6 +133,7 @@ def build_match():
     rosters = load_nflreadpy_rosters_from_db(con)
     spotrac_df = load_spotrac_contracts_from_db(con)
     snap_shares, snap_crosswalk = load_snap_shares_from_db(con)
+    penalty_counts = load_penalties_from_db(con)
 
     madden_by_team = load_madden_from_db(con)
     madden_pos_ranks = build_madden_pos_ranks(madden_by_team)
@@ -206,12 +215,26 @@ def build_match():
     from season_utils import calculate_age
     for entry in master.values():
         gid = entry.get('gsis_id')
+        # OL never has a gsis_id from our own matching (find_gsis() skips OL
+        # entirely) -- recover one via an independent name+team match against
+        # nflreadpy's own roster data instead, so OL can reach the same bio
+        # dicts every other position already uses. Local variable only --
+        # entry['gsis_id'] itself is untouched, so match_source/
+        # match_confidence keep accurately reflecting OL was never primarily
+        # GSIS-matched. Mirrors build_master.py's identical handling.
+        if gid is None and entry['standard_pos'] == 'OL':
+            gid = find_roster_gsis_for_ol(entry['canonical_name'], entry['team'], rosters)
         entry_year = entry_year_by_gsis.get(gid) if gid else None
         entry['draft_year'] = entry_year
         entry['college'] = college_by_gsis.get(gid) if gid else None
-        entry['years_pro'] = (SEASON - entry_year) if entry_year is not None else None
+        # Clamp to 0 -- matches build_master.py's existing fix for the same
+        # edge case (a player whose entry_year is the season that hasn't
+        # "started" yet by get_current_season()'s Sept 1 rule shouldn't show
+        # negative years of experience). build_match.py was missing this.
+        entry['years_pro'] = max(0, SEASON - entry_year) if entry_year is not None else None
         birth_date = birth_date_by_gsis.get(gid) if gid else None
         entry['age'] = calculate_age(birth_date)
+        entry['penalty_count'] = penalty_counts.get(gid, 0) if gid else None
 
     # snap_pct: gsis->pfr_id chain first, independent name+team fuzzy match
     # against the snap-count crosswalk second (closes the OL gap)
