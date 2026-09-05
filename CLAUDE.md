@@ -264,6 +264,31 @@ MLS's Advanced tab already showed real ASA xgoals data before this pass — it w
 
 ---
 
+## Statistics
+
+Research notes on which stats best represent player value per sport/position, for populating `advanced_value_stat`/`advanced_value_source`. Ongoing — sports get filled in as we work through them.
+
+### NFL
+
+- Madden ratings are UI candy, not evaluative — display only, never treat as a real signal.
+- Solid free evaluative stats by position: QB → EPA/play + CPOE; RB → rush yards over expected (RYOE, via `load_nextgen_stats()`, unused); WR/TE → target share + air yards.
+- EDGE/DI → pressure rate + pass-rush win rate, not sacks. Sacks are scheme/luck-dependent; pressure rate is the better free signal.
+- CB/S → weakest free data spot in football analytics. No good free per-target coverage stat exists; targets-against/completion%-allowed from play-by-play is the best available proxy.
+
+#### Offensive Line
+
+**Investigated Sept 2026.** Individually-attributed OL performance data is the thinnest of any position group, free or paid — grading who "won" a block requires watching tape, no tracking-data shortcut exists like it does for other positions.
+
+- **PBWR / RBWR** (ESPN Analytics, built off restricted NFL Next Gen Stats tracking): real, computed by ESPN at the individual level, but **not publicly available as a full-league table**. ESPN only publishes team-level rankings + "Top 10 at OT/OG/C" leaderboards. No API, no CSV. Individual numbers outside the top 10 only surface secondhand in other outlets' articles. **Don't spend more time trying to scrape a full table — it doesn't exist.**
+- **Overall Block Win Rate** = (PBWR × team pass-play%) + (RBWR × team run-play%) — the "single number" version, team-level only.
+- **"Yards before contact" is NOT an OL stat** — it's attributed to the RB, not the blockers. Ruled out for per-lineman use; noting here so we don't re-investigate this.
+- **FTN charting** (`load_ftn_charting()`, free/unused in our stack) is play-context charting (blitzers, play-action, motion, `is_qb_fault_sack`, etc.) — NOT lineman grading. `is_qb_fault_sack` is a legit free nugget for cleaning up team-level sack rate (QB hold-time sacks vs. OL-fault sacks), but attributes nothing to a specific lineman.
+- **What's actually free and individually attributed:** penalty rate (false starts/holds — real player-level data in official play-by-play), snap_pct/games started (already have), draft capital (`load_draft_picks()`), contract value (already have via Spotrac/OTC). These are proxies/context, not direct performance grades.
+- **Real individual performance signal is paywalled:** PFF+ ($99.99–$119.99/yr as of Aug 2026) has player-level pass-block/run-block grades + pressures-allowed-per-snap. PFF Pro ($199.99/yr) adds an actual API/CLI — the clean way in if we ever go this route, vs. scraping their site directly (ToS risk).
+- **Decision: not pursuing a PFF subscription right now.** Interim OL story = penalty rate + snap_pct + team-level PBWR/RBWR as context (not individually isolated). Revisit as a deliberate call if OL becomes a priority, not a default next step.
+
+---
+
 ## ScraperAPI — real status
 
 Used by `mlb/scripts/scrape_ratings.py` and `nhl/scripts/scrape_ratings.py`, both running in their sport's cloud job. Free plan is 1,000 credits/month recurring; combined real usage (~130 + ~139 requests/month) sits well under that indefinitely. No card on file, staying on the free tier by choice.
