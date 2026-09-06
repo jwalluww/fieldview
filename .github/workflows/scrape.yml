@@ -35,6 +35,9 @@ jobs:
       - name: Run Madden scraper
         run: python nfl/scripts/scrape_madden.py
 
+      - name: Run QBR scraper
+        run: python nfl/scripts/scrape_qbr.py
+
       - name: Load raw sources into DuckDB
         run: python nfl/scripts/build_db.py
 

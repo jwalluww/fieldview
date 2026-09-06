@@ -474,6 +474,19 @@ def find_pfr_id(name, standard_pos, team, snap_crosswalk):
                          pos_col='standard_pos', name_col='name_norm',
                          team_col='team_norm', id_col='pfr_player_id')
 
+def find_espn_qbr(name, team, qbr_df):
+    """Fuzzy-match a QB against ESPN's QBR leaderboard. No shared ID --
+    ESPN athlete IDs have no crosswalk anywhere in this pipeline, same
+    situation find_spotrac_contract() solves for Spotrac. qbr_df is
+    QB-only by construction (ESPN's own leaderboard only lists QBs),
+    so standard_pos is hardcoded, not passed in."""
+    if qbr_df is None or len(qbr_df) == 0:
+        return None, None
+    name_norm = normalize_for_matching(name)
+    return _match_in_df(name_norm, 'QB', team, qbr_df,
+                         pos_col='standard_pos', name_col='name_norm',
+                         team_col='team_norm', id_col='row_idx')
+
 def _match_in_df(name_norm, standard_pos, team, df,
                  pos_col, name_col, team_col, id_col, pos_aliases=None):
     """Shared matching logic for any dataframe source.

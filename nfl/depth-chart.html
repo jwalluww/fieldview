@@ -635,6 +635,7 @@ body {
   <button class="view-tab" onclick="setView('rushing', this)">Rushing</button>
   <button class="view-tab" onclick="setView('receiving', this)">Receiving</button>
   <button class="view-tab" onclick="setView('defense', this)">Defense</button>
+  <button class="view-tab" onclick="setView('advanced', this)">Advanced</button>
 </div>
 
 <!-- Filter bar -->
@@ -761,6 +762,13 @@ const STAT_COLS = {
   rushing:   ['CAR','RUSH_YDS','RUSH_TDS'],
   receiving: ['REC','TGT','REC_YDS','REC_TDS'],
   defense:   ['TKL','SACK','INT','PBU','TFL'],
+  advanced:  [
+    { key: 'epa_per_play', label: 'EPA/DB' },
+    { key: 'success_rate', label: 'SUCC%' },
+    { key: 'cpoe', label: 'CPOE' },
+    { key: 'ngs_time_to_throw', label: 'TTT' },
+    { key: 'qbr', label: 'QBR' },
+  ],
 };
 const TEAM_ABBRS = Object.keys(TEAMS);
 const ALL_POSITIONS = ['QB','WR','RB','TE','OL','EDGE','DI','LB','CB','S','K','P'];
@@ -810,6 +818,7 @@ const VIEWS = {
   rushing:    { cols: ['team','name','stat1','stat2','stat3'],                                pos: ['RB'], sort: 'stat2' },
   receiving:  { cols: ['team','name','stat1','stat2','stat3','stat4'],                       pos: ['WR'], sort: 'stat3' },
   defense:    { cols: ['team','ourlads_pos','pos','name','stat1','stat2','stat3','stat4'],   pos: [...DEFENSE_POS], sort: 'stat1' },
+  advanced:   { cols: ['team','name','stat1','stat2','stat3','stat4','stat5'],               pos: ['QB'], sort: 'stat5' },
 };
 
 function setView(viewKey, btn) {
@@ -840,7 +849,7 @@ function setView(viewKey, btn) {
   // production stat (see VIEWS above) instead of name -- all four are
   // "higher is better" counting stats (yards/tackles), so they need
   // desc here same as madden/cap, or the tab would load worst-to-best.
-  sortDir = (view.sort === 'madden' || view.sort === 'cap' || viewKey === 'passing' || viewKey === 'rushing' || viewKey === 'receiving' || viewKey === 'defense') ? 'desc' : 'asc';
+  sortDir = (view.sort === 'madden' || view.sort === 'cap' || viewKey === 'passing' || viewKey === 'rushing' || viewKey === 'receiving' || viewKey === 'defense' || viewKey === 'advanced') ? 'desc' : 'asc';
   updateStatColumns(viewKey);
   applyFilters();
   updateStickyOffset();
@@ -1142,21 +1151,25 @@ function maddenColor(r) {
 }
 
 function getStatVal(p, statKey) {
-  if (!statKey || !p.stats) return null;
-  return p.stats[statKey] != null ? p.stats[statKey] : null;
+  if (!statKey) return null;
+  if (p.stats && p.stats[statKey] != null) return p.stats[statKey];
+  return p[statKey] != null ? p[statKey] : null;
 }
 
 function updateStatColumns(viewKey) {
   const keys = STAT_COLS[viewKey] || null;
   const ids = ['stat1','stat2','stat3','stat4','stat5'];
-  
+
   ids.forEach((id, i) => {
     const th = document.getElementById('th-' + id);
     if (!th) return;
     if (keys && i < keys.length) {
+      const entry = keys[i];
+      const key = typeof entry === 'string' ? entry : entry.key;
+      const label = typeof entry === 'string' ? entry : entry.label;
       th.style.display = '';
-      th.innerHTML = keys[i] + ' <span class="sort-icon">↕</span>';
-      window['_statKey' + (i+1)] = keys[i];
+      th.innerHTML = label + ' <span class="sort-icon">↕</span>';
+      window['_statKey' + (i+1)] = key;
     } else {
       th.style.display = 'none';
       window['_statKey' + (i+1)] = null;
@@ -1253,7 +1266,7 @@ function renderTable() {
       ['stat1','stat2','stat3','stat4','stat5'].forEach((col, i) => {
         if (cols.includes(col)) {
           const key = window['_statKey' + (i+1)];
-          const val = key && p.stats ? p.stats[key] : null;
+          const val = getStatVal(p, key);
           row += '<td style="text-align:center;font-family:\'Barlow Condensed\',sans-serif;font-weight:700;font-size:16px;color:var(--text)">' + (val != null ? val : '<span style="color:var(--text-muted)">—</span>') + '</td>';
         }
       });

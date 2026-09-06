@@ -23,6 +23,7 @@ from build_master import (
     SPOTRAC_POS_MAP, CROSSWALK_POS_ALIASES, ROSTERS_POS_ALIASES,
     normalize_team, build_madden_pos_ranks, find_madden_player, find_gsis,
     find_pfr_id, find_spotrac_contract, find_roster_gsis_for_ol,
+    find_espn_qbr,
 )
 from name_utils import normalize_name, normalize_for_matching, normalize_madden
 
@@ -126,6 +127,30 @@ def load_penalties_from_db(con):
     return df.groupby('penalty_player_id').size().to_dict()
 
 
+def load_qb_dropback_stats_from_db(con):
+    df = con.execute("SELECT * FROM qb_dropback_stats").fetchdf()
+    return df.set_index('passer_player_id').to_dict('index')
+
+
+def load_ngs_passing_from_db(con):
+    df = con.execute("SELECT * FROM ngs_passing").fetchdf()
+    return df.set_index('player_gsis_id').to_dict('index')
+
+
+def load_qbr_from_db(con):
+    """Mirrors load_spotrac_contracts_from_db()'s indexing pattern --
+    needs name_norm/team_norm columns added for find_espn_qbr()'s
+    fuzzy match, since qbr_ratings has no standard_pos column of its
+    own (every row is already a QB)."""
+    df = con.execute("SELECT * FROM qbr_ratings").fetchdf()
+    df['standard_pos'] = 'QB'
+    df['name_norm'] = df['name'].apply(
+        lambda n: normalize_for_matching(normalize_name(str(n))))
+    df['team_norm'] = df['team'].apply(normalize_team)
+    df['row_idx'] = df.index
+    return df
+
+
 def build_match():
     con = duckdb.connect(DB_PATH)
 
@@ -134,6 +159,9 @@ def build_match():
     spotrac_df = load_spotrac_contracts_from_db(con)
     snap_shares, snap_crosswalk = load_snap_shares_from_db(con)
     penalty_counts = load_penalties_from_db(con)
+    qb_dropback_stats = load_qb_dropback_stats_from_db(con)
+    ngs_passing = load_ngs_passing_from_db(con)
+    qbr_df = load_qbr_from_db(con)
 
     madden_by_team = load_madden_from_db(con)
     madden_pos_ranks = build_madden_pos_ranks(madden_by_team)
@@ -235,6 +263,22 @@ def build_match():
         birth_date = birth_date_by_gsis.get(gid) if gid else None
         entry['age'] = calculate_age(birth_date)
         entry['penalty_count'] = penalty_counts.get(gid, 0) if gid else None
+
+        if entry['standard_pos'] == 'QB':
+            dropback = qb_dropback_stats.get(gid) if gid else None
+            entry['epa_per_play'] = dropback['epa_per_play'] if dropback else None
+            entry['success_rate'] = dropback['success_rate'] * 100 if dropback else None
+            ngs = ngs_passing.get(gid) if gid else None
+            entry['ngs_time_to_throw'] = ngs['avg_time_to_throw'] if ngs else None
+            entry['cpoe'] = ngs['completion_percentage_above_expectation'] if ngs else None
+            qbr_idx, _ = find_espn_qbr(entry['canonical_name'], entry['team'], qbr_df)
+            entry['qbr'] = qbr_df.loc[qbr_idx, 'qbr'] if qbr_idx is not None else None
+        else:
+            entry['epa_per_play'] = None
+            entry['success_rate'] = None
+            entry['ngs_time_to_throw'] = None
+            entry['cpoe'] = None
+            entry['qbr'] = None
 
     # snap_pct: gsis->pfr_id chain first, independent name+team fuzzy match
     # against the snap-count crosswalk second (closes the OL gap)

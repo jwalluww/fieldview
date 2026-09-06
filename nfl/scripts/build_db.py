@@ -119,21 +119,66 @@ def load_snap_counts():
         return nfl.load_snap_counts([SEASON - 1]).to_pandas()
 
 
-def load_penalties():
+def load_pbp_cached():
+    """Shared pbp load for load_penalties() and load_qb_dropback_stats()
+    -- avoids fetching the same season file twice in one run."""
+    import nflreadpy as nfl
+    try:
+        return nfl.load_pbp([SEASON]).to_pandas()
+    except ValueError as e:
+        print(f"  {SEASON} play-by-play not published yet ({e}) -- falling back to {SEASON - 1}")
+        return nfl.load_pbp([SEASON - 1]).to_pandas()
+
+
+def load_penalties(pbp):
     """Season penalty counts, filtered to the two types overwhelmingly
     attributable to a specific offensive lineman (Offensive Holding,
     False Start). penalty_player_id is already in the same 00-XXXXXXX
-    gsis_id format used everywhere else in this pipeline. Same
-    current-season-not-published-yet gap as load_snap_counts() above."""
-    import nflreadpy as nfl
-    try:
-        pbp = nfl.load_pbp([SEASON]).to_pandas()
-    except ValueError as e:
-        print(f"  {SEASON} play-by-play not published yet ({e}) -- falling back to {SEASON - 1}")
-        pbp = nfl.load_pbp([SEASON - 1]).to_pandas()
+    gsis_id format used everywhere else in this pipeline."""
     pen = pbp[(pbp['penalty'] == 1) &
               (pbp['penalty_type'].isin(['Offensive Holding', 'False Start']))]
     return pen[['penalty_player_id', 'penalty_type']].dropna(subset=['penalty_player_id'])
+
+
+def load_qb_dropback_stats(pbp):
+    """Season EPA/dropback and success rate per QB. nflverse's pbp
+    already has pre-computed qb_epa (isolated QB credit, not the
+    generic epa column which mixes credit across play types) and
+    success (nflverse's own standard success-rate flag) columns per
+    play -- no manual down/distance formula needed. Dropback =
+    pass_attempt or sack (a sack is a failed dropback by definition;
+    excluding it would flatter sack-prone QBs)."""
+    dropbacks = pbp[(pbp['pass_attempt'] == 1) | (pbp['sack'] == 1)]
+    return dropbacks.groupby('passer_player_id').agg(
+        epa_per_play=('qb_epa', 'mean'),
+        success_rate=('success', 'mean'),
+    ).reset_index()
+
+
+def load_ngs_passing():
+    """NGS Time to Throw + NFL's own official CPOE (completion_percentage
+    _above_expectation -- the league's published model, not nflverse's
+    separate pbp-derived cpoe column), keyed by player_gsis_id.
+
+    IMPORTANT: load_nextgen_stats() mixes weekly rows (week=1,2,3...)
+    and ONE season-aggregate row (week=0) in the same dataframe for a
+    given season -- confirmed by real inspection. Must filter to
+    week == 0, or every downstream lookup gets multiple rows per
+    player and silently breaks."""
+    import nflreadpy as nfl
+    try:
+        df = nfl.load_nextgen_stats(stat_type='passing', seasons=[SEASON]).to_pandas()
+    except ValueError as e:
+        print(f"  {SEASON} NGS passing stats not published yet ({e}) -- falling back to {SEASON - 1}")
+        df = nfl.load_nextgen_stats(stat_type='passing', seasons=[SEASON - 1]).to_pandas()
+    return df[df['week'] == 0]
+
+
+def load_qbr_ratings():
+    path = os.path.join('nfl', 'data', 'qbr.json')
+    with open(path, 'r') as f:
+        records = json.load(f)
+    return pd.json_normalize(records)
 
 
 def build_db():
@@ -157,8 +202,16 @@ def build_db():
         print("Loading snap_counts...")
         write_table(con, 'snap_counts', load_snap_counts())
 
-        print("Loading penalties...")
-        write_table(con, 'penalties', load_penalties())
+        print("Loading play-by-play (penalties + QB dropback stats)...")
+        pbp = load_pbp_cached()
+        write_table(con, 'penalties', load_penalties(pbp))
+        write_table(con, 'qb_dropback_stats', load_qb_dropback_stats(pbp))
+
+        print("Loading NGS passing (CPOE + Time to Throw)...")
+        write_table(con, 'ngs_passing', load_ngs_passing())
+
+        print("Loading QBR ratings...")
+        write_table(con, 'qbr_ratings', load_qbr_ratings())
     finally:
         con.close()
 

@@ -34,6 +34,7 @@ INT_FIELDS = {
 FLOAT_FIELDS = {
     'match_confidence', 'snap_pct', 'cash_total_remaining',
     'cash_guaranteed_remaining', 'avg_annual_remaining',
+    'epa_per_play', 'success_rate', 'ngs_time_to_throw', 'cpoe', 'qbr',
 }
 
 
@@ -85,7 +86,12 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             pm.cash_total_remaining,
             pm.cash_guaranteed_remaining,
             pm.avg_annual_remaining,
-            pm.penalty_count
+            pm.penalty_count,
+            pm.epa_per_play,
+            pm.success_rate,
+            pm.ngs_time_to_throw,
+            pm.cpoe,
+            pm.qbr
         FROM player_match pm
         JOIN ourlads_players op ON pm.row_id = op.row_id
         ORDER BY pm.row_id
@@ -132,6 +138,11 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             'cash_guaranteed_remaining': clean('cash_guaranteed_remaining', r['cash_guaranteed_remaining']),
             'avg_annual_remaining': clean('avg_annual_remaining', r['avg_annual_remaining']),
             'penalty_count': clean('penalty_count', r['penalty_count']),
+            'epa_per_play': clean('epa_per_play', r['epa_per_play']),
+            'success_rate': clean('success_rate', r['success_rate']),
+            'ngs_time_to_throw': clean('ngs_time_to_throw', r['ngs_time_to_throw']),
+            'cpoe': clean('cpoe', r['cpoe']),
+            'qbr': clean('qbr', r['qbr']),
         }
         master[r['player_id']] = entry
 
