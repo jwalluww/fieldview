@@ -763,11 +763,11 @@ const STAT_COLS = {
   receiving: ['REC','TGT','REC_YDS','REC_TDS'],
   defense:   ['TKL','SACK','INT','PBU','TFL'],
   advanced:  [
-    { key: 'epa_per_play', label: 'EPA/DB' },
-    { key: 'success_rate', label: 'SUCC%' },
-    { key: 'cpoe', label: 'CPOE' },
-    { key: 'ngs_time_to_throw', label: 'TTT' },
-    { key: 'qbr', label: 'QBR' },
+    { key: 'epa_per_play', label: 'EPA/DB', decimals: 2 },
+    { key: 'success_rate', label: 'SUCC%', decimals: 1 },
+    { key: 'cpoe', label: 'CPOE', decimals: 1 },
+    { key: 'ngs_time_to_throw', label: 'TTT', decimals: 2 },
+    { key: 'qbr', label: 'QBR', decimals: 1 },
   ],
 };
 const TEAM_ABBRS = Object.keys(TEAMS);
@@ -1267,7 +1267,10 @@ function renderTable() {
         if (cols.includes(col)) {
           const key = window['_statKey' + (i+1)];
           const val = getStatVal(p, key);
-          row += '<td style="text-align:center;font-family:\'Barlow Condensed\',sans-serif;font-weight:700;font-size:16px;color:var(--text)">' + (val != null ? val : '<span style="color:var(--text-muted)">—</span>') + '</td>';
+          const colDef = (STAT_COLS[currentView] || [])[i];
+          const decimals = colDef && typeof colDef === 'object' ? colDef.decimals : null;
+          const display = (val != null && decimals != null) ? Number(val).toFixed(decimals) : val;
+          row += '<td style="text-align:center;font-family:\'Barlow Condensed\',sans-serif;font-weight:700;font-size:16px;color:var(--text)">' + (display != null ? display : '<span style="color:var(--text-muted)">—</span>') + '</td>';
         }
       });
     row += '</tr>';

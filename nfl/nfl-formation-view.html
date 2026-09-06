@@ -1042,52 +1042,74 @@ function buildHoverCard(p, pos) {
           <div class="card-meta">${pos}${p.age ? ' · Age '+p.age : ''}${p.years_pro != null ? ' · Yr '+p.years_pro+' NFL' : ''}${p.draft_year ? ' · Drafted '+p.draft_year : ''}${p.college ? ' · '+p.college : ''}</div>
         </div>
       </div>
-      <div class="card-ratings">
-        <div class="card-rating-cell">
-          <div class="crc-val" style="color:${mc}">${p.madden || '—'}</div>
-          <div class="crc-label">Madden</div>
-        </div>
-        <div class="card-rating-cell">
-          <div class="crc-val" style="color:var(--gold)">${p.age || '—'}</div>
-          <div class="crc-label">Age</div>
-        </div>
-        <div class="card-rating-cell">
-          <div class="crc-val" style="color:var(--text-muted)">${p.snap_pct != null ? Math.round(p.snap_pct) + '%' : '—'}</div>
-          <div class="crc-label">${p.snap_pct != null ? 'Snaps' : ''}</div>
-        </div>
-      </div>
-      ${p.stats && Object.keys(p.stats).length > 0 ? `
-        <div style="padding:8px 13px;border-top:1px solid var(--border)">
-          <div style="font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:6px">${p.stats_season || ''} STATS</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px 12px">
-            ${Object.entries(p.stats).map(([k,v]) => `
-              <div style="display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid rgba(255,255,255,0.04)">
-                <span style="font-size:10px;color:var(--text-muted)">${k}</span>
-                <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:var(--text)">${v}</span>
-              </div>
-            `).join('')}
+      ${pos === 'QB' ? `
+        <div class="card-ratings" style="grid-template-columns:1fr 1fr">
+          <div class="card-rating-cell">
+            <div class="crc-val" style="color:${mc}">${p.madden || '—'}</div>
+            <div class="crc-label">Madden</div>
+          </div>
+          <div class="card-rating-cell">
+            <div class="crc-val" style="color:var(--text-muted)">${p.snap_pct != null ? Math.round(p.snap_pct) + '%' : '—'}</div>
+            <div class="crc-label">${p.snap_pct != null ? 'Snaps' : ''}</div>
           </div>
         </div>
-      ` : ''}
-      ${pos === 'QB' && (p.epa_per_play != null || p.success_rate != null || p.cpoe != null || p.ngs_time_to_throw != null || p.qbr != null) ? `
-        <div style="padding:8px 13px;border-top:1px solid var(--border)">
-          <div style="font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:6px">ADVANCED</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px 12px">
+        ${(p.epa_per_play != null || p.success_rate != null || p.cpoe != null || p.ngs_time_to_throw != null || p.qbr != null) ? `
+          <div style="padding:10px 13px 4px;text-align:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+            <div class="crc-val" style="font-size:30px;color:var(--gold)">${p.qbr != null ? p.qbr.toFixed(1) : '—'}</div>
+            <div class="crc-label">Total QBR</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)">
             ${[
-              ['EPA/DB', p.epa_per_play != null ? (p.epa_per_play > 0 ? '+' : '') + p.epa_per_play.toFixed(2) : null],
-              ['Success', p.success_rate != null ? Math.round(p.success_rate) + '%' : null],
-              ['CPOE', p.cpoe != null ? (p.cpoe > 0 ? '+' : '') + p.cpoe.toFixed(1) : null],
-              ['TTT', p.ngs_time_to_throw != null ? p.ngs_time_to_throw.toFixed(2) + 's' : null],
-              ['QBR', p.qbr != null ? p.qbr.toFixed(1) : null],
-            ].filter(([, v]) => v != null).map(([k, v]) => `
-              <div style="display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid rgba(255,255,255,0.04)">
-                <span style="font-size:10px;color:var(--text-muted)">${k}</span>
-                <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:var(--text)">${v}</span>
+              ['EPA/DB', p.epa_per_play != null ? (p.epa_per_play > 0 ? '+' : '') + p.epa_per_play.toFixed(2) : '—'],
+              ['Success', p.success_rate != null ? Math.round(p.success_rate) + '%' : '—'],
+              ['CPOE', p.cpoe != null ? (p.cpoe > 0 ? '+' : '') + p.cpoe.toFixed(1) : '—'],
+              ['TTT', p.ngs_time_to_throw != null ? p.ngs_time_to_throw.toFixed(2) + 's' : '—'],
+            ].map(([k, v]) => `
+              <div style="background:#14171f;padding:7px 4px;text-align:center">
+                <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:15px;color:var(--text)">${v}</div>
+                <div class="crc-label" style="font-size:9px">${k}</div>
               </div>
             `).join('')}
           </div>
+        ` : ''}
+        ${p.stats && (p.stats['PASS_YDS'] != null || p.stats['PASS_TDS'] != null || p.stats['INT'] != null) ? `
+          <div style="padding:7px 13px;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--text-muted)">
+            ${[
+              p.stats['PASS_YDS'] != null ? p.stats['PASS_YDS'] + ' yds' : null,
+              p.stats['PASS_TDS'] != null ? p.stats['PASS_TDS'] + ' TD' : null,
+              p.stats['INT'] != null ? p.stats['INT'] + ' INT' : null,
+            ].filter(v => v != null).join(' · ')}
+          </div>
+        ` : ''}
+      ` : `
+        <div class="card-ratings">
+          <div class="card-rating-cell">
+            <div class="crc-val" style="color:${mc}">${p.madden || '—'}</div>
+            <div class="crc-label">Madden</div>
+          </div>
+          <div class="card-rating-cell">
+            <div class="crc-val" style="color:var(--gold)">${p.age || '—'}</div>
+            <div class="crc-label">Age</div>
+          </div>
+          <div class="card-rating-cell">
+            <div class="crc-val" style="color:var(--text-muted)">${p.snap_pct != null ? Math.round(p.snap_pct) + '%' : '—'}</div>
+            <div class="crc-label">${p.snap_pct != null ? 'Snaps' : ''}</div>
+          </div>
         </div>
-      ` : ''}
+        ${p.stats && Object.keys(p.stats).length > 0 ? `
+          <div style="padding:8px 13px;border-top:1px solid var(--border)">
+            <div style="font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:6px">${p.stats_season || ''} STATS</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px 12px">
+              ${Object.entries(p.stats).map(([k,v]) => `
+                <div style="display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid rgba(255,255,255,0.04)">
+                  <span style="font-size:10px;color:var(--text-muted)">${k}</span>
+                  <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:var(--text)">${v}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+      `}
       <div class="card-footer" style="flex-direction:column;gap:4px;align-items:flex-start">
         ${p.years_remaining != null && p.avg_annual_remaining != null ? `
           <div style="display:flex;justify-content:space-between;width:100%;align-items:center">
