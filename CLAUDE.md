@@ -287,6 +287,20 @@ Research notes on which stats best represent player value per sport/position, fo
 - **Real individual performance signal is paywalled:** PFF+ ($99.99–$119.99/yr as of Aug 2026) has player-level pass-block/run-block grades + pressures-allowed-per-snap. PFF Pro ($199.99/yr) adds an actual API/CLI — the clean way in if we ever go this route, vs. scraping their site directly (ToS risk).
 - **Decision: not pursuing a PFF subscription right now.** Interim OL story = penalty rate + snap_pct + team-level PBWR/RBWR as context (not individually isolated). Revisit as a deliberate call if OL becomes a priority, not a default next step.
 
+#### Quarterbacks
+
+**Investigated Sept 2026.** Unlike OL, QB is the best-served position for free, individually-attributed advanced stats — most of it already sits in our existing `nflreadpy` dependency, no new scraping needed for 3 of the 5.
+
+- **EPA/play (Expected Points Added)** — measures how much a play is worth given the situation (down, distance, field position, score, time), instead of just raw yards. A 5-yard gain on 3rd-and-3 counts for a lot more than a 5-yard gain on 3rd-and-15. **Source:** free, from nflverse play-by-play (already in our pipeline via `nflreadpy`). Can split into passing/rushing/sack EPA separately.
+- **CPOE (Completion % Over Expected)** — actual completion rate minus what a model expects given the throw's difficulty (distance, coverage, etc). Tells you if a QB is genuinely accurate, or just racking up easy completions. Pairs with EPA — EPA rewards big/aggressive plays, CPOE checks if the guy's actually accurate doing it. **Source:** free, same nflverse play-by-play as EPA.
+- **Success rate** — % of dropbacks that "beat the down" (gained enough yards to keep the offense on schedule for that down/distance). A steadier, less streaky companion to EPA — one huge touchdown can skew EPA/play in a small sample, success rate won't move as much. **Source:** free, computed from the same play-by-play (down/distance/yards gained columns).
+- **NGS Time to Throw** — average seconds from snap to release. Not inherently "good" or "bad" on its own (some great QBs hold it longer to let deep shots develop) — it's a process/style stat, useful paired with the others to explain *how* a QB is generating his EPA/CPOE numbers. **Source:** free, NFL's own tracking data via `load_nextgen_stats()` (already available in our pipeline, currently unused). Published as a full public leaderboard for all qualifying QBs — unlike PBWR, NFL doesn't gate this one.
+- **ESPN Total QBR** — 0-100 all-in-one QB rating, ESPN's proprietary blend of EPA-like value plus clutch/game-context weighting. Formula's a black box, but the actual numbers are fully public for every qualifying QB (not top-10-only). **Source:** free to view, but no API — requires scraping the table at espn.com/nfl/qbr, our only new scraper of the 5.
+
+**Ruled out, noting so we don't re-investigate:**
+- **Big Time Throw rate / Turnover Worthy Play rate** — PFF-exclusive. This is a human charter grading every throw -2.0 to +2.0 by difficulty/placement, not derivable from tracking data or a box score. No free equivalent exists; closest free proxies (NGS Aggressiveness, CPOE split by air-yard bucket) only capture half the concept each. PFF+ subscription only.
+- **QBERT (Nate Silver / Silver Bulletin)** — a personal Substack project, not a licensed data source. Paywalled ("Paid" post), and even as a subscriber there's no API/CSV — renders as embedded charts meant for humans, not a pipeline. Conceptually it's chasing the same signal our EPA/CPOE/success-rate stack already captures, just with his own hand-tuned weights (credits drops to WR not QB, discounts sneak TDs, etc). Not viable to build around either way.
+
 ---
 
 ## ScraperAPI — real status
