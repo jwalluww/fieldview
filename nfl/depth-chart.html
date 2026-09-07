@@ -908,6 +908,11 @@ async function loadAll() {
       injured: player.injured || false,
       attainment: player.attainment || null,
       stats: player.stats || {},
+      epa_per_play: player.epa_per_play != null ? player.epa_per_play : null,
+      success_rate: player.success_rate != null ? player.success_rate : null,
+      ngs_time_to_throw: player.ngs_time_to_throw != null ? player.ngs_time_to_throw : null,
+      cpoe: player.cpoe != null ? player.cpoe : null,
+      qbr: player.qbr != null ? player.qbr : null,
     });
   }
   loaded++;
