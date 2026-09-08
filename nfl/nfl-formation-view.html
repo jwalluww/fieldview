@@ -843,6 +843,11 @@ function mapPlayer(player) {
     ngs_time_to_throw: player.ngs_time_to_throw,
     cpoe: player.cpoe,
     qbr: player.qbr,
+    ryoe_per_att: player.ryoe_per_att,
+    box_rate: player.box_rate,
+    yac_per_att: player.yac_per_att,
+    broken_tackle_rate: player.broken_tackle_rate,
+    target_share: player.target_share,
   };
 }
 
@@ -1046,14 +1051,44 @@ function buildHoverCard(p, pos) {
           </div>
           <div class="card-meta">${pos}${p.age ? ' · Age '+p.age : ''}${p.years_pro != null ? ' · Yr '+p.years_pro+' NFL' : ''}${p.draft_year ? ' · Drafted '+p.draft_year : ''}${p.college ? ' · '+p.college : ''}</div>
         </div>
-        ${pos === 'QB' ? `
+        ${(pos === 'QB' || pos === 'RB') ? `
           <div style="text-align:center;flex-shrink:0">
             <div class="crc-val" style="color:${mc};font-size:24px">${p.madden || '—'}</div>
             <div class="crc-label">Madden</div>
           </div>
         ` : ''}
       </div>
-      ${pos === 'QB' ? `
+      ${pos === 'RB' ? `
+        ${(p.ryoe_per_att != null || p.yac_per_att != null || p.broken_tackle_rate != null || p.box_rate != null || p.target_share != null) ? `
+          <div style="padding:10px 13px 4px;text-align:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+            <div class="crc-val" style="font-size:30px;color:var(--gold)">${p.ryoe_per_att != null ? (p.ryoe_per_att > 0 ? '+' : '') + p.ryoe_per_att.toFixed(2) : '—'}</div>
+            <div class="crc-label" title="Rush Yards Over Expected per attempt -- how many yards a carry gains vs. what's expected given blocking, defenders in the box, and other context. Typical range (2025, 100+ carry backs): about -0.8 (poor) to +1.3 (elite); 0 is average by definition.">RYOE/att</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)">
+            ${[
+              ['YAC/att', p.yac_per_att != null ? p.yac_per_att.toFixed(2) : '—', "Yards After Contact per attempt -- how many yards a back gains after first contact. Typical range (2025, 100+ carry backs): about 1.4 (poor) to 3.0 (elite); around 2.0 is roughly average."],
+              ['Brk Tkl%', p.broken_tackle_rate != null ? p.broken_tackle_rate.toFixed(1) + '%' : '—', "Broken tackles per touch (carries + receptions). Typical range (2025, 100+ touch backs): about 1.6% (low) to 12.7% (elite); around 6.5% is roughly average."],
+              ['Box Rate', p.box_rate != null ? Math.round(p.box_rate) + '%' : '—', "Share of carries run into a stacked box (8+ defenders). Typical range (2025): about 11% to 45%. Lower generally means defenses respect the passing game more -- this reflects the whole offense's threat level, not just the runner himself."],
+              ['Tgt Share', p.target_share != null ? p.target_share.toFixed(1) + '%' : '—', "Share of the team's total pass targets this back receives. Typical range (2025, 20+ target backs): about 3% (early-down runner) to 24% (elite receiving back); around 8% is roughly average."],
+            ].map(([k, v, tip]) => `
+              <div style="background:#14171f;padding:7px 4px;text-align:center">
+                <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:15px;color:var(--text)">${v}</div>
+                <div class="crc-label" style="font-size:9px" title="${tip}">${k}</div>
+              </div>
+            `).join('')}
+          </div>
+        ` : ''}
+        ${p.stats && (p.stats['CAR'] != null || p.stats['RUSH_YDS'] != null || p.stats['RUSH_TDS'] != null) ? `
+          <div style="padding:7px 13px;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--text-muted)">
+            ${[
+              p.stats['CAR'] != null ? p.stats['CAR'] + ' car' : null,
+              p.stats['RUSH_YDS'] != null ? p.stats['RUSH_YDS'] + ' yds' : null,
+              p.stats['RUSH_TDS'] != null ? p.stats['RUSH_TDS'] + ' TD' : null,
+              p.snap_pct != null ? Math.round(p.snap_pct) + '% snaps' : null,
+            ].filter(v => v != null).join(' · ')}
+          </div>
+        ` : ''}
+      ` : pos === 'QB' ? `
         ${(p.epa_per_play != null || p.success_rate != null || p.cpoe != null || p.ngs_time_to_throw != null || p.qbr != null) ? `
           <div style="padding:10px 13px 4px;text-align:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
             <div class="crc-val" style="font-size:30px;color:var(--gold)">${p.qbr != null ? p.qbr.toFixed(1) : '—'}</div>

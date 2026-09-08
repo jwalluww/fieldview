@@ -35,6 +35,7 @@ FLOAT_FIELDS = {
     'match_confidence', 'snap_pct', 'cash_total_remaining',
     'cash_guaranteed_remaining', 'avg_annual_remaining',
     'epa_per_play', 'success_rate', 'ngs_time_to_throw', 'cpoe', 'qbr',
+    'ryoe_per_att', 'box_rate', 'yac_per_att', 'broken_tackle_rate', 'target_share',
 }
 
 
@@ -91,7 +92,12 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             pm.success_rate,
             pm.ngs_time_to_throw,
             pm.cpoe,
-            pm.qbr
+            pm.qbr,
+            pm.ryoe_per_att,
+            pm.box_rate,
+            pm.yac_per_att,
+            pm.broken_tackle_rate,
+            pm.target_share
         FROM player_match pm
         JOIN ourlads_players op ON pm.row_id = op.row_id
         ORDER BY pm.row_id
@@ -143,6 +149,11 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             'ngs_time_to_throw': clean('ngs_time_to_throw', r['ngs_time_to_throw']),
             'cpoe': clean('cpoe', r['cpoe']),
             'qbr': clean('qbr', r['qbr']),
+            'ryoe_per_att': clean('ryoe_per_att', r['ryoe_per_att']),
+            'box_rate': clean('box_rate', r['box_rate']),
+            'yac_per_att': clean('yac_per_att', r['yac_per_att']),
+            'broken_tackle_rate': clean('broken_tackle_rate', r['broken_tackle_rate']),
+            'target_share': clean('target_share', r['target_share']),
         }
         master[r['player_id']] = entry
 

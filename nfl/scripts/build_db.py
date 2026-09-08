@@ -181,6 +181,79 @@ def load_qbr_ratings():
     return pd.json_normalize(records)
 
 
+def load_ngs_rushing():
+    """RYOE/attempt + box rate, both pre-computed by NGS. Same
+    week==0-only gotcha as load_ngs_passing() -- mixes weekly rows and
+    one season-aggregate row."""
+    import nflreadpy as nfl
+    try:
+        df = nfl.load_nextgen_stats(stat_type='rushing', seasons=[SEASON]).to_pandas()
+    except ValueError as e:
+        print(f"  {SEASON} NGS rushing stats not published yet ({e}) -- falling back to {SEASON - 1}")
+        df = nfl.load_nextgen_stats(stat_type='rushing', seasons=[SEASON - 1]).to_pandas()
+    return df[df['week'] == 0]
+
+
+def load_pfr_rb_stats():
+    """YAC/attempt (rushing table) + a combined broken-tackle rate
+    across both rushing and receiving touches. pfr_id is the join
+    key -- this pipeline already resolves pfr_id per player via
+    find_pfr_id()/pfr_id_direct (the same mechanism snap_pct already
+    uses), so no new crosswalk is needed here."""
+    import nflreadpy as nfl
+    try:
+        rush = nfl.load_pfr_advstats([SEASON], stat_type='rush', summary_level='season').to_pandas()
+    except ValueError as e:
+        print(f"  {SEASON} PFR rush advstats not published yet ({e}) -- falling back to {SEASON - 1}")
+        rush = nfl.load_pfr_advstats([SEASON - 1], stat_type='rush', summary_level='season').to_pandas()
+    try:
+        rec = nfl.load_pfr_advstats([SEASON], stat_type='rec', summary_level='season').to_pandas()
+    except ValueError as e:
+        print(f"  {SEASON} PFR rec advstats not published yet ({e}) -- falling back to {SEASON - 1}")
+        rec = nfl.load_pfr_advstats([SEASON - 1], stat_type='rec', summary_level='season').to_pandas()
+
+    # A player traded mid-season gets one row per team stint PLUS one
+    # combined aggregate row (tm like '2TM'/'3TM') in PFR's own
+    # season-level table -- confirmed live on Trayveon Williams (LAC+CLE,
+    # rows tm='LAC'/'CLE'/'2TM'). Keep only the aggregate row when
+    # present, or merging on pfr_id cross-multiplies rows for anyone
+    # traded (3 rush rows x 3 rec rows = 9 merged rows for one real
+    # person -- confirmed, this is what broke the first run).
+    def dedupe_multiteam(df):
+        df = df.copy()
+        df['_is_multiteam'] = df['tm'].str.match(r'^\d+TM$', na=False)
+        df = df.sort_values('_is_multiteam', ascending=False)
+        return df.drop_duplicates(subset='pfr_id', keep='first').drop(columns='_is_multiteam')
+
+    rush = dedupe_multiteam(rush[rush['pos'].isin(['RB', 'FB'])])[['pfr_id', 'att', 'yac_att', 'brk_tkl']]
+    rec = dedupe_multiteam(rec[rec['pos'].isin(['RB', 'FB'])])[['pfr_id', 'rec', 'brk_tkl']]
+    merged = rush.merge(rec, on='pfr_id', how='outer', suffixes=('_rush', '_rec'))
+    merged['touches'] = merged['att'].fillna(0) + merged['rec'].fillna(0)
+    merged['broken_tackle_rate'] = (
+        (merged['brk_tkl_rush'].fillna(0) + merged['brk_tkl_rec'].fillna(0))
+        / merged['touches'].replace(0, pd.NA) * 100
+    )
+    return merged[['pfr_id', 'yac_att', 'broken_tackle_rate']]
+
+
+def load_rb_target_share():
+    """Season-long target share, keyed by nflreadpy's own player_id --
+    confirmed real (00-XXXXXXX gsis_id format), lines up directly with
+    this pipeline's gid, no separate resolution needed. Needs its own
+    summary_level='reg' call rather than reusing scrape_stats.py's
+    weekly-sum output -- summing a ratio like target_share across weeks
+    produces a meaningless number. Confirmed this fails with
+    ConnectionError specifically (a missing not-yet-published parquet
+    file), not ValueError like every other new source this round."""
+    import nflreadpy as nfl
+    try:
+        df = nfl.load_player_stats([SEASON], summary_level='reg').to_pandas()
+    except ConnectionError as e:
+        print(f"  {SEASON} player stats not published yet ({e}) -- falling back to {SEASON - 1}")
+        df = nfl.load_player_stats([SEASON - 1], summary_level='reg').to_pandas()
+    return df[df['position'] == 'RB'][['player_id', 'target_share']]
+
+
 def build_db():
     con = duckdb.connect(DB_PATH)
     try:
@@ -212,6 +285,15 @@ def build_db():
 
         print("Loading QBR ratings...")
         write_table(con, 'qbr_ratings', load_qbr_ratings())
+
+        print("Loading NGS rushing (RYOE/att + box rate)...")
+        write_table(con, 'ngs_rushing', load_ngs_rushing())
+
+        print("Loading PFR RB stats (YAC/att + broken tackle rate)...")
+        write_table(con, 'pfr_rb_stats', load_pfr_rb_stats())
+
+        print("Loading RB target share...")
+        write_table(con, 'rb_target_share', load_rb_target_share())
     finally:
         con.close()
 
