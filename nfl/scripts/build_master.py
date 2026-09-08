@@ -26,6 +26,8 @@ NAME_ALIASES = {
     'Mike Jackson': None,
     'Joshua Metellus': None,
     'Greg Rousseau': 'Gregory Rousseau',
+    'Cam Ward': 'Cameron Ward',
+    'Zach Bako-bewele': 'Zach Tom',
 }
 
 SKIP_POSITIONS = {'KR', 'PR', 'KO', 'PK', 'LS', 'K', 'P', 'PT', 'H'}
