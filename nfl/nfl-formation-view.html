@@ -799,6 +799,47 @@ function maddenColor(r) {
   return `hsl(${Math.max(0,(r-55)*2)},90%,50%)`;
 }
 
+// Real terciles computed from this season's actual data (100+ pass
+// attempts for QB stats, 50+ carries for RB stats). qbr uses ESPN's own
+// stated design (50 = average) instead of an empirical tercile, since
+// the QBR-qualified sample is smaller and skews toward established
+// starters -- an empirical split there would overstate what counts as
+// "elite".
+const STAT_TIERS = {
+  epa_per_play:       { low: 0.001,  high: 0.127,  lowerIsBetter: false },
+  success_rate:       { low: 43.459, high: 47.681, lowerIsBetter: false },
+  cpoe:               { low: -1.671, high: 2.612,  lowerIsBetter: false },
+  ngs_time_to_throw:  { low: 2.794,  high: 2.868,  lowerIsBetter: true },
+  qbr:                { low: 45,     high: 65,     lowerIsBetter: false },
+  ryoe_per_att:       { low: 0.239,  high: 0.702,  lowerIsBetter: false },
+  yac_per_att:        { low: 1.8,    high: 2.2,    lowerIsBetter: false },
+  broken_tackle_rate: { low: 5.839,  high: 8.092,  lowerIsBetter: false },
+  box_rate:           { low: 22.069, high: 29.348, lowerIsBetter: true },
+  target_share:       { low: 5.16,   high: 8.621,  lowerIsBetter: false },
+};
+
+function tierColor(statKey, value) {
+  if (value == null) return null;
+  const t = STAT_TIERS[statKey];
+  if (!t) return null;
+  const aboveHigh = value >= t.high;
+  const belowLow = value <= t.low;
+  if (t.lowerIsBetter) {
+    if (belowLow) return '#22c55e';
+    if (aboveHigh) return '#ef4444';
+  } else {
+    if (aboveHigh) return '#22c55e';
+    if (belowLow) return '#ef4444';
+  }
+  return '#eab308';
+}
+
+function tierDot(statKey, value, size) {
+  const c = tierColor(statKey, value);
+  const px = size || 7;
+  return c ? `<span style="width:${px}px;height:${px}px;border-radius:50%;background:${c};display:inline-block"></span>` : '';
+}
+
 function parseCap(capStr) {
   if (!capStr) return 0;
   return parseInt(capStr.replace(/[$,]/g, '')) || 0;
@@ -1061,18 +1102,24 @@ function buildHoverCard(p, pos) {
       ${pos === 'RB' ? `
         ${(p.ryoe_per_att != null || p.yac_per_att != null || p.broken_tackle_rate != null || p.box_rate != null || p.target_share != null) ? `
           <div style="padding:10px 13px 4px;text-align:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
-            <div class="crc-val" style="font-size:30px;color:var(--gold)">${p.ryoe_per_att != null ? (p.ryoe_per_att > 0 ? '+' : '') + p.ryoe_per_att.toFixed(2) : '—'}</div>
+            <div style="display:flex;align-items:center;justify-content:center;gap:6px">
+              ${p.ryoe_per_att != null ? tierDot('ryoe_per_att', p.ryoe_per_att, 9) : ''}
+              <span class="crc-val" style="font-size:30px;color:var(--gold)">${p.ryoe_per_att != null ? (p.ryoe_per_att > 0 ? '+' : '') + p.ryoe_per_att.toFixed(2) : '—'}</span>
+            </div>
             <div class="crc-label" title="Rush Yards Over Expected per attempt -- how many yards a carry gains vs. what's expected given blocking, defenders in the box, and other context. Typical range (2025, 100+ carry backs): about -0.8 (poor) to +1.3 (elite); 0 is average by definition.">RYOE/att</div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)">
             ${[
-              ['YAC/att', p.yac_per_att != null ? p.yac_per_att.toFixed(2) : '—', "Yards After Contact per attempt -- how many yards a back gains after first contact. Typical range (2025, 100+ carry backs): about 1.4 (poor) to 3.0 (elite); around 2.0 is roughly average."],
-              ['Brk Tkl%', p.broken_tackle_rate != null ? p.broken_tackle_rate.toFixed(1) + '%' : '—', "Broken tackles per touch (carries + receptions). Typical range (2025, 100+ touch backs): about 1.6% (low) to 12.7% (elite); around 6.5% is roughly average."],
-              ['Box Rate', p.box_rate != null ? Math.round(p.box_rate) + '%' : '—', "Share of carries run into a stacked box (8+ defenders). Typical range (2025): about 11% to 45%. Lower generally means defenses respect the passing game more -- this reflects the whole offense's threat level, not just the runner himself."],
-              ['Tgt Share', p.target_share != null ? p.target_share.toFixed(1) + '%' : '—', "Share of the team's total pass targets this back receives. Typical range (2025, 20+ target backs): about 3% (early-down runner) to 24% (elite receiving back); around 8% is roughly average."],
-            ].map(([k, v, tip]) => `
+              ['YAC/att', 'yac_per_att', p.yac_per_att, p.yac_per_att != null ? p.yac_per_att.toFixed(2) : '—', "Yards After Contact per attempt -- how many yards a back gains after first contact. Typical range (2025, 100+ carry backs): about 1.4 (poor) to 3.0 (elite); around 2.0 is roughly average."],
+              ['Brk Tkl%', 'broken_tackle_rate', p.broken_tackle_rate, p.broken_tackle_rate != null ? p.broken_tackle_rate.toFixed(1) + '%' : '—', "Broken tackles per touch (carries + receptions). Typical range (2025, 100+ touch backs): about 1.6% (low) to 12.7% (elite); around 6.5% is roughly average."],
+              ['Box Rate', 'box_rate', p.box_rate, p.box_rate != null ? Math.round(p.box_rate) + '%' : '—', "Share of carries run into a stacked box (8+ defenders). Typical range (2025): about 11% to 45%. Lower generally means defenses respect the passing game more -- this reflects the whole offense's threat level, not just the runner himself."],
+              ['Tgt Share', 'target_share', p.target_share, p.target_share != null ? p.target_share.toFixed(1) + '%' : '—', "Share of the team's total pass targets this back receives. Typical range (2025, 20+ target backs): about 3% (early-down runner) to 24% (elite receiving back); around 8% is roughly average."],
+            ].map(([k, statKey, raw, display, tip]) => `
               <div style="background:#14171f;padding:7px 4px;text-align:center">
-                <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:15px;color:var(--text)">${v}</div>
+                <div style="display:flex;align-items:center;justify-content:center;gap:5px">
+                  ${tierDot(statKey, raw)}
+                  <span style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:15px;color:var(--text)">${display}</span>
+                </div>
                 <div class="crc-label" style="font-size:9px" title="${tip}">${k}</div>
               </div>
             `).join('')}
@@ -1091,18 +1138,24 @@ function buildHoverCard(p, pos) {
       ` : pos === 'QB' ? `
         ${(p.epa_per_play != null || p.success_rate != null || p.cpoe != null || p.ngs_time_to_throw != null || p.qbr != null) ? `
           <div style="padding:10px 13px 4px;text-align:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
-            <div class="crc-val" style="font-size:30px;color:var(--gold)">${p.qbr != null ? p.qbr.toFixed(1) : '—'}</div>
+            <div style="display:flex;align-items:center;justify-content:center;gap:6px">
+              ${p.qbr != null ? tierDot('qbr', p.qbr, 9) : ''}
+              <span class="crc-val" style="font-size:30px;color:var(--gold)">${p.qbr != null ? p.qbr.toFixed(1) : '—'}</span>
+            </div>
             <div class="crc-label" title="ESPN's Total QBR -- a 0-100 all-in-one rating of overall efficiency. ESPN scales it so 50 = average; 65+ is very good, below 40 is poor.">Total QBR</div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)">
             ${[
-              ['EPA/DB', p.epa_per_play != null ? (p.epa_per_play > 0 ? '+' : '') + p.epa_per_play.toFixed(2) : '—', "Expected Points Added per dropback -- points added vs. a league-average outcome in the same situation. Typical range: about -0.10 (poor) to +0.25 (elite); 0.00-0.10 is roughly average."],
-              ['Success', p.success_rate != null ? Math.round(p.success_rate) + '%' : '—', "Success rate -- share of dropbacks that meaningfully move the offense closer to a first down or score. Typical range: about 40% (poor) to 55%+ (elite); 46-48% is roughly average."],
-              ['CPOE', p.cpoe != null ? (p.cpoe > 0 ? '+' : '') + p.cpoe.toFixed(1) : '—', "Completion % Over Expected -- accuracy vs. expected, given throw difficulty. Typical range: about -5% (poor) to +5-8% (elite); 0% is average."],
-              ['TTT', p.ngs_time_to_throw != null ? p.ngs_time_to_throw.toFixed(2) + 's' : '—', "Time to throw -- average seconds from snap to release. Typically 2.4-3.0s. Faster isn't automatically better or worse -- it depends on scheme and play style."],
-            ].map(([k, v, tip]) => `
+              ['EPA/DB', 'epa_per_play', p.epa_per_play, p.epa_per_play != null ? (p.epa_per_play > 0 ? '+' : '') + p.epa_per_play.toFixed(2) : '—', "Expected Points Added per dropback -- points added vs. a league-average outcome in the same situation. Typical range: about -0.10 (poor) to +0.25 (elite); 0.00-0.10 is roughly average."],
+              ['Success', 'success_rate', p.success_rate, p.success_rate != null ? Math.round(p.success_rate) + '%' : '—', "Success rate -- share of dropbacks that meaningfully move the offense closer to a first down or score. Typical range: about 40% (poor) to 55%+ (elite); 46-48% is roughly average."],
+              ['CPOE', 'cpoe', p.cpoe, p.cpoe != null ? (p.cpoe > 0 ? '+' : '') + p.cpoe.toFixed(1) : '—', "Completion % Over Expected -- accuracy vs. expected, given throw difficulty. Typical range: about -5% (poor) to +5-8% (elite); 0% is average."],
+              ['TTT', 'ngs_time_to_throw', p.ngs_time_to_throw, p.ngs_time_to_throw != null ? p.ngs_time_to_throw.toFixed(2) + 's' : '—', "Time to throw -- average seconds from snap to release. Typically 2.4-3.0s. Faster isn't automatically better or worse -- it depends on scheme and play style."],
+            ].map(([k, statKey, raw, display, tip]) => `
               <div style="background:#14171f;padding:7px 4px;text-align:center">
-                <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:15px;color:var(--text)">${v}</div>
+                <div style="display:flex;align-items:center;justify-content:center;gap:5px">
+                  ${tierDot(statKey, raw)}
+                  <span style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:15px;color:var(--text)">${display}</span>
+                </div>
                 <div class="crc-label" style="font-size:9px" title="${tip}">${k}</div>
               </div>
             `).join('')}
