@@ -509,7 +509,7 @@
         "name": "Nazir Stackhouse",
         "depth": 3,
         "injured": false,
-        "attainment": "W/Ten",
+        "attainment": "W/GB",
         "standard_slot": "RDT",
         "standard_pos": "DI",
         "cap_number": "$1,005,000",
@@ -636,13 +636,13 @@
     ],
     "LCB": [
       {
-        "name": "Alontae Taylor",
+        "name": "Cor'dale Flott",
         "depth": 1,
         "injured": false,
-        "attainment": "U/NO",
+        "attainment": "U/NYG",
         "standard_slot": "LCB",
         "standard_pos": "CB",
-        "cap_number": "$14,000,000",
+        "cap_number": "$10,743,333",
         "stats": {},
         "stats_season": null
       },
@@ -724,24 +724,13 @@
     ],
     "RCB": [
       {
-        "name": "Cor'dale Flott",
+        "name": "Alontae Taylor",
         "depth": 1,
         "injured": false,
-        "attainment": "U/NYG",
+        "attainment": "U/NO",
         "standard_slot": "RCB",
         "standard_pos": "CB",
-        "cap_number": "$10,743,333",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Melvin Smith Jr.",
-        "depth": 2,
-        "injured": false,
-        "attainment": "W/KC",
-        "standard_slot": "RCB",
-        "standard_pos": "CB",
-        "cap_number": "$885,000",
+        "cap_number": "$14,000,000",
         "stats": {},
         "stats_season": null
       }
@@ -761,6 +750,17 @@
           "TFL": 1
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Melvin Smith Jr.",
+        "depth": 2,
+        "injured": false,
+        "attainment": "W/KC",
+        "standard_slot": "NB",
+        "standard_pos": "CB",
+        "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "PT": [
@@ -931,21 +931,8 @@
     ],
     "S": [
       {
-        "name": "Jerrick Reed II",
-        "depth": 1,
-        "injured": false,
-        "attainment": "W/Sea",
-        "standard_slot": "S",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {
-          "TKL": 6
-        },
-        "stats_season": 2025
-      },
-      {
         "name": "Erick Hallett II",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "P/Det",
         "standard_slot": "S",
@@ -954,6 +941,22 @@
         "stats": {
           "TKL": 12,
           "PD": 1
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Isaiah Oliver",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "S",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TGT": 1,
+          "REC": 1,
+          "YDS": 8,
+          "YAC": 2
         },
         "stats_season": 2025
       }

@@ -250,19 +250,8 @@
         "stats_season": null
       },
       {
-        "name": "Tanner Koziol",
-        "depth": 3,
-        "injured": false,
-        "attainment": "26/5",
-        "standard_slot": "TE",
-        "standard_pos": "TE",
-        "cap_number": "$1,004,210",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Quintin Morris",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "U/Buf",
         "standard_slot": "TE",
@@ -276,6 +265,17 @@
           "YAC": 21
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Tanner Koziol",
+        "depth": 4,
+        "injured": false,
+        "attainment": "26/5",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": "$1,004,210",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Hayden Rucci",
@@ -682,17 +682,16 @@
     ],
     "LCB": [
       {
-        "name": "Montaric Brown",
+        "name": "Travis Hunter",
         "depth": 1,
         "injured": false,
-        "attainment": "22/7",
+        "attainment": "25/1",
         "standard_slot": "LCB",
         "standard_pos": "CB",
-        "cap_number": "$3,926,471",
+        "cap_number": "$10,602,071",
         "stats": {
-          "TKL": 43,
-          "INTs": 2,
-          "PD": 12
+          "TKL": 11,
+          "PD": 3
         },
         "stats_season": 2025
       },
@@ -791,33 +790,17 @@
     ],
     "RCB": [
       {
-        "name": "Travis Hunter",
+        "name": "Montaric Brown",
         "depth": 1,
         "injured": false,
-        "attainment": "25/1",
+        "attainment": "22/7",
         "standard_slot": "RCB",
         "standard_pos": "CB",
-        "cap_number": "$10,602,071",
+        "cap_number": "$3,926,471",
         "stats": {
-          "TKL": 11,
-          "PD": 3
-        },
-        "stats_season": 2025
-      },
-      {
-        "name": "Jarrian Jones",
-        "depth": 2,
-        "injured": false,
-        "attainment": "24/3",
-        "standard_slot": "RCB",
-        "standard_pos": "CB",
-        "cap_number": "$1,526,267",
-        "stats": {
-          "TKL": 35,
-          "INTs": 3,
-          "PD": 8,
-          "TFL": 6,
-          "QB HIT": 1
+          "TKL": 43,
+          "INTs": 2,
+          "PD": 12
         },
         "stats_season": 2025
       }
@@ -836,6 +819,23 @@
           "INTs": 2,
           "PD": 10,
           "TFL": 5,
+          "QB HIT": 1
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Jarrian Jones",
+        "depth": 2,
+        "injured": false,
+        "attainment": "24/3",
+        "standard_slot": "NB",
+        "standard_pos": "CB",
+        "cap_number": "$1,526,267",
+        "stats": {
+          "TKL": 35,
+          "INTs": 3,
+          "PD": 8,
+          "TFL": 6,
           "QB HIT": 1
         },
         "stats_season": 2025

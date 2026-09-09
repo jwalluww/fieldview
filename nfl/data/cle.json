@@ -17,19 +17,19 @@
         "stats_season": null
       },
       {
-        "name": "Isaiah Bond",
+        "name": "Malachi Corley",
         "depth": 2,
         "injured": false,
-        "attainment": "CF25",
+        "attainment": "SF25",
         "standard_slot": "LWR",
         "standard_pos": "WR",
-        "cap_number": "$1,022,666",
+        "cap_number": "$1,075,000",
         "stats": {
-          "TGT": 44,
-          "REC": 18,
-          "YDS": 338,
-          "YAC": 79,
-          "CAR": 5
+          "TGT": 14,
+          "REC": 11,
+          "YDS": 79,
+          "YAC": 68,
+          "CAR": 13
         },
         "stats_season": 2025
       }
@@ -78,19 +78,19 @@
         "stats_season": null
       },
       {
-        "name": "Malachi Corley",
+        "name": "Isaiah Bond",
         "depth": 2,
         "injured": false,
-        "attainment": "SF25",
+        "attainment": "CF25",
         "standard_slot": "SWR",
         "standard_pos": "WR",
-        "cap_number": "$1,075,000",
+        "cap_number": "$1,022,666",
         "stats": {
-          "TGT": 14,
-          "REC": 11,
-          "YDS": 79,
-          "YAC": 68,
-          "CAR": 13
+          "TGT": 44,
+          "REC": 18,
+          "YDS": 338,
+          "YAC": 79,
+          "CAR": 5
         },
         "stats_season": 2025
       }
@@ -193,6 +193,17 @@
         "cap_number": "$2,732,000",
         "stats": {},
         "stats_season": 2025
+      },
+      {
+        "name": "Austin Barber",
+        "depth": 2,
+        "injured": false,
+        "attainment": "26/3",
+        "standard_slot": "RG",
+        "standard_pos": "OL",
+        "cap_number": "$1,249,841",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RT": [
@@ -204,17 +215,6 @@
         "standard_slot": "RT",
         "standard_pos": "OL",
         "cap_number": "$5,981,176",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Austin Barber",
-        "depth": 2,
-        "injured": false,
-        "attainment": "26/3",
-        "standard_slot": "RT",
-        "standard_pos": "OL",
-        "cap_number": "$1,249,841",
         "stats": {},
         "stats_season": null
       }
@@ -401,31 +401,32 @@
     ],
     "LDE": [
       {
-        "name": "Isaiah Mcguire",
+        "name": "Jared Verse",
         "depth": 1,
         "injured": false,
-        "attainment": "23/4",
+        "attainment": "T/LAR",
         "standard_slot": "LE",
         "standard_pos": "EDGE",
-        "cap_number": "$3,851,982",
-        "stats": {
-          "TKL": 17,
-          "SACKS": 2.0,
-          "TFL": 8,
-          "QB HIT": 6
-        },
-        "stats_season": 2025
-      },
-      {
-        "name": "Derek Barnett",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/Hou",
-        "standard_slot": "LE",
-        "standard_pos": "EDGE",
-        "cap_number": "$1,776,000",
+        "cap_number": "$2,170,850",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Sam Williams",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LE",
+        "standard_pos": "EDGE",
+        "cap_number": "$0",
+        "stats": {
+          "CAR": 10,
+          "RU YDS": 36,
+          "REC": 8,
+          "RE YDS": 55,
+          "TGT": 9
+        },
+        "stats_season": 2025
       }
     ],
     "LDT": [
@@ -497,32 +498,31 @@
     ],
     "RDE": [
       {
-        "name": "Jared Verse",
+        "name": "Isaiah Mcguire",
         "depth": 1,
         "injured": false,
-        "attainment": "T/LAR",
+        "attainment": "23/4",
         "standard_slot": "RE",
         "standard_pos": "EDGE",
-        "cap_number": "$2,170,850",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Sam Williams",
-        "depth": 2,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "RE",
-        "standard_pos": "EDGE",
-        "cap_number": "$0",
+        "cap_number": "$3,851,982",
         "stats": {
-          "CAR": 10,
-          "RU YDS": 36,
-          "REC": 8,
-          "RE YDS": 55,
-          "TGT": 9
+          "TKL": 17,
+          "SACKS": 2.0,
+          "TFL": 8,
+          "QB HIT": 6
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Derek Barnett",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/Hou",
+        "standard_slot": "RE",
+        "standard_pos": "EDGE",
+        "cap_number": "$1,776,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "WLB": [
@@ -544,19 +544,8 @@
         "stats_season": 2025
       },
       {
-        "name": "Winston Reid",
-        "depth": 2,
-        "injured": false,
-        "attainment": "CF24",
-        "standard_slot": "WILL",
-        "standard_pos": "LB",
-        "cap_number": "$1,005,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Easton Mascarenas-arnold",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "CF25",
         "standard_slot": "WILL",
@@ -566,6 +555,17 @@
           "TKL": 4
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Winston Reid",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF24",
+        "standard_slot": "WILL",
+        "standard_pos": "LB",
+        "cap_number": "$1,005,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "MLB": [
@@ -781,17 +781,6 @@
           "FG%": "\u2014"
         },
         "stats_season": 2025
-      },
-      {
-        "name": "Wes Pahl",
-        "depth": 2,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "PT",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "H": [
@@ -822,7 +811,7 @@
         "stats_season": null
       },
       {
-        "name": "Bryce Oliver",
+        "name": "Bub Means",
         "depth": 2,
         "injured": false,
         "attainment": "SF26",
@@ -870,10 +859,10 @@
         "stats_season": null
       },
       {
-        "name": "Tyreak Sapp",
+        "name": "Nadame Tucker",
         "depth": 3,
         "injured": false,
-        "attainment": "CF26",
+        "attainment": "SF26",
         "standard_slot": "ED",
         "standard_pos": "DEF",
         "cap_number": null,
@@ -912,6 +901,17 @@
           "TGT": 9
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Zion Logue",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LB": [

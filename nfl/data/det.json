@@ -100,15 +100,15 @@
         "stats_season": 2025
       },
       {
-        "name": "Ben Bartch",
+        "name": "Miles Frazier",
         "depth": 2,
         "injured": false,
-        "attainment": "U/SF",
+        "attainment": "25/5",
         "standard_slot": "LG",
         "standard_pos": "OL",
-        "cap_number": "$1,075,000",
+        "cap_number": "$1,085,054",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2025
       }
     ],
     "C": [
@@ -124,7 +124,7 @@
         "stats_season": null
       },
       {
-        "name": "Elijah Klein",
+        "name": "Seth Mclaughlin",
         "depth": 2,
         "injured": false,
         "attainment": "SF26",
@@ -148,15 +148,15 @@
         "stats_season": 2025
       },
       {
-        "name": "Miles Frazier",
+        "name": "Ben Bartch",
         "depth": 2,
         "injured": false,
-        "attainment": "25/5",
+        "attainment": "U/SF",
         "standard_slot": "RG",
         "standard_pos": "OL",
-        "cap_number": "$1,085,054",
+        "cap_number": "$1,075,000",
         "stats": {},
-        "stats_season": 2025
+        "stats_season": null
       }
     ],
     "RT": [
@@ -315,8 +315,22 @@
         "stats_season": 2025
       },
       {
-        "name": "Jacob Saylors",
+        "name": "Sione Vaki",
         "depth": 2,
+        "injured": false,
+        "attainment": "24/4",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": "$1,207,177",
+        "stats": {
+          "CAR": 1,
+          "RU YDS": 4
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Jacob Saylors",
+        "depth": 3,
         "injured": false,
         "attainment": "SF25",
         "standard_slot": "RB",
@@ -329,18 +343,15 @@
         "stats_season": 2025
       },
       {
-        "name": "Sione Vaki",
-        "depth": 3,
+        "name": "Jabari Small",
+        "depth": 4,
         "injured": false,
-        "attainment": "24/4",
+        "attainment": "SF25",
         "standard_slot": "RB",
         "standard_pos": "RB",
-        "cap_number": "$1,207,177",
-        "stats": {
-          "CAR": 1,
-          "RU YDS": 4
-        },
-        "stats_season": 2025
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LDE": [
@@ -456,8 +467,19 @@
     ],
     "RDE": [
       {
-        "name": "Tyler Lacy",
+        "name": "DJ Wonnum",
         "depth": 1,
+        "injured": false,
+        "attainment": "U/Car",
+        "standard_slot": "RE",
+        "standard_pos": "EDGE",
+        "cap_number": "$2,960,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Tyler Lacy",
+        "depth": 2,
         "injured": false,
         "attainment": "W/Jax",
         "standard_slot": "RE",
@@ -469,17 +491,6 @@
           "QB HIT": 2
         },
         "stats_season": 2025
-      },
-      {
-        "name": "DJ Wonnum",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/Car",
-        "standard_slot": "RE",
-        "standard_pos": "EDGE",
-        "cap_number": "$2,960,000",
-        "stats": {},
-        "stats_season": null
       },
       {
         "name": "Ahmed Hassanein",
@@ -518,6 +529,17 @@
           "TFL": 1
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Joe Bachie",
+        "depth": 3,
+        "injured": false,
+        "attainment": "U/Ten",
+        "standard_slot": "WILL",
+        "standard_pos": "LB",
+        "cap_number": "$1,075,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "MLB": [
@@ -811,10 +833,10 @@
     ],
     "OG": [
       {
-        "name": "Mason Miller",
+        "name": "Elijah Klein",
         "depth": 1,
         "injured": false,
-        "attainment": "CF25",
+        "attainment": "SF26",
         "standard_slot": "OG",
         "standard_pos": "DEF",
         "cap_number": null,
@@ -881,17 +903,6 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Joe Bachie",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/Ten",
-        "standard_slot": "LB",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "CB": [
@@ -926,6 +937,19 @@
           "PD": 3
         },
         "stats_season": 2025
+      }
+    ],
+    "PS/IR": [
+      {
+        "name": "Mason Og^ Miller",
+        "depth": 1,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "PS/IR",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ]
   }

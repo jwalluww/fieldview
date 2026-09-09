@@ -446,7 +446,7 @@
       {
         "name": "Aaron Donald",
         "depth": 1,
-        "injured": false,
+        "injured": true,
         "attainment": "14/1",
         "standard_slot": "LE",
         "standard_pos": "DI",
@@ -711,6 +711,21 @@
         "cap_number": "$6,946,666",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Emmanuel Forbes Jr.",
+        "depth": 2,
+        "injured": false,
+        "attainment": "W/Was",
+        "standard_slot": "LCB",
+        "standard_pos": "CB",
+        "cap_number": "$2,851,032",
+        "stats": {
+          "TKL": 32,
+          "INTs": 3,
+          "PD": 18
+        },
+        "stats_season": 2025
       }
     ],
     "SS": [
@@ -779,21 +794,6 @@
         "cap_number": "$10,800,000",
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Emmanuel Forbes Jr.",
-        "depth": 2,
-        "injured": false,
-        "attainment": "W/Was",
-        "standard_slot": "RCB",
-        "standard_pos": "CB",
-        "cap_number": "$2,851,032",
-        "stats": {
-          "TKL": 32,
-          "INTs": 3,
-          "PD": 18
-        },
-        "stats_season": 2025
       }
     ],
     "NB": [

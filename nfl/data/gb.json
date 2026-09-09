@@ -6,19 +6,20 @@
   "depth_chart": {
     "LWR": [
       {
-        "name": "Matthew Golden",
+        "name": "Christian Watson",
         "depth": 1,
         "injured": false,
-        "attainment": "25/1",
+        "attainment": "22/2",
         "standard_slot": "LWR",
         "standard_pos": "WR",
-        "cap_number": "$3,994,395",
+        "cap_number": "$10,519,297",
         "stats": {
-          "TGT": 44,
-          "REC": 29,
-          "YDS": 361,
-          "YAC": 101,
-          "CAR": 10
+          "TGT": 55,
+          "REC": 35,
+          "YDS": 611,
+          "TDs": 6,
+          "YAC": 118,
+          "CAR": 1
         },
         "stats_season": 2025
       },
@@ -43,20 +44,19 @@
     ],
     "RWR": [
       {
-        "name": "Christian Watson",
+        "name": "Matthew Golden",
         "depth": 1,
         "injured": false,
-        "attainment": "22/2",
+        "attainment": "25/1",
         "standard_slot": "RWR",
         "standard_pos": "WR",
-        "cap_number": "$10,519,297",
+        "cap_number": "$3,994,395",
         "stats": {
-          "TGT": 55,
-          "REC": 35,
-          "YDS": 611,
-          "TDs": 6,
-          "YAC": 118,
-          "CAR": 1
+          "TGT": 44,
+          "REC": 29,
+          "YDS": 361,
+          "YAC": 101,
+          "CAR": 10
         },
         "stats_season": 2025
       },
@@ -147,13 +147,13 @@
         "stats_season": 2025
       },
       {
-        "name": "Jager Burton",
+        "name": "Donovan Jennings",
         "depth": 2,
         "injured": false,
-        "attainment": "26/5",
+        "attainment": "CF24",
         "standard_slot": "LG",
         "standard_pos": "OL",
-        "cap_number": "$1,011,000",
+        "cap_number": "$1,005,000",
         "stats": {},
         "stats_season": null
       }
@@ -171,37 +171,37 @@
         "stats_season": 2025
       },
       {
-        "name": "Jacob Monk",
+        "name": "Jager Burton",
         "depth": 2,
         "injured": false,
-        "attainment": "24/5",
+        "attainment": "26/5",
         "standard_slot": "C",
         "standard_pos": "OL",
-        "cap_number": "$1,150,404",
+        "cap_number": "$1,011,000",
         "stats": {},
         "stats_season": null
       }
     ],
     "RG": [
       {
-        "name": "Anthony Belton",
+        "name": "Jacob Monk",
         "depth": 1,
         "injured": false,
-        "attainment": "25/2",
+        "attainment": "24/5",
         "standard_slot": "RG",
         "standard_pos": "OL",
-        "cap_number": "$1,822,006",
+        "cap_number": "$1,150,404",
         "stats": {},
-        "stats_season": 2025
+        "stats_season": null
       },
       {
-        "name": "Donovan Jennings",
+        "name": "Travis Glover",
         "depth": 2,
         "injured": false,
-        "attainment": "CF24",
+        "attainment": "24/6",
         "standard_slot": "RG",
         "standard_pos": "OL",
-        "cap_number": "$1,005,000",
+        "cap_number": "$1,117,845",
         "stats": {},
         "stats_season": null
       }
@@ -219,15 +219,15 @@
         "stats_season": 2025
       },
       {
-        "name": "Travis Glover",
+        "name": "Anthony Belton",
         "depth": 2,
         "injured": false,
-        "attainment": "24/6",
+        "attainment": "25/2",
         "standard_slot": "RT",
         "standard_pos": "OL",
-        "cap_number": "$1,117,845",
+        "cap_number": "$1,822,006",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2025
       }
     ],
     "TE": [
@@ -404,19 +404,8 @@
     ],
     "LDE": [
       {
-        "name": "Javon Hargrave",
-        "depth": 1,
-        "injured": false,
-        "attainment": "CC/Min",
-        "standard_slot": "LE",
-        "standard_pos": "DI",
-        "cap_number": "$7,705,882",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Karl Brooks",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "23/6",
         "standard_slot": "LE",
@@ -429,17 +418,43 @@
           "QB HIT": 5
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Warren Brinson",
+        "depth": 2,
+        "injured": true,
+        "attainment": "25/6",
+        "standard_slot": "LE",
+        "standard_pos": "DI",
+        "cap_number": "$1,061,596",
+        "stats": {
+          "TKL": 6,
+          "SACKS": 0.5,
+          "QB HIT": 3
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Anthony Campbell",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "LE",
+        "standard_pos": "DI",
+        "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "NT": [
       {
-        "name": "Chris Mcclellan",
+        "name": "Javon Hargrave",
         "depth": 1,
         "injured": false,
-        "attainment": "26/3",
+        "attainment": "CC/Min",
         "standard_slot": "NT",
         "standard_pos": "DI",
-        "cap_number": "$1,290,194",
+        "cap_number": "$7,705,882",
         "stats": {},
         "stats_season": null
       },
@@ -475,28 +490,13 @@
         "stats_season": 2025
       },
       {
-        "name": "Warren Brinson",
+        "name": "Chris Mcclellan",
         "depth": 2,
-        "injured": true,
-        "attainment": "25/6",
-        "standard_slot": "RE",
-        "standard_pos": "DI",
-        "cap_number": "$1,061,596",
-        "stats": {
-          "TKL": 6,
-          "SACKS": 0.5,
-          "QB HIT": 3
-        },
-        "stats_season": 2025
-      },
-      {
-        "name": "Anthony Campbell",
-        "depth": 3,
         "injured": false,
-        "attainment": "SF25",
+        "attainment": "26/3",
         "standard_slot": "RE",
         "standard_pos": "DI",
-        "cap_number": "$885,000",
+        "cap_number": "$1,290,194",
         "stats": {},
         "stats_season": null
       }
@@ -724,8 +724,19 @@
     ],
     "RCB": [
       {
-        "name": "Carrington Valentine",
+        "name": "Brandon Cisse",
         "depth": 1,
+        "injured": false,
+        "attainment": "26/2",
+        "standard_slot": "RCB",
+        "standard_pos": "CB",
+        "cap_number": "$1,702,717",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Carrington Valentine",
+        "depth": 2,
         "injured": false,
         "attainment": "23/7",
         "standard_slot": "RCB",
@@ -736,17 +747,6 @@
           "PD": 4
         },
         "stats_season": 2025
-      },
-      {
-        "name": "Brandon Cisse",
-        "depth": 2,
-        "injured": false,
-        "attainment": "26/2",
-        "standard_slot": "RCB",
-        "standard_pos": "CB",
-        "cap_number": "$1,702,717",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "NB": [

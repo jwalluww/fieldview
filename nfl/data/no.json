@@ -6,24 +6,24 @@
   "depth_chart": {
     "LWR": [
       {
-        "name": "Bryce Lance",
-        "depth": 1,
-        "injured": false,
-        "attainment": "26/4",
-        "standard_slot": "LWR",
-        "standard_pos": "WR",
-        "cap_number": "$1,082,259",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Barion Brown",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "26/6",
         "standard_slot": "LWR",
         "standard_pos": "WR",
         "cap_number": "$958,504",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Bryce Lance",
+        "depth": 2,
+        "injured": false,
+        "attainment": "26/4",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": "$1,082,259",
         "stats": {},
         "stats_season": null
       }
@@ -494,6 +494,22 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Jonah Williams",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {
+          "TKL": 8,
+          "SACKS": 3.0,
+          "TFL": 5,
+          "QB HIT": 5
+        },
+        "stats_season": 2025
       }
     ],
     "LOLB": [
@@ -544,25 +560,8 @@
         "stats_season": null
       },
       {
-        "name": "Isaiah Stalbird",
-        "depth": 2,
-        "injured": false,
-        "attainment": "CF24",
-        "standard_slot": "ILB_L",
-        "standard_pos": "LB",
-        "cap_number": "$1,075,000",
-        "stats": {
-          "TKL": 12,
-          "SACKS": 2.0,
-          "PD": 1,
-          "TFL": 2,
-          "QB HIT": 3
-        },
-        "stats_season": 2025
-      },
-      {
         "name": "Chris Rumph II",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "U/LAC",
         "standard_slot": "ILB_L",
@@ -574,6 +573,23 @@
           "PD": 1,
           "TFL": 3,
           "QB HIT": 4
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Isaiah Stalbird",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF24",
+        "standard_slot": "ILB_L",
+        "standard_pos": "LB",
+        "cap_number": "$1,075,000",
+        "stats": {
+          "TKL": 12,
+          "SACKS": 2.0,
+          "PD": 1,
+          "TFL": 2,
+          "QB HIT": 3
         },
         "stats_season": 2025
       }
@@ -668,13 +684,13 @@
         "stats_season": 2025
       },
       {
-        "name": "Decamerion Richardson",
+        "name": "Martin Emerson Jr.",
         "depth": 2,
         "injured": false,
-        "attainment": "W/LV",
+        "attainment": "U/Cle",
         "standard_slot": "LCB",
         "standard_pos": "CB",
-        "cap_number": "$1,075,000",
+        "cap_number": "$1,515,000",
         "stats": {},
         "stats_season": null
       }
@@ -764,13 +780,13 @@
         "stats_season": 2025
       },
       {
-        "name": "Martin Emerson Jr.",
+        "name": "Decamerion Richardson",
         "depth": 2,
         "injured": false,
-        "attainment": "U/Cle",
+        "attainment": "W/LV",
         "standard_slot": "RCB",
         "standard_pos": "CB",
-        "cap_number": "$1,515,000",
+        "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
       }

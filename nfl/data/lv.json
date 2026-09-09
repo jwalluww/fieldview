@@ -138,19 +138,8 @@
         "stats_season": null
       },
       {
-        "name": "Trey Zuhn III",
-        "depth": 2,
-        "injured": false,
-        "attainment": "26/3",
-        "standard_slot": "C",
-        "standard_pos": "OL",
-        "cap_number": "$1,241,278",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Will Putnam",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "CF24",
         "standard_slot": "C",
@@ -195,6 +184,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": 2025
+      },
+      {
+        "name": "Trey Zuhn III",
+        "depth": 2,
+        "injured": false,
+        "attainment": "26/3",
+        "standard_slot": "RT",
+        "standard_pos": "OL",
+        "cap_number": "$1,241,278",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "TE": [
@@ -259,6 +259,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Patrick Gurd",
+        "depth": 5,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "QB": [
@@ -306,7 +317,7 @@
       {
         "name": "Ashton Jeanty",
         "depth": 1,
-        "injured": true,
+        "injured": false,
         "attainment": "25/1",
         "standard_slot": "RB",
         "standard_pos": "RB",
@@ -403,15 +414,20 @@
         "stats_season": 2025
       },
       {
-        "name": "Kwity Paye",
+        "name": "Malcolm Koonce",
         "depth": 2,
         "injured": false,
-        "attainment": "U/Ind",
+        "attainment": "21/3",
         "standard_slot": "LE",
         "standard_pos": "DI",
-        "cap_number": "$9,422,666",
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$11,010,000",
+        "stats": {
+          "TKL": 14,
+          "SACKS": 4.5,
+          "TFL": 6,
+          "QB HIT": 13
+        },
+        "stats_season": 2025
       }
     ],
     "LDT": [
@@ -432,30 +448,34 @@
         "stats_season": 2025
       },
       {
-        "name": "Thomas Booker IV",
+        "name": "Jonah Laulu",
         "depth": 2,
         "injured": false,
-        "attainment": "T/Phi",
+        "attainment": "W/Ind",
         "standard_slot": "LDT",
         "standard_pos": "DI",
-        "cap_number": "$3,674,000",
+        "cap_number": "$1,075,000",
         "stats": {
-          "TKL": 16,
-          "TFL": 1,
+          "TKL": 24,
+          "SACKS": 4.0,
+          "TFL": 8,
           "QB HIT": 7
         },
         "stats_season": 2025
       },
       {
-        "name": "Folorunso Fatukasi",
+        "name": "Jj Pegues",
         "depth": 3,
         "injured": false,
-        "attainment": "U/Hou",
+        "attainment": "25/6",
         "standard_slot": "LDT",
         "standard_pos": "DI",
-        "cap_number": "$1,075,000",
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$1,071,785",
+        "stats": {
+          "TKL": 4,
+          "TFL": 1
+        },
+        "stats_season": 2025
       }
     ],
     "RDT": [
@@ -476,52 +496,43 @@
         "stats_season": 2025
       },
       {
-        "name": "Jonah Laulu",
+        "name": "Folorunso Fatukasi",
         "depth": 2,
         "injured": false,
-        "attainment": "W/Ind",
+        "attainment": "U/Hou",
         "standard_slot": "RDT",
         "standard_pos": "DI",
         "cap_number": "$1,075,000",
-        "stats": {
-          "TKL": 24,
-          "SACKS": 4.0,
-          "TFL": 8,
-          "QB HIT": 7
-        },
-        "stats_season": 2025
+        "stats": {},
+        "stats_season": null
       },
       {
-        "name": "Jj Pegues",
+        "name": "Thomas Booker IV",
         "depth": 3,
         "injured": false,
-        "attainment": "25/6",
+        "attainment": "T/Phi",
         "standard_slot": "RDT",
         "standard_pos": "DI",
-        "cap_number": "$1,071,785",
+        "cap_number": "$3,674,000",
         "stats": {
-          "TKL": 4,
-          "TFL": 1
+          "TKL": 16,
+          "TFL": 1,
+          "QB HIT": 7
         },
         "stats_season": 2025
       }
     ],
     "RDE": [
       {
-        "name": "Malcolm Koonce",
+        "name": "Kwity Paye",
         "depth": 1,
         "injured": false,
-        "attainment": "21/3",
+        "attainment": "U/Ind",
         "standard_slot": "RE",
         "standard_pos": "DI",
-        "cap_number": "$11,010,000",
-        "stats": {
-          "TKL": 14,
-          "SACKS": 4.5,
-          "TFL": 6,
-          "QB HIT": 13
-        },
-        "stats_season": 2025
+        "cap_number": "$9,422,666",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Patrick Johnson",
@@ -551,30 +562,17 @@
         "stats_season": null
       },
       {
-        "name": "Tommy Eichenberg",
+        "name": "Cody Lindenberg",
         "depth": 2,
         "injured": false,
-        "attainment": "24/5",
+        "attainment": "25/7",
         "standard_slot": "ILB_L",
         "standard_pos": "LB",
-        "cap_number": "$1,159,428",
+        "cap_number": "$1,040,292",
         "stats": {
-          "TKL": 21,
-          "PD": 1,
-          "TFL": 1
+          "TKL": 4
         },
         "stats_season": 2025
-      },
-      {
-        "name": "Segun Olubi",
-        "depth": 3,
-        "injured": false,
-        "attainment": "U/Ind",
-        "standard_slot": "ILB_L",
-        "standard_pos": "LB",
-        "cap_number": "$1,160,000",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "MLB": [
@@ -590,17 +588,30 @@
         "stats_season": null
       },
       {
-        "name": "Cody Lindenberg",
+        "name": "Tommy Eichenberg",
         "depth": 2,
         "injured": false,
-        "attainment": "25/7",
+        "attainment": "24/5",
         "standard_slot": "ILB_R",
         "standard_pos": "LB",
-        "cap_number": "$1,040,292",
+        "cap_number": "$1,159,428",
         "stats": {
-          "TKL": 4
+          "TKL": 21,
+          "PD": 1,
+          "TFL": 1
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Segun Olubi",
+        "depth": 3,
+        "injured": false,
+        "attainment": "U/Ind",
+        "standard_slot": "ILB_R",
+        "standard_pos": "LB",
+        "cap_number": "$1,160,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LCB": [
@@ -895,23 +906,15 @@
         "stats_season": null
       },
       {
-        "name": "Gary Smith III",
+        "name": "Tim Keenan III",
         "depth": 2,
         "injured": false,
-        "attainment": "CF26",
+        "attainment": "SF26",
         "standard_slot": "RE",
         "standard_pos": "DI",
         "cap_number": null,
-        "stats": {
-          "CMP": 302,
-          "ATT": 448,
-          "YDS": 3025,
-          "TDs": 19,
-          "INTs": 17,
-          "SACKS": 55,
-          "RU YDS": 109
-        },
-        "stats_season": 2025
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LB": [
@@ -942,19 +945,6 @@
           "QB HIT": 1
         },
         "stats_season": 2025
-      }
-    ],
-    "S": [
-      {
-        "name": "Devin Lafayette",
-        "depth": 1,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "S",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ]
   }

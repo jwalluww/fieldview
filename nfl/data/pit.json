@@ -121,13 +121,13 @@
         "stats_season": 2025
       },
       {
-        "name": "Brock Hoffman",
+        "name": "Gennings Dunker",
         "depth": 2,
         "injured": false,
-        "attainment": "U/Dal",
+        "attainment": "26/3",
         "standard_slot": "LG",
         "standard_pos": "OL",
-        "cap_number": "$2,500,000",
+        "cap_number": "$1,222,971",
         "stats": {},
         "stats_season": null
       }
@@ -169,13 +169,13 @@
         "stats_season": 2025
       },
       {
-        "name": "Gennings Dunker",
+        "name": "Brock Hoffman",
         "depth": 2,
         "injured": false,
-        "attainment": "26/3",
+        "attainment": "U/Dal",
         "standard_slot": "RG",
         "standard_pos": "OL",
-        "cap_number": "$1,222,971",
+        "cap_number": "$2,500,000",
         "stats": {},
         "stats_season": null
       }
@@ -443,16 +443,18 @@
     ],
     "NT": [
       {
-        "name": "Yahya Black",
+        "name": "Keeanu Benton",
         "depth": 1,
         "injured": false,
-        "attainment": "25/5",
+        "attainment": "23/2",
         "standard_slot": "NT",
         "standard_pos": "DI",
-        "cap_number": "$1,099,959",
+        "cap_number": "$4,299,295",
         "stats": {
-          "TKL": 10,
-          "QB HIT": 1
+          "TKL": 25,
+          "SACKS": 5.5,
+          "TFL": 6,
+          "QB HIT": 12
         },
         "stats_season": 2025
       },
@@ -486,18 +488,16 @@
         "stats_season": 2025
       },
       {
-        "name": "Keeanu Benton",
+        "name": "Yahya Black",
         "depth": 2,
         "injured": false,
-        "attainment": "23/2",
+        "attainment": "25/5",
         "standard_slot": "RE",
         "standard_pos": "DI",
-        "cap_number": "$4,299,295",
+        "cap_number": "$1,099,959",
         "stats": {
-          "TKL": 25,
-          "SACKS": 5.5,
-          "TFL": 6,
-          "QB HIT": 12
+          "TKL": 10,
+          "QB HIT": 1
         },
         "stats_season": 2025
       },
@@ -829,19 +829,8 @@
     ],
     "WR": [
       {
-        "name": "Cole Wr Burgess",
-        "depth": 1,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "LWR",
-        "standard_pos": "WR",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Max Hurleman",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "CF25",
         "standard_slot": "LWR",
@@ -849,6 +838,23 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Brandon Johnson",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {
+          "CAR": 28,
+          "RU YDS": 69,
+          "REC": 1,
+          "RE YDS": 9,
+          "TGT": 2
+        },
+        "stats_season": 2025
       },
       {
         "name": "Brandon Smith",
@@ -865,23 +871,6 @@
           "TDs": 2,
           "YAC": 179,
           "CAR": 9
-        },
-        "stats_season": 2025
-      },
-      {
-        "name": "Brandon Johnson",
-        "depth": 4,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "LWR",
-        "standard_pos": "WR",
-        "cap_number": null,
-        "stats": {
-          "CAR": 28,
-          "RU YDS": 69,
-          "REC": 1,
-          "RE YDS": 9,
-          "TGT": 2
         },
         "stats_season": 2025
       }

@@ -23,20 +23,15 @@
         "stats_season": 2025
       },
       {
-        "name": "Jalen Royals",
+        "name": "Cyrus Allen",
         "depth": 2,
         "injured": false,
-        "attainment": "25/4",
+        "attainment": "26/5",
         "standard_slot": "LWR",
         "standard_pos": "WR",
-        "cap_number": "$1,221,800",
-        "stats": {
-          "TGT": 3,
-          "REC": 2,
-          "YDS": 4,
-          "YAC": 4
-        },
-        "stats_season": 2025
+        "cap_number": "$979,869",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RWR": [
@@ -59,15 +54,21 @@
         "stats_season": 2025
       },
       {
-        "name": "Cyrus Allen",
+        "name": "Nikko Remigio",
         "depth": 2,
         "injured": false,
-        "attainment": "26/5",
+        "attainment": "CF23",
         "standard_slot": "RWR",
         "standard_pos": "WR",
-        "cap_number": "$979,869",
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$1,075,000",
+        "stats": {
+          "TGT": 1,
+          "REC": 1,
+          "YDS": 21,
+          "YAC": 3,
+          "CAR": 1
+        },
+        "stats_season": 2025
       }
     ],
     "SWR": [
@@ -90,19 +91,18 @@
         "stats_season": 2025
       },
       {
-        "name": "Nikko Remigio",
+        "name": "Jalen Royals",
         "depth": 2,
         "injured": false,
-        "attainment": "CF23",
+        "attainment": "25/4",
         "standard_slot": "SWR",
         "standard_pos": "WR",
-        "cap_number": "$1,075,000",
+        "cap_number": "$1,221,800",
         "stats": {
-          "TGT": 1,
-          "REC": 1,
-          "YDS": 21,
-          "YAC": 3,
-          "CAR": 1
+          "TGT": 3,
+          "REC": 2,
+          "YDS": 4,
+          "YAC": 4
         },
         "stats_season": 2025
       }
@@ -111,7 +111,7 @@
       {
         "name": "Josh Simmons",
         "depth": 1,
-        "injured": false,
+        "injured": true,
         "attainment": "25/1",
         "standard_slot": "LT",
         "standard_pos": "OL",
@@ -120,10 +120,10 @@
         "stats_season": 2025
       },
       {
-        "name": "Diego Pounds",
+        "name": "Kahlil Benson",
         "depth": 2,
         "injured": false,
-        "attainment": "T/Bal",
+        "attainment": "CF26",
         "standard_slot": "LT",
         "standard_pos": "OL",
         "cap_number": "$885,000",
@@ -227,10 +227,10 @@
         "stats_season": null
       },
       {
-        "name": "Kahlil Benson",
+        "name": "Diego Pounds",
         "depth": 2,
         "injured": false,
-        "attainment": "CF26",
+        "attainment": "T/Bal",
         "standard_slot": "RT",
         "standard_pos": "OL",
         "cap_number": "$885,000",
@@ -305,6 +305,17 @@
         "depth": 5,
         "injured": false,
         "attainment": "SF26",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Thomas Odukoya",
+        "depth": 6,
+        "injured": false,
+        "attainment": "SF26*",
         "standard_slot": "TE",
         "standard_pos": "TE",
         "cap_number": null,
@@ -452,20 +463,9 @@
         "cap_number": "$2,217,601",
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Jack Pyburn",
-        "depth": 3,
-        "injured": false,
-        "attainment": "W/TB",
-        "standard_slot": "LE",
-        "standard_pos": "EDGE",
-        "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null
       }
     ],
-    "LDT": [
+    "NT": [
       {
         "name": "Khyiris Tonga",
         "depth": 1,
@@ -489,7 +489,7 @@
         "stats_season": null
       }
     ],
-    "RDT": [
+    "DT": [
       {
         "name": "Chris Jones",
         "depth": 1,
@@ -514,6 +514,17 @@
         "standard_slot": "RDT",
         "standard_pos": "DI",
         "cap_number": "$3,268,293",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Marcus Harris",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -543,6 +554,17 @@
         "standard_slot": "RE",
         "standard_pos": "EDGE",
         "cap_number": "$3,760,216",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Jack Pyburn",
+        "depth": 3,
+        "injured": false,
+        "attainment": "W/TB",
+        "standard_slot": "RE",
+        "standard_pos": "EDGE",
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       }
@@ -665,7 +687,7 @@
       {
         "name": "Chamarri Conner",
         "depth": 1,
-        "injured": false,
+        "injured": true,
         "attainment": "23/4",
         "standard_slot": "SS",
         "standard_pos": "S",
@@ -695,6 +717,17 @@
           "QB HIT": 2
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Xavier Nwankpa",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "SS",
+        "standard_pos": "S",
+        "cap_number": "$891,666",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "FS": [
@@ -723,17 +756,6 @@
           "PD": 3
         },
         "stats_season": 2025
-      },
-      {
-        "name": "Xavier Nwankpa",
-        "depth": 3,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "FS",
-        "standard_pos": "S",
-        "cap_number": "$891,666",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "RCB": [
@@ -745,17 +767,6 @@
         "standard_slot": "RCB",
         "standard_pos": "CB",
         "cap_number": "$7,623,884",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "L'jarius Sneed",
-        "depth": 2,
-        "injured": false,
-        "attainment": "CC/Ten",
-        "standard_slot": "RCB",
-        "standard_pos": "CB",
-        "cap_number": "$1,215,000",
         "stats": {},
         "stats_season": null
       }
@@ -879,19 +890,6 @@
           "TGT": 35
         },
         "stats_season": 2025
-      }
-    ],
-    "DT": [
-      {
-        "name": "Marcus Harris",
-        "depth": 1,
-        "injured": false,
-        "attainment": "SF25",
-        "standard_slot": "RDT",
-        "standard_pos": "DI",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "LB": [

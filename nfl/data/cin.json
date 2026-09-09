@@ -24,15 +24,20 @@
         "stats_season": 2025
       },
       {
-        "name": "Dohnte Meyers",
+        "name": "Ke'shawn Williams",
         "depth": 2,
         "injured": false,
-        "attainment": "SF26",
+        "attainment": "W/Pit",
         "standard_slot": "LWR",
         "standard_pos": "WR",
-        "cap_number": "$888,333",
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$1,005,000",
+        "stats": {
+          "TGT": 1,
+          "REC": 1,
+          "YDS": 5,
+          "CAR": 2
+        },
+        "stats_season": 2025
       }
     ],
     "RWR": [
@@ -85,20 +90,15 @@
         "stats_season": 2025
       },
       {
-        "name": "Ke'shawn Williams",
+        "name": "Dohnte Meyers",
         "depth": 2,
         "injured": false,
-        "attainment": "W/Pit",
+        "attainment": "SF26",
         "standard_slot": "SWR",
         "standard_pos": "WR",
-        "cap_number": "$1,005,000",
-        "stats": {
-          "TGT": 1,
-          "REC": 1,
-          "YDS": 5,
-          "CAR": 2
-        },
-        "stats_season": 2025
+        "cap_number": "$888,333",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LT": [
@@ -114,13 +114,13 @@
         "stats_season": 2025
       },
       {
-        "name": "Myles Hinton",
+        "name": "Javon Foster",
         "depth": 2,
         "injured": false,
-        "attainment": "W/Phi",
+        "attainment": "SF25",
         "standard_slot": "LT",
         "standard_pos": "OL",
-        "cap_number": "$885,000",
+        "cap_number": "$1,005,000",
         "stats": {},
         "stats_season": null
       }
@@ -138,15 +138,15 @@
         "stats_season": 2025
       },
       {
-        "name": "Jacob Bayer",
+        "name": "Jalen Rivers",
         "depth": 2,
         "injured": false,
-        "attainment": "SF25",
+        "attainment": "25/5",
         "standard_slot": "LG",
         "standard_pos": "OL",
-        "cap_number": "$885,000",
+        "cap_number": "$1,110,247",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2025
       }
     ],
     "C": [
@@ -186,15 +186,15 @@
         "stats_season": 2025
       },
       {
-        "name": "Jalen Rivers",
+        "name": "Jacob Bayer",
         "depth": 2,
         "injured": false,
-        "attainment": "25/5",
+        "attainment": "SF25",
         "standard_slot": "RG",
         "standard_pos": "OL",
-        "cap_number": "$1,110,247",
+        "cap_number": "$885,000",
         "stats": {},
-        "stats_season": 2025
+        "stats_season": null
       }
     ],
     "RT": [
@@ -210,13 +210,13 @@
         "stats_season": 2025
       },
       {
-        "name": "Javon Foster",
+        "name": "Myles Hinton",
         "depth": 2,
         "injured": false,
-        "attainment": "SF25",
+        "attainment": "W/Phi",
         "standard_slot": "RT",
         "standard_pos": "OL",
-        "cap_number": "$1,005,000",
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
       }
@@ -464,7 +464,7 @@
       {
         "name": "Shemar Stewart",
         "depth": 2,
-        "injured": true,
+        "injured": false,
         "attainment": "25/1",
         "standard_slot": "LE",
         "standard_pos": "EDGE",

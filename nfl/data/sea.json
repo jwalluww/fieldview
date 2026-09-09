@@ -757,7 +757,7 @@
       {
         "name": "Ty Okada",
         "depth": 1,
-        "injured": false,
+        "injured": true,
         "attainment": "CF23",
         "standard_slot": "FS",
         "standard_pos": "S",
@@ -940,24 +940,6 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Marvin Jones Jr.",
-        "depth": 2,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "ED",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {
-          "TKL": 60,
-          "SACKS": 0.5,
-          "INTs": 5,
-          "PD": 7,
-          "TFL": 4,
-          "QB HIT": 1
-        },
-        "stats_season": 2025
       }
     ],
     "CB": [
@@ -1035,6 +1017,22 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "D'anthony Bell",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "S",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 6,
+          "SACKS": 0.5,
+          "TFL": 1,
+          "QB HIT": 1
+        },
+        "stats_season": 2025
       }
     ],
     "CE": [

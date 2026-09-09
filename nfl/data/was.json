@@ -41,19 +41,8 @@
     ],
     "RWR": [
       {
-        "name": "Stefon Diggs",
-        "depth": 1,
-        "injured": false,
-        "attainment": "CC/NE",
-        "standard_slot": "RWR",
-        "standard_pos": "WR",
-        "cap_number": "$8,000,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Treylon Burks",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "SF25",
         "standard_slot": "RWR",
@@ -67,17 +56,28 @@
           "YAC": 34
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Antonio Williams",
+        "depth": 2,
+        "injured": false,
+        "attainment": "26/3",
+        "standard_slot": "RWR",
+        "standard_pos": "WR",
+        "cap_number": "$1,319,767",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "SWR": [
       {
-        "name": "Antonio Williams",
+        "name": "Stefon Diggs",
         "depth": 1,
         "injured": false,
-        "attainment": "26/3",
+        "attainment": "CC/NE",
         "standard_slot": "SWR",
         "standard_pos": "WR",
-        "cap_number": "$1,319,767",
+        "cap_number": "$8,000,000",
         "stats": {},
         "stats_season": null
       },
@@ -299,19 +299,8 @@
         "stats_season": 2025
       },
       {
-        "name": "Joshua Simon",
-        "depth": 5,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "TE",
-        "standard_pos": "TE",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Jack Westover",
-        "depth": 6,
+        "depth": 5,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "TE",
@@ -488,18 +477,16 @@
         "stats_season": null
       },
       {
-        "name": "Ricky Barber",
+        "name": "Shy Tuttle",
         "depth": 2,
         "injured": false,
-        "attainment": "CF25",
+        "attainment": "W/Ten",
         "standard_slot": "NT",
         "standard_pos": "DI",
-        "cap_number": "$885,000",
+        "cap_number": "$1,075,000",
         "stats": {
-          "TKL": 2,
-          "SACKS": 1.0,
-          "TFL": 1,
-          "QB HIT": 1
+          "TKL": 7,
+          "TFL": 1
         },
         "stats_season": 2025
       }
@@ -522,16 +509,18 @@
         "stats_season": 2025
       },
       {
-        "name": "Shy Tuttle",
+        "name": "Ricky Barber",
         "depth": 2,
         "injured": false,
-        "attainment": "W/Ten",
+        "attainment": "CF25",
         "standard_slot": "RE",
         "standard_pos": "DI",
-        "cap_number": "$1,075,000",
+        "cap_number": "$885,000",
         "stats": {
-          "TKL": 7,
-          "TFL": 1
+          "TKL": 2,
+          "SACKS": 1.0,
+          "TFL": 1,
+          "QB HIT": 1
         },
         "stats_season": 2025
       },
@@ -560,26 +549,31 @@
     ],
     "LOLB": [
       {
-        "name": "Odafe Oweh",
+        "name": "K'lavon Chaisson",
         "depth": 1,
         "injured": false,
-        "attainment": "U/LAC",
+        "attainment": "U/NE",
         "standard_slot": "LOLB",
         "standard_pos": "EDGE",
-        "cap_number": "$9,200,000",
+        "cap_number": "$11,470,000",
         "stats": {},
         "stats_season": null
       },
       {
-        "name": "Joshua Josephs",
+        "name": "Javontae Jean-baptiste",
         "depth": 2,
         "injured": false,
-        "attainment": "26/5",
+        "attainment": "24/7",
         "standard_slot": "LOLB",
         "standard_pos": "EDGE",
-        "cap_number": "$1,016,578",
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$1,105,297",
+        "stats": {
+          "TKL": 2,
+          "SACKS": 1.0,
+          "TFL": 1,
+          "QB HIT": 1
+        },
+        "stats_season": 2025
       }
     ],
     "WLB": [
@@ -655,31 +649,26 @@
     ],
     "ROLB": [
       {
-        "name": "K'lavon Chaisson",
+        "name": "Odafe Oweh",
         "depth": 1,
         "injured": false,
-        "attainment": "U/NE",
+        "attainment": "U/LAC",
         "standard_slot": "ROLB",
         "standard_pos": "EDGE",
-        "cap_number": "$11,470,000",
+        "cap_number": "$9,200,000",
         "stats": {},
         "stats_season": null
       },
       {
-        "name": "Javontae Jean-baptiste",
+        "name": "Joshua Josephs",
         "depth": 2,
         "injured": false,
-        "attainment": "24/7",
+        "attainment": "26/5",
         "standard_slot": "ROLB",
         "standard_pos": "EDGE",
-        "cap_number": "$1,105,297",
-        "stats": {
-          "TKL": 2,
-          "SACKS": 1.0,
-          "TFL": 1,
-          "QB HIT": 1
-        },
-        "stats_season": 2025
+        "cap_number": "$1,016,578",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LCB": [
@@ -848,6 +837,17 @@
         "depth": 1,
         "injured": false,
         "attainment": "CF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Van Jefferson",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/Ten",
         "standard_slot": "LWR",
         "standard_pos": "WR",
         "cap_number": null,

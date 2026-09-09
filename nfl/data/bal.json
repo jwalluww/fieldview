@@ -151,24 +151,24 @@
     ],
     "C": [
       {
-        "name": "Ethan Pocic",
-        "depth": 1,
-        "injured": false,
-        "attainment": "U/Cle",
-        "standard_slot": "C",
-        "standard_pos": "OL",
-        "cap_number": "$3,691,176",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Jovaughn Gwyn",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "U/Atl",
         "standard_slot": "C",
         "standard_pos": "OL",
         "cap_number": "$1,195,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Ethan Pocic",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/Cle",
+        "standard_slot": "C",
+        "standard_pos": "OL",
+        "cap_number": "$3,691,176",
         "stats": {},
         "stats_season": null
       }
@@ -403,24 +403,8 @@
     ],
     "DE": [
       {
-        "name": "Nnamdi Madubuike",
-        "depth": 1,
-        "injured": false,
-        "attainment": "20/3",
-        "standard_slot": "LE",
-        "standard_pos": "DI",
-        "cap_number": "$29,872,059",
-        "stats": {
-          "TKL": 5,
-          "SACKS": 2.0,
-          "TFL": 2,
-          "QB HIT": 3
-        },
-        "stats_season": 2025
-      },
-      {
         "name": "Calais Campbell",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "U/Arz",
         "standard_slot": "LE",
@@ -428,6 +412,20 @@
         "cap_number": "$6,000,000",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Aeneas Peebles",
+        "depth": 2,
+        "injured": false,
+        "attainment": "25/6",
+        "standard_slot": "LE",
+        "standard_pos": "DI",
+        "cap_number": "$1,048,570",
+        "stats": {
+          "TKL": 2,
+          "QB HIT": 1
+        },
+        "stats_season": 2025
       }
     ],
     "NT": [
@@ -466,8 +464,24 @@
     ],
     "DT": [
       {
-        "name": "Broderick Washington Jr.",
+        "name": "Nnamdi Madubuike",
         "depth": 1,
+        "injured": false,
+        "attainment": "20/3",
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": "$29,872,059",
+        "stats": {
+          "TKL": 5,
+          "SACKS": 2.0,
+          "TFL": 2,
+          "QB HIT": 3
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Broderick Washington Jr.",
+        "depth": 2,
         "injured": false,
         "attainment": "20/5",
         "standard_slot": "RE",
@@ -475,20 +489,6 @@
         "cap_number": "$3,850,000",
         "stats": {
           "TKL": 1
-        },
-        "stats_season": 2025
-      },
-      {
-        "name": "Aeneas Peebles",
-        "depth": 2,
-        "injured": false,
-        "attainment": "25/6",
-        "standard_slot": "RE",
-        "standard_pos": "DI",
-        "cap_number": "$1,048,570",
-        "stats": {
-          "TKL": 2,
-          "QB HIT": 1
         },
         "stats_season": 2025
       },
@@ -515,57 +515,39 @@
         "stats_season": null
       }
     ],
-    "LOLB": [
+    "RUSH": [
       {
-        "name": "Tavius Robinson",
+        "name": "Trey Hendrickson",
         "depth": 1,
         "injured": false,
-        "attainment": "23/4",
-        "standard_slot": "LOLB",
+        "attainment": "U/Cin",
+        "standard_slot": "ROLB",
         "standard_pos": "EDGE",
-        "cap_number": "$3,854,141",
-        "stats": {
-          "TKL": 15,
-          "SACKS": 4.5,
-          "PD": 1,
-          "TFL": 3,
-          "QB HIT": 10
-        },
-        "stats_season": 2025
-      },
-      {
-        "name": "Zion Young",
-        "depth": 2,
-        "injured": false,
-        "attainment": "26/2",
-        "standard_slot": "LOLB",
-        "standard_pos": "EDGE",
-        "cap_number": "$2,031,812",
+        "cap_number": "$15,000,000",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Mike Green",
+        "depth": 2,
+        "injured": false,
+        "attainment": "25/2",
+        "standard_slot": "ROLB",
+        "standard_pos": "EDGE",
+        "cap_number": "$1,686,229",
+        "stats": {
+          "TKL": 17,
+          "SACKS": 3.5,
+          "TFL": 7,
+          "QB HIT": 14
+        },
+        "stats_season": 2025
       }
     ],
     "WLB": [
       {
-        "name": "Teddye Buchanan",
-        "depth": 1,
-        "injured": false,
-        "attainment": "25/4",
-        "standard_slot": "ILB_L",
-        "standard_pos": "LB",
-        "cap_number": "$1,230,724",
-        "stats": {
-          "TKL": 49,
-          "SACKS": 0.5,
-          "PD": 1,
-          "TFL": 5,
-          "QB HIT": 2
-        },
-        "stats_season": 2025
-      },
-      {
         "name": "Trenton Simpson",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "23/3",
         "standard_slot": "ILB_L",
@@ -577,6 +559,23 @@
           "PD": 1,
           "TFL": 4,
           "QB HIT": 4
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Teddye Buchanan",
+        "depth": 2,
+        "injured": false,
+        "attainment": "25/4",
+        "standard_slot": "ILB_L",
+        "standard_pos": "LB",
+        "cap_number": "$1,230,724",
+        "stats": {
+          "TKL": 49,
+          "SACKS": 0.5,
+          "PD": 1,
+          "TFL": 5,
+          "QB HIT": 2
         },
         "stats_season": 2025
       }
@@ -612,40 +611,41 @@
         "stats_season": 2025
       }
     ],
-    "ROLB": [
+    "SLB": [
       {
-        "name": "Trey Hendrickson",
+        "name": "Tavius Robinson",
         "depth": 1,
         "injured": false,
-        "attainment": "U/Cin",
-        "standard_slot": "ROLB",
+        "attainment": "23/4",
+        "standard_slot": "LOLB",
         "standard_pos": "EDGE",
-        "cap_number": "$15,000,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Mike Green",
-        "depth": 2,
-        "injured": false,
-        "attainment": "25/2",
-        "standard_slot": "ROLB",
-        "standard_pos": "EDGE",
-        "cap_number": "$1,686,229",
+        "cap_number": "$3,854,141",
         "stats": {
-          "TKL": 17,
-          "SACKS": 3.5,
-          "TFL": 7,
-          "QB HIT": 14
+          "TKL": 15,
+          "SACKS": 4.5,
+          "PD": 1,
+          "TFL": 3,
+          "QB HIT": 10
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Zion Young",
+        "depth": 2,
+        "injured": false,
+        "attainment": "26/2",
+        "standard_slot": "LOLB",
+        "standard_pos": "EDGE",
+        "cap_number": "$2,031,812",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Ethan Burke",
         "depth": 3,
         "injured": false,
         "attainment": "CF26",
-        "standard_slot": "ROLB",
+        "standard_slot": "LOLB",
         "standard_pos": "EDGE",
         "cap_number": "$891,666",
         "stats": {},
@@ -654,18 +654,20 @@
     ],
     "LCB": [
       {
-        "name": "Nate Wiggins",
+        "name": "Marlon Humphrey",
         "depth": 1,
         "injured": false,
-        "attainment": "24/1",
+        "attainment": "17/1",
         "standard_slot": "LCB",
         "standard_pos": "CB",
-        "cap_number": "$3,496,315",
+        "cap_number": "$26,276,000",
         "stats": {
-          "TKL": 57,
-          "INTs": 3,
-          "PD": 14,
-          "TFL": 2
+          "TKL": 53,
+          "SACKS": 1.0,
+          "INTs": 4,
+          "PD": 13,
+          "TFL": 3,
+          "QB HIT": 3
         },
         "stats_season": 2025
       },
@@ -687,21 +689,15 @@
     ],
     "SS": [
       {
-        "name": "Kyle Hamilton",
+        "name": "Jaylinn Hawkins",
         "depth": 1,
         "injured": false,
-        "attainment": "22/1",
+        "attainment": "U/NE",
         "standard_slot": "SS",
         "standard_pos": "S",
-        "cap_number": "$10,682,604",
-        "stats": {
-          "TKL": 59,
-          "SACKS": 1.0,
-          "PD": 9,
-          "TFL": 7,
-          "QB HIT": 4
-        },
-        "stats_season": 2025
+        "cap_number": "$3,150,000",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Keondre Jackson",
@@ -734,23 +730,28 @@
           "QB HIT": 1
         },
         "stats_season": 2025
-      },
-      {
-        "name": "Jaylinn Hawkins",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/NE",
-        "standard_slot": "FS",
-        "standard_pos": "S",
-        "cap_number": "$3,150,000",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "RCB": [
       {
-        "name": "Chidobe Awuzie",
+        "name": "Nate Wiggins",
         "depth": 1,
+        "injured": false,
+        "attainment": "24/1",
+        "standard_slot": "RCB",
+        "standard_pos": "CB",
+        "cap_number": "$3,496,315",
+        "stats": {
+          "TKL": 57,
+          "INTs": 3,
+          "PD": 14,
+          "TFL": 2
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Chidobe Awuzie",
+        "depth": 2,
         "injured": false,
         "attainment": "CC/Ten",
         "standard_slot": "RCB",
@@ -762,35 +763,23 @@
           "QB HIT": 1
         },
         "stats_season": 2025
-      },
-      {
-        "name": "Chandler Rivers",
-        "depth": 2,
-        "injured": false,
-        "attainment": "26/5",
-        "standard_slot": "RCB",
-        "standard_pos": "CB",
-        "cap_number": "$1,005,878",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "NB": [
       {
-        "name": "Marlon Humphrey",
+        "name": "Kyle Hamilton",
         "depth": 1,
         "injured": false,
-        "attainment": "17/1",
+        "attainment": "22/1",
         "standard_slot": "NB",
         "standard_pos": "CB",
-        "cap_number": "$26,276,000",
+        "cap_number": "$10,682,604",
         "stats": {
-          "TKL": 53,
+          "TKL": 59,
           "SACKS": 1.0,
-          "INTs": 4,
-          "PD": 13,
-          "TFL": 3,
-          "QB HIT": 3
+          "PD": 9,
+          "TFL": 7,
+          "QB HIT": 4
         },
         "stats_season": 2025
       },
@@ -810,6 +799,17 @@
           "QB HIT": 1
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Chandler Rivers",
+        "depth": 3,
+        "injured": false,
+        "attainment": "26/5",
+        "standard_slot": "NB",
+        "standard_pos": "CB",
+        "cap_number": "$1,005,878",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "PT": [

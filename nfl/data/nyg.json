@@ -45,23 +45,6 @@
         "cap_number": "$1,307,547",
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Darius Slayton",
-        "depth": 2,
-        "injured": false,
-        "attainment": "19/5",
-        "standard_slot": "RWR",
-        "standard_pos": "WR",
-        "cap_number": "$15,911,770",
-        "stats": {
-          "TGT": 63,
-          "REC": 37,
-          "YDS": 538,
-          "TDs": 1,
-          "YAC": 198
-        },
-        "stats_season": 2025
       }
     ],
     "SWR": [
@@ -402,16 +385,33 @@
     ],
     "DE": [
       {
-        "name": "Shelby Harris",
+        "name": "Chauncey Golston",
         "depth": 1,
         "injured": false,
-        "attainment": "U/Cle",
+        "attainment": "U/Dal",
         "standard_slot": "LE",
         "standard_pos": "DI",
-        "cap_number": "$3,000,000",
+        "cap_number": "$6,917,647",
         "stats": {
-          "TKL": 19,
-          "TFL": 3,
+          "TKL": 13,
+          "SACKS": 1.0,
+          "TFL": 5,
+          "QB HIT": 1
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Darius Alexander",
+        "depth": 2,
+        "injured": false,
+        "attainment": "25/3",
+        "standard_slot": "LE",
+        "standard_pos": "DI",
+        "cap_number": "$1,536,834",
+        "stats": {
+          "TKL": 9,
+          "SACKS": 3.5,
+          "TFL": 4,
           "QB HIT": 6
         },
         "stats_season": 2025
@@ -443,17 +443,16 @@
     ],
     "DT": [
       {
-        "name": "Darius Alexander",
+        "name": "Shelby Harris",
         "depth": 1,
         "injured": false,
-        "attainment": "25/3",
+        "attainment": "U/Cle",
         "standard_slot": "RE",
         "standard_pos": "DI",
-        "cap_number": "$1,536,834",
+        "cap_number": "$3,000,000",
         "stats": {
-          "TKL": 9,
-          "SACKS": 3.5,
-          "TFL": 4,
+          "TKL": 19,
+          "TFL": 3,
           "QB HIT": 6
         },
         "stats_season": 2025
@@ -479,15 +478,26 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Dean Lowry",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
-    "LOLB": [
+    "RUSH": [
       {
         "name": "Brian Burns",
         "depth": 1,
         "injured": false,
         "attainment": "T/Car",
-        "standard_slot": "LOLB",
+        "standard_slot": "ROLB",
         "standard_pos": "EDGE",
         "cap_number": "$21,383,333",
         "stats": {
@@ -496,22 +506,6 @@
           "PD": 7,
           "TFL": 22,
           "QB HIT": 31
-        },
-        "stats_season": 2025
-      },
-      {
-        "name": "Chauncey Golston",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/Dal",
-        "standard_slot": "LOLB",
-        "standard_pos": "EDGE",
-        "cap_number": "$6,917,647",
-        "stats": {
-          "TKL": 13,
-          "SACKS": 1.0,
-          "TFL": 5,
-          "QB HIT": 1
         },
         "stats_season": 2025
       }
@@ -583,13 +577,13 @@
         "stats_season": 2025
       }
     ],
-    "ROLB": [
+    "SLB": [
       {
         "name": "Abdul Carter",
         "depth": 1,
         "injured": false,
         "attainment": "25/1",
-        "standard_slot": "ROLB",
+        "standard_slot": "LOLB",
         "standard_pos": "EDGE",
         "cap_number": "$10,285,268",
         "stats": {
@@ -605,7 +599,7 @@
         "depth": 2,
         "injured": false,
         "attainment": "22/1",
-        "standard_slot": "ROLB",
+        "standard_slot": "LOLB",
         "standard_pos": "EDGE",
         "cap_number": "$14,751,000",
         "stats": {
@@ -620,8 +614,23 @@
     ],
     "LCB": [
       {
-        "name": "Paulson Adebo",
+        "name": "Deonte Banks",
         "depth": 1,
+        "injured": false,
+        "attainment": "23/1",
+        "standard_slot": "LCB",
+        "standard_pos": "CB",
+        "cap_number": "$4,320,720",
+        "stats": {
+          "TKL": 24,
+          "PD": 5,
+          "TFL": 2
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Paulson Adebo",
+        "depth": 2,
         "injured": false,
         "attainment": "U/NO",
         "standard_slot": "LCB",
@@ -632,21 +641,6 @@
           "INTs": 1,
           "PD": 8,
           "TFL": 1
-        },
-        "stats_season": 2025
-      },
-      {
-        "name": "Deonte Banks",
-        "depth": 2,
-        "injured": false,
-        "attainment": "23/1",
-        "standard_slot": "LCB",
-        "standard_pos": "CB",
-        "cap_number": "$4,320,720",
-        "stats": {
-          "TKL": 24,
-          "PD": 5,
-          "TFL": 2
         },
         "stats_season": 2025
       }

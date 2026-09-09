@@ -425,16 +425,18 @@
         "stats_season": 2025
       },
       {
-        "name": "Daniel Hardy",
+        "name": "Austin Booker",
         "depth": 2,
         "injured": false,
-        "attainment": "SF23",
+        "attainment": "24/5",
         "standard_slot": "LE",
         "standard_pos": "EDGE",
-        "cap_number": "$2,137,500",
+        "cap_number": "$1,162,285",
         "stats": {
-          "TKL": 7,
-          "QB HIT": 1
+          "TKL": 19,
+          "SACKS": 4.5,
+          "TFL": 5,
+          "QB HIT": 12
         },
         "stats_season": 2025
       },
@@ -468,8 +470,19 @@
         "stats_season": 2025
       },
       {
-        "name": "James Lynch",
+        "name": "Neville Gallimore",
         "depth": 2,
+        "injured": false,
+        "attainment": "U/Ind",
+        "standard_slot": "LDT",
+        "standard_pos": "DI",
+        "cap_number": "$4,000,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "James Lynch",
+        "depth": 3,
         "injured": false,
         "attainment": "U/Ten",
         "standard_slot": "LDT",
@@ -477,34 +490,12 @@
         "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Jayden Loving",
-        "depth": 3,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "LDT",
-        "standard_pos": "DI",
-        "cap_number": "$891,666",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "RDT": [
       {
-        "name": "Neville Gallimore",
-        "depth": 1,
-        "injured": false,
-        "attainment": "U/Ind",
-        "standard_slot": "RDT",
-        "standard_pos": "DI",
-        "cap_number": "$4,000,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Kentavius Street",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "U/Atl",
         "standard_slot": "RDT",
@@ -515,7 +506,7 @@
       },
       {
         "name": "Jordan Van Den Berg",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "26/6",
         "standard_slot": "RDT",
@@ -523,28 +514,23 @@
         "cap_number": "$942,902",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Jayden Loving",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": "$891,666",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RDE": [
       {
-        "name": "Austin Booker",
-        "depth": 1,
-        "injured": false,
-        "attainment": "24/5",
-        "standard_slot": "RE",
-        "standard_pos": "EDGE",
-        "cap_number": "$1,162,285",
-        "stats": {
-          "TKL": 19,
-          "SACKS": 4.5,
-          "TFL": 5,
-          "QB HIT": 12
-        },
-        "stats_season": 2025
-      },
-      {
         "name": "Dayo Odeyingbo",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "U/Ind",
         "standard_slot": "RE",
@@ -555,6 +541,20 @@
           "SACKS": 1.0,
           "TFL": 2,
           "QB HIT": 4
+        },
+        "stats_season": 2025
+      },
+      {
+        "name": "Daniel Hardy",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF23",
+        "standard_slot": "RE",
+        "standard_pos": "EDGE",
+        "cap_number": "$2,137,500",
+        "stats": {
+          "TKL": 7,
+          "QB HIT": 1
         },
         "stats_season": 2025
       }
@@ -595,6 +595,17 @@
           "QB HIT": 1
         },
         "stats_season": 2025
+      },
+      {
+        "name": "Keyshaun Elliott",
+        "depth": 3,
+        "injured": false,
+        "attainment": "26/5",
+        "standard_slot": "WILL",
+        "standard_pos": "LB",
+        "cap_number": "$1,001,885",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "MLB": [
@@ -619,17 +630,6 @@
         "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Keyshaun Elliott",
-        "depth": 3,
-        "injured": false,
-        "attainment": "26/5",
-        "standard_slot": "MIKE",
-        "standard_pos": "LB",
-        "cap_number": "$1,001,885",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "LCB": [
@@ -650,13 +650,13 @@
         "stats_season": 2025
       },
       {
-        "name": "Malik Muhammad II",
+        "name": "Clark Phillips III",
         "depth": 2,
         "injured": false,
-        "attainment": "26/4",
+        "attainment": "T/Atl",
         "standard_slot": "LCB",
         "standard_pos": "CB",
-        "cap_number": "$1,160,695",
+        "cap_number": "$2,149,000",
         "stats": {},
         "stats_season": null
       }
@@ -728,15 +728,17 @@
         "stats_season": 2025
       },
       {
-        "name": "Clark Phillips III",
+        "name": "Josh Blackwell",
         "depth": 2,
         "injured": false,
-        "attainment": "T/Atl",
+        "attainment": "W/Phi",
         "standard_slot": "RCB",
         "standard_pos": "CB",
-        "cap_number": "$2,149,000",
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$2,605,000",
+        "stats": {
+          "TKL": 3
+        },
+        "stats_season": 2025
       }
     ],
     "NB": [
@@ -752,17 +754,15 @@
         "stats_season": null
       },
       {
-        "name": "Josh Blackwell",
+        "name": "Malik Muhammad II",
         "depth": 2,
         "injured": false,
-        "attainment": "W/Phi",
+        "attainment": "26/4",
         "standard_slot": "NB",
         "standard_pos": "CB",
-        "cap_number": "$2,605,000",
-        "stats": {
-          "TKL": 3
-        },
-        "stats_season": 2025
+        "cap_number": "$1,160,695",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "PT": [
