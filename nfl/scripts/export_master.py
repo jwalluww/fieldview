@@ -42,7 +42,16 @@ FLOAT_FIELDS = {
 
 
 def clean(field, value):
-    if value is None or (isinstance(value, float) and pd.isna(value)):
+    # pd.isna() unconditionally (not gated behind isinstance(value, float))
+    # -- confirmed live this needs to catch pd.NA specifically, not just
+    # NaN. build_db.py's load_pfr_rb_stats() divides by
+    # touches.replace(0, pd.NA) to avoid a division-by-zero for a player
+    # with zero combined rush+rec touches; that pd.NA is a distinct type
+    # from float NaN (isinstance(pd.NA, float) is False) and was passing
+    # through this check uncaught, crashing json.dump() with "Object of
+    # type NAType is not JSON serializable" the first time this pipeline
+    # ever produced a real (non-empty) PFR row hitting that edge case.
+    if value is None or pd.isna(value):
         return None
     if hasattr(value, 'item'):  # numpy scalar -> native python
         value = value.item()
