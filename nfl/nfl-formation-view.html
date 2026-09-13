@@ -816,6 +816,11 @@ const STAT_TIERS = {
   broken_tackle_rate: { low: 5.839,  high: 8.092,  lowerIsBetter: false },
   box_rate:           { low: 22.069, high: 29.348, lowerIsBetter: true },
   target_share:       { low: 5.16,   high: 8.621,  lowerIsBetter: false },
+  target_share_wrte:    { low: 11.831, high: 17.409, lowerIsBetter: false },
+  avg_separation:       { low: 2.73,   high: 3.267,  lowerIsBetter: false },
+  yac_above_expectation:{ low: 0.143,  high: 0.774,  lowerIsBetter: false },
+  drop_rate:            { low: 2.4,    high: 4.9,    lowerIsBetter: true },
+  broken_tackle_rate_rec:{ low: 2.941, high: 6.25,   lowerIsBetter: false },
 };
 
 function tierColor(statKey, value) {
@@ -889,6 +894,12 @@ function mapPlayer(player) {
     yac_per_att: player.yac_per_att,
     broken_tackle_rate: player.broken_tackle_rate,
     target_share: player.target_share,
+    adot: player.adot,
+    air_yards_share: player.air_yards_share,
+    avg_separation: player.avg_separation,
+    yac_above_expectation: player.yac_above_expectation,
+    drop_rate: player.drop_rate,
+    broken_tackle_rate_rec: player.broken_tackle_rate_rec,
   };
 }
 
@@ -1092,7 +1103,7 @@ function buildHoverCard(p, pos) {
           </div>
           <div class="card-meta">${pos}${p.age ? ' · Age '+p.age : ''}${p.years_pro != null ? ' · Yr '+p.years_pro+' NFL' : ''}${p.draft_year ? ' · Drafted '+p.draft_year : ''}${p.college ? ' · '+p.college : ''}</div>
         </div>
-        ${(pos === 'QB' || pos === 'RB') ? `
+        ${(pos === 'QB' || pos === 'RB' || pos === 'WR' || pos === 'TE') ? `
           <div style="text-align:center;flex-shrink:0">
             <div class="crc-val" style="color:${mc};font-size:24px">${p.madden || '—'}</div>
             <div class="crc-label">Madden</div>
@@ -1131,6 +1142,44 @@ function buildHoverCard(p, pos) {
               p.stats['CAR'] != null ? p.stats['CAR'] + ' car' : null,
               p.stats['RUSH_YDS'] != null ? p.stats['RUSH_YDS'] + ' yds' : null,
               p.stats['RUSH_TDS'] != null ? p.stats['RUSH_TDS'] + ' TD' : null,
+              p.snap_pct != null ? Math.round(p.snap_pct) + '% snaps' : null,
+            ].filter(v => v != null).join(' · ')}
+          </div>
+        ` : ''}
+      ` : (pos === 'WR' || pos === 'TE') ? `
+        ${(p.target_share != null || p.adot != null || p.air_yards_share != null || p.avg_separation != null || p.drop_rate != null || p.broken_tackle_rate_rec != null) ? `
+          <div style="padding:10px 13px 4px;text-align:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+            <div style="display:flex;align-items:center;justify-content:center;gap:6px">
+              ${p.yac_above_expectation != null ? tierDot('yac_above_expectation', p.yac_above_expectation, 9) : ''}
+              <span class="crc-val" style="font-size:30px;color:var(--gold)">${p.yac_above_expectation != null ? (p.yac_above_expectation > 0 ? '+' : '') + p.yac_above_expectation.toFixed(2) : '—'}</span>
+            </div>
+            <div class="crc-label" title="Yards After Catch vs. NFL's expected-YAC model (based on speed, separation, and defender pursuit angles at the catch) -- isolates what the receiver did with the ball from what the play design/blocking provided. Typical range (2025): about 0.1 (poor) to 0.8+ (elite); 0 is average by definition.">YAC Above Exp</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)">
+            ${[
+              ['Tgt Share', 'target_share_wrte', p.target_share, p.target_share != null ? p.target_share.toFixed(1) + '%' : '—', "Share of the team's total pass targets this player receives. Typical range (2025, 40+ target WR/TE): about 12% (low) to 17%+ (elite); varies a lot by role."],
+              ['aDOT', null, null, p.adot != null ? p.adot.toFixed(1) : '—', "Average Depth of Target -- how far downfield this player's targets travel on average. Not a quality stat -- describes role (deep threat vs. possession/slot receiver), not skill."],
+              ['Air Yd Shr', null, null, p.air_yards_share != null ? p.air_yards_share.toFixed(1) + '%' : '—', "Share of the team's total intended air yards directed at this player. Same role indicator as aDOT, not a quality signal."],
+              ['Sep', 'avg_separation', p.avg_separation, p.avg_separation != null ? p.avg_separation.toFixed(2) : '—', "Average distance (yards) from the nearest defender when the ball arrives -- a tracking-based route-running signal. Typical range (2025, 40+ target WR/TE): about 2.7 (tight) to 3.3+ (open); higher is generally better."],
+              ['Drop%', 'drop_rate', p.drop_rate, p.drop_rate != null ? p.drop_rate.toFixed(1) + '%' : '—', "Share of catchable targets dropped. Typical range (2025, 40+ target WR/TE): about 2.4% (good) to 4.9%+ (poor); lower is better."],
+              ['Brk Tkl%', 'broken_tackle_rate_rec', p.broken_tackle_rate_rec, p.broken_tackle_rate_rec != null ? p.broken_tackle_rate_rec.toFixed(1) + '%' : '—', "Broken tackles per reception. Typical range (2025, 40+ target WR/TE): about 2.9% (low) to 6.3%+ (elite)."],
+            ].map(([k, statKey, raw, display, tip]) => `
+              <div style="background:#14171f;padding:7px 4px;text-align:center">
+                <div style="display:flex;align-items:center;justify-content:center;gap:5px">
+                  ${statKey ? tierDot(statKey, raw) : ''}
+                  <span style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:15px;color:var(--text)">${display}</span>
+                </div>
+                <div class="crc-label" style="font-size:9px" title="${tip}">${k}</div>
+              </div>
+            `).join('')}
+          </div>
+        ` : ''}
+        ${p.stats && (p.stats['REC'] != null || p.stats['REC_YDS'] != null || p.stats['REC_TDS'] != null) ? `
+          <div style="padding:7px 13px;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--text-muted)">
+            ${[
+              p.stats['REC'] != null ? p.stats['REC'] + ' rec' : null,
+              p.stats['REC_YDS'] != null ? p.stats['REC_YDS'] + ' yds' : null,
+              p.stats['REC_TDS'] != null ? p.stats['REC_TDS'] + ' TD' : null,
               p.snap_pct != null ? Math.round(p.snap_pct) + '% snaps' : null,
             ].filter(v => v != null).join(' · ')}
           </div>

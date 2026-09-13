@@ -36,6 +36,8 @@ FLOAT_FIELDS = {
     'cash_guaranteed_remaining', 'avg_annual_remaining',
     'epa_per_play', 'success_rate', 'ngs_time_to_throw', 'cpoe', 'qbr',
     'ryoe_per_att', 'box_rate', 'yac_per_att', 'broken_tackle_rate', 'target_share',
+    'adot', 'air_yards_share', 'avg_separation', 'yac_above_expectation',
+    'drop_rate', 'broken_tackle_rate_rec',
 }
 
 
@@ -97,7 +99,13 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             pm.box_rate,
             pm.yac_per_att,
             pm.broken_tackle_rate,
-            pm.target_share
+            pm.target_share,
+            pm.adot,
+            pm.air_yards_share,
+            pm.avg_separation,
+            pm.yac_above_expectation,
+            pm.drop_rate,
+            pm.broken_tackle_rate_rec
         FROM player_match pm
         JOIN ourlads_players op ON pm.row_id = op.row_id
         ORDER BY pm.row_id
@@ -154,6 +162,12 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             'yac_per_att': clean('yac_per_att', r['yac_per_att']),
             'broken_tackle_rate': clean('broken_tackle_rate', r['broken_tackle_rate']),
             'target_share': clean('target_share', r['target_share']),
+            'adot': clean('adot', r['adot']),
+            'air_yards_share': clean('air_yards_share', r['air_yards_share']),
+            'avg_separation': clean('avg_separation', r['avg_separation']),
+            'yac_above_expectation': clean('yac_above_expectation', r['yac_above_expectation']),
+            'drop_rate': clean('drop_rate', r['drop_rate']),
+            'broken_tackle_rate_rec': clean('broken_tackle_rate_rec', r['broken_tackle_rate_rec']),
         }
         master[r['player_id']] = entry
 

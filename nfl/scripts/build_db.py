@@ -194,39 +194,57 @@ def load_ngs_rushing():
     return df[df['week'] == 0]
 
 
-def load_pfr_rb_stats():
+def load_pfr_advstats_safe(stat_type):
+    """Wraps load_pfr_advstats with a fallback that fires on EITHER
+    an exception (season not yet valid) OR an empty result (season
+    valid but PFR hasn't published charted data for it yet -- these
+    are different failure modes, both need the same fallback).
+    Confirmed live at the 2026 season's Week 1: load_pfr_advstats no
+    longer raises (nflverse's own date validation accepts the season)
+    but returns zero rows, since PFR/Sportradar's own charting lags
+    behind -- the exception-only version of this check silently let
+    every RB/WR/TE's PFR-sourced stats go null with no error anywhere."""
+    import nflreadpy as nfl
+    try:
+        df = nfl.load_pfr_advstats([SEASON], stat_type=stat_type, summary_level='season').to_pandas()
+    except ValueError as e:
+        print(f"  {SEASON} PFR {stat_type} advstats not published yet ({e}) -- falling back to {SEASON - 1}")
+        return nfl.load_pfr_advstats([SEASON - 1], stat_type=stat_type, summary_level='season').to_pandas()
+    if len(df) == 0:
+        print(f"  {SEASON} PFR {stat_type} advstats returned zero rows (not charted yet) -- falling back to {SEASON - 1}")
+        return nfl.load_pfr_advstats([SEASON - 1], stat_type=stat_type, summary_level='season').to_pandas()
+    return df
+
+
+def dedupe_pfr_multiteam(df):
+    """A player traded mid-season gets one row per team stint PLUS one
+    combined aggregate row (tm like '2TM'/'3TM') in PFR's own
+    season-level table -- confirmed live on Trayveon Williams (LAC+CLE,
+    rows tm='LAC'/'CLE'/'2TM'), and separately confirmed on 13 different
+    WR/TE (Zay Flowers, Ty Lockett, etc.) once this loader was extended
+    to that position group. Keep only the aggregate row when present, or
+    merging/keying on pfr_id cross-multiplies or collides on anyone
+    traded (3 rush rows x 3 rec rows = 9 merged rows for one real person
+    in RB's case -- confirmed, this is what broke the first run;
+    duplicate pfr_id keys for WR/TE, confirmed the same way when this
+    loader was extended to that group)."""
+    df = df.copy()
+    df['_is_multiteam'] = df['tm'].str.match(r'^\d+TM$', na=False)
+    df = df.sort_values('_is_multiteam', ascending=False)
+    return df.drop_duplicates(subset='pfr_id', keep='first').drop(columns='_is_multiteam')
+
+
+def load_pfr_rb_stats(rush, rec):
     """YAC/attempt (rushing table) + a combined broken-tackle rate
     across both rushing and receiving touches. pfr_id is the join
     key -- this pipeline already resolves pfr_id per player via
     find_pfr_id()/pfr_id_direct (the same mechanism snap_pct already
-    uses), so no new crosswalk is needed here."""
-    import nflreadpy as nfl
-    try:
-        rush = nfl.load_pfr_advstats([SEASON], stat_type='rush', summary_level='season').to_pandas()
-    except ValueError as e:
-        print(f"  {SEASON} PFR rush advstats not published yet ({e}) -- falling back to {SEASON - 1}")
-        rush = nfl.load_pfr_advstats([SEASON - 1], stat_type='rush', summary_level='season').to_pandas()
-    try:
-        rec = nfl.load_pfr_advstats([SEASON], stat_type='rec', summary_level='season').to_pandas()
-    except ValueError as e:
-        print(f"  {SEASON} PFR rec advstats not published yet ({e}) -- falling back to {SEASON - 1}")
-        rec = nfl.load_pfr_advstats([SEASON - 1], stat_type='rec', summary_level='season').to_pandas()
-
-    # A player traded mid-season gets one row per team stint PLUS one
-    # combined aggregate row (tm like '2TM'/'3TM') in PFR's own
-    # season-level table -- confirmed live on Trayveon Williams (LAC+CLE,
-    # rows tm='LAC'/'CLE'/'2TM'). Keep only the aggregate row when
-    # present, or merging on pfr_id cross-multiplies rows for anyone
-    # traded (3 rush rows x 3 rec rows = 9 merged rows for one real
-    # person -- confirmed, this is what broke the first run).
-    def dedupe_multiteam(df):
-        df = df.copy()
-        df['_is_multiteam'] = df['tm'].str.match(r'^\d+TM$', na=False)
-        df = df.sort_values('_is_multiteam', ascending=False)
-        return df.drop_duplicates(subset='pfr_id', keep='first').drop(columns='_is_multiteam')
-
-    rush = dedupe_multiteam(rush[rush['pos'].isin(['RB', 'FB'])])[['pfr_id', 'att', 'yac_att', 'brk_tkl']]
-    rec = dedupe_multiteam(rec[rec['pos'].isin(['RB', 'FB'])])[['pfr_id', 'rec', 'brk_tkl']]
+    uses), so no new crosswalk is needed here. Takes rush/rec as
+    params (fetched once in build_db() via load_pfr_advstats_safe) so
+    the 'rec' table -- also needed by load_pfr_wr_te_stats() -- isn't
+    pulled twice in one run."""
+    rush = dedupe_pfr_multiteam(rush[rush['pos'].isin(['RB', 'FB'])])[['pfr_id', 'att', 'yac_att', 'brk_tkl']]
+    rec = dedupe_pfr_multiteam(rec[rec['pos'].isin(['RB', 'FB'])])[['pfr_id', 'rec', 'brk_tkl']]
     merged = rush.merge(rec, on='pfr_id', how='outer', suffixes=('_rush', '_rec'))
     merged['touches'] = merged['att'].fillna(0) + merged['rec'].fillna(0)
     merged['broken_tackle_rate'] = (
@@ -236,7 +254,22 @@ def load_pfr_rb_stats():
     return merged[['pfr_id', 'yac_att', 'broken_tackle_rate']]
 
 
-def load_rb_target_share():
+def load_pfr_wr_te_stats(rec):
+    """Drop rate + a receiving-only broken-tackle rate for WR/TE.
+    Simpler than RB's version -- WR/TE don't have meaningful rushing
+    touches, so no rush+rec combination is needed, just
+    rec['brk_tkl'] / rec['rec']. Takes the same rec dataframe
+    load_pfr_rb_stats() uses (fetched once in build_db()), not a
+    second independent pull. Also needs the same multi-team dedup RB's
+    loader uses -- confirmed live this bug isn't RB-specific, 13 real
+    traded WR/TE had duplicate pfr_id rows without it."""
+    rec = dedupe_pfr_multiteam(rec[rec['pos'].isin(['WR', 'TE'])])
+    rec['broken_tackle_rate'] = rec['brk_tkl'] / rec['rec'] * 100
+    rec['drop_rate'] = rec['drop_percent'] * 100
+    return rec[['pfr_id', 'drop_rate', 'broken_tackle_rate']]
+
+
+def load_target_share():
     """Season-long target share, keyed by nflreadpy's own player_id --
     confirmed real (00-XXXXXXX gsis_id format), lines up directly with
     this pipeline's gid, no separate resolution needed. Needs its own
@@ -244,14 +277,34 @@ def load_rb_target_share():
     weekly-sum output -- summing a ratio like target_share across weeks
     produces a meaningless number. Confirmed this fails with
     ConnectionError specifically (a missing not-yet-published parquet
-    file), not ValueError like every other new source this round."""
+    file), not ValueError like every other new source this round.
+
+    Covers RB, WR, and TE -- this source already carries real
+    target_share for all three (confirmed live), not RB-only."""
     import nflreadpy as nfl
     try:
         df = nfl.load_player_stats([SEASON], summary_level='reg').to_pandas()
     except ConnectionError as e:
         print(f"  {SEASON} player stats not published yet ({e}) -- falling back to {SEASON - 1}")
         df = nfl.load_player_stats([SEASON - 1], summary_level='reg').to_pandas()
-    return df[df['position'] == 'RB'][['player_id', 'target_share']]
+    return df[df['position'].isin(['RB', 'WR', 'TE'])][['player_id', 'target_share']]
+
+
+def load_ngs_receiving():
+    """aDOT, air yards share, average separation, and YAC above
+    expectation -- all pre-computed by NGS, no manual math needed.
+    Same week==0-only gotcha as the QB/RB NGS loaders. Confirmed this
+    source does NOT have load_pfr_advstats_safe()'s empty-result
+    problem (real current-season data already present, including week
+    1) -- exception-only fallback matches the existing NGS
+    passing/rushing pattern."""
+    import nflreadpy as nfl
+    try:
+        df = nfl.load_nextgen_stats(stat_type='receiving', seasons=[SEASON]).to_pandas()
+    except ValueError as e:
+        print(f"  {SEASON} NGS receiving stats not published yet ({e}) -- falling back to {SEASON - 1}")
+        df = nfl.load_nextgen_stats(stat_type='receiving', seasons=[SEASON - 1]).to_pandas()
+    return df[df['week'] == 0]
 
 
 def build_db():
@@ -289,11 +342,17 @@ def build_db():
         print("Loading NGS rushing (RYOE/att + box rate)...")
         write_table(con, 'ngs_rushing', load_ngs_rushing())
 
-        print("Loading PFR RB stats (YAC/att + broken tackle rate)...")
-        write_table(con, 'pfr_rb_stats', load_pfr_rb_stats())
+        print("Loading PFR advstats (RB + WR/TE)...")
+        pfr_rush = load_pfr_advstats_safe('rush')
+        pfr_rec = load_pfr_advstats_safe('rec')
+        write_table(con, 'pfr_rb_stats', load_pfr_rb_stats(pfr_rush, pfr_rec))
+        write_table(con, 'pfr_wr_te_stats', load_pfr_wr_te_stats(pfr_rec))
 
-        print("Loading RB target share...")
-        write_table(con, 'rb_target_share', load_rb_target_share())
+        print("Loading target share (RB/WR/TE)...")
+        write_table(con, 'target_share', load_target_share())
+
+        print("Loading NGS receiving (aDOT, air yards share, separation, YAC+)...")
+        write_table(con, 'ngs_receiving', load_ngs_receiving())
     finally:
         con.close()
 

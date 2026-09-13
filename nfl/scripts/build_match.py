@@ -161,12 +161,23 @@ def load_pfr_rb_stats_from_db(con):
     return df.set_index('pfr_id').to_dict('index')
 
 
-def load_rb_target_share_from_db(con):
+def load_target_share_from_db(con):
     """Keyed by nflreadpy's own player_id -- confirmed real (00-XXXXXXX
     gsis_id format, same as every gid elsewhere in this pipeline), so no
-    separate resolution is needed here."""
-    df = con.execute("SELECT * FROM rb_target_share").fetchdf()
+    separate resolution is needed here. Covers RB, WR, and TE -- the
+    underlying table isn't RB-only (see build_db.py's load_target_share())."""
+    df = con.execute("SELECT * FROM target_share").fetchdf()
     return df.set_index('player_id').to_dict('index')
+
+
+def load_pfr_wr_te_stats_from_db(con):
+    df = con.execute("SELECT * FROM pfr_wr_te_stats").fetchdf()
+    return df.set_index('pfr_id').to_dict('index')
+
+
+def load_ngs_receiving_from_db(con):
+    df = con.execute("SELECT * FROM ngs_receiving").fetchdf()
+    return df.set_index('player_gsis_id').to_dict('index')
 
 
 def build_match():
@@ -182,7 +193,9 @@ def build_match():
     qbr_df = load_qbr_from_db(con)
     ngs_rushing = load_ngs_rushing_from_db(con)
     pfr_rb_stats = load_pfr_rb_stats_from_db(con)
-    rb_target_share = load_rb_target_share_from_db(con)
+    target_share_by_gsis = load_target_share_from_db(con)
+    pfr_wr_te_stats = load_pfr_wr_te_stats_from_db(con)
+    ngs_receiving = load_ngs_receiving_from_db(con)
 
     madden_by_team = load_madden_from_db(con)
     madden_pos_ranks = build_madden_pos_ranks(madden_by_team)
@@ -326,14 +339,17 @@ def build_match():
     for key, entry in master.items():
         entry['snap_pct'] = snap_pct_for(pfr_id_direct[key])
 
-    # RB advanced stats. Deliberately NOT in the earlier QB bio-merge loop --
-    # pfr_id_direct doesn't exist yet at that point (it's built from `master`
-    # itself, then backfilled by a fuzzy-match pass, both of which run after
-    # that loop finishes), so reusing it here (rather than resolving pfr_id
-    # a second time via find_pfr_id) means this has to be its own pass.
+    # RB/WR/TE advanced stats. Deliberately NOT in the earlier QB bio-merge
+    # loop -- pfr_id_direct doesn't exist yet at that point (it's built from
+    # `master` itself, then backfilled by a fuzzy-match pass, both of which
+    # run after that loop finishes), so reusing it here (rather than
+    # resolving pfr_id a second time via find_pfr_id) means this has to be
+    # its own pass.
     for key, entry in master.items():
         gid = entry.get('gsis_id')
-        if entry['standard_pos'] == 'RB':
+        pos = entry['standard_pos']
+
+        if pos == 'RB':
             ngs_r = ngs_rushing.get(gid) if gid else None
             entry['ryoe_per_att'] = ngs_r['rush_yards_over_expected_per_att'] if ngs_r else None
             entry['box_rate'] = ngs_r['percent_attempts_gte_eight_defenders'] if ngs_r else None
@@ -341,14 +357,38 @@ def build_match():
             pfr_r = pfr_rb_stats.get(pfr_id) if pfr_id else None
             entry['yac_per_att'] = pfr_r['yac_att'] if pfr_r else None
             entry['broken_tackle_rate'] = pfr_r['broken_tackle_rate'] if pfr_r else None
-            ts = rb_target_share.get(gid) if gid else None
-            entry['target_share'] = ts['target_share'] * 100 if ts else None
         else:
             entry['ryoe_per_att'] = None
             entry['box_rate'] = None
             entry['yac_per_att'] = None
             entry['broken_tackle_rate'] = None
+
+        # target_share covers RB, WR, and TE -- the underlying source
+        # already carries real values for all three, not RB-only, so this
+        # one field is gated separately from the RB-only fields above.
+        if pos in ('RB', 'WR', 'TE'):
+            ts = target_share_by_gsis.get(gid) if gid else None
+            entry['target_share'] = ts['target_share'] * 100 if ts else None
+        else:
             entry['target_share'] = None
+
+        if pos in ('WR', 'TE'):
+            ngs_rec = ngs_receiving.get(gid) if gid else None
+            entry['adot'] = ngs_rec['avg_intended_air_yards'] if ngs_rec else None
+            entry['air_yards_share'] = ngs_rec['percent_share_of_intended_air_yards'] if ngs_rec else None
+            entry['avg_separation'] = ngs_rec['avg_separation'] if ngs_rec else None
+            entry['yac_above_expectation'] = ngs_rec['avg_yac_above_expectation'] if ngs_rec else None
+            pfr_id = pfr_id_direct.get(key)
+            pfr_r = pfr_wr_te_stats.get(pfr_id) if pfr_id else None
+            entry['drop_rate'] = pfr_r['drop_rate'] if pfr_r else None
+            entry['broken_tackle_rate_rec'] = pfr_r['broken_tackle_rate'] if pfr_r else None
+        else:
+            entry['adot'] = None
+            entry['air_yards_share'] = None
+            entry['avg_separation'] = None
+            entry['yac_above_expectation'] = None
+            entry['drop_rate'] = None
+            entry['broken_tackle_rate_rec'] = None
 
     # Spotrac remaining-contract fuzzy match
     for entry in master.values():
