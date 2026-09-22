@@ -14,10 +14,10 @@
         "standard_pos": "WR",
         "cap_number": "$2,747,525",
         "stats": {
-          "TGT": 1,
-          "REC": 1,
-          "YDS": 1,
-          "YAC": -3
+          "TGT": 7,
+          "REC": 7,
+          "YDS": 64,
+          "YAC": 12
         },
         "stats_season": 2026
       },
@@ -30,11 +30,11 @@
         "standard_pos": "WR",
         "cap_number": null,
         "stats": {
-          "TGT": 2,
-          "REC": 1,
-          "YDS": 34,
-          "TDs": 1,
-          "YAC": 6
+          "TGT": 5,
+          "REC": 2,
+          "YDS": 77,
+          "TDs": 2,
+          "YAC": 16
         },
         "stats_season": 2026
       }
@@ -53,7 +53,8 @@
           "REC": 5,
           "YDS": 100,
           "TDs": 1,
-          "YAC": 24
+          "YAC": 24,
+          "CAR": 1
         },
         "stats_season": 2026
       },
@@ -79,22 +80,11 @@
         "standard_pos": "WR",
         "cap_number": "$6,792,000",
         "stats": {
-          "TGT": 6,
-          "REC": 4,
-          "YDS": 50,
-          "YAC": 25
+          "TGT": 12,
+          "REC": 7,
+          "YDS": 88,
+          "YAC": 44
         },
-        "stats_season": 2026
-      },
-      {
-        "name": "Greg Dortch",
-        "depth": 2,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "SWR",
-        "standard_pos": "WR",
-        "cap_number": null,
-        "stats": {},
         "stats_season": 2026
       }
     ],
@@ -204,7 +194,7 @@
         "standard_pos": "OL",
         "cap_number": "$8,970,000",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       },
       {
         "name": "Tylan Grable",
@@ -228,10 +218,11 @@
         "standard_pos": "TE",
         "cap_number": "$4,272,240",
         "stats": {
-          "TGT": 6,
-          "REC": 5,
-          "YDS": 130,
-          "YAC": 38
+          "TGT": 14,
+          "REC": 12,
+          "YDS": 225,
+          "TDs": 1,
+          "YAC": 77
         },
         "stats_season": 2026
       },
@@ -244,10 +235,11 @@
         "standard_pos": "TE",
         "cap_number": "$8,551,333",
         "stats": {
-          "TGT": 1,
-          "REC": 1,
-          "YDS": 7,
-          "YAC": 5
+          "TGT": 3,
+          "REC": 3,
+          "YDS": 12,
+          "TDs": 1,
+          "YAC": 7
         },
         "stats_season": 2026
       },
@@ -284,12 +276,12 @@
         "standard_pos": "QB",
         "cap_number": "$44,228,000",
         "stats": {
-          "CMP": 20,
-          "ATT": 29,
-          "YDS": 334,
-          "TDs": 2,
-          "SACKS": 2,
-          "RU YDS": 23
+          "CMP": 40,
+          "ATT": 60,
+          "YDS": 582,
+          "TDs": 5,
+          "SACKS": 4,
+          "RU YDS": 92
         },
         "stats_season": 2026
       },
@@ -302,12 +294,12 @@
         "standard_pos": "QB",
         "cap_number": "$1,900,000",
         "stats": {
-          "CMP": 20,
-          "ATT": 29,
-          "YDS": 334,
-          "TDs": 2,
-          "SACKS": 2,
-          "RU YDS": 23
+          "CMP": 40,
+          "ATT": 60,
+          "YDS": 582,
+          "TDs": 5,
+          "SACKS": 4,
+          "RU YDS": 92
         },
         "stats_season": 2026
       },
@@ -333,11 +325,12 @@
         "standard_pos": "RB",
         "cap_number": "$5,880,000",
         "stats": {
-          "CAR": 13,
-          "RU YDS": 57,
-          "REC": 3,
-          "RE YDS": 12,
-          "TGT": 4
+          "CAR": 34,
+          "RU YDS": 192,
+          "RU TDs": 1,
+          "REC": 4,
+          "RE YDS": 16,
+          "TGT": 7
         },
         "stats_season": 2026
       },
@@ -350,7 +343,7 @@
         "standard_pos": "RB",
         "cap_number": "$3,275,000",
         "stats": {
-          "TKL": 6
+          "TKL": 7
         },
         "stats_season": 2026
       },
@@ -369,8 +362,19 @@
         "stats_season": 2026
       },
       {
-        "name": "Frank Gore Jr.",
+        "name": "Brock Lampe",
         "depth": 4,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Frank Gore Jr.",
+        "depth": 5,
         "injured": false,
         "attainment": null,
         "standard_slot": "RB",
@@ -404,7 +408,7 @@
         "standard_pos": "DI",
         "cap_number": "$1,504,314",
         "stats": {
-          "TKL": 1
+          "TKL": 2
         },
         "stats_season": 2026
       }
@@ -422,7 +426,7 @@
           "TKL": 3,
           "SACKS": 1.0,
           "TFL": 2,
-          "QB HIT": 1
+          "QB HIT": 4
         },
         "stats_season": 2026
       },
@@ -465,7 +469,7 @@
         "standard_pos": "DI",
         "cap_number": "$1,532,195",
         "stats": {
-          "TKL": 1,
+          "TKL": 2,
           "TFL": 1
         },
         "stats_season": 2026
@@ -492,11 +496,11 @@
         "standard_pos": "EDGE",
         "cap_number": null,
         "stats": {
-          "TKL": 4,
-          "SACKS": 2.0,
+          "TKL": 7,
+          "SACKS": 4.0,
           "PD": 1,
-          "TFL": 2,
-          "QB HIT": 5
+          "TFL": 4,
+          "QB HIT": 9
         },
         "stats_season": 2026
       },
@@ -509,7 +513,9 @@
         "standard_pos": "EDGE",
         "cap_number": "$3,400,717",
         "stats": {
-          "TKL": 1
+          "TKL": 1,
+          "SACKS": 0.5,
+          "QB HIT": 1
         },
         "stats_season": 2026
       },
@@ -521,8 +527,10 @@
         "standard_slot": "LOLB",
         "standard_pos": "EDGE",
         "cap_number": "$1,262,500",
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "QB HIT": 1
+        },
+        "stats_season": 2026
       }
     ],
     "WLB": [
@@ -535,8 +543,9 @@
         "standard_pos": "LB",
         "cap_number": "$3,902,692",
         "stats": {
-          "TKL": 4,
-          "TFL": 1
+          "TKL": 9,
+          "PD": 1,
+          "TFL": 2
         },
         "stats_season": 2026
       },
@@ -562,8 +571,9 @@
         "standard_pos": "LB",
         "cap_number": "$5,352,000",
         "stats": {
-          "TKL": 6,
-          "TFL": 1
+          "TKL": 9,
+          "PD": 1,
+          "TFL": 2
         },
         "stats_season": 2026
       },
@@ -591,7 +601,10 @@
         "standard_pos": "EDGE",
         "cap_number": "$6,500,000",
         "stats": {
-          "QB HIT": 2
+          "TKL": 2,
+          "SACKS": 1.5,
+          "TFL": 1,
+          "QB HIT": 4
         },
         "stats_season": 2026
       },
@@ -603,7 +616,9 @@
         "standard_slot": "ROLB",
         "standard_pos": "EDGE",
         "cap_number": "$2,389,226",
-        "stats": {},
+        "stats": {
+          "TKL": 1
+        },
         "stats_season": 2026
       },
       {
@@ -615,7 +630,7 @@
         "standard_pos": "EDGE",
         "cap_number": "$1,138,569",
         "stats": {
-          "TKL": 1
+          "TKL": 2
         },
         "stats_season": 2026
       }
@@ -630,7 +645,8 @@
         "standard_pos": "CB",
         "cap_number": "$7,396,000",
         "stats": {
-          "TKL": 3
+          "TKL": 8,
+          "PD": 2
         },
         "stats_season": 2026
       }
@@ -645,7 +661,7 @@
         "standard_pos": "S",
         "cap_number": null,
         "stats": {
-          "TKL": 6
+          "TKL": 7
         },
         "stats_season": 2026
       },
@@ -657,7 +673,9 @@
         "standard_slot": "SS",
         "standard_pos": "S",
         "cap_number": "$1,125,000",
-        "stats": {},
+        "stats": {
+          "TKL": 1
+        },
         "stats_season": 2026
       },
       {
@@ -682,7 +700,7 @@
         "standard_pos": "S",
         "cap_number": "$1,785,817",
         "stats": {
-          "TKL": 2
+          "TKL": 7
         },
         "stats_season": 2026
       },
@@ -694,7 +712,9 @@
         "standard_slot": "FS",
         "standard_pos": "S",
         "cap_number": "$1,916,666",
-        "stats": {},
+        "stats": {
+          "TKL": 1
+        },
         "stats_season": 2026
       }
     ],
@@ -708,7 +728,7 @@
         "standard_pos": "CB",
         "cap_number": "$3,467,723",
         "stats": {
-          "TKL": 2
+          "TKL": 3
         },
         "stats_season": 2026
       },
@@ -721,7 +741,7 @@
         "standard_pos": "CB",
         "cap_number": "$1,445,274",
         "stats": {
-          "TKL": 1,
+          "TKL": 5,
           "PD": 1
         },
         "stats_season": 2026
@@ -736,7 +756,9 @@
         "standard_slot": "NB",
         "standard_pos": "CB",
         "cap_number": "$3,230,000",
-        "stats": {},
+        "stats": {
+          "TKL": 2
+        },
         "stats_season": 2026
       },
       {
@@ -747,7 +769,9 @@
         "standard_slot": "NB",
         "standard_pos": "CB",
         "cap_number": "$1,085,054",
-        "stats": {},
+        "stats": {
+          "TKL": 3
+        },
         "stats_season": 2026
       }
     ],
@@ -814,23 +838,23 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Greg Dortch",
+        "depth": 4,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": 2026
       }
     ],
     "OT": [
       {
-        "name": "Nick Broeker",
-        "depth": 1,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "LT",
-        "standard_pos": "OL",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Jedrick Wills Jr.",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": null,
         "standard_slot": "LT",
@@ -847,19 +871,6 @@
         "injured": false,
         "attainment": null,
         "standard_slot": "OG",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      }
-    ],
-    "ED": [
-      {
-        "name": "Andre Jones Jr.",
-        "depth": 1,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "ED",
         "standard_pos": "DEF",
         "cap_number": null,
         "stats": {},
@@ -914,7 +925,7 @@
           "TKL": 3,
           "SACKS": 1.0,
           "TFL": 2,
-          "QB HIT": 1
+          "QB HIT": 4
         },
         "stats_season": 2026
       },

@@ -14,10 +14,10 @@
         "standard_pos": "WR",
         "cap_number": "$13,225,000",
         "stats": {
-          "TGT": 10,
-          "REC": 4,
-          "YDS": 40,
-          "YAC": 5
+          "TGT": 19,
+          "REC": 8,
+          "YDS": 67,
+          "YAC": 20
         },
         "stats_season": 2026
       },
@@ -29,8 +29,13 @@
         "standard_slot": "LWR",
         "standard_pos": "WR",
         "cap_number": null,
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "TGT": 1,
+          "REC": 1,
+          "YDS": 2,
+          "YAC": 1
+        },
+        "stats_season": 2026
       }
     ],
     "RWR": [
@@ -58,8 +63,13 @@
         "standard_slot": "RWR",
         "standard_pos": "WR",
         "cap_number": "$1,917,250",
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "TGT": 8,
+          "REC": 4,
+          "YDS": 35,
+          "YAC": 12
+        },
+        "stats_season": 2026
       }
     ],
     "SWR": [
@@ -72,10 +82,10 @@
         "standard_pos": "WR",
         "cap_number": "$1,566,864",
         "stats": {
-          "TGT": 6,
-          "REC": 3,
-          "YDS": 26,
-          "YAC": 6
+          "TGT": 12,
+          "REC": 8,
+          "YDS": 54,
+          "YAC": 28
         },
         "stats_season": 2026
       },
@@ -101,7 +111,7 @@
         "standard_pos": "OL",
         "cap_number": "$4,105,990",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       }
     ],
     "LG": [
@@ -162,7 +172,7 @@
         "standard_pos": "OL",
         "cap_number": "$1,164,446",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       },
       {
         "name": "Brock Hoffman",
@@ -210,11 +220,12 @@
         "standard_pos": "TE",
         "cap_number": "$6,943,333",
         "stats": {
-          "TGT": 5,
-          "REC": 5,
-          "YDS": 46,
+          "TGT": 10,
+          "REC": 9,
+          "YDS": 78,
           "TDs": 1,
-          "YAC": 25
+          "YAC": 39,
+          "CAR": 1
         },
         "stats_season": 2026
       },
@@ -227,10 +238,10 @@
         "standard_pos": "TE",
         "cap_number": "$3,473,438",
         "stats": {
-          "TGT": 2,
-          "REC": 2,
-          "YDS": 18,
-          "YAC": 12
+          "TGT": 4,
+          "REC": 3,
+          "YDS": 25,
+          "YAC": 19
         },
         "stats_season": 2026
       },
@@ -267,12 +278,13 @@
         "standard_pos": "QB",
         "cap_number": "$22,500,000",
         "stats": {
-          "CMP": 24,
-          "ATT": 40,
-          "YDS": 221,
+          "CMP": 47,
+          "ATT": 79,
+          "YDS": 408,
           "TDs": 1,
-          "SACKS": 2,
-          "RU YDS": -3
+          "INTs": 1,
+          "SACKS": 6,
+          "RU YDS": 2
         },
         "stats_season": 2026
       },
@@ -284,8 +296,11 @@
         "standard_slot": "QB",
         "standard_pos": "QB",
         "cap_number": "$4,622,500",
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "ATT": 1,
+          "RU YDS": 3
+        },
+        "stats_season": 2026
       },
       {
         "name": "Will Howard",
@@ -320,11 +335,11 @@
         "standard_pos": "RB",
         "cap_number": "$7,033,333",
         "stats": {
-          "CAR": 10,
-          "RU YDS": 46,
-          "REC": 5,
-          "RE YDS": 27,
-          "TGT": 6
+          "CAR": 21,
+          "RU YDS": 89,
+          "REC": 7,
+          "RE YDS": 61,
+          "TGT": 10
         },
         "stats_season": 2026
       },
@@ -337,11 +352,11 @@
         "standard_pos": "RB",
         "cap_number": "$3,750,000",
         "stats": {
-          "CAR": 8,
-          "RU YDS": 15,
-          "REC": 2,
-          "RE YDS": 6,
-          "TGT": 5
+          "CAR": 15,
+          "RU YDS": 37,
+          "REC": 4,
+          "RE YDS": 28,
+          "TGT": 7
         },
         "stats_season": 2026
       },
@@ -357,7 +372,7 @@
         "stats_season": 2026
       },
       {
-        "name": "Travis Homer",
+        "name": "Lew Nichols",
         "depth": 4,
         "injured": false,
         "attainment": null,
@@ -368,15 +383,18 @@
         "stats_season": null
       },
       {
-        "name": "Lew Nichols",
+        "name": "Travis Homer",
         "depth": 5,
         "injured": false,
         "attainment": null,
         "standard_slot": "RB",
         "standard_pos": "RB",
         "cap_number": null,
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "CAR": 2,
+          "RU YDS": 16
+        },
+        "stats_season": 2026
       }
     ],
     "FB": [
@@ -402,7 +420,9 @@
         "standard_pos": "DI",
         "cap_number": "$4,084,910",
         "stats": {
-          "TKL": 1
+          "TKL": 2,
+          "SACKS": 0.5,
+          "QB HIT": 1
         },
         "stats_season": 2026
       },
@@ -415,7 +435,8 @@
         "standard_pos": "DI",
         "cap_number": "$3,650,000",
         "stats": {
-          "TKL": 1
+          "TKL": 2,
+          "TFL": 1
         },
         "stats_season": 2026
       },
@@ -467,7 +488,8 @@
         "standard_pos": "DI",
         "cap_number": "$13,675,000",
         "stats": {
-          "TKL": 2
+          "TKL": 2,
+          "QB HIT": 1
         },
         "stats_season": 2026
       },
@@ -515,12 +537,12 @@
         "standard_pos": "EDGE",
         "cap_number": "$42,000,000",
         "stats": {
-          "TKL": 4,
-          "SACKS": 2.0,
+          "TKL": 6,
+          "SACKS": 3.5,
           "INTs": 1,
           "PD": 1,
-          "TFL": 3,
-          "QB HIT": 2
+          "TFL": 4,
+          "QB HIT": 4
         },
         "stats_season": 2026
       },
@@ -533,7 +555,8 @@
         "standard_pos": "EDGE",
         "cap_number": "$5,427,431",
         "stats": {
-          "TKL": 1,
+          "TKL": 5,
+          "TFL": 3,
           "QB HIT": 1
         },
         "stats_season": 2026
@@ -549,7 +572,9 @@
         "standard_pos": "LB",
         "cap_number": "$17,193,334",
         "stats": {
-          "TKL": 2
+          "TKL": 2,
+          "INTs": 1,
+          "PD": 1
         },
         "stats_season": 2026
       },
@@ -577,8 +602,8 @@
         "standard_pos": "LB",
         "cap_number": "$1,526,267",
         "stats": {
-          "TKL": 5,
-          "TFL": 2
+          "TKL": 9,
+          "TFL": 3
         },
         "stats_season": 2026
       },
@@ -590,7 +615,9 @@
         "standard_slot": "ILB_R",
         "standard_pos": "LB",
         "cap_number": "$1,987,500",
-        "stats": {},
+        "stats": {
+          "TKL": 1
+        },
         "stats_season": 2026
       }
     ],
@@ -604,10 +631,11 @@
         "standard_pos": "EDGE",
         "cap_number": "$20,102,000",
         "stats": {
-          "TKL": 2,
-          "SACKS": 2.0,
-          "TFL": 2,
-          "QB HIT": 2
+          "TKL": 4,
+          "SACKS": 3.0,
+          "PD": 1,
+          "TFL": 4,
+          "QB HIT": 5
         },
         "stats_season": 2026
       },
@@ -646,20 +674,10 @@
         "standard_pos": "CB",
         "cap_number": "$4,000,000",
         "stats": {
-          "TKL": 1
+          "TKL": 4,
+          "PD": 1
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Doneiko Slaughter",
-        "depth": 3,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "LCB",
-        "standard_pos": "CB",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "SS": [
@@ -672,7 +690,7 @@
         "standard_pos": "S",
         "cap_number": "$1,075,000",
         "stats": {
-          "TKL": 1
+          "TKL": 5
         },
         "stats_season": 2026
       }
@@ -687,7 +705,7 @@
         "standard_pos": "S",
         "cap_number": "$5,500,000",
         "stats": {
-          "TKL": 4,
+          "TKL": 5,
           "INTs": 1,
           "PD": 1
         },
@@ -702,7 +720,7 @@
         "standard_pos": "S",
         "cap_number": "$925,982",
         "stats": {
-          "TKL": 1
+          "TKL": 4
         },
         "stats_season": 2026
       }
@@ -717,7 +735,7 @@
         "standard_pos": "CB",
         "cap_number": "$5,500,000",
         "stats": {
-          "TKL": 3
+          "TKL": 5
         },
         "stats_season": 2026
       },
@@ -745,7 +763,7 @@
         "standard_pos": "CB",
         "cap_number": "$19,500,000",
         "stats": {
-          "TKL": 3,
+          "TKL": 5,
           "PD": 1
         },
         "stats_season": 2026
@@ -794,15 +812,21 @@
     ],
     "WR": [
       {
-        "name": "Max Hurleman",
+        "name": "Brandon Smith",
         "depth": 1,
         "injured": false,
         "attainment": null,
         "standard_slot": "LWR",
         "standard_pos": "WR",
         "cap_number": null,
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "TKL": 4,
+          "SACKS": 3.0,
+          "PD": 1,
+          "TFL": 4,
+          "QB HIT": 5
+        },
+        "stats_season": 2026
       },
       {
         "name": "Brandon Johnson",
@@ -814,22 +838,6 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Brandon Smith",
-        "depth": 3,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "LWR",
-        "standard_pos": "WR",
-        "cap_number": null,
-        "stats": {
-          "TKL": 2,
-          "SACKS": 2.0,
-          "TFL": 2,
-          "QB HIT": 2
-        },
-        "stats_season": 2026
       }
     ],
     "OT": [
@@ -906,6 +914,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Doneiko Slaughter",
+        "depth": 2,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "S": [
@@ -928,6 +947,19 @@
         "standard_slot": "S",
         "standard_pos": "DEF",
         "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "PS/IR": [
+      {
+        "name": "Max Hurleman",
+        "depth": 1,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "PS/IR",
+        "standard_pos": "DEF",
+        "cap_number": "$247,500",
         "stats": {},
         "stats_season": null
       }
