@@ -42,7 +42,7 @@ body {
   overflow-x: hidden;
 }
 
-#th-stat1, #th-stat2, #th-stat3, #th-stat4, #th-stat5 {
+#th-stat1, #th-stat2, #th-stat3, #th-stat4, #th-stat5, #th-stat6, #th-stat7 {
   text-align: center;
 }
 
@@ -707,6 +707,8 @@ body {
         <th onclick="sortBy('stat3')" id="th-stat3" style="display:none"><span class="sort-icon">↕</span></th>
         <th onclick="sortBy('stat4')" id="th-stat4" style="display:none"><span class="sort-icon">↕</span></th>
         <th onclick="sortBy('stat5')" id="th-stat5" style="display:none"><span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('stat6')" id="th-stat6" style="display:none"><span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('stat7')" id="th-stat7" style="display:none"><span class="sort-icon">↕</span></th>
       </tr>
     </thead>
     <tbody id="tableBody"></tbody>
@@ -762,14 +764,45 @@ const STAT_COLS = {
   rushing:   ['CAR','RUSH_YDS','RUSH_TDS'],
   receiving: ['REC','TGT','REC_YDS','REC_TDS'],
   defense:   ['TKL','SACK','INT','PBU','TFL'],
-  advanced:  [
-    { key: 'epa_per_play', label: 'EPA/DB', decimals: 2, tooltip: "Expected Points Added per dropback -- points added vs. a league-average outcome in the same situation. Typical range: about -0.10 (poor) to +0.25 (elite); 0.00-0.10 is roughly average." },
-    { key: 'success_rate', label: 'SUCC%', decimals: 1, tooltip: "Success rate -- share of dropbacks that meaningfully move the offense closer to a first down or score. Typical range: about 40% (poor) to 55%+ (elite); 46-48% is roughly average." },
-    { key: 'cpoe', label: 'CPOE', decimals: 1, tooltip: "Completion % Over Expected -- accuracy vs. expected, given throw difficulty. Typical range: about -5% (poor) to +5-8% (elite); 0% is average." },
-    { key: 'ngs_time_to_throw', label: 'TTT', decimals: 2, tooltip: "Time to throw -- average seconds from snap to release. Typically 2.4-3.0s. Faster isn't automatically better or worse -- it depends on scheme and play style." },
-    { key: 'qbr', label: 'QBR', decimals: 1, tooltip: "ESPN's Total QBR -- a 0-100 all-in-one rating of overall efficiency. ESPN scales it so 50 = average; 65+ is very good, below 40 is poor." },
-  ],
+  advanced: {
+    QB: [
+      { key: 'epa_per_play', label: 'EPA/DB', decimals: 2, tooltip: "Expected Points Added per dropback -- points added vs. a league-average outcome in the same situation. Typical range: about -0.10 (poor) to +0.25 (elite); 0.00-0.10 is roughly average." },
+      { key: 'success_rate', label: 'SUCC%', decimals: 1, tooltip: "Success rate -- share of dropbacks that meaningfully move the offense closer to a first down or score. Typical range: about 40% (poor) to 55%+ (elite); 46-48% is roughly average." },
+      { key: 'cpoe', label: 'CPOE', decimals: 1, tooltip: "Completion % Over Expected -- accuracy vs. expected, given throw difficulty. Typical range: about -5% (poor) to +5-8% (elite); 0% is average." },
+      { key: 'ngs_time_to_throw', label: 'TTT', decimals: 2, tooltip: "Time to throw -- average seconds from snap to release. Typically 2.4-3.0s. Faster isn't automatically better or worse -- it depends on scheme and play style." },
+      { key: 'qbr', label: 'QBR', decimals: 1, tooltip: "ESPN's Total QBR -- a 0-100 all-in-one rating of overall efficiency. ESPN scales it so 50 = average; 65+ is very good, below 40 is poor." },
+    ],
+    RB: [
+      { key: 'ryoe_per_att', label: 'RYOE/Att', decimals: 2, tooltip: "Rush Yards Over Expected per attempt -- how many yards a carry gains vs. what's expected given blocking, defenders in the box, and other context. Typical range (2025, 100+ carry backs): about -0.8 (poor) to +1.3 (elite); 0 is average by definition." },
+      { key: 'yac_per_att', label: 'YAC/Att', decimals: 2, tooltip: "Yards After Contact per attempt -- how many yards a back gains after first contact. Typical range (2025, 100+ carry backs): about 1.4 (poor) to 3.0 (elite); around 2.0 is roughly average." },
+      { key: 'broken_tackle_rate', label: 'BRK TKL%', decimals: 1, tooltip: "Broken tackles per touch (carries + receptions). Typical range (2025, 100+ touch backs): about 1.6% (low) to 12.7% (elite); around 6.5% is roughly average." },
+      { key: 'box_rate', label: 'BOX%', decimals: 0, tooltip: "Share of carries run into a stacked box (8+ defenders). Typical range (2025): about 11% to 45%. Lower generally means defenses respect the passing game more -- this reflects the whole offense's threat level, not just the runner himself." },
+      { key: 'target_share', label: 'TGT SHR%', decimals: 1, tooltip: "Share of the team's total pass targets this back receives. Typical range (2025, 20+ target backs): about 3% (early-down runner) to 24% (elite receiving back); around 8% is roughly average." },
+    ],
+    WRTE: [
+      { key: 'yac_above_expectation', label: 'YAC AE', decimals: 2, tooltip: "Yards After Catch vs. NFL's expected-YAC model (based on speed, separation, and defender pursuit angles at the catch) -- isolates what the receiver did with the ball from what the play design/blocking provided. Typical range (2025): about 0.1 (poor) to 0.8+ (elite); 0 is average by definition." },
+      { key: 'target_share', label: 'TGT SHR%', decimals: 1, tooltip: "Share of the team's total pass targets this player receives. Typical range (2025, 40+ target WR/TE): about 12% (low) to 17%+ (elite); varies a lot by role." },
+      { key: 'adot', label: 'aDOT', decimals: 1, tooltip: "Average Depth of Target -- how far downfield this player's targets travel on average. Not a quality stat -- describes role (deep threat vs. possession/slot receiver), not skill." },
+      { key: 'air_yards_share', label: 'AIR YD SHR%', decimals: 1, tooltip: "Share of the team's total intended air yards directed at this player. Same role indicator as aDOT, not a quality signal." },
+      { key: 'avg_separation', label: 'SEP', decimals: 2, tooltip: "Average distance (yards) from the nearest defender when the ball arrives -- a tracking-based route-running signal. Typical range (2025, 40+ target WR/TE): about 2.7 (tight) to 3.3+ (open); higher is generally better." },
+      { key: 'drop_rate', label: 'DROP%', decimals: 1, tooltip: "Share of catchable targets dropped. Typical range (2025, 40+ target WR/TE): about 2.4% (good) to 4.9%+ (poor); lower is better." },
+      { key: 'broken_tackle_rate_rec', label: 'BRK TKL%', decimals: 1, tooltip: "Broken tackles per reception. Typical range (2025, 40+ target WR/TE): about 2.9% (low) to 6.3%+ (elite)." },
+    ],
+  },
 };
+// Advanced tab's column set follows the position filter: all-RB -> RB set,
+// only WR/TE -> WR/TE set, anything else (empty/mixed/QB) -> QB set.
+const ADV_DEFAULT_SORT = { QB: 'stat5', RB: 'stat1', WRTE: 'stat2' };
+function advancedGroup() {
+  const sel = [...selectedPositions];
+  if (sel.length && sel.every(p => p === 'RB')) return 'RB';
+  if (sel.length && sel.every(p => p === 'WR' || p === 'TE')) return 'WRTE';
+  return 'QB';
+}
+function statColsFor(viewKey) {
+  const cols = STAT_COLS[viewKey];
+  return (viewKey === 'advanced') ? cols[advancedGroup()] : cols;
+}
 const TEAM_ABBRS = Object.keys(TEAMS);
 const ALL_POSITIONS = ['QB','WR','RB','TE','OL','EDGE','DI','LB','CB','S','K','P'];
 
@@ -801,6 +834,7 @@ let filteredPlayers = [];
 let sortCol = 'madden';
 let sortDir = 'desc';
 let currentView = 'overview';
+let advancedGroupShown = 'QB';
 
 // Multi-select filter state. Empty set = no filter (show all) -- same
 // semantics as the old selects' "" / "All ..." option.
@@ -818,7 +852,7 @@ const VIEWS = {
   rushing:    { cols: ['team','name','stat1','stat2','stat3'],                                pos: ['RB'], sort: 'stat2' },
   receiving:  { cols: ['team','name','stat1','stat2','stat3','stat4'],                       pos: ['WR'], sort: 'stat3' },
   defense:    { cols: ['team','ourlads_pos','pos','name','stat1','stat2','stat3','stat4'],   pos: [...DEFENSE_POS], sort: 'stat1' },
-  advanced:   { cols: ['team','name','stat1','stat2','stat3','stat4','stat5'],               pos: ['QB'], sort: 'stat5' },
+  advanced:   { cols: ['team','name','stat1','stat2','stat3','stat4','stat5','stat6','stat7'], pos: ['QB','RB','WR','TE'], sort: 'stat5' },
 };
 
 function setView(viewKey, btn) {
@@ -851,12 +885,16 @@ function setView(viewKey, btn) {
   // desc here same as madden/cap, or the tab would load worst-to-best.
   sortDir = (view.sort === 'madden' || view.sort === 'cap' || viewKey === 'passing' || viewKey === 'rushing' || viewKey === 'receiving' || viewKey === 'defense' || viewKey === 'advanced') ? 'desc' : 'asc';
   updateStatColumns(viewKey);
+  if (viewKey === 'advanced') {
+    advancedGroupShown = advancedGroup();
+    sortCol = ADV_DEFAULT_SORT[advancedGroupShown];
+  }
   applyFilters();
   updateStickyOffset();
 }
 
 function updateColumns(cols) {
-  const allCols = ['team','ourlads_pos','pos','name','age','college','draft_year','years_pro','madden','cap','years_remaining','cash_total_remaining','cash_guaranteed_remaining','avg_annual_remaining','stat1','stat2','stat3','stat4','stat5'];
+  const allCols = ['team','ourlads_pos','pos','name','age','college','draft_year','years_pro','madden','cap','years_remaining','cash_total_remaining','cash_guaranteed_remaining','avg_annual_remaining','stat1','stat2','stat3','stat4','stat5','stat6','stat7'];
 
   const colMap = {
       team: 'th-team', ourlads_pos: 'th-ourlads_pos', pos: 'th-pos', name: 'th-name',
@@ -864,7 +902,7 @@ function updateColumns(cols) {
       years_pro: 'th-years_pro', madden: 'th-madden', cap: 'th-cap',
       years_remaining: 'th-years_remaining', cash_total_remaining: 'th-cash_total_remaining',
       cash_guaranteed_remaining: 'th-cash_guaranteed_remaining', avg_annual_remaining: 'th-avg_annual_remaining',
-      stat1: 'th-stat1', stat2: 'th-stat2', stat3: 'th-stat3', stat4: 'th-stat4', stat5: 'th-stat5'
+      stat1: 'th-stat1', stat2: 'th-stat2', stat3: 'th-stat3', stat4: 'th-stat4', stat5: 'th-stat5', stat6: 'th-stat6', stat7: 'th-stat7'
   };
 
   allCols.forEach(col => {
@@ -913,6 +951,17 @@ async function loadAll() {
       ngs_time_to_throw: player.ngs_time_to_throw != null ? player.ngs_time_to_throw : null,
       cpoe: player.cpoe != null ? player.cpoe : null,
       qbr: player.qbr != null ? player.qbr : null,
+      ryoe_per_att: player.ryoe_per_att != null ? player.ryoe_per_att : null,
+      yac_per_att: player.yac_per_att != null ? player.yac_per_att : null,
+      broken_tackle_rate: player.broken_tackle_rate != null ? player.broken_tackle_rate : null,
+      box_rate: player.box_rate != null ? player.box_rate : null,
+      target_share: player.target_share != null ? player.target_share : null,
+      yac_above_expectation: player.yac_above_expectation != null ? player.yac_above_expectation : null,
+      adot: player.adot != null ? player.adot : null,
+      air_yards_share: player.air_yards_share != null ? player.air_yards_share : null,
+      avg_separation: player.avg_separation != null ? player.avg_separation : null,
+      drop_rate: player.drop_rate != null ? player.drop_rate : null,
+      broken_tackle_rate_rec: player.broken_tackle_rate_rec != null ? player.broken_tackle_rate_rec : null,
     });
   }
   loaded++;
@@ -1055,6 +1104,15 @@ function applyFilters() {
     return true;
   });
 
+  // Advanced tab: a position-filter change can swap the column set (QB/RB/
+  // WR+TE); when it does, reset to that set's default sort.
+  if (currentView === 'advanced' && advancedGroup() !== advancedGroupShown) {
+    advancedGroupShown = advancedGroup();
+    updateStatColumns('advanced');
+    sortCol = ADV_DEFAULT_SORT[advancedGroupShown];
+    sortDir = 'desc';
+  }
+
   // Apply sort
   sortPlayers();
   renderTable();
@@ -1125,6 +1183,8 @@ function sortPlayers() {
       case 'stat3': av = getStatVal(a, window._statKey3); bv = getStatVal(b, window._statKey3); break;
       case 'stat4': av = getStatVal(a, window._statKey4); bv = getStatVal(b, window._statKey4); break;
       case 'stat5': av = getStatVal(a, window._statKey5); bv = getStatVal(b, window._statKey5); break;
+      case 'stat6': av = getStatVal(a, window._statKey6); bv = getStatVal(b, window._statKey6); break;
+      case 'stat7': av = getStatVal(a, window._statKey7); bv = getStatVal(b, window._statKey7); break;
       default:          av = a.madden;        bv = b.madden;
     }
     // Nulls always last regardless of sort direction
@@ -1162,8 +1222,8 @@ function getStatVal(p, statKey) {
 }
 
 function updateStatColumns(viewKey) {
-  const keys = STAT_COLS[viewKey] || null;
-  const ids = ['stat1','stat2','stat3','stat4','stat5'];
+  const keys = statColsFor(viewKey) || null;
+  const ids = ['stat1','stat2','stat3','stat4','stat5','stat6','stat7'];
 
   ids.forEach((id, i) => {
     const th = document.getElementById('th-' + id);
@@ -1269,11 +1329,11 @@ function renderTable() {
       row += '<td style="font-family:\'Barlow Condensed\',sans-serif;font-weight:700;color:var(--text)">' + (formatMoney(p.cash_guaranteed_remaining) || '—') + '</td>';
     if (cols.includes('avg_annual_remaining'))
       row += '<td style="font-family:\'Barlow Condensed\',sans-serif;font-weight:700;color:var(--gold)">' + (formatMoney(p.avg_annual_remaining) || '—') + '</td>';
-      ['stat1','stat2','stat3','stat4','stat5'].forEach((col, i) => {
-        if (cols.includes(col)) {
-          const key = window['_statKey' + (i+1)];
+      ['stat1','stat2','stat3','stat4','stat5','stat6','stat7'].forEach((col, i) => {
+        const key = window['_statKey' + (i+1)];
+        if (cols.includes(col) && key) {
           const val = getStatVal(p, key);
-          const colDef = (STAT_COLS[currentView] || [])[i];
+          const colDef = (statColsFor(currentView) || [])[i];
           const decimals = colDef && typeof colDef === 'object' ? colDef.decimals : null;
           const display = (val != null && decimals != null) ? Number(val).toFixed(decimals) : val;
           row += '<td style="text-align:center;font-family:\'Barlow Condensed\',sans-serif;font-weight:700;font-size:16px;color:var(--text)">' + (display != null ? display : '<span style="color:var(--text-muted)">—</span>') + '</td>';
