@@ -1072,7 +1072,8 @@ function updateHeader() {
   logo.alt = currentTeam;
   document.getElementById('teamNameEl').textContent = team.name;
   const asOf = maddenMeta[currentTeam];
-  document.getElementById('maddenAsOf').textContent = asOf ? 'Ratings as of ' + asOf : '';
+  document.getElementById('maddenAsOf').textContent = asOf ? 'Ratings as of ' + asOf
+    : (Object.keys(maddenMeta).length ? 'Ratings date unknown' : '');
 }
 
 function positionHoverCard(node) {

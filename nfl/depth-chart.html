@@ -924,7 +924,15 @@ async function loadAll() {
   try {
     const res = await fetch('data/madden_meta.json');
     const dates = res.ok ? Object.values(await res.json()).filter(Boolean).sort() : [];
-    if (dates.length) document.getElementById('maddenAsOf').textContent = 'Ratings as of ' + dates[0];
+    if (dates.length) {
+      // Teams the scraper couldn't refresh have no date; say so instead of
+      // letting the oldest known date imply every team is that fresh.
+      const newest = dates[dates.length - 1];
+      const older = TEAM_ABBRS.length - dates.filter(d => d === newest).length;
+      const all = dates.length >= TEAM_ABBRS.length;
+      document.getElementById('maddenAsOf').textContent = 'Ratings as of ' + dates[0] +
+        (all ? '' : ' (' + older + ' team' + (older === 1 ? '' : 's') + ' older)');
+    }
   } catch (e) {}
 
   for (const player of Object.values(data)) {
