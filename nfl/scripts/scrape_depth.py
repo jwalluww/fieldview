@@ -39,7 +39,10 @@ TEAMS = [
     {"name": "Washington Commanders","abbr": "WAS"},
 ]
 
-SKIP_POSITIONS = {'PUP', 'IR', 'NFI', 'PUP-R', 'EXE', 'RES', 'KR', 'PR', 'LS', 'K', 'P', 'KO', 'PK'}
+SKIP_POSITIONS = {'EXE', 'RES', 'KR', 'PR', 'LS', 'K', 'P', 'KO', 'PK'}
+# Injured-list sections are kept (flagged injured) so those players show up in
+# the table; build_match.py resolves their position and they get no depth slot.
+INJURED_SECTIONS = {'PUP', 'IR', 'NFI', 'PUP-R'}
 
 # Standard slot mapping per scheme
 # Each entry: ourlads_code -> (standard_slot, standard_pos)
@@ -246,7 +249,7 @@ def scrape_depth_chart(team):
             if player_tag:
                 player_name = player_tag.get_text(strip=True)
                 if player_name:
-                    is_injured = 'lc_red' in player_tag.get('class', [])
+                    is_injured = 'lc_red' in player_tag.get('class', []) or position in INJURED_SECTIONS
                     raw_suffix = ''
                     suffix_match = re.search(r'\s+(\S*[\d/]\S*)$', player_name)
                     if suffix_match:

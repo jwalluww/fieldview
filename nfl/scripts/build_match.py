@@ -33,6 +33,7 @@ DB_PATH = os.path.join('nfl', 'data', 'fieldview.duckdb')
 # scrape_depth's SLOT_MAPs don't cover, so they land as standard_pos 'DEF'.
 # 'CE' is ambiguous (Terrion Arnold, a CB, sits under it), so it and the
 # status labels (SUS, PS/IR, LEFT) fall through to the Madden position.
+INJURED_SECTIONS = {'PUP', 'IR', 'NFI', 'PUP-R'}
 RESERVE_LABEL_MAP = {'ED': 'EDGE', 'CB': 'CB', 'S': 'S', 'LB': 'LB', 'OG': 'OL'}
 MADDEN_POS_MAP = {
     'QB': 'QB', 'HB': 'RB', 'FB': 'RB', 'WR': 'WR', 'TE': 'TE',
@@ -239,6 +240,7 @@ def build_match():
     ).fetchdf()
 
     nb_safeties = []
+    inj_dropped = []
     def_outcomes = {'label': [], 'madden': [], 'dropped': []}
     master = {}  # player_key -> match result dict (mirrors build_master's dedup)
 
@@ -253,6 +255,7 @@ def build_match():
         canonical_name = normalize_name(raw_name)
         standard_pos = p['standard_pos'] or ''
         abbr = p['abbr']
+        is_inj_section = p['ourlads_pos'] in INJURED_SECTIONS
 
         madden_is_dup = normalize_madden(raw_name) in madden_duplicate_names
         mp = find_madden_player(raw_name, madden_by_team.get(abbr, []),
@@ -275,6 +278,8 @@ def build_match():
                 how = 'madden'
             if not resolved:
                 def_outcomes['dropped'].append((canonical_name, abbr, p['ourlads_pos']))
+                if is_inj_section:
+                    inj_dropped.append((canonical_name, abbr, p['ourlads_pos']))
                 continue
             def_outcomes[how].append((canonical_name, abbr, p['ourlads_pos'], resolved))
             standard_pos = resolved
@@ -297,11 +302,16 @@ def build_match():
 
         depth = p['depth'] if pd.notna(p['depth']) else 99
         if player_key in master:
-            if depth >= master[player_key]['depth']:
+            # An injured-list row never displaces (and is replaced by) a real
+            # depth-chart row for the same player.
+            if is_inj_section:
+                continue
+            if not master[player_key]['inj_section'] and depth >= master[player_key]['depth']:
                 continue
 
         master[player_key] = {
             'row_id': int(p['row_id']),
+            'inj_section': is_inj_section,
             'player_key': player_key,
             'depth': depth,
             'canonical_name': canonical_name,
@@ -529,6 +539,8 @@ def build_match():
     print(f"GSIS matched: {gsis_matched} ({gsis_matched / total * 100:.1f}%)")
     print(f"Madden matched: {madden_matched} ({madden_matched / total * 100:.1f}%)")
     print(f"NB safeties retagged S: {len(nb_safeties)}")
+    print(f"Injured-list rows dropped (no usable Madden position): {len(inj_dropped)}")
+    print(f"Injured-list players kept: {int(match_df['inj_section'].sum())}")
     print(f"DEF rows resolved by label: {len(def_outcomes['label'])}, by Madden: "
           f"{len(def_outcomes['madden'])}, dropped: {len(def_outcomes['dropped'])}")
 

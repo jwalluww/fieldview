@@ -1145,6 +1145,8 @@ function getStarter(formationPos) {
   return null;
 }
 
+const INJURED_SLOTS = ['IR', 'PUP', 'NFI', 'PUP-R'];
+
 function getSubCandidates(formationPos) {
   if (!teamData) return [];
   // Find the standard_pos for this slot from current starter or coord map
@@ -1157,7 +1159,8 @@ function getSubCandidates(formationPos) {
   const targetPositions = formationPos === 'NB' ? ['CB', 'S'] : [targetPos];
 
   // Collect all players with matching standard_pos, sorted by madden desc
-  const candidates = teamData.players.filter(p => targetPositions.includes(p.standard_pos));
+  // Injured-list players (standard_slot IR/PUP/NFI/PUP-R) are never sub options.
+  const candidates = teamData.players.filter(p => targetPositions.includes(p.standard_pos) && !INJURED_SLOTS.includes(p.standard_slot));
   candidates.sort((a, b) => (b.madden || 0) - (a.madden || 0));
   // Dedupe by id, and exclude anyone already on the field
   const seen = new Set();
