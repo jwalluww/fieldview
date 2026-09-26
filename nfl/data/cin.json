@@ -21,17 +21,6 @@
           "YAC": 17
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Ke'shawn Williams",
-        "depth": 2,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "LWR",
-        "standard_pos": "WR",
-        "cap_number": "$1,005,000",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "RWR": [
@@ -70,24 +59,8 @@
     ],
     "SWR": [
       {
-        "name": "Andrei Iosivas",
-        "depth": 1,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "SWR",
-        "standard_pos": "WR",
-        "cap_number": "$3,713,848",
-        "stats": {
-          "TGT": 4,
-          "REC": 3,
-          "YDS": 19,
-          "YAC": 2
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Dohnte Meyers",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": null,
         "standard_slot": "SWR",
@@ -101,6 +74,17 @@
           "CAR": 1
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Ke'shawn Williams",
+        "depth": 2,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "SWR",
+        "standard_pos": "WR",
+        "cap_number": "$1,005,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LT": [
@@ -350,13 +334,8 @@
         "standard_slot": "QB",
         "standard_pos": "QB",
         "cap_number": null,
-        "stats": {
-          "TKL": 3,
-          "SACKS": 2.0,
-          "TFL": 2,
-          "QB HIT": 2
-        },
-        "stats_season": 2026
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RB": [
@@ -675,7 +654,10 @@
         "standard_slot": "LCB",
         "standard_pos": "CB",
         "cap_number": null,
-        "stats": {},
+        "stats": {
+          "TKL": 11,
+          "PD": 4
+        },
         "stats_season": 2026
       },
       {

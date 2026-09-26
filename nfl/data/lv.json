@@ -439,24 +439,10 @@
         "stats_season": 2026
       }
     ],
-    "LDT": [
+    "NT": [
       {
-        "name": "Tonka Hemingway",
+        "name": "Folorunso Fatukasi",
         "depth": 1,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "LDT",
-        "standard_pos": "DI",
-        "cap_number": "$1,171,454",
-        "stats": {
-          "TKL": 1,
-          "QB HIT": 1
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Jonah Laulu",
-        "depth": 2,
         "injured": false,
         "attainment": null,
         "standard_slot": "LDT",
@@ -464,7 +450,23 @@
         "cap_number": "$1,075,000",
         "stats": {
           "TKL": 1,
-          "QB HIT": 2
+          "SACKS": 0.5,
+          "QB HIT": 1
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Thomas Booker IV",
+        "depth": 2,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "LDT",
+        "standard_pos": "DI",
+        "cap_number": "$3,674,000",
+        "stats": {
+          "TKL": 2,
+          "TFL": 1,
+          "QB HIT": 1
         },
         "stats_season": 2026
       },
@@ -480,10 +482,24 @@
         "stats_season": null
       }
     ],
-    "RDT": [
+    "DT": [
+      {
+        "name": "Tonka Hemingway",
+        "depth": 1,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": "$1,171,454",
+        "stats": {
+          "TKL": 1,
+          "QB HIT": 1
+        },
+        "stats_season": 2026
+      },
       {
         "name": "Adam Butler",
-        "depth": 1,
+        "depth": 2,
         "injured": false,
         "attainment": null,
         "standard_slot": "RDT",
@@ -493,8 +509,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Folorunso Fatukasi",
-        "depth": 2,
+        "name": "Jonah Laulu",
+        "depth": 3,
         "injured": false,
         "attainment": null,
         "standard_slot": "RDT",
@@ -502,25 +518,31 @@
         "cap_number": "$1,075,000",
         "stats": {
           "TKL": 1,
-          "SACKS": 0.5,
-          "QB HIT": 1
+          "QB HIT": 2
         },
         "stats_season": 2026
       },
       {
-        "name": "Thomas Booker IV",
-        "depth": 3,
+        "name": "Brandon Cleveland",
+        "depth": 4,
         "injured": false,
         "attainment": null,
         "standard_slot": "RDT",
         "standard_pos": "DI",
-        "cap_number": "$3,674,000",
-        "stats": {
-          "TKL": 2,
-          "TFL": 1,
-          "QB HIT": 1
-        },
-        "stats_season": 2026
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Tim Keenan III",
+        "depth": 5,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RDE": [
@@ -676,12 +698,8 @@
         "standard_slot": "SS",
         "standard_pos": "S",
         "cap_number": "$1,014,939",
-        "stats": {
-          "TKL": 4,
-          "TFL": 1,
-          "QB HIT": 1
-        },
-        "stats_season": 2026
+        "stats": {},
+        "stats_season": null
       }
     ],
     "FS": [
@@ -897,30 +915,6 @@
         "attainment": null,
         "standard_slot": "ED",
         "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      }
-    ],
-    "DT": [
-      {
-        "name": "Brandon Cleveland",
-        "depth": 1,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "RDT",
-        "standard_pos": "DI",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Tim Keenan III",
-        "depth": 2,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "RDT",
-        "standard_pos": "DI",
         "cap_number": null,
         "stats": {},
         "stats_season": null

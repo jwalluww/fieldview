@@ -137,7 +137,7 @@
         "attainment": null,
         "standard_slot": "C",
         "standard_pos": "OL",
-        "cap_number": null,
+        "cap_number": "$786,667",
         "stats": {},
         "stats_season": null
       }
@@ -588,19 +588,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Joe Bachie",
-        "depth": 3,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "MIKE",
-        "standard_pos": "LB",
-        "cap_number": "$1,075,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Jimmy Rolder",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": null,
         "standard_slot": "MIKE",
@@ -637,42 +626,15 @@
           "TFL": 1
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Ennis Rakestraw Jr.",
-        "depth": 3,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "LCB",
-        "standard_pos": "CB",
-        "cap_number": "$1,768,567",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "SS": [
-      {
-        "name": "Avonte Maddox",
-        "depth": 1,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "SS",
-        "standard_pos": "S",
-        "cap_number": "$1,262,500",
-        "stats": {
-          "TKL": 5,
-          "PD": 2
-        },
-        "stats_season": 2026
-      }
-    ],
-    "FS": [
       {
         "name": "Chuck Clark",
         "depth": 1,
         "injured": false,
         "attainment": null,
-        "standard_slot": "FS",
+        "standard_slot": "SS",
         "standard_pos": "S",
         "cap_number": "$1,262,500",
         "stats": {
@@ -684,8 +646,23 @@
         "stats_season": 2026
       },
       {
-        "name": "Thomas Harper",
+        "name": "Christian Izien",
         "depth": 2,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "SS",
+        "standard_pos": "S",
+        "cap_number": "$1,955,000",
+        "stats": {
+          "TKL": 2
+        },
+        "stats_season": 2026
+      }
+    ],
+    "FS": [
+      {
+        "name": "Thomas Harper",
+        "depth": 1,
         "injured": false,
         "attainment": null,
         "standard_slot": "FS",
@@ -696,6 +673,17 @@
           "PD": 2
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Bishop Fitzgerald",
+        "depth": 2,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "FS",
+        "standard_pos": "S",
+        "cap_number": "$786,667",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RCB": [
@@ -714,11 +702,24 @@
         "stats_season": 2026
       },
       {
-        "name": "Roger Mccreary",
+        "name": "Ennis Rakestraw Jr.",
         "depth": 2,
         "injured": false,
         "attainment": null,
         "standard_slot": "RCB",
+        "standard_pos": "CB",
+        "cap_number": "$1,768,567",
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "NB": [
+      {
+        "name": "Roger Mccreary",
+        "depth": 1,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "NB",
         "standard_pos": "CB",
         "cap_number": "$1,262,500",
         "stats": {
@@ -726,21 +727,6 @@
           "SACKS": 1.0,
           "TFL": 1,
           "QB HIT": 1
-        },
-        "stats_season": 2026
-      }
-    ],
-    "NB": [
-      {
-        "name": "Christian Izien",
-        "depth": 1,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "NB",
-        "standard_pos": "CB",
-        "cap_number": "$1,955,000",
-        "stats": {
-          "TKL": 2
         },
         "stats_season": 2026
       },
@@ -880,6 +866,17 @@
       {
         "name": "Amen Ogbongbemiga",
         "depth": 1,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Joe Bachie",
+        "depth": 2,
         "injured": false,
         "attainment": null,
         "standard_slot": "LB",

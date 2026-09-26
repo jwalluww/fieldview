@@ -67,17 +67,6 @@
           "YAC": 20
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Braxton Berrios",
-        "depth": 2,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "SWR",
-        "standard_pos": "WR",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": 2026
       }
     ],
     "LT": [
@@ -148,17 +137,6 @@
         "standard_slot": "C",
         "standard_pos": "OL",
         "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Kingsley Eguakun",
-        "depth": 3,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "C",
-        "standard_pos": "OL",
-        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -259,26 +237,8 @@
     ],
     "QB": [
       {
-        "name": "Jaxson Dart",
-        "depth": 1,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "QB",
-        "standard_pos": "QB",
-        "cap_number": "$3,858,623",
-        "stats": {
-          "CMP": 26,
-          "ATT": 34,
-          "YDS": 250,
-          "TDs": 3,
-          "SACKS": 2,
-          "RU YDS": 54
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Jameis Winston",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": null,
         "standard_slot": "QB",
@@ -296,7 +256,7 @@
       },
       {
         "name": "Jake Haener",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": null,
         "standard_slot": "QB",
@@ -343,22 +303,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Tyrone Tracy Jr.",
-        "depth": 3,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": "$1,146,588",
-        "stats": {
-          "CAR": 2,
-          "RU YDS": 14
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Najee Harris",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": null,
         "standard_slot": "RB",
@@ -367,6 +313,20 @@
         "stats": {
           "CAR": 4,
           "RU YDS": 6
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Tyrone Tracy Jr.",
+        "depth": 4,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": "$1,146,588",
+        "stats": {
+          "CAR": 2,
+          "RU YDS": 14
         },
         "stats_season": 2026
       },
@@ -457,7 +417,7 @@
         "standard_pos": "DI",
         "cap_number": null,
         "stats": {},
-        "stats_season": 2026
+        "stats_season": null
       },
       {
         "name": "Bobby Jamison-travis",
@@ -495,6 +455,17 @@
         "cap_number": "$1,015,278",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "C.j. Ravenell",
+        "depth": 3,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RUSH": [
@@ -530,19 +501,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Jack Kelly",
-        "depth": 2,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "ILB_L",
-        "standard_pos": "LB",
-        "cap_number": "$955,662",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Zaire Barnes",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": null,
         "standard_slot": "ILB_L",
@@ -581,17 +541,15 @@
         "stats_season": null
       },
       {
-        "name": "Malik Harrison",
+        "name": "Jack Kelly",
         "depth": 3,
         "injured": false,
         "attainment": null,
         "standard_slot": "ILB_R",
         "standard_pos": "LB",
-        "cap_number": null,
-        "stats": {
-          "TKL": 2
-        },
-        "stats_season": 2026
+        "cap_number": "$955,662",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "SLB": [
@@ -761,10 +719,8 @@
         "standard_slot": "NB",
         "standard_pos": "CB",
         "cap_number": "$1,635,257",
-        "stats": {
-          "TKL": 3
-        },
-        "stats_season": 2026
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Nic Jones",
@@ -830,10 +786,8 @@
         "standard_slot": "LWR",
         "standard_pos": "WR",
         "cap_number": null,
-        "stats": {
-          "TKL": 1
-        },
-        "stats_season": 2026
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Dalen Cambre",
@@ -845,12 +799,34 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Braxton Berrios",
+        "depth": 4,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": 2026
       }
     ],
     "OT": [
       {
         "name": "Jarrod Gray",
         "depth": 1,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Ryan Schernecke",
+        "depth": 2,
         "injured": false,
         "attainment": null,
         "standard_slot": "LT",
@@ -908,25 +884,25 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Malik Harrison",
+        "depth": 2,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 2
+        },
+        "stats_season": 2026
       }
     ],
     "CB": [
       {
-        "name": "Elijah Jones",
-        "depth": 1,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "CB",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {
-          "TKL": 1
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Jaden Robinson",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": null,
         "standard_slot": "CB",

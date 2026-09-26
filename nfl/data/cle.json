@@ -191,7 +191,7 @@
         "standard_pos": "OL",
         "cap_number": "$2,732,000",
         "stats": {},
-        "stats_season": 2026
+        "stats_season": null
       },
       {
         "name": "Austin Barber",
@@ -303,14 +303,8 @@
         "standard_slot": "QB",
         "standard_pos": "QB",
         "cap_number": "$1,116,845",
-        "stats": {
-          "CAR": 3,
-          "RU YDS": 5,
-          "REC": 4,
-          "RE YDS": 32,
-          "TGT": 4
-        },
-        "stats_season": 2026
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Taylen Green",
@@ -904,22 +898,20 @@
     ],
     "LB": [
       {
-        "name": "Nathaniel Watson",
+        "name": "Krys Barnes",
         "depth": 1,
         "injured": false,
         "attainment": null,
         "standard_slot": "LB",
         "standard_pos": "DEF",
         "cap_number": null,
-        "stats": {
-          "TKL": 1
-        },
-        "stats_season": 2026
+        "stats": {},
+        "stats_season": null
       }
     ],
     "CB": [
       {
-        "name": "Myles Bryant",
+        "name": "Michael Coats Jr.",
         "depth": 1,
         "injured": false,
         "attainment": null,
@@ -930,7 +922,7 @@
         "stats_season": null
       },
       {
-        "name": "Michael Coats Jr.",
+        "name": "D'angelo Ross",
         "depth": 2,
         "injured": false,
         "attainment": null,
@@ -952,6 +944,21 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      }
+    ],
+    "PS/IR": [
+      {
+        "name": "Nathaniel Watson",
+        "depth": 1,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "PS/IR",
+        "standard_pos": "DEF",
+        "cap_number": "$339,444",
+        "stats": {
+          "TKL": 1
+        },
+        "stats_season": 2026
       }
     ]
   }

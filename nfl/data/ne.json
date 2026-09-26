@@ -157,16 +157,11 @@
         "standard_slot": "C",
         "standard_pos": "OL",
         "cap_number": "$1,370,000",
-        "stats": {
-          "TGT": 4,
-          "REC": 3,
-          "YDS": 26,
-          "YAC": 14
-        },
-        "stats_season": 2026
+        "stats": {},
+        "stats_season": null
       },
       {
-        "name": "Xavier Newman",
+        "name": "Xavier Newman-johnson",
         "depth": 3,
         "injured": false,
         "attainment": null,
@@ -179,19 +174,8 @@
     ],
     "RG": [
       {
-        "name": "Mike Onwenu",
-        "depth": 1,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "RG",
-        "standard_pos": "OL",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Greg Van Roten",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": null,
         "standard_slot": "RG",
@@ -278,6 +262,17 @@
         "standard_slot": "TE",
         "standard_pos": "TE",
         "cap_number": "$890,833",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Tanner Conner",
+        "depth": 5,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -616,15 +611,15 @@
         "stats_season": 2026
       },
       {
-        "name": "Quintayvious Hutchins",
+        "name": "Jose Ramirez",
         "depth": 2,
         "injured": false,
         "attainment": null,
         "standard_slot": "ROLB",
         "standard_pos": "EDGE",
-        "cap_number": "$915,523",
+        "cap_number": "$893,333",
         "stats": {},
-        "stats_season": 2026
+        "stats_season": null
       }
     ],
     "LCB": [
@@ -672,15 +667,15 @@
         "stats_season": 2026
       },
       {
-        "name": "Dell Pettus",
+        "name": "Jaylen Reed",
         "depth": 2,
         "injured": false,
         "attainment": null,
         "standard_slot": "SS",
         "standard_pos": "S",
-        "cap_number": "$1,078,000",
+        "cap_number": "$1,005,000",
         "stats": {
-          "TKL": 2
+          "TKL": 1
         },
         "stats_season": 2026
       }
@@ -696,19 +691,6 @@
         "cap_number": "$9,000,000",
         "stats": {
           "TKL": 4
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Jaylen Reed",
-        "depth": 2,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "FS",
-        "standard_pos": "S",
-        "cap_number": "$1,005,000",
-        "stats": {
-          "TKL": 1
         },
         "stats_season": 2026
       }
@@ -766,6 +748,36 @@
         "cap_number": "$891,666",
         "stats": {},
         "stats_season": null
+      }
+    ],
+    "PT": [
+      {
+        "name": "Mitch Wishnowsky",
+        "depth": 1,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "PT",
+        "standard_pos": "DEF",
+        "cap_number": "$955,556",
+        "stats": {
+          "FG%": "\u2014"
+        },
+        "stats_season": 2026
+      }
+    ],
+    "H": [
+      {
+        "name": "Mitch Wishnowsky",
+        "depth": 1,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "H",
+        "standard_pos": "DEF",
+        "cap_number": "$955,556",
+        "stats": {
+          "FG%": "\u2014"
+        },
+        "stats_season": 2026
       }
     ],
     "WR": [
@@ -839,10 +851,10 @@
         "standard_pos": "DEF",
         "cap_number": null,
         "stats": {},
-        "stats_season": 2026
+        "stats_season": null
       },
       {
-        "name": "Jose Ramirez",
+        "name": "Xavier Holmes",
         "depth": 2,
         "injured": false,
         "attainment": null,
@@ -853,7 +865,7 @@
         "stats_season": null
       },
       {
-        "name": "Xavier Holmes",
+        "name": "Benton Whitley",
         "depth": 3,
         "injured": false,
         "attainment": null,
@@ -923,13 +935,8 @@
         "standard_slot": "S",
         "standard_pos": "DEF",
         "cap_number": null,
-        "stats": {
-          "TGT": 4,
-          "REC": 3,
-          "YDS": 26,
-          "YAC": 14
-        },
-        "stats_season": 2026
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Elliott Davison",
@@ -943,19 +950,17 @@
         "stats_season": null
       }
     ],
-    "PT": [
+    "DFR": [
       {
-        "name": "Mitch Wishnowsky",
+        "name": "Brenden Schooler",
         "depth": 1,
         "injured": false,
         "attainment": null,
-        "standard_slot": "PT",
+        "standard_slot": "DFR",
         "standard_pos": "DEF",
         "cap_number": null,
-        "stats": {
-          "FG%": "\u2014"
-        },
-        "stats_season": 2026
+        "stats": {},
+        "stats_season": null
       }
     ]
   }

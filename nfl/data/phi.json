@@ -66,10 +66,8 @@
         "standard_slot": "RWR",
         "standard_pos": "WR",
         "cap_number": null,
-        "stats": {
-          "CAR": 2
-        },
-        "stats_season": 2026
+        "stats": {},
+        "stats_season": null
       }
     ],
     "SWR": [
@@ -133,13 +131,8 @@
         "standard_slot": "LT",
         "standard_pos": "OL",
         "cap_number": "$1,338,361",
-        "stats": {
-          "TKL": 11,
-          "SACKS": 1.0,
-          "TFL": 1,
-          "QB HIT": 1
-        },
-        "stats_season": 2026
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LG": [
@@ -235,7 +228,7 @@
         "standard_pos": "OL",
         "cap_number": "$1,460,000",
         "stats": {},
-        "stats_season": 2026
+        "stats_season": null
       }
     ],
     "TE": [
@@ -286,6 +279,17 @@
       {
         "name": "Josiah Deguara",
         "depth": 4,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Zach Ertz",
+        "depth": 5,
         "injured": false,
         "attainment": null,
         "standard_slot": "TE",
@@ -509,17 +513,6 @@
       {
         "name": "Uar Bernard",
         "depth": 3,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "RE",
-        "standard_pos": "DI",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Gabe Hall",
-        "depth": 4,
         "injured": false,
         "attainment": null,
         "standard_slot": "RE",
@@ -896,19 +889,25 @@
         "standard_slot": "LB",
         "standard_pos": "DEF",
         "cap_number": null,
-        "stats": {
-          "TKL": 11,
-          "SACKS": 1.0,
-          "TFL": 1,
-          "QB HIT": 1
-        },
-        "stats_season": 2026
+        "stats": {},
+        "stats_season": null
       }
     ],
     "CB": [
       {
-        "name": "Robert Longerbeam",
+        "name": "Kenny Moore",
         "depth": 1,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Shaun Wade",
+        "depth": 2,
         "injured": false,
         "attainment": null,
         "standard_slot": "CB",
@@ -922,17 +921,6 @@
       {
         "name": "Cole Wisniewski",
         "depth": 1,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "S",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Maximus Pulley",
-        "depth": 2,
         "injured": false,
         "attainment": null,
         "standard_slot": "S",

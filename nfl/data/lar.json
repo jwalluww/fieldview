@@ -23,18 +23,17 @@
         "stats_season": 2026
       },
       {
-        "name": "Konata Mumpfield",
+        "name": "Tutu Atwell",
         "depth": 2,
         "injured": false,
         "attainment": null,
         "standard_slot": "LWR",
         "standard_pos": "WR",
-        "cap_number": "$1,032,134",
+        "cap_number": "$1,075,000",
         "stats": {
-          "TGT": 3,
+          "TGT": 2,
           "REC": 1,
-          "YDS": 12,
-          "YAC": 8
+          "YDS": 19
         },
         "stats_season": 2026
       }
@@ -57,17 +56,18 @@
         "stats_season": 2026
       },
       {
-        "name": "Tutu Atwell",
+        "name": "Konata Mumpfield",
         "depth": 2,
         "injured": false,
         "attainment": null,
         "standard_slot": "RWR",
         "standard_pos": "WR",
-        "cap_number": "$1,075,000",
+        "cap_number": "$1,032,134",
         "stats": {
-          "TGT": 2,
+          "TGT": 3,
           "REC": 1,
-          "YDS": 19
+          "YDS": 12,
+          "YAC": 8
         },
         "stats_season": 2026
       },
@@ -396,25 +396,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Ronnie Rivers",
-        "depth": 3,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": "$1,075,000",
-        "stats": {
-          "CAR": 5,
-          "RU YDS": 19,
-          "REC": 1,
-          "RE YDS": 5,
-          "TGT": 1
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Dean Connors",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": null,
         "standard_slot": "RB",
@@ -425,7 +408,7 @@
       },
       {
         "name": "Jordan Waters",
-        "depth": 5,
+        "depth": 4,
         "injured": false,
         "attainment": null,
         "standard_slot": "RB",
@@ -437,22 +420,8 @@
     ],
     "DE": [
       {
-        "name": "Aaron Donald",
-        "depth": 1,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "LE",
-        "standard_pos": "DI",
-        "cap_number": "$5,826,000",
-        "stats": {
-          "TKL": 1,
-          "TFL": 1
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Braden Fiske",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": null,
         "standard_slot": "LE",
@@ -463,43 +432,26 @@
           "QB HIT": 1
         },
         "stats_season": 2026
-      }
-    ],
-    "NT": [
-      {
-        "name": "Poona Ford",
-        "depth": 1,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "NT",
-        "standard_pos": "DI",
-        "cap_number": "$11,433,333",
-        "stats": {
-          "TKL": 1
-        },
-        "stats_season": 2026
       },
       {
-        "name": "Tyler Davis",
+        "name": "Ty Hamilton",
         "depth": 2,
         "injured": false,
         "attainment": null,
-        "standard_slot": "NT",
+        "standard_slot": "LE",
         "standard_pos": "DI",
-        "cap_number": "$1,120,638",
-        "stats": {
-          "TKL": 2
-        },
+        "cap_number": "$1,114,647",
+        "stats": {},
         "stats_season": 2026
       }
     ],
-    "DT": [
+    "NT": [
       {
         "name": "Kobie Turner",
         "depth": 1,
         "injured": false,
         "attainment": null,
-        "standard_slot": "RE",
+        "standard_slot": "NT",
         "standard_pos": "DI",
         "cap_number": "$4,154,267",
         "stats": {
@@ -509,14 +461,45 @@
         "stats_season": 2026
       },
       {
-        "name": "Ty Hamilton",
+        "name": "Poona Ford",
+        "depth": 2,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "NT",
+        "standard_pos": "DI",
+        "cap_number": "$11,433,333",
+        "stats": {
+          "TKL": 1
+        },
+        "stats_season": 2026
+      }
+    ],
+    "DT": [
+      {
+        "name": "Aaron Donald",
+        "depth": 1,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": "$5,826,000",
+        "stats": {
+          "TKL": 1,
+          "TFL": 1
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Tyler Davis",
         "depth": 2,
         "injured": false,
         "attainment": null,
         "standard_slot": "RE",
         "standard_pos": "DI",
-        "cap_number": "$1,114,647",
-        "stats": {},
+        "cap_number": "$1,120,638",
+        "stats": {
+          "TKL": 2
+        },
         "stats_season": 2026
       },
       {
@@ -615,17 +598,6 @@
           "TKL": 3
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Elias Neal",
-        "depth": 3,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "ILB_L",
-        "standard_pos": "LB",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "RILB": [
@@ -767,6 +739,17 @@
           "QB HIT": 1
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Maximus Pulley",
+        "depth": 3,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "FS",
+        "standard_pos": "S",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RCB": [
@@ -926,6 +909,19 @@
         "injured": false,
         "attainment": null,
         "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "LB": [
+      {
+        "name": "Elias Neal",
+        "depth": 1,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "LB",
         "standard_pos": "DEF",
         "cap_number": null,
         "stats": {},

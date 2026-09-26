@@ -102,10 +102,8 @@
         "standard_slot": "LT",
         "standard_pos": "OL",
         "cap_number": "$3,955,000",
-        "stats": {
-          "TKL": 12
-        },
-        "stats_season": 2026
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LG": [
@@ -169,19 +167,8 @@
     ],
     "RG": [
       {
-        "name": "Anthony Bradford",
-        "depth": 1,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "RG",
-        "standard_pos": "OL",
-        "cap_number": "$3,874,997",
-        "stats": {},
-        "stats_season": 2026
-      },
-      {
         "name": "Christian Haynes",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": null,
         "standard_slot": "RG",
@@ -381,10 +368,8 @@
         "standard_slot": "RB",
         "standard_pos": "RB",
         "cap_number": null,
-        "stats": {
-          "TKL": 12
-        },
-        "stats_season": 2026
+        "stats": {},
+        "stats_season": null
       }
     ],
     "FB": [
@@ -494,6 +479,17 @@
       {
         "name": "Deven Eastern",
         "depth": 3,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Uso Seumalo",
+        "depth": 4,
         "injured": false,
         "attainment": null,
         "standard_slot": "RE",
@@ -717,6 +713,20 @@
         "cap_number": "$1,145,000",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Rodney Thomas II",
+        "depth": 2,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "FS",
+        "standard_pos": "S",
+        "cap_number": "$955,556",
+        "stats": {
+          "TKL": 3,
+          "PD": 2
+        },
+        "stats_season": 2026
       }
     ],
     "RCB": [
@@ -841,6 +851,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Malick Meiga",
+        "depth": 4,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "OT": [
@@ -950,20 +971,6 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Rodney Thomas II",
-        "depth": 3,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "S",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {
-          "TKL": 3,
-          "PD": 2
-        },
-        "stats_season": 2026
       }
     ],
     "CE": [
@@ -975,13 +982,8 @@
         "standard_slot": "CE",
         "standard_pos": "DEF",
         "cap_number": null,
-        "stats": {
-          "CMP": 1,
-          "ATT": 2,
-          "YDS": 13,
-          "SACKS": 1
-        },
-        "stats_season": 2026
+        "stats": {},
+        "stats_season": null
       }
     ]
   }
