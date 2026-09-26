@@ -824,20 +824,20 @@ const STAT_TIERS = {
   broken_tackle_rate_rec:{ low: 2.941, high: 6.25,   lowerIsBetter: false },
   // Defenders: keyed <stat>_<standard_pos>. Terciles of qualified players (300+
   // defensive snaps, or 10+ targets for coverage stats) in the def_advanced_season data.
-  pressures_per100_edge:      { low: 2.87, high: 3.995, lowerIsBetter: false },
-  pressures_per100_di:        { low: 1.211, high: 1.923, lowerIsBetter: false },
-  sacks_per100_edge:          { low: 0.568, high: 1.03, lowerIsBetter: false },
-  sacks_per100_di:            { low: 0.202, high: 0.587, lowerIsBetter: false },
-  tfl_per100_edge:            { low: 0.965, high: 1.448, lowerIsBetter: false },
-  tfl_per100_di:              { low: 0.605, high: 0.986, lowerIsBetter: false },
-  tfl_per100_lb:              { low: 0.504, high: 0.792, lowerIsBetter: false },
-  tkl_per100_edge:            { low: 5.68, high: 6.946, lowerIsBetter: false },
-  tkl_per100_di:              { low: 5.671, high: 7.466, lowerIsBetter: false },
-  tkl_per100_lb:              { low: 11.192, high: 13.588, lowerIsBetter: false },
-  missed_tackle_rate_edge:    { low: 6.112, high: 9.982, lowerIsBetter: true },
-  missed_tackle_rate_di:      { low: 5.3, high: 9.296, lowerIsBetter: true },
-  missed_tackle_rate_lb:      { low: 6, high: 8.9, lowerIsBetter: true },
-  missed_tackle_rate_s:       { low: 7, high: 9.384, lowerIsBetter: true },
+  pressures_per100_edge:      { low: 3.016, high: 4.147, lowerIsBetter: false },
+  pressures_per100_di:        { low: 1.336, high: 1.963, lowerIsBetter: false },
+  sacks_per100_edge:          { low: 0.666, high: 1.12, lowerIsBetter: false },
+  sacks_per100_di:            { low: 0.216, high: 0.628, lowerIsBetter: false },
+  tfl_per100_edge:            { low: 0.959, high: 1.556, lowerIsBetter: false },
+  tfl_per100_di:              { low: 0.716, high: 1.05, lowerIsBetter: false },
+  tfl_per100_lb:              { low: 0.508, high: 0.82, lowerIsBetter: false },
+  tkl_per100_edge:            { low: 5.993, high: 7.324, lowerIsBetter: false },
+  tkl_per100_di:              { low: 6.205, high: 7.819, lowerIsBetter: false },
+  tkl_per100_lb:              { low: 11.781, high: 14.171, lowerIsBetter: false },
+  missed_tackle_rate_edge:    { low: 5.914, high: 9.979, lowerIsBetter: true },
+  missed_tackle_rate_di:      { low: 5.3, high: 9.331, lowerIsBetter: true },
+  missed_tackle_rate_lb:      { low: 6.009, high: 8.882, lowerIsBetter: true },
+  missed_tackle_rate_s:       { low: 7.039, high: 9.483, lowerIsBetter: true },
   missed_tackle_rate_cb:      { low: 7.801, high: 12.797, lowerIsBetter: true },
   comp_pct_allowed_lb:        { low: 70.342, high: 78.358, lowerIsBetter: true },
   comp_pct_allowed_s:         { low: 61.736, high: 69.928, lowerIsBetter: true },
@@ -854,20 +854,20 @@ const STAT_TIERS = {
 
 // 10th-90th percentile of the same qualified players, [low, high, N], for tooltips.
 const DEF_RANGES = {
-  pressures_per100_edge: [1.732, 5.013, 88],
-  pressures_per100_di: [0.581, 3.045, 100],
-  sacks_per100_edge: [0.324, 1.783, 88],
-  sacks_per100_di: [0, 0.856, 100],
-  tfl_per100_edge: [0.54, 2.049, 88],
-  tfl_per100_di: [0.301, 1.518, 100],
-  tfl_per100_lb: [0.269, 1.138, 76],
-  tkl_per100_edge: [4.638, 8.198, 88],
-  tkl_per100_di: [4.275, 9.132, 100],
-  tkl_per100_lb: [9.732, 16.627, 76],
-  missed_tackle_rate_edge: [2.66, 15.42, 83],
-  missed_tackle_rate_di: [2.7, 13.34, 95],
-  missed_tackle_rate_lb: [3.95, 13.6, 76],
-  missed_tackle_rate_s: [4.58, 13.58, 85],
+  pressures_per100_edge: [1.885, 5.353, 84],
+  pressures_per100_di: [0.617, 3.312, 98],
+  sacks_per100_edge: [0.345, 1.788, 84],
+  sacks_per100_di: [0, 0.924, 98],
+  tfl_per100_edge: [0.554, 2.239, 84],
+  tfl_per100_di: [0.319, 1.57, 98],
+  tfl_per100_lb: [0.285, 1.261, 74],
+  tkl_per100_edge: [4.706, 8.703, 84],
+  tkl_per100_di: [4.529, 9.495, 98],
+  tkl_per100_lb: [9.869, 17.615, 74],
+  missed_tackle_rate_edge: [2.57, 15.51, 80],
+  missed_tackle_rate_di: [3.06, 13.43, 94],
+  missed_tackle_rate_lb: [4.1, 13.68, 74],
+  missed_tackle_rate_s: [4.73, 13.76, 84],
   missed_tackle_rate_cb: [4.34, 17.56, 98],
   comp_pct_allowed_lb: [63.6, 86.88, 88],
   comp_pct_allowed_s: [54.72, 78, 93],
@@ -884,6 +884,10 @@ const DEF_RANGES = {
   adot_allowed_s: [5.52, 13.46, 93],
   adot_allowed_cb: [6.27, 13.53, 128],
 };
+
+// The season the tier cutoffs and DEF_RANGES above were computed from (regular
+// season only); tooltips cite this, not the live def_advanced_season.
+const DEF_CUTOFF_SEASON = 2025;
 
 const DEF_ADV_FIELDS = ['pressures_per100', 'sacks_per100', 'tfl_per100', 'tkl_per100', 'missed_tackle_rate',
   'comp_pct_allowed', 'rating_allowed', 'yds_per_target_allowed', 'adot_allowed', 'int_pd_per_target'];
@@ -910,13 +914,13 @@ const DEF_STAT_META = {
   int_pd_per_target:  { label: 'INT+PD/Tgt', dec: 1, unit: '%', tip: 'Interceptions plus passes defended per 100 targets. Higher is better.' },
 };
 
-function defTooltip(key, pos, season) {
+function defTooltip(key, pos) {
   const m = DEF_STAT_META[key];
   const r = DEF_RANGES[key + '_' + pos.toLowerCase()];
   let tip = m.tip;
   if (r) {
     const qual = (m.per100 || key === 'missed_tackle_rate') ? '300+ snaps' : '10+ targets';
-    tip += ' Typical range (' + season + ', ' + pos + ', ' + qual + '): about ' + r[0].toFixed(m.dec) + m.unit + ' to ' + r[1].toFixed(m.dec) + m.unit + '.';
+    tip += ' Typical range (' + DEF_CUTOFF_SEASON + ', ' + pos + ', ' + qual + '): about ' + r[0].toFixed(m.dec) + m.unit + ' to ' + r[1].toFixed(m.dec) + m.unit + '.';
   }
   if (m.per100) tip += ' The denominator is all defensive snaps, so it understates players who often drop into coverage; compare within a position group only.';
   return tip;
@@ -941,13 +945,15 @@ function buildDefAdvBlock(p) {
     cfg.compact.includes('PBU') && stat('PBU', 'PD') != null ? stat('PBU', 'PD') + ' PD' : null,
     p.snap_pct != null ? Math.round(p.snap_pct) + '% snaps' : null,
   ].filter(v => v != null).join(' · ');
+  // TKL/SACK/etc. and snap % come from the stats block's season, which can differ from the advanced season.
+  const compactLabel = compact && p.stats_season != null && p.stats_season !== p.def_advanced_season ? p.stats_season + ': ' : '';
   return `
         <div style="padding:10px 13px 4px;text-align:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
           <div style="display:flex;align-items:center;justify-content:center;gap:6px">
             ${dot(cfg.hero, 9)}
             <span class="crc-val" style="font-size:30px;color:var(--gold)">${fmt(cfg.hero)}</span>
           </div>
-          <div class="crc-label" title="${defTooltip(cfg.hero, pos, season)}">${DEF_STAT_META[cfg.hero].label}</div>
+          <div class="crc-label" title="${defTooltip(cfg.hero, pos)}">${DEF_STAT_META[cfg.hero].label}</div>
         </div>
         <div style="display:grid;grid-template-columns:repeat(${cfg.cols},1fr);gap:1px;background:var(--border)">
           ${cfg.grid.map(key => `
@@ -956,12 +962,12 @@ function buildDefAdvBlock(p) {
                 ${dot(key)}
                 <span style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:15px;color:var(--text)">${fmt(key)}</span>
               </div>
-              <div class="crc-label" style="font-size:9px" title="${defTooltip(key, pos, season)}">${DEF_STAT_META[key].label}</div>
+              <div class="crc-label" style="font-size:9px" title="${defTooltip(key, pos)}">${DEF_STAT_META[key].label}</div>
             </div>
           `).join('')}
         </div>
         ${compact ? `
-          <div style="padding:7px 13px 2px;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--text-muted)">${compact}</div>
+          <div style="padding:7px 13px 2px;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--text-muted)">${compactLabel}${compact}</div>
         ` : ''}
         ${season ? `<div style="padding:0 13px 6px;text-align:center;font-size:9px;color:var(--text-dim)">Advanced: ${season}</div>` : ''}
       `;

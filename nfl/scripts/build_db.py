@@ -286,6 +286,10 @@ def load_def_snaps(season):
     which may be a different, partial season)."""
     import nflreadpy as nfl
     snaps = nfl.load_snap_counts([season]).to_pandas()
+    # PFR season advstats, TFL and PBU are regular season only; the snap
+    # counts also carry playoff games (WC/DIV/CON/SB), which would inflate
+    # the denominator for every playoff team's defenders.
+    snaps = snaps[snaps['game_type'] == 'REG']
     out = snaps.groupby('pfr_player_id', as_index=False)['defense_snaps'].sum()
     out = out.rename(columns={'pfr_player_id': 'pfr_id'})
     out['season'] = season
