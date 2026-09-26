@@ -29,6 +29,19 @@ from name_utils import normalize_name, normalize_for_matching, normalize_madden
 
 DB_PATH = os.path.join('nfl', 'data', 'fieldview.duckdb')
 
+# OurLads' reserve/practice-squad rows use generic labels that
+# scrape_depth's SLOT_MAPs don't cover, so they land as standard_pos 'DEF'.
+# 'CE' is ambiguous (Terrion Arnold, a CB, sits under it), so it and the
+# status labels (SUS, PS/IR, LEFT) fall through to the Madden position.
+RESERVE_LABEL_MAP = {'ED': 'EDGE', 'CB': 'CB', 'S': 'S', 'LB': 'LB', 'OG': 'OL'}
+MADDEN_POS_MAP = {
+    'QB': 'QB', 'HB': 'RB', 'FB': 'RB', 'WR': 'WR', 'TE': 'TE',
+    'LT': 'OL', 'LG': 'OL', 'C': 'OL', 'RG': 'OL', 'RT': 'OL',
+    'LEDG': 'EDGE', 'REDG': 'EDGE', 'DT': 'DI',
+    'MIKE': 'LB', 'WILL': 'LB', 'SAM': 'LB',
+    'CB': 'CB', 'FS': 'S', 'SS': 'S',
+}
+
 
 def load_madden_from_db(con):
     """DB-backed equivalent of build_master.load_madden() -- same output
@@ -207,6 +220,8 @@ def build_match():
         "SELECT * FROM ourlads_players ORDER BY row_id"
     ).fetchdf()
 
+    nb_safeties = []
+    def_outcomes = {'label': [], 'madden': [], 'dropped': []}
     master = {}  # player_key -> match result dict (mirrors build_master's dedup)
 
     for _, p in ourlads.iterrows():
@@ -220,6 +235,31 @@ def build_match():
         canonical_name = normalize_name(raw_name)
         standard_pos = p['standard_pos'] or ''
         abbr = p['abbr']
+
+        madden_is_dup = normalize_madden(raw_name) in madden_duplicate_names
+        mp = find_madden_player(raw_name, madden_by_team.get(abbr, []),
+                                 all_madden_players,
+                                 allow_cross_team=not madden_is_dup)
+        madden_rank_info = madden_pos_ranks.get((mp["normalized"], mp["team"])) if mp else None
+
+        # scrape_depth tags every NB (nickel) row 'CB' -- its own Madden-based
+        # S resolution runs before Madden is joined, so never fires. Safeties
+        # keep standard_slot 'NB' but get standard_pos 'S'.
+        if (p['ourlads_pos'] == 'NB' and standard_pos == 'CB'
+                and mp and mp['position'] in ('FS', 'SS', 'S')):
+            standard_pos = 'S'
+            nb_safeties.append((canonical_name, abbr))
+        elif standard_pos == 'DEF':
+            resolved = RESERVE_LABEL_MAP.get(p['ourlads_pos'])
+            how = 'label'
+            if not resolved:
+                resolved = MADDEN_POS_MAP.get(mp['position']) if mp else None
+                how = 'madden'
+            if not resolved:
+                def_outcomes['dropped'].append((canonical_name, abbr, p['ourlads_pos']))
+                continue
+            def_outcomes[how].append((canonical_name, abbr, p['ourlads_pos'], resolved))
+            standard_pos = resolved
 
         gsis_id, confidence = find_gsis(
             canonical_name, standard_pos, abbr, crosswalk, rosters)
@@ -242,12 +282,6 @@ def build_match():
         if player_key in master:
             if depth >= master[player_key]['depth']:
                 continue
-
-        madden_is_dup = normalize_madden(raw_name) in madden_duplicate_names
-        mp = find_madden_player(raw_name, madden_by_team.get(abbr, []),
-                                 all_madden_players,
-                                 allow_cross_team=not madden_is_dup)
-        madden_rank_info = madden_pos_ranks.get((mp["normalized"], mp["team"])) if mp else None
 
         master[player_key] = {
             'row_id': int(p['row_id']),
@@ -432,6 +466,9 @@ def build_match():
     print(f"player_match: {total} players")
     print(f"GSIS matched: {gsis_matched} ({gsis_matched / total * 100:.1f}%)")
     print(f"Madden matched: {madden_matched} ({madden_matched / total * 100:.1f}%)")
+    print(f"NB safeties retagged S: {len(nb_safeties)}")
+    print(f"DEF rows resolved by label: {len(def_outcomes['label'])}, by Madden: "
+          f"{len(def_outcomes['madden'])}, dropped: {len(def_outcomes['dropped'])}")
 
 
 if __name__ == '__main__':

@@ -634,6 +634,7 @@ body {
     <div class="ls-item"><div class="ls-dot" style="background:#facc15"></div>75–79</div>
     <div class="ls-item"><div class="ls-dot" style="background:#fb923c"></div>70–74</div>
     <div class="ls-item"><div class="ls-dot" style="background:#ef4444"></div>&lt;70</div>
+    <span id="maddenAsOf" style="margin-left:auto;font-size:13px;color:var(--text-dim)"></span>
   </div>
 </div>
 
@@ -903,7 +904,16 @@ function mapPlayer(player) {
   };
 }
 
+let maddenMeta = {};
+async function loadMaddenMeta() {
+  try {
+    const res = await fetch('data/madden_meta.json');
+    if (res.ok) maddenMeta = await res.json();
+  } catch (e) { maddenMeta = {}; }
+}
+
 async function loadAllPlayers() {
+  await loadMaddenMeta();
   try {
     const res = await fetch('data/players_master.json');
     const raw = await res.json();
@@ -983,9 +993,11 @@ function getSubCandidates(formationPos) {
   // or what standard_slot a safety was filed under (e.g. an NB-row safety).
   const targetPos = (formationPos === 'FS' || formationPos === 'SS') ? 'S' : current?.standard_pos;
   if (!targetPos) return [];
+  // The nickel slot takes corners or safeties.
+  const targetPositions = formationPos === 'NB' ? ['CB', 'S'] : [targetPos];
 
   // Collect all players with matching standard_pos, sorted by madden desc
-  const candidates = teamData.players.filter(p => p.standard_pos === targetPos);
+  const candidates = teamData.players.filter(p => targetPositions.includes(p.standard_pos));
   candidates.sort((a, b) => (b.madden || 0) - (a.madden || 0));
   // Dedupe by id, and exclude anyone already on the field
   const seen = new Set();
@@ -1059,6 +1071,8 @@ function updateHeader() {
   logo.src = teamLogoUrl(currentTeam);
   logo.alt = currentTeam;
   document.getElementById('teamNameEl').textContent = team.name;
+  const asOf = maddenMeta[currentTeam];
+  document.getElementById('maddenAsOf').textContent = asOf ? 'Ratings as of ' + asOf : '';
 }
 
 function positionHoverCard(node) {

@@ -674,6 +674,7 @@ body {
   </div>
 
   <div class="filter-right">
+    <span class="row-count" id="maddenAsOf"></span>
     <span class="row-count" id="rowCount">Loading...</span>
     <button class="clear-btn" onclick="clearFilters()">Clear</button>
   </div>
@@ -920,6 +921,11 @@ let loaded = 0;
 // ══════════════════════════════════════════
 async function loadAll() {
   const data = await fetch('data/players_master.json').then(r => r.json());
+  try {
+    const res = await fetch('data/madden_meta.json');
+    const dates = res.ok ? Object.values(await res.json()).filter(Boolean).sort() : [];
+    if (dates.length) document.getElementById('maddenAsOf').textContent = 'Ratings as of ' + dates[0];
+  } catch (e) {}
 
   for (const player of Object.values(data)) {
     const team = TEAMS[player.team] || {};

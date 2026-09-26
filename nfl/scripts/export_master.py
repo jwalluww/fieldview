@@ -76,7 +76,7 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             op.base_defense,
             op.ourlads_pos,
             op.standard_slot,
-            op.standard_pos,
+            pm.standard_pos,
             op.depth,
             pm.madden_jersey AS jersey,
             pm.madden,

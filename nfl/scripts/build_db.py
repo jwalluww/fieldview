@@ -17,7 +17,7 @@ SEASON = get_current_season()
 DB_PATH = os.path.join('nfl', 'data', 'fieldview.duckdb')
 
 # Files under nfl/data/ that are not per-team OurLads depth charts.
-NON_TEAM_FILES = {'madden.json', 'spotrac_contracts.json', 'players_master.json'}
+NON_TEAM_FILES = {'madden.json', 'madden_meta.json', 'spotrac_contracts.json', 'players_master.json'}
 
 
 def write_table(con, name, df):

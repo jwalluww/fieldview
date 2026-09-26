@@ -5,6 +5,7 @@ import os
 import random
 import re
 import time
+from datetime import datetime, timezone
 
 TEAMS = [
     {"name": "Arizona Cardinals",    "abbr": "ARZ", "slug": "arizona-cardinals"},
@@ -160,6 +161,21 @@ if __name__ == "__main__":
         for team in failed:
             by_team[team["abbr"]] = scrape_team(team)
             time.sleep(1.5)
+
+    # Sidecar: per-team date of the last SUCCESSFUL fresh fetch. Set before the
+    # fallback below, so a team that only has last-known rows never gets a
+    # new date. madden.json's own shape is untouched (other code reads it).
+    meta_path = "nfl/data/madden_meta.json"
+    meta = {}
+    if os.path.exists(meta_path):
+        with open(meta_path) as f:
+            meta = json.load(f)
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    for team in TEAMS:
+        if by_team[team["abbr"]]:
+            meta[team["abbr"]] = today
+    with open(meta_path, "w") as f:
+        json.dump(meta, f, indent=2, sort_keys=True)
 
     stale, missing = [], []
     for team in TEAMS:
