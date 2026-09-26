@@ -634,9 +634,9 @@ let selectedPositions = new Set();
 // with-zeros. Every stat field below is read with a null-safe fallback
 // in loadAll() rather than assumed present.
 const VIEWS = {
-  overview: { cols: ['team','position','name','age','rating','minutes'], sort: 'rating' },
-  stats:    { cols: ['team','position','name','goals','assists','minutes','pointsAdded'], sort: 'goals' },
-  advanced: { cols: ['team','position','name','shots','shotsOnTarget','xgoals','xassists','gMinusXg','xgPlusXa','aMinusXa','xPointsAdded','keyPasses'], sort: 'xgoals' },
+  overview: { cols: ['team','position','name','age','rating','minutes'], pos: [], sort: 'rating' },
+  stats:    { cols: ['team','position','name','goals','assists','minutes','pointsAdded'], pos: ['D','M','F'], sort: 'goals' },
+  advanced: { cols: ['team','position','name','shots','shotsOnTarget','xgoals','xassists','gMinusXg','xgPlusXa','aMinusXa','xPointsAdded','keyPasses'], pos: ['D','M','F'], sort: 'xgoals' },
 };
 
 const ALL_COLS = ['team','position','name','age','rating','minutes','goals','assists','pointsAdded','shots','shotsOnTarget','xgoals','xassists','gMinusXg','xgPlusXa','aMinusXa','xPointsAdded','keyPasses'];
@@ -648,6 +648,11 @@ function setView(viewKey, btn) {
   btn.classList.add('active');
 
   const view = VIEWS[viewKey];
+  // Each tab sets the position filter (Stats/Advanced hide keepers by
+  // default; Overview clears it) -- same pattern as NFL's depth-chart.html.
+  selectedPositions = new Set(view.pos);
+  syncPosCheckboxes();
+  updatePosLabel();
   updateColumns(view.cols);
 
   sortCol = view.sort;
@@ -841,6 +846,8 @@ function syncPosCheckboxes() {
 // output), same as goals/assists/minutes_played -- no string-coercion
 // needed, unlike MLB's statsapi rate stats.
 function toSortVal(p, col) {
+  // Position sorts on the label the cell displays, not the coarse G/D/M/F code.
+  if (col === 'position') return p.standardPos || POSITION_LABELS[p.position] || p.position;
   return p[col];
 }
 
