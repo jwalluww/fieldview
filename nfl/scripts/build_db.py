@@ -269,6 +269,40 @@ def load_pfr_wr_te_stats(rec):
     return rec[['pfr_id', 'drop_rate', 'broken_tackle_rate']]
 
 
+def load_pfr_def_stats(pfr_def):
+    """Defender advanced stats straight from PFR's season 'def' table
+    (pressures, sacks, combined tackles, missed tackles, and coverage
+    allowed). `season` is kept on every row: PFR's charting lags, so this
+    can be last season while SEASON has already flipped -- every rate built
+    from it (snaps, TFL, PBU) must use this same season, never SEASON."""
+    d = dedupe_pfr_multiteam(pfr_def)
+    return d[['pfr_id', 'season', 'prss', 'sk', 'int', 'comb', 'm_tkl', 'm_tkl_percent',
+              'tgt', 'cmp_percent', 'yds_tgt', 'rat', 'dadot']]
+
+
+def load_def_snaps(season):
+    """Season-total defensive snaps per pfr_id for the SAME season the
+    PFR def table returned (the cached snap_counts table is SEASON,
+    which may be a different, partial season)."""
+    import nflreadpy as nfl
+    snaps = nfl.load_snap_counts([season]).to_pandas()
+    out = snaps.groupby('pfr_player_id', as_index=False)['defense_snaps'].sum()
+    out = out.rename(columns={'pfr_player_id': 'pfr_id'})
+    out['season'] = season
+    return out
+
+
+def load_def_season_stats(season):
+    """TFL and pass deflections for the same season as the PFR def
+    table, summed per player from nflreadpy weekly stats (keyed by gsis
+    player_id)."""
+    import nflreadpy as nfl
+    ps = nfl.load_player_stats([season], 'reg').to_pandas()
+    out = ps.groupby('player_id', as_index=False)[['def_tackles_for_loss', 'def_pass_defended']].sum()
+    out['season'] = season
+    return out
+
+
 def load_target_share():
     """Season-long target share, keyed by nflreadpy's own player_id --
     confirmed real (00-XXXXXXX gsis_id format), lines up directly with
@@ -347,6 +381,13 @@ def build_db():
         pfr_rec = load_pfr_advstats_safe('rec')
         write_table(con, 'pfr_rb_stats', load_pfr_rb_stats(pfr_rush, pfr_rec))
         write_table(con, 'pfr_wr_te_stats', load_pfr_wr_te_stats(pfr_rec))
+
+        print("Loading PFR advstats (defense) + same-season snaps/TFL/PBU...")
+        pfr_def = load_pfr_advstats_safe('def')
+        def_season = int(pfr_def['season'].iloc[0])
+        write_table(con, 'pfr_def_stats', load_pfr_def_stats(pfr_def))
+        write_table(con, 'def_snaps_season', load_def_snaps(def_season))
+        write_table(con, 'def_season_stats', load_def_season_stats(def_season))
 
         print("Loading target share (RB/WR/TE)...")
         write_table(con, 'target_share', load_target_share())

@@ -175,6 +175,21 @@ def load_pfr_rb_stats_from_db(con):
     return df.set_index('pfr_id').to_dict('index')
 
 
+def load_pfr_def_stats_from_db(con):
+    df = con.execute("SELECT * FROM pfr_def_stats").fetchdf()
+    return df.set_index('pfr_id').to_dict('index')
+
+
+def load_def_snaps_from_db(con):
+    df = con.execute("SELECT * FROM def_snaps_season").fetchdf()
+    return df.set_index('pfr_id')['defense_snaps'].to_dict()
+
+
+def load_def_season_stats_from_db(con):
+    df = con.execute("SELECT * FROM def_season_stats").fetchdf()
+    return df.set_index('player_id').to_dict('index')
+
+
 def load_target_share_from_db(con):
     """Keyed by nflreadpy's own player_id -- confirmed real (00-XXXXXXX
     gsis_id format, same as every gid elsewhere in this pipeline), so no
@@ -210,6 +225,9 @@ def build_match():
     target_share_by_gsis = load_target_share_from_db(con)
     pfr_wr_te_stats = load_pfr_wr_te_stats_from_db(con)
     ngs_receiving = load_ngs_receiving_from_db(con)
+    pfr_def_stats = load_pfr_def_stats_from_db(con)
+    def_snaps = load_def_snaps_from_db(con)
+    def_season_stats = load_def_season_stats_from_db(con)
 
     madden_by_team = load_madden_from_db(con)
     madden_pos_ranks = build_madden_pos_ranks(madden_by_team)
@@ -263,13 +281,12 @@ def build_match():
 
         gsis_id, confidence = find_gsis(
             canonical_name, standard_pos, abbr, crosswalk, rosters)
-        # OurLads' NB row is a nickel slot, not a position: scrape_depth
-        # tags every NB player 'CB' (its Madden-based S resolution runs
-        # before Madden is joined, so never fires), but ~14 are safeties
-        # (Derwin James, Kyle Hamilton) whom the crosswalk lists as 'S'.
-        if not gsis_id and p['ourlads_pos'] == 'NB' and standard_pos == 'CB':
+        # OurLads' NB row is a nickel slot, not a position: the crosswalk may
+        # list an NB player as either 'S' (Derwin James, Kyle Hamilton) or
+        # 'CB' (Jalen Ramsey, retagged S above), so try the other one.
+        if not gsis_id and p['ourlads_pos'] == 'NB' and standard_pos in ('CB', 'S'):
             gsis_id, confidence = find_gsis(
-                canonical_name, 'S', abbr, crosswalk, rosters)
+                canonical_name, 'CB' if standard_pos == 'S' else 'S', abbr, crosswalk, rosters)
 
         if gsis_id:
             player_key = gsis_id
@@ -431,6 +448,51 @@ def build_match():
             entry['yac_above_expectation'] = None
             entry['drop_rate'] = None
             entry['broken_tackle_rate_rec'] = None
+
+    # Defender advanced stats. Every input for a rate is the PFR def
+    # table's own season (S) -- snaps and TFL/PBU are loaded for S in
+    # build_db.py, never the current SEASON's partial data. A rate whose
+    # inputs can't be had for S stays null.
+    DEF_POS = ('EDGE', 'DI', 'LB', 'S', 'CB')
+    DEF_FIELDS = ['pressures_per100', 'sacks_per100', 'tfl_per100', 'tkl_per100',
+                  'missed_tackle_rate', 'comp_pct_allowed', 'rating_allowed',
+                  'yds_per_target_allowed', 'adot_allowed', 'int_pd_per_target',
+                  'def_advanced_season']
+    MIN_SNAPS, MIN_TARGETS, MIN_TACKLE_ATTEMPTS = 100, 10, 20
+    gsis_by_pfr = {v: k for k, v in pfr_id_by_gsis.items() if v}
+    for key, entry in master.items():
+        for f in DEF_FIELDS:
+            entry[f] = None
+        pos = entry['standard_pos']
+        pfr_id = pfr_id_direct.get(key)
+        row = pfr_def_stats.get(pfr_id) if (pos in DEF_POS and pfr_id) else None
+        if not row:
+            continue
+        snaps = def_snaps.get(pfr_id)
+        gid = entry.get('gsis_id') or gsis_by_pfr.get(pfr_id)
+        ss = def_season_stats.get(gid) if gid else None
+        enough_snaps = snaps is not None and pd.notna(snaps) and snaps >= MIN_SNAPS
+        entry['def_advanced_season'] = int(row['season'])
+
+        attempts = row['comb'] + row['m_tkl']
+        if pd.notna(row['m_tkl_percent']) and attempts >= MIN_TACKLE_ATTEMPTS:
+            entry['missed_tackle_rate'] = row['m_tkl_percent'] * 100
+
+        if pos in ('EDGE', 'DI') and enough_snaps:
+            entry['pressures_per100'] = row['prss'] / snaps * 100
+            entry['sacks_per100'] = row['sk'] / snaps * 100
+        if pos in ('EDGE', 'DI', 'LB') and enough_snaps:
+            if ss:
+                entry['tfl_per100'] = ss['def_tackles_for_loss'] / snaps * 100
+            entry['tkl_per100'] = row['comb'] / snaps * 100
+
+        if pos in ('LB', 'S', 'CB') and pd.notna(row['tgt']) and row['tgt'] >= MIN_TARGETS:
+            entry['comp_pct_allowed'] = row['cmp_percent'] * 100
+            entry['rating_allowed'] = row['rat']
+            entry['yds_per_target_allowed'] = row['yds_tgt']
+            entry['adot_allowed'] = row['dadot']
+            if pos in ('S', 'CB') and ss:
+                entry['int_pd_per_target'] = (row['int'] + ss['def_pass_defended']) / row['tgt'] * 100
 
     # Spotrac remaining-contract fuzzy match
     for entry in master.values():

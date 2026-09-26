@@ -29,7 +29,7 @@ DEFAULT_OUT_PATH = os.path.join('nfl', 'data', 'players_master_db.json')
 INT_FIELDS = {
     'depth', 'jersey', 'madden', 'madden_rank', 'madden_rank_total',
     'draft_year', 'years_pro', 'age', 'years_remaining', 'stats_season',
-    'penalty_count',
+    'penalty_count', 'def_advanced_season',
 }
 FLOAT_FIELDS = {
     'match_confidence', 'snap_pct', 'cash_total_remaining',
@@ -38,6 +38,9 @@ FLOAT_FIELDS = {
     'ryoe_per_att', 'box_rate', 'yac_per_att', 'broken_tackle_rate', 'target_share',
     'adot', 'air_yards_share', 'avg_separation', 'yac_above_expectation',
     'drop_rate', 'broken_tackle_rate_rec',
+    'pressures_per100', 'sacks_per100', 'tfl_per100', 'tkl_per100', 'missed_tackle_rate',
+    'comp_pct_allowed', 'rating_allowed', 'yds_per_target_allowed', 'adot_allowed',
+    'int_pd_per_target',
 }
 
 
@@ -114,7 +117,11 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             pm.avg_separation,
             pm.yac_above_expectation,
             pm.drop_rate,
-            pm.broken_tackle_rate_rec
+            pm.broken_tackle_rate_rec,
+            pm.pressures_per100, pm.sacks_per100, pm.tfl_per100, pm.tkl_per100,
+            pm.missed_tackle_rate, pm.comp_pct_allowed, pm.rating_allowed,
+            pm.yds_per_target_allowed, pm.adot_allowed, pm.int_pd_per_target,
+            pm.def_advanced_season
         FROM player_match pm
         JOIN ourlads_players op ON pm.row_id = op.row_id
         ORDER BY pm.row_id
@@ -177,6 +184,17 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             'yac_above_expectation': clean('yac_above_expectation', r['yac_above_expectation']),
             'drop_rate': clean('drop_rate', r['drop_rate']),
             'broken_tackle_rate_rec': clean('broken_tackle_rate_rec', r['broken_tackle_rate_rec']),
+            'pressures_per100': clean('pressures_per100', r['pressures_per100']),
+            'sacks_per100': clean('sacks_per100', r['sacks_per100']),
+            'tfl_per100': clean('tfl_per100', r['tfl_per100']),
+            'tkl_per100': clean('tkl_per100', r['tkl_per100']),
+            'missed_tackle_rate': clean('missed_tackle_rate', r['missed_tackle_rate']),
+            'comp_pct_allowed': clean('comp_pct_allowed', r['comp_pct_allowed']),
+            'rating_allowed': clean('rating_allowed', r['rating_allowed']),
+            'yds_per_target_allowed': clean('yds_per_target_allowed', r['yds_per_target_allowed']),
+            'adot_allowed': clean('adot_allowed', r['adot_allowed']),
+            'int_pd_per_target': clean('int_pd_per_target', r['int_pd_per_target']),
+            'def_advanced_season': clean('def_advanced_season', r['def_advanced_season']),
         }
         master[r['player_id']] = entry
 
