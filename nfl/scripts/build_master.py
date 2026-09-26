@@ -95,6 +95,7 @@ def load_madden(path):
             continue
         by_team.setdefault(abbr, []).append({
             "full_name": f"{p['firstName']} {p['lastName']}",
+            "team": abbr,
             "normalized": normalize_madden(f"{p['firstName']} {p['lastName']}"),
             "overall": p["overallRating"],
             "jersey": p.get("jerseyNum"),
@@ -114,7 +115,10 @@ def build_madden_pos_ranks(madden_by_team):
     for pos, players in by_position.items():
         sorted_players = sorted(players, key=lambda x: x["overall"], reverse=True)
         for rank, player in enumerate(sorted_players, 1):
-            pos_ranks[player["normalized"]] = {
+            # Keyed by (name, team): two different players can share a
+            # name (Justin Jefferson WR/MIN and LB/CLE) and a name-only
+            # key handed the WR the LB's rank and "MIKE" position label.
+            pos_ranks[(player["normalized"], player["team"])] = {
                 "rank": rank,
                 "total": len(sorted_players),
                 "pos": pos
@@ -595,7 +599,7 @@ def build_master():
                 madden_is_dup = normalize_madden(raw_name) in madden_duplicate_names
                 mp = find_madden_player(raw_name, madden_by_team.get(abbr, []), all_madden_players,
                                          allow_cross_team=not madden_is_dup)
-                madden_rank_info = madden_pos_ranks.get(mp["normalized"]) if mp else None
+                madden_rank_info = madden_pos_ranks.get((mp["normalized"], mp["team"])) if mp else None
 
                 entry = {
                     'player_id': player_key,

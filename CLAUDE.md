@@ -310,6 +310,7 @@ Used by `mlb/scripts/scrape_ratings.py` and `nhl/scripts/scrape_ratings.py`, bot
 ---
 
 ## Conventions & Gotchas
+- **TableView design framework — four shapes:** (1) uniform box score, tabbed by category (NBA); (2) position-gated disjoint stats, row-filtered by tab (NFL/MLB/NHL); (3) metric-lens switching, not position-gated (EPL/MLS); (4) cosmetic rating vs. genuine evaluative metric — not yet separated in any sport. **What's changed:** NFL's Advanced tab now covers QB/RB/WR/TE with position-aware columns (the column set follows the position filter: all-RB → RB set, WR/TE → WR/TE set, anything else → QB set).
 - OurLads abbreviations: `ARZ` (not ARI), `JAX` (not JAC)
 - Team JSON can come out as a list or dict — normalize with `if type(team_data) is list: team_data = team_data[0]`
 - Minimal targeted edits only — no unrelated refactors, no adjacent "improvements"
@@ -354,6 +355,9 @@ Used by `mlb/scripts/scrape_ratings.py` and `nhl/scripts/scrape_ratings.py`, bot
 - ⬜ Additional NFL data sources via `nflreadpy`: `load_ftn_charting()`, `load_nextgen_stats()`, `load_participation()`, `load_combine()` — all free, unused
 - ⬜ Confirm the EPL name-order-swap fix and NBA 2K stale-unmatched fix both land cleanly in a real live pipeline run (both verified via standalone/controlled tests only so far)
 - ⬜ MLS TableView — never got the explicit column/default-sort review pass NFL/MLB/NHL/EPL each got this session; worth a look for parity, even though its Advanced tab was already in good shape
+- ⬜ NHL TableView: expose `evGoals`, `evPoints`, `faceoffWinPct` — all already available in the data, never added to the table
+- ⬜ NBA stat richness: `fetch_stats.py` only pulls ppg/rpg/apg/mpg, and richer stats mean changing the scraper (a local-only script, stats.nba.com blocks the cloud runner), not just the table
+- ⬜ "Genuinely evaluative metric" — its own future project, needs new data sources: separate cosmetic video-game ratings from real evaluative stats (NFL pressure rate over sacks, NBA BPM/VORP, MLB WAR/xwOBA, NHL GAR/xG). NFL's advanced-stat work (QB/RB/WR/TE hover cards + the Advanced tab) is the first partial step on this
 - ⬜ Revisit MLB's SF Giants ratings-coverage gap now that it's actually visible in the UI (see Known Outstanding Bugs)
 - ⬜ A real audit approach for MLB/NHL's ratings-matching (no raw source file exists to compare against the way NFL/EPL/NBA's audit worked — would need checking the scrape scripts' own unmatched-reporting, if any exists, or a different technique entirely)
 

@@ -43,6 +43,7 @@ def load_madden_from_db(con):
         full_name = f"{p['firstName']} {p['lastName']}"
         by_team.setdefault(abbr, []).append({
             "full_name": full_name,
+            "team": abbr,
             "normalized": normalize_madden(full_name),
             "overall": p['overallRating'],
             "jersey": p.get('jerseyNum'),
@@ -222,6 +223,13 @@ def build_match():
 
         gsis_id, confidence = find_gsis(
             canonical_name, standard_pos, abbr, crosswalk, rosters)
+        # OurLads' NB row is a nickel slot, not a position: scrape_depth
+        # tags every NB player 'CB' (its Madden-based S resolution runs
+        # before Madden is joined, so never fires), but ~14 are safeties
+        # (Derwin James, Kyle Hamilton) whom the crosswalk lists as 'S'.
+        if not gsis_id and p['ourlads_pos'] == 'NB' and standard_pos == 'CB':
+            gsis_id, confidence = find_gsis(
+                canonical_name, 'S', abbr, crosswalk, rosters)
 
         if gsis_id:
             player_key = gsis_id
@@ -239,7 +247,7 @@ def build_match():
         mp = find_madden_player(raw_name, madden_by_team.get(abbr, []),
                                  all_madden_players,
                                  allow_cross_team=not madden_is_dup)
-        madden_rank_info = madden_pos_ranks.get(mp["normalized"]) if mp else None
+        madden_rank_info = madden_pos_ranks.get((mp["normalized"], mp["team"])) if mp else None
 
         master[player_key] = {
             'row_id': int(p['row_id']),

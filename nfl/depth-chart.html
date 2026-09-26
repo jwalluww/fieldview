@@ -1217,6 +1217,9 @@ function maddenColor(r) {
 
 function getStatVal(p, statKey) {
   if (!statKey) return null;
+  // Defense-tab stats only exist for defensive positions ('DEF' = generic
+  // reserve-list defenders); applies to both display and sort.
+  if (currentView === 'defense' && !DEFENSE_POS.has(p.standard_pos) && p.standard_pos !== 'DEF') return null;
   if (p.stats && p.stats[statKey] != null) return p.stats[statKey];
   return p[statKey] != null ? p[statKey] : null;
 }

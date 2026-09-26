@@ -176,11 +176,26 @@ def main():
                 if sp and sp.get("team") != nfl_abbr:
                     sp = None
 
-                # Fallback: match on last name only within same team
+                # Fallback: same last name AND same first initial within the
+                # same team (covers nickname/short forms like "Gabe" vs
+                # "Gabriel" and the "A.Rodgers"-style short keys). Last name
+                # alone attached a teammate's stats to a different player
+                # (OL Donovan Jackson got S Theo Jackson's tackles).
                 if not sp:
-                    last = key.split()[-1] if key.split() else ""
+                    parts = key.split()
+                    last = parts[-1] if parts else ""
+                    initial = parts[0][:1] if parts else ""
                     for k, v in name_lookup.items():
-                        if k.endswith(last) and v.get("team") == nfl_abbr:
+                        if v.get("team") != nfl_abbr:
+                            continue
+                        kt = k.split()
+                        if not kt or not last:
+                            continue
+                        if len(kt) >= 2:
+                            hit = kt[-1] == last and kt[0][:1] == initial
+                        else:
+                            hit = kt[0] == initial + last
+                        if hit:
                             sp = v
                             break
 
