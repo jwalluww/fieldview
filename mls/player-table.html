@@ -535,6 +535,7 @@ body {
         <th onclick="sortBy('team')" id="th-team">Team <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('position')" id="th-position">Pos <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('name')" id="th-name" class="sorted">Player <span class="sort-icon">↑</span></th>
+        <th onclick="sortBy('age')" id="th-age" style="display:none">Age <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('rating')" id="th-rating" style="display:none">Rating <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('minutes')" id="th-minutes" style="display:none">Min <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('goals')" id="th-goals" style="display:none">G <span class="sort-icon">↕</span></th>
@@ -544,6 +545,10 @@ body {
         <th onclick="sortBy('shotsOnTarget')" id="th-shotsOnTarget" style="display:none">SOT <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('xgoals')" id="th-xgoals" style="display:none">xG <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('xassists')" id="th-xassists" style="display:none">xA <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('gMinusXg')" id="th-gMinusXg" style="display:none">G-xG <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('xgPlusXa')" id="th-xgPlusXa" style="display:none">xG+xA <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('aMinusXa')" id="th-aMinusXa" style="display:none">A-xA <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('xPointsAdded')" id="th-xPointsAdded" style="display:none">xPts Add <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('keyPasses')" id="th-keyPasses" style="display:none">KP <span class="sort-icon">↕</span></th>
       </tr>
     </thead>
@@ -629,12 +634,12 @@ let selectedPositions = new Set();
 // with-zeros. Every stat field below is read with a null-safe fallback
 // in loadAll() rather than assumed present.
 const VIEWS = {
-  overview: { cols: ['team','position','name','rating','minutes'], sort: 'rating' },
+  overview: { cols: ['team','position','name','age','rating','minutes'], sort: 'rating' },
   stats:    { cols: ['team','position','name','goals','assists','minutes','pointsAdded'], sort: 'goals' },
-  advanced: { cols: ['team','position','name','shots','shotsOnTarget','xgoals','xassists','keyPasses'], sort: 'xgoals' },
+  advanced: { cols: ['team','position','name','shots','shotsOnTarget','xgoals','xassists','gMinusXg','xgPlusXa','aMinusXa','xPointsAdded','keyPasses'], sort: 'xgoals' },
 };
 
-const ALL_COLS = ['team','position','name','rating','minutes','goals','assists','pointsAdded','shots','shotsOnTarget','xgoals','xassists','keyPasses'];
+const ALL_COLS = ['team','position','name','age','rating','minutes','goals','assists','pointsAdded','shots','shotsOnTarget','xgoals','xassists','gMinusXg','xgPlusXa','aMinusXa','xPointsAdded','keyPasses'];
 
 function setView(viewKey, btn) {
   currentView = viewKey;
@@ -689,6 +694,7 @@ async function loadAll() {
       position: player.position_group,       // coarse G/D/M/F, always present
       standardPos: player.standard_pos,       // granular sofifa slot, null for unmatched -- display only
       name: player.name || '',
+      age: player.age,
       rating: player.overall_rating,          // null if no sofifa match
       minutes: s.minutes_played,
       goals: s.goals,
@@ -698,6 +704,10 @@ async function loadAll() {
       shotsOnTarget: s.shots_on_target,
       xgoals: s.xgoals,
       xassists: s.xassists,
+      gMinusXg: s.goals_minus_xgoals,
+      xgPlusXa: s.xgoals_plus_xassists,
+      aMinusXa: s.primary_assists_minus_xassists,
+      xPointsAdded: s.xpoints_added,
       keyPasses: s.key_passes,
     });
   }
@@ -932,6 +942,8 @@ function renderTable() {
         '<div class="player-initials">' + initials + '</div>' +
         '<div class="player-name-block"><div class="player-name">' + p.name + '</div></div>' +
       '</div></td>';
+    if (cols.includes('age'))
+      row += '<td class="cell-stat">' + (p.age != null ? p.age : '—') + '</td>';
     if (cols.includes('rating'))
       row += '<td class="cell-stat">' + (p.rating != null ? p.rating : '—') + '</td>';
     if (cols.includes('minutes'))
@@ -950,6 +962,14 @@ function renderTable() {
       row += '<td class="cell-stat">' + (p.xgoals != null ? p.xgoals.toFixed(2) : '—') + '</td>';
     if (cols.includes('xassists'))
       row += '<td class="cell-stat">' + (p.xassists != null ? p.xassists.toFixed(2) : '—') + '</td>';
+    if (cols.includes('gMinusXg'))
+      row += '<td class="cell-stat">' + (p.gMinusXg != null ? p.gMinusXg.toFixed(2) : '—') + '</td>';
+    if (cols.includes('xgPlusXa'))
+      row += '<td class="cell-stat">' + (p.xgPlusXa != null ? p.xgPlusXa.toFixed(2) : '—') + '</td>';
+    if (cols.includes('aMinusXa'))
+      row += '<td class="cell-stat">' + (p.aMinusXa != null ? p.aMinusXa.toFixed(2) : '—') + '</td>';
+    if (cols.includes('xPointsAdded'))
+      row += '<td class="cell-stat">' + (p.xPointsAdded != null ? p.xPointsAdded.toFixed(2) : '—') + '</td>';
     if (cols.includes('keyPasses'))
       row += '<td class="cell-stat">' + (p.keyPasses != null ? p.keyPasses : '—') + '</td>';
     row += '</tr>';
