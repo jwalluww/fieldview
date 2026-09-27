@@ -32,6 +32,39 @@ NAME_ALIASES = {
 
 SKIP_POSITIONS = {'KR', 'PR', 'KO', 'PK', 'LS', 'K', 'P', 'PT', 'H'}
 
+# Madden-only aliases: OurLads name -> the name Madden's roster uses. Kept
+# separate from NAME_ALIASES because that table also drives GSIS/OTC lookups,
+# where a different spelling is correct (e.g. 'Cam Bynum' -> 'Cameron Bynum'
+# for the crosswalk, but Madden lists 'Camryn Bynum'; 'Josh Uche' -> 'Joshua
+# Uche' for the crosswalk, but Madden lists 'Josh Uche').
+MADDEN_NAME_ALIASES = {
+    'Nnamdi Madubuike': 'Justin Madubuike',
+    'Mike Onwenu': 'Michael Onwenu',
+    'Cam Bynum': 'Camryn Bynum',
+    'Jevón Holland': 'Jevon Holland',
+    'Joshua Metellus': 'Josh Metellus',
+    'Kenny Gainwell': 'Kenneth Gainwell',
+    'Dax Hill': 'Daxton Hill',
+    'Vega Ioane': 'Olaivavega Ioane',
+    'Hollywood Brown': 'Marquise Brown',
+    'Joshua Palmer': 'Josh Palmer',
+    'Josh Uche': 'Josh Uche',
+    'Olu Fashanu': 'Olumuyiwa Fashanu',
+    'Jaylahn Tuimoloau': 'JT Tuimoloau',
+    'DJ Glaze': 'Delmar Glaze',
+    'Bam Knight': 'Zonovan Knight',
+    'Nicholas Singleton': 'Nick Singleton',
+    'Matt Peart': 'Matthew Peart',
+    'Gabriel Rubio': 'Gabe Rubio',
+    'Zach Carter': 'Zachary Carter',
+    'Kiko Mauigoa': 'Francisco Mauigoa',
+    'Olu Oluwatimi': 'Olusegun Oluwatimi',
+    'Matt Hibner': 'Matthew Hibner',
+    'Irv Charles': 'Irvin Charles',
+    'Rob Beal Jr.': 'Robert Beal Jr.',
+    'Ben Yurosek': 'Benjamin Yurosek',
+}
+
 TEAM_ABB_MAP = {
     'ARI': 'ARZ', 'KCC': 'KC',  'LVR': 'LV',
     'TBB': 'TB',  'SFO': 'SF',  'GNB': 'GB',
@@ -161,7 +194,7 @@ def find_madden_player(name, team_madden_players, all_madden_players, allow_cros
     Confirmed at least one (Mike Jackson, CAR) already matches correctly
     in Madden despite being a forced GSIS no-match; honoring None here
     would have silently regressed him from matched to unmatched."""
-    lookup_name = NAME_ALIASES.get(name)
+    lookup_name = MADDEN_NAME_ALIASES.get(name) or NAME_ALIASES.get(name)
     target = normalize_madden(lookup_name if lookup_name is not None else name)
     target_words = set(target.split())
     # Prefer a match within the player's own team first, to avoid colliding
