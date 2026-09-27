@@ -250,8 +250,16 @@ def scrape_depth_chart(team):
                 player_name = player_tag.get_text(strip=True)
                 if player_name:
                     is_injured = 'lc_red' in player_tag.get('class', []) or position in INJURED_SECTIONS
+                    # The attainment suffix ("23/1", "CC/NYG") lives in a
+                    # <span class="dc-key"> that's a SIBLING of the <a> tag,
+                    # not inside it -- get_text(strip=True) on player_tag
+                    # alone (the old approach) could never see it, so the
+                    # regex below was matching against a string that
+                    # structurally never contained a suffix.
+                    key_tag = col.find("span", class_="dc-key")
+                    key_text = key_tag.get_text(strip=True) if key_tag else ''
                     raw_suffix = ''
-                    suffix_match = re.search(r'\s+(\S*[\d/]\S*)$', player_name)
+                    suffix_match = re.search(r'(\S*[\d/]\S*)$', key_text)
                     if suffix_match:
                         raw_suffix = suffix_match.group(1)
                     players.append({
