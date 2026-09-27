@@ -97,10 +97,24 @@ def normalize_madden(name):
     find_madden_player()'s word-subset fallback (target_words.issubset(...))
     needs to split the normalized name into separate word tokens, which a
     space-stripped string can't do. Ported unchanged from the old
-    merge_madden.py's normalize()."""
+    merge_madden.py's normalize().
+
+    Hyphens are turned into spaces (not silently dropped) -- confirmed live
+    that Josh Hines-Allen's OurLads name normalized to a single concatenated
+    "hinesallen" token while maddenratings.com's own page spells him "Josh
+    Hines Allen" (a real space, no hyphen at all), so the two sides could
+    never word-subset-match. Verified against every hyphenated name already
+    matching in players_master.json before this fix: 44/45 keep the exact
+    same Madden match (the one exception, Zach Bako-Bewele/Zach Tom,
+    resolves via a NAME_ALIASES full-name substitution before this function
+    ever sees the hyphenated form, so it was never affected either way);
+    this fix recovers exactly the 1 additional real case (Hines-Allen) out
+    of 15 previously-unmatched hyphenated names -- the other 14 are
+    genuinely absent from madden.json under any spelling, not a hyphen
+    artifact."""
     if not name:
         return ''
-    name = name.lower()
+    name = name.lower().replace('-', ' ')
     name = re.sub(r'\b(jr|sr|ii|iii|iv)\b\.?', '', name)
     name = re.sub(r"[^a-z ]", "", name)
     return re.sub(r'\s+', ' ', name).strip()
