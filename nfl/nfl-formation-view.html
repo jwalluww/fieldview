@@ -235,9 +235,9 @@ body {
 .player-node:hover { z-index: 100; }
 
 .p-card {
-  width: 105px;
+  width: 88px;
   border-radius: 8px 8px 0 0;
-  padding: 7px 10px 6px;
+  padding: 5px 7px 4px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -246,16 +246,31 @@ body {
   border-bottom: none;
   transition: transform .2s cubic-bezier(.34,1.56,.64,1), border-color .2s;
   box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  position: relative;
 }
 .player-node:hover .p-card {
   transform: scale(1.06);
   border-color: rgba(255,255,255,0.4);
 }
 
+.p-badge-inj {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: rgba(239,68,68,.9);
+  color: #fff;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 1px 4px;
+  letter-spacing: .5px;
+  z-index: 5;
+}
+
 .p-jersey {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
-  font-size: 12px;
+  font-size: 10px;
   color: rgba(255,255,255,0.65);
   line-height: 1;
   align-self: flex-start;
@@ -264,41 +279,41 @@ body {
 .p-lastname {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 15px;
   color: #fff;
   line-height: 1.1;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 93px;
+  max-width: 76px;
 }
 
 .p-madden {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 900;
-  font-size: 28px;
+  font-size: 22px;
   line-height: 1;
   text-align: center;
 }
 
 .p-rank {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 14px;
+  font-size: 11px;
   color: rgba(255,255,255,0.45);
   letter-spacing: .5px;
   line-height: 1;
 }
 
 .p-pos-bar {
-  width: 105px;
+  width: 88px;
   background: #000;
   border-radius: 0 0 6px 6px;
-  padding: 4px 0;
+  padding: 3px 0;
   text-align: center;
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 11px;
   letter-spacing: 2px;
   color: rgba(255,255,255,0.9);
   text-transform: uppercase;
@@ -311,7 +326,7 @@ body {
   position: absolute;
   bottom: calc(100% + 12px);
   left: 50%;
-  width: 260px;
+  width: 300px;
   background: #14171f;
   border: 1px solid var(--border2);
   border-radius: 10px;
@@ -413,6 +428,28 @@ body {
   align-items: center;
   justify-content: center;
   gap: 6px;
+}
+
+/* ── HOVER CARD STAT ROWS ── */
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 13px;
+  border-top: 1px solid var(--border);
+}
+.stat-row-label {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.stat-row-val {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--text);
 }
 
 /* ── LEGEND ── */
@@ -947,25 +984,14 @@ function buildDefAdvBlock(p) {
   ].filter(v => v != null).join(' · ');
   // TKL/SACK/etc. and snap % come from the stats block's season, which can differ from the advanced season.
   const compactLabel = compact && p.stats_season != null && p.stats_season !== p.def_advanced_season ? p.stats_season + ': ' : '';
+  const rows = [cfg.hero, ...cfg.grid].map(key => ({
+    label: DEF_STAT_META[key].label,
+    tooltip: defTooltip(key, pos),
+    dot: dot(key, 8),
+    display: fmt(key),
+  }));
   return `
-        <div style="padding:10px 13px 4px;text-align:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
-          <div style="display:flex;align-items:center;justify-content:center;gap:6px">
-            ${dot(cfg.hero, 9)}
-            <span class="crc-val" style="font-size:30px;color:var(--gold)">${fmt(cfg.hero)}</span>
-          </div>
-          <div class="crc-label" title="${defTooltip(cfg.hero, pos)}">${DEF_STAT_META[cfg.hero].label}</div>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(${cfg.cols},1fr);gap:1px;background:var(--border)">
-          ${cfg.grid.map(key => `
-            <div style="background:#14171f;padding:7px 4px;text-align:center">
-              <div style="display:flex;align-items:center;justify-content:center;gap:5px">
-                ${dot(key)}
-                <span style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:15px;color:var(--text)">${fmt(key)}</span>
-              </div>
-              <div class="crc-label" style="font-size:9px" title="${defTooltip(key, pos)}">${DEF_STAT_META[key].label}</div>
-            </div>
-          `).join('')}
-        </div>
+        ${buildStatRows(rows)}
         ${compact ? `
           <div style="padding:7px 13px 2px;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--text-muted)">${compactLabel}${compact}</div>
         ` : ''}
@@ -993,6 +1019,18 @@ function tierDot(statKey, value, size) {
   const c = tierColor(statKey, value);
   const px = size || 7;
   return c ? `<span style="width:${px}px;height:${px}px;border-radius:50%;background:${c};display:inline-block"></span>` : '';
+}
+
+// Shared hover-card layout: a single column of equal-weight rows, replacing
+// the old "hero stat + small grid" pattern. Each row's own border-top does
+// the dividing, so callers don't need to wrap this in a bordered container.
+function buildStatRows(rows) {
+  return rows.map(r => `
+        <div class="stat-row">
+          <span class="stat-row-label" title="${r.tooltip || ''}">${r.label}</span>
+          <span class="stat-row-val">${r.dot || ''}${r.display}</span>
+        </div>
+      `).join('');
 }
 
 function parseCap(capStr) {
@@ -1158,9 +1196,11 @@ function getSubCandidates(formationPos) {
   // The nickel slot takes corners or safeties.
   const targetPositions = formationPos === 'NB' ? ['CB', 'S'] : [targetPos];
 
-  // Collect all players with matching standard_pos, sorted by madden desc
-  // Injured-list players (standard_slot IR/PUP/NFI/PUP-R) are never sub options.
-  const candidates = teamData.players.filter(p => targetPositions.includes(p.standard_pos) && !INJURED_SLOTS.includes(p.standard_slot));
+  // Collect all players with matching standard_pos, sorted by madden desc.
+  // Injured-list players ARE eligible sub options (see the on-field INJ
+  // badge in buildPlayerNode) -- INJURED_SLOTS is kept in case that's
+  // revisited, but nothing currently filters on it here.
+  const candidates = teamData.players.filter(p => targetPositions.includes(p.standard_pos));
   candidates.sort((a, b) => (b.madden || 0) - (a.madden || 0));
   // Dedupe by id, and exclude anyone already on the field
   const seen = new Set();
@@ -1204,11 +1244,44 @@ function selectSub(formationPos, playerId, event) {
   event.stopPropagation();
   // Find the player object
   const p = teamData.players.find(p => p.id === playerId);
-  if (p) {
-    currentStarters[formationPos] = p;
-    closeSubDropdown();
-    renderFormation();
+  if (!p) return;
+
+  currentStarters[formationPos] = p;
+  closeSubDropdown();
+
+  // Recompute currentOnFieldIds and every slot's coords/flip from scratch --
+  // cheap (no DOM work), and buildFormationSlots() already encodes all of
+  // getStarter()'s override/fallback logic so this stays in lockstep with
+  // a full renderFormation() without needing to duplicate it here.
+  currentOnFieldIds = new Set();
+  const offCoordMap = FORMATION_COORDS.offense[currentOffPersonnel] || FORMATION_COORDS.offense['11'];
+  const defCoordMap = FORMATION_COORDS.defense[currentDefPersonnel] || {};
+  const slots = [
+    ...buildFormationSlots(offCoordMap, currentOffPersonnel),
+    ...buildFormationSlots(defCoordMap, currentDefPersonnel),
+  ];
+
+  // Rebuild only the substituted slot's node -- find it via its sub-dropdown
+  // id (stable per formationPos) rather than replaying the whole field.
+  const oldDropdown = document.getElementById('sub-' + formationPos);
+  const oldNode = oldDropdown ? oldDropdown.closest('.player-node') : null;
+  const changedSlot = slots.find(s => s.pos === formationPos);
+  if (oldNode && changedSlot) {
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = buildPlayerNode(changedSlot.starter, changedSlot.pos, changedSlot.coords, 0, changedSlot.flip).trim();
+    oldNode.replaceWith(wrapper.firstElementChild);
   }
+
+  // Every OTHER rendered slot's dropdown was baked with the old
+  // currentOnFieldIds -- refresh their (hidden) sub-dropdown markup in
+  // place so candidate lists stay correct. This is invisible since
+  // dropdowns are closed by default, so it causes no visual flicker.
+  document.querySelectorAll('#playersLayer .sub-dropdown').forEach(dd => {
+    if (dd.id === 'sub-' + formationPos) return; // just rebuilt above
+    const pos = dd.id.replace('sub-', '');
+    const currentP = getStarter(pos);
+    dd.outerHTML = buildSubDropdown(pos, currentP);
+  });
 }
 
 function openSubDropdown(formationPos, event) {
@@ -1303,29 +1376,13 @@ function buildHoverCard(p, pos) {
       </div>
       ${pos === 'RB' ? `
         ${(p.ryoe_per_att != null || p.yac_per_att != null || p.broken_tackle_rate != null || p.box_rate != null || p.target_share != null) ? `
-          <div style="padding:10px 13px 4px;text-align:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
-            <div style="display:flex;align-items:center;justify-content:center;gap:6px">
-              ${p.ryoe_per_att != null ? tierDot('ryoe_per_att', p.ryoe_per_att, 9) : ''}
-              <span class="crc-val" style="font-size:30px;color:var(--gold)">${p.ryoe_per_att != null ? (p.ryoe_per_att > 0 ? '+' : '') + p.ryoe_per_att.toFixed(2) : '—'}</span>
-            </div>
-            <div class="crc-label" title="Rush Yards Over Expected per attempt -- how many yards a carry gains vs. what's expected given blocking, defenders in the box, and other context. Typical range (2025, 100+ carry backs): about -0.8 (poor) to +1.3 (elite); 0 is average by definition.">RYOE/att</div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)">
-            ${[
-              ['YAC/att', 'yac_per_att', p.yac_per_att, p.yac_per_att != null ? p.yac_per_att.toFixed(2) : '—', "Yards After Contact per attempt -- how many yards a back gains after first contact. Typical range (2025, 100+ carry backs): about 1.4 (poor) to 3.0 (elite); around 2.0 is roughly average."],
-              ['Brk Tkl%', 'broken_tackle_rate', p.broken_tackle_rate, p.broken_tackle_rate != null ? p.broken_tackle_rate.toFixed(1) + '%' : '—', "Broken tackles per touch (carries + receptions). Typical range (2025, 100+ touch backs): about 1.6% (low) to 12.7% (elite); around 6.5% is roughly average."],
-              ['Box Rate', 'box_rate', p.box_rate, p.box_rate != null ? Math.round(p.box_rate) + '%' : '—', "Share of carries run into a stacked box (8+ defenders). Typical range (2025): about 11% to 45%. Lower generally means defenses respect the passing game more -- this reflects the whole offense's threat level, not just the runner himself."],
-              ['Tgt Share', 'target_share', p.target_share, p.target_share != null ? p.target_share.toFixed(1) + '%' : '—', "Share of the team's total pass targets this back receives. Typical range (2025, 20+ target backs): about 3% (early-down runner) to 24% (elite receiving back); around 8% is roughly average."],
-            ].map(([k, statKey, raw, display, tip]) => `
-              <div style="background:#14171f;padding:7px 4px;text-align:center">
-                <div style="display:flex;align-items:center;justify-content:center;gap:5px">
-                  ${tierDot(statKey, raw)}
-                  <span style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:15px;color:var(--text)">${display}</span>
-                </div>
-                <div class="crc-label" style="font-size:9px" title="${tip}">${k}</div>
-              </div>
-            `).join('')}
-          </div>
+          ${buildStatRows([
+            { label: 'RYOE/att', tooltip: "Rush Yards Over Expected per attempt -- how many yards a carry gains vs. what's expected given blocking, defenders in the box, and other context. Typical range (2025, 100+ carry backs): about -0.8 (poor) to +1.3 (elite); 0 is average by definition.", dot: tierDot('ryoe_per_att', p.ryoe_per_att, 8), display: p.ryoe_per_att != null ? (p.ryoe_per_att > 0 ? '+' : '') + p.ryoe_per_att.toFixed(2) : '—' },
+            { label: 'YAC/att', tooltip: "Yards After Contact per attempt -- how many yards a back gains after first contact. Typical range (2025, 100+ carry backs): about 1.4 (poor) to 3.0 (elite); around 2.0 is roughly average.", dot: tierDot('yac_per_att', p.yac_per_att, 8), display: p.yac_per_att != null ? p.yac_per_att.toFixed(2) : '—' },
+            { label: 'Brk Tkl%', tooltip: "Broken tackles per touch (carries + receptions). Typical range (2025, 100+ touch backs): about 1.6% (low) to 12.7% (elite); around 6.5% is roughly average.", dot: tierDot('broken_tackle_rate', p.broken_tackle_rate, 8), display: p.broken_tackle_rate != null ? p.broken_tackle_rate.toFixed(1) + '%' : '—' },
+            { label: 'Box Rate', tooltip: "Share of carries run into a stacked box (8+ defenders). Typical range (2025): about 11% to 45%. Lower generally means defenses respect the passing game more -- this reflects the whole offense's threat level, not just the runner himself.", dot: tierDot('box_rate', p.box_rate, 8), display: p.box_rate != null ? Math.round(p.box_rate) + '%' : '—' },
+            { label: 'Tgt Share', tooltip: "Share of the team's total pass targets this back receives. Typical range (2025, 20+ target backs): about 3% (early-down runner) to 24% (elite receiving back); around 8% is roughly average.", dot: tierDot('target_share', p.target_share, 8), display: p.target_share != null ? p.target_share.toFixed(1) + '%' : '—' },
+          ])}
         ` : ''}
         ${p.stats && (p.stats['CAR'] != null || p.stats['RUSH_YDS'] != null || p.stats['RUSH_TDS'] != null) ? `
           <div style="padding:7px 13px;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--text-muted)">
@@ -1339,31 +1396,15 @@ function buildHoverCard(p, pos) {
         ` : ''}
       ` : isWRTE ? `
         ${(p.target_share != null || p.adot != null || p.air_yards_share != null || p.avg_separation != null || p.drop_rate != null || p.broken_tackle_rate_rec != null) ? `
-          <div style="padding:10px 13px 4px;text-align:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
-            <div style="display:flex;align-items:center;justify-content:center;gap:6px">
-              ${p.yac_above_expectation != null ? tierDot('yac_above_expectation', p.yac_above_expectation, 9) : ''}
-              <span class="crc-val" style="font-size:30px;color:var(--gold)">${p.yac_above_expectation != null ? (p.yac_above_expectation > 0 ? '+' : '') + p.yac_above_expectation.toFixed(2) : '—'}</span>
-            </div>
-            <div class="crc-label" title="Yards After Catch vs. NFL's expected-YAC model (based on speed, separation, and defender pursuit angles at the catch) -- isolates what the receiver did with the ball from what the play design/blocking provided. Typical range (2025): about 0.1 (poor) to 0.8+ (elite); 0 is average by definition.">YAC Above Exp</div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)">
-            ${[
-              ['Tgt Share', 'target_share_wrte', p.target_share, p.target_share != null ? p.target_share.toFixed(1) + '%' : '—', "Share of the team's total pass targets this player receives. Typical range (2025, 40+ target WR/TE): about 12% (low) to 17%+ (elite); varies a lot by role."],
-              ['aDOT', null, null, p.adot != null ? p.adot.toFixed(1) : '—', "Average Depth of Target -- how far downfield this player's targets travel on average. Not a quality stat -- describes role (deep threat vs. possession/slot receiver), not skill."],
-              ['Air Yd Shr', null, null, p.air_yards_share != null ? p.air_yards_share.toFixed(1) + '%' : '—', "Share of the team's total intended air yards directed at this player. Same role indicator as aDOT, not a quality signal."],
-              ['Sep', 'avg_separation', p.avg_separation, p.avg_separation != null ? p.avg_separation.toFixed(2) : '—', "Average distance (yards) from the nearest defender when the ball arrives -- a tracking-based route-running signal. Typical range (2025, 40+ target WR/TE): about 2.7 (tight) to 3.3+ (open); higher is generally better."],
-              ['Drop%', 'drop_rate', p.drop_rate, p.drop_rate != null ? p.drop_rate.toFixed(1) + '%' : '—', "Share of catchable targets dropped. Typical range (2025, 40+ target WR/TE): about 2.4% (good) to 4.9%+ (poor); lower is better."],
-              ['Brk Tkl%', 'broken_tackle_rate_rec', p.broken_tackle_rate_rec, p.broken_tackle_rate_rec != null ? p.broken_tackle_rate_rec.toFixed(1) + '%' : '—', "Broken tackles per reception. Typical range (2025, 40+ target WR/TE): about 2.9% (low) to 6.3%+ (elite)."],
-            ].map(([k, statKey, raw, display, tip]) => `
-              <div style="background:#14171f;padding:7px 4px;text-align:center">
-                <div style="display:flex;align-items:center;justify-content:center;gap:5px">
-                  ${statKey ? tierDot(statKey, raw) : ''}
-                  <span style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:15px;color:var(--text)">${display}</span>
-                </div>
-                <div class="crc-label" style="font-size:9px" title="${tip}">${k}</div>
-              </div>
-            `).join('')}
-          </div>
+          ${buildStatRows([
+            { label: 'YAC Above Exp', tooltip: "Yards After Catch vs. NFL's expected-YAC model (based on speed, separation, and defender pursuit angles at the catch) -- isolates what the receiver did with the ball from what the play design/blocking provided. Typical range (2025): about 0.1 (poor) to 0.8+ (elite); 0 is average by definition.", dot: tierDot('yac_above_expectation', p.yac_above_expectation, 8), display: p.yac_above_expectation != null ? (p.yac_above_expectation > 0 ? '+' : '') + p.yac_above_expectation.toFixed(2) : '—' },
+            { label: 'Tgt Share', tooltip: "Share of the team's total pass targets this player receives. Typical range (2025, 40+ target WR/TE): about 12% (low) to 17%+ (elite); varies a lot by role.", dot: tierDot('target_share_wrte', p.target_share, 8), display: p.target_share != null ? p.target_share.toFixed(1) + '%' : '—' },
+            { label: 'aDOT', tooltip: "Average Depth of Target -- how far downfield this player's targets travel on average. Not a quality stat -- describes role (deep threat vs. possession/slot receiver), not skill.", dot: '', display: p.adot != null ? p.adot.toFixed(1) : '—' },
+            { label: 'Air Yd Shr', tooltip: "Share of the team's total intended air yards directed at this player. Same role indicator as aDOT, not a quality signal.", dot: '', display: p.air_yards_share != null ? p.air_yards_share.toFixed(1) + '%' : '—' },
+            { label: 'Sep', tooltip: "Average distance (yards) from the nearest defender when the ball arrives -- a tracking-based route-running signal. Typical range (2025, 40+ target WR/TE): about 2.7 (tight) to 3.3+ (open); higher is generally better.", dot: tierDot('avg_separation', p.avg_separation, 8), display: p.avg_separation != null ? p.avg_separation.toFixed(2) : '—' },
+            { label: 'Drop%', tooltip: "Share of catchable targets dropped. Typical range (2025, 40+ target WR/TE): about 2.4% (good) to 4.9%+ (poor); lower is better.", dot: tierDot('drop_rate', p.drop_rate, 8), display: p.drop_rate != null ? p.drop_rate.toFixed(1) + '%' : '—' },
+            { label: 'Brk Tkl%', tooltip: "Broken tackles per reception. Typical range (2025, 40+ target WR/TE): about 2.9% (low) to 6.3%+ (elite).", dot: tierDot('broken_tackle_rate_rec', p.broken_tackle_rate_rec, 8), display: p.broken_tackle_rate_rec != null ? p.broken_tackle_rate_rec.toFixed(1) + '%' : '—' },
+          ])}
         ` : ''}
         ${p.stats && (p.stats['REC'] != null || p.stats['REC_YDS'] != null || p.stats['REC_TDS'] != null) ? `
           <div style="padding:7px 13px;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--text-muted)">
@@ -1377,29 +1418,13 @@ function buildHoverCard(p, pos) {
         ` : ''}
       ` : pos === 'QB' ? `
         ${(p.epa_per_play != null || p.success_rate != null || p.cpoe != null || p.ngs_time_to_throw != null || p.qbr != null) ? `
-          <div style="padding:10px 13px 4px;text-align:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
-            <div style="display:flex;align-items:center;justify-content:center;gap:6px">
-              ${p.qbr != null ? tierDot('qbr', p.qbr, 9) : ''}
-              <span class="crc-val" style="font-size:30px;color:var(--gold)">${p.qbr != null ? p.qbr.toFixed(1) : '—'}</span>
-            </div>
-            <div class="crc-label" title="ESPN's Total QBR -- a 0-100 all-in-one rating of overall efficiency. ESPN scales it so 50 = average; 65+ is very good, below 40 is poor.">Total QBR</div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)">
-            ${[
-              ['EPA/DB', 'epa_per_play', p.epa_per_play, p.epa_per_play != null ? (p.epa_per_play > 0 ? '+' : '') + p.epa_per_play.toFixed(2) : '—', "Expected Points Added per dropback -- points added vs. a league-average outcome in the same situation. Typical range: about -0.10 (poor) to +0.25 (elite); 0.00-0.10 is roughly average."],
-              ['Success', 'success_rate', p.success_rate, p.success_rate != null ? Math.round(p.success_rate) + '%' : '—', "Success rate -- share of dropbacks that meaningfully move the offense closer to a first down or score. Typical range: about 40% (poor) to 55%+ (elite); 46-48% is roughly average."],
-              ['CPOE', 'cpoe', p.cpoe, p.cpoe != null ? (p.cpoe > 0 ? '+' : '') + p.cpoe.toFixed(1) : '—', "Completion % Over Expected -- accuracy vs. expected, given throw difficulty. Typical range: about -5% (poor) to +5-8% (elite); 0% is average."],
-              ['TTT', 'ngs_time_to_throw', p.ngs_time_to_throw, p.ngs_time_to_throw != null ? p.ngs_time_to_throw.toFixed(2) + 's' : '—', "Time to throw -- average seconds from snap to release. Typically 2.4-3.0s. Faster isn't automatically better or worse -- it depends on scheme and play style."],
-            ].map(([k, statKey, raw, display, tip]) => `
-              <div style="background:#14171f;padding:7px 4px;text-align:center">
-                <div style="display:flex;align-items:center;justify-content:center;gap:5px">
-                  ${tierDot(statKey, raw)}
-                  <span style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:15px;color:var(--text)">${display}</span>
-                </div>
-                <div class="crc-label" style="font-size:9px" title="${tip}">${k}</div>
-              </div>
-            `).join('')}
-          </div>
+          ${buildStatRows([
+            { label: 'QBR', tooltip: "ESPN's Total QBR -- a 0-100 all-in-one rating of overall efficiency. ESPN scales it so 50 = average; 65+ is very good, below 40 is poor.", dot: tierDot('qbr', p.qbr, 8), display: p.qbr != null ? p.qbr.toFixed(1) : '—' },
+            { label: 'EPA/DB', tooltip: "Expected Points Added per dropback -- points added vs. a league-average outcome in the same situation. Typical range: about -0.10 (poor) to +0.25 (elite); 0.00-0.10 is roughly average.", dot: tierDot('epa_per_play', p.epa_per_play, 8), display: p.epa_per_play != null ? (p.epa_per_play > 0 ? '+' : '') + p.epa_per_play.toFixed(2) : '—' },
+            { label: 'Success', tooltip: "Success rate -- share of dropbacks that meaningfully move the offense closer to a first down or score. Typical range: about 40% (poor) to 55%+ (elite); 46-48% is roughly average.", dot: tierDot('success_rate', p.success_rate, 8), display: p.success_rate != null ? Math.round(p.success_rate) + '%' : '—' },
+            { label: 'CPOE', tooltip: "Completion % Over Expected -- accuracy vs. expected, given throw difficulty. Typical range: about -5% (poor) to +5-8% (elite); 0% is average.", dot: tierDot('cpoe', p.cpoe, 8), display: p.cpoe != null ? (p.cpoe > 0 ? '+' : '') + p.cpoe.toFixed(1) : '—' },
+            { label: 'TTT', tooltip: "Time to throw -- average seconds from snap to release. Typically 2.4-3.0s. Faster isn't automatically better or worse -- it depends on scheme and play style.", dot: tierDot('ngs_time_to_throw', p.ngs_time_to_throw, 8), display: p.ngs_time_to_throw != null ? p.ngs_time_to_throw.toFixed(2) + 's' : '—' },
+          ])}
         ` : ''}
         ${p.stats && (p.stats['PASS_YDS'] != null || p.stats['PASS_TDS'] != null || p.stats['INT'] != null) ? `
           <div style="padding:7px 13px;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--text-muted)">
@@ -1469,6 +1494,7 @@ function buildPlayerNode(p, pos, coords, delay, flipCard) {
          onclick="openSubDropdown('${pos}', event)"
          onmouseenter="positionHoverCard(this)">
       <div class="p-card" style="background:${team.colors[0]}">
+        ${p.injured ? '<div class="p-badge-inj">INJ</div>' : ''}
         <div class="p-jersey">${p.jersey ? '#'+p.jersey : '\u00a0'}</div>
         <div class="p-lastname">${lastName}</div>
         <div class="p-madden" style="color:${mc}">${p.madden || '—'}</div>

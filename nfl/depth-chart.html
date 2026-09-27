@@ -42,7 +42,9 @@ body {
   overflow-x: hidden;
 }
 
-#th-stat1, #th-stat2, #th-stat3, #th-stat4, #th-stat5, #th-stat6, #th-stat7 {
+#th-stat1, #th-stat2, #th-stat3, #th-stat4, #th-stat5, #th-stat6, #th-stat7,
+#th-stat8, #th-stat9, #th-stat10, #th-stat11, #th-stat12, #th-stat13,
+#th-stat14, #th-stat15, #th-stat16, #th-stat17 {
   text-align: center;
 }
 
@@ -219,6 +221,32 @@ body {
   transition: all .15s;
 }
 .multiselect-group-btn:hover { color: var(--accent); border-color: var(--accent); }
+.multiselect-group-btn.active { background: var(--accent); border-color: var(--accent); color: #0d0e13; }
+
+/* ── COLUMN PICKER ── */
+.col-picker {
+  background: #0d1118;
+  border-bottom: 1px solid var(--border2);
+  padding: 8px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 16px;
+}
+.col-picker-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: .5px;
+  color: var(--text-muted);
+  cursor: pointer;
+  text-transform: uppercase;
+  user-select: none;
+}
+.col-picker-item:hover { color: var(--text); }
+.col-picker-item input[type="checkbox"] { accent-color: var(--accent); cursor: pointer; }
 
 .multiselect-list {
   overflow-y: auto;
@@ -635,7 +663,6 @@ body {
   <button class="view-tab" onclick="setView('rushing', this)">Rushing</button>
   <button class="view-tab" onclick="setView('receiving', this)">Receiving</button>
   <button class="view-tab" onclick="setView('defense', this)">Defense</button>
-  <button class="view-tab" onclick="setView('advanced', this)">Advanced</button>
 </div>
 
 <!-- Filter bar -->
@@ -666,8 +693,8 @@ body {
     </button>
     <div class="multiselect-panel" id="posPanel" style="display:none">
       <div class="multiselect-actions">
-        <button type="button" class="multiselect-group-btn" onclick="togglePosGroup('OFFENSE')">All Offense</button>
-        <button type="button" class="multiselect-group-btn" onclick="togglePosGroup('DEFENSE')">All Defense</button>
+        <button type="button" class="multiselect-group-btn" id="posGroupOffenseBtn" onclick="togglePosGroup('OFFENSE')">All Offense</button>
+        <button type="button" class="multiselect-group-btn" id="posGroupDefenseBtn" onclick="togglePosGroup('DEFENSE')">All Defense</button>
       </div>
       <div class="multiselect-list" id="posPanelList"></div>
     </div>
@@ -679,6 +706,9 @@ body {
     <button class="clear-btn" onclick="clearFilters()">Clear</button>
   </div>
 </div>
+
+<!-- Column picker (Passing/Rushing/Receiving/Defense only) -->
+<div id="colPicker" class="col-picker" style="display:none"></div>
 
 <!-- Table -->
 <div class="table-wrap">
@@ -710,6 +740,16 @@ body {
         <th onclick="sortBy('stat5')" id="th-stat5" style="display:none"><span class="sort-icon">↕</span></th>
         <th onclick="sortBy('stat6')" id="th-stat6" style="display:none"><span class="sort-icon">↕</span></th>
         <th onclick="sortBy('stat7')" id="th-stat7" style="display:none"><span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('stat8')" id="th-stat8" style="display:none"><span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('stat9')" id="th-stat9" style="display:none"><span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('stat10')" id="th-stat10" style="display:none"><span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('stat11')" id="th-stat11" style="display:none"><span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('stat12')" id="th-stat12" style="display:none"><span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('stat13')" id="th-stat13" style="display:none"><span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('stat14')" id="th-stat14" style="display:none"><span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('stat15')" id="th-stat15" style="display:none"><span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('stat16')" id="th-stat16" style="display:none"><span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('stat17')" id="th-stat17" style="display:none"><span class="sort-icon">↕</span></th>
       </tr>
     </thead>
     <tbody id="tableBody"></tbody>
@@ -760,50 +800,155 @@ const TEAMS = {
 const OFFENSE_POS = new Set(['QB','WR','RB','TE','OL']);
 const DEFENSE_POS = new Set(['EDGE','DI','LB','CB','S']);
 const ST_POS = new Set(['K','P','LS']);
-const STAT_COLS = {
-  passing:   ['CMP','ATT','PASS_YDS','PASS_TDS','INT'],
-  rushing:   ['CAR','RUSH_YDS','RUSH_TDS'],
-  receiving: ['REC','TGT','REC_YDS','REC_TDS'],
-  defense:   ['TKL','SACK','INT','PBU','TFL'],
-  advanced: {
-    QB: [
-      { key: 'epa_per_play', label: 'EPA/DB', decimals: 2, tooltip: "Expected Points Added per dropback -- points added vs. a league-average outcome in the same situation. Typical range: about -0.10 (poor) to +0.25 (elite); 0.00-0.10 is roughly average." },
-      { key: 'success_rate', label: 'SUCC%', decimals: 1, tooltip: "Success rate -- share of dropbacks that meaningfully move the offense closer to a first down or score. Typical range: about 40% (poor) to 55%+ (elite); 46-48% is roughly average." },
-      { key: 'cpoe', label: 'CPOE', decimals: 1, tooltip: "Completion % Over Expected -- accuracy vs. expected, given throw difficulty. Typical range: about -5% (poor) to +5-8% (elite); 0% is average." },
-      { key: 'ngs_time_to_throw', label: 'TTT', decimals: 2, tooltip: "Time to throw -- average seconds from snap to release. Typically 2.4-3.0s. Faster isn't automatically better or worse -- it depends on scheme and play style." },
-      { key: 'qbr', label: 'QBR', decimals: 1, tooltip: "ESPN's Total QBR -- a 0-100 all-in-one rating of overall efficiency. ESPN scales it so 50 = average; 65+ is very good, below 40 is poor." },
-    ],
-    RB: [
-      { key: 'ryoe_per_att', label: 'RYOE/Att', decimals: 2, tooltip: "Rush Yards Over Expected per attempt -- how many yards a carry gains vs. what's expected given blocking, defenders in the box, and other context. Typical range (2025, 100+ carry backs): about -0.8 (poor) to +1.3 (elite); 0 is average by definition." },
-      { key: 'yac_per_att', label: 'YAC/Att', decimals: 2, tooltip: "Yards After Contact per attempt -- how many yards a back gains after first contact. Typical range (2025, 100+ carry backs): about 1.4 (poor) to 3.0 (elite); around 2.0 is roughly average." },
-      { key: 'broken_tackle_rate', label: 'BRK TKL%', decimals: 1, tooltip: "Broken tackles per touch (carries + receptions). Typical range (2025, 100+ touch backs): about 1.6% (low) to 12.7% (elite); around 6.5% is roughly average." },
-      { key: 'box_rate', label: 'BOX%', decimals: 0, tooltip: "Share of carries run into a stacked box (8+ defenders). Typical range (2025): about 11% to 45%. Lower generally means defenses respect the passing game more -- this reflects the whole offense's threat level, not just the runner himself." },
-      { key: 'target_share', label: 'TGT SHR%', decimals: 1, tooltip: "Share of the team's total pass targets this back receives. Typical range (2025, 20+ target backs): about 3% (early-down runner) to 24% (elite receiving back); around 8% is roughly average." },
-    ],
-    WRTE: [
-      { key: 'yac_above_expectation', label: 'YAC AE', decimals: 2, tooltip: "Yards After Catch vs. NFL's expected-YAC model (based on speed, separation, and defender pursuit angles at the catch) -- isolates what the receiver did with the ball from what the play design/blocking provided. Typical range (2025): about 0.1 (poor) to 0.8+ (elite); 0 is average by definition." },
-      { key: 'target_share', label: 'TGT SHR%', decimals: 1, tooltip: "Share of the team's total pass targets this player receives. Typical range (2025, 40+ target WR/TE): about 12% (low) to 17%+ (elite); varies a lot by role." },
-      { key: 'adot', label: 'aDOT', decimals: 1, tooltip: "Average Depth of Target -- how far downfield this player's targets travel on average. Not a quality stat -- describes role (deep threat vs. possession/slot receiver), not skill." },
-      { key: 'air_yards_share', label: 'AIR YD SHR%', decimals: 1, tooltip: "Share of the team's total intended air yards directed at this player. Same role indicator as aDOT, not a quality signal." },
-      { key: 'avg_separation', label: 'SEP', decimals: 2, tooltip: "Average distance (yards) from the nearest defender when the ball arrives -- a tracking-based route-running signal. Typical range (2025, 40+ target WR/TE): about 2.7 (tight) to 3.3+ (open); higher is generally better." },
-      { key: 'drop_rate', label: 'DROP%', decimals: 1, tooltip: "Share of catchable targets dropped. Typical range (2025, 40+ target WR/TE): about 2.4% (good) to 4.9%+ (poor); lower is better." },
-      { key: 'broken_tackle_rate_rec', label: 'BRK TKL%', decimals: 1, tooltip: "Broken tackles per reception. Typical range (2025, 40+ target WR/TE): about 2.9% (low) to 6.3%+ (elite)." },
-    ],
-  },
+
+// Defender advanced fields -- same source/season/gates as the FormationView
+// hover card (see build_match.py / CLAUDE.md); label/dec/tooltip reused
+// here rather than duplicated per-column below.
+const DEF_STAT_META = {
+  pressures_per100:   { label: 'Pressures/100', dec: 1, tip: 'QB pressures (sacks, hits and hurries) per 100 defensive snaps.' },
+  sacks_per100:       { label: 'Sacks/100', dec: 2, tip: 'Sacks per 100 defensive snaps.' },
+  tfl_per100:         { label: 'TFL/100', dec: 2, tip: 'Tackles for loss per 100 defensive snaps.' },
+  tkl_per100:         { label: 'Tkl/100', dec: 1, tip: 'Combined tackles per 100 defensive snaps. A volume stat: it reflects role and scheme as much as skill.' },
+  missed_tackle_rate: { label: 'Missed Tkl%', dec: 1, tip: 'Share of tackle attempts that were missed (missed / (tackles + missed)). Lower is better.' },
+  comp_pct_allowed:   { label: 'Comp% Allowed', dec: 1, tip: 'Completion percentage on passes thrown at him in coverage. Lower is better.' },
+  rating_allowed:     { label: 'Rating Allowed', dec: 1, tip: 'Passer rating of quarterbacks when targeting him in coverage. Lower is better.' },
+  yds_per_target_allowed: { label: 'Yds/Tgt Allowed', dec: 1, tip: 'Passing yards allowed per target in coverage. Lower is better.' },
+  adot_allowed:       { label: 'aDOT Allowed', dec: 1, tip: 'Average depth of the targets thrown at him. Not a quality stat -- it describes how he is tested (deep vs. short/underneath), not how well he covers.' },
+  int_pd_per_target:  { label: 'INT+PD/Tgt', dec: 1, tip: 'Interceptions plus passes defended per 100 targets. Higher is better.' },
 };
-// Advanced tab's column set follows the position filter: all-RB -> RB set,
-// only WR/TE -> WR/TE set, anything else (empty/mixed/QB) -> QB set.
-const ADV_DEFAULT_SORT = { QB: 'stat5', RB: 'stat1', WRTE: 'stat2' };
-function advancedGroup() {
-  const sel = [...selectedPositions];
-  if (sel.length && sel.every(p => p === 'RB')) return 'RB';
-  if (sel.length && sel.every(p => p === 'WR' || p === 'TE')) return 'WRTE';
-  return 'QB';
+const DEF_ADV_COLS = Object.entries(DEF_STAT_META).map(([key, m]) => ({
+  key, label: m.label, decimals: m.dec, tooltip: m.tip, default: false,
+}));
+
+// One flat, ordered column list per merged tab: { key, label, tooltip,
+// decimals (null for raw stats-block fields), default }. `default: true`
+// columns are what the tab opens with; the rest are available via the
+// column picker.
+const STAT_COLS = {
+  passing: [
+    { key: 'CMP', label: 'CMP', decimals: null, tooltip: '', default: true },
+    { key: 'ATT', label: 'ATT', decimals: null, tooltip: '', default: true },
+    { key: 'PASS_YDS', label: 'YDS', decimals: null, tooltip: '', default: true },
+    { key: 'PASS_TDS', label: 'TD', decimals: null, tooltip: '', default: true },
+    { key: 'INT', label: 'INT', decimals: null, tooltip: '', default: true },
+    { key: 'SACK', label: 'SACKED', decimals: null, tooltip: '', default: false },
+    { key: 'RUSH_YDS', label: 'RUSH YDS', decimals: null, tooltip: '', default: false },
+    { key: 'epa_per_play', label: 'EPA/DB', decimals: 2, tooltip: "Expected Points Added per dropback -- points added vs. a league-average outcome in the same situation. Typical range: about -0.10 (poor) to +0.25 (elite); 0.00-0.10 is roughly average.", default: false },
+    { key: 'success_rate', label: 'SUCC%', decimals: 1, tooltip: "Success rate -- share of dropbacks that meaningfully move the offense closer to a first down or score. Typical range: about 40% (poor) to 55%+ (elite); 46-48% is roughly average.", default: false },
+    { key: 'cpoe', label: 'CPOE', decimals: 1, tooltip: "Completion % Over Expected -- accuracy vs. expected, given throw difficulty. Typical range: about -5% (poor) to +5-8% (elite); 0% is average.", default: false },
+    { key: 'ngs_time_to_throw', label: 'TTT', decimals: 2, tooltip: "Time to throw -- average seconds from snap to release. Typically 2.4-3.0s. Faster isn't automatically better or worse -- it depends on scheme and play style.", default: false },
+    { key: 'qbr', label: 'QBR', decimals: 1, tooltip: "ESPN's Total QBR -- a 0-100 all-in-one rating of overall efficiency. ESPN scales it so 50 = average; 65+ is very good, below 40 is poor.", default: false },
+  ],
+  rushing: [
+    { key: 'CAR', label: 'CAR', decimals: null, tooltip: '', default: true },
+    { key: 'RUSH_YDS', label: 'RUSH_YDS', decimals: null, tooltip: '', default: true },
+    { key: 'RUSH_TDS', label: 'RUSH_TDS', decimals: null, tooltip: '', default: true },
+    { key: 'REC', label: 'REC', decimals: null, tooltip: '', default: false },
+    { key: 'REC_YDS', label: 'REC_YDS', decimals: null, tooltip: '', default: false },
+    { key: 'TGT', label: 'TGT', decimals: null, tooltip: '', default: false },
+    { key: 'ryoe_per_att', label: 'RYOE/Att', decimals: 2, tooltip: "Rush Yards Over Expected per attempt -- how many yards a carry gains vs. what's expected given blocking, defenders in the box, and other context. Typical range (2025, 100+ carry backs): about -0.8 (poor) to +1.3 (elite); 0 is average by definition.", default: false },
+    { key: 'yac_per_att', label: 'YAC/Att', decimals: 2, tooltip: "Yards After Contact per attempt -- how many yards a back gains after first contact. Typical range (2025, 100+ carry backs): about 1.4 (poor) to 3.0 (elite); around 2.0 is roughly average.", default: false },
+    { key: 'broken_tackle_rate', label: 'Brk Tkl%', decimals: 1, tooltip: "Broken tackles per touch (carries + receptions). Typical range (2025, 100+ touch backs): about 1.6% (low) to 12.7% (elite); around 6.5% is roughly average.", default: false },
+    { key: 'box_rate', label: 'Box%', decimals: 0, tooltip: "Share of carries run into a stacked box (8+ defenders). Typical range (2025): about 11% to 45%. Lower generally means defenses respect the passing game more -- this reflects the whole offense's threat level, not just the runner himself.", default: false },
+    { key: 'target_share', label: 'Tgt Shr%', decimals: 1, tooltip: "Share of the team's total pass targets this back receives. Typical range (2025, 20+ target backs): about 3% (early-down runner) to 24% (elite receiving back); around 8% is roughly average.", default: false },
+  ],
+  receiving: [
+    { key: 'REC', label: 'REC', decimals: null, tooltip: '', default: true },
+    { key: 'TGT', label: 'TGT', decimals: null, tooltip: '', default: true },
+    { key: 'REC_YDS', label: 'REC_YDS', decimals: null, tooltip: '', default: true },
+    { key: 'REC_TDS', label: 'REC_TDS', decimals: null, tooltip: '', default: true },
+    { key: 'YAC', label: 'YAC', decimals: null, tooltip: '', default: false },
+    { key: 'yac_above_expectation', label: 'YAC AE', decimals: 2, tooltip: "Yards After Catch vs. NFL's expected-YAC model (based on speed, separation, and defender pursuit angles at the catch) -- isolates what the receiver did with the ball from what the play design/blocking provided. Typical range (2025): about 0.1 (poor) to 0.8+ (elite); 0 is average by definition.", default: false },
+    { key: 'target_share', label: 'Tgt Shr%', decimals: 1, tooltip: "Share of the team's total pass targets this player receives. Typical range (2025, 40+ target WR/TE): about 12% (low) to 17%+ (elite); varies a lot by role.", default: false },
+    { key: 'adot', label: 'aDOT', decimals: 1, tooltip: "Average Depth of Target -- how far downfield this player's targets travel on average. Not a quality stat -- describes role (deep threat vs. possession/slot receiver), not skill.", default: false },
+    { key: 'air_yards_share', label: 'Air Yd Shr%', decimals: 1, tooltip: "Share of the team's total intended air yards directed at this player. Same role indicator as aDOT, not a quality signal.", default: false },
+    { key: 'avg_separation', label: 'Sep', decimals: 2, tooltip: "Average distance (yards) from the nearest defender when the ball arrives -- a tracking-based route-running signal. Typical range (2025, 40+ target WR/TE): about 2.7 (tight) to 3.3+ (open); higher is generally better.", default: false },
+    { key: 'drop_rate', label: 'Drop%', decimals: 1, tooltip: "Share of catchable targets dropped. Typical range (2025, 40+ target WR/TE): about 2.4% (good) to 4.9%+ (poor); lower is better.", default: false },
+    { key: 'broken_tackle_rate_rec', label: 'Brk Tkl%', decimals: 1, tooltip: "Broken tackles per reception. Typical range (2025, 40+ target WR/TE): about 2.9% (low) to 6.3%+ (elite).", default: false },
+  ],
+  defense: [
+    { key: 'TKL', label: 'TKL', decimals: null, tooltip: '', default: true },
+    { key: 'SACK', label: 'SACK', decimals: null, tooltip: '', default: true },
+    { key: 'INT', label: 'INT', decimals: null, tooltip: '', default: true },
+    { key: 'PBU', label: 'PBU', decimals: null, tooltip: '', default: true },
+    { key: 'TFL', label: 'TFL', decimals: null, tooltip: '', default: true },
+    { key: 'QB_HIT', label: 'QB_HIT', decimals: null, tooltip: '', default: false },
+    { key: 'FF', label: 'FF', decimals: null, tooltip: '', default: false },
+    ...DEF_ADV_COLS,
+  ],
+};
+
+// The 4 merged tabs (Advanced folded into each by position). Fixed columns
+// come before the picker-driven stat slots; default sort key is the stat
+// KEY (not slot position, since slot position shifts as columns toggle).
+const MERGED_TABS = ['passing', 'rushing', 'receiving', 'defense'];
+const FIXED_COLS = {
+  passing:   ['team', 'name'],
+  rushing:   ['team', 'name'],
+  receiving: ['team', 'name'],
+  defense:   ['team', 'ourlads_pos', 'pos', 'name'],
+};
+const DEFAULT_SORT_KEY = {
+  passing: 'PASS_YDS',
+  rushing: 'RUSH_YDS',
+  receiving: 'REC_YDS',
+  defense: 'TKL',
+};
+let checkedStatKeys = new Set();
+
+function checkedCols(viewKey) {
+  return STAT_COLS[viewKey].filter(e => checkedStatKeys.has(e.key));
 }
-function statColsFor(viewKey) {
-  const cols = STAT_COLS[viewKey];
-  return (viewKey === 'advanced') ? cols[advancedGroup()] : cols;
+
+function defaultSortColFor(viewKey) {
+  const entries = checkedCols(viewKey);
+  const idx = entries.findIndex(e => e.key === DEFAULT_SORT_KEY[viewKey]);
+  return idx >= 0 ? 'stat' + (idx + 1) : 'madden';
 }
+
+function rebuildStatView(viewKey) {
+  const entries = checkedCols(viewKey);
+  const cols = FIXED_COLS[viewKey].concat(entries.map((e, i) => 'stat' + (i + 1)));
+  updateColumns(cols);
+  updateStatColumns(viewKey, entries);
+}
+
+function renderColPicker(viewKey) {
+  document.getElementById('colPicker').innerHTML = STAT_COLS[viewKey].map(e => `
+    <label class="col-picker-item">
+      <input type="checkbox" ${checkedStatKeys.has(e.key) ? 'checked' : ''} onchange="toggleStatCol('${e.key}','${viewKey}')">
+      ${e.label}
+    </label>
+  `).join('');
+}
+
+function toggleStatCol(key, viewKey) {
+  // Capture the actual stat KEY the sort currently points to (if any),
+  // so a checkbox toggle that shifts slot positions doesn't silently
+  // re-point the sort at a different stat.
+  let sortKeyBefore = null;
+  const m = /^stat(\d+)$/.exec(sortCol);
+  if (m) sortKeyBefore = window['_statKey' + m[1]];
+
+  if (checkedStatKeys.has(key)) checkedStatKeys.delete(key); else checkedStatKeys.add(key);
+  rebuildStatView(viewKey);
+
+  if (sortKeyBefore) {
+    if (!checkedStatKeys.has(sortKeyBefore)) {
+      // The column driving the sort was just unchecked -- fall back to
+      // this tab's original default sort column.
+      sortCol = defaultSortColFor(viewKey);
+      sortDir = 'desc';
+    } else {
+      // Still checked, but may have shifted slots -- re-point sortCol.
+      const entries = checkedCols(viewKey);
+      const idx = entries.findIndex(e => e.key === sortKeyBefore);
+      if (idx >= 0) sortCol = 'stat' + (idx + 1);
+    }
+  }
+  applyFilters();
+}
+
 const TEAM_ABBRS = Object.keys(TEAMS);
 const ALL_POSITIONS = ['QB','WR','RB','TE','OL','EDGE','DI','LB','CB','S','K','P'];
 
@@ -835,7 +980,6 @@ let filteredPlayers = [];
 let sortCol = 'madden';
 let sortDir = 'desc';
 let currentView = 'overview';
-let advancedGroupShown = 'QB';
 
 // Multi-select filter state. Empty set = no filter (show all) -- same
 // semantics as the old selects' "" / "All ..." option.
@@ -849,11 +993,10 @@ const VIEWS = {
   overview:   { cols: ['team','ourlads_pos','pos','name','age','college','draft_year','madden','cap'], pos: null, sort: 'madden' },
   financial:  { cols: ['team','ourlads_pos','pos','name','cap','years_pro','years_remaining','cash_total_remaining','cash_guaranteed_remaining','avg_annual_remaining'], pos: null, sort: 'cap' },
   madden:     { cols: ['team','ourlads_pos','pos','name','madden','age'],                    pos: null, sort: 'madden' },
-  passing:    { cols: ['team','name','stat1','stat2','stat3','stat4','stat5'],               pos: ['QB'], sort: 'stat3' },
-  rushing:    { cols: ['team','name','stat1','stat2','stat3'],                                pos: ['RB'], sort: 'stat2' },
-  receiving:  { cols: ['team','name','stat1','stat2','stat3','stat4'],                       pos: ['WR'], sort: 'stat3' },
-  defense:    { cols: ['team','ourlads_pos','pos','name','stat1','stat2','stat3','stat4'],   pos: [...DEFENSE_POS], sort: 'stat1' },
-  advanced:   { cols: ['team','name','stat1','stat2','stat3','stat4','stat5','stat6','stat7'], pos: ['QB','RB','WR','TE'], sort: 'stat5' },
+  passing:    { pos: ['QB'] },
+  rushing:    { pos: ['RB'] },
+  receiving:  { pos: ['WR','TE'] },
+  defense:    { pos: [...DEFENSE_POS] },
 };
 
 function setView(viewKey, btn) {
@@ -873,29 +1016,34 @@ function setView(viewKey, btn) {
     selectedPositions = new Set(view.pos);
     syncPosCheckboxes();
     updatePosLabel();
+    syncPosGroupButtons();
   }
 
-  // Update visible columns
-  updateColumns(view.cols);
-
-  // Apply sort
-  sortCol = view.sort;
-  // passing/rushing/receiving/defense now default-sort by a real
-  // production stat (see VIEWS above) instead of name -- all four are
-  // "higher is better" counting stats (yards/tackles), so they need
-  // desc here same as madden/cap, or the tab would load worst-to-best.
-  sortDir = (view.sort === 'madden' || view.sort === 'cap' || viewKey === 'passing' || viewKey === 'rushing' || viewKey === 'receiving' || viewKey === 'defense' || viewKey === 'advanced') ? 'desc' : 'asc';
-  updateStatColumns(viewKey);
-  if (viewKey === 'advanced') {
-    advancedGroupShown = advancedGroup();
-    sortCol = ADV_DEFAULT_SORT[advancedGroupShown];
+  if (MERGED_TABS.includes(viewKey)) {
+    // Column picker tabs: reset to this tab's default columns every time
+    // it's (re)opened, same convention as filters resetting on Clear.
+    checkedStatKeys = new Set(STAT_COLS[viewKey].filter(e => e.default).map(e => e.key));
+    renderColPicker(viewKey);
+    document.getElementById('colPicker').style.display = 'flex';
+    rebuildStatView(viewKey);
+    sortCol = defaultSortColFor(viewKey);
+    sortDir = 'desc'; // all default columns here are "higher is better" counting stats
+  } else {
+    document.getElementById('colPicker').style.display = 'none';
+    updateColumns(view.cols);
+    updateStatColumns(viewKey);
+    sortCol = view.sort;
+    sortDir = (view.sort === 'madden' || view.sort === 'cap') ? 'desc' : 'asc';
   }
+
   applyFilters();
   updateStickyOffset();
 }
 
+const STAT_SLOT_IDS = Array.from({length: 17}, (_, i) => 'stat' + (i + 1));
+
 function updateColumns(cols) {
-  const allCols = ['team','ourlads_pos','pos','name','age','college','draft_year','years_pro','madden','cap','years_remaining','cash_total_remaining','cash_guaranteed_remaining','avg_annual_remaining','stat1','stat2','stat3','stat4','stat5','stat6','stat7'];
+  const allCols = ['team','ourlads_pos','pos','name','age','college','draft_year','years_pro','madden','cap','years_remaining','cash_total_remaining','cash_guaranteed_remaining','avg_annual_remaining', ...STAT_SLOT_IDS];
 
   const colMap = {
       team: 'th-team', ourlads_pos: 'th-ourlads_pos', pos: 'th-pos', name: 'th-name',
@@ -903,8 +1051,8 @@ function updateColumns(cols) {
       years_pro: 'th-years_pro', madden: 'th-madden', cap: 'th-cap',
       years_remaining: 'th-years_remaining', cash_total_remaining: 'th-cash_total_remaining',
       cash_guaranteed_remaining: 'th-cash_guaranteed_remaining', avg_annual_remaining: 'th-avg_annual_remaining',
-      stat1: 'th-stat1', stat2: 'th-stat2', stat3: 'th-stat3', stat4: 'th-stat4', stat5: 'th-stat5', stat6: 'th-stat6', stat7: 'th-stat7'
   };
+  STAT_SLOT_IDS.forEach(id => { colMap[id] = 'th-' + id; });
 
   allCols.forEach(col => {
     const th = document.getElementById(colMap[col]);
@@ -976,6 +1124,16 @@ async function loadAll() {
       avg_separation: player.avg_separation != null ? player.avg_separation : null,
       drop_rate: player.drop_rate != null ? player.drop_rate : null,
       broken_tackle_rate_rec: player.broken_tackle_rate_rec != null ? player.broken_tackle_rate_rec : null,
+      pressures_per100: player.pressures_per100 != null ? player.pressures_per100 : null,
+      sacks_per100: player.sacks_per100 != null ? player.sacks_per100 : null,
+      tfl_per100: player.tfl_per100 != null ? player.tfl_per100 : null,
+      tkl_per100: player.tkl_per100 != null ? player.tkl_per100 : null,
+      missed_tackle_rate: player.missed_tackle_rate != null ? player.missed_tackle_rate : null,
+      comp_pct_allowed: player.comp_pct_allowed != null ? player.comp_pct_allowed : null,
+      rating_allowed: player.rating_allowed != null ? player.rating_allowed : null,
+      yds_per_target_allowed: player.yds_per_target_allowed != null ? player.yds_per_target_allowed : null,
+      adot_allowed: player.adot_allowed != null ? player.adot_allowed : null,
+      int_pd_per_target: player.int_pd_per_target != null ? player.int_pd_per_target : null,
     });
   }
   loaded++;
@@ -1026,6 +1184,7 @@ function toggleTeamItem(abbr) {
 function togglePosItem(pos) {
   if (selectedPositions.has(pos)) selectedPositions.delete(pos); else selectedPositions.add(pos);
   updatePosLabel();
+  syncPosGroupButtons();
   applyFilters();
 }
 
@@ -1047,7 +1206,18 @@ function togglePosGroup(which) {
   group.forEach(p => allSelected ? selectedPositions.delete(p) : selectedPositions.add(p));
   syncPosCheckboxes();
   updatePosLabel();
+  syncPosGroupButtons();
   applyFilters();
+}
+
+// Highlights "All Offense"/"All Defense" when every position in that group
+// is currently selected (and only then) -- called anywhere selectedPositions
+// changes, not just from the group-toggle buttons themselves.
+function syncPosGroupButtons() {
+  const offBtn = document.getElementById('posGroupOffenseBtn');
+  const defBtn = document.getElementById('posGroupDefenseBtn');
+  if (offBtn) offBtn.classList.toggle('active', [...OFFENSE_POS].every(p => selectedPositions.has(p)));
+  if (defBtn) defBtn.classList.toggle('active', [...DEFENSE_POS].every(p => selectedPositions.has(p)));
 }
 
 function syncTeamCheckboxes() {
@@ -1118,15 +1288,6 @@ function applyFilters() {
     return true;
   });
 
-  // Advanced tab: a position-filter change can swap the column set (QB/RB/
-  // WR+TE); when it does, reset to that set's default sort.
-  if (currentView === 'advanced' && advancedGroup() !== advancedGroupShown) {
-    advancedGroupShown = advancedGroup();
-    updateStatColumns('advanced');
-    sortCol = ADV_DEFAULT_SORT[advancedGroupShown];
-    sortDir = 'desc';
-  }
-
   // Apply sort
   sortPlayers();
   renderTable();
@@ -1142,6 +1303,7 @@ function clearFilters() {
   syncPosCheckboxes();
   updateTeamLabel();
   updatePosLabel();
+  syncPosGroupButtons();
   applyFilters();
 }
 
@@ -1199,6 +1361,16 @@ function sortPlayers() {
       case 'stat5': av = getStatVal(a, window._statKey5); bv = getStatVal(b, window._statKey5); break;
       case 'stat6': av = getStatVal(a, window._statKey6); bv = getStatVal(b, window._statKey6); break;
       case 'stat7': av = getStatVal(a, window._statKey7); bv = getStatVal(b, window._statKey7); break;
+      case 'stat8': av = getStatVal(a, window._statKey8); bv = getStatVal(b, window._statKey8); break;
+      case 'stat9': av = getStatVal(a, window._statKey9); bv = getStatVal(b, window._statKey9); break;
+      case 'stat10': av = getStatVal(a, window._statKey10); bv = getStatVal(b, window._statKey10); break;
+      case 'stat11': av = getStatVal(a, window._statKey11); bv = getStatVal(b, window._statKey11); break;
+      case 'stat12': av = getStatVal(a, window._statKey12); bv = getStatVal(b, window._statKey12); break;
+      case 'stat13': av = getStatVal(a, window._statKey13); bv = getStatVal(b, window._statKey13); break;
+      case 'stat14': av = getStatVal(a, window._statKey14); bv = getStatVal(b, window._statKey14); break;
+      case 'stat15': av = getStatVal(a, window._statKey15); bv = getStatVal(b, window._statKey15); break;
+      case 'stat16': av = getStatVal(a, window._statKey16); bv = getStatVal(b, window._statKey16); break;
+      case 'stat17': av = getStatVal(a, window._statKey17); bv = getStatVal(b, window._statKey17); break;
       default:          av = a.madden;        bv = b.madden;
     }
     // Nulls always last regardless of sort direction
@@ -1238,21 +1410,21 @@ function getStatVal(p, statKey) {
   return p[statKey] != null ? p[statKey] : null;
 }
 
-function updateStatColumns(viewKey) {
-  const keys = statColsFor(viewKey) || null;
-  const ids = ['stat1','stat2','stat3','stat4','stat5','stat6','stat7'];
+function updateStatColumns(viewKey, entries) {
+  // `entries` (an ordered array of {key,label,tooltip} from checkedCols())
+  // drives the 4 merged tabs; non-merged tabs (overview/financial/madden)
+  // pass none and simply clear every stat slot, same as before.
+  const keys = entries || null;
 
-  ids.forEach((id, i) => {
+  STAT_SLOT_IDS.forEach((id, i) => {
     const th = document.getElementById('th-' + id);
     if (!th) return;
     if (keys && i < keys.length) {
       const entry = keys[i];
-      const key = typeof entry === 'string' ? entry : entry.key;
-      const label = typeof entry === 'string' ? entry : entry.label;
       th.style.display = '';
-      th.innerHTML = label + ' <span class="sort-icon">↕</span>';
-      th.title = (typeof entry === 'object' && entry.tooltip) ? entry.tooltip : '';
-      window['_statKey' + (i+1)] = key;
+      th.innerHTML = entry.label + ' <span class="sort-icon">↕</span>';
+      th.title = entry.tooltip || '';
+      window['_statKey' + (i+1)] = entry.key;
     } else {
       th.style.display = 'none';
       window['_statKey' + (i+1)] = null;
@@ -1301,6 +1473,7 @@ function renderTable() {
   }
   empty.style.display = 'none';
 
+    const activeEntries = MERGED_TABS.includes(currentView) ? checkedCols(currentView) : [];
     const html = filteredPlayers.map(p => {
     const team = TEAMS[p.abbr];
     const mc = maddenColor(p.madden);
@@ -1346,12 +1519,12 @@ function renderTable() {
       row += '<td style="font-family:\'Barlow Condensed\',sans-serif;font-weight:700;color:var(--text)">' + (formatMoney(p.cash_guaranteed_remaining) || '—') + '</td>';
     if (cols.includes('avg_annual_remaining'))
       row += '<td style="font-family:\'Barlow Condensed\',sans-serif;font-weight:700;color:var(--gold)">' + (formatMoney(p.avg_annual_remaining) || '—') + '</td>';
-      ['stat1','stat2','stat3','stat4','stat5','stat6','stat7'].forEach((col, i) => {
+      STAT_SLOT_IDS.forEach((col, i) => {
         const key = window['_statKey' + (i+1)];
         if (cols.includes(col) && key) {
           const val = getStatVal(p, key);
-          const colDef = (statColsFor(currentView) || [])[i];
-          const decimals = colDef && typeof colDef === 'object' ? colDef.decimals : null;
+          const colDef = activeEntries[i];
+          const decimals = colDef ? colDef.decimals : null;
           const display = (val != null && decimals != null) ? Number(val).toFixed(decimals) : val;
           row += '<td style="text-align:center;font-family:\'Barlow Condensed\',sans-serif;font-weight:700;font-size:16px;color:var(--text)">' + (display != null ? display : '<span style="color:var(--text-muted)">—</span>') + '</td>';
         }
