@@ -14,11 +14,27 @@
         "standard_pos": "WR",
         "cap_number": "$3,888,378",
         "stats": {
-          "TGT": 11,
-          "REC": 7,
-          "YDS": 146,
+          "TGT": 15,
+          "REC": 11,
+          "YDS": 189,
           "TDs": 1,
-          "YAC": 3
+          "YAC": 11
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Cody White",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {
+          "TGT": 6,
+          "REC": 3,
+          "YDS": 28,
+          "TDs": 3
         },
         "stats_season": 2026
       }
@@ -33,10 +49,10 @@
         "standard_pos": "WR",
         "cap_number": "$4,582,000",
         "stats": {
-          "TGT": 8,
-          "REC": 4,
-          "YDS": 36,
-          "YAC": 12
+          "TGT": 11,
+          "REC": 5,
+          "YDS": 52,
+          "YAC": 14
         },
         "stats_season": 2026
       },
@@ -49,7 +65,7 @@
         "standard_pos": "WR",
         "cap_number": "$954,433",
         "stats": {
-          "TGT": 3,
+          "TGT": 4,
           "REC": 1,
           "YDS": 6,
           "YAC": 7,
@@ -222,8 +238,14 @@
         "standard_slot": "TE",
         "standard_pos": "TE",
         "cap_number": "$4,946,941",
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "TGT": 13,
+          "REC": 10,
+          "YDS": 116,
+          "TDs": 1,
+          "YAC": 28
+        },
+        "stats_season": 2026
       },
       {
         "name": "Michael Mayer",
@@ -234,10 +256,11 @@
         "standard_pos": "TE",
         "cap_number": "$5,825,889",
         "stats": {
-          "TGT": 11,
-          "REC": 9,
-          "YDS": 55,
-          "YAC": 36
+          "TGT": 14,
+          "REC": 12,
+          "YDS": 87,
+          "TDs": 1,
+          "YAC": 56
         },
         "stats_season": 2026
       },
@@ -290,13 +313,13 @@
         "standard_pos": "QB",
         "cap_number": "$1,300,000",
         "stats": {
-          "CMP": 40,
-          "ATT": 59,
-          "YDS": 413,
-          "TDs": 6,
+          "CMP": 62,
+          "ATT": 92,
+          "YDS": 661,
+          "TDs": 9,
           "INTs": 3,
-          "SACKS": 2,
-          "RU YDS": -5
+          "SACKS": 5,
+          "RU YDS": -2
         },
         "stats_season": 2026
       },
@@ -333,11 +356,11 @@
         "standard_pos": "RB",
         "cap_number": "$8,158,139",
         "stats": {
-          "CAR": 44,
-          "RU YDS": 150,
-          "REC": 10,
-          "RE YDS": 60,
-          "TGT": 13
+          "CAR": 63,
+          "RU YDS": 206,
+          "REC": 13,
+          "RE YDS": 97,
+          "TGT": 16
         },
         "stats_season": 2026
       },
@@ -350,8 +373,9 @@
         "standard_pos": "RB",
         "cap_number": "$1,164,039",
         "stats": {
-          "CAR": 10,
-          "RU YDS": 48,
+          "CAR": 15,
+          "RU YDS": 102,
+          "RU TDs": 1,
           "TGT": 1
         },
         "stats_season": 2026
@@ -416,10 +440,10 @@
         "standard_pos": "EDGE",
         "cap_number": "$35,791,250",
         "stats": {
-          "TKL": 2,
+          "TKL": 3,
           "SACKS": 1.5,
           "TFL": 1,
-          "QB HIT": 4
+          "QB HIT": 6
         },
         "stats_season": 2026
       },
@@ -432,9 +456,10 @@
         "standard_pos": "EDGE",
         "cap_number": "$11,010,000",
         "stats": {
-          "TKL": 2,
-          "SACKS": 1.5,
-          "QB HIT": 2
+          "TKL": 5,
+          "SACKS": 2.5,
+          "TFL": 1,
+          "QB HIT": 5
         },
         "stats_season": 2026
       }
@@ -451,7 +476,7 @@
         "stats": {
           "TKL": 1,
           "SACKS": 0.5,
-          "QB HIT": 1
+          "QB HIT": 2
         },
         "stats_season": 2026
       },
@@ -492,7 +517,8 @@
         "standard_pos": "DI",
         "cap_number": "$1,171,454",
         "stats": {
-          "TKL": 1,
+          "TKL": 2,
+          "TFL": 1,
           "QB HIT": 1
         },
         "stats_season": 2026
@@ -571,7 +597,8 @@
         "standard_pos": "EDGE",
         "cap_number": "$1,075,000",
         "stats": {
-          "TKL": 1
+          "TKL": 2,
+          "QB HIT": 1
         },
         "stats_season": 2026
       }
@@ -586,7 +613,8 @@
         "standard_pos": "LB",
         "cap_number": "$4,838,666",
         "stats": {
-          "TKL": 7
+          "TKL": 9,
+          "TFL": 1
         },
         "stats_season": 2026
       },
@@ -599,7 +627,7 @@
         "standard_pos": "LB",
         "cap_number": "$1,040,292",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       }
     ],
     "MLB": [
@@ -612,9 +640,10 @@
         "standard_pos": "LB",
         "cap_number": "$7,966,666",
         "stats": {
-          "TKL": 12,
+          "TKL": 23,
           "SACKS": 1.5,
-          "TFL": 2,
+          "PD": 1,
+          "TFL": 3,
           "QB HIT": 3
         },
         "stats_season": 2026
@@ -656,7 +685,7 @@
         "standard_pos": "CB",
         "cap_number": "$6,680,000",
         "stats": {
-          "TKL": 4,
+          "TKL": 5,
           "SACKS": 1.0,
           "TFL": 1
         },
@@ -686,13 +715,27 @@
         "standard_pos": "S",
         "cap_number": "$9,555,000",
         "stats": {
-          "TKL": 6
+          "TKL": 13,
+          "SACKS": 1.0,
+          "TFL": 1,
+          "QB HIT": 1
         },
         "stats_season": 2026
       },
       {
-        "name": "Dalton Johnson",
+        "name": "Tristin Mccollum",
         "depth": 2,
+        "injured": false,
+        "attainment": "W/Phi",
+        "standard_slot": "SS",
+        "standard_pos": "S",
+        "cap_number": "$1,145,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Dalton Johnson",
+        "depth": 3,
         "injured": false,
         "attainment": "26/5",
         "standard_slot": "SS",
@@ -727,20 +770,9 @@
         "standard_pos": "S",
         "cap_number": "$4,860,000",
         "stats": {
-          "TKL": 1
+          "TKL": 6
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Tristin Mccollum",
-        "depth": 3,
-        "injured": false,
-        "attainment": "W/Phi",
-        "standard_slot": "FS",
-        "standard_pos": "S",
-        "cap_number": "$1,145,000",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "RCB": [
@@ -753,6 +785,7 @@
         "standard_pos": "CB",
         "cap_number": "$1,528,203",
         "stats": {
+          "TKL": 1,
           "PD": 2
         },
         "stats_season": 2026
@@ -766,9 +799,9 @@
         "standard_pos": "CB",
         "cap_number": "$979,869",
         "stats": {
-          "TKL": 4,
-          "INTs": 2,
-          "PD": 3,
+          "TKL": 8,
+          "INTs": 3,
+          "PD": 4,
           "TFL": 1
         },
         "stats_season": 2026
@@ -795,7 +828,8 @@
         "standard_pos": "CB",
         "cap_number": "$8,670,000",
         "stats": {
-          "TKL": 4,
+          "TKL": 11,
+          "PD": 1,
           "TFL": 1,
           "QB HIT": 1
         },
@@ -854,22 +888,6 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Cody White",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "LWR",
-        "standard_pos": "WR",
-        "cap_number": null,
-        "stats": {
-          "TGT": 3,
-          "REC": 2,
-          "YDS": 24,
-          "TDs": 2
-        },
-        "stats_season": 2026
       }
     ],
     "OG": [

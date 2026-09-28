@@ -14,10 +14,10 @@
         "standard_pos": "WR",
         "cap_number": "$2,747,525",
         "stats": {
-          "TGT": 7,
-          "REC": 7,
-          "YDS": 64,
-          "YAC": 12
+          "TGT": 9,
+          "REC": 8,
+          "YDS": 101,
+          "YAC": 16
         },
         "stats_season": 2026
       },
@@ -49,11 +49,11 @@
         "standard_pos": "WR",
         "cap_number": "$6,752,000",
         "stats": {
-          "TGT": 8,
-          "REC": 5,
-          "YDS": 100,
+          "TGT": 18,
+          "REC": 11,
+          "YDS": 167,
           "TDs": 1,
-          "YAC": 24,
+          "YAC": 47,
           "CAR": 1
         },
         "stats_season": 2026
@@ -80,10 +80,10 @@
         "standard_pos": "WR",
         "cap_number": "$6,792,000",
         "stats": {
-          "TGT": 12,
-          "REC": 7,
-          "YDS": 88,
-          "YAC": 44
+          "TGT": 15,
+          "REC": 8,
+          "YDS": 94,
+          "YAC": 46
         },
         "stats_season": 2026
       },
@@ -109,7 +109,7 @@
         "standard_pos": "OL",
         "cap_number": "$24,837,834",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       },
       {
         "name": "Jude Bowry",
@@ -229,11 +229,11 @@
         "standard_pos": "TE",
         "cap_number": "$4,272,240",
         "stats": {
-          "TGT": 14,
-          "REC": 12,
-          "YDS": 225,
+          "TGT": 17,
+          "REC": 14,
+          "YDS": 263,
           "TDs": 1,
-          "YAC": 77
+          "YAC": 95
         },
         "stats_season": 2026
       },
@@ -246,11 +246,12 @@
         "standard_pos": "TE",
         "cap_number": "$8,551,333",
         "stats": {
-          "TGT": 3,
-          "REC": 3,
-          "YDS": 12,
+          "TGT": 4,
+          "REC": 4,
+          "YDS": 17,
           "TDs": 1,
-          "YAC": 7
+          "YAC": 9,
+          "CAR": 1
         },
         "stats_season": 2026
       },
@@ -262,8 +263,10 @@
         "standard_slot": "TE",
         "standard_pos": "TE",
         "cap_number": "$1,085,054",
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "TGT": 1
+        },
+        "stats_season": 2026
       },
       {
         "name": "Keleki Latu",
@@ -287,12 +290,13 @@
         "standard_pos": "QB",
         "cap_number": "$44,228,000",
         "stats": {
-          "CMP": 40,
-          "ATT": 60,
-          "YDS": 582,
+          "CMP": 56,
+          "ATT": 86,
+          "YDS": 786,
           "TDs": 5,
-          "SACKS": 4,
-          "RU YDS": 92
+          "INTs": 2,
+          "SACKS": 8,
+          "RU YDS": 114
         },
         "stats_season": 2026
       },
@@ -329,12 +333,12 @@
         "standard_pos": "RB",
         "cap_number": "$5,880,000",
         "stats": {
-          "CAR": 34,
-          "RU YDS": 192,
-          "RU TDs": 1,
+          "CAR": 58,
+          "RU YDS": 346,
+          "RU TDs": 2,
           "REC": 4,
           "RE YDS": 16,
-          "TGT": 7
+          "TGT": 8
         },
         "stats_season": 2026
       },
@@ -346,8 +350,12 @@
         "standard_slot": "RB",
         "standard_pos": "RB",
         "cap_number": "$3,275,000",
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "REC": 4,
+          "RE YDS": 50,
+          "TGT": 4
+        },
+        "stats_season": 2026
       },
       {
         "name": "Ray Davis",
@@ -410,7 +418,7 @@
         "standard_pos": "DI",
         "cap_number": "$1,504,314",
         "stats": {
-          "TKL": 2
+          "TKL": 3
         },
         "stats_season": 2026
       }
@@ -425,7 +433,7 @@
         "standard_pos": "DI",
         "cap_number": "$1,266,763",
         "stats": {
-          "TKL": 3,
+          "TKL": 4,
           "SACKS": 1.0,
           "TFL": 2,
           "QB HIT": 4
@@ -456,9 +464,9 @@
         "standard_pos": "DI",
         "cap_number": "$13,660,000",
         "stats": {
-          "TKL": 2,
+          "TKL": 3,
           "TFL": 1,
-          "QB HIT": 1
+          "QB HIT": 4
         },
         "stats_season": 2026
       },
@@ -471,7 +479,7 @@
         "standard_pos": "DI",
         "cap_number": "$1,532,195",
         "stats": {
-          "TKL": 2,
+          "TKL": 3,
           "TFL": 1
         },
         "stats_season": 2026
@@ -509,11 +517,11 @@
         "standard_pos": "EDGE",
         "cap_number": null,
         "stats": {
-          "TKL": 7,
-          "SACKS": 4.0,
+          "TKL": 12,
+          "SACKS": 6.0,
           "PD": 1,
-          "TFL": 4,
-          "QB HIT": 9
+          "TFL": 8,
+          "QB HIT": 12
         },
         "stats_season": 2026
       },
@@ -556,7 +564,7 @@
         "standard_pos": "LB",
         "cap_number": "$3,902,692",
         "stats": {
-          "TKL": 9,
+          "TKL": 13,
           "PD": 1,
           "TFL": 2
         },
@@ -570,7 +578,9 @@
         "standard_slot": "ILB_L",
         "standard_pos": "LB",
         "cap_number": "$1,155,740",
-        "stats": {},
+        "stats": {
+          "TKL": 1
+        },
         "stats_season": 2026
       }
     ],
@@ -584,7 +594,7 @@
         "standard_pos": "LB",
         "cap_number": "$5,352,000",
         "stats": {
-          "TKL": 9,
+          "TKL": 12,
           "PD": 1,
           "TFL": 2
         },
@@ -617,7 +627,7 @@
           "TKL": 2,
           "SACKS": 1.5,
           "TFL": 1,
-          "QB HIT": 4
+          "QB HIT": 6
         },
         "stats_season": 2026
       },
@@ -658,8 +668,21 @@
         "standard_pos": "CB",
         "cap_number": "$7,396,000",
         "stats": {
-          "TKL": 8,
-          "PD": 2
+          "TKL": 10,
+          "PD": 3
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Te'cory Couch",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF24",
+        "standard_slot": "LCB",
+        "standard_pos": "CB",
+        "cap_number": null,
+        "stats": {
+          "TKL": 1
         },
         "stats_season": 2026
       }
@@ -674,7 +697,9 @@
         "standard_pos": "S",
         "cap_number": null,
         "stats": {
-          "TKL": 7
+          "TKL": 10,
+          "INTs": 1,
+          "PD": 2
         },
         "stats_season": 2026
       },
@@ -687,7 +712,7 @@
         "standard_pos": "S",
         "cap_number": "$1,125,000",
         "stats": {
-          "TKL": 1
+          "TKL": 2
         },
         "stats_season": 2026
       },
@@ -713,7 +738,7 @@
         "standard_pos": "S",
         "cap_number": "$1,785,817",
         "stats": {
-          "TKL": 7
+          "TKL": 11
         },
         "stats_season": 2026
       },
@@ -726,7 +751,7 @@
         "standard_pos": "S",
         "cap_number": "$1,916,666",
         "stats": {
-          "TKL": 1
+          "TKL": 2
         },
         "stats_season": 2026
       }
@@ -741,7 +766,8 @@
         "standard_pos": "CB",
         "cap_number": "$3,467,723",
         "stats": {
-          "TKL": 3
+          "TKL": 4,
+          "PD": 1
         },
         "stats_season": 2026
       },
@@ -754,8 +780,8 @@
         "standard_pos": "CB",
         "cap_number": "$1,445,274",
         "stats": {
-          "TKL": 5,
-          "PD": 1
+          "TKL": 8,
+          "PD": 2
         },
         "stats_season": 2026
       }
@@ -770,7 +796,8 @@
         "standard_pos": "CB",
         "cap_number": "$3,230,000",
         "stats": {
-          "TKL": 2
+          "TKL": 2,
+          "PD": 1
         },
         "stats_season": 2026
       }
@@ -892,10 +919,10 @@
     ],
     "CB": [
       {
-        "name": "Te'cory Couch",
+        "name": "Anthony Kendall",
         "depth": 1,
         "injured": false,
-        "attainment": "CF24",
+        "attainment": "U/Cle",
         "standard_slot": "CB",
         "standard_pos": "DEF",
         "cap_number": null,
@@ -907,17 +934,6 @@
         "depth": 2,
         "injured": false,
         "attainment": "CF26",
-        "standard_slot": "CB",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Anthony Kendall",
-        "depth": 3,
-        "injured": false,
-        "attainment": "U/Cle",
         "standard_slot": "CB",
         "standard_pos": "DEF",
         "cap_number": null,

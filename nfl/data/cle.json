@@ -14,11 +14,11 @@
         "standard_pos": "WR",
         "cap_number": "$2,251,926",
         "stats": {
-          "TGT": 11,
-          "REC": 7,
-          "YDS": 154,
+          "TGT": 15,
+          "REC": 9,
+          "YDS": 195,
           "TDs": 2,
-          "YAC": 52
+          "YAC": 69
         },
         "stats_season": 2026
       },
@@ -60,7 +60,7 @@
         "standard_pos": "WR",
         "cap_number": "$1,262,500",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       }
     ],
     "SWR": [
@@ -73,9 +73,9 @@
         "standard_pos": "WR",
         "cap_number": "$3,590,623",
         "stats": {
-          "TGT": 11,
-          "REC": 10,
-          "YDS": 71,
+          "TGT": 20,
+          "REC": 12,
+          "YDS": 80,
           "YAC": 31,
           "CAR": 4
         },
@@ -108,7 +108,7 @@
         "standard_pos": "OL",
         "cap_number": "$5,864,696",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       },
       {
         "name": "Dawand Jones",
@@ -228,10 +228,11 @@
         "standard_pos": "TE",
         "cap_number": "$1,532,474",
         "stats": {
-          "TGT": 9,
-          "REC": 7,
-          "YDS": 75,
-          "YAC": 48
+          "TGT": 18,
+          "REC": 14,
+          "YDS": 126,
+          "TDs": 2,
+          "YAC": 74
         },
         "stats_season": 2026
       },
@@ -285,13 +286,13 @@
         "standard_pos": "QB",
         "cap_number": "$40,959,128",
         "stats": {
-          "CMP": 40,
-          "ATT": 52,
-          "YDS": 443,
-          "TDs": 3,
+          "CMP": 56,
+          "ATT": 82,
+          "YDS": 587,
+          "TDs": 5,
           "INTs": 1,
-          "SACKS": 7,
-          "RU YDS": 60
+          "SACKS": 9,
+          "RU YDS": 105
         },
         "stats_season": 2026
       },
@@ -303,8 +304,11 @@
         "standard_slot": "QB",
         "standard_pos": "QB",
         "cap_number": "$1,116,845",
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "CMP": 1,
+          "ATT": 1
+        },
+        "stats_season": 2026
       },
       {
         "name": "Taylen Green",
@@ -328,11 +332,11 @@
         "standard_pos": "RB",
         "cap_number": "$2,591,390",
         "stats": {
-          "CAR": 24,
-          "RU YDS": 54,
-          "REC": 7,
-          "RE YDS": 44,
-          "TGT": 7
+          "CAR": 42,
+          "RU YDS": 124,
+          "REC": 9,
+          "RE YDS": 53,
+          "TGT": 9
         },
         "stats_season": 2026
       },
@@ -345,11 +349,11 @@
         "standard_pos": "RB",
         "cap_number": "$1,005,000",
         "stats": {
-          "CAR": 3,
-          "RU YDS": 5,
-          "REC": 4,
-          "RE YDS": 32,
-          "TGT": 4
+          "CAR": 4,
+          "RU YDS": 22,
+          "REC": 8,
+          "RE YDS": 66,
+          "TGT": 9
         },
         "stats_season": 2026
       },
@@ -389,8 +393,10 @@
         "standard_slot": "FB",
         "standard_pos": "RB",
         "cap_number": "$1,135,000",
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "TGT": 1
+        },
+        "stats_season": 2026
       }
     ],
     "LDE": [
@@ -403,9 +409,9 @@
         "standard_pos": "EDGE",
         "cap_number": "$2,170,850",
         "stats": {
-          "TKL": 4,
+          "TKL": 6,
           "TFL": 2,
-          "QB HIT": 1
+          "QB HIT": 2
         },
         "stats_season": 2026
       },
@@ -434,7 +440,7 @@
         "cap_number": "$5,307,824",
         "stats": {
           "TKL": 1,
-          "QB HIT": 1
+          "QB HIT": 3
         },
         "stats_season": 2026
       },
@@ -446,8 +452,10 @@
         "standard_slot": "LDT",
         "standard_pos": "DI",
         "cap_number": null,
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "TKL": 2
+        },
+        "stats_season": 2026
       }
     ],
     "RDT": [
@@ -460,10 +468,10 @@
         "standard_pos": "DI",
         "cap_number": "$9,289,589",
         "stats": {
-          "TKL": 4,
-          "SACKS": 2.0,
-          "TFL": 3,
-          "QB HIT": 3
+          "TKL": 8,
+          "SACKS": 4.0,
+          "TFL": 6,
+          "QB HIT": 5
         },
         "stats_season": 2026
       },
@@ -489,8 +497,10 @@
         "standard_pos": "EDGE",
         "cap_number": "$3,851,982",
         "stats": {
-          "TKL": 3,
-          "TFL": 1
+          "TKL": 5,
+          "SACKS": 1.0,
+          "TFL": 3,
+          "QB HIT": 1
         },
         "stats_season": 2026
       },
@@ -503,8 +513,9 @@
         "standard_pos": "EDGE",
         "cap_number": "$1,776,000",
         "stats": {
-          "TKL": 2,
-          "TFL": 1
+          "TKL": 3,
+          "TFL": 1,
+          "QB HIT": 1
         },
         "stats_season": 2026
       }
@@ -519,8 +530,9 @@
         "standard_pos": "LB",
         "cap_number": "$2,628,000",
         "stats": {
-          "TKL": 7,
-          "TFL": 1
+          "TKL": 12,
+          "TFL": 2,
+          "QB HIT": 1
         },
         "stats_season": 2026
       },
@@ -546,7 +558,7 @@
         "standard_pos": "LB",
         "cap_number": "$2,681,909",
         "stats": {
-          "TKL": 8,
+          "TKL": 9,
           "TFL": 2,
           "QB HIT": 1
         },
@@ -587,22 +599,20 @@
         "standard_pos": "CB",
         "cap_number": "$19,048,412",
         "stats": {
-          "TKL": 5
+          "TKL": 8,
+          "PD": 1
         },
         "stats_season": 2026
       },
       {
-        "name": "Mekhi Blackmon",
+        "name": "Toriano Pride Jr.",
         "depth": 2,
         "injured": false,
-        "attainment": "W/Ind",
+        "attainment": "W/Buf",
         "standard_slot": "LCB",
         "standard_pos": "CB",
-        "cap_number": "$1,325,000",
-        "stats": {
-          "TKL": 2,
-          "PD": 1
-        },
+        "cap_number": "$885,000",
+        "stats": {},
         "stats_season": 2026
       }
     ],
@@ -616,7 +626,7 @@
         "standard_pos": "S",
         "cap_number": "$9,053,000",
         "stats": {
-          "TKL": 6,
+          "TKL": 8,
           "SACKS": 1.0,
           "PD": 1,
           "QB HIT": 1
@@ -644,8 +654,10 @@
         "standard_slot": "SS",
         "standard_pos": "S",
         "cap_number": "$1,357,500",
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "TKL": 1
+        },
+        "stats_season": 2026
       }
     ],
     "FS": [
@@ -658,8 +670,10 @@
         "standard_pos": "S",
         "cap_number": "$3,520,000",
         "stats": {
-          "TKL": 4,
+          "TKL": 7,
           "SACKS": 1.0,
+          "INTs": 1,
+          "PD": 1,
           "QB HIT": 1
         },
         "stats_season": 2026
@@ -692,6 +706,20 @@
           "TFL": 1
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Mekhi Blackmon",
+        "depth": 2,
+        "injured": false,
+        "attainment": "W/Ind",
+        "standard_slot": "RCB",
+        "standard_pos": "CB",
+        "cap_number": "$1,325,000",
+        "stats": {
+          "TKL": 8,
+          "PD": 2
+        },
+        "stats_season": 2026
       }
     ],
     "NB": [
@@ -704,9 +732,9 @@
         "standard_pos": "CB",
         "cap_number": "$1,102,583",
         "stats": {
-          "TKL": 3,
+          "TKL": 5,
           "INTs": 1,
-          "PD": 2
+          "PD": 3
         },
         "stats_season": 2026
       },
@@ -722,17 +750,6 @@
           "TKL": 2
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Toriano Pride Jr.",
-        "depth": 3,
-        "injured": false,
-        "attainment": "W/Buf",
-        "standard_slot": "NB",
-        "standard_pos": "CB",
-        "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "PT": [

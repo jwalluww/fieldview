@@ -14,10 +14,11 @@
         "standard_pos": "WR",
         "cap_number": "$13,225,000",
         "stats": {
-          "TGT": 19,
-          "REC": 8,
-          "YDS": 67,
-          "YAC": 20
+          "TGT": 24,
+          "REC": 11,
+          "YDS": 98,
+          "TDs": 1,
+          "YAC": 28
         },
         "stats_season": 2026
       },
@@ -30,9 +31,10 @@
         "standard_pos": "WR",
         "cap_number": null,
         "stats": {
-          "TGT": 1,
-          "REC": 1,
-          "YDS": 2,
+          "TGT": 2,
+          "REC": 2,
+          "YDS": 25,
+          "TDs": 1,
           "YAC": 1
         },
         "stats_season": 2026
@@ -48,10 +50,10 @@
         "standard_pos": "WR",
         "cap_number": "$8,866,666",
         "stats": {
-          "TGT": 3,
-          "REC": 3,
-          "YDS": 58,
-          "YAC": 25
+          "TGT": 8,
+          "REC": 5,
+          "YDS": 74,
+          "YAC": 30
         },
         "stats_season": 2026
       },
@@ -64,9 +66,9 @@
         "standard_pos": "WR",
         "cap_number": "$1,917,250",
         "stats": {
-          "TGT": 8,
-          "REC": 4,
-          "YDS": 35,
+          "TGT": 9,
+          "REC": 5,
+          "YDS": 49,
           "YAC": 12
         },
         "stats_season": 2026
@@ -82,10 +84,11 @@
         "standard_pos": "WR",
         "cap_number": "$1,566,864",
         "stats": {
-          "TGT": 12,
-          "REC": 8,
-          "YDS": 54,
-          "YAC": 28
+          "TGT": 18,
+          "REC": 11,
+          "YDS": 114,
+          "TDs": 1,
+          "YAC": 39
         },
         "stats_season": 2026
       },
@@ -125,17 +128,6 @@
         "cap_number": "$1,266,224",
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Gennings Dunker",
-        "depth": 2,
-        "injured": false,
-        "attainment": "26/3",
-        "standard_slot": "LG",
-        "standard_pos": "OL",
-        "cap_number": "$894,082",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "C": [
@@ -164,8 +156,19 @@
     ],
     "RG": [
       {
-        "name": "Spencer Anderson",
+        "name": "Brock Hoffman",
         "depth": 1,
+        "injured": false,
+        "attainment": "U/Dal",
+        "standard_slot": "RG",
+        "standard_pos": "OL",
+        "cap_number": "$2,500,000",
+        "stats": {},
+        "stats_season": 2026
+      },
+      {
+        "name": "Spencer Anderson",
+        "depth": 2,
         "injured": false,
         "attainment": "23/7",
         "standard_slot": "RG",
@@ -173,34 +176,12 @@
         "cap_number": "$1,164,446",
         "stats": {},
         "stats_season": 2026
-      },
-      {
-        "name": "Brock Hoffman",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/Dal",
-        "standard_slot": "RG",
-        "standard_pos": "OL",
-        "cap_number": "$2,500,000",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "RT": [
       {
-        "name": "Dylan Cook",
-        "depth": 1,
-        "injured": false,
-        "attainment": "SF23",
-        "standard_slot": "RT",
-        "standard_pos": "OL",
-        "cap_number": "$1,075,000",
-        "stats": {},
-        "stats_season": 2026
-      },
-      {
         "name": "Max Iheanachor",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "26/1",
         "standard_slot": "RT",
@@ -208,6 +189,17 @@
         "cap_number": "$3,762,252",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Dylan Cook",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF23",
+        "standard_slot": "RT",
+        "standard_pos": "OL",
+        "cap_number": "$1,075,000",
+        "stats": {},
+        "stats_season": 2026
       }
     ],
     "TE": [
@@ -220,12 +212,12 @@
         "standard_pos": "TE",
         "cap_number": "$6,943,333",
         "stats": {
-          "TGT": 10,
-          "REC": 9,
-          "YDS": 78,
+          "TGT": 14,
+          "REC": 11,
+          "YDS": 108,
           "TDs": 1,
-          "YAC": 39,
-          "CAR": 1
+          "YAC": 58,
+          "CAR": 2
         },
         "stats_season": 2026
       },
@@ -238,10 +230,10 @@
         "standard_pos": "TE",
         "cap_number": "$3,473,438",
         "stats": {
-          "TGT": 4,
-          "REC": 3,
-          "YDS": 25,
-          "YAC": 19
+          "TGT": 8,
+          "REC": 6,
+          "YDS": 92,
+          "YAC": 75
         },
         "stats_season": 2026
       },
@@ -253,8 +245,13 @@
         "standard_slot": "TE",
         "standard_pos": "TE",
         "cap_number": "$1,075,000",
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "TGT": 1,
+          "REC": 1,
+          "YDS": 2,
+          "YAC": 2
+        },
+        "stats_season": 2026
       },
       {
         "name": "Lake Mcree",
@@ -278,13 +275,13 @@
         "standard_pos": "QB",
         "cap_number": "$22,500,000",
         "stats": {
-          "CMP": 47,
-          "ATT": 79,
-          "YDS": 408,
-          "TDs": 1,
-          "INTs": 1,
-          "SACKS": 6,
-          "RU YDS": 2
+          "CMP": 66,
+          "ATT": 113,
+          "YDS": 700,
+          "TDs": 4,
+          "INTs": 2,
+          "SACKS": 8,
+          "RU YDS": 12
         },
         "stats_season": 2026
       },
@@ -335,11 +332,11 @@
         "standard_pos": "RB",
         "cap_number": "$7,033,333",
         "stats": {
-          "CAR": 21,
-          "RU YDS": 89,
-          "REC": 7,
-          "RE YDS": 61,
-          "TGT": 10
+          "CAR": 38,
+          "RU YDS": 216,
+          "REC": 10,
+          "RE YDS": 110,
+          "TGT": 14
         },
         "stats_season": 2026
       },
@@ -361,14 +358,17 @@
         "stats_season": 2026
       },
       {
-        "name": "Eli Heidenreich",
+        "name": "Travis Homer",
         "depth": 3,
         "injured": false,
-        "attainment": "26/7",
+        "attainment": "U/Chi",
         "standard_slot": "RB",
         "standard_pos": "RB",
-        "cap_number": "$923,996",
-        "stats": {},
+        "cap_number": "$955,556",
+        "stats": {
+          "CAR": 3,
+          "RU YDS": 16
+        },
         "stats_season": 2026
       },
       {
@@ -379,21 +379,20 @@
         "standard_slot": "RB",
         "standard_pos": "RB",
         "cap_number": null,
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "CAR": 1
+        },
+        "stats_season": 2026
       },
       {
-        "name": "Travis Homer",
+        "name": "Eli Heidenreich",
         "depth": 5,
         "injured": false,
-        "attainment": "U/Chi",
+        "attainment": "26/7",
         "standard_slot": "RB",
         "standard_pos": "RB",
-        "cap_number": "$955,556",
-        "stats": {
-          "CAR": 2,
-          "RU YDS": 16
-        },
+        "cap_number": "$923,996",
+        "stats": {},
         "stats_season": 2026
       }
     ],
@@ -420,9 +419,10 @@
         "standard_pos": "DI",
         "cap_number": "$4,084,910",
         "stats": {
-          "TKL": 2,
-          "SACKS": 0.5,
-          "QB HIT": 1
+          "TKL": 3,
+          "SACKS": 1.5,
+          "TFL": 1,
+          "QB HIT": 2
         },
         "stats_season": 2026
       },
@@ -436,7 +436,8 @@
         "cap_number": "$3,650,000",
         "stats": {
           "TKL": 2,
-          "TFL": 1
+          "TFL": 1,
+          "QB HIT": 1
         },
         "stats_season": 2026
       },
@@ -462,7 +463,8 @@
         "standard_pos": "DI",
         "cap_number": "$4,299,295",
         "stats": {
-          "TKL": 2
+          "TKL": 2,
+          "QB HIT": 1
         },
         "stats_season": 2026
       },
@@ -488,8 +490,8 @@
         "standard_pos": "DI",
         "cap_number": "$13,675,000",
         "stats": {
-          "TKL": 2,
-          "QB HIT": 1
+          "TKL": 3,
+          "QB HIT": 3
         },
         "stats_season": 2026
       },
@@ -501,7 +503,9 @@
         "standard_slot": "RE",
         "standard_pos": "DI",
         "cap_number": "$1,099,959",
-        "stats": {},
+        "stats": {
+          "TKL": 1
+        },
         "stats_season": 2026
       },
       {
@@ -542,7 +546,7 @@
           "INTs": 1,
           "PD": 1,
           "TFL": 4,
-          "QB HIT": 4
+          "QB HIT": 5
         },
         "stats_season": 2026
       },
@@ -555,7 +559,7 @@
         "standard_pos": "EDGE",
         "cap_number": "$5,427,431",
         "stats": {
-          "TKL": 5,
+          "TKL": 6,
           "TFL": 3,
           "QB HIT": 1
         },
@@ -572,9 +576,10 @@
         "standard_pos": "LB",
         "cap_number": "$17,193,334",
         "stats": {
-          "TKL": 2,
+          "TKL": 6,
           "INTs": 1,
-          "PD": 1
+          "PD": 2,
+          "TFL": 1
         },
         "stats_season": 2026
       },
@@ -587,7 +592,7 @@
         "standard_pos": "LB",
         "cap_number": "$1,039,235",
         "stats": {
-          "TKL": 1
+          "TKL": 2
         },
         "stats_season": 2026
       }
@@ -603,6 +608,7 @@
         "cap_number": "$1,526,267",
         "stats": {
           "TKL": 9,
+          "PD": 1,
           "TFL": 3
         },
         "stats_season": 2026
@@ -616,7 +622,7 @@
         "standard_pos": "LB",
         "cap_number": "$1,987,500",
         "stats": {
-          "TKL": 1
+          "TKL": 2
         },
         "stats_season": 2026
       }
@@ -648,7 +654,7 @@
         "standard_pos": "EDGE",
         "cap_number": "$1,242,733",
         "stats": {
-          "TKL": 1
+          "TKL": 3
         },
         "stats_season": 2026
       }
@@ -674,8 +680,21 @@
         "standard_pos": "CB",
         "cap_number": "$4,000,000",
         "stats": {
-          "TKL": 4,
-          "PD": 1
+          "TKL": 5,
+          "PD": 2
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Doneiko Slaughter",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LCB",
+        "standard_pos": "CB",
+        "cap_number": null,
+        "stats": {
+          "TKL": 1
         },
         "stats_season": 2026
       }
@@ -690,7 +709,7 @@
         "standard_pos": "S",
         "cap_number": "$1,075,000",
         "stats": {
-          "TKL": 5
+          "TKL": 10
         },
         "stats_season": 2026
       }
@@ -705,7 +724,7 @@
         "standard_pos": "S",
         "cap_number": "$5,500,000",
         "stats": {
-          "TKL": 5,
+          "TKL": 8,
           "INTs": 1,
           "PD": 1
         },
@@ -735,7 +754,8 @@
         "standard_pos": "CB",
         "cap_number": "$5,500,000",
         "stats": {
-          "TKL": 5
+          "TKL": 8,
+          "PD": 1
         },
         "stats_season": 2026
       },
@@ -748,7 +768,8 @@
         "standard_pos": "CB",
         "cap_number": "$1,254,635",
         "stats": {
-          "TKL": 1
+          "TKL": 2,
+          "PD": 1
         },
         "stats_season": 2026
       }
@@ -763,8 +784,9 @@
         "standard_pos": "CB",
         "cap_number": "$19,500,000",
         "stats": {
-          "TKL": 5,
-          "PD": 1
+          "TKL": 9,
+          "PD": 1,
+          "TFL": 1
         },
         "stats_season": 2026
       },
@@ -776,8 +798,10 @@
         "standard_slot": "NB",
         "standard_pos": "CB",
         "cap_number": "$3,915,000",
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "TKL": 2
+        },
+        "stats_season": 2026
       }
     ],
     "PT": [
@@ -921,19 +945,8 @@
         "stats_season": null
       },
       {
-        "name": "Doneiko Slaughter",
-        "depth": 2,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "CB",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Darius Rush",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "CB",
@@ -958,8 +971,19 @@
     ],
     "IR": [
       {
-        "name": "Deshon Elliott",
+        "name": "Gennings Dunker",
         "depth": 1,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$894,082",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Deshon Elliott",
+        "depth": 2,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -970,7 +994,7 @@
       },
       {
         "name": "Jack Driscoll",
-        "depth": 2,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -981,17 +1005,6 @@
       },
       {
         "name": "Daequan Hardy",
-        "depth": 3,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$515,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Cole Burgess",
         "depth": 4,
         "injured": true,
         "attainment": null,
@@ -1002,8 +1015,19 @@
         "stats_season": null
       },
       {
-        "name": "Logan Lee",
+        "name": "Cole Burgess",
         "depth": 5,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$515,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Logan Lee",
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",

@@ -14,11 +14,11 @@
         "standard_pos": "WR",
         "cap_number": "$26,171,176",
         "stats": {
-          "TGT": 13,
-          "REC": 9,
-          "YDS": 87,
-          "TDs": 2,
-          "YAC": 17
+          "TGT": 25,
+          "REC": 18,
+          "YDS": 185,
+          "TDs": 3,
+          "YAC": 45
         },
         "stats_season": 2026
       }
@@ -33,10 +33,11 @@
         "standard_pos": "WR",
         "cap_number": "$26,514,706",
         "stats": {
-          "TGT": 16,
-          "REC": 8,
-          "YDS": 154,
-          "YAC": 59
+          "TGT": 23,
+          "REC": 14,
+          "YDS": 244,
+          "TDs": 1,
+          "YAC": 66
         },
         "stats_season": 2026
       },
@@ -49,10 +50,10 @@
         "standard_pos": "WR",
         "cap_number": "$1,082,259",
         "stats": {
-          "TGT": 1,
-          "REC": 1,
-          "YDS": 7,
-          "YAC": 1
+          "TGT": 2,
+          "REC": 2,
+          "YDS": 9,
+          "YAC": 2
         },
         "stats_season": 2026
       }
@@ -67,10 +68,10 @@
         "standard_pos": "WR",
         "cap_number": "$888,333",
         "stats": {
-          "TGT": 2,
-          "REC": 1,
-          "YDS": 18,
-          "YAC": 16,
+          "TGT": 7,
+          "REC": 4,
+          "YDS": 47,
+          "YAC": 34,
           "CAR": 1
         },
         "stats_season": 2026
@@ -84,7 +85,7 @@
         "standard_pos": "WR",
         "cap_number": "$1,005,000",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       }
     ],
     "LT": [
@@ -193,7 +194,7 @@
         "standard_pos": "OL",
         "cap_number": "$4,192,243",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       },
       {
         "name": "Myles Hinton",
@@ -217,10 +218,10 @@
         "standard_pos": "TE",
         "cap_number": "$2,850,000",
         "stats": {
-          "TGT": 3,
-          "REC": 3,
+          "TGT": 5,
+          "REC": 4,
           "YDS": 19,
-          "YAC": 19
+          "YAC": 22
         },
         "stats_season": 2026
       },
@@ -233,11 +234,11 @@
         "standard_pos": "TE",
         "cap_number": "$7,584,313",
         "stats": {
-          "TGT": 7,
-          "REC": 5,
-          "YDS": 78,
-          "TDs": 1,
-          "YAC": 21
+          "TGT": 10,
+          "REC": 8,
+          "YDS": 115,
+          "TDs": 2,
+          "YAC": 26
         },
         "stats_season": 2026
       },
@@ -258,8 +259,24 @@
         "stats_season": 2026
       },
       {
-        "name": "Jack Endries",
+        "name": "Tanner Hudson",
         "depth": 4,
+        "injured": false,
+        "attainment": "SF22",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": null,
+        "stats": {
+          "TGT": 3,
+          "REC": 3,
+          "YDS": 17,
+          "YAC": 4
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Jack Endries",
+        "depth": 5,
         "injured": false,
         "attainment": "26/7",
         "standard_slot": "TE",
@@ -267,21 +284,6 @@
         "cap_number": "$927,754",
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Tanner Hudson",
-        "depth": 5,
-        "injured": false,
-        "attainment": "SF22",
-        "standard_slot": "TE",
-        "standard_pos": "TE",
-        "cap_number": null,
-        "stats": {
-          "TGT": 1,
-          "REC": 1,
-          "YDS": 4
-        },
-        "stats_season": 2026
       }
     ],
     "QB": [
@@ -294,13 +296,13 @@
         "standard_pos": "QB",
         "cap_number": "$37,599,784",
         "stats": {
-          "CMP": 45,
-          "ATT": 66,
-          "YDS": 461,
-          "TDs": 3,
+          "CMP": 73,
+          "ATT": 103,
+          "YDS": 743,
+          "TDs": 6,
           "INTs": 1,
-          "SACKS": 6,
-          "RU YDS": 19
+          "SACKS": 7,
+          "RU YDS": 32
         },
         "stats_season": 2026
       },
@@ -348,12 +350,12 @@
         "standard_pos": "RB",
         "cap_number": "$3,745,539",
         "stats": {
-          "CAR": 36,
-          "RU YDS": 136,
+          "CAR": 49,
+          "RU YDS": 197,
           "RU TDs": 1,
-          "REC": 8,
-          "RE YDS": 24,
-          "TGT": 11
+          "REC": 10,
+          "RE YDS": 32,
+          "TGT": 13
         },
         "stats_season": 2026
       },
@@ -366,11 +368,11 @@
         "standard_pos": "RB",
         "cap_number": "$2,000,000",
         "stats": {
-          "CAR": 7,
-          "RU YDS": 26,
-          "REC": 4,
-          "RE YDS": 46,
-          "TGT": 4
+          "CAR": 10,
+          "RU YDS": 35,
+          "REC": 5,
+          "RE YDS": 51,
+          "TGT": 7
         },
         "stats_season": 2026
       },
@@ -420,7 +422,7 @@
         "stats": {
           "TKL": 2,
           "SACKS": 0.5,
-          "QB HIT": 1
+          "QB HIT": 2
         },
         "stats_season": 2026
       },
@@ -449,7 +451,7 @@
         "standard_pos": "EDGE",
         "cap_number": "$1,109,597",
         "stats": {
-          "TKL": 3,
+          "TKL": 4,
           "SACKS": 2.0,
           "TFL": 2,
           "QB HIT": 2
@@ -467,9 +469,10 @@
         "standard_pos": "DI",
         "cap_number": "$15,333,333",
         "stats": {
-          "TKL": 2,
-          "TFL": 1,
-          "QB HIT": 2
+          "TKL": 5,
+          "SACKS": 2.0,
+          "TFL": 4,
+          "QB HIT": 4
         },
         "stats_season": 2026
       },
@@ -511,7 +514,7 @@
           "TKL": 5,
           "SACKS": 2.0,
           "TFL": 4,
-          "QB HIT": 2
+          "QB HIT": 4
         },
         "stats_season": 2026
       },
@@ -580,7 +583,8 @@
         "standard_pos": "EDGE",
         "cap_number": "$2,183,273",
         "stats": {
-          "QB HIT": 1
+          "TKL": 1,
+          "QB HIT": 3
         },
         "stats_season": 2026
       }
@@ -595,7 +599,7 @@
         "standard_pos": "LB",
         "cap_number": "$2,048,295",
         "stats": {
-          "TKL": 9,
+          "TKL": 11,
           "QB HIT": 1
         },
         "stats_season": 2026
@@ -609,7 +613,7 @@
         "standard_pos": "LB",
         "cap_number": "$2,675,000",
         "stats": {
-          "TKL": 1
+          "TKL": 3
         },
         "stats_season": 2026
       }
@@ -624,10 +628,11 @@
         "standard_pos": "LB",
         "cap_number": "$1,250,529",
         "stats": {
-          "TKL": 7,
+          "TKL": 9,
           "SACKS": 0.5,
+          "PD": 1,
           "TFL": 2,
-          "QB HIT": 1
+          "QB HIT": 2
         },
         "stats_season": 2026
       },
@@ -643,6 +648,17 @@
           "TKL": 1
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Joe Giles-harris",
+        "depth": 3,
+        "injured": false,
+        "attainment": "U/Jax",
+        "standard_slot": "MIKE",
+        "standard_pos": "LB",
+        "cap_number": "$955,556",
+        "stats": {},
+        "stats_season": 2026
       }
     ],
     "LCB": [
@@ -655,8 +671,8 @@
         "standard_pos": "CB",
         "cap_number": null,
         "stats": {
-          "TKL": 11,
-          "PD": 4
+          "TKL": 13,
+          "PD": 5
         },
         "stats_season": 2026
       },
@@ -669,7 +685,8 @@
         "standard_pos": "CB",
         "cap_number": "$1,315,713",
         "stats": {
-          "TKL": 1
+          "TKL": 6,
+          "PD": 1
         },
         "stats_season": 2026
       }
@@ -684,8 +701,9 @@
         "standard_pos": "S",
         "cap_number": "$3,892,185",
         "stats": {
-          "TKL": 10,
-          "PD": 1
+          "TKL": 13,
+          "INTs": 1,
+          "PD": 2
         },
         "stats_season": 2026
       },
@@ -698,7 +716,8 @@
         "standard_pos": "S",
         "cap_number": "$1,262,500",
         "stats": {
-          "TKL": 1
+          "TKL": 5,
+          "PD": 1
         },
         "stats_season": 2026
       }
@@ -713,7 +732,7 @@
         "standard_pos": "S",
         "cap_number": "$10,666,666",
         "stats": {
-          "TKL": 7
+          "TKL": 9
         },
         "stats_season": 2026
       },
@@ -725,7 +744,9 @@
         "standard_slot": "FS",
         "standard_pos": "S",
         "cap_number": "$1,005,000",
-        "stats": {},
+        "stats": {
+          "TKL": 1
+        },
         "stats_season": 2026
       }
     ],
@@ -740,7 +761,7 @@
         "cap_number": "$4,044,007",
         "stats": {
           "TKL": 7,
-          "PD": 2
+          "PD": 3
         },
         "stats_season": 2026
       },
@@ -753,7 +774,7 @@
         "standard_pos": "CB",
         "cap_number": "$1,165,164",
         "stats": {
-          "TKL": 1
+          "TKL": 2
         },
         "stats_season": 2026
       }
@@ -768,7 +789,7 @@
         "standard_pos": "CB",
         "cap_number": "$1,486,765",
         "stats": {
-          "TKL": 4,
+          "TKL": 5,
           "PD": 2,
           "TFL": 1
         },
@@ -888,17 +909,6 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Joe Giles-harris",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/Jax",
-        "standard_slot": "LB",
-        "standard_pos": "DEF",
-        "cap_number": "$955,556",
-        "stats": {},
-        "stats_season": 2026
       }
     ],
     "CB": [
