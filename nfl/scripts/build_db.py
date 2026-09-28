@@ -119,6 +119,11 @@ def load_snap_counts():
         return nfl.load_snap_counts([SEASON - 1]).to_pandas()
 
 
+def load_injuries():
+    import nflreadpy as nfl
+    return nfl.load_injuries([SEASON]).to_pandas()
+
+
 def load_pbp_cached():
     """Shared pbp load for load_penalties() and load_qb_dropback_stats()
     -- avoids fetching the same season file twice in one run."""
@@ -365,6 +370,9 @@ def build_db():
 
         print("Loading snap_counts...")
         write_table(con, 'snap_counts', load_snap_counts())
+
+        print("Loading injuries...")
+        write_table(con, 'injuries', load_injuries())
 
         print("Loading play-by-play (penalties + QB dropback stats)...")
         pbp = load_pbp_cached()

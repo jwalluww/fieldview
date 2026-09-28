@@ -479,6 +479,13 @@ def find_gsis(name, standard_pos, team, crosswalk_df, roster_df=None):
 
     return None, None
 
+def format_height(total_inches):
+    """74 -> 6'2\""""
+    if total_inches is None:
+        return None
+    feet, inches = divmod(int(total_inches), 12)
+    return f"{feet}'{inches}\""
+
 def find_roster_gsis_for_ol(name, team, roster_df):
     """Independent name+team fuzzy match against nflreadpy's own roster
     data to recover an OL player's real gsis_id directly -- not gated
@@ -690,6 +697,8 @@ def build_master():
     college_by_gsis = {}
     pfr_id_by_gsis = {}
     birth_date_by_gsis = {}
+    height_by_gsis = {}
+    weight_by_gsis = {}
     if rosters is not None:
         dedup_rosters = rosters.drop_duplicates(subset='gsis_id', keep='first')
         for _, row in dedup_rosters.iterrows():
@@ -704,6 +713,10 @@ def build_master():
             pfr_id_by_gsis[gid] = pfr_id if pd.notna(pfr_id) else None
             birth_date = row.get('birth_date')
             birth_date_by_gsis[gid] = birth_date if pd.notna(birth_date) else None
+            height = row.get('height')
+            height_by_gsis[gid] = int(height) if pd.notna(height) else None
+            weight = row.get('weight')
+            weight_by_gsis[gid] = int(weight) if pd.notna(weight) else None
 
     draft_matched = 0
     age_matched = 0
@@ -744,6 +757,8 @@ def build_master():
         entry['age'] = calculate_age(birth_date)
         if entry['age'] is not None:
             age_matched += 1
+        entry['height'] = format_height(height_by_gsis.get(gid) if gid else None)
+        entry['weight'] = weight_by_gsis.get(gid) if gid else None
 
     # Snap share — first pass: gsis_id -> pfr_id (from rosters, above) ->
     # season snap average. This is the ORIGINAL chain, and it structurally

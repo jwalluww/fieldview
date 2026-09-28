@@ -23,7 +23,7 @@ from build_master import (
     SPOTRAC_POS_MAP, CROSSWALK_POS_ALIASES, ROSTERS_POS_ALIASES,
     normalize_team, build_madden_pos_ranks, find_madden_player, find_gsis,
     find_pfr_id, find_spotrac_contract, find_roster_gsis_for_ol,
-    find_espn_qbr,
+    find_espn_qbr, format_height,
 )
 from name_utils import normalize_name, normalize_for_matching, normalize_madden
 
@@ -134,6 +134,17 @@ def load_snap_shares_from_db(con):
     return season_avg, crosswalk
 
 
+def load_injuries_from_db(con):
+    """Per gsis_id, the most recent week's row carrying real injury-report
+    data -- rows where both report_status and report_primary_injury are
+    null are a normal healthy-scratch entry, not real data, and are
+    skipped rather than overwriting an earlier real row."""
+    df = con.execute("SELECT * FROM injuries").fetchdf()
+    df = df[df['report_status'].notna() | df['report_primary_injury'].notna()]
+    df = df.sort_values('week').drop_duplicates(subset='gsis_id', keep='last')
+    return df.set_index('gsis_id').to_dict('index')
+
+
 def load_penalties_from_db(con):
     """Season penalty counts (Offensive Holding + False Start only --
     see build_db.py's load_penalties()) keyed by gsis_id -- already in
@@ -217,6 +228,7 @@ def build_match():
     rosters = load_nflreadpy_rosters_from_db(con)
     spotrac_df = load_spotrac_contracts_from_db(con)
     snap_shares, snap_crosswalk = load_snap_shares_from_db(con)
+    injuries_by_gsis = load_injuries_from_db(con)
     penalty_counts = load_penalties_from_db(con)
     qb_dropback_stats = load_qb_dropback_stats_from_db(con)
     ngs_passing = load_ngs_passing_from_db(con)
@@ -329,6 +341,7 @@ def build_match():
 
     # draft_year/college/years_pro/age, keyed off the gsis_id already resolved
     entry_year_by_gsis, college_by_gsis, pfr_id_by_gsis, birth_date_by_gsis = {}, {}, {}, {}
+    height_by_gsis, weight_by_gsis = {}, {}
     dedup_rosters = rosters.drop_duplicates(subset='gsis_id', keep='first')
     for _, row in dedup_rosters.iterrows():
         gid = row['gsis_id']
@@ -342,6 +355,10 @@ def build_match():
         pfr_id_by_gsis[gid] = pfr_id if pd.notna(pfr_id) else None
         birth_date = row.get('birth_date')
         birth_date_by_gsis[gid] = birth_date if pd.notna(birth_date) else None
+        height = row.get('height')
+        height_by_gsis[gid] = int(height) if pd.notna(height) else None
+        weight = row.get('weight')
+        weight_by_gsis[gid] = int(weight) if pd.notna(weight) else None
 
     from season_utils import calculate_age
     for entry in master.values():
@@ -365,6 +382,11 @@ def build_match():
         entry['years_pro'] = max(0, SEASON - entry_year) if entry_year is not None else None
         birth_date = birth_date_by_gsis.get(gid) if gid else None
         entry['age'] = calculate_age(birth_date)
+        entry['height'] = format_height(height_by_gsis.get(gid) if gid else None)
+        entry['weight'] = weight_by_gsis.get(gid) if gid else None
+        inj = injuries_by_gsis.get(gid) if gid else None
+        entry['injury_status'] = inj['report_status'] if inj else None
+        entry['injury_detail'] = inj['report_primary_injury'] if inj else None
         entry['penalty_count'] = penalty_counts.get(gid, 0) if gid else None
 
         if entry['standard_pos'] == 'QB':

@@ -1062,6 +1062,8 @@ function mapPlayer(player) {
     years_pro: player.years_pro,
     draft_year: player.draft_year,
     college: player.college,
+    height: player.height,
+    weight: player.weight,
     snap_pct: player.snap_pct,
     madden: player.madden,
     madden_rank: player.madden_rank,
@@ -1072,6 +1074,8 @@ function mapPlayer(player) {
     years_remaining: player.years_remaining,
     avg_annual_remaining: player.avg_annual_remaining,
     injured: player.injured,
+    injury_status: player.injury_status,
+    injury_detail: player.injury_detail,
     attainment: player.attainment,
     stats: player.stats,
     stats_season: player.stats_season,
@@ -1365,10 +1369,10 @@ function buildHoverCard(p, pos) {
         <div class="card-nameblock" style="flex:1">
           <div class="card-name" style="display:flex;align-items:center;gap:6px">
             <span>${p.jersey ? '#'+p.jersey+' ' : ''}${p.name}</span>
-            ${p.injured ? `<span style="background:rgba(239,68,68,.2);color:#ef4444;border:1px solid rgba(239,68,68,.4);border-radius:3px;font-size:9px;font-weight:800;padding:1px 5px;letter-spacing:1px">INJ</span>` : ''}
+            ${p.injured ? `<span title="${[p.injury_detail, p.injury_status].filter(Boolean).join(' — ')}" style="background:rgba(239,68,68,.2);color:#ef4444;border:1px solid rgba(239,68,68,.4);border-radius:3px;font-size:9px;font-weight:800;padding:1px 5px;letter-spacing:1px">INJ</span>` : ''}
             ${p.years_pro === 0 ? `<span style="background:rgba(34,197,94,.1);color:#22c55e;border:1px solid rgba(34,197,94,.3);border-radius:3px;font-size:9px;font-weight:800;padding:1px 5px;letter-spacing:1px">R</span>` : ''}
           </div>
-          <div class="card-meta">${pos}${p.age ? ' · Age '+p.age : ''}${p.years_pro != null ? ' · Yr '+p.years_pro+' NFL' : ''}${p.draft_year ? ' · Drafted '+p.draft_year : ''}${p.college ? ' · '+p.college : ''}</div>
+          <div class="card-meta">${pos}${p.age ? ' · Age '+p.age : ''}${p.years_pro != null ? ' · Yr '+p.years_pro+' NFL' : ''}${p.draft_year ? ' · Drafted '+p.draft_year : ''}${p.college ? ' · '+p.college : ''}${p.height ? ' · '+p.height : ''}${p.weight ? ' · '+p.weight+' lbs' : ''}</div>
         </div>
         ${(pos === 'QB' || pos === 'RB' || isWRTE || useDefCard) ? `
           <div style="text-align:center;flex-shrink:0">
@@ -1497,7 +1501,7 @@ function buildPlayerNode(p, pos, coords, delay, flipCard) {
          onclick="openSubDropdown('${pos}', event)"
          onmouseenter="positionHoverCard(this)">
       <div class="p-card" style="background:${team.colors[0]}">
-        ${p.injured ? '<div class="p-badge-inj">INJ</div>' : ''}
+        ${p.injured ? `<div class="p-badge-inj" title="${[p.injury_detail, p.injury_status].filter(Boolean).join(' — ')}">INJ</div>` : ''}
         <div class="p-jersey">${p.jersey ? '#'+p.jersey : '\u00a0'}</div>
         <div class="p-lastname">${lastName}</div>
         <div class="p-madden" style="color:${mc}">${p.madden || '—'}</div>
