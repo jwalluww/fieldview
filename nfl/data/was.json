@@ -132,6 +132,17 @@
         "cap_number": "$1,652,243",
         "stats": {},
         "stats_season": 2026
+      },
+      {
+        "name": "Andrew Wylie",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/KC",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": "$3,200,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LG": [
@@ -147,19 +158,8 @@
         "stats_season": null
       },
       {
-        "name": "Matt Gulbin",
-        "depth": 2,
-        "injured": false,
-        "attainment": "26/6",
-        "standard_slot": "LG",
-        "standard_pos": "OL",
-        "cap_number": "$948,394",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Tanoa Togiai",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "LG",
@@ -171,24 +171,24 @@
     ],
     "C": [
       {
-        "name": "Nick Allegretti",
-        "depth": 1,
-        "injured": false,
-        "attainment": "U/KC",
-        "standard_slot": "C",
-        "standard_pos": "OL",
-        "cap_number": "$3,844,666",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Lucas Patrick",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "C",
         "standard_pos": "OL",
         "cap_number": "$1,015,278",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Matt Gulbin",
+        "depth": 2,
+        "injured": false,
+        "attainment": "26/6",
+        "standard_slot": "C",
+        "standard_pos": "OL",
+        "cap_number": "$948,394",
         "stats": {},
         "stats_season": null
       },
@@ -217,13 +217,13 @@
         "stats_season": null
       },
       {
-        "name": "Andrew Wylie",
+        "name": "Nick Allegretti",
         "depth": 2,
         "injured": false,
         "attainment": "U/KC",
         "standard_slot": "RG",
         "standard_pos": "OL",
-        "cap_number": "$3,200,000",
+        "cap_number": "$3,844,666",
         "stats": {},
         "stats_season": null
       }
@@ -634,19 +634,6 @@
           "TFL": 1
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Ale Kaho",
-        "depth": 3,
-        "injured": false,
-        "attainment": "CF25",
-        "standard_slot": "ILB_L",
-        "standard_pos": "LB",
-        "cap_number": null,
-        "stats": {
-          "TKL": 3
-        },
-        "stats_season": 2026
       }
     ],
     "MLB": [
@@ -719,22 +706,8 @@
     ],
     "LCB": [
       {
-        "name": "Mike Sainristil",
-        "depth": 1,
-        "injured": false,
-        "attainment": "24/2",
-        "standard_slot": "LCB",
-        "standard_pos": "CB",
-        "cap_number": "$2,100,637",
-        "stats": {
-          "TKL": 9,
-          "TFL": 1
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Rasul Douglas",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "U/Mia",
         "standard_slot": "LCB",
@@ -748,7 +721,7 @@
       },
       {
         "name": "Isaac Yiadom",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "LCB",
@@ -848,8 +821,22 @@
         "stats_season": 2026
       },
       {
-        "name": "Tyler Owens",
+        "name": "Mike Sainristil",
         "depth": 2,
+        "injured": false,
+        "attainment": "24/2",
+        "standard_slot": "NB",
+        "standard_pos": "CB",
+        "cap_number": "$2,100,637",
+        "stats": {
+          "TKL": 9,
+          "TFL": 1
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Tyler Owens",
+        "depth": 3,
         "injured": false,
         "attainment": "CF24",
         "standard_slot": "NB",
@@ -963,6 +950,19 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Ale Kaho",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 3
+        },
+        "stats_season": 2026
       }
     ],
     "CB": [

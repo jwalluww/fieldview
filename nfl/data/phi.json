@@ -14,11 +14,11 @@
         "standard_pos": "WR",
         "cap_number": "$2,316,000",
         "stats": {
-          "TGT": 10,
-          "REC": 7,
-          "YDS": 147,
+          "TGT": 15,
+          "REC": 9,
+          "YDS": 179,
           "TDs": 1,
-          "YAC": 29
+          "YAC": 36
         },
         "stats_season": 2026
       },
@@ -50,11 +50,11 @@
         "standard_pos": "WR",
         "cap_number": "$10,726,510",
         "stats": {
-          "TGT": 19,
-          "REC": 13,
-          "YDS": 170,
+          "TGT": 27,
+          "REC": 19,
+          "YDS": 235,
           "TDs": 1,
-          "YAC": 12
+          "YAC": 39
         },
         "stats_season": 2026
       },
@@ -80,10 +80,10 @@
         "standard_pos": "WR",
         "cap_number": "$3,783,706",
         "stats": {
-          "TGT": 5,
-          "REC": 4,
-          "YDS": 9,
-          "YAC": 4,
+          "TGT": 9,
+          "REC": 7,
+          "YDS": 38,
+          "YAC": 21,
           "CAR": 1
         },
         "stats_season": 2026
@@ -169,7 +169,7 @@
         "standard_pos": "OL",
         "cap_number": "$1,093,769",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       },
       {
         "name": "Jake Majors",
@@ -258,10 +258,10 @@
         "standard_pos": "TE",
         "cap_number": "$1,340,000",
         "stats": {
-          "TGT": 3,
-          "REC": 2,
-          "YDS": 8,
-          "YAC": 3
+          "TGT": 4,
+          "REC": 3,
+          "YDS": 12,
+          "YAC": 13
         },
         "stats_season": 2026
       },
@@ -274,24 +274,29 @@
         "standard_pos": "TE",
         "cap_number": "$1,025,166",
         "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Josiah Deguara",
-        "depth": 4,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "TE",
-        "standard_pos": "TE",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       },
       {
         "name": "Zach Ertz",
-        "depth": 5,
+        "depth": 4,
         "injured": false,
         "attainment": "U/Was",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": null,
+        "stats": {
+          "TGT": 2,
+          "REC": 1,
+          "YDS": 9,
+          "YAC": 5
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Josiah Deguara",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF26",
         "standard_slot": "TE",
         "standard_pos": "TE",
         "cap_number": null,
@@ -309,13 +314,13 @@
         "standard_pos": "QB",
         "cap_number": "$31,971,800",
         "stats": {
-          "CMP": 40,
-          "ATT": 62,
-          "YDS": 467,
+          "CMP": 56,
+          "ATT": 87,
+          "YDS": 620,
           "TDs": 5,
-          "INTs": 2,
-          "SACKS": 6,
-          "RU YDS": 62
+          "INTs": 3,
+          "SACKS": 8,
+          "RU YDS": 87
         },
         "stats_season": 2026
       },
@@ -327,8 +332,11 @@
         "standard_slot": "QB",
         "standard_pos": "QB",
         "cap_number": "$1,500,000",
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "ATT": 1,
+          "INTs": 1
+        },
+        "stats_season": 2026
       },
       {
         "name": "Tanner Mckee",
@@ -363,11 +371,11 @@
         "standard_pos": "RB",
         "cap_number": "$9,881,100",
         "stats": {
-          "CAR": 19,
-          "RU YDS": 92,
-          "REC": 2,
-          "RE YDS": 8,
-          "TGT": 4
+          "CAR": 34,
+          "RU YDS": 174,
+          "REC": 3,
+          "RE YDS": 6,
+          "TGT": 6
         },
         "stats_season": 2026
       },
@@ -383,9 +391,9 @@
           "CAR": 14,
           "RU YDS": 36,
           "RU TDs": 1,
-          "REC": 2,
-          "RE YDS": 5,
-          "TGT": 2
+          "REC": 3,
+          "RE YDS": 10,
+          "TGT": 3
         },
         "stats_season": 2026
       },
@@ -400,9 +408,9 @@
         "stats": {
           "CAR": 9,
           "RU YDS": 28,
-          "REC": 3,
-          "RE YDS": 13,
-          "TGT": 3
+          "REC": 4,
+          "RE YDS": 24,
+          "TGT": 5
         },
         "stats_season": 2026
       },
@@ -451,7 +459,8 @@
         "cap_number": "$3,693,446",
         "stats": {
           "TKL": 4,
-          "TFL": 1
+          "TFL": 1,
+          "QB HIT": 1
         },
         "stats_season": 2026
       }
@@ -479,7 +488,7 @@
         "standard_pos": "DI",
         "cap_number": "$1,263,917",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       }
     ],
     "DT": [
@@ -492,9 +501,9 @@
         "standard_pos": "DI",
         "cap_number": "$9,209,761",
         "stats": {
-          "TKL": 2,
+          "TKL": 4,
           "SACKS": 1.0,
-          "TFL": 1,
+          "TFL": 2,
           "QB HIT": 1
         },
         "stats_season": 2026
@@ -531,8 +540,11 @@
         "standard_slot": "LOLB",
         "standard_pos": "EDGE",
         "cap_number": "$6,278,000",
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "TKL": 1,
+          "QB HIT": 1
+        },
+        "stats_season": 2026
       },
       {
         "name": "Nolan Smith Jr.",
@@ -545,6 +557,7 @@
         "stats": {
           "TKL": 3,
           "SACKS": 1.0,
+          "PD": 1,
           "TFL": 2,
           "QB HIT": 1
         },
@@ -574,9 +587,9 @@
         "standard_pos": "LB",
         "cap_number": "$7,638,000",
         "stats": {
-          "TKL": 9,
-          "PD": 2,
-          "TFL": 2
+          "TKL": 14,
+          "PD": 3,
+          "TFL": 4
         },
         "stats_season": 2026
       },
@@ -592,6 +605,17 @@
           "TKL": 1
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Chance Campbell",
+        "depth": 3,
+        "injured": false,
+        "attainment": "U/Ten",
+        "standard_slot": "ILB_L",
+        "standard_pos": "LB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": 2026
       }
     ],
     "MLB": [
@@ -604,7 +628,7 @@
         "standard_pos": "LB",
         "cap_number": "$3,387,176",
         "stats": {
-          "TKL": 11,
+          "TKL": 15,
           "SACKS": 1.0,
           "TFL": 1,
           "QB HIT": 1
@@ -635,9 +659,9 @@
         "standard_pos": "EDGE",
         "cap_number": "$1,536,282",
         "stats": {
-          "TKL": 6,
+          "TKL": 8,
           "TFL": 1,
-          "QB HIT": 1
+          "QB HIT": 2
         },
         "stats_season": 2026
       },
@@ -665,7 +689,7 @@
         "standard_pos": "CB",
         "cap_number": "$3,408,000",
         "stats": {
-          "TKL": 4,
+          "TKL": 7,
           "PD": 1
         },
         "stats_season": 2026
@@ -692,7 +716,7 @@
         "standard_pos": "S",
         "cap_number": "$1,450,000",
         "stats": {
-          "TKL": 6
+          "TKL": 10
         },
         "stats_season": 2026
       },
@@ -705,7 +729,7 @@
         "standard_pos": "S",
         "cap_number": "$1,420,000",
         "stats": {
-          "TKL": 1
+          "TKL": 4
         },
         "stats_season": 2026
       }
@@ -720,7 +744,7 @@
         "standard_pos": "S",
         "cap_number": "$1,627,395",
         "stats": {
-          "TKL": 3
+          "TKL": 7
         },
         "stats_season": 2026
       }
@@ -735,7 +759,9 @@
         "standard_pos": "CB",
         "cap_number": "$4,041,299",
         "stats": {
-          "TKL": 7
+          "TKL": 13,
+          "PD": 2,
+          "TFL": 2
         },
         "stats_season": 2026
       },
@@ -748,7 +774,7 @@
         "standard_pos": "CB",
         "cap_number": "$1,350,232",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       }
     ],
     "NB": [
@@ -761,7 +787,8 @@
         "standard_pos": "CB",
         "cap_number": "$2,531,897",
         "stats": {
-          "TKL": 6,
+          "TKL": 8,
+          "PD": 2,
           "QB HIT": 1
         },
         "stats_season": 2026
@@ -874,19 +901,6 @@
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "ED",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      }
-    ],
-    "LB": [
-      {
-        "name": "Chance Campbell",
-        "depth": 1,
-        "injured": false,
-        "attainment": "U/Ten",
-        "standard_slot": "LB",
         "standard_pos": "DEF",
         "cap_number": null,
         "stats": {},

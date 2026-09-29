@@ -335,25 +335,8 @@
     ],
     "RB": [
       {
-        "name": "De'von Achane",
-        "depth": 1,
-        "injured": false,
-        "attainment": "23/3",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": "$3,154,627",
-        "stats": {
-          "CAR": 34,
-          "RU YDS": 127,
-          "REC": 7,
-          "RE YDS": 49,
-          "TGT": 12
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Jaylen Wright",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "24/4",
         "standard_slot": "RB",
@@ -367,7 +350,7 @@
       },
       {
         "name": "Ollie Gordon II",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "25/6",
         "standard_slot": "RB",
@@ -385,7 +368,7 @@
       },
       {
         "name": "Jarquez Hunter",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "T/LAR",
         "standard_slot": "RB",
@@ -396,7 +379,7 @@
       },
       {
         "name": "Carlos Washington Jr.",
-        "depth": 5,
+        "depth": 4,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "RB",
@@ -550,19 +533,6 @@
           "TFL": 1
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Clelin Ferrell",
-        "depth": 3,
-        "injured": false,
-        "attainment": "U/SF",
-        "standard_slot": "RE",
-        "standard_pos": "EDGE",
-        "cap_number": null,
-        "stats": {
-          "TKL": 1
-        },
-        "stats_season": 2026
       }
     ],
     "WLB": [
@@ -577,19 +547,6 @@
         "stats": {
           "TKL": 11,
           "QB HIT": 1
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Liam Anderson",
-        "depth": 2,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "WILL",
-        "standard_pos": "LB",
-        "cap_number": null,
-        "stats": {
-          "TKL": 1
         },
         "stats_season": 2026
       }
@@ -885,6 +842,19 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Clelin Ferrell",
+        "depth": 3,
+        "injured": false,
+        "attainment": "U/SF",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 1
+        },
+        "stats_season": 2026
       }
     ],
     "DT": [
@@ -922,6 +892,19 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Liam Anderson",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 1
+        },
+        "stats_season": 2026
       }
     ],
     "CB": [
@@ -1016,6 +999,23 @@
         "cap_number": "$525,000",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "De'von Achane",
+        "depth": 7,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$3,154,627",
+        "stats": {
+          "CAR": 34,
+          "RU YDS": 127,
+          "REC": 7,
+          "RE YDS": 49,
+          "TGT": 12
+        },
+        "stats_season": 2026
       }
     ],
     "PUP": [

@@ -290,19 +290,8 @@
         "stats_season": 2026
       },
       {
-        "name": "J.j. Mccarthy",
-        "depth": 3,
-        "injured": false,
-        "attainment": "24/1",
-        "standard_slot": "QB",
-        "standard_pos": "QB",
-        "cap_number": "$5,960,399",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Max Brosmer",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "CF25",
         "standard_slot": "QB",
@@ -529,24 +518,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Kyle Van Noy",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/Bal",
-        "standard_slot": "LOLB",
-        "standard_pos": "EDGE",
-        "cap_number": null,
-        "stats": {
-          "TKL": 5,
-          "SACKS": 1.5,
-          "TFL": 4,
-          "QB HIT": 2
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Chaz Chambliss",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "CF25",
         "standard_slot": "LOLB",
@@ -813,17 +786,6 @@
         "cap_number": "$1,308,386",
         "stats": {},
         "stats_season": 2026
-      },
-      {
-        "name": "Tavierre Thomas",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/TB",
-        "standard_slot": "NB",
-        "standard_pos": "CB",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "PT": [
@@ -943,6 +905,22 @@
         "cap_number": null,
         "stats": {},
         "stats_season": 2026
+      },
+      {
+        "name": "Kyle Van Noy",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/Bal",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 5,
+          "SACKS": 1.5,
+          "TFL": 4,
+          "QB HIT": 2
+        },
+        "stats_season": 2026
       }
     ],
     "LB": [
@@ -977,6 +955,17 @@
         "depth": 1,
         "injured": false,
         "attainment": "SF26*",
+        "standard_slot": "S",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Tavierre Thomas",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/TB",
         "standard_slot": "S",
         "standard_pos": "DEF",
         "cap_number": null,

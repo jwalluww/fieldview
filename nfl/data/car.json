@@ -20,22 +20,6 @@
           "YAC": 39
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Brycen Tremayne",
-        "depth": 2,
-        "injured": false,
-        "attainment": "SF25",
-        "standard_slot": "LWR",
-        "standard_pos": "WR",
-        "cap_number": "$1,005,000",
-        "stats": {
-          "TGT": 6,
-          "REC": 4,
-          "YDS": 83,
-          "YAC": 15
-        },
-        "stats_season": 2026
       }
     ],
     "RWR": [
@@ -56,15 +40,18 @@
         "stats_season": 2026
       },
       {
-        "name": "David Moore",
+        "name": "Brycen Tremayne",
         "depth": 2,
         "injured": false,
-        "attainment": "U/TB",
+        "attainment": "SF25",
         "standard_slot": "RWR",
         "standard_pos": "WR",
-        "cap_number": null,
+        "cap_number": "$1,005,000",
         "stats": {
-          "TGT": 2
+          "TGT": 6,
+          "REC": 4,
+          "YDS": 83,
+          "YAC": 15
         },
         "stats_season": 2026
       }
@@ -380,19 +367,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Anthony Tyus III",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF25",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": 2026
-      },
-      {
         "name": "Ahmani Marshall",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "RB",
@@ -400,6 +376,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Anthony Tyus III",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": 2026
       }
     ],
     "LDE": [
@@ -849,6 +836,19 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "David Moore",
+        "depth": 4,
+        "injured": false,
+        "attainment": "U/TB",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {
+          "TGT": 2
+        },
+        "stats_season": 2026
       }
     ],
     "OG": [
@@ -868,6 +868,17 @@
         "depth": 2,
         "injured": false,
         "attainment": "23/4",
+        "standard_slot": "OG",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Saahdiq Charles",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF25",
         "standard_slot": "OG",
         "standard_pos": "DEF",
         "cap_number": null,
