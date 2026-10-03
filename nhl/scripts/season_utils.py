@@ -24,7 +24,12 @@ season with its real standingsStart/standingsEnd dates) and finds
 `current` -- the season with the latest standingsStart that has already
 begun as of today. If `current` has ALSO already ended
 (standingsEnd <= today -- the offseason gap), stats_season stays on
-`current` and roster_season moves one cycle ahead. If `current` is
+`current` and roster_season moves one cycle ahead -- but only if that
+next season actually exists in the manifest yet; the API can report a
+stale/not-yet-finalized standingsEnd for a season that's really still
+underway (20262027 showed standingsEnd 2026-10-02 right after its
+Sept 29 start), and advancing to a nonexistent season 404s every
+roster call. In that case roster_season stays on `current`. If `current` is
 still underway, stats_season and roster_season are the same season --
 there's no gap to split them during an active season.
 
@@ -53,8 +58,15 @@ def resolve_seasons(client, today=None):
     stats_season_id = current['id']
     if current['standingsEnd'] <= today:
         # Offseason gap -- stats stay on the season that just ended,
-        # rosters move to the upcoming one.
-        roster_season_id = stats_season_id + 10001
+        # rosters move to the upcoming one IF it's actually been
+        # published yet. The API can report a stale/not-yet-finalized
+        # standingsEnd for a season that's really still in progress
+        # (seen 2026-10-03: 20262027 shows standingsEnd 2026-10-02,
+        # three days after a Sept 29 start) -- don't trust that signal
+        # blind, confirm the next season id exists before jumping to it.
+        next_id = stats_season_id + 10001
+        next_exists = any(s['id'] == next_id for s in manifest)
+        roster_season_id = next_id if next_exists else stats_season_id
     else:
         # Season in progress -- both point at it.
         roster_season_id = stats_season_id
