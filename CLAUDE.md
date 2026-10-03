@@ -80,7 +80,7 @@ Purpose: each sport gets a FieldView (players on the field/court/pitch in their 
 ### File Map
 - `index.html` — home page, entry cards for all sports
 - `nfl/nfl-formation-view.html` — formation view, **now shows offense and defense simultaneously** (see Opponent View section below)
-- `nfl/depth-chart.html` — OOTP-style data table (tabs: Overview/Financial/Madden/Passing/Rushing/Receiving/Defense/**Advanced**)
+- `nfl/depth-chart.html` — OOTP-style data table (tabs: Overview/Financial/Madden/Passing/Rushing/Receiving/Defense; Advanced tab removed in d04855b, see TableView)
 - `nfl/data/madden_meta.json` — sidecar, per-team date (YYYY-MM-DD) of the last *successful* fresh Madden fetch; committed as `{}` and filled in by the pipeline (see Madden freshness below)
 
 ### Scripts (`nfl/scripts/`)
