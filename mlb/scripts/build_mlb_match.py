@@ -5,14 +5,15 @@ Phase 2 (MLB): joins the raw statsapi_* tables Phase 1
 writes a resolved player_match table back to the same DB -- same role
 as nfl/scripts/build_match.py and nba/scripts/build_nba_match.py.
 
-Base population is today's active roster (statsapi_roster, 782 rows as
-of the last pull), NOT the full statsapi_stats_hitting/pitching
-person_id union (1,382 as of the last check). Season stats include
-anyone who played in 2026 at all, including traded/released/optioned
-players no longer on any 30-man roster -- left-joining stats onto
-roster keeps player_match aligned with "who's on a team today", which
-is what DiamondView needs. A rookie/late call-up with zero 2026 games
-is a valid null-stats row, not an error.
+Base population is today's 40-man roster (statsapi_roster, rosterType=40Man,
+~1,360 rows), NOT the full statsapi_stats_hitting/pitching person_id union.
+The 40-man (not the 26-man active roster) so injured-list stars like Judge
+and Devers are present; each row carries roster_status (raw code: A, 40M,
+D60, D15, RM, PL...) and injured (true for D7/D10/D15/D60). Season stats
+include anyone who played in 2026 at all, including traded/released
+players no longer on any 40-man -- left-joining stats onto roster keeps
+player_match aligned with "who's on a team today". A player with zero 2026
+games is a valid null-stats row, not an error.
 
 Position taxonomy is clean here (no NFL EDGE/DI-style collapse):
   IF = 1B/2B/3B/SS, OF = LF/CF/RF, standalone = C/P/DH
@@ -103,6 +104,11 @@ def resolve_player_type(position_abbr):
     return 'batter'
 
 
+# Injured-list status codes on the 40-man (D7/D10/D15/D60). Other non-active codes
+# (40M, RM, PL, ...) are not injuries.
+IL_CODE = re.compile(r'^D[0-9]+$')
+
+
 def norm_name(n):
     """Lowercase, strip accents/periods/apostrophes, hyphens -> spaces, drop Jr./Sr./II-IV."""
     n = unicodedata.normalize('NFKD', n)
@@ -174,7 +180,7 @@ def build_match():
     con = duckdb.connect(DB_PATH)
 
     roster = con.execute("""
-        SELECT r.person_id, r.team_id, r.team_abbr, t.name AS team_name, r.full_name,
+        SELECT r.person_id, r.team_id, r.team_abbr, t.name AS team_name, r.full_name, r.status_code,
                r.jersey_number, r.position_abbreviation, r.position_name,
                p.height, p.weight, p.bat_side, p.pitch_hand, p.birth_date
         FROM statsapi_roster r
@@ -246,6 +252,8 @@ def build_match():
             'throws': clean(r['pitch_hand']),
             'batting_stats': stats_dict(hit_row) if hit_row is not None else None,
             'pitching_stats': stats_dict(pitch_row) if pitch_row is not None else None,
+            'roster_status': clean(r['status_code']),
+            'injured': bool(IL_CODE.match(clean(r['status_code']) or '')),
             'match_source': match_source,
             'overall_rating': clean(rating_card['ovr']) if rating_card is not None else None,
         })

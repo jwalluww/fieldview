@@ -400,6 +400,8 @@ body.sb-open .right-col { display: none; }
 .sb-rating { text-align: center; flex-shrink: 0; }
 .sb-rating-val { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 34px; line-height: 1; }
 .sb-rating-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); }
+.sb-pill { border-radius: 3px; font-size: 10px; font-weight: 800; padding: 1px 5px; letter-spacing: 1px; }
+.sb-pill.inj { background: rgba(239,68,68,.2); color: #ef4444; border: 1px solid rgba(239,68,68,.4); }
 .sb-section { padding: 12px 16px; border-bottom: 1px solid var(--border); }
 .sb-section-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
 .sb-stat { padding: 7px 0; border-top: 1px solid rgba(255,255,255,0.05); }
@@ -700,6 +702,8 @@ function mapPlayer(p) {
     age: (bs && bs.age) || (ps && ps.age) || null,
     bs: bs,
     ps: ps,
+    injured: !!p.injured,
+    rosterStatus: p.roster_status,
     hasBatting: !!bs,
     hasPitching: !!ps,
   };
@@ -759,11 +763,18 @@ function updateHeader() {
 // mirrors the one known real case (Cristian Pache) rather than a general
 // rule, per the "single-player edge case, don't over-engineer" call this
 // data was built under.
+// Injured-list players (roster_status D7/D10/D15/D60) are never natural starters.
 function naturalCandidates(zone) {
   if (zone === 'CF') {
-    return teamPlayers.filter(p => p.position === 'CF' || p.position === 'OF');
+    return teamPlayers.filter(p => !p.injured && (p.position === 'CF' || p.position === 'OF'));
   }
-  return teamPlayers.filter(p => p.position === zone);
+  return teamPlayers.filter(p => !p.injured && p.position === zone);
+}
+
+// Has actually played this season (PA or IP). The 40-man carries filler with neither; those, and
+// injured players, stay out of the sub pools and the batting-order / pitching-staff lists.
+function hasPlayed(p) {
+  return (p.pa || 0) > 0 || (p.ps && ipToNum(p.ps.inningsPitched) > 0);
 }
 
 function getStarter(zone) {
@@ -844,7 +855,7 @@ function renderBattingOrder() {
   // "this person bats". Confirmed on real data: 54 pitchers league-wide
   // carry a zero-PA batting_stats block.
   const batters = teamPlayers
-    .filter(p => p.hasBatting && p.pa > 0)
+    .filter(p => !p.injured && p.hasBatting && p.pa > 0)
     .sort((a, b) => (b.pa || 0) - (a.pa || 0));
 
   if (!batters.length) {
@@ -880,7 +891,7 @@ function renderBattingOrder() {
 // ══════════════════════════════════════════
 function renderPitchingStaff() {
   const list = document.getElementById('pitchingList');
-  const pitchers = teamPlayers.filter(p => p.hasPitching);
+  const pitchers = teamPlayers.filter(p => !p.injured && p.hasPitching && ipToNum(p.inningsPitched) > 0);
   const starters = pitchers.filter(p => (p.gamesStarted || 0) > 0)
     .sort((a, b) => (b.gamesStarted || 0) - (a.gamesStarted || 0));
   const bullpen = pitchers.filter(p => (p.gamesStarted || 0) === 0)
@@ -948,7 +959,7 @@ function subEligiblePlayers(zone) {
   } else {
     pool = teamPlayers.filter(p => p.position === zone);
   }
-  pool = pool.filter(p => !allStarterIds.has(p.id));
+  pool = pool.filter(p => !allStarterIds.has(p.id) && !p.injured && hasPlayed(p));
   if (zone === 'P') {
     return pool.sort((a,b) => (b.gamesStarted||0) - (a.gamesStarted||0) || (b.gamesPitched||0) - (a.gamesPitched||0));
   }
@@ -1421,7 +1432,7 @@ function renderSidebar(resetScroll) {
     <button class="sb-close" onclick="closeSidebar()" aria-label="Close">&times;</button>
     <div class="sb-head">
       <div style="flex:1;min-width:0">
-        <div class="sb-name"><span>${p.jersey ? '#' + p.jersey + ' ' : ''}${p.name}</span></div>
+        <div class="sb-name"><span>${p.jersey ? '#' + p.jersey + ' ' : ''}${p.name}</span>${p.injured ? '<span class="sb-pill inj">INJ</span>' : ''}</div>
         <div class="sb-meta">${meta1}</div>
         ${meta2 ? `<div class="sb-meta">${meta2}</div>` : ''}
       </div>

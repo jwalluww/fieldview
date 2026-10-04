@@ -229,7 +229,13 @@ Four fixes, all in `diamond-view.html`: the on-field position label (`.player-ra
 Overview tab gained a Rating column and now sorts by it by default (previously sorted alphabetically with zero rating/stat signal — the weakest Overview of all six sports before this fix). Batting tab gained a BABIP column; Pitching tab gained a K/BB (`strikeoutWalkRatio`) column — both real fields already present in `mlb_players_master.json`, previously unexposed, both meaningfully better "quality" indicators than raw AVG/ERA per this project's own stated metric instincts. Both wired into `FLOAT_SORT_COLS` so they sort numerically (they arrive as formatted strings from statsapi.mlb.com, same as `era`/`whip`).
 
 ### Real current numbers (779 total players)
-`overall_rating` (The Show API, name + team match; 2026-10-04 local run): 1,078 / 1,080 (99.8%), SF 40/40. Unmatched (2, no Live card exists): Eiberson Castellano (COL), Devereaux Harrison (TOR); list in `mlb/data/unmatched_mlb.txt`. Population is now the 1,080-player `rosterType=active` pull (post-season rosters), up from 779.
+`overall_rating` (The Show API, name + team match; 2026-10-04 local run on the 40-man roster): 1,355 / 1,360 (99.6%). Unmatched (5, no Live card exists): Eiberson Castellano (COL), Johan Rojas (PHI), Rowan Wick (SF), Jonathan Heasley (TB), Devereaux Harrison (TOR); list in `mlb/data/unmatched_mlb.txt`. 169 matches are the "FA" name-only tier (reassigned/IL/released players the API lists without a team). `roster_status` counts: A 1,080, D60 171, 40M 88, RM 15, D15 5, PL 1 (176 `injured`).
+
+### Roster source — 40-man, injured handling (2026-10)
+- `scrape_roster.py` pulls `rosterType=40Man` (~1,360 players), not `active` (which dropped Judge, Devers and ~230 other players with 2026 stats). Each row carries its raw status code into the master as `roster_status` (`A`, `40M` non-active 40-man, `D60`/`D15`/(`D7`/`D10`) injured list, `RM` reassigned to minors, `PL` paternity); `injured` is true for `D<number>` codes only. Players traded/released and on no 40-man are still absent (~227 with stats).
+- DiamondView: injured players are never natural starters (so a team can have an empty slot, e.g. SF 1B while Devers is on the 60-day IL), never in sub pools, never in the batting-order/pitching-staff lists. Sub pools and both lists also exclude anyone with 0 PA and 0 IP this season (`hasPlayed()`, non-injured 40-man filler). The sidebar header shows a red INJ pill if ever opened for an injured player. Judge (status `40M`, not injured) resolves as NYY's RF starter.
+- player-table.html shows all 40-man players, injured included, with the same red INJ tag as NFL's depth chart.
+
 
 ### Ratings source — The Show official API (replaced theshowratings.com, 2026-10)
 - `scrape_show_api.py` pulls `mlb26.theshow.com/apis/items.json?type=mlb_card` (25/page, loops `total_pages`), keeps `series == "Live"` (~2,084 cards, one per real player; ~884 are team "FA"), and writes the raw snapshot `mlb/data/show_api_live.json` plus `mlb/data/ratings_meta.json` (`ratings_as_of` = newest `roster_updates.json` date, weekly updates). Plain `requests` + Chrome UA works, no Cloudflare, no ScraperAPI. A failed/truncated fetch (< 1,500 Live cards) keeps the previous snapshot and exits 0 — staleness shows up as an old as-of date. No MLB player ID and no potential rating exist in the API.
@@ -249,7 +255,7 @@ Overview tab gained a Rating column and now sorts by it by default (previously s
 - **Reset to starters**: button in the field header, clears `manualStarters`, refreshes/closes the sidebar; hidden when there are no manual subs.
 
 ### Schema
-`mlb_players_master.json` keys: `player_id, name, team, team_abbr, position, position_group, position_group_source, player_type, jersey_number, height, weight, bats, throws, batting_stats, pitching_stats, match_source, overall_rating`.
+`mlb_players_master.json` keys: `player_id, name, team, team_abbr, position, position_group, position_group_source, player_type, jersey_number, height, weight, bats, throws, batting_stats, pitching_stats, roster_status, injured, match_source, overall_rating`.
 
 ---
 
@@ -416,7 +422,6 @@ Used only by `nhl/scripts/scrape_ratings.py` (NHL cloud job). **MLB no longer us
 - **NFL**: the first-initial stats fallback may have lost a few real nickname matches (Dru Phillips, Sai'vion Jones, Jaylon Jones, Dalton Johnson, Mike Reid were on the 49-player dropped list) — not chased; a wrong stat is worse than a missing one.
 - **NBA**: 2K ratings Task Scheduler job's last recorded run had a non-zero result code — separate, still-unresolved issue from the stale-unmatched-record bug fixed this pass. Task Scheduler history logging is disabled (needs an elevated/admin session to enable) so the historical code isn't recoverable; basic error logging was added for future occurrences.
 - **NBA**: `scrape_2kratings.py` has still never completed a full 30-team run in one pass — cumulative trickle coverage has reached all 30 teams, but no single run has. Lower-priority now that stale unmatched records self-heal every run regardless.
-- **MLB**: Aaron Judge (and ~230 other players with 2026 stats) are missing from `mlb_players_master.json` because `scrape_roster.py` pulls `rosterType=active` only, so anyone on the 60-day IL (126 players with stats, e.g. Devers), a non-active 40-man spot (85, Judge's status is `40M`), reassigned to minors (16), or not on any 40-man (227, traded/released) has no row. Not fixed: the real fix is switching to `rosterType=40Man` (adds status codes D60/D15/40M/RM, ~1,360 players, changes the sub pools and batting-order lists), which needs a decision on how injured/optioned players should display.
 - **EPL/MLS**: the full six-sport `run_all.bat` chain has still never completed in one sitting — lower priority now that each sport refreshes independently via its own cloud job regardless.
 - **EPL**: the original unmatched-pool breakdown (99 on 3 clubs sofifa's database lag, rest genuine academy/transfer gaps) hasn't been re-verified against the newer ~223-239 unmatched counts from later runs — worth a fresh look if EPL matching becomes a focus again.
 - **Cross-sport ratings audit gap**: NFL (Rousseau), EPL (Mitoma + 2 more), and NBA (Lillard + Sorber) all had real, findable alias/matching bugs surfaced by actually going looking this pass. MLB and NHL were *not* covered by the same audit — neither has a raw ratings-source file committed to the repo (both scrape live via ScraperAPI without a persisted raw snapshot), so the same "compare raw source vs. matched output" technique doesn't directly apply. This is a real, acknowledged gap in coverage, not a clean bill of health for those two sports.
@@ -439,7 +444,6 @@ Used only by `nhl/scripts/scrape_ratings.py` (NHL cloud job). **MLB no longer us
 - ⬜ NHL TableView: expose `evGoals`, `evPoints`, `faceoffWinPct` — all already available in the data, never added to the table
 - ⬜ NBA stat richness: `fetch_stats.py` only pulls ppg/rpg/apg/mpg, and richer stats mean changing the scraper (a local-only script, stats.nba.com blocks the cloud runner), not just the table
 - ⬜ "Genuinely evaluative metric" — its own future project, needs new data sources: separate cosmetic video-game ratings from real evaluative stats (NFL pressure rate over sacks, NBA BPM/VORP, MLB WAR/xwOBA, NHL GAR/xG). NFL's advanced-stat work (QB/RB/WR/TE hover cards + the Advanced tab) is the first partial step on this
-- ⬜ Decide how to bring IL / non-active 40-man MLB players (Judge, Devers) into DiamondView — see Known Outstanding Bugs (roster endpoint switch)
 - ⬜ A real audit approach for MLB/NHL's ratings-matching (no raw source file exists to compare against the way NFL/EPL/NBA's audit worked — would need checking the scrape scripts' own unmatched-reporting, if any exists, or a different technique entirely)
 
 **Future State**

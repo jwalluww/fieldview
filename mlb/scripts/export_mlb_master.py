@@ -53,6 +53,8 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             'throws': clean('throws', r['throws']),
             'batting_stats': r['batting_stats'] if isinstance(r['batting_stats'], dict) else None,
             'pitching_stats': r['pitching_stats'] if isinstance(r['pitching_stats'], dict) else None,
+            'roster_status': clean('roster_status', r['roster_status']),
+            'injured': bool(r['injured']),
             'match_source': clean('match_source', r['match_source']),
             'overall_rating': clean('overall_rating', r['overall_rating']),
         }

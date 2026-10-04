@@ -1,7 +1,8 @@
 """
 mlb/scripts/scrape_roster.py
 
-Pulls team list, one team's roster, and that roster's player bio data
+Pulls team list, each team's 40-man roster (rosterType=40Man, so injured-list and
+non-active 40-man players are included; status_code carries A/40M/D60/RM/...), and that roster's player bio data
 from statsapi.mlb.com, loads each straight into mlb/data/fieldview.duckdb
 as raw unmodified tables (row_id + loaded_at) -- same convention as
 build_db.py's raw ingestion, applied to the live-pull pattern it already
@@ -35,7 +36,7 @@ def fetch_teams():
 
 def fetch_roster(team_id, team_abbr):
     resp = fetch_with_retry(f"{BASE_URL}/teams/{team_id}/roster",
-                             params={"rosterType": "active"})
+                             params={"rosterType": "40Man"})
     resp.raise_for_status()
     loaded_at = datetime.now(timezone.utc).isoformat()
     rows = []

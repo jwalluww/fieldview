@@ -351,6 +351,8 @@ body {
   white-space: nowrap;
 }
 
+.tag-inj { background: rgba(239,68,68,.15); color: var(--red); border: 1px solid rgba(239,68,68,.3); margin-left: 6px; }
+
 .tag {
   font-size: 9px;
   font-weight: 700;
@@ -739,6 +741,7 @@ async function loadAll() {
       so: ps ? ps.strikeOuts : null,
       ip: ps ? ps.inningsPitched : null,
       rating: player.overall_rating,
+      injured: !!player.injured,
       babip: bs ? bs.babip : null,
       strikeoutWalkRatio: ps ? ps.strikeoutWalkRatio : null,
     });
@@ -958,7 +961,7 @@ function renderMobileList() {
       <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
         <img class="team-logo-cell" src="${teamLogoUrl(p.abbr)}" alt="${p.abbr}" loading="lazy">
         <div style="flex:1;min-width:0">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}${p.injured ? ' <span style="color:var(--red);font-size:11px">INJ</span>' : ''}</div>
           <div style="font-size:11px;color:var(--text-muted);margin-top:1px">${p.position || '—'} · ${playerTypeCell(p)}</div>
         </div>
       </div>
@@ -990,7 +993,7 @@ function renderTable() {
     if (cols.includes('name'))
       row += '<td><div class="cell-player">' +
         '<div class="player-initials">' + initials + '</div>' +
-        '<div class="player-name-block"><div class="player-name">' + p.name + '</div></div>' +
+        '<div class="player-name-block"><div class="player-name">' + p.name + (p.injured ? '<span class="tag tag-inj">INJ</span>' : '') + '</div></div>' +
       '</div></td>';
     if (cols.includes('rating'))
       row += '<td class="cell-stat">' + (p.rating != null ? p.rating : '—') + '</td>';
