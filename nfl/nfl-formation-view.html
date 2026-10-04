@@ -452,7 +452,16 @@ body.sb-open .field-outer { padding-right: 384px; }
 .sb-hero .sb-stat-val { font-size: 36px; line-height: 1; }
 .sb-hero .sb-bar { height: 8px; }
 .sb-caption { font-size: 10px; color: var(--text-dim); margin-top: 6px; }
-.sb-box { font-size: 12px; color: var(--text-muted); }
+.sb-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 8px; }
+.sb-cell-label { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--text-dim); }
+.sb-cell-val { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 18px; color: var(--text); line-height: 1.2; }
+.sb-tbl { display: grid; grid-template-columns: 1fr 80px 80px; align-items: center; }
+.sb-tbl > div { padding: 4px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+.sb-tbl > div:nth-child(-n+3) { border-top: none; }
+.sb-tbl-h { text-align: right; font-size: 11px; font-weight: 700; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sb-tbl-l { font-size: 12px; color: var(--text-muted); }
+.sb-tbl-v { text-align: right; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 15px; color: var(--text); }
+.sb-tbl-v.best { font-weight: 800; color: #22c55e; }
 .sb-sub { display: flex; align-items: center; gap: 10px; padding: 7px 8px; margin: 0 -8px; cursor: pointer; border-radius: 6px; }
 .sb-sub:hover { background: var(--border); }
 .sb-sub-madden { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 18px; width: 32px; text-align: center; flex-shrink: 0; }
@@ -477,7 +486,6 @@ body.sb-open .field-outer { padding-right: 384px; }
 .sb-cmp-tag { width: 62px; font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .sb-cmp-val { width: 46px; text-align: right; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 14px; color: var(--text); }
 .sb-cmp-pct { width: 34px; text-align: right; font-size: 11px; font-weight: 700; }
-.sb-cmp-box { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
 
 /* ── LEGEND ── */
 .legend-strip {
@@ -798,11 +806,11 @@ function maddenColor(r) {
   return `hsl(${Math.max(0,(r-55)*2)},90%,50%)`;
 }
 
-// Diverging percentile color: red at 0, neutral gray at 50, blue at 99.
-const PCT_RED = [239, 68, 68], PCT_GRAY = [156, 163, 184], PCT_BLUE = [77, 163, 255];
+// Percentile color: red at 0, amber at 50, green at 99.
+const PCT_RED = [239, 68, 68], PCT_AMBER = [245, 190, 40], PCT_GREEN = [34, 197, 94];
 const PCT_NEUTRAL = '#8b93b0'; // style stats (describe role, not quality) use one flat color
 function pctColor(pct) {
-  const [a, b, t] = pct <= 50 ? [PCT_RED, PCT_GRAY, pct / 50] : [PCT_GRAY, PCT_BLUE, (pct - 50) / 49];
+  const [a, b, t] = pct <= 50 ? [PCT_RED, PCT_AMBER, pct / 50] : [PCT_AMBER, PCT_GREEN, (pct - 50) / 49];
   return 'rgb(' + a.map((x, i) => Math.round(x + (b[i] - x) * t)).join(',') + ')';
 }
 
@@ -1173,30 +1181,86 @@ function closeSidebar() {
   syncURL();
 }
 
-function buildBoxLine(p) {
+// Season-stat grid. keys: stats-block spellings to try in order (the block mixes SACK/SACKS,
+// QB_HIT/"QB HIT", INT/INTs, PBU/PD across positions); num/den: derived rate; lower: lower is
+// better when comparing two players.
+const DEF_GRID = [
+  { label: 'TKL', keys: ['TKL'] }, { label: 'SACK', keys: ['SACK', 'SACKS'] }, { label: 'TFL', keys: ['TFL'] },
+  { label: 'QB Hit', keys: ['QB_HIT', 'QB HIT'] }, { label: 'INT', keys: ['INT', 'INTs'] }, { label: 'PBU', keys: ['PBU', 'PD'] },
+];
+const REC_GRID = [
+  { label: 'TGT', keys: ['TGT'] }, { label: 'REC', keys: ['REC'] }, { label: 'Rec Yds', keys: ['REC_YDS'] },
+  { label: 'Y/Rec', num: 'REC_YDS', den: 'REC', dec: 1 }, { label: 'Rec TD', keys: ['REC_TDS'] }, { label: 'YAC', keys: ['YAC'] },
+];
+const GRID_DEFS = {
+  QB: [
+    { label: 'CMP', keys: ['CMP'] }, { label: 'ATT', keys: ['ATT'] }, { label: 'Comp%', num: 'CMP', den: 'ATT', mult: 100, dec: 1, unit: '%' },
+    { label: 'Pass Yds', keys: ['PASS_YDS'] }, { label: 'YPA', num: 'PASS_YDS', den: 'ATT', dec: 1 }, { label: 'Pass TD', keys: ['PASS_TDS'] },
+    { label: 'INT', keys: ['INT', 'INTs'], lower: true }, { label: 'Sacks', keys: ['SACK', 'SACKS'], lower: true }, { label: 'Rush Yds', keys: ['RUSH_YDS'] },
+  ],
+  RB: [
+    { label: 'CAR', keys: ['CAR'] }, { label: 'Rush Yds', keys: ['RUSH_YDS'] }, { label: 'YPC', num: 'RUSH_YDS', den: 'CAR', dec: 1 },
+    { label: 'Rush TD', keys: ['RUSH_TDS'] }, { label: 'REC', keys: ['REC'] }, { label: 'Rec Yds', keys: ['REC_YDS'] },
+  ],
+  WR: REC_GRID, TE: REC_GRID,
+  EDGE: DEF_GRID, DI: DEF_GRID, LB: DEF_GRID, CB: DEF_GRID, S: DEF_GRID,
+};
+const SNAP_DEF = { label: 'Snap%', snap: true };
+const gridDefs = pos => (GRID_DEFS[pos] || []).concat([SNAP_DEF]);
+
+// Number for one grid cell, or null when missing (or a derived rate's denominator is 0/missing).
+function gridValue(p, d) {
+  if (d.snap) return p.snap_pct != null ? p.snap_pct : null;
   const st = p.stats || {};
-  const stat = (...ks) => { for (const k of ks) if (st[k] != null) return st[k]; return null; };
-  const pos = p.standard_pos;
-  const snaps = p.snap_pct != null ? Math.round(p.snap_pct) + '% snaps' : null;
-  let parts, prefix = '';
-  if (pos === 'QB') parts = [stat('PASS_YDS') != null ? stat('PASS_YDS') + ' yds' : null, stat('PASS_TDS') != null ? stat('PASS_TDS') + ' TD' : null, stat('INT') != null ? stat('INT') + ' INT' : null];
-  else if (pos === 'RB') parts = [stat('CAR') != null ? stat('CAR') + ' car' : null, stat('RUSH_YDS') != null ? stat('RUSH_YDS') + ' yds' : null, stat('RUSH_TDS') != null ? stat('RUSH_TDS') + ' TD' : null, snaps];
-  else if (pos === 'WR' || pos === 'TE') parts = [stat('REC') != null ? stat('REC') + ' rec' : null, stat('REC_YDS') != null ? stat('REC_YDS') + ' yds' : null, stat('REC_TDS') != null ? stat('REC_TDS') + ' TD' : null, snaps];
-  else if (SIDEBAR_CARD[pos] && SIDEBAR_CARD[pos].compact) {
-    const c = SIDEBAR_CARD[pos].compact;
-    parts = [
-      c.includes('TKL') && stat('TKL') != null ? stat('TKL') + ' tkl' : null,
-      c.includes('SACK') && stat('SACK', 'SACKS') != null ? stat('SACK', 'SACKS') + ' sack' : null,
-      c.includes('TFL') && stat('TFL') != null ? stat('TFL') + ' TFL' : null,
-      c.includes('INT') && stat('INT') != null ? stat('INT') + ' INT' : null,
-      c.includes('PBU') && stat('PBU', 'PD') != null ? stat('PBU', 'PD') + ' PD' : null,
-      snaps,
-    ];
-    // These come from the stats block's season, which can differ from the advanced season.
-    if (parts.some(v => v != null) && p.stats_season != null && p.stats_season !== p.def_advanced_season) prefix = p.stats_season + ': ';
-  } else parts = [snaps];
-  const line = parts.filter(v => v != null).join(' · ');
-  return line ? prefix + line : '';
+  if (d.num) {
+    const n = st[d.num], den = st[d.den];
+    return n != null && den ? n / den * (d.mult || 1) : null;
+  }
+  for (const k of d.keys) if (st[k] != null) return Number(st[k]);
+  return null;
+}
+
+function gridFmt(d, v) {
+  if (v == null) return '—';
+  if (d.snap) return Math.round(v) + '%';
+  return d.dec != null ? v.toFixed(d.dec) + (d.unit || '') : String(v);
+}
+
+// stats-block season, shown when any non-snap stat has a value
+function statsSeasonCaption(p) {
+  const has = gridDefs(p.standard_pos).some(d => !d.snap && gridValue(p, d) != null);
+  return has && p.stats_season != null ? p.stats_season + ' season' : '';
+}
+
+function gridSectionHtml(p) {
+  const defs = gridDefs(p.standard_pos);
+  const vals = defs.map(d => gridValue(p, d));
+  if (!vals.some(v => v != null)) return '';
+  const cap = statsSeasonCaption(p);
+  return `<div class="sb-section"><div class="sb-section-title">Season Stats</div>
+    <div class="sb-grid">${defs.map((d, i) => `<div class="sb-cell"><div class="sb-cell-label">${d.label}</div><div class="sb-cell-val">${gridFmt(d, vals[i])}</div></div>`).join('')}</div>
+    ${cap ? `<div class="sb-caption">${cap}</div>` : ''}</div>`;
+}
+
+// Starter-vs-substitute stat table; the better value per row is bold green.
+function compareTableHtml(a, b, last) {
+  const defsA = gridDefs(a.standard_pos);
+  const seen = new Set(defsA.map(d => d.label));
+  const extra = gridDefs(b.standard_pos).filter(d => !seen.has(d.label) && gridValue(a, d) != null);
+  const rows = [...defsA, ...extra].map(d => ({ d, va: gridValue(a, d), vb: gridValue(b, d) })).filter(r => r.va != null || r.vb != null);
+  if (!rows.length) return '';
+  const cells = rows.map(({ d, va, vb }) => {
+    const fa = gridFmt(d, va), fb = gridFmt(d, vb);
+    let best = '';
+    if (va != null && vb != null && fa !== fb) best = (d.lower ? va < vb : va > vb) ? 'a' : 'b';
+    return `<div class="sb-tbl-l">${d.label}</div><div class="sb-tbl-v${best === 'a' ? ' best' : ''}">${fa}</div><div class="sb-tbl-v${best === 'b' ? ' best' : ''}">${fb}</div>`;
+  }).join('');
+  const ca = statsSeasonCaption(a), cb = statsSeasonCaption(b);
+  const cap = ca && cb && a.stats_season === b.stats_season ? ca
+    : [ca && last(a) + ' ' + ca, cb && last(b) + ' ' + cb].filter(Boolean).join(' · ');
+  return `<div class="sb-section"><div class="sb-section-title">Season Stats</div>
+    <div class="sb-tbl"><div></div><div class="sb-tbl-h">${last(a)}</div><div class="sb-tbl-h">${last(b)}</div>${cells}</div>
+    ${cap ? `<div class="sb-caption">${cap}</div>` : ''}</div>`;
 }
 
 function renderSidebar(resetScroll) {
@@ -1224,8 +1288,6 @@ function renderSidebar(resetScroll) {
     listHtml = `<div class="sb-section"><div class="sb-section-title">Advanced Stats</div>${keys.map(k => advStatHtml(p, k)).join('')}
       ${cfg.compact && p.def_advanced_season ? `<div class="sb-caption">Advanced: ${p.def_advanced_season}</div>` : ''}</div>`;
   }
-  const box = buildBoxLine(p);
-
   const subs = getSubCandidates(sidebarPos);
   const subsHtml = subs.length ? subs.map(c => `
       <div class="sb-sub" onclick="openCompare('${c.id}', event)">
@@ -1251,7 +1313,7 @@ function renderSidebar(resetScroll) {
     </div>
     ${heroHtml}
     ${listHtml}
-    ${box ? `<div class="sb-section"><div class="sb-section-title">Box Score</div><div class="sb-box">${box}</div></div>` : ''}
+    ${gridSectionHtml(p)}
     <div class="sb-section" style="border-bottom:none">
       <div class="sb-section-title">Substitutes</div>
       ${subsHtml}
@@ -1303,11 +1365,15 @@ function renderCompare(el, a) {
     const m = ADV_STATS[key];
     const pa = statPct(a, key).pct, pb = statPct(b, key).pct;
     let delta = '';
-    if (pa != null && pb != null) {
-      const d = pb - pa;
+    const hasPct = pa != null && pb != null, hasRaw = a[key] != null && b[key] != null;
+    if (hasPct || hasRaw) {
+      const d = hasPct ? pb - pa : 0;
       // Percentiles are already inverted for lower-is-better stats, so a positive delta is always "candidate better".
-      const c = m.style || d === 0 ? 'var(--text-muted)' : (d > 0 ? '#22c55e' : '#ef4444');
-      delta = `<span class="sb-delta" style="color:${c}">${d > 0 ? '+' : ''}${d}</span>`;
+      const c = m.style || !hasPct || d === 0 ? 'var(--text-muted)' : (d > 0 ? '#22c55e' : '#ef4444');
+      let raw = '';
+      if (hasRaw) { const t = m.fmt(b[key] - a[key]); raw = (t[0] === '-' || t[0] === '+' ? '' : '+') + t; }
+      const pct = hasPct ? (d > 0 ? '+' : '') + d + ' pct' : '';
+      delta = `<span class="sb-delta" style="color:${c}">${hasRaw && hasPct ? raw + '  (' + pct + ')' : raw || pct}</span>`;
     }
     return `<div class="sb-cmp-row"><div class="sb-cmp-top"><span class="sb-stat-label">${m.label}</span>${delta}</div>${line(a, key)}${line(b, key)}</div>`;
   }).join('');
@@ -1318,7 +1384,6 @@ function renderCompare(el, a) {
       <div class="sb-cmp-sub">${pl.standard_pos}${pl.age ? ' · Age ' + pl.age : ''}</div>
       <div class="sb-cmp-madden" style="color:${maddenColor(pl.madden)}">${pl.madden || '—'}</div>
     </div>`;
-  const boxA = buildBoxLine(a), boxB = buildBoxLine(b);
 
   el.innerHTML = `
     <button class="sb-close" onclick="closeSidebar()" aria-label="Close">&times;</button>
@@ -1327,13 +1392,10 @@ function renderCompare(el, a) {
       <button class="sb-btn" onclick="closeCompare(event)">Back</button>
       <button class="sb-btn primary" onclick="swapFromCompare(event)">Swap in</button>
     </div>
+    ${compareTableHtml(a, b, last)}
     ${rows ? `<div class="sb-section"><div class="sb-section-title">Advanced Stats · percentile vs. own position</div>${rows}
       ${a.standard_pos !== b.standard_pos ? `<div class="sb-caption">Different positions: only shared stats are compared, each ranked within his own position.</div>` : ''}</div>` : ''}
-    <div class="sb-section" style="border-bottom:none">
-      <div class="sb-section-title">Box Score</div>
-      <div class="sb-cmp-box"><b>${last(a)}:</b> ${boxA || '—'}</div>
-      <div class="sb-cmp-box"><b>${last(b)}:</b> ${boxB || '—'}</div>
-    </div>`;
+    `;
   el.classList.add('open');
   document.body.classList.add('sb-open');
   el.scrollTop = 0;
