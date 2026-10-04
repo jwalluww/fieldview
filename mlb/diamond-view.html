@@ -263,6 +263,8 @@ body {
 .player-card.selected { z-index: 90; }
 .player-card.selected .player-dot { box-shadow: 0 0 0 3px var(--accent), 0 0 18px rgba(0,212,255,.55); }
 
+.player-rank.fillin { color: var(--text-muted); font-style: italic; }
+
 .court-hint { font-size: 10px; color: var(--text-dim); margin-top: 8px; font-style: italic; }
 
 /* ── SUBS POPOVER ── */
@@ -777,7 +779,7 @@ function hasPlayed(p) {
   return (p.pa || 0) > 0 || (p.ps && ipToNum(p.ps.inningsPitched) > 0);
 }
 
-function getStarter(zone) {
+function naturalStarter(zone) {
   if (manualStarters[zone] != null) {
     const manual = teamPlayers.find(p => p.id === manualStarters[zone]);
     if (manual) return manual;
@@ -793,11 +795,38 @@ function getStarter(zone) {
   return candidates.slice().sort((a,b) => (b.pa||0) - (a.pa||0))[0];
 }
 
+// Whole lineup in one pass: manual subs / natural starters first, then any empty field zone (not P) is
+// filled by the healthy, not-already-placed batter (PA > 0) with the most PA -- never a pitcher or the
+// two-way player. fill: true marks that player as playing out of position.
+function computeLineup() {
+  const lineup = {};
+  for (const z of ZONE_ORDER) lineup[z] = { p: naturalStarter(z), fill: false };
+  const placed = new Set(ZONE_ORDER.map(z => lineup[z].p && lineup[z].p.id).filter(id => id != null));
+  for (const z of ZONE_ORDER) {
+    if (lineup[z].p || z === 'P') continue;
+    const fill = teamPlayers
+      .filter(p => !p.injured && p.playerType === 'batter' && (p.pa || 0) > 0 && !placed.has(p.id))
+      .sort((a, b) => (b.pa || 0) - (a.pa || 0))[0];
+    if (fill) { lineup[z] = { p: fill, fill: true }; placed.add(fill.id); }
+  }
+  return lineup;
+}
+
+function getStarter(zone) {
+  return computeLineup()[zone].p;
+}
+
+function isFillIn(zone) {
+  return computeLineup()[zone].fill;
+}
+
 function renderField() {
   const layer = document.getElementById('playersLayer');
+  const lineup = computeLineup();
   const html = ZONE_ORDER.map(zone => {
     const dz = DIAMOND_ZONES[zone];
-    const p = getStarter(zone);
+    const p = lineup[zone].p;
+    const fill = lineup[zone].fill;
     if (!p) {
       return `
         <div class="player-card" data-pos="${zone}" style="left:${dz.x}%; top:${dz.y}%">
@@ -807,10 +836,10 @@ function renderField() {
       `;
     }
     return `
-      <div class="player-card" data-pos="${zone}" data-pid="${p.id}" style="left:${dz.x}%; top:${dz.y}%">
+      <div class="player-card" data-pos="${zone}" data-pid="${p.id}" style="left:${dz.x}%; top:${dz.y}%"${fill ? ` title="Playing out of position (natural: ${p.position})"` : ''}>
         <div class="player-dot" style="background:${ratingColor(p.rating)}">${p.rating != null ? p.rating : '—'}</div>
         <div class="player-name">${p.name}</div>
-        <div class="player-rank">${zone}</div>
+        <div class="player-rank${fill ? ' fillin' : ''}">${zone}</div>
       </div>
     `;
   }).join('');
@@ -1435,6 +1464,7 @@ function renderSidebar(resetScroll) {
         <div class="sb-name"><span>${p.jersey ? '#' + p.jersey + ' ' : ''}${p.name}</span>${p.injured ? '<span class="sb-pill inj">INJ</span>' : ''}</div>
         <div class="sb-meta">${meta1}</div>
         ${meta2 ? `<div class="sb-meta">${meta2}</div>` : ''}
+        ${isFillIn(sidebarZone) ? `<div class="sb-meta" style="color:var(--gold)">Playing out of position (natural: ${p.position})</div>` : ''}
       </div>
       <div class="sb-rating"><div class="sb-rating-val" style="color:${ratingColor(p.rating)}">${p.rating != null ? p.rating : '—'}</div><div class="sb-rating-label">Overall</div></div>
     </div>

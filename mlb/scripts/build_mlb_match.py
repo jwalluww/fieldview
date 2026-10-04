@@ -42,7 +42,7 @@ normalized name + team (see match_rating()): exact, then a small alias table
 (Encarnacion-Strand -> Encarnacion), all scoped to the same team and only
 accepted when exactly one card qualifies; last, if the API lists the player
 as a free agent ("FA") and that name is unique among Live cards, a name-only
-match. Same-name players (Max Muncy) can only ever match on name + team.
+match that must also agree on bats/throws and pitcher-vs-hitter. Same-name players (Max Muncy) can only ever match on name + team.
 Unmatched roster players get overall_rating = null (never dropped, never
 defaulted) and are written to mlb/data/unmatched_mlb.txt. The API has no
 potential rating, so the master has no `potential` field.
@@ -136,7 +136,22 @@ def build_ratings_index(cards):
     return by_name
 
 
-def match_rating(by_name, name, team_abbr):
+def fa_agrees(card, bats, throws, player_type):
+    """Extra checks for the no-team-evidence FA tier: bats/throws must agree (a switch hitter
+    or a missing value is compatible) and pitcher-vs-hitter must agree (two-way players skip it)."""
+    def same(a, b):
+        return not a or not b or a == 'S' or b == 'S' or a == b
+    if not same(bats, card.get('bat_hand')):
+        return False
+    if throws and card.get('throw_hand') and throws != card['throw_hand']:
+        return False
+    if player_type and player_type != 'two_way' and card.get('is_hitter') is not None:
+        if (player_type == 'pitcher') == bool(card['is_hitter']):
+            return False
+    return True
+
+
+def match_rating(by_name, name, team_abbr, bats=None, throws=None, player_type=None):
     """-> (card or None, source). Sources: exact, alias, hyphen, fa_name_only; else
     unmatched_{no_name,other_team,ambiguous}."""
     def pick(key):
@@ -161,7 +176,7 @@ def match_rating(by_name, name, team_abbr):
     same_name = {c['uuid']: c for c in by_name.get(key, []) + by_name.get(NAME_ALIASES.get(key), [])}
     if len(same_name) == 1:
         only = next(iter(same_name.values()))
-        if only['team_short_name'] == 'FA':
+        if only['team_short_name'] == 'FA' and fa_agrees(only, bats, throws, player_type):
             return only, 'fa_name_only'
     return None, 'unmatched_other_team' if same_name else 'unmatched_no_name'
 
@@ -222,7 +237,8 @@ def build_match():
 
         hit_row = hitting_by_id.get(pid)
         pitch_row = pitching_by_id.get(pid)
-        rating_card, rating_source = match_rating(ratings_index, clean(r['full_name']), clean(r['team_abbr'])) if ratings_exists else (None, 'no_snapshot')
+        rating_card, rating_source = match_rating(ratings_index, clean(r['full_name']), clean(r['team_abbr']),
+                                                     clean(r['bat_side']), clean(r['pitch_hand']), resolve_player_type(pos_abbr)) if ratings_exists else (None, 'no_snapshot')
         rating_sources[rating_source] = rating_sources.get(rating_source, 0) + 1
         if rating_card is None:
             unmatched_ratings.append((clean(r['full_name']), clean(r['team_abbr']), rating_source))
