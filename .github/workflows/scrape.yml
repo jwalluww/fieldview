@@ -134,12 +134,10 @@ jobs:
       - name: Run MLB stats scraper
         run: python mlb/scripts/scrape_stats.py
 
-      # theshowratings.com via the ScraperAPI proxy -- same proxy NHL's
-      # ratings scraper uses, requires SCRAPERAPI_KEY as a repo secret.
+      # MLB The Show's official public API (plain requests, no proxy).
+      # Replaced theshowratings.com + ScraperAPI; scrape_ratings.py is retired.
       - name: Run MLB ratings scraper
-        env:
-          SCRAPERAPI_KEY: ${{ secrets.SCRAPERAPI_KEY }}
-        run: python mlb/scripts/scrape_ratings.py
+        run: python mlb/scripts/scrape_show_api.py
 
       - name: Run matching
         run: python mlb/scripts/build_mlb_match.py

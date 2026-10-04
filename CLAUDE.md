@@ -121,7 +121,7 @@ Replaced the rich hover card. Hover now shows only name / position / Madden / IN
 - **Layout:** header (name/jersey/team/pos, Madden, age, height/weight, contract, INJ detail) -> Advanced Stats rows -> Season Stats grid -> Substitutes. Players with no advanced values skip the advanced section (OL show Snap% only).
 - **Advanced rows:** raw value + percentile bar + one-line definition. Percentile = % of the same-`standard_pos` population beaten across all loaded players (ties half, lower-is-better inverted, population < 10 -> no bar), colored red -> amber -> green (`pctColor()`). Style stats (TTT, aDOT, Air Yd Shr, aDOT Allowed) get a neutral bar and descriptive text ("quicker than N% of QBs"). Offense stats are gated by the qualifier rules above.
 - **Season Stats grid:** per-position keys from the `stats` block with derived Comp%/YPA/YPC/Y/Rec; the block spells some keys several ways (`SACK`/`SACKS`, `QB_HIT`/`QB HIT`, `INT`/`INTs`, `PBU`/`PD`), all handled.
-- **Substitutes:** clicking one opens a starter-vs-candidate comparison (season-stat table with the better value in green, advanced rows with raw and percentile-point deltas); "Swap in" does the substitution, "Back" cancels. Cross-position pairs (NB slot CB vs S) compare shared stats only.
+- **Substitutes:** clicking one opens a starter-vs-candidate comparison (season-stat table with the better value in green, advanced rows with both players' bars and percentiles, no deltas); "Swap in" does the substitution, "Back" cancels. Cross-position pairs (NB slot CB vs S) compare shared stats only.
 - **`?player=<player_id>`** is written while the sidebar is open (alongside `?team=&off=&def=`) and reopens it on load if that player is currently on the field for the loaded team; ignored otherwise, dropped on team switch.
 - **Reset to starters** (header, next to the personnel buttons): `resetStarters()` clears `currentStarters` for both offense and defense in one go, keeps the current Off/Def personnel, and re-renders (the sidebar refreshes, or closes if its slot is gone). Hidden while there are no manual subs (`updateResetBtn()`, called from `renderFormation()` and `selectSub()`).
 
@@ -217,7 +217,7 @@ Three label elements (`.bench-stat-label`, `.popup-pos`, `.popup-stat-label`) us
 - `mlb/diamond-view.html`, `mlb/player-table.html`
 
 ### Scripts (`mlb/scripts/`)
-`scrape_roster.py` → `scrape_stats.py` → `scrape_ratings.py` (theshowratings.com via ScraperAPI) → `build_mlb_match.py` → `export_mlb_master.py` — unchanged pipeline shape.
+`scrape_roster.py` → `scrape_stats.py` → `scrape_show_api.py` (MLB The Show's official API) → `build_mlb_match.py` → `export_mlb_master.py`. **`scrape_ratings.py` (theshowratings.com via ScraperAPI) is retired** — left in place, unused; no longer in the `scrape-mlb` job or `run_mlb.bat`.
 
 ### Rating-driven dot (diamond-view.html)
 The field dot previously showed AVG (batters) or ERA (pitchers), colored by position-specific heuristics (`battingColor()`/`pitchingColor()`). **Switched to the shared `ratingColor()` gradient used by every other sport**, showing `overall_rating` directly (or an em dash if null) — matching NFL/NBA/EPL/MLS's convention. The old heuristic functions are fully removed (confirmed unused anywhere else in the file).
@@ -229,14 +229,19 @@ Four fixes, all in `diamond-view.html`: the on-field position label (`.player-ra
 Overview tab gained a Rating column and now sorts by it by default (previously sorted alphabetically with zero rating/stat signal — the weakest Overview of all six sports before this fix). Batting tab gained a BABIP column; Pitching tab gained a K/BB (`strikeoutWalkRatio`) column — both real fields already present in `mlb_players_master.json`, previously unexposed, both meaningfully better "quality" indicators than raw AVG/ERA per this project's own stated metric instincts. Both wired into `FLOAT_SORT_COLS` so they sort numerically (they arrive as formatted strings from statsapi.mlb.com, same as `era`/`whip`).
 
 ### Real current numbers (779 total players)
-`overall_rating` (theshowratings.com match): 728 (93.5%) — **now genuinely visible on both the field dot and in the table**, unlike before this pass.
+`overall_rating` (The Show API, name + team match; 2026-10-04 local run): 1,078 / 1,080 (99.8%), SF 40/40. Unmatched (2, no Live card exists): Eiberson Castellano (COL), Devereaux Harrison (TOR); list in `mlb/data/unmatched_mlb.txt`. Population is now the 1,080-player `rosterType=active` pull (post-season rosters), up from 779.
 
-**SF Giants coverage outlier, real and now user-visible**: SF sits at 61.5% (16/26) matched vs. the league's 88-100%. Confirmed via a real `mlbam_id`-level diff that this is a source-vs-source roster-snapshot lag (theshowratings.com's own SF page carries several players statsapi's roster currently has on other teams — Aroldis Chapman/BOS, Luis Arraez/PHI, Robbie Ray/SD), not a matching bug. **This was previously filed under Dropped with the reasoning "not currently displayed anywhere, no user-visible gap" — that reasoning is now stale** since `overall_rating` is displayed on both the dot and the table. Moved back to Known Outstanding Bugs below.
+### Ratings source — The Show official API (replaced theshowratings.com, 2026-10)
+- `scrape_show_api.py` pulls `mlb26.theshow.com/apis/items.json?type=mlb_card` (25/page, loops `total_pages`), keeps `series == "Live"` (~2,084 cards, one per real player; ~884 are team "FA"), and writes the raw snapshot `mlb/data/show_api_live.json` plus `mlb/data/ratings_meta.json` (`ratings_as_of` = newest `roster_updates.json` date, weekly updates). Plain `requests` + Chrome UA works, no Cloudflare, no ScraperAPI. A failed/truncated fetch (< 1,500 Live cards) keeps the previous snapshot and exits 0 — staleness shows up as an old as-of date. No MLB player ID and no potential rating exist in the API.
+- **Matching** (`build_mlb_match.py`, replaces the old `person_id` join): normalized name (accents, periods, Jr./Sr./II-IV stripped, hyphens -> spaces) + team (`ARI→AZ, WAS→WSH, OAK→ATH`). Tiers, all team-scoped and accepted only if exactly one card qualifies: exact, `NAME_ALIASES` (Leo Rivas, Cam Cauley, Robby Ahlstrom, Leo Balcazar), hyphenated-surname truncation (Encarnacion-Strand -> Encarnacion); last, if the API team is "FA" and the name is unique among Live cards, a name-only match (10 players locally). Same-name players (Max Muncy LAD 81 / ATH 63) only ever match on name + team. Unmatched -> `overall_rating: null` + `mlb/data/unmatched_mlb.txt`.
+- The ratings are noticeably different from theshowratings.com's (which looked stale): e.g. Webb 94 -> 80, Raleigh 95 -> 79, Freeman 90 -> 81. `potential` was **removed** from the master and the UI (sidebar header no longer shows "Pot").
+- DiamondView shows "Ratings as of <date>" next to "Starting Nine" from `ratings_meta.json` (nothing if missing).
+
 
 ### Player sidebar, bigger field, Reset to starters (diamond-view.html, frontend-only)
 - **Field**: `.court-canvas` uses a fixed height (`--fh` = viewport minus header/margins, also capped by width so field + 360px column fit) and the page never scrolls at 1280x900 or 1920x1080; `.right-col` scrolls on its own. Dots are ~1.4x (`--dot` = `min(90px, 9.3vh)`; name/rank/dot fonts and card width derive from it). DIAMOND_ZONES retuned for the bigger cards (CF y10, P y58, 2B x62, SS x34). Don't use `min-height` for the field (NFL's scroll bug).
 - **Toggle**: header "Sidebar: On/Off", `localStorage` key **`fieldview_mlb_sidebar`** (`'on'`/`'off'`, default ON). OFF = the original click-to-sub popover and full hover card, untouched.
-- **ON**: hover = name / position / rating only. Click a starter opens a 360px sidebar that *replaces* the batting-order/pitching-staff column (`body.sb-open`; the field doesn't resize). Esc, x, empty-field click, team switch close it; selected card keeps a cyan ring that follows a swap. Layout: header (name, jersey, team, position, bats/throws, height/weight, rating + potential) -> Advanced Stats -> Season Stats grid -> Substitutes. No hero stat. Two-way players (Ohtani) get both batting and pitching sections (pitching first when he's at P).
+- **ON**: hover = name / position / rating only. Click a starter opens a 360px sidebar that *replaces* the batting-order/pitching-staff column (`body.sb-open`; the field doesn't resize). Esc, x, empty-field click, team switch close it; selected card keeps a cyan ring that follows a swap. Layout: header (name, jersey, team, position, bats/throws, height/weight, overall rating) -> Advanced Stats -> Season Stats grid -> Substitutes. No hero stat. Two-way players (Ohtani) get both batting and pitching sections (pitching first when he's at P).
 - **Advanced stats** (`buildAdv()` computes everything client-side from `batting_stats`/`pitching_stats`; statsapi rates are strings, so counts are used where possible): batters OPS, OBP, SLG, ISO (SLG-AVG), BB% (BB/PA), K% (lower better), BABIP (style stat: neutral grey, "higher than N% of hitters") ranked among all qualified batters league-wide; pitchers ERA, WHIP, K% (SO/BF), BB%, K-BB%, HR/9 ranked within role (SP if GS >= half of games, else RP). **`inningsPitched` is in thirds** ("85.2" = 85 2/3), parsed by `ipToNum()`. Percentile math/`pctColor()` copied from NFL (ties half, inverted for lower-is-better, cap 99, population < 10 -> raw + definition only).
 - **Qualifiers**: batters PA >= 3.1 x G, SP IP >= 1.0 x G, RP IP >= 0.25 x G. G = 162 once the regular season is complete, else the max games any player has played (`leagueG`; currently 162, logged to the console). Unqualified players are excluded from populations and show raw + definition + a "low sample" tag, no bar (so most bench bats and nearly every reliever, and Ohtani's pitching line, are "low sample").
 - **Sub comparison**: starter vs candidate header + Back / Swap in, season-stat table (better value bold green; ERA/WHIP/BB/BB%/K%/HR/9 lower-is-better) plus both players' advanced bars/percentiles, no deltas. Only blocks both players have are compared, with a caption otherwise (in practice only pitcher-vs-Ohtani at P; batter slot pools never contain pitchers).
@@ -244,7 +249,7 @@ Overview tab gained a Rating column and now sorts by it by default (previously s
 - **Reset to starters**: button in the field header, clears `manualStarters`, refreshes/closes the sidebar; hidden when there are no manual subs.
 
 ### Schema
-`mlb_players_master.json` keys: `player_id, name, team, team_abbr, position, position_group, position_group_source, player_type, jersey_number, height, weight, bats, throws, batting_stats, pitching_stats, match_source, overall_rating, potential`.
+`mlb_players_master.json` keys: `player_id, name, team, team_abbr, position, position_group, position_group_source, player_type, jersey_number, height, weight, bats, throws, batting_stats, pitching_stats, match_source, overall_rating`.
 
 ---
 
@@ -368,7 +373,7 @@ Research notes on which stats best represent player value per sport/position, fo
 
 ## ScraperAPI — real status
 
-Used by `mlb/scripts/scrape_ratings.py` and `nhl/scripts/scrape_ratings.py`, both running in their sport's cloud job. Free plan is 1,000 credits/month recurring; combined real usage (~130 + ~139 requests/month) sits well under that indefinitely. No card on file, staying on the free tier by choice.
+Used only by `nhl/scripts/scrape_ratings.py` (NHL cloud job). **MLB no longer uses ScraperAPI** — its ratings moved to The Show's official API (2026-10); `mlb/scripts/scrape_ratings.py` is retired but left in place. Keep the `SCRAPERAPI_KEY` secret. Free plan is 1,000 credits/month; NHL's real usage (~139 requests/month) sits well under that.
 
 ---
 
@@ -411,7 +416,7 @@ Used by `mlb/scripts/scrape_ratings.py` and `nhl/scripts/scrape_ratings.py`, bot
 - **NFL**: the first-initial stats fallback may have lost a few real nickname matches (Dru Phillips, Sai'vion Jones, Jaylon Jones, Dalton Johnson, Mike Reid were on the 49-player dropped list) — not chased; a wrong stat is worse than a missing one.
 - **NBA**: 2K ratings Task Scheduler job's last recorded run had a non-zero result code — separate, still-unresolved issue from the stale-unmatched-record bug fixed this pass. Task Scheduler history logging is disabled (needs an elevated/admin session to enable) so the historical code isn't recoverable; basic error logging was added for future occurrences.
 - **NBA**: `scrape_2kratings.py` has still never completed a full 30-team run in one pass — cumulative trickle coverage has reached all 30 teams, but no single run has. Lower-priority now that stale unmatched records self-heal every run regardless.
-- **MLB**: SF Giants sits at 61.5% `overall_rating` coverage vs. the league's 88-100% — confirmed a real theshowratings.com roster-snapshot lag, not a matching bug. **Reopened this pass**: previously filed under Dropped on the reasoning that ratings weren't displayed anywhere so there was no user-visible gap — that's no longer true now that MLB's dot and table both show `overall_rating`. No fix proposed yet; still a source-freshness question, not a code defect, but now worth revisiting since it's actually visible to users.
+- **MLB**: Aaron Judge (and ~230 other players with 2026 stats) are missing from `mlb_players_master.json` because `scrape_roster.py` pulls `rosterType=active` only, so anyone on the 60-day IL (126 players with stats, e.g. Devers), a non-active 40-man spot (85, Judge's status is `40M`), reassigned to minors (16), or not on any 40-man (227, traded/released) has no row. Not fixed: the real fix is switching to `rosterType=40Man` (adds status codes D60/D15/40M/RM, ~1,360 players, changes the sub pools and batting-order lists), which needs a decision on how injured/optioned players should display.
 - **EPL/MLS**: the full six-sport `run_all.bat` chain has still never completed in one sitting — lower priority now that each sport refreshes independently via its own cloud job regardless.
 - **EPL**: the original unmatched-pool breakdown (99 on 3 clubs sofifa's database lag, rest genuine academy/transfer gaps) hasn't been re-verified against the newer ~223-239 unmatched counts from later runs — worth a fresh look if EPL matching becomes a focus again.
 - **Cross-sport ratings audit gap**: NFL (Rousseau), EPL (Mitoma + 2 more), and NBA (Lillard + Sorber) all had real, findable alias/matching bugs surfaced by actually going looking this pass. MLB and NHL were *not* covered by the same audit — neither has a raw ratings-source file committed to the repo (both scrape live via ScraperAPI without a persisted raw snapshot), so the same "compare raw source vs. matched output" technique doesn't directly apply. This is a real, acknowledged gap in coverage, not a clean bill of health for those two sports.
@@ -434,7 +439,7 @@ Used by `mlb/scripts/scrape_ratings.py` and `nhl/scripts/scrape_ratings.py`, bot
 - ⬜ NHL TableView: expose `evGoals`, `evPoints`, `faceoffWinPct` — all already available in the data, never added to the table
 - ⬜ NBA stat richness: `fetch_stats.py` only pulls ppg/rpg/apg/mpg, and richer stats mean changing the scraper (a local-only script, stats.nba.com blocks the cloud runner), not just the table
 - ⬜ "Genuinely evaluative metric" — its own future project, needs new data sources: separate cosmetic video-game ratings from real evaluative stats (NFL pressure rate over sacks, NBA BPM/VORP, MLB WAR/xwOBA, NHL GAR/xG). NFL's advanced-stat work (QB/RB/WR/TE hover cards + the Advanced tab) is the first partial step on this
-- ⬜ Revisit MLB's SF Giants ratings-coverage gap now that it's actually visible in the UI (see Known Outstanding Bugs)
+- ⬜ Decide how to bring IL / non-active 40-man MLB players (Judge, Devers) into DiamondView — see Known Outstanding Bugs (roster endpoint switch)
 - ⬜ A real audit approach for MLB/NHL's ratings-matching (no raw source file exists to compare against the way NFL/EPL/NBA's audit worked — would need checking the scrape scripts' own unmatched-reporting, if any exists, or a different technique entirely)
 
 **Future State**
@@ -445,7 +450,7 @@ Used by `mlb/scripts/scrape_ratings.py` and `nhl/scripts/scrape_ratings.py`, bot
 
 **Dropped**
 - ~~NBA Big/Wing/Guard bucket UI~~ — superseded by the shipped positionless substitution.
-- ~~OOTP as an MLB ratings source~~ — legal exposure too high. Dropped in favor of theshowratings.com.
+- ~~OOTP as an MLB ratings source~~ — legal exposure too high. Dropped in favor of theshowratings.com, which was itself replaced by The Show's official API (2026-10).
 - Historical rating trends - not a part of the scope or goal of this website
 - Player comparison - not a part of the scope or goal of this website
 - A `CNAME` at the repo root pointing `www.fieldview.com` — didn't work, someone else appears to own it. Site stays on the default GitHub Pages URL.

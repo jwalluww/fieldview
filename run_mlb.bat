@@ -6,18 +6,10 @@ REM -- there is no mlb\PIPELINE.md and no cloud job for MLB (CLAUDE.md:
 REM manual/local only). scrape_roster.py and scrape_stats.py each load
 REM straight into mlb\data\fieldview.duckdb themselves (no separate
 REM build_db.py step, unlike NFL/NBA) -- confirmed by reading both
-REM scripts' __main__ blocks. scrape_ratings.py (theshowratings.com via
-REM the ScraperAPI proxy) doesn't depend on the roster/stats tables
-REM either (its join key is the mlbam_id embedded in each player's photo
-REM URL, not a DB lookup), so its position in this order is for clarity,
-REM not a real dependency.
-REM
-REM scrape_ratings.py deliberately exits non-zero (SystemExit(1)) if its
-REM own single-page test doesn't clear the site's block, rather than
-REM burning a full 30-team run against a block it already knows is up --
-REM that's real, intentional behavior in the script itself, and this
-REM orchestrator's fail-and-continue handling is what lets the rest of
-REM the MLB pipeline finish normally when that happens.
+REM scripts' __main__ blocks. scrape_show_api.py (MLB The Show's official API via
+REM plain requests; it replaced theshowratings.com + ScraperAPI, whose scrape_ratings.py
+REM is retired) writes mlb\data\show_api_live.json + ratings_meta.json for
+REM build_mlb_match.py. On a failed fetch it keeps the previous snapshot and exits 0.
 REM
 REM Does NOT git add/commit/push anything -- this only regenerates local
 REM mlb\data\*.json / mlb\data\fieldview.duckdb. Committing stays a
@@ -27,9 +19,7 @@ REM Each step is echoed before it runs. A failed step is logged clearly
 REM and the run continues to the next step rather than stopping, so one
 REM broken scraper doesn't kill the rest of the pipeline.
 REM
-REM Env vars (SCRAPERAPI_KEY for scrape_ratings.py, read the same way the
-REM script already reads it via os.environ) come from whatever's already
-REM set in the environment -- nothing is read, set, or hardcoded here.
+REM No env vars are needed (MLB ratings no longer use ScraperAPI).
 
 setlocal enabledelayedexpansion
 cd /d "%~dp0"
@@ -45,7 +35,7 @@ echo ============================================
 
 call :run_step "scrape_roster.py" "python mlb\scripts\scrape_roster.py"
 call :run_step "scrape_stats.py" "python mlb\scripts\scrape_stats.py"
-call :run_step "scrape_ratings.py" "python mlb\scripts\scrape_ratings.py"
+call :run_step "scrape_show_api.py" "python mlb\scripts\scrape_show_api.py"
 call :run_step "build_mlb_match.py" "python mlb\scripts\build_mlb_match.py"
 call :run_step "export_mlb_master.py" "python mlb\scripts\export_mlb_master.py mlb\data\mlb_players_master.json"
 

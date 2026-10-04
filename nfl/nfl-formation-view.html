@@ -478,7 +478,6 @@ body.sb-open .field-outer { padding-right: 384px; }
 .sb-cmp-row { padding: 7px 0; border-top: 1px solid rgba(255,255,255,0.05); }
 .sb-cmp-row:first-of-type { border-top: none; }
 .sb-cmp-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px; }
-.sb-delta { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 15px; color: var(--text-muted); }
 .sb-cmp-line { display: flex; align-items: center; gap: 8px; margin-top: 3px; }
 .sb-cmp-tag { width: 62px; font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .sb-cmp-val { width: 46px; text-align: right; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 14px; color: var(--text); }
@@ -1397,19 +1396,7 @@ function renderCompare(el, a) {
   };
   const rows = keys.map(key => {
     const m = ADV_STATS[key];
-    const pa = statPct(a, key).pct, pb = statPct(b, key).pct;
-    let delta = '';
-    const hasPct = pa != null && pb != null, hasRaw = a[key] != null && b[key] != null;
-    if (hasPct || hasRaw) {
-      const d = hasPct ? pb - pa : 0;
-      // Percentiles are already inverted for lower-is-better stats, so a positive delta is always "candidate better".
-      const c = m.style || !hasPct || d === 0 ? 'var(--text-muted)' : (d > 0 ? '#22c55e' : '#ef4444');
-      let raw = '';
-      if (hasRaw) { const t = m.fmt(b[key] - a[key]); raw = (t[0] === '-' || t[0] === '+' ? '' : '+') + t; }
-      const pct = hasPct ? (d > 0 ? '+' : '') + d + ' pct' : '';
-      delta = `<span class="sb-delta" style="color:${c}">${hasRaw && hasPct ? raw + '  (' + pct + ')' : raw || pct}</span>`;
-    }
-    return `<div class="sb-cmp-row"><div class="sb-cmp-top"><span class="sb-stat-label">${m.label}</span>${delta}</div>${line(a, key)}${line(b, key)}</div>`;
+    return `<div class="sb-cmp-row"><div class="sb-cmp-top"><span class="sb-stat-label">${m.label}</span></div>${line(a, key)}${line(b, key)}</div>`;
   }).join('');
 
   const head = (pl, tag) => `<div>

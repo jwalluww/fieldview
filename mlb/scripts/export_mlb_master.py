@@ -55,7 +55,6 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             'pitching_stats': r['pitching_stats'] if isinstance(r['pitching_stats'], dict) else None,
             'match_source': clean('match_source', r['match_source']),
             'overall_rating': clean('overall_rating', r['overall_rating']),
-            'potential': clean('potential', r['potential']),
         }
         master[str(pid)] = entry
 

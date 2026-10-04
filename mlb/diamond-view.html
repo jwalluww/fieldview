@@ -175,6 +175,8 @@ body {
   margin-bottom: 10px;
 }
 
+.asof { font-size: 13px; font-weight: 400; letter-spacing: 0; text-transform: none; margin-left: 10px; }
+
 .reset-btn {
   background: none;
   border: 1px solid var(--border2);
@@ -506,7 +508,7 @@ body.sb-open .right-col { display: none; }
 <div class="wrap">
   <div class="left-col">
     <div class="court-label">
-      <span>Starting Nine</span>
+      <span>Starting Nine <span class="asof" id="ratingsAsOf"></span></span>
       <button class="reset-btn" id="resetStartersBtn" onclick="resetStarters()" style="display:none">Reset to starters</button>
     </div>
 
@@ -648,7 +650,7 @@ let manualStarters = {};
 
 // Shared 0-99 rating color scale, identical to nba/court-view.html and
 // epl/pitch-view.html's ratingColor() -- MLB ratings are live now via
-// theshowratings.com (ScraperAPI), so the dot switches from an AVG/ERA
+// The Show's official API (scrape_show_api.py), so the dot switches from an AVG/ERA
 // heuristic to the same rating-driven convention every other sport uses.
 function ratingColor(r) {
   if (r == null) return '#6b7494';
@@ -695,7 +697,6 @@ function mapPlayer(p) {
     so: ps ? ps.strikeOuts : null,
     inningsPitched: ps ? ps.inningsPitched : null,
     rating: p.overall_rating,
-    potential: p.potential,
     age: (bs && bs.age) || (ps && ps.age) || null,
     bs: bs,
     ps: ps,
@@ -714,6 +715,19 @@ async function loadAllPlayers() {
     console.error('Failed to load mlb_players_master.json:', e);
     allPlayers = [];
   }
+}
+
+// "Ratings as of <date>" caption: newest roster update's date from ratings_meta.json (shown only if present).
+async function loadRatingsMeta() {
+  try {
+    const res = await fetch('data/ratings_meta.json');
+    const meta = await res.json();
+    if (meta.ratings_as_of) {
+      const [y, m, d] = meta.ratings_as_of.split('-').map(Number);
+      const txt = new Date(y, m - 1, d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      document.getElementById('ratingsAsOf').textContent = 'Ratings as of ' + txt;
+    }
+  } catch (e) {}
 }
 
 async function loadTeam(abbr) {
@@ -1411,7 +1425,7 @@ function renderSidebar(resetScroll) {
         <div class="sb-meta">${meta1}</div>
         ${meta2 ? `<div class="sb-meta">${meta2}</div>` : ''}
       </div>
-      <div class="sb-rating"><div class="sb-rating-val" style="color:${ratingColor(p.rating)}">${p.rating != null ? p.rating : '—'}</div><div class="sb-rating-label">Overall${p.potential ? ' · Pot ' + p.potential : ''}</div></div>
+      <div class="sb-rating"><div class="sb-rating-val" style="color:${ratingColor(p.rating)}">${p.rating != null ? p.rating : '—'}</div><div class="sb-rating-label">Overall</div></div>
     </div>
     ${advHtml}
     ${gridHtml}
@@ -1557,6 +1571,7 @@ if (urlParams.get('team') && TEAMS[urlParams.get('team')]) currentTeam = urlPara
 const urlPlayer = urlParams.get('player');
 
 updateSbToggle();
+loadRatingsMeta();
 buildTeamsDropdown();
 loadTeam(currentTeam).then(() => {
   // Reopen the sidebar if ?player= is someone currently on the field for this team; otherwise ignore it.

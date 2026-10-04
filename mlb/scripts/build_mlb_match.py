@@ -33,25 +33,43 @@ useful "provenance" signal here, since (unlike NFL/NBA) there's only
 one vendor and no fuzzy name matching, just data availability:
 'both', 'hitting', 'pitching', or 'roster_only' (no 2026 games yet).
 
-Ratings (show_ratings, from theshowratings.com via scrape_ratings.py's
-ScraperAPI proxy -- see CLAUDE.md's theshowratings.com Scraper section)
-are left-joined onto the roster population by person_id, same clean-ID
-join theshowratings.com already gave this pipeline. Checked live before
-joining: zero duplicate person_id rows in the current show_ratings
-pull, but a traded player could plausibly appear on two teams' org-
-depth pages in a future run, so the dedup (keep the row with the max
-loaded_at per person_id) runs unconditionally rather than only after a
-duplicate is actually observed. Unmatched roster players get
-overall_rating/potential = null, same convention as batting_stats/
-pitching_stats for a player with no stats yet -- never dropped, never
-defaulted.
+Ratings come from MLB The Show's official API (scrape_show_api.py ->
+mlb/data/show_api_live.json, Live-series cards only). The API carries no
+MLB player ID, so they're left-joined onto the roster population by
+normalized name + team (see match_rating()): exact, then a small alias table
+(Leo -> Leonardo Rivas...), then a hyphenated-surname truncation
+(Encarnacion-Strand -> Encarnacion), all scoped to the same team and only
+accepted when exactly one card qualifies; last, if the API lists the player
+as a free agent ("FA") and that name is unique among Live cards, a name-only
+match. Same-name players (Max Muncy) can only ever match on name + team.
+Unmatched roster players get overall_rating = null (never dropped, never
+defaulted) and are written to mlb/data/unmatched_mlb.txt. The API has no
+potential rating, so the master has no `potential` field.
 """
+import json
 import os
+import re
+import unicodedata
 
 import duckdb
 import pandas as pd
 
 DB_PATH = os.path.join('mlb', 'data', 'fieldview.duckdb')
+RATINGS_PATH = os.path.join('mlb', 'data', 'show_api_live.json')
+UNMATCHED_PATH = os.path.join('mlb', 'data', 'unmatched_mlb.txt')
+
+# The Show's team_short_name -> statsapi abbreviation (the only three that differ;
+# checked against statsapi_teams / the master's team_abbr set).
+SHOW_TEAM_MAP = {'ARI': 'AZ', 'WAS': 'WSH', 'OAK': 'ATH'}
+
+# statsapi (normalized) name -> The Show's (normalized) name, for first-name
+# shortenings the generic rules can't see.
+NAME_ALIASES = {
+    'leo rivas': 'leonardo rivas',
+    'cam cauley': 'cameron cauley',
+    'robby ahlstrom': 'robert ahlstrom',
+    'leo balcazar': 'leonardo balcazar',
+}
 
 POSITION_GROUP_MAP = {
     '1B': 'IF', '2B': 'IF', '3B': 'IF', 'SS': 'IF',
@@ -83,6 +101,63 @@ def resolve_player_type(position_abbr):
     if position_abbr == 'TWP':
         return 'two_way'
     return 'batter'
+
+
+def norm_name(n):
+    """Lowercase, strip accents/periods/apostrophes, hyphens -> spaces, drop Jr./Sr./II-IV."""
+    n = unicodedata.normalize('NFKD', n)
+    n = ''.join(ch for ch in n if not unicodedata.combining(ch)).lower()
+    n = re.sub(r"[.'’]", '', n).replace('-', ' ').replace('–', ' ')
+    n = re.sub(r'\b(jr|sr|ii|iii|iv)\b', '', n)
+    return ' '.join(n.split())
+
+
+def hyphen_head(n):
+    """'Christian Encarnacion-Strand' -> 'Christian Encarnacion' (first half of a hyphenated surname), else None."""
+    words = n.split()
+    if len(words) < 2 or '-' not in words[-1]:
+        return None
+    return ' '.join(words[:-1] + [words[-1].split('-')[0]])
+
+
+def build_ratings_index(cards):
+    by_name = {}
+    for c in cards:
+        by_name.setdefault(norm_name(c['name']), []).append(c)
+        head = hyphen_head(c['name'])
+        if head:  # API-side hyphenated surname: also reachable by its first half
+            by_name.setdefault(norm_name(head), []).append(c)
+    return by_name
+
+
+def match_rating(by_name, name, team_abbr):
+    """-> (card or None, source). Sources: exact, alias, hyphen, fa_name_only; else
+    unmatched_{no_name,other_team,ambiguous}."""
+    def pick(key):
+        cands = [c for c in by_name.get(key, []) if SHOW_TEAM_MAP.get(c['team_short_name'], c['team_short_name']) == team_abbr]
+        uniq = {c['uuid']: c for c in cands}
+        return list(uniq.values())
+    key = norm_name(name)
+    tiers = [('exact', key)]
+    if key in NAME_ALIASES:
+        tiers.append(('alias', NAME_ALIASES[key]))
+    head = hyphen_head(name)
+    if head:
+        tiers.append(('hyphen', norm_name(head)))
+    ambiguous = False
+    for source, k in tiers:
+        got = pick(k)
+        if len(got) == 1:
+            return got[0], source
+        ambiguous = ambiguous or len(got) > 1
+    if ambiguous:
+        return None, 'unmatched_ambiguous'
+    same_name = {c['uuid']: c for c in by_name.get(key, []) + by_name.get(NAME_ALIASES.get(key), [])}
+    if len(same_name) == 1:
+        only = next(iter(same_name.values()))
+        if only['team_short_name'] == 'FA':
+            return only, 'fa_name_only'
+    return None, 'unmatched_other_team' if same_name else 'unmatched_no_name'
 
 
 def clean(v):
@@ -120,30 +195,20 @@ def build_match():
         LEFT JOIN statsapi_teams t ON t.id = pt.team_id
     """).fetchdf()
 
-    ratings_exists = con.execute(
-        "SELECT 1 FROM information_schema.tables WHERE table_name = 'show_ratings'"
-    ).fetchone() is not None
-    ratings = con.execute("SELECT * FROM show_ratings").fetchdf() if ratings_exists else pd.DataFrame()
-
     con.close()
 
     hitting_by_id = {int(r['person_id']): r for _, r in hitting.iterrows()}
     pitching_by_id = {int(r['person_id']): r for _, r in pitching.iterrows()}
 
-    ratings_by_id = {}
-    ratings_dupes = 0
-    if not ratings.empty:
-        # Pick one row per person_id deterministically (most recent
-        # loaded_at) rather than let a duplicate silently fan the join
-        # out into multiple output rows for the same player.
-        ratings_sorted = ratings.sort_values('loaded_at')
-        for _, r in ratings_sorted.iterrows():
-            pid = int(r['person_id'])
-            if pid in ratings_by_id:
-                ratings_dupes += 1
-            ratings_by_id[pid] = r  # later (more recent) row wins
+    ratings_exists = os.path.exists(RATINGS_PATH)
+    ratings_index = {}
+    if ratings_exists:
+        with open(RATINGS_PATH, encoding='utf-8') as f:
+            ratings_index = build_ratings_index(json.load(f))
 
     matches = []
+    rating_sources = {}
+    unmatched_ratings = []
     for _, r in roster.iterrows():
         pid = int(r['person_id'])
         pos_abbr = clean(r['position_abbreviation'])
@@ -151,7 +216,10 @@ def build_match():
 
         hit_row = hitting_by_id.get(pid)
         pitch_row = pitching_by_id.get(pid)
-        rating_row = ratings_by_id.get(pid)
+        rating_card, rating_source = match_rating(ratings_index, clean(r['full_name']), clean(r['team_abbr'])) if ratings_exists else (None, 'no_snapshot')
+        rating_sources[rating_source] = rating_sources.get(rating_source, 0) + 1
+        if rating_card is None:
+            unmatched_ratings.append((clean(r['full_name']), clean(r['team_abbr']), rating_source))
         if hit_row is not None and pitch_row is not None:
             match_source = 'both'
         elif hit_row is not None:
@@ -179,8 +247,7 @@ def build_match():
             'batting_stats': stats_dict(hit_row) if hit_row is not None else None,
             'pitching_stats': stats_dict(pitch_row) if pitch_row is not None else None,
             'match_source': match_source,
-            'overall_rating': clean(rating_row['ovr']) if rating_row is not None else None,
-            'potential': clean(rating_row['pot']) if rating_row is not None else None,
+            'overall_rating': clean(rating_card['ovr']) if rating_card is not None else None,
         })
 
     match_df = pd.DataFrame(matches)
@@ -198,10 +265,14 @@ def build_match():
     print(f"player_match: {total} players")
     print(f"Matched to hitting and/or pitching stats: {matched_stats} / {total} ({matched_stats / total:.1%})")
     if ratings_exists:
-        print(f"Matched to show_ratings: {matched_ratings} / {total} ({matched_ratings / total:.1%})"
-              + (f" -- {ratings_dupes} duplicate person_id row(s) in show_ratings resolved by most-recent loaded_at" if ratings_dupes else ""))
+        print(f"Matched to The Show ratings: {matched_ratings} / {total} ({matched_ratings / total:.1%}) -- by tier: "
+              + ', '.join(f"{k}={v}" for k, v in sorted(rating_sources.items())))
+        with open(UNMATCHED_PATH, 'w', encoding='utf-8') as f:
+            for name, team, why in sorted(unmatched_ratings, key=lambda x: (x[1] or '', x[0] or '')):
+                f.write(f"{name} (team={team}, {why})" + "\n")
+        print(f"  unmatched list: {UNMATCHED_PATH} ({len(unmatched_ratings)} players)")
     else:
-        print("show_ratings table not present -- overall_rating/potential are null for everyone")
+        print("show_api_live.json not present -- overall_rating is null for everyone")
     print(f"two_way players: {twp}")
     print(f"defaulted position_group (generic OF -> CF): {defaulted}")
 

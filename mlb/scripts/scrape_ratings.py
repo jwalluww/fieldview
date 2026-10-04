@@ -1,6 +1,9 @@
 """
 mlb/scripts/scrape_ratings.py
 
+RETIRED (2026-10): no longer run by the scrape-mlb job or run_mlb.bat. MLB ratings now come
+from The Show's official API (scrape_show_api.py). Kept in place, unused.
+
 Pulls MLB The Show 26 ratings (OVR/POT) from theshowratings.com's 30
 team pages, loads into mlb/data/fieldview.duckdb as a raw show_ratings
 table. Join key is the mlbam_id embedded in each player's photo URL
