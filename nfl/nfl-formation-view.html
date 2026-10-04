@@ -172,7 +172,7 @@ body {
 /* ── FIELD ── */
 .field-outer {
   padding: 16px 24px 8px;
-  height: calc(100vh - 52px);
+  min-height: calc(100vh - 52px);
   display: flex;
   flex-direction: column;
 }
@@ -457,20 +457,18 @@ body {
 
 /* ── LEGEND ── */
 .legend-strip {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 50;
+  width: 100%;
+  max-width: 1400px;
+  margin: 12px auto 0;
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-  background: rgba(13, 17, 24, 0.82);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 10px 12px;
-  font-size: 12px;
+  align-items: center;
+  gap: 20px;
+  font-size: 16px;
   color: var(--text-muted);
-  letter-spacing: .3px;
+  letter-spacing: .5px;
+  padding: 10px 0;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
 }
 
 .ls-item { display: flex; align-items: center; gap: 6px; }
@@ -665,18 +663,18 @@ body {
     </svg>
 
     <div class="players-layer" id="playersLayer"></div>
+  </div>
 
-    <div class="legend-strip">
-      <div style="font-family:'Barlow Condensed';font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim)">Madden Rating</div>
-      <div class="ls-item"><div class="ls-dot" style="background:#00ff88"></div>95+</div>
-      <div class="ls-item"><div class="ls-dot" style="background:#22c55e"></div>90–94</div>
-      <div class="ls-item"><div class="ls-dot" style="background:#a3e635"></div>85–89</div>
-      <div class="ls-item"><div class="ls-dot" style="background:#d4e635"></div>80–84</div>
-      <div class="ls-item"><div class="ls-dot" style="background:#facc15"></div>75–79</div>
-      <div class="ls-item"><div class="ls-dot" style="background:#fb923c"></div>70–74</div>
-      <div class="ls-item"><div class="ls-dot" style="background:#ef4444"></div>&lt;70</div>
-      <span id="maddenAsOf" style="font-size:11px;color:var(--text-dim);margin-top:2px"></span>
-    </div>
+  <div class="legend-strip">
+    <span style="font-family:'Barlow Condensed';font-weight:700;font-size:16px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-right:4px">Madden Rating</span>
+    <div class="ls-item"><div class="ls-dot" style="background:#00ff88"></div>95+</div>
+    <div class="ls-item"><div class="ls-dot" style="background:#22c55e"></div>90–94</div>
+    <div class="ls-item"><div class="ls-dot" style="background:#a3e635"></div>85–89</div>
+    <div class="ls-item"><div class="ls-dot" style="background:#d4e635"></div>80–84</div>
+    <div class="ls-item"><div class="ls-dot" style="background:#facc15"></div>75–79</div>
+    <div class="ls-item"><div class="ls-dot" style="background:#fb923c"></div>70–74</div>
+    <div class="ls-item"><div class="ls-dot" style="background:#ef4444"></div>&lt;70</div>
+    <span id="maddenAsOf" style="margin-left:auto;font-size:13px;color:var(--text-dim)"></span>
   </div>
 </div>
 
