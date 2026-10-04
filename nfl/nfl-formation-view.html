@@ -384,8 +384,6 @@ body {
 }
 
 /* ── PLAYER SIDEBAR ── */
-/* ?sidebar=overlay|push is TEMPORARY, for comparing the two layouts. Remove the
-   param (and the unused mode's CSS) once one is chosen. Not persisted anywhere. */
 .sidebar {
   position: fixed;
   top: 52px;
@@ -403,18 +401,18 @@ body {
   transition: transform .18s, visibility .18s;
 }
 .sidebar.open { transform: none; visibility: visible; }
-body.sb-push.sb-open .field-outer { padding-right: 384px; }
-/* Push mode on narrower screens: the field loses 360px, so slim the cards to keep 22 from overlapping. */
+body.sb-open .field-outer { padding-right: 384px; }
+/* The field shrinks to make room for the sidebar; on narrower screens the field loses 360px, slim the cards to keep 22 from overlapping. */
 @media (max-width: 1500px) {
-  body.sb-push.sb-open .p-card, body.sb-push.sb-open .p-pos-bar { width: 66px; }
-  body.sb-push.sb-open .p-card { padding: 4px 4px 4px; }
-  body.sb-push.sb-open .p-pos-bar { font-size: 11px; padding: 3px 0; }
-  body.sb-push.sb-open .p-lastname { max-width: 58px; font-size: 13px; }
-  body.sb-push.sb-open .p-madden { font-size: 22px; }
-  body.sb-push.sb-open .p-jersey { font-size: 10px; }
-  body.sb-push.sb-open .p-rank { display: none; }
-  body.sb-push.sb-open .formation-bar { flex-wrap: wrap; row-gap: 0; }
-  body.sb-push.sb-open .formation-bar > .formation-label { white-space: nowrap; }
+  body.sb-open .p-card, body.sb-open .p-pos-bar { width: 66px; }
+  body.sb-open .p-card { padding: 4px 4px 4px; }
+  body.sb-open .p-pos-bar { font-size: 11px; padding: 3px 0; }
+  body.sb-open .p-lastname { max-width: 58px; font-size: 13px; }
+  body.sb-open .p-madden { font-size: 22px; }
+  body.sb-open .p-jersey { font-size: 10px; }
+  body.sb-open .p-rank { display: none; }
+  body.sb-open .formation-bar { flex-wrap: wrap; row-gap: 0; }
+  body.sb-open .formation-bar > .formation-label { white-space: nowrap; }
 }
 
 .sb-close {
@@ -446,7 +444,7 @@ body.sb-push.sb-open .field-outer { padding-right: 384px; }
 .sb-bar-wrap { display: flex; align-items: center; gap: 8px; margin-top: 3px; }
 .sb-bar { flex: 1; height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
 .sb-bar-fill { height: 100%; border-radius: 3px; }
-.sb-pct { font-size: 11px; font-weight: 700; width: 58px; text-align: right; }
+.sb-pct { font-size: 11px; font-weight: 700; min-width: 58px; text-align: right; white-space: nowrap; }
 .sb-def { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 .sb-hero { padding: 14px 16px; border-bottom: 1px solid var(--border); background: rgba(0,0,0,0.25); }
 .sb-hero .sb-stat { border: none; padding: 0; }
@@ -461,6 +459,25 @@ body.sb-push.sb-open .field-outer { padding-right: 384px; }
 .sb-sub-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; color: var(--text); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .sb-sub-pos { font-size: 11px; color: var(--text-muted); }
 .sb-empty { font-size: 12px; color: var(--text-dim); }
+.sb-cmp-actions { display: flex; gap: 8px; padding: 10px 16px; border-bottom: 1px solid var(--border); }
+.sb-btn { flex: 1; padding: 8px 0; border-radius: 6px; border: 1px solid var(--border2); background: transparent; color: var(--text); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; }
+.sb-btn:hover { background: var(--border); }
+.sb-btn.primary { background: var(--accent); border-color: var(--accent); color: #000; }
+.sb-btn.primary:hover { filter: brightness(1.1); }
+.sb-cmp-head { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 14px 40px 12px 16px; border-bottom: 1px solid var(--border); }
+.sb-cmp-tagline { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); }
+.sb-cmp-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 18px; color: var(--text); line-height: 1.1; }
+.sb-cmp-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.sb-cmp-madden { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 28px; line-height: 1; margin-top: 4px; }
+.sb-cmp-row { padding: 7px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+.sb-cmp-row:first-of-type { border-top: none; }
+.sb-cmp-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px; }
+.sb-delta { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 15px; color: var(--text-muted); }
+.sb-cmp-line { display: flex; align-items: center; gap: 8px; margin-top: 3px; }
+.sb-cmp-tag { width: 62px; font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sb-cmp-val { width: 46px; text-align: right; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 14px; color: var(--text); }
+.sb-cmp-pct { width: 34px; text-align: right; font-size: 11px; font-weight: 700; }
+.sb-cmp-box { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
 
 /* ── LEGEND ── */
 .legend-strip {
@@ -495,7 +512,7 @@ body.sb-push.sb-open .field-outer { padding-right: 384px; }
 
 @media (max-width: 600px) {
   .sidebar { width: 100%; }
-  body.sb-push.sb-open .field-outer { padding-right: 24px; }
+  body.sb-open .field-outer { padding-right: 24px; }
   .p-card {
     width: 72px;
     padding: 4px 6px 4px;
@@ -781,22 +798,18 @@ function maddenColor(r) {
   return `hsl(${Math.max(0,(r-55)*2)},90%,50%)`;
 }
 
-// Same 0-99 rating color scale as epl/pitch-view.html's ratingColor(); here it
-// colors a stat's percentile (0-99) rather than a rating.
-function ratingColor(r) {
-  if (r == null) return '#6b7494';
-  if (r >= 95) return '#86efac';
-  if (r >= 90) { const t=(r-90)/5; return 'hsl('+(140+t*20)+',60%,62%)'; }
-  if (r >= 85) { const t=(r-85)/5; return 'hsl('+(100+t*40)+',55%,58%)'; }
-  if (r >= 80) { const t=(r-80)/5; return 'hsl('+(75+t*25)+',55%,58%)'; }
-  if (r >= 75) { const t=(r-75)/5; return 'hsl('+(55+t*20)+',60%,58%)'; }
-  if (r >= 70) { const t=(r-70)/5; return 'hsl('+(38+t*17)+',65%,55%)'; }
-  if (r >= 65) { const t=(r-65)/5; return 'hsl('+(25+t*13)+',65%,52%)'; }
-  return 'hsl('+Math.max(0,(r-55)*2)+',70%,48%)';
+// Diverging percentile color: red at 0, neutral gray at 50, blue at 99.
+const PCT_RED = [239, 68, 68], PCT_GRAY = [156, 163, 184], PCT_BLUE = [77, 163, 255];
+const PCT_NEUTRAL = '#8b93b0'; // style stats (describe role, not quality) use one flat color
+function pctColor(pct) {
+  const [a, b, t] = pct <= 50 ? [PCT_RED, PCT_GRAY, pct / 50] : [PCT_GRAY, PCT_BLUE, (pct - 50) / 49];
+  return 'rgb(' + a.map((x, i) => Math.round(x + (b[i] - x) * t)).join(',') + ')';
 }
 
 // Advanced stats shown in the player sidebar. lower: lower is better (percentile
-// inverted). nobar: describes role/style rather than quality -- raw + definition only.
+// inverted). style: describes role/style rather than quality -- neutral bar and descriptive
+// text ("<style> N% of <pos plural>") instead of a good/bad color; lower: true means the
+// percentile counts players with a LARGER value (e.g. "quicker than").
 const fmtN = (d, unit, signed) => v => (signed && v > 0 ? '+' : '') + v.toFixed(d) + (unit || '');
 const ADV_STATS = {
   // QB
@@ -804,7 +817,7 @@ const ADV_STATS = {
   epa_per_play:           { label: 'EPA/DB', fmt: fmtN(2, '', true), def: 'Points added per dropback vs. an average result in that spot.' },
   success_rate:           { label: 'Success', fmt: v => Math.round(v) + '%', def: 'Share of dropbacks that keep the offense on schedule.' },
   cpoe:                   { label: 'CPOE', fmt: fmtN(1, '', true), def: 'Completion % above what the throws’ difficulty predicts.' },
-  ngs_time_to_throw:      { label: 'TTT', fmt: fmtN(2, 's'), nobar: true, def: 'Snap-to-release time. A style stat, not a quality one.' },
+  ngs_time_to_throw:      { label: 'TTT', fmt: fmtN(2, 's'), style: 'quicker than', lower: true, def: 'Snap-to-release time. A style stat, not a quality one.' },
   // RB
   ryoe_per_att:           { label: 'RYOE/att', fmt: fmtN(2, '', true), def: 'Rush yards per carry above what blocking and the box predict.' },
   yac_per_att:            { label: 'YAC/att', fmt: fmtN(2), def: 'Yards gained after first contact, per carry.' },
@@ -817,8 +830,8 @@ const ADV_STATS = {
   avg_separation:         { label: 'Sep', fmt: fmtN(2), def: 'Yards of space from the nearest defender at the catch.' },
   drop_rate:              { label: 'Drop%', fmt: fmtN(1, '%'), lower: true, def: 'Share of catchable targets dropped (lower is better).' },
   broken_tackle_rate_rec: { label: 'Brk Tkl%', fmt: fmtN(1, '%'), def: 'Broken tackles per reception.' },
-  adot:                   { label: 'aDOT', fmt: fmtN(1), nobar: true, def: 'Avg depth of his targets. Describes role, not skill.' },
-  air_yards_share:        { label: 'Air Yd Shr', fmt: fmtN(1, '%'), nobar: true, def: "Share of the team's air yards aimed at him. Role, not skill." },
+  adot:                   { label: 'aDOT', fmt: fmtN(1), style: 'deeper than', def: 'Avg depth of his targets. Describes role, not skill.' },
+  air_yards_share:        { label: 'Air Yd Shr', fmt: fmtN(1, '%'), style: 'more than', def: "Share of the team's air yards aimed at him. Role, not skill." },
   // Defenders
   pressures_per100:       { label: 'Pressures/100', fmt: fmtN(1), def: 'Sacks, hits and hurries per 100 defensive snaps.' },
   sacks_per100:           { label: 'Sacks/100', fmt: fmtN(2), def: 'Sacks per 100 defensive snaps.' },
@@ -828,7 +841,7 @@ const ADV_STATS = {
   comp_pct_allowed:       { label: 'Comp% Allowed', fmt: fmtN(1, '%'), lower: true, def: 'Completion % on passes thrown at him (lower is better).' },
   rating_allowed:         { label: 'Rating Allowed', fmt: fmtN(1), lower: true, def: 'Passer rating when targeting him (lower is better).' },
   yds_per_target_allowed: { label: 'Yds/Tgt Allowed', fmt: fmtN(1), lower: true, def: 'Passing yards allowed per target (lower is better).' },
-  adot_allowed:           { label: 'aDOT Allowed', fmt: fmtN(1), nobar: true, def: 'Depth of passes thrown at him. How he is tested, not quality.' },
+  adot_allowed:           { label: 'aDOT Allowed', fmt: fmtN(1), style: 'tested deeper than', def: 'Depth of passes thrown at him. How he is tested, not quality.' },
   int_pd_per_target:      { label: 'INT+PD/Tgt', fmt: fmtN(1, '%'), def: 'Interceptions + passes defended per 100 targets.' },
 };
 
@@ -885,15 +898,28 @@ function ordinal(n) {
   return n + (['th', 'st', 'nd', 'rd'][n % 10] || 'th');
 }
 
+const POS_PLURAL = { QB: 'QBs', RB: 'RBs', WR: 'WRs', TE: 'TEs', EDGE: 'edge rushers', DI: 'interior linemen', LB: 'LBs', S: 'safeties', CB: 'CBs' };
+
+// Percentile, bar color and label text for one player's stat (all null when no value / population too small).
+function statPct(p, key) {
+  const m = ADV_STATS[key];
+  const pct = p[key] != null ? percentileOf(p, key) : null;
+  if (pct == null) return { pct: null, color: null, text: '' };
+  return {
+    pct,
+    color: m.style ? PCT_NEUTRAL : pctColor(pct),
+    text: m.style ? m.style + ' ' + pct + '% of ' + (POS_PLURAL[p.standard_pos] || p.standard_pos) : ordinal(pct) + ' pct',
+  };
+}
+
 function advStatHtml(p, key) {
   const m = ADV_STATS[key];
   const v = p[key];
-  const pct = (v != null && !m.nobar) ? percentileOf(p, key) : null;
-  const c = pct != null ? ratingColor(pct) : null;
+  const { pct, color: c, text } = statPct(p, key);
   return `
     <div class="sb-stat">
       <div class="sb-stat-top"><span class="sb-stat-label">${m.label}</span><span class="sb-stat-val">${v != null ? m.fmt(v) : '—'}</span></div>
-      ${pct != null ? `<div class="sb-bar-wrap"><div class="sb-bar"><div class="sb-bar-fill" style="width:${pct}%;background:${c}"></div></div><span class="sb-pct" style="color:${c}">${ordinal(pct)} pct</span></div>` : ''}
+      ${pct != null ? `<div class="sb-bar-wrap"><div class="sb-bar"><div class="sb-bar-fill" style="width:${pct}%;background:${c}"></div></div><span class="sb-pct" style="color:${c}">${text}</span></div>` : ''}
       <div class="sb-def">${m.def}</div>
     </div>`;
 }
@@ -1008,7 +1034,8 @@ function syncURL() {
     off: currentOffPersonnel,
     def: currentDefPersonnel
   });
-  if (SIDEBAR_PARAM) params.set('sidebar', SIDEBAR_PARAM); // temporary mode param, see sidebar CSS
+  const sbPlayer = sidebarPos ? getStarter(sidebarPos) : null;
+  if (sbPlayer) params.set('player', sbPlayer.id);
   history.replaceState(null, '', '?' + params.toString());
 }
 
@@ -1084,7 +1111,8 @@ function getSubCandidates(formationPos) {
 }
 
 function selectSub(formationPos, playerId, event) {
-  event.stopPropagation();
+  if (event) event.stopPropagation();
+  compareId = null;
   // Find the player object
   const p = teamData.players.find(p => p.id === playerId);
   if (!p) return;
@@ -1117,12 +1145,8 @@ function selectSub(formationPos, playerId, event) {
 }
 
 // ── PLAYER SIDEBAR ──
-// ?sidebar=push shrinks the field to make room; default (overlay) floats over it.
-// TEMPORARY comparison param -- remove once a mode is chosen. Not persisted.
-const SIDEBAR_PARAM = new URLSearchParams(window.location.search).get('sidebar');
-document.body.classList.add(SIDEBAR_PARAM === 'push' ? 'sb-push' : 'sb-overlay');
-
 let sidebarPos = null; // formation slot key of the player shown in the sidebar
+let compareId = null;  // candidate substitute being previewed against the starter, if any
 
 function setSelectedHighlight() {
   document.querySelectorAll('#playersLayer .player-node.selected').forEach(n => n.classList.remove('selected'));
@@ -1135,15 +1159,18 @@ function openSidebar(pos, event) {
   if (event) event.stopPropagation();
   const swapped = sidebarPos !== pos;
   sidebarPos = pos;
+  if (swapped) compareId = null;
   renderSidebar(swapped);
 }
 
 function closeSidebar() {
   sidebarPos = null;
+  compareId = null;
   document.getElementById('playerSidebar').classList.remove('open');
   document.body.classList.remove('sb-open');
   setSelectedHighlight();
   syncFieldHeight();
+  syncURL();
 }
 
 function buildBoxLine(p) {
@@ -1176,6 +1203,7 @@ function renderSidebar(resetScroll) {
   const el = document.getElementById('playerSidebar');
   const p = sidebarPos ? getStarter(sidebarPos) : null;
   if (!p) { closeSidebar(); return; }
+  if (compareId) { renderCompare(el, p); return; }
   const team = TEAMS[currentTeam];
   const mc = maddenColor(p.madden);
   const cfg = SIDEBAR_CARD[p.standard_pos];
@@ -1200,7 +1228,7 @@ function renderSidebar(resetScroll) {
 
   const subs = getSubCandidates(sidebarPos);
   const subsHtml = subs.length ? subs.map(c => `
-      <div class="sb-sub" onclick="selectSub('${sidebarPos}', '${c.id}', event)">
+      <div class="sb-sub" onclick="openCompare('${c.id}', event)">
         <div class="sb-sub-madden" style="color:${maddenColor(c.madden)}">${c.madden || '—'}</div>
         <div class="sb-sub-name">${c.name}</div>
         <div class="sb-sub-pos">${c.standard_pos}${c.injured ? ' · <span style="color:#ef4444">INJ</span>' : ''}</div>
@@ -1233,6 +1261,85 @@ function renderSidebar(resetScroll) {
   if (resetScroll) el.scrollTop = 0;
   setSelectedHighlight();
   syncFieldHeight();
+  syncURL();
+}
+
+function openCompare(id, event) {
+  if (event) event.stopPropagation();
+  compareId = id;
+  renderSidebar(true);
+}
+
+function closeCompare(event) {
+  if (event) event.stopPropagation();
+  compareId = null;
+  renderSidebar(true);
+}
+
+function swapFromCompare(event) {
+  const id = compareId;
+  selectSub(sidebarPos, id, event); // clears compareId and re-renders the sidebar for the new starter
+}
+
+// Starter vs. candidate. Only stats both positions carry are compared; each player's
+// percentile stays within his own standard_pos.
+function renderCompare(el, a) {
+  const b = teamData.players.find(x => x.id === compareId);
+  if (!b) { compareId = null; renderSidebar(); return; }
+  const cfgA = SIDEBAR_CARD[a.standard_pos], cfgB = SIDEBAR_CARD[b.standard_pos];
+  const keysB = cfgB ? [cfgB.hero, ...cfgB.list] : [];
+  const keys = cfgA ? [cfgA.hero, ...cfgA.list].filter(k => keysB.includes(k) && (a[k] != null || b[k] != null)) : [];
+  const last = pl => { const w = pl.name.split(' '); return w.length > 1 ? w.slice(1).join(' ') : w[0]; };
+
+  const line = (pl, key) => {
+    const m = ADV_STATS[key];
+    const { pct, color } = statPct(pl, key);
+    return `<div class="sb-cmp-line"><span class="sb-cmp-tag">${last(pl)}</span>
+      <div class="sb-bar">${pct != null ? `<div class="sb-bar-fill" style="width:${pct}%;background:${color}"></div>` : ''}</div>
+      <span class="sb-cmp-val">${pl[key] != null ? m.fmt(pl[key]) : '—'}</span>
+      <span class="sb-cmp-pct" style="color:${color || 'inherit'}">${pct != null ? ordinal(pct) : ''}</span></div>`;
+  };
+  const rows = keys.map(key => {
+    const m = ADV_STATS[key];
+    const pa = statPct(a, key).pct, pb = statPct(b, key).pct;
+    let delta = '';
+    if (pa != null && pb != null) {
+      const d = pb - pa;
+      // Percentiles are already inverted for lower-is-better stats, so a positive delta is always "candidate better".
+      const c = m.style || d === 0 ? 'var(--text-muted)' : (d > 0 ? '#22c55e' : '#ef4444');
+      delta = `<span class="sb-delta" style="color:${c}">${d > 0 ? '+' : ''}${d}</span>`;
+    }
+    return `<div class="sb-cmp-row"><div class="sb-cmp-top"><span class="sb-stat-label">${m.label}</span>${delta}</div>${line(a, key)}${line(b, key)}</div>`;
+  }).join('');
+
+  const head = (pl, tag) => `<div>
+      <div class="sb-cmp-tagline">${tag}</div>
+      <div class="sb-cmp-name">${pl.jersey ? '#' + pl.jersey + ' ' : ''}${pl.name}</div>
+      <div class="sb-cmp-sub">${pl.standard_pos}${pl.age ? ' · Age ' + pl.age : ''}</div>
+      <div class="sb-cmp-madden" style="color:${maddenColor(pl.madden)}">${pl.madden || '—'}</div>
+    </div>`;
+  const boxA = buildBoxLine(a), boxB = buildBoxLine(b);
+
+  el.innerHTML = `
+    <button class="sb-close" onclick="closeSidebar()" aria-label="Close">&times;</button>
+    <div class="sb-cmp-head">${head(a, 'Starter')}${head(b, 'Substitute')}</div>
+    <div class="sb-cmp-actions">
+      <button class="sb-btn" onclick="closeCompare(event)">Back</button>
+      <button class="sb-btn primary" onclick="swapFromCompare(event)">Swap in</button>
+    </div>
+    ${rows ? `<div class="sb-section"><div class="sb-section-title">Advanced Stats · percentile vs. own position</div>${rows}
+      ${a.standard_pos !== b.standard_pos ? `<div class="sb-caption">Different positions: only shared stats are compared, each ranked within his own position.</div>` : ''}</div>` : ''}
+    <div class="sb-section" style="border-bottom:none">
+      <div class="sb-section-title">Box Score</div>
+      <div class="sb-cmp-box"><b>${last(a)}:</b> ${boxA || '—'}</div>
+      <div class="sb-cmp-box"><b>${last(b)}:</b> ${boxB || '—'}</div>
+    </div>`;
+  el.classList.add('open');
+  document.body.classList.add('sb-open');
+  el.scrollTop = 0;
+  setSelectedHighlight();
+  syncFieldHeight();
+  syncURL();
 }
 
 function updateHeader() {
@@ -1504,6 +1611,7 @@ const params = new URLSearchParams(window.location.search);
 const urlTeam = params.get('team');
 const urlOff  = params.get('off');
 const urlDef  = params.get('def');
+const urlPlayer = params.get('player');
 
 currentTeam = (urlTeam && TEAMS[urlTeam]) ? urlTeam : (localStorage.getItem('fieldview_team') || 'BUF');
 
@@ -1520,6 +1628,12 @@ loadTeam(currentTeam).then(() => {
     defBtns.forEach(btn => {
       if (btn.getAttribute('onclick')?.includes(urlDef)) btn.click();
     });
+  }
+  // Reopen the sidebar if ?player= is someone currently on the field for this team; otherwise ignore it.
+  if (urlPlayer) {
+    const slot = [...document.querySelectorAll('#playersLayer .player-node')].map(n => n.dataset.pos)
+      .find(pos => { const st = getStarter(pos); return st && st.id === urlPlayer; });
+    if (slot) openSidebar(slot);
   }
 });
 </script>
