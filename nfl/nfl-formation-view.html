@@ -103,6 +103,7 @@ body {
 }
 .ctrl-btn:hover { color: var(--text); background: var(--border); }
 .ctrl-btn.active { background: var(--accent); color: #000; }
+.reset-btn { border: 1px solid var(--border2); }
 
 .view-toggle {
   margin-left: auto;
@@ -580,6 +581,7 @@ body.sb-open .field-outer { padding-right: 384px; }
       <!-- rebuilt per-team by updateDefPersonnelButtons(), same
            base/nickel key logic the old setUnit('defense', ...) used -->
     </div>
+    <button class="ctrl-btn reset-btn" id="resetStartersBtn" onclick="resetStarters()" style="display:none">Reset to starters</button>
   </div>
 
   <div class="view-toggle">
@@ -1172,6 +1174,20 @@ function selectSub(formationPos, playerId, event) {
 
   // The sidebar follows the incoming player (and moves the highlight to the new card).
   if (sidebarPos === formationPos) renderSidebar();
+  updateResetBtn();
+}
+
+// Reset button is only shown while there are manual subs on either side.
+function updateResetBtn() {
+  document.getElementById('resetStartersBtn').style.display = Object.keys(currentStarters).length ? '' : 'none';
+}
+
+// Clears manual subs for both offense and defense; personnel choices are untouched.
+// renderFormation() refreshes the sidebar, or closes it if its player left the field.
+function resetStarters() {
+  currentStarters = {};
+  compareId = null;
+  renderFormation();
 }
 
 // ── PLAYER SIDEBAR ──
@@ -1589,6 +1605,7 @@ function renderFormation() {
     if (layer.querySelector(`.player-node[data-pos="${sidebarPos}"]`)) renderSidebar();
     else closeSidebar();
   }
+  updateResetBtn();
 }
 
 function setOffPersonnel(pers, btn) {
