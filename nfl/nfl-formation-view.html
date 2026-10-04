@@ -444,13 +444,9 @@ body.sb-open .field-outer { padding-right: 384px; }
 .sb-bar-wrap { display: flex; align-items: center; gap: 8px; margin-top: 3px; }
 .sb-bar { flex: 1; height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
 .sb-bar-fill { height: 100%; border-radius: 3px; }
+.sb-low { font-size: 10px; font-weight: 400; color: var(--text-dim); margin-left: 4px; }
 .sb-pct { font-size: 11px; font-weight: 700; min-width: 58px; text-align: right; white-space: nowrap; }
 .sb-def { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-.sb-hero { padding: 14px 16px; border-bottom: 1px solid var(--border); background: rgba(0,0,0,0.25); }
-.sb-hero .sb-stat { border: none; padding: 0; }
-.sb-hero .sb-stat-label { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); }
-.sb-hero .sb-stat-val { font-size: 36px; line-height: 1; }
-.sb-hero .sb-bar { height: 8px; }
 .sb-caption { font-size: 10px; color: var(--text-dim); margin-top: 6px; }
 .sb-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 8px; }
 .sb-cell-label { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--text-dim); }
@@ -485,7 +481,7 @@ body.sb-open .field-outer { padding-right: 384px; }
 .sb-cmp-line { display: flex; align-items: center; gap: 8px; margin-top: 3px; }
 .sb-cmp-tag { width: 62px; font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .sb-cmp-val { width: 46px; text-align: right; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 14px; color: var(--text); }
-.sb-cmp-pct { width: 34px; text-align: right; font-size: 11px; font-weight: 700; }
+.sb-cmp-pct { width: 52px; text-align: right; font-size: 11px; font-weight: 700; }
 
 /* ── LEGEND ── */
 .legend-strip {
@@ -853,18 +849,33 @@ const ADV_STATS = {
   int_pd_per_target:      { label: 'INT+PD/Tgt', fmt: fmtN(1, '%'), def: 'Interceptions + passes defended per 100 targets.' },
 };
 
-// Per standard_pos: hero stat, the rest of the list, and which box-score keys to show.
+// Per standard_pos: the advanced stats to list (in order), and which season-stat keys the compact line uses.
 const SIDEBAR_CARD = {
-  QB:   { hero: 'qbr', list: ['epa_per_play', 'success_rate', 'cpoe', 'ngs_time_to_throw'] },
-  RB:   { hero: 'ryoe_per_att', list: ['yac_per_att', 'broken_tackle_rate', 'box_rate', 'target_share'] },
-  WR:   { hero: 'yac_above_expectation', list: ['target_share', 'avg_separation', 'drop_rate', 'broken_tackle_rate_rec', 'adot', 'air_yards_share'] },
-  TE:   { hero: 'yac_above_expectation', list: ['target_share', 'avg_separation', 'drop_rate', 'broken_tackle_rate_rec', 'adot', 'air_yards_share'] },
-  EDGE: { hero: 'pressures_per100', list: ['sacks_per100', 'tfl_per100', 'missed_tackle_rate'], compact: ['TKL', 'SACK'] },
-  DI:   { hero: 'pressures_per100', list: ['tfl_per100', 'tkl_per100', 'missed_tackle_rate'], compact: ['TKL', 'SACK'] },
-  LB:   { hero: 'missed_tackle_rate', list: ['tfl_per100', 'tkl_per100', 'rating_allowed', 'yds_per_target_allowed'], compact: ['TKL', 'TFL'] },
-  S:    { hero: 'rating_allowed', list: ['comp_pct_allowed', 'adot_allowed', 'int_pd_per_target', 'missed_tackle_rate'], compact: ['TKL', 'INT', 'PBU'] },
-  CB:   { hero: 'rating_allowed', list: ['comp_pct_allowed', 'adot_allowed', 'int_pd_per_target', 'missed_tackle_rate'], compact: ['TKL', 'INT', 'PBU'] },
+  QB:   { list: ['qbr', 'epa_per_play', 'success_rate', 'cpoe', 'ngs_time_to_throw'] },
+  RB:   { list: ['ryoe_per_att', 'yac_per_att', 'broken_tackle_rate', 'box_rate', 'target_share'] },
+  WR:   { list: ['yac_above_expectation', 'target_share', 'avg_separation', 'drop_rate', 'broken_tackle_rate_rec', 'adot', 'air_yards_share'] },
+  TE:   { list: ['yac_above_expectation', 'target_share', 'avg_separation', 'drop_rate', 'broken_tackle_rate_rec', 'adot', 'air_yards_share'] },
+  EDGE: { list: ['pressures_per100', 'sacks_per100', 'tfl_per100', 'missed_tackle_rate'], compact: ['TKL', 'SACK'] },
+  DI:   { list: ['pressures_per100', 'tfl_per100', 'tkl_per100', 'missed_tackle_rate'], compact: ['TKL', 'SACK'] },
+  LB:   { list: ['missed_tackle_rate', 'tfl_per100', 'tkl_per100', 'rating_allowed', 'yds_per_target_allowed'], compact: ['TKL', 'TFL'] },
+  S:    { list: ['rating_allowed', 'comp_pct_allowed', 'adot_allowed', 'int_pd_per_target', 'missed_tackle_rate'], compact: ['TKL', 'INT', 'PBU'] },
+  CB:   { list: ['rating_allowed', 'comp_pct_allowed', 'adot_allowed', 'int_pd_per_target', 'missed_tackle_rate'], compact: ['TKL', 'INT', 'PBU'] },
 };
+
+// Offense sample-size gate (NFL leaderboard qualifiers, per team game played). The volume must come
+// from the same season as the stat: S = advMeta.field_season[field], G = league_max_games[S], and
+// players' adv_volume[S] from the pipeline. Gated by position group, not field. Inert when the
+// pipeline data isn't there yet (no meta, or players without an adv_volume key).
+const GATE_RULES = { QB: ['att', 14], RB: ['car', 6.25], WR: ['tgt', 1.875], TE: ['tgt', 1.875] };
+function isLowSample(p, key) {
+  const rule = GATE_RULES[p.standard_pos];
+  if (!rule || p.adv_volume === undefined) return false; // defenders (gated in the pipeline) / pre-pipeline data
+  const S = advMeta.field_season && advMeta.field_season[key];
+  const G = S != null && advMeta.league_max_games && advMeta.league_max_games[S];
+  if (!G) return false;
+  const vol = p.adv_volume && p.adv_volume[S];
+  return !vol || vol[rule[0]] == null || vol[rule[0]] < rule[1] * G;
+}
 
 // Percentile index: for each standard_pos, the sorted values of every advanced stat
 // across ALL loaded players. Built once after data loads. Sample-size filtering is
@@ -876,7 +887,7 @@ function buildPctIndex() {
     if (!p.standard_pos) continue;
     for (const key in ADV_STATS) {
       const v = p[key];
-      if (typeof v !== 'number' || isNaN(v)) continue;
+      if (typeof v !== 'number' || isNaN(v) || isLowSample(p, key)) continue;
       const byKey = pctIndex[p.standard_pos] || (pctIndex[p.standard_pos] = {});
       (byKey[key] || (byKey[key] = [])).push(v);
     }
@@ -889,7 +900,7 @@ function buildPctIndex() {
 function percentileOf(p, key) {
   const arr = pctIndex[p.standard_pos] && pctIndex[p.standard_pos][key];
   const v = p[key];
-  if (!arr || arr.length < 10 || typeof v !== 'number') return null;
+  if (!arr || arr.length < 10 || typeof v !== 'number' || isLowSample(p, key)) return null;
   const lower = !!ADV_STATS[key].lower;
   let beaten = 0, eq = 0;
   for (const x of arr) {
@@ -924,9 +935,10 @@ function advStatHtml(p, key) {
   const m = ADV_STATS[key];
   const v = p[key];
   const { pct, color: c, text } = statPct(p, key);
+  const low = v != null && isLowSample(p, key);
   return `
     <div class="sb-stat">
-      <div class="sb-stat-top"><span class="sb-stat-label">${m.label}</span><span class="sb-stat-val">${v != null ? m.fmt(v) : '—'}</span></div>
+      <div class="sb-stat-top"><span class="sb-stat-label">${m.label}${low ? ' <span class="sb-low">low sample</span>' : ''}</span><span class="sb-stat-val">${v != null ? m.fmt(v) : '—'}</span></div>
       ${pct != null ? `<div class="sb-bar-wrap"><div class="sb-bar"><div class="sb-bar-fill" style="width:${pct}%;background:${c}"></div></div><span class="sb-pct" style="color:${c}">${text}</span></div>` : ''}
       <div class="sb-def">${m.def}</div>
     </div>`;
@@ -1002,10 +1014,12 @@ function mapPlayer(player) {
     adot_allowed: player.adot_allowed,
     int_pd_per_target: player.int_pd_per_target,
     def_advanced_season: player.def_advanced_season,
+    adv_volume: player.adv_volume,
   };
 }
 
 let maddenMeta = {};
+let advMeta = {}; // { field_season, league_max_games } from the pipeline; empty = offense gate inert
 async function loadMaddenMeta() {
   try {
     const res = await fetch('data/madden_meta.json');
@@ -1013,8 +1027,16 @@ async function loadMaddenMeta() {
   } catch (e) { maddenMeta = {}; }
 }
 
+async function loadAdvMeta() {
+  try {
+    const res = await fetch('data/advanced_meta.json');
+    if (res.ok) advMeta = await res.json();
+  } catch (e) { advMeta = {}; }
+}
+
 async function loadAllPlayers() {
   await loadMaddenMeta();
+  await loadAdvMeta();
   try {
     const res = await fetch('data/players_master.json');
     const raw = await res.json();
@@ -1279,13 +1301,10 @@ function renderSidebar(resetScroll) {
     ? p.years_remaining + ' yrs remaining · ' + formatMoneyShort(p.avg_annual_remaining) + '/yr avg'
     : (p.cap_raw ? formatMoneyShort(p.cap_raw) + ' cap hit' : '');
 
-  // Advanced section: hero + list; skipped entirely when the player has no advanced values.
-  let heroHtml = '', listHtml = '';
-  if (cfg && [cfg.hero, ...cfg.list].some(k => p[k] != null)) {
-    const hasHero = p[cfg.hero] != null;
-    if (hasHero) heroHtml = `<div class="sb-hero">${advStatHtml(p, cfg.hero)}</div>`;
-    const keys = hasHero ? cfg.list : [cfg.hero, ...cfg.list];
-    listHtml = `<div class="sb-section"><div class="sb-section-title">Advanced Stats</div>${keys.map(k => advStatHtml(p, k)).join('')}
+  // Advanced section: skipped entirely when the player has no advanced values.
+  let listHtml = '';
+  if (cfg && cfg.list.some(k => p[k] != null)) {
+    listHtml = `<div class="sb-section"><div class="sb-section-title">Advanced Stats</div>${cfg.list.map(k => advStatHtml(p, k)).join('')}
       ${cfg.compact && p.def_advanced_season ? `<div class="sb-caption">Advanced: ${p.def_advanced_season}</div>` : ''}</div>`;
   }
   const subs = getSubCandidates(sidebarPos);
@@ -1311,7 +1330,6 @@ function renderSidebar(resetScroll) {
       </div>
       <div class="sb-madden"><div class="sb-madden-val" style="color:${mc}">${p.madden || '—'}</div><div class="sb-madden-label">Madden</div></div>
     </div>
-    ${heroHtml}
     ${listHtml}
     ${gridSectionHtml(p)}
     <div class="sb-section" style="border-bottom:none">
@@ -1349,8 +1367,8 @@ function renderCompare(el, a) {
   const b = teamData.players.find(x => x.id === compareId);
   if (!b) { compareId = null; renderSidebar(); return; }
   const cfgA = SIDEBAR_CARD[a.standard_pos], cfgB = SIDEBAR_CARD[b.standard_pos];
-  const keysB = cfgB ? [cfgB.hero, ...cfgB.list] : [];
-  const keys = cfgA ? [cfgA.hero, ...cfgA.list].filter(k => keysB.includes(k) && (a[k] != null || b[k] != null)) : [];
+  const keysB = cfgB ? cfgB.list : [];
+  const keys = cfgA ? cfgA.list.filter(k => keysB.includes(k) && (a[k] != null || b[k] != null)) : [];
   const last = pl => { const w = pl.name.split(' '); return w.length > 1 ? w.slice(1).join(' ') : w[0]; };
 
   const line = (pl, key) => {
@@ -1359,7 +1377,7 @@ function renderCompare(el, a) {
     return `<div class="sb-cmp-line"><span class="sb-cmp-tag">${last(pl)}</span>
       <div class="sb-bar">${pct != null ? `<div class="sb-bar-fill" style="width:${pct}%;background:${color}"></div>` : ''}</div>
       <span class="sb-cmp-val">${pl[key] != null ? m.fmt(pl[key]) : '—'}</span>
-      <span class="sb-cmp-pct" style="color:${color || 'inherit'}">${pct != null ? ordinal(pct) : ''}</span></div>`;
+      <span class="sb-cmp-pct" style="color:${color || 'inherit'}">${pct != null ? ordinal(pct) : (pl[key] != null && isLowSample(pl, key) ? '<span class="sb-low" style="margin:0">low sample</span>' : '')}</span></div>`;
   };
   const rows = keys.map(key => {
     const m = ADV_STATS[key];

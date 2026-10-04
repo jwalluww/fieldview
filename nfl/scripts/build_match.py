@@ -12,6 +12,7 @@ snapshot Phase 1 captured. build_master.py itself is untouched and still
 runs standalone -- this script is additive, run side by side with it for
 Phase 2's parity verification.
 """
+import json
 import os
 import re
 
@@ -216,6 +217,19 @@ def load_pfr_wr_te_stats_from_db(con):
     return df.set_index('pfr_id').to_dict('index')
 
 
+def load_adv_volume_from_db(con):
+    """gsis_id -> {"<season>": {"att": n, "car": n, "tgt": n}} for the seasons
+    the offense advanced stats came from (see build_db.py's load_adv_volume());
+    a missing value is omitted, never zero-filled."""
+    df = con.execute("SELECT * FROM adv_volume").fetchdf()
+    out = {}
+    for r in df.itertuples():
+        d = {k: int(v) for k, v in (('att', r.att), ('car', r.car), ('tgt', r.tgt)) if pd.notna(v)}
+        if d:
+            out.setdefault(r.player_id, {})[str(int(r.season))] = d
+    return out
+
+
 def load_ngs_receiving_from_db(con):
     df = con.execute("SELECT * FROM ngs_receiving").fetchdf()
     return df.set_index('player_gsis_id').to_dict('index')
@@ -238,6 +252,7 @@ def build_match():
     target_share_by_gsis = load_target_share_from_db(con)
     pfr_wr_te_stats = load_pfr_wr_te_stats_from_db(con)
     ngs_receiving = load_ngs_receiving_from_db(con)
+    adv_volume = load_adv_volume_from_db(con)
     pfr_def_stats = load_pfr_def_stats_from_db(con)
     def_snaps = load_def_snaps_from_db(con)
     def_season_stats = load_def_season_stats_from_db(con)
@@ -480,6 +495,12 @@ def build_match():
             entry['yac_above_expectation'] = None
             entry['drop_rate'] = None
             entry['broken_tackle_rate_rec'] = None
+
+    # Same-season volume for the frontend's offense sample-size gate; players
+    # with no gsis_id or no row get nothing (never zeros).
+    for entry in master.values():
+        vol = adv_volume.get(entry.get('gsis_id'))
+        entry['adv_volume_json'] = json.dumps(vol) if vol else None
 
     # Defender advanced stats. Every input for a rate is the PFR def
     # table's own season (S) -- snaps and TFL/PBU are loaded for S in

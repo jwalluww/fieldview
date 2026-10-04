@@ -17,7 +17,8 @@ SEASON = get_current_season()
 DB_PATH = os.path.join('nfl', 'data', 'fieldview.duckdb')
 
 # Files under nfl/data/ that are not per-team OurLads depth charts.
-NON_TEAM_FILES = {'madden.json', 'madden_meta.json', 'spotrac_contracts.json', 'players_master.json'}
+NON_TEAM_FILES = {'madden.json', 'madden_meta.json', 'advanced_meta.json', 'spotrac_contracts.json', 'players_master.json'}
+ADV_META_PATH = os.path.join('nfl', 'data', 'advanced_meta.json')
 
 
 def write_table(con, name, df):
@@ -330,7 +331,7 @@ def load_target_share():
     except ConnectionError as e:
         print(f"  {SEASON} player stats not published yet ({e}) -- falling back to {SEASON - 1}")
         df = nfl.load_player_stats([SEASON - 1], summary_level='reg').to_pandas()
-    return df[df['position'].isin(['RB', 'WR', 'TE'])][['player_id', 'target_share']]
+    return df[df['position'].isin(['RB', 'WR', 'TE'])][['player_id', 'season', 'target_share']]
 
 
 def load_ngs_receiving():
@@ -350,7 +351,49 @@ def load_ngs_receiving():
     return df[df['week'] == 0]
 
 
+def season_of(df):
+    """The season a loaded source table actually came from, read from its own
+    `season` column AFTER any SEASON -> SEASON-1 fallback; None if unreadable."""
+    if df is None or len(df) == 0 or 'season' not in df.columns:
+        return None
+    s = df['season'].dropna()
+    return int(s.max()) if len(s) else None
+
+
+def load_league_max_games(season):
+    """Most regular-season games any team has played in `season` (completed games
+    only, so a season in progress gives its current week count, not 17)."""
+    import nflreadpy as nfl
+    sc = nfl.load_schedules([season]).to_pandas()
+    played = sc[(sc['game_type'] == 'REG') & sc['result'].notna()]
+    return int(pd.concat([played['home_team'], played['away_team']]).value_counts().max())
+
+
+def load_adv_volume(seasons):
+    """Regular-season pass attempts / carries / targets per gsis player_id for each
+    season an offense advanced stat actually came from -- the volume the frontend's
+    sample-size gate must use (same season as the stat, never the current-season
+    stats block). Rows are only written when the source has them."""
+    import nflreadpy as nfl
+    ps = nfl.load_player_stats(list(seasons), summary_level='reg').to_pandas()
+    if 'season_type' in ps.columns:
+        ps = ps[ps['season_type'] == 'REG']
+    ps = ps[ps['player_id'].notna()]
+    return ps[['player_id', 'season', 'attempts', 'carries', 'targets']].rename(
+        columns={'attempts': 'att', 'carries': 'car', 'targets': 'tgt'})
+
+
 def build_db():
+    field_season = {}  # advanced field -> season its value actually came from
+
+    def note(fields, df):
+        s = season_of(df)
+        if s is None:
+            print(f"  WARNING: could not read the season for {fields} -- left out of advanced_meta.json")
+            return
+        for f in fields:
+            field_season[f] = s
+
     con = duckdb.connect(DB_PATH)
     try:
         print("Loading ourlads_players...")
@@ -378,21 +421,35 @@ def build_db():
         pbp = load_pbp_cached()
         write_table(con, 'penalties', load_penalties(pbp))
         write_table(con, 'qb_dropback_stats', load_qb_dropback_stats(pbp))
+        note(['epa_per_play', 'success_rate'], pbp)
 
         print("Loading NGS passing (CPOE + Time to Throw)...")
-        write_table(con, 'ngs_passing', load_ngs_passing())
+        ngs_passing = load_ngs_passing()
+        write_table(con, 'ngs_passing', ngs_passing)
+        note(['ngs_time_to_throw', 'cpoe'], ngs_passing)
 
         print("Loading QBR ratings...")
-        write_table(con, 'qbr_ratings', load_qbr_ratings())
+        qbr = load_qbr_ratings()
+        write_table(con, 'qbr_ratings', qbr)
+        note(['qbr'], qbr)
 
         print("Loading NGS rushing (RYOE/att + box rate)...")
-        write_table(con, 'ngs_rushing', load_ngs_rushing())
+        ngs_rushing = load_ngs_rushing()
+        write_table(con, 'ngs_rushing', ngs_rushing)
+        note(['ryoe_per_att', 'box_rate'], ngs_rushing)
 
         print("Loading PFR advstats (RB + WR/TE)...")
         pfr_rush = load_pfr_advstats_safe('rush')
         pfr_rec = load_pfr_advstats_safe('rec')
         write_table(con, 'pfr_rb_stats', load_pfr_rb_stats(pfr_rush, pfr_rec))
         write_table(con, 'pfr_wr_te_stats', load_pfr_wr_te_stats(pfr_rec))
+        note(['yac_per_att'], pfr_rush)
+        note(['drop_rate', 'broken_tackle_rate_rec'], pfr_rec)
+        # RB broken_tackle_rate combines rush + rec; if the two ever fell back
+        # differently, record the older season (the conservative one).
+        rush_s, rec_s = season_of(pfr_rush), season_of(pfr_rec)
+        if rush_s is not None and rec_s is not None:
+            field_season['broken_tackle_rate'] = min(rush_s, rec_s)
 
         print("Loading PFR advstats (defense) + same-season snaps/TFL/PBU...")
         pfr_def = load_pfr_advstats_safe('def')
@@ -402,10 +459,37 @@ def build_db():
         write_table(con, 'def_season_stats', load_def_season_stats(def_season))
 
         print("Loading target share (RB/WR/TE)...")
-        write_table(con, 'target_share', load_target_share())
+        target_share = load_target_share()
+        write_table(con, 'target_share', target_share)
+        note(['target_share'], target_share)
 
         print("Loading NGS receiving (aDOT, air yards share, separation, YAC+)...")
-        write_table(con, 'ngs_receiving', load_ngs_receiving())
+        ngs_receiving = load_ngs_receiving()
+        write_table(con, 'ngs_receiving', ngs_receiving)
+        note(['adot', 'air_yards_share', 'avg_separation', 'yac_above_expectation'], ngs_receiving)
+
+        print("Loading same-season volume for the offense sample-size gate...")
+        seasons = sorted(set(field_season.values()))
+        volume_cols = ['player_id', 'season', 'att', 'car', 'tgt']
+        league_max_games = {}
+        try:
+            volume = load_adv_volume(seasons)
+            for s in seasons:
+                # A season only gets a league_max_games entry once its volume loaded,
+                # so a failed load leaves the frontend gate inert for it (not "everyone unqualified").
+                if (volume['season'] == s).any():
+                    league_max_games[str(s)] = load_league_max_games(s)
+                else:
+                    print(f"  WARNING: no volume rows for {s} -- gate stays inert for it")
+        except Exception as e:
+            print(f"  WARNING: adv volume load failed ({type(e).__name__}: {e}) -- gate stays inert")
+            volume = pd.DataFrame(columns=volume_cols)
+        write_table(con, 'adv_volume', volume)
+
+        with open(ADV_META_PATH, 'w') as f:
+            json.dump({'field_season': dict(sorted(field_season.items())),
+                       'league_max_games': league_max_games}, f, indent=2)
+        print(f"  wrote {ADV_META_PATH}: {len(field_season)} fields, league_max_games {league_max_games}")
     finally:
         con.close()
 

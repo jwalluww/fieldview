@@ -73,12 +73,28 @@ def extract_espnfitt(html):
     return json.loads(html[json_start:end])
 
 
+def qbr_page_season(data):
+    """The season ESPN actually served (it defaults to the last completed
+    season until the current one is populated, so this can't be assumed).
+    content.currents.seasonAndType looks like '2026|2' (season|regular=2)."""
+    content = data['page']['content']
+    try:
+        return int(content['currents']['seasonAndType'].split('|')[0])
+    except (KeyError, ValueError, AttributeError):
+        pass
+    try:
+        return int(content['metadata']['season'])
+    except (KeyError, ValueError, TypeError):
+        return None
+
+
 def parse_qbr_records(data):
     # Real navigation path confirmed by live investigation -- the exact
     # kind of undocumented structure that breaks silently if ESPN
     # reshapes the page: __espnfitt__ -> page -> content -> table ->
     # playerStats is the per-QB leaderboard array.
     player_stats = data['page']['content']['table']['playerStats']
+    season = qbr_page_season(data)
 
     records = []
     for p in player_stats:
@@ -106,12 +122,15 @@ def parse_qbr_records(data):
         if not espn_id or not name or qbr_value is None:
             continue
 
-        records.append({
+        record = {
             'espn_id': espn_id,
             'name': name,
             'team': team,
             'qbr': qbr_value,
-        })
+        }
+        if season is not None:
+            record['season'] = season  # build_db.py records it in advanced_meta.json
+        records.append(record)
 
     return records
 

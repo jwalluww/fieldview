@@ -125,7 +125,8 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             pm.pressures_per100, pm.sacks_per100, pm.tfl_per100, pm.tkl_per100,
             pm.missed_tackle_rate, pm.comp_pct_allowed, pm.rating_allowed,
             pm.yds_per_target_allowed, pm.adot_allowed, pm.int_pd_per_target,
-            pm.def_advanced_season
+            pm.def_advanced_season,
+            pm.adv_volume_json
         FROM player_match pm
         JOIN ourlads_players op ON pm.row_id = op.row_id
         ORDER BY pm.row_id
@@ -203,6 +204,7 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             'adot_allowed': clean('adot_allowed', r['adot_allowed']),
             'int_pd_per_target': clean('int_pd_per_target', r['int_pd_per_target']),
             'def_advanced_season': clean('def_advanced_season', r['def_advanced_season']),
+            'adv_volume': json.loads(r['adv_volume_json']) if pd.notna(r['adv_volume_json']) else {},
         }
         master[r['player_id']] = entry
 
