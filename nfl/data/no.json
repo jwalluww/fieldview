@@ -21,6 +21,22 @@
           "YAC": 81
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Kevin Austin Jr.",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF24",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": "$895,833",
+        "stats": {
+          "TGT": 1,
+          "REC": 1,
+          "YDS": 7,
+          "YAC": 1
+        },
+        "stats_season": 2026
       }
     ],
     "RWR": [
@@ -290,25 +306,8 @@
     ],
     "RB": [
       {
-        "name": "Travis Etienne Jr.",
-        "depth": 1,
-        "injured": false,
-        "attainment": "U/Jax",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": "$5,000,000",
-        "stats": {
-          "CAR": 30,
-          "RU YDS": 128,
-          "REC": 11,
-          "RE YDS": 51,
-          "TGT": 13
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Alvin Kamara",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "17/3",
         "standard_slot": "RB",
@@ -320,6 +319,24 @@
           "REC": 6,
           "RE YDS": 12,
           "TGT": 7
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Kendre Miller",
+        "depth": 2,
+        "injured": false,
+        "attainment": "23/3",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": "$1,799,099",
+        "stats": {
+          "CAR": 13,
+          "RU YDS": 44,
+          "RU TDs": 1,
+          "REC": 2,
+          "RE YDS": 5,
+          "TGT": 3
         },
         "stats_season": 2026
       },
@@ -341,28 +358,21 @@
         "stats_season": 2026
       },
       {
-        "name": "Kendre Miller",
+        "name": "Zamir White",
         "depth": 4,
         "injured": false,
-        "attainment": "23/3",
+        "attainment": "T/SF",
         "standard_slot": "RB",
         "standard_pos": "RB",
-        "cap_number": "$1,799,099",
-        "stats": {
-          "CAR": 13,
-          "RU YDS": 44,
-          "RU TDs": 1,
-          "REC": 2,
-          "RE YDS": 5,
-          "TGT": 3
-        },
-        "stats_season": 2026
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       },
       {
-        "name": "Zamir White",
+        "name": "Ulysses Bentley IV",
         "depth": 5,
         "injured": false,
-        "attainment": "T/SF",
+        "attainment": "SF26",
         "standard_slot": "RB",
         "standard_pos": "RB",
         "cap_number": null,
@@ -848,24 +858,8 @@
         "stats_season": null
       },
       {
-        "name": "Kevin Austin Jr.",
+        "name": "Jalen Cropper",
         "depth": 4,
-        "injured": false,
-        "attainment": "SF24",
-        "standard_slot": "LWR",
-        "standard_pos": "WR",
-        "cap_number": null,
-        "stats": {
-          "TGT": 1,
-          "REC": 1,
-          "YDS": 7,
-          "YAC": 1
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Jalen Moreno-cropper",
-        "depth": 5,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "LWR",
@@ -918,6 +912,17 @@
         "depth": 1,
         "injured": false,
         "attainment": "25/7",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "David Ojabo",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
         "standard_slot": "ED",
         "standard_pos": "DEF",
         "cap_number": null,
@@ -1008,24 +1013,30 @@
         "stats_season": null
       },
       {
-        "name": "Dillon Radunz",
+        "name": "Travis Etienne Jr.",
         "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
         "standard_pos": "DEF",
-        "cap_number": "$2,450,000",
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$5,000,000",
+        "stats": {
+          "CAR": 30,
+          "RU YDS": 128,
+          "REC": 11,
+          "RE YDS": 51,
+          "TGT": 13
+        },
+        "stats_season": 2026
       },
       {
-        "name": "Moliki Matavao",
+        "name": "Dillon Radunz",
         "depth": 7,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
         "standard_pos": "DEF",
-        "cap_number": "$540,000",
+        "cap_number": "$2,450,000",
         "stats": {},
         "stats_season": null
       },
@@ -1076,13 +1087,13 @@
         "stats_season": null
       },
       {
-        "name": "Devin Neal",
+        "name": "Moliki Matavao",
         "depth": 12,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
         "standard_pos": "DEF",
-        "cap_number": null,
+        "cap_number": "$540,000",
         "stats": {},
         "stats_season": null
       }

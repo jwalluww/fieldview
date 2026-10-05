@@ -14,10 +14,11 @@
         "standard_pos": "WR",
         "cap_number": "$2,747,525",
         "stats": {
-          "TGT": 9,
-          "REC": 8,
-          "YDS": 101,
-          "YAC": 16
+          "TGT": 16,
+          "REC": 14,
+          "YDS": 217,
+          "TDs": 1,
+          "YAC": 44
         },
         "stats_season": 2026
       },
@@ -30,9 +31,9 @@
         "standard_pos": "WR",
         "cap_number": null,
         "stats": {
-          "TGT": 5,
-          "REC": 2,
-          "YDS": 77,
+          "TGT": 9,
+          "REC": 3,
+          "YDS": 80,
           "TDs": 2,
           "YAC": 16
         },
@@ -49,12 +50,12 @@
         "standard_pos": "WR",
         "cap_number": "$6,752,000",
         "stats": {
-          "TGT": 18,
-          "REC": 11,
-          "YDS": 167,
+          "TGT": 20,
+          "REC": 12,
+          "YDS": 178,
           "TDs": 1,
           "YAC": 47,
-          "CAR": 1
+          "CAR": 2
         },
         "stats_season": 2026
       },
@@ -80,10 +81,10 @@
         "standard_pos": "WR",
         "cap_number": "$6,792,000",
         "stats": {
-          "TGT": 15,
-          "REC": 8,
-          "YDS": 94,
-          "YAC": 46
+          "TGT": 23,
+          "REC": 15,
+          "YDS": 176,
+          "YAC": 103
         },
         "stats_season": 2026
       },
@@ -157,7 +158,7 @@
         "standard_pos": "OL",
         "cap_number": "$5,250,000",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       },
       {
         "name": "Lloyd Cushenberry",
@@ -229,11 +230,11 @@
         "standard_pos": "TE",
         "cap_number": "$4,272,240",
         "stats": {
-          "TGT": 17,
-          "REC": 14,
-          "YDS": 263,
+          "TGT": 19,
+          "REC": 15,
+          "YDS": 270,
           "TDs": 1,
-          "YAC": 95
+          "YAC": 98
         },
         "stats_season": 2026
       },
@@ -246,11 +247,11 @@
         "standard_pos": "TE",
         "cap_number": "$8,551,333",
         "stats": {
-          "TGT": 4,
-          "REC": 4,
-          "YDS": 17,
+          "TGT": 6,
+          "REC": 6,
+          "YDS": 30,
           "TDs": 1,
-          "YAC": 9,
+          "YAC": 19,
           "CAR": 1
         },
         "stats_season": 2026
@@ -290,13 +291,13 @@
         "standard_pos": "QB",
         "cap_number": "$44,228,000",
         "stats": {
-          "CMP": 56,
-          "ATT": 86,
-          "YDS": 786,
-          "TDs": 5,
-          "INTs": 2,
-          "SACKS": 8,
-          "RU YDS": 114
+          "CMP": 79,
+          "ATT": 119,
+          "YDS": 1039,
+          "TDs": 6,
+          "INTs": 3,
+          "SACKS": 9,
+          "RU YDS": 118
         },
         "stats_season": 2026
       },
@@ -333,12 +334,12 @@
         "standard_pos": "RB",
         "cap_number": "$5,880,000",
         "stats": {
-          "CAR": 58,
-          "RU YDS": 346,
-          "RU TDs": 2,
-          "REC": 4,
-          "RE YDS": 16,
-          "TGT": 8
+          "CAR": 70,
+          "RU YDS": 421,
+          "RU TDs": 3,
+          "REC": 6,
+          "RE YDS": 24,
+          "TGT": 10
         },
         "stats_season": 2026
       },
@@ -351,9 +352,11 @@
         "standard_pos": "RB",
         "cap_number": "$3,275,000",
         "stats": {
-          "REC": 4,
-          "RE YDS": 50,
-          "TGT": 4
+          "CAR": 1,
+          "RU YDS": 3,
+          "REC": 6,
+          "RE YDS": 59,
+          "TGT": 6
         },
         "stats_season": 2026
       },
@@ -366,8 +369,11 @@
         "standard_pos": "RB",
         "cap_number": "$1,253,297",
         "stats": {
-          "CAR": 1,
-          "RU YDS": 3
+          "CAR": 2,
+          "RU YDS": 6,
+          "REC": 1,
+          "RE YDS": 4,
+          "TGT": 1
         },
         "stats_season": 2026
       },
@@ -433,9 +439,9 @@
         "standard_pos": "DI",
         "cap_number": "$1,266,763",
         "stats": {
-          "TKL": 4,
+          "TKL": 6,
           "SACKS": 1.0,
-          "TFL": 2,
+          "TFL": 3,
           "QB HIT": 4
         },
         "stats_season": 2026
@@ -449,7 +455,7 @@
         "standard_pos": "DI",
         "cap_number": "$1,262,500",
         "stats": {
-          "TKL": 1
+          "TKL": 2
         },
         "stats_season": 2026
       }
@@ -465,6 +471,7 @@
         "cap_number": "$13,660,000",
         "stats": {
           "TKL": 3,
+          "SACKS": 0.5,
           "TFL": 1,
           "QB HIT": 4
         },
@@ -479,7 +486,7 @@
         "standard_pos": "DI",
         "cap_number": "$1,532,195",
         "stats": {
-          "TKL": 3,
+          "TKL": 6,
           "TFL": 1
         },
         "stats_season": 2026
@@ -505,6 +512,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Phidarian Mathis",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LOLB": [
@@ -517,11 +535,11 @@
         "standard_pos": "EDGE",
         "cap_number": null,
         "stats": {
-          "TKL": 12,
+          "TKL": 14,
           "SACKS": 6.0,
-          "PD": 1,
+          "PD": 3,
           "TFL": 8,
-          "QB HIT": 12
+          "QB HIT": 16
         },
         "stats_season": 2026
       },
@@ -536,6 +554,7 @@
         "stats": {
           "TKL": 1,
           "SACKS": 0.5,
+          "PD": 1,
           "QB HIT": 1
         },
         "stats_season": 2026
@@ -564,9 +583,9 @@
         "standard_pos": "LB",
         "cap_number": "$3,902,692",
         "stats": {
-          "TKL": 13,
+          "TKL": 17,
           "PD": 1,
-          "TFL": 2
+          "TFL": 3
         },
         "stats_season": 2026
       },
@@ -579,7 +598,7 @@
         "standard_pos": "LB",
         "cap_number": "$1,155,740",
         "stats": {
-          "TKL": 1
+          "TKL": 2
         },
         "stats_season": 2026
       }
@@ -594,7 +613,7 @@
         "standard_pos": "LB",
         "cap_number": "$5,352,000",
         "stats": {
-          "TKL": 12,
+          "TKL": 17,
           "PD": 1,
           "TFL": 2
         },
@@ -609,7 +628,7 @@
         "standard_pos": "LB",
         "cap_number": "$1,075,834",
         "stats": {
-          "TKL": 1
+          "TKL": 2
         },
         "stats_season": 2026
       }
@@ -624,10 +643,10 @@
         "standard_pos": "EDGE",
         "cap_number": "$6,500,000",
         "stats": {
-          "TKL": 2,
+          "TKL": 4,
           "SACKS": 1.5,
-          "TFL": 1,
-          "QB HIT": 6
+          "TFL": 2,
+          "QB HIT": 7
         },
         "stats_season": 2026
       },
@@ -640,7 +659,8 @@
         "standard_pos": "EDGE",
         "cap_number": "$2,389,226",
         "stats": {
-          "TKL": 1
+          "TKL": 3,
+          "SACKS": 0.5
         },
         "stats_season": 2026
       },
@@ -672,6 +692,20 @@
           "PD": 3
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Davison Igbinosun",
+        "depth": 2,
+        "injured": false,
+        "attainment": "26/2",
+        "standard_slot": "LCB",
+        "standard_pos": "CB",
+        "cap_number": "$1,445,274",
+        "stats": {
+          "TKL": 11,
+          "PD": 3
+        },
+        "stats_season": 2026
       }
     ],
     "SS": [
@@ -684,7 +718,7 @@
         "standard_pos": "S",
         "cap_number": null,
         "stats": {
-          "TKL": 10,
+          "TKL": 12,
           "INTs": 1,
           "PD": 2
         },
@@ -699,7 +733,7 @@
         "standard_pos": "S",
         "cap_number": "$1,125,000",
         "stats": {
-          "TKL": 2
+          "TKL": 3
         },
         "stats_season": 2026
       },
@@ -725,7 +759,7 @@
         "standard_pos": "S",
         "cap_number": "$1,785,817",
         "stats": {
-          "TKL": 11
+          "TKL": 15
         },
         "stats_season": 2026
       },
@@ -753,23 +787,20 @@
         "standard_pos": "CB",
         "cap_number": "$3,467,723",
         "stats": {
-          "TKL": 4,
-          "PD": 1
+          "TKL": 6,
+          "PD": 2
         },
         "stats_season": 2026
       },
       {
-        "name": "Davison Igbinosun",
+        "name": "Kani Walker",
         "depth": 2,
         "injured": false,
-        "attainment": "26/2",
+        "attainment": "CF26",
         "standard_slot": "RCB",
         "standard_pos": "CB",
-        "cap_number": "$1,445,274",
-        "stats": {
-          "TKL": 8,
-          "PD": 2
-        },
+        "cap_number": null,
+        "stats": {},
         "stats_season": 2026
       }
     ],
@@ -784,7 +815,21 @@
         "cap_number": "$3,230,000",
         "stats": {
           "TKL": 2,
-          "PD": 1
+          "INTs": 1,
+          "PD": 2
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Te'cory Couch",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF24",
+        "standard_slot": "NB",
+        "standard_pos": "CB",
+        "cap_number": null,
+        "stats": {
+          "TKL": 1
         },
         "stats_season": 2026
       }
@@ -915,30 +960,6 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Kani Walker",
-        "depth": 2,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "CB",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Te'cory Couch",
-        "depth": 3,
-        "injured": false,
-        "attainment": "CF24",
-        "standard_slot": "CB",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {
-          "TKL": 1
-        },
-        "stats_season": 2026
       }
     ],
     "S": [
@@ -1000,19 +1021,6 @@
         "injured": true,
         "attainment": null,
         "standard_slot": "NFI",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      }
-    ],
-    "SUS": [
-      {
-        "name": "Phidarian Mathis",
-        "depth": 1,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "SUS",
         "standard_pos": "DEF",
         "cap_number": null,
         "stats": {},

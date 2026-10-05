@@ -43,12 +43,23 @@
         "standard_pos": "WR",
         "cap_number": "$10,074,819",
         "stats": {
-          "TGT": 27,
-          "REC": 21,
-          "YDS": 243,
+          "TGT": 31,
+          "REC": 24,
+          "YDS": 270,
           "TDs": 2,
-          "YAC": 39
+          "YAC": 41
         },
+        "stats_season": 2026
+      },
+      {
+        "name": "Jamaal Pritchett",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "RWR",
+        "standard_pos": "WR",
+        "cap_number": "$786,667",
+        "stats": {},
         "stats_season": 2026
       }
     ],
@@ -62,23 +73,29 @@
         "standard_pos": "WR",
         "cap_number": "$1,075,000",
         "stats": {
-          "TGT": 9,
-          "REC": 8,
-          "YDS": 62,
-          "YAC": 32,
+          "TGT": 12,
+          "REC": 10,
+          "YDS": 135,
+          "TDs": 1,
+          "YAC": 60,
           "CAR": 1
         },
         "stats_season": 2026
       },
       {
-        "name": "Jamaal Pritchett",
+        "name": "Sterling Shepard",
         "depth": 2,
         "injured": false,
-        "attainment": "CF25",
+        "attainment": "SF26",
         "standard_slot": "SWR",
         "standard_pos": "WR",
-        "cap_number": "$893,333",
-        "stats": {},
+        "cap_number": null,
+        "stats": {
+          "TGT": 2,
+          "REC": 1,
+          "YDS": 3,
+          "YAC": 1
+        },
         "stats_season": 2026
       }
     ],
@@ -141,6 +158,17 @@
         "cap_number": "$4,300,000",
         "stats": {},
         "stats_season": 2026
+      },
+      {
+        "name": "Nick Dawkins",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "C",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RG": [
@@ -154,6 +182,17 @@
         "cap_number": "$3,793,928",
         "stats": {},
         "stats_season": 2026
+      },
+      {
+        "name": "Kohl Levao",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF24",
+        "standard_slot": "RG",
+        "standard_pos": "OL",
+        "cap_number": "$737,500",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RT": [
@@ -205,7 +244,7 @@
         "standard_pos": "TE",
         "cap_number": "$4,062,601",
         "stats": {
-          "TGT": 14,
+          "TGT": 18,
           "REC": 12,
           "YDS": 143,
           "TDs": 1,
@@ -240,10 +279,10 @@
         "standard_pos": "TE",
         "cap_number": "$1,104,412",
         "stats": {
-          "TGT": 1,
-          "REC": 1,
-          "YDS": 20,
-          "YAC": 1
+          "TGT": 2,
+          "REC": 2,
+          "YDS": 31,
+          "YAC": 10
         },
         "stats_season": 2026
       },
@@ -269,11 +308,11 @@
         "standard_pos": "QB",
         "cap_number": "$3,300,000",
         "stats": {
-          "CMP": 77,
-          "ATT": 102,
-          "YDS": 783,
-          "TDs": 4,
-          "SACKS": 9,
+          "CMP": 85,
+          "ATT": 117,
+          "YDS": 902,
+          "TDs": 5,
+          "SACKS": 12,
           "RU YDS": 36
         },
         "stats_season": 2026
@@ -329,12 +368,12 @@
         "standard_pos": "RB",
         "cap_number": "$1,207,177",
         "stats": {
-          "CAR": 19,
-          "RU YDS": 61,
+          "CAR": 33,
+          "RU YDS": 120,
           "RU TDs": 1,
-          "REC": 4,
-          "RE YDS": 11,
-          "TGT": 5
+          "REC": 6,
+          "RE YDS": 19,
+          "TGT": 7
         },
         "stats_season": 2026
       },
@@ -358,7 +397,7 @@
         "standard_pos": "RB",
         "cap_number": "$1,926,471",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       },
       {
         "name": "Al-jay Henderson",
@@ -395,8 +434,9 @@
         "standard_pos": "DI",
         "cap_number": "$1,075,000",
         "stats": {
-          "TKL": 1,
+          "TKL": 3,
           "SACKS": 1.0,
+          "TFL": 1,
           "QB HIT": 1
         },
         "stats_season": 2026
@@ -436,7 +476,7 @@
         "standard_pos": "DI",
         "cap_number": "$1,202,905",
         "stats": {
-          "TKL": 1
+          "TKL": 4
         },
         "stats_season": 2026
       }
@@ -451,8 +491,8 @@
         "standard_pos": "DI",
         "cap_number": "$7,500,000",
         "stats": {
-          "TKL": 1,
-          "QB HIT": 2
+          "TKL": 3,
+          "QB HIT": 3
         },
         "stats_season": 2026
       },
@@ -489,8 +529,9 @@
         "standard_pos": "EDGE",
         "cap_number": "$9,940,859",
         "stats": {
-          "TKL": 10,
+          "TKL": 12,
           "SACKS": 2.0,
+          "PD": 1,
           "TFL": 3,
           "QB HIT": 3
         },
@@ -505,7 +546,7 @@
         "standard_pos": "EDGE",
         "cap_number": "$5,193,257",
         "stats": {
-          "TKL": 2,
+          "TKL": 4,
           "SACKS": 1.0,
           "TFL": 1,
           "QB HIT": 1
@@ -523,8 +564,8 @@
         "standard_pos": "LB",
         "cap_number": "$11,500,000",
         "stats": {
-          "TKL": 9,
-          "PD": 1,
+          "TKL": 14,
+          "PD": 2,
           "TFL": 2
         },
         "stats_season": 2026
@@ -541,6 +582,17 @@
           "TKL": 1
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Jaden Keller",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "ILB_L",
+        "standard_pos": "LB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": 2026
       }
     ],
     "MLB": [
@@ -553,11 +605,11 @@
         "standard_pos": "LB",
         "cap_number": "$5,000,000",
         "stats": {
-          "TKL": 14,
-          "SACKS": 1.0,
+          "TKL": 19,
+          "SACKS": 2.0,
           "PD": 1,
-          "TFL": 2,
-          "QB HIT": 1
+          "TFL": 3,
+          "QB HIT": 2
         },
         "stats_season": 2026
       },
@@ -609,7 +661,9 @@
         "standard_slot": "ROLB",
         "standard_pos": "EDGE",
         "cap_number": "$5,455,000",
-        "stats": {},
+        "stats": {
+          "TKL": 5
+        },
         "stats_season": 2026
       },
       {
@@ -621,7 +675,7 @@
         "standard_pos": "EDGE",
         "cap_number": "$1,081,668",
         "stats": {
-          "TKL": 1
+          "TKL": 2
         },
         "stats_season": 2026
       }
@@ -636,8 +690,8 @@
         "standard_pos": "CB",
         "cap_number": "$1,498,556",
         "stats": {
-          "TKL": 9,
-          "PD": 1,
+          "TKL": 13,
+          "PD": 2,
           "TFL": 2
         },
         "stats_season": 2026
@@ -666,8 +720,8 @@
         "standard_pos": "S",
         "cap_number": "$4,000,000",
         "stats": {
-          "TKL": 9,
-          "PD": 1
+          "TKL": 15,
+          "PD": 2
         },
         "stats_season": 2026
       },
@@ -680,7 +734,7 @@
         "standard_pos": "S",
         "cap_number": "$1,229,535",
         "stats": {
-          "TKL": 2
+          "TKL": 3
         },
         "stats_season": 2026
       }
@@ -694,8 +748,12 @@
         "standard_slot": "FS",
         "standard_pos": "S",
         "cap_number": "$7,411,765",
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "TKL": 8,
+          "INTs": 1,
+          "PD": 1
+        },
+        "stats_season": 2026
       },
       {
         "name": "Andre Cisco",
@@ -706,7 +764,7 @@
         "standard_pos": "S",
         "cap_number": "$2,230,000",
         "stats": {
-          "TKL": 15,
+          "TKL": 16,
           "SACKS": 1.0,
           "PD": 1,
           "TFL": 2,
@@ -725,7 +783,8 @@
         "standard_pos": "CB",
         "cap_number": "$13,970,000",
         "stats": {
-          "TKL": 6,
+          "TKL": 9,
+          "PD": 1,
           "TFL": 1
         },
         "stats_season": 2026
@@ -739,7 +798,7 @@
         "standard_pos": "CB",
         "cap_number": "$1,138,569",
         "stats": {
-          "TKL": 1
+          "TKL": 3
         },
         "stats_season": 2026
       }
@@ -759,26 +818,17 @@
         "stats_season": 2026
       },
       {
-        "name": "Jordan Clark",
-        "depth": 2,
-        "injured": false,
-        "attainment": "CF25",
-        "standard_slot": "NB",
-        "standard_pos": "CB",
-        "cap_number": "$949,167",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "D'angelo Ponds",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "26/2",
         "standard_slot": "NB",
         "standard_pos": "CB",
         "cap_number": "$1,788,530",
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "TKL": 1
+        },
+        "stats_season": 2026
       }
     ],
     "PT": [
@@ -822,22 +872,6 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Sterling Shepard",
-        "depth": 2,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "LWR",
-        "standard_pos": "WR",
-        "cap_number": null,
-        "stats": {
-          "TGT": 1,
-          "REC": 1,
-          "YDS": 3,
-          "YAC": 1
-        },
-        "stats_season": 2026
       }
     ],
     "OT": [
@@ -855,10 +889,10 @@
     ],
     "OG": [
       {
-        "name": "Kohl Levao",
+        "name": "Jimmy Morrissey",
         "depth": 1,
         "injured": false,
-        "attainment": "SF24",
+        "attainment": "SF26",
         "standard_slot": "OG",
         "standard_pos": "DEF",
         "cap_number": null,
@@ -890,19 +924,6 @@
         "stats_season": null
       }
     ],
-    "LB": [
-      {
-        "name": "Jaden Keller",
-        "depth": 1,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "LB",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      }
-    ],
     "CB": [
       {
         "name": "Mory Bamba",
@@ -925,15 +946,13 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
-      }
-    ],
-    "S": [
+      },
       {
-        "name": "John Saunders Jr.",
-        "depth": 1,
+        "name": "Jordan Clark",
+        "depth": 3,
         "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "S",
+        "attainment": "CF25",
+        "standard_slot": "CB",
         "standard_pos": "DEF",
         "cap_number": null,
         "stats": {},

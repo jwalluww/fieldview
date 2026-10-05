@@ -414,24 +414,34 @@
         "stats_season": 2026
       },
       {
-        "name": "Zach Harrison",
+        "name": "Jared Ivey",
         "depth": 2,
         "injured": false,
-        "attainment": "23/3",
+        "attainment": "W/Sea",
         "standard_slot": "LE",
         "standard_pos": "DI",
-        "cap_number": "$1,017,778",
-        "stats": {
-          "TKL": 2,
-          "TFL": 1
-        },
+        "cap_number": "$885,000",
+        "stats": {},
         "stats_season": 2026
       }
     ],
     "NT": [
       {
-        "name": "Lacale London",
+        "name": "Maason Smith",
         "depth": 1,
+        "injured": false,
+        "attainment": "T/Jax",
+        "standard_slot": "NT",
+        "standard_pos": "DI",
+        "cap_number": "$1,523,964",
+        "stats": {
+          "QB HIT": 1
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Lacale London",
+        "depth": 2,
         "injured": false,
         "attainment": "SF23",
         "standard_slot": "NT",
@@ -445,21 +455,8 @@
     ],
     "DT": [
       {
-        "name": "Maason Smith",
-        "depth": 1,
-        "injured": false,
-        "attainment": "T/Jax",
-        "standard_slot": "RE",
-        "standard_pos": "DI",
-        "cap_number": "$1,523,964",
-        "stats": {
-          "QB HIT": 1
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Gervon Dexter Sr.",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "T/Chi",
         "standard_slot": "RE",
@@ -469,6 +466,20 @@
           "TKL": 2,
           "SACKS": 0.5,
           "QB HIT": 3
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Zach Harrison",
+        "depth": 2,
+        "injured": false,
+        "attainment": "23/3",
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": "$1,017,778",
+        "stats": {
+          "TKL": 2,
+          "TFL": 1
         },
         "stats_season": 2026
       },
@@ -502,14 +513,16 @@
         "stats_season": 2026
       },
       {
-        "name": "Jared Ivey",
+        "name": "Yasir Abdullah",
         "depth": 2,
         "injured": false,
-        "attainment": "W/Sea",
+        "attainment": "W/Jax",
         "standard_slot": "LOLB",
         "standard_pos": "EDGE",
-        "cap_number": "$885,000",
-        "stats": {},
+        "cap_number": "$1,145,000",
+        "stats": {
+          "TKL": 2
+        },
         "stats_season": 2026
       }
     ],
@@ -616,19 +629,6 @@
           "QB HIT": 3
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Yasir Abdullah",
-        "depth": 3,
-        "injured": false,
-        "attainment": "W/Jax",
-        "standard_slot": "ROLB",
-        "standard_pos": "EDGE",
-        "cap_number": "$1,145,000",
-        "stats": {
-          "TKL": 2
-        },
-        "stats_season": 2026
       }
     ],
     "LCB": [
@@ -647,27 +647,26 @@
         "stats_season": 2026
       },
       {
-        "name": "Mike Ford Jr.",
+        "name": "Avieon Terrell",
         "depth": 2,
         "injured": false,
-        "attainment": "U/Cle",
+        "attainment": "26/2",
         "standard_slot": "LCB",
         "standard_pos": "CB",
-        "cap_number": "$2,155,000",
+        "cap_number": "$1,874,345",
         "stats": {
-          "TKL": 2,
-          "QB HIT": 1
+          "TKL": 2
         },
         "stats_season": 2026
       },
       {
-        "name": "Malcolm Dewalt IV",
+        "name": "Robert Longerbeam",
         "depth": 3,
         "injured": false,
-        "attainment": "CF26",
+        "attainment": "P/Phi",
         "standard_slot": "LCB",
         "standard_pos": "CB",
-        "cap_number": "$891,666",
+        "cap_number": "$786,667",
         "stats": {},
         "stats_season": null
       }
@@ -748,26 +747,13 @@
         "stats_season": 2026
       },
       {
-        "name": "Avieon Terrell",
+        "name": "Malcolm Dewalt IV",
         "depth": 2,
         "injured": false,
-        "attainment": "26/2",
+        "attainment": "CF26",
         "standard_slot": "RCB",
         "standard_pos": "CB",
-        "cap_number": "$1,874,345",
-        "stats": {
-          "TKL": 2
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Robert Longerbeam",
-        "depth": 3,
-        "injured": false,
-        "attainment": "P/Phi",
-        "standard_slot": "RCB",
-        "standard_pos": "CB",
-        "cap_number": "$786,667",
+        "cap_number": "$891,666",
         "stats": {},
         "stats_season": null
       }
@@ -784,6 +770,20 @@
         "stats": {
           "TKL": 1,
           "PD": 2
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Mike Ford Jr.",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/Cle",
+        "standard_slot": "NB",
+        "standard_pos": "CB",
+        "cap_number": "$2,155,000",
+        "stats": {
+          "TKL": 2,
+          "QB HIT": 1
         },
         "stats_season": 2026
       }
@@ -926,6 +926,19 @@
           "PD": 1
         },
         "stats_season": 2026
+      }
+    ],
+    "LB": [
+      {
+        "name": "Brian Asamoah II",
+        "depth": 1,
+        "injured": false,
+        "attainment": "U/Cin",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "CB": [

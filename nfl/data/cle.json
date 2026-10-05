@@ -14,11 +14,11 @@
         "standard_pos": "WR",
         "cap_number": "$2,251,926",
         "stats": {
-          "TGT": 15,
-          "REC": 9,
-          "YDS": 195,
+          "TGT": 22,
+          "REC": 13,
+          "YDS": 284,
           "TDs": 2,
-          "YAC": 69
+          "YAC": 109
         },
         "stats_season": 2026
       },
@@ -44,10 +44,10 @@
         "standard_pos": "WR",
         "cap_number": "$10,372,400",
         "stats": {
-          "TGT": 5,
-          "REC": 2,
-          "YDS": 26,
-          "YAC": 9
+          "TGT": 8,
+          "REC": 5,
+          "YDS": 62,
+          "YAC": 22
         },
         "stats_season": 2026
       },
@@ -73,10 +73,10 @@
         "standard_pos": "WR",
         "cap_number": "$3,590,623",
         "stats": {
-          "TGT": 20,
-          "REC": 12,
-          "YDS": 80,
-          "YAC": 31,
+          "TGT": 28,
+          "REC": 17,
+          "YDS": 144,
+          "YAC": 69,
           "CAR": 4
         },
         "stats_season": 2026
@@ -90,9 +90,9 @@
         "standard_pos": "WR",
         "cap_number": "$1,022,666",
         "stats": {
-          "TGT": 1,
-          "REC": 1,
-          "YDS": 10,
+          "TGT": 2,
+          "REC": 2,
+          "YDS": 12,
           "YAC": 3
         },
         "stats_season": 2026
@@ -167,7 +167,7 @@
         "standard_pos": "OL",
         "cap_number": "$1,189,993",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       },
       {
         "name": "Parker Brailsford",
@@ -228,11 +228,11 @@
         "standard_pos": "TE",
         "cap_number": "$1,532,474",
         "stats": {
-          "TGT": 18,
-          "REC": 14,
-          "YDS": 126,
-          "TDs": 2,
-          "YAC": 74
+          "TGT": 23,
+          "REC": 17,
+          "YDS": 153,
+          "TDs": 3,
+          "YAC": 88
         },
         "stats_season": 2026
       },
@@ -265,10 +265,10 @@
         "stats_season": 2026
       },
       {
-        "name": "Messiah Swinson",
+        "name": "John Fitzpatrick",
         "depth": 4,
         "injured": false,
-        "attainment": "SF26",
+        "attainment": "U/GB",
         "standard_slot": "TE",
         "standard_pos": "TE",
         "cap_number": null,
@@ -286,13 +286,13 @@
         "standard_pos": "QB",
         "cap_number": "$40,959,128",
         "stats": {
-          "CMP": 56,
-          "ATT": 82,
-          "YDS": 587,
-          "TDs": 5,
-          "INTs": 1,
-          "SACKS": 9,
-          "RU YDS": 105
+          "CMP": 80,
+          "ATT": 115,
+          "YDS": 855,
+          "TDs": 6,
+          "INTs": 2,
+          "SACKS": 11,
+          "RU YDS": 127
         },
         "stats_season": 2026
       },
@@ -332,11 +332,12 @@
         "standard_pos": "RB",
         "cap_number": "$2,591,390",
         "stats": {
-          "CAR": 42,
-          "RU YDS": 124,
-          "REC": 9,
-          "RE YDS": 53,
-          "TGT": 9
+          "CAR": 59,
+          "RU YDS": 177,
+          "RU TDs": 1,
+          "REC": 15,
+          "RE YDS": 96,
+          "TGT": 16
         },
         "stats_season": 2026
       },
@@ -349,11 +350,11 @@
         "standard_pos": "RB",
         "cap_number": "$1,005,000",
         "stats": {
-          "CAR": 4,
-          "RU YDS": 22,
-          "REC": 8,
-          "RE YDS": 66,
-          "TGT": 9
+          "CAR": 6,
+          "RU YDS": 31,
+          "REC": 10,
+          "RE YDS": 73,
+          "TGT": 11
         },
         "stats_season": 2026
       },
@@ -366,8 +367,9 @@
         "standard_pos": "RB",
         "cap_number": "$1,081,389",
         "stats": {
-          "CAR": 1,
-          "RU YDS": 3,
+          "CAR": 2,
+          "RU YDS": 31,
+          "RU TDs": 1,
           "TGT": 1
         },
         "stats_season": 2026
@@ -409,8 +411,8 @@
         "standard_pos": "EDGE",
         "cap_number": "$2,170,850",
         "stats": {
-          "TKL": 6,
-          "TFL": 2,
+          "TKL": 7,
+          "TFL": 3,
           "QB HIT": 2
         },
         "stats_season": 2026
@@ -424,7 +426,10 @@
         "standard_pos": "EDGE",
         "cap_number": "$1,145,000",
         "stats": {
-          "TKL": 3
+          "TKL": 4,
+          "SACKS": 1.0,
+          "TFL": 1,
+          "QB HIT": 2
         },
         "stats_season": 2026
       }
@@ -439,8 +444,10 @@
         "standard_pos": "DI",
         "cap_number": "$5,307,824",
         "stats": {
-          "TKL": 1,
-          "QB HIT": 3
+          "TKL": 3,
+          "SACKS": 1.0,
+          "TFL": 2,
+          "QB HIT": 4
         },
         "stats_season": 2026
       },
@@ -453,7 +460,10 @@
         "standard_pos": "DI",
         "cap_number": null,
         "stats": {
-          "TKL": 2
+          "TKL": 3,
+          "SACKS": 1.0,
+          "TFL": 1,
+          "QB HIT": 1
         },
         "stats_season": 2026
       }
@@ -483,7 +493,12 @@
         "standard_slot": "RDT",
         "standard_pos": "DI",
         "cap_number": "$1,011,666",
-        "stats": {},
+        "stats": {
+          "TKL": 1,
+          "SACKS": 1.0,
+          "TFL": 1,
+          "QB HIT": 3
+        },
         "stats_season": 2026
       }
     ],
@@ -497,10 +512,10 @@
         "standard_pos": "EDGE",
         "cap_number": "$3,851,982",
         "stats": {
-          "TKL": 5,
-          "SACKS": 1.0,
-          "TFL": 3,
-          "QB HIT": 1
+          "TKL": 7,
+          "SACKS": 2.0,
+          "TFL": 4,
+          "QB HIT": 2
         },
         "stats_season": 2026
       },
@@ -515,20 +530,20 @@
         "stats": {
           "TKL": 3,
           "TFL": 1,
-          "QB HIT": 1
+          "QB HIT": 2
         },
         "stats_season": 2026
       }
     ],
     "WLB": [
       {
-        "name": "Quincy Williams",
+        "name": "Carson Schwesinger",
         "depth": 1,
         "injured": false,
-        "attainment": "U/NYJ",
+        "attainment": "25/2",
         "standard_slot": "WILL",
         "standard_pos": "LB",
-        "cap_number": "$2,628,000",
+        "cap_number": "$2,681,909",
         "stats": {
           "TKL": 12,
           "TFL": 2,
@@ -544,21 +559,24 @@
         "standard_slot": "WILL",
         "standard_pos": "LB",
         "cap_number": "$1,008,333",
-        "stats": {},
+        "stats": {
+          "TKL": 1
+        },
         "stats_season": 2026
       }
     ],
     "MLB": [
       {
-        "name": "Carson Schwesinger",
+        "name": "Quincy Williams",
         "depth": 1,
         "injured": false,
-        "attainment": "25/2",
+        "attainment": "U/NYJ",
         "standard_slot": "MIKE",
         "standard_pos": "LB",
-        "cap_number": "$2,681,909",
+        "cap_number": "$2,628,000",
         "stats": {
-          "TKL": 9,
+          "TKL": 12,
+          "PD": 1,
           "TFL": 2,
           "QB HIT": 1
         },
@@ -599,8 +617,10 @@
         "standard_pos": "CB",
         "cap_number": "$19,048,412",
         "stats": {
-          "TKL": 8,
-          "PD": 1
+          "TKL": 11,
+          "INTs": 1,
+          "PD": 2,
+          "QB HIT": 1
         },
         "stats_season": 2026
       },
@@ -626,9 +646,10 @@
         "standard_pos": "S",
         "cap_number": "$9,053,000",
         "stats": {
-          "TKL": 8,
+          "TKL": 12,
           "SACKS": 1.0,
-          "PD": 1,
+          "INTs": 1,
+          "PD": 2,
           "QB HIT": 1
         },
         "stats_season": 2026
@@ -642,7 +663,7 @@
         "standard_pos": "S",
         "cap_number": "$1,008,333",
         "stats": {
-          "TKL": 1
+          "TKL": 2
         },
         "stats_season": 2026
       },
@@ -655,7 +676,7 @@
         "standard_pos": "S",
         "cap_number": "$1,357,500",
         "stats": {
-          "TKL": 1
+          "TKL": 2
         },
         "stats_season": 2026
       }
@@ -670,10 +691,10 @@
         "standard_pos": "S",
         "cap_number": "$3,520,000",
         "stats": {
-          "TKL": 7,
+          "TKL": 8,
           "SACKS": 1.0,
           "INTs": 1,
-          "PD": 1,
+          "PD": 2,
           "QB HIT": 1
         },
         "stats_season": 2026
@@ -687,7 +708,8 @@
         "standard_pos": "S",
         "cap_number": "$1,518,217",
         "stats": {
-          "TKL": 4
+          "TKL": 5,
+          "PD": 2
         },
         "stats_season": 2026
       }
@@ -702,7 +724,8 @@
         "standard_pos": "CB",
         "cap_number": "$4,916,000",
         "stats": {
-          "TKL": 7,
+          "TKL": 13,
+          "PD": 1,
           "TFL": 1
         },
         "stats_season": 2026
@@ -716,7 +739,7 @@
         "standard_pos": "CB",
         "cap_number": "$1,325,000",
         "stats": {
-          "TKL": 8,
+          "TKL": 9,
           "PD": 2
         },
         "stats_season": 2026
@@ -732,7 +755,7 @@
         "standard_pos": "CB",
         "cap_number": "$1,102,583",
         "stats": {
-          "TKL": 5,
+          "TKL": 7,
           "INTs": 1,
           "PD": 3
         },
@@ -939,10 +962,10 @@
         "stats_season": null
       },
       {
-        "name": "D'angelo Ross",
+        "name": "Myles Bryant",
         "depth": 2,
         "injured": false,
-        "attainment": "P/Hou",
+        "attainment": "U/Hou",
         "standard_slot": "CB",
         "standard_pos": "DEF",
         "cap_number": null,
@@ -998,13 +1021,13 @@
         "stats_season": null
       },
       {
-        "name": "Kendrick Green",
+        "name": "Damarri Mathis",
         "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
         "standard_pos": "DEF",
-        "cap_number": "$615,000",
+        "cap_number": "$590,000",
         "stats": {},
         "stats_season": null
       },
@@ -1038,28 +1061,6 @@
         "standard_slot": "IR",
         "standard_pos": "DEF",
         "cap_number": "$565,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Travis Bell",
-        "depth": 8,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Damarri Mathis",
-        "depth": 9,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$590,000",
         "stats": {},
         "stats_season": null
       }
