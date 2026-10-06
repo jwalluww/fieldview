@@ -14,11 +14,11 @@
         "standard_pos": "WR",
         "cap_number": "$9,573,000",
         "stats": {
-          "TGT": 36,
-          "REC": 27,
-          "YDS": 375,
+          "TGT": 48,
+          "REC": 35,
+          "YDS": 491,
           "TDs": 1,
-          "YAC": 81
+          "YAC": 106
         },
         "stats_season": 2026
       },
@@ -49,9 +49,9 @@
         "standard_pos": "WR",
         "cap_number": "$1,082,259",
         "stats": {
-          "TGT": 8,
-          "REC": 4,
-          "YDS": 50,
+          "TGT": 13,
+          "REC": 5,
+          "YDS": 57,
           "YAC": 7
         },
         "stats_season": 2026
@@ -65,7 +65,7 @@
         "standard_pos": "WR",
         "cap_number": "$958,504",
         "stats": {
-          "CAR": 1
+          "CAR": 2
         },
         "stats_season": 2026
       }
@@ -80,11 +80,11 @@
         "standard_pos": "WR",
         "cap_number": "$1,075,000",
         "stats": {
-          "TGT": 22,
-          "REC": 15,
-          "YDS": 172,
-          "TDs": 1,
-          "YAC": 43
+          "TGT": 31,
+          "REC": 21,
+          "YDS": 226,
+          "TDs": 2,
+          "YAC": 50
         },
         "stats_season": 2026
       }
@@ -99,7 +99,7 @@
         "standard_pos": "OL",
         "cap_number": "$1,145,000",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       }
     ],
     "LG": [
@@ -173,7 +173,7 @@
         "standard_pos": "OL",
         "cap_number": "$4,731,316",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       },
       {
         "name": "Mason Murphy",
@@ -197,11 +197,11 @@
         "standard_pos": "TE",
         "cap_number": "$7,613,000",
         "stats": {
-          "TGT": 19,
-          "REC": 15,
-          "YDS": 173,
+          "TGT": 27,
+          "REC": 21,
+          "YDS": 232,
           "TDs": 3,
-          "YAC": 97
+          "YAC": 116
         },
         "stats_season": 2026
       },
@@ -246,7 +246,9 @@
         "standard_slot": "TE",
         "standard_pos": "TE",
         "cap_number": "$1,005,000",
-        "stats": {},
+        "stats": {
+          "TGT": 1
+        },
         "stats_season": 2026
       },
       {
@@ -271,13 +273,13 @@
         "standard_pos": "QB",
         "cap_number": "$2,455,620",
         "stats": {
-          "CMP": 91,
-          "ATT": 132,
-          "YDS": 917,
-          "TDs": 8,
+          "CMP": 121,
+          "ATT": 180,
+          "YDS": 1203,
+          "TDs": 9,
           "INTs": 3,
-          "SACKS": 10,
-          "RU YDS": 67
+          "SACKS": 12,
+          "RU YDS": 72
         },
         "stats_season": 2026
       },
@@ -314,11 +316,12 @@
         "standard_pos": "RB",
         "cap_number": "$11,378,471",
         "stats": {
-          "CAR": 18,
-          "RU YDS": 51,
-          "REC": 6,
-          "RE YDS": 12,
-          "TGT": 7
+          "CAR": 25,
+          "RU YDS": 74,
+          "RU TDs": 2,
+          "REC": 11,
+          "RE YDS": 47,
+          "TGT": 14
         },
         "stats_season": 2026
       },
@@ -331,12 +334,12 @@
         "standard_pos": "RB",
         "cap_number": "$1,799,099",
         "stats": {
-          "CAR": 13,
-          "RU YDS": 44,
+          "CAR": 19,
+          "RU YDS": 53,
           "RU TDs": 1,
-          "REC": 2,
-          "RE YDS": 5,
-          "TGT": 3
+          "REC": 4,
+          "RE YDS": 15,
+          "TGT": 6
         },
         "stats_season": 2026
       },
@@ -349,11 +352,11 @@
         "standard_pos": "RB",
         "cap_number": "$835,833",
         "stats": {
-          "CAR": 4,
-          "RU YDS": 11,
-          "REC": 1,
-          "RE YDS": -2,
-          "TGT": 2
+          "CAR": 7,
+          "RU YDS": 29,
+          "REC": 3,
+          "RE YDS": 3,
+          "TGT": 4
         },
         "stats_season": 2026
       },
@@ -426,30 +429,30 @@
         "stats_season": 2026
       },
       {
-        "name": "Christen Miller",
-        "depth": 2,
-        "injured": false,
-        "attainment": "26/2",
-        "standard_slot": "NT",
-        "standard_pos": "DI",
-        "cap_number": "$2,144,658",
-        "stats": {},
-        "stats_season": 2026
-      },
-      {
         "name": "Khristian Boyd",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "24/6",
         "standard_slot": "NT",
         "standard_pos": "DI",
         "cap_number": "$1,119,707",
         "stats": {
-          "TKL": 2,
+          "TKL": 3,
           "SACKS": 1.0,
           "TFL": 2,
           "QB HIT": 1
         },
+        "stats_season": 2026
+      },
+      {
+        "name": "Christen Miller",
+        "depth": 3,
+        "injured": false,
+        "attainment": "26/2",
+        "standard_slot": "NT",
+        "standard_pos": "DI",
+        "cap_number": "$2,144,658",
+        "stats": {},
         "stats_season": 2026
       }
     ],
@@ -463,7 +466,7 @@
         "standard_pos": "DI",
         "cap_number": "$4,348,000",
         "stats": {
-          "TKL": 2,
+          "TKL": 3,
           "SACKS": 0.5,
           "QB HIT": 3
         },
@@ -478,7 +481,7 @@
         "standard_pos": "DI",
         "cap_number": "$2,040,000",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       },
       {
         "name": "Jay'viar Suggs",
@@ -532,6 +535,20 @@
           "TKL": 1
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Fadil Diggs",
+        "depth": 3,
+        "injured": false,
+        "attainment": "25/7",
+        "standard_slot": "LOLB",
+        "standard_pos": "EDGE",
+        "cap_number": null,
+        "stats": {
+          "TKL": 1,
+          "PD": 1
+        },
+        "stats_season": 2026
       }
     ],
     "WLB": [
@@ -552,14 +569,16 @@
         "stats_season": 2026
       },
       {
-        "name": "Chris Rumph II",
+        "name": "Danny Stutsman",
         "depth": 2,
         "injured": false,
-        "attainment": "U/LAC",
+        "attainment": "25/4",
         "standard_slot": "ILB_L",
         "standard_pos": "LB",
-        "cap_number": "$2,000,000",
-        "stats": {},
+        "cap_number": "$1,262,091",
+        "stats": {
+          "TKL": 10
+        },
         "stats_season": 2026
       },
       {
@@ -571,7 +590,7 @@
         "standard_pos": "LB",
         "cap_number": "$1,075,000",
         "stats": {
-          "TKL": 3
+          "TKL": 4
         },
         "stats_season": 2026
       }
@@ -586,26 +605,35 @@
         "standard_pos": "LB",
         "cap_number": "$3,938,000",
         "stats": {
-          "TKL": 13,
+          "TKL": 14,
           "SACKS": 1.0,
           "PD": 1,
-          "TFL": 2,
+          "TFL": 3,
           "QB HIT": 2
         },
         "stats_season": 2026
       },
       {
-        "name": "Danny Stutsman",
+        "name": "Chris Rumph II",
         "depth": 2,
         "injured": false,
-        "attainment": "25/4",
+        "attainment": "U/LAC",
         "standard_slot": "ILB_R",
         "standard_pos": "LB",
-        "cap_number": "$1,262,091",
-        "stats": {
-          "TKL": 9
-        },
+        "cap_number": "$2,000,000",
+        "stats": {},
         "stats_season": 2026
+      },
+      {
+        "name": "Jackson Sirmon",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "ILB_R",
+        "standard_pos": "LB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "ROLB": [
@@ -618,7 +646,7 @@
         "standard_pos": "EDGE",
         "cap_number": "$9,610,000",
         "stats": {
-          "TKL": 3,
+          "TKL": 5,
           "SACKS": 3.5,
           "TFL": 3,
           "QB HIT": 5
@@ -647,7 +675,12 @@
         "standard_slot": "ROLB",
         "standard_pos": "EDGE",
         "cap_number": "$4,159,842",
-        "stats": {},
+        "stats": {
+          "TKL": 4,
+          "SACKS": 1.0,
+          "TFL": 1,
+          "QB HIT": 1
+        },
         "stats_season": 2026
       }
     ],
@@ -661,7 +694,7 @@
         "standard_pos": "CB",
         "cap_number": "$2,497,393",
         "stats": {
-          "TKL": 10,
+          "TKL": 11,
           "PD": 4
         },
         "stats_season": 2026
@@ -690,7 +723,7 @@
         "standard_pos": "S",
         "cap_number": "$5,190,000",
         "stats": {
-          "TKL": 11,
+          "TKL": 14,
           "TFL": 1
         },
         "stats_season": 2026
@@ -719,7 +752,7 @@
         "standard_pos": "S",
         "cap_number": "$1,515,000",
         "stats": {
-          "TKL": 6,
+          "TKL": 11,
           "INTs": 1,
           "PD": 1
         },
@@ -747,7 +780,7 @@
         "standard_pos": "CB",
         "cap_number": "$1,226,809",
         "stats": {
-          "TKL": 4,
+          "TKL": 6,
           "PD": 2
         },
         "stats_season": 2026
@@ -774,7 +807,7 @@
         "standard_pos": "CB",
         "cap_number": "$1,419,364",
         "stats": {
-          "TKL": 13,
+          "TKL": 17,
           "TFL": 1
         },
         "stats_season": 2026
@@ -908,35 +941,11 @@
     ],
     "ED": [
       {
-        "name": "Fadil Diggs",
-        "depth": 1,
-        "injured": false,
-        "attainment": "25/7",
-        "standard_slot": "ED",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "David Ojabo",
-        "depth": 2,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "ED",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      }
-    ],
-    "LB": [
-      {
-        "name": "Jackson Sirmon",
         "depth": 1,
         "injured": false,
         "attainment": "SF26",
-        "standard_slot": "LB",
+        "standard_slot": "ED",
         "standard_pos": "DEF",
         "cap_number": null,
         "stats": {},

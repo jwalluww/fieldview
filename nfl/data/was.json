@@ -454,8 +454,19 @@
         "stats_season": 2026
       },
       {
-        "name": "Craig Reynolds",
+        "name": "Robert Henry Jr.",
         "depth": 5,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Craig Reynolds",
+        "depth": 6,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "RB",
@@ -466,17 +477,6 @@
           "RU YDS": 4
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Robert Henry Jr.",
-        "depth": 6,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "LDE": [
@@ -651,19 +651,6 @@
           "PD": 2,
           "TFL": 2,
           "QB HIT": 2
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Ale Kaho",
-        "depth": 2,
-        "injured": false,
-        "attainment": "CF25",
-        "standard_slot": "ILB_R",
-        "standard_pos": "LB",
-        "cap_number": null,
-        "stats": {
-          "TKL": 3
         },
         "stats_season": 2026
       }
@@ -982,6 +969,19 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Ale Kaho",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 3
+        },
+        "stats_season": 2026
       }
     ],
     "CB": [

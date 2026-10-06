@@ -412,24 +412,8 @@
     ],
     "DE": [
       {
-        "name": "Derrick Harmon",
-        "depth": 1,
-        "injured": false,
-        "attainment": "25/1",
-        "standard_slot": "LE",
-        "standard_pos": "DI",
-        "cap_number": "$4,084,910",
-        "stats": {
-          "TKL": 3,
-          "SACKS": 1.5,
-          "TFL": 1,
-          "QB HIT": 2
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Sebastian Joseph-day",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "U/Ten",
         "standard_slot": "LE",
@@ -444,7 +428,7 @@
       },
       {
         "name": "Kevin Jobity Jr.",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "LE",
@@ -470,15 +454,17 @@
         "stats_season": 2026
       },
       {
-        "name": "Gabriel Rubio",
+        "name": "Yahya Black",
         "depth": 2,
         "injured": false,
-        "attainment": "26/6",
+        "attainment": "25/5",
         "standard_slot": "NT",
         "standard_pos": "DI",
-        "cap_number": "$946,725",
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$1,099,959",
+        "stats": {
+          "TKL": 3
+        },
+        "stats_season": 2026
       }
     ],
     "DT": [
@@ -497,17 +483,15 @@
         "stats_season": 2026
       },
       {
-        "name": "Yahya Black",
+        "name": "Gabriel Rubio",
         "depth": 2,
         "injured": false,
-        "attainment": "25/5",
+        "attainment": "26/6",
         "standard_slot": "RE",
         "standard_pos": "DI",
-        "cap_number": "$1,099,959",
-        "stats": {
-          "TKL": 3
-        },
-        "stats_season": 2026
+        "cap_number": "$946,725",
+        "stats": {},
+        "stats_season": null
       },
       {
         "name": "Kyler Baugh",
@@ -680,18 +664,15 @@
         "stats_season": 2026
       },
       {
-        "name": "Daylen Everette",
+        "name": "Sean Murphy-bunting",
         "depth": 2,
         "injured": false,
-        "attainment": "26/3",
+        "attainment": "P/TB",
         "standard_slot": "LCB",
         "standard_pos": "CB",
-        "cap_number": "$1,254,635",
-        "stats": {
-          "TKL": 5,
-          "PD": 2
-        },
-        "stats_season": 2026
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "SS": [
@@ -757,15 +738,16 @@
         "stats_season": 2026
       },
       {
-        "name": "Doneiko Slaughter",
+        "name": "Daylen Everette",
         "depth": 2,
         "injured": false,
-        "attainment": "SF26",
+        "attainment": "26/3",
         "standard_slot": "RCB",
         "standard_pos": "CB",
-        "cap_number": "$737,500",
+        "cap_number": "$1,254,635",
         "stats": {
-          "TKL": 1
+          "TKL": 5,
+          "PD": 2
         },
         "stats_season": 2026
       }
@@ -926,6 +908,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Marte Mapu",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "CB": [
@@ -967,8 +960,24 @@
     ],
     "IR": [
       {
-        "name": "Gennings Dunker",
+        "name": "Derrick Harmon",
         "depth": 1,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$4,084,910",
+        "stats": {
+          "TKL": 3,
+          "SACKS": 1.5,
+          "TFL": 1,
+          "QB HIT": 2
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Gennings Dunker",
+        "depth": 2,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -979,7 +988,7 @@
       },
       {
         "name": "Deshon Elliott",
-        "depth": 2,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -990,7 +999,7 @@
       },
       {
         "name": "Jack Driscoll",
-        "depth": 3,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1001,17 +1010,6 @@
       },
       {
         "name": "Daequan Hardy",
-        "depth": 4,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$515,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Cole Burgess",
         "depth": 5,
         "injured": true,
         "attainment": null,
@@ -1022,8 +1020,19 @@
         "stats_season": null
       },
       {
-        "name": "Logan Lee",
+        "name": "Cole Burgess",
         "depth": 6,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$515,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Logan Lee",
+        "depth": 7,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",

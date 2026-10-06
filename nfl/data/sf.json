@@ -50,17 +50,6 @@
           "CAR": 1
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Malik Turner",
-        "depth": 2,
-        "injured": false,
-        "attainment": "SF24",
-        "standard_slot": "RWR",
-        "standard_pos": "WR",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "SWR": [
@@ -491,7 +480,7 @@
         "attainment": "CF25",
         "standard_slot": "LDT",
         "standard_pos": "DI",
-        "cap_number": null,
+        "cap_number": "$837,500",
         "stats": {
           "TKL": 2,
           "QB HIT": 1
@@ -553,19 +542,6 @@
         "stats": {
           "TKL": 3,
           "SACKS": 1.0
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Matthew Judon",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "RE",
-        "standard_pos": "EDGE",
-        "cap_number": null,
-        "stats": {
-          "TKL": 1
         },
         "stats_season": 2026
       }
@@ -867,6 +843,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Malik Turner",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF24",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "OT": [
@@ -891,6 +878,21 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      }
+    ],
+    "ED": [
+      {
+        "name": "Matthew Judon",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 1
+        },
+        "stats_season": 2026
       }
     ],
     "DT": [

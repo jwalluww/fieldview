@@ -729,17 +729,6 @@
           "TKL": 11
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Juanyeh Thomas",
-        "depth": 2,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "SS",
-        "standard_pos": "S",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "FS": [
@@ -826,19 +815,6 @@
           "SACKS": 1.0,
           "PD": 1,
           "QB HIT": 1
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Reddy Steward",
-        "depth": 2,
-        "injured": false,
-        "attainment": "W/Min",
-        "standard_slot": "NB",
-        "standard_pos": "CB",
-        "cap_number": null,
-        "stats": {
-          "TKL": 5
         },
         "stats_season": 2026
       }
@@ -980,6 +956,32 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Reddy Steward",
+        "depth": 4,
+        "injured": false,
+        "attainment": "W/Min",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 5
+        },
+        "stats_season": 2026
+      }
+    ],
+    "S": [
+      {
+        "name": "Juanyeh Thomas",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "S",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "IR": [
@@ -1036,19 +1038,8 @@
         "stats_season": null
       },
       {
-        "name": "Tyler Smith",
-        "depth": 5,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$10,302,300",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Devin Moore",
-        "depth": 6,
+        "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1059,12 +1050,23 @@
       },
       {
         "name": "Marist Liufau",
-        "depth": 7,
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
         "standard_pos": "DEF",
         "cap_number": "$1,552,231",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Princeton Fant",
+        "depth": 7,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$540,000",
         "stats": {},
         "stats_season": null
       },
@@ -1100,15 +1102,17 @@
         "cap_number": "$1,262,500",
         "stats": {},
         "stats_season": null
-      },
+      }
+    ],
+    "DFR": [
       {
-        "name": "Princeton Fant",
-        "depth": 11,
-        "injured": true,
+        "name": "Tyler Smith",
+        "depth": 1,
+        "injured": false,
         "attainment": null,
-        "standard_slot": "IR",
+        "standard_slot": "DFR",
         "standard_pos": "DEF",
-        "cap_number": "$540,000",
+        "cap_number": "$10,302,300",
         "stats": {},
         "stats_season": null
       }

@@ -679,21 +679,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Jalen Mcleod",
-        "depth": 2,
-        "injured": false,
-        "attainment": "25/6",
-        "standard_slot": "SAM",
-        "standard_pos": "LB",
-        "cap_number": null,
-        "stats": {
-          "TKL": 3
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Jack Kiser",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "25/4",
         "standard_slot": "SAM",
@@ -727,17 +714,6 @@
         "standard_slot": "LCB",
         "standard_pos": "CB",
         "cap_number": "$1,145,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Jabbar Muhammad",
-        "depth": 3,
-        "injured": false,
-        "attainment": "CF25",
-        "standard_slot": "LCB",
-        "standard_pos": "CB",
-        "cap_number": null,
         "stats": {},
         "stats_season": null
       }
@@ -968,6 +944,34 @@
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "LB": [
+      {
+        "name": "Jalen Mcleod",
+        "depth": 1,
+        "injured": false,
+        "attainment": "25/6",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 3
+        },
+        "stats_season": 2026
+      }
+    ],
+    "CB": [
+      {
+        "name": "Jabbar Muhammad",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "CB",
         "standard_pos": "DEF",
         "cap_number": null,
         "stats": {},

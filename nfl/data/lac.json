@@ -281,19 +281,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Patrick Herbert",
-        "depth": 4,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "TE",
-        "standard_pos": "TE",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": 2026
-      },
-      {
         "name": "Evan Svoboda",
-        "depth": 5,
+        "depth": 4,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "TE",
@@ -301,6 +290,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Patrick Herbert",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": 2026
       }
     ],
     "QB": [
@@ -337,17 +337,6 @@
       {
         "name": "DJ Uiagalelei",
         "depth": 3,
-        "injured": false,
-        "attainment": "CF25",
-        "standard_slot": "QB",
-        "standard_pos": "QB",
-        "cap_number": "$786,667",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "DJ Uiagalelei",
-        "depth": 4,
         "injured": false,
         "attainment": "CF25",
         "standard_slot": "QB",
@@ -595,17 +584,6 @@
           "QB HIT": 1
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Caleb Murphy",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "LOLB",
-        "standard_pos": "EDGE",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "LILB": [
@@ -752,8 +730,23 @@
         "stats_season": 2026
       },
       {
-        "name": "Genesis Smith",
+        "name": "Tony Jefferson",
         "depth": 2,
+        "injured": false,
+        "attainment": "SF24",
+        "standard_slot": "SS",
+        "standard_pos": "S",
+        "cap_number": "$1,750,000",
+        "stats": {
+          "TKL": 8,
+          "PD": 2,
+          "TFL": 1
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Genesis Smith",
+        "depth": 3,
         "injured": false,
         "attainment": "26/4",
         "standard_slot": "SS",
@@ -763,19 +756,6 @@
           "TKL": 7,
           "INTs": 2,
           "PD": 3
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Kendall Williamson",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF24",
-        "standard_slot": "SS",
-        "standard_pos": "S",
-        "cap_number": "$1,075,000",
-        "stats": {
-          "TKL": 2
         },
         "stats_season": 2026
       }
@@ -806,6 +786,19 @@
         "stats": {
           "TKL": 6,
           "QB HIT": 1
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Kendall Williamson",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF24",
+        "standard_slot": "FS",
+        "standard_pos": "S",
+        "cap_number": "$1,075,000",
+        "stats": {
+          "TKL": 2
         },
         "stats_season": 2026
       }
@@ -927,6 +920,17 @@
       {
         "name": "Andre Carter II",
         "depth": 1,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Caleb Murphy",
+        "depth": 2,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "ED",

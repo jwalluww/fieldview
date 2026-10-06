@@ -70,19 +70,6 @@
           "CAR": 1
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Braxton Berrios",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/Hou",
-        "standard_slot": "SWR",
-        "standard_pos": "WR",
-        "cap_number": "$895,833",
-        "stats": {
-          "TGT": 1
-        },
-        "stats_season": 2026
       }
     ],
     "LT": [
@@ -634,19 +621,6 @@
           "QB HIT": 1
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Trace Ford",
-        "depth": 2,
-        "injured": false,
-        "attainment": "CF25",
-        "standard_slot": "LOLB",
-        "standard_pos": "EDGE",
-        "cap_number": null,
-        "stats": {
-          "TKL": 2
-        },
-        "stats_season": 2026
       }
     ],
     "LCB": [
@@ -910,6 +884,21 @@
         "stats_season": null
       }
     ],
+    "ED": [
+      {
+        "name": "Trace Ford",
+        "depth": 1,
+        "injured": false,
+        "attainment": "CF25",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 2
+        },
+        "stats_season": 2026
+      }
+    ],
     "LB": [
       {
         "name": "Chandler Martin",
@@ -964,8 +953,21 @@
     ],
     "IR": [
       {
-        "name": "Paulson Adebo",
+        "name": "Braxton Berrios",
         "depth": 1,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$895,833",
+        "stats": {
+          "TGT": 1
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Paulson Adebo",
+        "depth": 2,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -978,7 +980,7 @@
       },
       {
         "name": "Korie Black",
-        "depth": 2,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -989,7 +991,7 @@
       },
       {
         "name": "Brian Burns",
-        "depth": 3,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1003,7 +1005,7 @@
       },
       {
         "name": "Jaxson Dart",
-        "depth": 4,
+        "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1021,7 +1023,7 @@
       },
       {
         "name": "Calvin Austin III",
-        "depth": 5,
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1032,7 +1034,7 @@
       },
       {
         "name": "Jarrick Bernard-converse",
-        "depth": 6,
+        "depth": 7,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1043,7 +1045,7 @@
       },
       {
         "name": "Roy Robertson-harris",
-        "depth": 7,
+        "depth": 8,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1054,7 +1056,7 @@
       },
       {
         "name": "Gunner Olszewski",
-        "depth": 8,
+        "depth": 9,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1065,7 +1067,7 @@
       },
       {
         "name": "Thaddeus Dixon",
-        "depth": 9,
+        "depth": 10,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1076,7 +1078,7 @@
       },
       {
         "name": "Rico Payton",
-        "depth": 10,
+        "depth": 11,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
