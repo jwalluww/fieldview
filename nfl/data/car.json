@@ -366,19 +366,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Anthony Tyus III",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF25",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": "$737,500",
-        "stats": {},
-        "stats_season": 2026
-      },
-      {
         "name": "Ahmani Marshall",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "RB",
@@ -386,6 +375,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Anthony Tyus III",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": 2026
       }
     ],
     "LDE": [
@@ -429,19 +429,6 @@
         "cap_number": "$1,831,435",
         "stats": {
           "TKL": 5
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Cam Jackson",
-        "depth": 2,
-        "injured": false,
-        "attainment": "25/5",
-        "standard_slot": "NT",
-        "standard_pos": "DI",
-        "cap_number": null,
-        "stats": {
-          "TKL": 2
         },
         "stats_season": 2026
       }
@@ -564,7 +551,7 @@
         "attainment": "SF26",
         "standard_slot": "ILB_R",
         "standard_pos": "LB",
-        "cap_number": null,
+        "cap_number": "$1,015,278",
         "stats": {
           "TKL": 1
         },
@@ -822,39 +809,14 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Isaia Glass",
-        "depth": 3,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "OG",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "ED": [
       {
-        "name": "Jeremiah Moon",
+        "name": "Nick Hampton",
         "depth": 1,
         "injured": false,
-        "attainment": "U/Pit",
-        "standard_slot": "ED",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {
-          "TKL": 5,
-          "PD": 1
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Cam Gill",
-        "depth": 2,
-        "injured": false,
-        "attainment": "SF26",
+        "attainment": "U/LAR",
         "standard_slot": "ED",
         "standard_pos": "DEF",
         "cap_number": null,
@@ -875,7 +837,7 @@
         "stats_season": null
       },
       {
-        "name": "Anthony Goodlow",
+        "name": "Keith Cooper Jr.",
         "depth": 2,
         "injured": false,
         "attainment": "SF26",
@@ -947,8 +909,19 @@
         "stats_season": null
       },
       {
-        "name": "Robert Rochell",
+        "name": "Marco Wilson",
         "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Robert Rochell",
+        "depth": 5,
         "injured": false,
         "attainment": "P/Dal",
         "standard_slot": "CB",
@@ -962,8 +935,21 @@
     ],
     "IR": [
       {
-        "name": "Xavier Legette",
+        "name": "Cam Jackson",
         "depth": 1,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 2
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Xavier Legette",
+        "depth": 2,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -979,7 +965,7 @@
       },
       {
         "name": "Jaycee Horn",
-        "depth": 2,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -993,7 +979,7 @@
       },
       {
         "name": "Mike Jackson",
-        "depth": 3,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1006,7 +992,7 @@
       },
       {
         "name": "Jonathon Brooks",
-        "depth": 4,
+        "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1020,17 +1006,6 @@
           "TGT": 3
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Trevor Etienne",
-        "depth": 5,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$792,186",
-        "stats": {},
-        "stats_season": null
       },
       {
         "name": "Bam Martin-scott",
@@ -1077,39 +1052,50 @@
         "stats_season": null
       }
     ],
-    "PUP": [
-      {
-        "name": "Tershawn Wharton",
-        "depth": 1,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "PUP",
-        "standard_pos": "DEF",
-        "cap_number": "$8,855,333",
-        "stats": {},
-        "stats_season": null
-      }
-    ],
     "NFI": [
       {
-        "name": "Taylor Moton",
+        "name": "Ikem Ekwonu",
         "depth": 1,
         "injured": true,
         "attainment": null,
         "standard_slot": "NFI",
+        "standard_pos": "DEF",
+        "cap_number": "$17,560,000",
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "DFR": [
+      {
+        "name": "Taylor Moton",
+        "depth": 1,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "DFR",
         "standard_pos": "DEF",
         "cap_number": null,
         "stats": {},
         "stats_season": null
       },
       {
-        "name": "Ikem Ekwonu",
+        "name": "Tershawn Wharton",
         "depth": 2,
-        "injured": true,
+        "injured": false,
         "attainment": null,
-        "standard_slot": "NFI",
+        "standard_slot": "DFR",
         "standard_pos": "DEF",
-        "cap_number": "$17,560,000",
+        "cap_number": "$8,855,333",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Trevor Etienne",
+        "depth": 3,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "DFR",
+        "standard_pos": "DEF",
+        "cap_number": "$792,186",
         "stats": {},
         "stats_season": null
       }
