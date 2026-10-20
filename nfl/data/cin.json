@@ -264,25 +264,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Tanner Hudson",
-        "depth": 4,
-        "injured": false,
-        "attainment": "SF22",
-        "standard_slot": "TE",
-        "standard_pos": "TE",
-        "cap_number": "$895,833",
-        "stats": {
-          "TGT": 7,
-          "REC": 7,
-          "YDS": 33,
-          "TDs": 1,
-          "YAC": 9
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Jack Endries",
-        "depth": 5,
+        "depth": 4,
         "injured": false,
         "attainment": "26/7",
         "standard_slot": "TE",
@@ -672,8 +655,22 @@
     ],
     "LCB": [
       {
-        "name": "Tacario Davis",
+        "name": "DJ Ivey",
         "depth": 1,
+        "injured": false,
+        "attainment": "23/7",
+        "standard_slot": "LCB",
+        "standard_pos": "CB",
+        "cap_number": "$1,165,164",
+        "stats": {
+          "TKL": 5,
+          "PD": 3
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Tacario Davis",
+        "depth": 2,
         "injured": false,
         "attainment": "26/3",
         "standard_slot": "LCB",
@@ -684,17 +681,6 @@
           "PD": 1
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Josh Newton",
-        "depth": 2,
-        "injured": false,
-        "attainment": "24/5",
-        "standard_slot": "LCB",
-        "standard_pos": "CB",
-        "cap_number": "$1,159,319",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "SS": [
@@ -772,18 +758,15 @@
         "stats_season": 2026
       },
       {
-        "name": "DJ Ivey",
+        "name": "Josh Newton",
         "depth": 2,
         "injured": false,
-        "attainment": "23/7",
+        "attainment": "24/5",
         "standard_slot": "RCB",
         "standard_pos": "CB",
-        "cap_number": "$1,165,164",
-        "stats": {
-          "TKL": 5,
-          "PD": 3
-        },
-        "stats_season": 2026
+        "cap_number": "$1,159,319",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "NB": [
@@ -967,8 +950,21 @@
     ],
     "IR": [
       {
-        "name": "Jalen Davis",
+        "name": "Swayze Bozeman",
         "depth": 1,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$706,667",
+        "stats": {
+          "TKL": 1
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Jalen Davis",
+        "depth": 2,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -983,7 +979,7 @@
       },
       {
         "name": "Andrei Iosivas",
-        "depth": 2,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -999,7 +995,7 @@
       },
       {
         "name": "Brian Parker II",
-        "depth": 3,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1010,7 +1006,7 @@
       },
       {
         "name": "Ja'sir Taylor",
-        "depth": 4,
+        "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1018,6 +1014,23 @@
         "cap_number": "$565,000",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Tanner Hudson",
+        "depth": 6,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$895,833",
+        "stats": {
+          "TGT": 7,
+          "REC": 7,
+          "YDS": 33,
+          "TDs": 1,
+          "YAC": 9
+        },
+        "stats_season": 2026
       }
     ]
   }

@@ -69,17 +69,6 @@
           "YAC": 128
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Tom Kennedy",
-        "depth": 2,
-        "injured": false,
-        "attainment": "CF19",
-        "standard_slot": "SWR",
-        "standard_pos": "WR",
-        "cap_number": "$1,075,000",
-        "stats": {},
-        "stats_season": 2026
       }
     ],
     "LT": [
@@ -106,17 +95,6 @@
         "cap_number": "$1,109,597",
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Ben Bartch",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/SF",
-        "standard_slot": "LG",
-        "standard_pos": "OL",
-        "cap_number": "$1,075,000",
-        "stats": {},
-        "stats_season": 2026
       }
     ],
     "C": [
@@ -579,19 +557,6 @@
         "cap_number": "$895,833",
         "stats": {},
         "stats_season": 2026
-      },
-      {
-        "name": "Devin White",
-        "depth": 4,
-        "injured": false,
-        "attainment": "U/LV",
-        "standard_slot": "WILL",
-        "standard_pos": "LB",
-        "cap_number": "$1,075,000",
-        "stats": {
-          "TKL": 4
-        },
-        "stats_season": 2026
       }
     ],
     "MLB": [
@@ -847,6 +812,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Deandre Carter",
+        "depth": 4,
+        "injured": false,
+        "attainment": "U/Cle",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "OT": [
@@ -966,25 +942,34 @@
         "stats_season": null
       }
     ],
-    "S": [
-      {
-        "name": "Jalen Mills",
-        "depth": 1,
-        "injured": false,
-        "attainment": "W/Hou",
-        "standard_slot": "S",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {
-          "TKL": 2
-        },
-        "stats_season": 2026
-      }
-    ],
     "IR": [
       {
-        "name": "Thomas Harper",
+        "name": "Ben Bartch",
         "depth": 1,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$706,667",
+        "stats": {},
+        "stats_season": 2026
+      },
+      {
+        "name": "Devin White",
+        "depth": 2,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$706,667",
+        "stats": {
+          "TKL": 4
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Thomas Harper",
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -998,7 +983,7 @@
       },
       {
         "name": "Avonte Maddox",
-        "depth": 2,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1012,7 +997,7 @@
       },
       {
         "name": "Isiah Pacheco",
-        "depth": 3,
+        "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1022,8 +1007,19 @@
         "stats_season": null
       },
       {
+        "name": "Tom Kennedy",
+        "depth": 6,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$706,667",
+        "stats": {},
+        "stats_season": 2026
+      },
+      {
         "name": "Payton Turner",
-        "depth": 4,
+        "depth": 7,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1034,7 +1030,7 @@
       },
       {
         "name": "Kendrick Law",
-        "depth": 5,
+        "depth": 8,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1045,7 +1041,7 @@
       },
       {
         "name": "Damone Clark",
-        "depth": 6,
+        "depth": 9,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",

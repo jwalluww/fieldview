@@ -14,10 +14,10 @@
         "standard_pos": "WR",
         "cap_number": "$1,262,500",
         "stats": {
-          "TGT": 19,
-          "REC": 11,
-          "YDS": 157,
-          "YAC": 40
+          "TGT": 24,
+          "REC": 13,
+          "YDS": 178,
+          "YAC": 54
         },
         "stats_season": 2026
       },
@@ -30,24 +30,13 @@
         "standard_pos": "WR",
         "cap_number": "$915,122",
         "stats": {
-          "TGT": 4,
-          "REC": 1,
-          "YDS": 6,
-          "YAC": 2,
-          "CAR": 2
+          "TGT": 6,
+          "REC": 3,
+          "YDS": 47,
+          "YAC": 10,
+          "CAR": 3
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Darius Slayton",
-        "depth": 3,
-        "injured": false,
-        "attainment": "CC/NYG",
-        "standard_slot": "LWR",
-        "standard_pos": "WR",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "RWR": [
@@ -60,11 +49,11 @@
         "standard_pos": "WR",
         "cap_number": "$3,320,000",
         "stats": {
-          "TGT": 29,
-          "REC": 18,
-          "YDS": 145,
+          "TGT": 40,
+          "REC": 26,
+          "YDS": 227,
           "TDs": 1,
-          "YAC": 46
+          "YAC": 80
         },
         "stats_season": 2026
       },
@@ -95,10 +84,11 @@
         "standard_pos": "WR",
         "cap_number": "$4,177,719",
         "stats": {
-          "TGT": 34,
-          "REC": 20,
-          "YDS": 249,
-          "YAC": 87
+          "TGT": 42,
+          "REC": 24,
+          "YDS": 289,
+          "YAC": 92,
+          "CAR": 1
         },
         "stats_season": 2026
       },
@@ -137,7 +127,7 @@
         "standard_pos": "OL",
         "cap_number": "$24,200,000",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       },
       {
         "name": "Dalton Tucker",
@@ -251,9 +241,10 @@
         "standard_pos": "TE",
         "cap_number": "$1,487,500",
         "stats": {
-          "TGT": 3,
-          "REC": 3,
-          "YDS": 30,
+          "TGT": 4,
+          "REC": 4,
+          "YDS": 31,
+          "TDs": 1,
           "YAC": 27
         },
         "stats_season": 2026
@@ -270,15 +261,36 @@
         "stats_season": null
       },
       {
-        "name": "Pharaoh Brown",
+        "name": "Will Mallory",
         "depth": 4,
+        "injured": false,
+        "attainment": "23/5",
+        "standard_slot": "TE",
+        "standard_pos": "TE",
+        "cap_number": "$1,217,648",
+        "stats": {
+          "TGT": 6,
+          "REC": 2,
+          "YDS": 20,
+          "YAC": 2
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Pharaoh Brown",
+        "depth": 5,
         "injured": false,
         "attainment": "U/Arz",
         "standard_slot": "TE",
         "standard_pos": "TE",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$776,389",
+        "stats": {
+          "TGT": 1,
+          "REC": 1,
+          "YDS": 7,
+          "YAC": 8
+        },
+        "stats_season": 2026
       }
     ],
     "QB": [
@@ -291,13 +303,13 @@
         "standard_pos": "QB",
         "cap_number": "$19,180,000",
         "stats": {
-          "CMP": 108,
-          "ATT": 176,
-          "YDS": 1021,
-          "TDs": 3,
-          "INTs": 4,
-          "SACKS": 9,
-          "RU YDS": 25
+          "CMP": 130,
+          "ATT": 218,
+          "YDS": 1290,
+          "TDs": 4,
+          "INTs": 6,
+          "SACKS": 15,
+          "RU YDS": 55
         },
         "stats_season": 2026
       },
@@ -334,12 +346,12 @@
         "standard_pos": "RB",
         "cap_number": "$16,187,000",
         "stats": {
-          "CAR": 101,
-          "RU YDS": 398,
-          "RU TDs": 6,
-          "REC": 13,
-          "RE YDS": 106,
-          "TGT": 19
+          "CAR": 122,
+          "RU YDS": 492,
+          "RU TDs": 7,
+          "REC": 15,
+          "RE YDS": 163,
+          "TGT": 23
         },
         "stats_season": 2026
       },
@@ -352,8 +364,8 @@
         "standard_pos": "RB",
         "cap_number": "$918,727",
         "stats": {
-          "CAR": 17,
-          "RU YDS": 61,
+          "CAR": 21,
+          "RU YDS": 88,
           "REC": 3,
           "RE YDS": 10,
           "TGT": 4
@@ -393,7 +405,7 @@
         "standard_pos": "EDGE",
         "cap_number": null,
         "stats": {
-          "TKL": 3,
+          "TKL": 5,
           "QB HIT": 1
         },
         "stats_season": 2026
@@ -469,7 +481,7 @@
         "standard_pos": "DI",
         "cap_number": "$26,600,000",
         "stats": {
-          "TKL": 8,
+          "TKL": 9,
           "SACKS": 4.0,
           "TFL": 4,
           "QB HIT": 8
@@ -485,10 +497,10 @@
         "standard_pos": "DI",
         "cap_number": "$1,344,228",
         "stats": {
-          "TKL": 2,
+          "TKL": 3,
           "SACKS": 2.0,
           "TFL": 1,
-          "QB HIT": 5
+          "QB HIT": 6
         },
         "stats_season": 2026
       },
@@ -514,7 +526,7 @@
         "standard_pos": "EDGE",
         "cap_number": "$4,645,062",
         "stats": {
-          "TKL": 9,
+          "TKL": 10,
           "SACKS": 1.0,
           "QB HIT": 5
         },
@@ -551,28 +563,28 @@
         "stats_season": 2026
       },
       {
-        "name": "Bryce Boettcher",
+        "name": "Austin Ajiake",
         "depth": 2,
+        "injured": false,
+        "attainment": "SF23",
+        "standard_slot": "WILL",
+        "standard_pos": "LB",
+        "cap_number": "$1,005,000",
+        "stats": {
+          "TKL": 6
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Bryce Boettcher",
+        "depth": 3,
         "injured": false,
         "attainment": "26/4",
         "standard_slot": "WILL",
         "standard_pos": "LB",
         "cap_number": "$1,082,259",
         "stats": {
-          "TKL": 7
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Tahj Chambers",
-        "depth": 3,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "WILL",
-        "standard_pos": "LB",
-        "cap_number": "$888,333",
-        "stats": {
-          "TKL": 2
+          "TKL": 8
         },
         "stats_season": 2026
       }
@@ -587,7 +599,7 @@
         "standard_pos": "LB",
         "cap_number": "$2,725,000",
         "stats": {
-          "TKL": 23,
+          "TKL": 28,
           "PD": 1,
           "TFL": 2
         },
@@ -602,20 +614,20 @@
         "standard_pos": "LB",
         "cap_number": "$1,659,808",
         "stats": {
-          "TKL": 1
+          "TKL": 2
         },
         "stats_season": 2026
       },
       {
-        "name": "Austin Ajiake",
+        "name": "Tahj Chambers",
         "depth": 3,
         "injured": false,
-        "attainment": "SF23",
+        "attainment": "CF26",
         "standard_slot": "MIKE",
         "standard_pos": "LB",
-        "cap_number": "$1,005,000",
+        "cap_number": "$888,333",
         "stats": {
-          "TKL": 6
+          "TKL": 2
         },
         "stats_season": 2026
       }
@@ -644,7 +656,7 @@
         "standard_pos": "CB",
         "cap_number": "$1,202,778",
         "stats": {
-          "TKL": 3,
+          "TKL": 5,
           "PD": 1
         },
         "stats_season": 2026
@@ -660,7 +672,7 @@
         "standard_pos": "S",
         "cap_number": "$1,287,809",
         "stats": {
-          "TKL": 12,
+          "TKL": 14,
           "PD": 2
         },
         "stats_season": 2026
@@ -674,7 +686,7 @@
         "standard_pos": "S",
         "cap_number": "$917,767",
         "stats": {
-          "TKL": 5
+          "TKL": 6
         },
         "stats_season": 2026
       }
@@ -690,7 +702,8 @@
         "cap_number": null,
         "stats": {
           "TKL": 16,
-          "PD": 1,
+          "INTs": 1,
+          "PD": 2,
           "QB HIT": 1
         },
         "stats_season": 2026
@@ -704,7 +717,7 @@
         "standard_pos": "S",
         "cap_number": "$1,262,500",
         "stats": {
-          "TKL": 3
+          "TKL": 4
         },
         "stats_season": 2026
       }
@@ -735,7 +748,7 @@
         "standard_pos": "CB",
         "cap_number": "$1,464,549",
         "stats": {
-          "TKL": 18,
+          "TKL": 20,
           "SACKS": 1.0,
           "PD": 3,
           "TFL": 1,
@@ -752,7 +765,7 @@
         "standard_pos": "CB",
         "cap_number": "$885,000",
         "stats": {
-          "TKL": 2,
+          "TKL": 4,
           "PD": 1,
           "TFL": 1
         },
@@ -909,6 +922,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Germaine Pratt",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "CB": [
@@ -1034,19 +1058,6 @@
         "standard_slot": "IR",
         "standard_pos": "DEF",
         "cap_number": "$518,333",
-        "stats": {},
-        "stats_season": null
-      }
-    ],
-    "DFR": [
-      {
-        "name": "Will Mallory",
-        "depth": 1,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "DFR",
-        "standard_pos": "DEF",
-        "cap_number": "$1,217,648",
         "stats": {},
         "stats_season": null
       }
