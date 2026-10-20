@@ -570,7 +570,7 @@
     "player_id": 1626192,
     "name": "Pat Connaughton",
     "team": "CHA",
-    "position": "SG",
+    "position": "PG",
     "jersey_number": "21",
     "height": "6-5",
     "weight": 209,
@@ -581,11 +581,11 @@
     "games_played": 42,
     "games_started": null,
     "rotation_status": "bench",
-    "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "rotation_source": "mpg_derived",
+    "depth_rank": null,
     "overall_rating": 73,
-    "contract_salary": "$3,815,861",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1626204": {
     "player_id": 1626204,
@@ -717,7 +717,7 @@
     "player_id": 1631103,
     "name": "Malaki Branham",
     "team": "WAS",
-    "position": "SG",
+    "position": null,
     "jersey_number": null,
     "height": null,
     "weight": null,
@@ -731,8 +731,8 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": null,
-    "contract_salary": "$2,625,627",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1628365": {
     "player_id": 1628365,
@@ -1052,7 +1052,7 @@
   "1628396": {
     "player_id": 1628396,
     "name": "Tony Bradley",
-    "team": "ATL",
+    "team": "UTA",
     "position": "C",
     "jersey_number": "13",
     "height": "6-10",
@@ -1064,8 +1064,8 @@
     "games_played": 41,
     "games_started": null,
     "rotation_status": "bench",
-    "rotation_source": "mpg_derived",
-    "depth_rank": null,
+    "rotation_source": "nbadepthchart.com",
+    "depth_rank": 3,
     "overall_rating": null,
     "contract_salary": "$3,506,659",
     "contract_years_remaining": 1
@@ -1357,9 +1357,9 @@
     "mpg": 22.9,
     "games_played": 56,
     "games_started": null,
-    "rotation_status": "rotation",
+    "rotation_status": "starter",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 2,
+    "depth_rank": 1,
     "overall_rating": 75,
     "contract_salary": "$2,845,883",
     "contract_years_remaining": 1
@@ -1389,7 +1389,7 @@
     "player_id": 1630534,
     "name": "Ochai Agbaji",
     "team": "BKN",
-    "position": "SF",
+    "position": "PG",
     "jersey_number": "30",
     "height": "6-5",
     "weight": 215,
@@ -1403,8 +1403,8 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": null,
-    "contract_salary": "$2,625,627",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1630536": {
     "player_id": 1630536,
@@ -1756,9 +1756,9 @@
     "mpg": 22.6,
     "games_played": 69,
     "games_started": null,
-    "rotation_status": "rotation",
+    "rotation_status": "starter",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 2,
+    "depth_rank": 1,
     "overall_rating": 85,
     "contract_salary": "$14,589,931",
     "contract_years_remaining": 3
@@ -2136,7 +2136,7 @@
     "games_started": null,
     "rotation_status": "bench",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 3,
+    "depth_rank": 4,
     "overall_rating": 73,
     "contract_salary": "$3,400,000",
     "contract_years_remaining": 1
@@ -2438,7 +2438,7 @@
   "1642877": {
     "player_id": 1642877,
     "name": "Micah Peavy",
-    "team": "MEM",
+    "team": "NOP",
     "position": "SF",
     "jersey_number": "14",
     "height": "6-7",
@@ -2449,12 +2449,12 @@
     "mpg": 15.0,
     "games_played": 61,
     "games_started": null,
-    "rotation_status": "bench",
-    "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "rotation_status": "rotation",
+    "rotation_source": "mpg_derived",
+    "depth_rank": null,
     "overall_rating": 72,
-    "contract_salary": "$2,470,839",
-    "contract_years_remaining": 3
+    "contract_salary": "$2,150,917",
+    "contract_years_remaining": 1
   },
   "1642878": {
     "player_id": 1642878,
@@ -2660,10 +2660,10 @@
     "games_played": 12,
     "games_started": null,
     "rotation_status": "bench",
-    "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "rotation_source": "mpg_derived",
+    "depth_rank": null,
     "overall_rating": 68,
-    "contract_salary": "$678,882",
+    "contract_salary": "$91,000",
     "contract_years_remaining": 1
   },
   "1630598": {
@@ -2934,7 +2934,7 @@
     "games_started": null,
     "rotation_status": "bench",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "depth_rank": 3,
     "overall_rating": 68,
     "contract_salary": null,
     "contract_years_remaining": 1
@@ -3417,7 +3417,7 @@
     "games_started": null,
     "rotation_status": "bench",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "depth_rank": 3,
     "overall_rating": 72,
     "contract_salary": "$678,882",
     "contract_years_remaining": 1
@@ -3467,7 +3467,7 @@
   "1642951": {
     "player_id": 1642951,
     "name": "Sean Pedulla",
-    "team": "HOU",
+    "team": "LAC",
     "position": "PG",
     "jersey_number": null,
     "height": "6-1",
@@ -3479,11 +3479,11 @@
     "games_played": 7,
     "games_started": null,
     "rotation_status": "bench",
-    "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "rotation_source": "mpg_derived",
+    "depth_rank": null,
     "overall_rating": 68,
-    "contract_salary": "$339,441",
-    "contract_years_remaining": 2
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1642954": {
     "player_id": 1642954,
@@ -3543,7 +3543,7 @@
     "games_started": null,
     "rotation_status": "bench",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "depth_rank": 3,
     "overall_rating": 68,
     "contract_salary": null,
     "contract_years_remaining": 1
@@ -3585,7 +3585,7 @@
     "games_started": null,
     "rotation_status": "bench",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "depth_rank": 3,
     "overall_rating": 69,
     "contract_salary": "$678,882",
     "contract_years_remaining": 1
@@ -3604,12 +3604,12 @@
     "mpg": 19.5,
     "games_played": 13,
     "games_started": null,
-    "rotation_status": "bench",
-    "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "rotation_status": "rotation",
+    "rotation_source": "mpg_derived",
+    "depth_rank": null,
     "overall_rating": 71,
     "contract_salary": null,
-    "contract_years_remaining": 1
+    "contract_years_remaining": null
   },
   "1630679": {
     "player_id": 1630679,
@@ -3818,8 +3818,8 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": 70,
-    "contract_salary": "$2,185,116",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1643016": {
     "player_id": 1643016,
@@ -3839,8 +3839,8 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": null,
-    "contract_salary": "$2,185,116",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1643018": {
     "player_id": 1643018,
@@ -3899,11 +3899,11 @@
     "games_played": 4,
     "games_started": null,
     "rotation_status": "bench",
-    "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "rotation_source": "mpg_derived",
+    "depth_rank": null,
     "overall_rating": 68,
     "contract_salary": null,
-    "contract_years_remaining": 1
+    "contract_years_remaining": null
   },
   "1643052": {
     "player_id": 1643052,
@@ -3944,8 +3944,8 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": null,
-    "contract_salary": "$2,185,116",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1630811": {
     "player_id": 1630811,
@@ -4035,7 +4035,7 @@
     "player_id": 1643141,
     "name": "Jahmyl Telfort",
     "team": "LAC",
-    "position": "SF",
+    "position": null,
     "jersey_number": null,
     "height": null,
     "weight": null,
@@ -4049,8 +4049,8 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": null,
-    "contract_salary": "$1,357,763",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1643158": {
     "player_id": 1643158,
@@ -4469,8 +4469,8 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": 75,
-    "contract_salary": "$3,506,659",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1628973": {
     "player_id": 1628973,
@@ -4549,9 +4549,9 @@
     "mpg": 30.4,
     "games_played": 82,
     "games_started": null,
-    "rotation_status": "rotation",
+    "rotation_status": "bench",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 2,
+    "depth_rank": 4,
     "overall_rating": 80,
     "contract_salary": "$12,535,000",
     "contract_years_remaining": 1
@@ -5358,7 +5358,7 @@
     "player_id": 1631104,
     "name": "Blake Wesley",
     "team": "POR",
-    "position": "SG",
+    "position": "PG",
     "jersey_number": "1",
     "height": "6-4",
     "weight": 190,
@@ -5372,8 +5372,8 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": 73,
-    "contract_salary": "$2,625,627",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1631106": {
     "player_id": 1631106,
@@ -5462,8 +5462,8 @@
   "1631110": {
     "player_id": 1631110,
     "name": "Jeremy Sochan",
-    "team": "POR",
-    "position": "PF",
+    "team": "NYK",
+    "position": "SF",
     "jersey_number": "20",
     "height": "6-8",
     "weight": 230,
@@ -5474,11 +5474,11 @@
     "games_played": 44,
     "games_started": null,
     "rotation_status": "bench",
-    "rotation_source": "nbadepthchart.com",
-    "depth_rank": 3,
+    "rotation_source": "mpg_derived",
+    "depth_rank": null,
     "overall_rating": 74,
-    "contract_salary": "$2,625,627",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1631109": {
     "player_id": 1631109,
@@ -5631,7 +5631,7 @@
     "player_id": 1631113,
     "name": "Kennedy Chandler",
     "team": "UTA",
-    "position": "PG",
+    "position": null,
     "jersey_number": null,
     "height": null,
     "weight": null,
@@ -5645,8 +5645,8 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": null,
-    "contract_salary": "$2,449,421",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1631119": {
     "player_id": 1631119,
@@ -5687,8 +5687,8 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": null,
-    "contract_salary": "$2,625,627",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1631121": {
     "player_id": 1631121,
@@ -5715,7 +5715,7 @@
     "player_id": 1631115,
     "name": "Orlando Robinson",
     "team": "ORL",
-    "position": "C",
+    "position": null,
     "jersey_number": null,
     "height": null,
     "weight": null,
@@ -5729,8 +5729,8 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": null,
-    "contract_salary": "$2,625,627",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1631123": {
     "player_id": 1631123,
@@ -5798,7 +5798,7 @@
   "1631127": {
     "player_id": 1631127,
     "name": "Harrison Ingram",
-    "team": "SAS",
+    "team": "UTA",
     "position": "SF",
     "jersey_number": "55",
     "height": "6-5",
@@ -5810,10 +5810,10 @@
     "games_played": 7,
     "games_started": null,
     "rotation_status": "bench",
-    "rotation_source": "mpg_derived",
-    "depth_rank": null,
+    "rotation_source": "nbadepthchart.com",
+    "depth_rank": 4,
     "overall_rating": 69,
-    "contract_salary": "$2,449,421",
+    "contract_salary": "$678,882",
     "contract_years_remaining": 1
   },
   "1631128": {
@@ -5840,7 +5840,7 @@
   "1631131": {
     "player_id": 1631131,
     "name": "Oscar Tshiebwe",
-    "team": "UTA",
+    "team": "HOU",
     "position": "PF",
     "jersey_number": "34",
     "height": "6-8",
@@ -5851,11 +5851,11 @@
     "mpg": 16.6,
     "games_played": 27,
     "games_started": null,
-    "rotation_status": "rotation",
-    "rotation_source": "mpg_derived",
-    "depth_rank": null,
+    "rotation_status": "bench",
+    "rotation_source": "nbadepthchart.com",
+    "depth_rank": 4,
     "overall_rating": 71,
-    "contract_salary": "$2,537,526",
+    "contract_salary": "$678,882",
     "contract_years_remaining": 1
   },
   "1631132": {
@@ -6002,7 +6002,7 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": null,
-    "contract_salary": "$2,449,421",
+    "contract_salary": "$678,882",
     "contract_years_remaining": 1
   },
   "1631169": {
@@ -6061,9 +6061,9 @@
     "mpg": 19.3,
     "games_played": 57,
     "games_started": null,
-    "rotation_status": "bench",
+    "rotation_status": "rotation",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 3,
+    "depth_rank": 2,
     "overall_rating": 77,
     "contract_salary": "$5,750,000",
     "contract_years_remaining": 3
@@ -6072,7 +6072,7 @@
     "player_id": 1631174,
     "name": "Tyler Burton",
     "team": "MEM",
-    "position": "SF",
+    "position": null,
     "jersey_number": null,
     "height": null,
     "weight": null,
@@ -6086,8 +6086,8 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": null,
-    "contract_salary": "$1,357,763",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1629130": {
     "player_id": 1629130,
@@ -6147,7 +6147,7 @@
     "games_started": null,
     "rotation_status": "bench",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "depth_rank": 3,
     "overall_rating": 74,
     "contract_salary": "$5,315,004",
     "contract_years_remaining": 1
@@ -6198,7 +6198,7 @@
     "player_id": 1631207,
     "name": "Dalen Terry",
     "team": "PHI",
-    "position": "SG",
+    "position": "SF",
     "jersey_number": "14",
     "height": "6-6",
     "weight": 210,
@@ -6212,8 +6212,8 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": null,
-    "contract_salary": "$2,625,627",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1629162": {
     "player_id": 1629162,
@@ -6240,7 +6240,7 @@
     "player_id": 1631211,
     "name": "Trevor Keels",
     "team": "MIA",
-    "position": "SG",
+    "position": "PG",
     "jersey_number": "3",
     "height": "6-3",
     "weight": 215,
@@ -6254,8 +6254,8 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": null,
-    "contract_salary": "$2,449,421",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1631212": {
     "player_id": 1631212,
@@ -6324,7 +6324,7 @@
     "player_id": 1631214,
     "name": "Alondes Williams",
     "team": "WAS",
-    "position": "PG",
+    "position": null,
     "jersey_number": null,
     "height": null,
     "weight": null,
@@ -6338,8 +6338,8 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": null,
-    "contract_salary": "$2,537,526",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1631216": {
     "player_id": 1631216,
@@ -6439,9 +6439,9 @@
     "mpg": 25.1,
     "games_played": 82,
     "games_started": null,
-    "rotation_status": "starter",
+    "rotation_status": "rotation",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 1,
+    "depth_rank": 2,
     "overall_rating": 75,
     "contract_salary": "$6,000,000",
     "contract_years_remaining": 1
@@ -6607,12 +6607,12 @@
     "mpg": 15.7,
     "games_played": 47,
     "games_started": null,
-    "rotation_status": "rotation",
-    "rotation_source": "mpg_derived",
-    "depth_rank": null,
+    "rotation_status": "bench",
+    "rotation_source": "nbadepthchart.com",
+    "depth_rank": 4,
     "overall_rating": 74,
-    "contract_salary": "$2,647,219",
-    "contract_years_remaining": 2
+    "contract_salary": "$678,882",
+    "contract_years_remaining": 1
   },
   "1631255": {
     "player_id": 1631255,
@@ -6695,7 +6695,7 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": 75,
-    "contract_salary": "$3,506,659",
+    "contract_salary": "$15,000",
     "contract_years_remaining": 1
   },
   "1631288": {
@@ -6796,9 +6796,9 @@
     "mpg": 26.4,
     "games_played": 32,
     "games_started": null,
-    "rotation_status": "bench",
+    "rotation_status": "rotation",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 3,
+    "depth_rank": 2,
     "overall_rating": 73,
     "contract_salary": "$2,556,911",
     "contract_years_remaining": 2
@@ -6881,11 +6881,11 @@
     "games_played": 7,
     "games_started": null,
     "rotation_status": "bench",
-    "rotation_source": "nbadepthchart.com",
-    "depth_rank": 3,
+    "rotation_source": "mpg_derived",
+    "depth_rank": null,
     "overall_rating": 71,
-    "contract_salary": "$3,066,143",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "203914": {
     "player_id": 203914,
@@ -7028,10 +7028,10 @@
     "games_played": 63,
     "games_started": null,
     "rotation_status": "bench",
-    "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "rotation_source": "mpg_derived",
+    "depth_rank": null,
     "overall_rating": null,
-    "contract_salary": "$3,876,529",
+    "contract_salary": "$1,000,000",
     "contract_years_remaining": 1
   },
   "203944": {
@@ -7344,7 +7344,7 @@
     "games_started": null,
     "rotation_status": "bench",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "depth_rank": 3,
     "overall_rating": 68,
     "contract_salary": null,
     "contract_years_remaining": 1
@@ -7533,7 +7533,7 @@
     "games_started": null,
     "rotation_status": "bench",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "depth_rank": 3,
     "overall_rating": 74,
     "contract_salary": "$678,882",
     "contract_years_remaining": 1
@@ -7577,7 +7577,7 @@
     "rotation_source": "nbadepthchart.com",
     "depth_rank": 1,
     "overall_rating": 87,
-    "contract_salary": "$15,104,626",
+    "contract_salary": "$224,104,626",
     "contract_years_remaining": 1
   },
   "1641715": {
@@ -7640,7 +7640,7 @@
     "rotation_source": "nbadepthchart.com",
     "depth_rank": 2,
     "overall_rating": 83,
-    "contract_salary": "$7,420,806",
+    "contract_salary": "$146,420,806",
     "contract_years_remaining": 1
   },
   "1641718": {
@@ -7689,7 +7689,7 @@
     "player_id": 1641723,
     "name": "Kobe Bufkin",
     "team": "LAL",
-    "position": "PG",
+    "position": null,
     "jersey_number": null,
     "height": null,
     "weight": null,
@@ -7703,8 +7703,8 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": null,
-    "contract_salary": "$2,537,526",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1641724": {
     "player_id": 1641724,
@@ -7932,7 +7932,7 @@
     "games_started": null,
     "rotation_status": "bench",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "depth_rank": 3,
     "overall_rating": 76,
     "contract_salary": "$678,882",
     "contract_years_remaining": 1
@@ -8088,7 +8088,7 @@
     "player_id": 1641753,
     "name": "Chris Livingston",
     "team": "CLE",
-    "position": "SF",
+    "position": null,
     "jersey_number": null,
     "height": null,
     "weight": null,
@@ -8102,8 +8102,8 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": null,
-    "contract_salary": "$2,537,526",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1641755": {
     "player_id": 1641755,
@@ -8120,8 +8120,8 @@
     "games_played": 21,
     "games_started": null,
     "rotation_status": "bench",
-    "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "rotation_source": "mpg_derived",
+    "depth_rank": null,
     "overall_rating": 71,
     "contract_salary": "$678,882",
     "contract_years_remaining": 1
@@ -8192,7 +8192,7 @@
   "1641763": {
     "player_id": 1641763,
     "name": "Julian Phillips",
-    "team": "MIN",
+    "team": "HOU",
     "position": "SF",
     "jersey_number": "4",
     "height": "6-6",
@@ -8204,10 +8204,10 @@
     "games_played": 48,
     "games_started": null,
     "rotation_status": "bench",
-    "rotation_source": "mpg_derived",
-    "depth_rank": null,
+    "rotation_source": "nbadepthchart.com",
+    "depth_rank": 4,
     "overall_rating": 71,
-    "contract_salary": "$2,537,526",
+    "contract_salary": "$678,882",
     "contract_years_remaining": 1
   },
   "1641764": {
@@ -8228,7 +8228,7 @@
     "rotation_source": "nbadepthchart.com",
     "depth_rank": 1,
     "overall_rating": 81,
-    "contract_salary": "$115,679,459",
+    "contract_salary": "$115,679,460",
     "contract_years_remaining": 1
   },
   "1641765": {
@@ -8289,7 +8289,7 @@
     "games_started": null,
     "rotation_status": "bench",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "depth_rank": 3,
     "overall_rating": 73,
     "contract_salary": "$678,882",
     "contract_years_remaining": 1
@@ -8360,7 +8360,7 @@
   "1641778": {
     "player_id": 1641778,
     "name": "Leaky Black",
-    "team": "WAS",
+    "team": "SAC",
     "position": "SF",
     "jersey_number": "12",
     "height": "6-6",
@@ -8371,11 +8371,11 @@
     "mpg": 28.9,
     "games_played": 15,
     "games_started": null,
-    "rotation_status": "starter",
-    "rotation_source": "mpg_derived",
-    "depth_rank": null,
+    "rotation_status": "bench",
+    "rotation_source": "nbadepthchart.com",
+    "depth_rank": 3,
     "overall_rating": null,
-    "contract_salary": "$2,449,421",
+    "contract_salary": "$678,882",
     "contract_years_remaining": 1
   },
   "1641780": {
@@ -8480,8 +8480,8 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": 69,
-    "contract_salary": "$2,449,421",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1641796": {
     "player_id": 1641796,
@@ -8522,8 +8522,8 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": null,
-    "contract_salary": "$2,449,421",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1641803": {
     "player_id": 1641803,
@@ -8543,8 +8543,8 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": 68,
-    "contract_salary": "$2,449,421",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1641807": {
     "player_id": 1641807,
@@ -8564,14 +8564,14 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": null,
-    "contract_salary": "$2,185,116",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1641809": {
     "player_id": 1641809,
     "name": "Drew Peterson",
     "team": "CHA",
-    "position": "SF",
+    "position": null,
     "jersey_number": null,
     "height": null,
     "weight": null,
@@ -8585,8 +8585,8 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": null,
-    "contract_salary": "$2,537,526",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "202066": {
     "player_id": 202066,
@@ -8613,7 +8613,7 @@
     "player_id": 1641810,
     "name": "Antonio Reeves",
     "team": "CHA",
-    "position": "SG",
+    "position": "PG",
     "jersey_number": "12",
     "height": "6-5",
     "weight": 205,
@@ -8627,8 +8627,8 @@
     "rotation_source": "mpg_derived",
     "depth_rank": null,
     "overall_rating": 70,
-    "contract_salary": "$2,449,421",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1641813": {
     "player_id": 1641813,
@@ -8772,7 +8772,7 @@
     "games_started": null,
     "rotation_status": "bench",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "depth_rank": 3,
     "overall_rating": null,
     "contract_salary": "$678,882",
     "contract_years_remaining": 1
@@ -8793,9 +8793,9 @@
     "games_started": null,
     "rotation_status": "bench",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "depth_rank": 3,
     "overall_rating": null,
-    "contract_salary": "$2,537,526",
+    "contract_salary": "$678,882",
     "contract_years_remaining": 1
   },
   "1629599": {
@@ -9022,9 +9022,9 @@
     "mpg": 26.1,
     "games_played": 45,
     "games_started": null,
-    "rotation_status": "rotation",
+    "rotation_status": "starter",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 2,
+    "depth_rank": 1,
     "overall_rating": 79,
     "contract_salary": "$24,910,714",
     "contract_years_remaining": 1
@@ -9190,9 +9190,9 @@
     "mpg": 33.2,
     "games_played": 38,
     "games_started": null,
-    "rotation_status": "bench",
-    "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "rotation_status": "starter",
+    "rotation_source": "mpg_derived",
+    "depth_rank": null,
     "overall_rating": 81,
     "contract_salary": "$5,390,700",
     "contract_years_remaining": 1
@@ -9494,8 +9494,8 @@
   "1641998": {
     "player_id": 1641998,
     "name": "Trey Jemison III",
-    "team": "TOR",
-    "position": "PF",
+    "team": "NYK",
+    "position": "C",
     "jersey_number": "50",
     "height": "6-10",
     "weight": 270,
@@ -9506,11 +9506,11 @@
     "games_played": 13,
     "games_started": null,
     "rotation_status": "bench",
-    "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "rotation_source": "mpg_derived",
+    "depth_rank": null,
     "overall_rating": 71,
-    "contract_salary": "$678,882",
-    "contract_years_remaining": 1
+    "contract_salary": null,
+    "contract_years_remaining": null
   },
   "1630567": {
     "player_id": 1630567,
@@ -9599,7 +9599,7 @@
   "1630164": {
     "player_id": 1630164,
     "name": "James Wiseman",
-    "team": "IND",
+    "team": "NYK",
     "position": "C",
     "jersey_number": null,
     "height": null,
@@ -9611,8 +9611,8 @@
     "games_played": 4,
     "games_started": null,
     "rotation_status": "bench",
-    "rotation_source": "mpg_derived",
-    "depth_rank": null,
+    "rotation_source": "nbadepthchart.com",
+    "depth_rank": 3,
     "overall_rating": null,
     "contract_salary": "$3,066,143",
     "contract_years_remaining": 1
@@ -9673,9 +9673,9 @@
     "mpg": 27.6,
     "games_played": 82,
     "games_started": null,
-    "rotation_status": "starter",
+    "rotation_status": "rotation",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 1,
+    "depth_rank": 2,
     "overall_rating": 79,
     "contract_salary": "$15,000,000",
     "contract_years_remaining": 3
@@ -10241,11 +10241,11 @@
     "games_played": 54,
     "games_started": null,
     "rotation_status": "bench",
-    "rotation_source": "nbadepthchart.com",
-    "depth_rank": 3,
+    "rotation_source": "mpg_derived",
+    "depth_rank": null,
     "overall_rating": 74,
-    "contract_salary": "$5,326,970",
-    "contract_years_remaining": 2
+    "contract_salary": "$4,201,080",
+    "contract_years_remaining": 1
   },
   "1642262": {
     "player_id": 1642262,
@@ -10261,9 +10261,9 @@
     "mpg": 24.3,
     "games_played": 67,
     "games_started": null,
-    "rotation_status": "bench",
+    "rotation_status": "rotation",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 3,
+    "depth_rank": 2,
     "overall_rating": null,
     "contract_salary": "$6,842,745",
     "contract_years_remaining": 2
@@ -10412,7 +10412,7 @@
     "rotation_source": "nbadepthchart.com",
     "depth_rank": 3,
     "overall_rating": 75,
-    "contract_salary": "$2,449,421",
+    "contract_salary": "$678,882",
     "contract_years_remaining": 1
   },
   "1642270": {
@@ -10578,7 +10578,7 @@
     "games_started": null,
     "rotation_status": "bench",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 3,
+    "depth_rank": 4,
     "overall_rating": 74,
     "contract_salary": "$2,391,633",
     "contract_years_remaining": 2
@@ -10769,7 +10769,7 @@
     "rotation_source": "nbadepthchart.com",
     "depth_rank": 2,
     "overall_rating": 75,
-    "contract_salary": "$2,391,633",
+    "contract_salary": "$16,891,633",
     "contract_years_remaining": 2
   },
   "1642346": {
@@ -10913,11 +10913,11 @@
     "games_played": 55,
     "games_started": null,
     "rotation_status": "bench",
-    "rotation_source": "nbadepthchart.com",
-    "depth_rank": 3,
+    "rotation_source": "mpg_derived",
+    "depth_rank": null,
     "overall_rating": 70,
-    "contract_salary": "$2,391,633",
-    "contract_years_remaining": 2
+    "contract_salary": "$678,882",
+    "contract_years_remaining": 1
   },
   "1642354": {
     "player_id": 1642354,
@@ -10956,7 +10956,7 @@
     "games_started": null,
     "rotation_status": "bench",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "depth_rank": 3,
     "overall_rating": 70,
     "contract_salary": "$2,391,633",
     "contract_years_remaining": 2
@@ -10977,7 +10977,7 @@
     "games_started": null,
     "rotation_status": "bench",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "depth_rank": 3,
     "overall_rating": 70,
     "contract_salary": "$678,882",
     "contract_years_remaining": 1
@@ -11145,7 +11145,7 @@
     "games_started": null,
     "rotation_status": "bench",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "depth_rank": 3,
     "overall_rating": 74,
     "contract_salary": "$697,552",
     "contract_years_remaining": 2
@@ -11248,12 +11248,12 @@
     "mpg": 20.4,
     "games_played": 69,
     "games_started": null,
-    "rotation_status": "bench",
-    "rotation_source": "nbadepthchart.com",
-    "depth_rank": 3,
+    "rotation_status": "rotation",
+    "rotation_source": "mpg_derived",
+    "depth_rank": null,
     "overall_rating": 75,
-    "contract_salary": "$5,111,051",
-    "contract_years_remaining": 3
+    "contract_salary": "$4,190,520",
+    "contract_years_remaining": 1
   },
   "1642384": {
     "player_id": 1642384,
@@ -11292,7 +11292,7 @@
     "games_started": null,
     "rotation_status": "bench",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "depth_rank": 3,
     "overall_rating": 67,
     "contract_salary": null,
     "contract_years_remaining": 1
@@ -11334,7 +11334,7 @@
     "games_started": null,
     "rotation_status": "bench",
     "rotation_source": "nbadepthchart.com",
-    "depth_rank": 4,
+    "depth_rank": 3,
     "overall_rating": 68,
     "contract_salary": null,
     "contract_years_remaining": 1
@@ -11357,7 +11357,7 @@
     "rotation_source": "nbadepthchart.com",
     "depth_rank": 4,
     "overall_rating": 69,
-    "contract_salary": "$678,882",
+    "contract_salary": "$91,000",
     "contract_years_remaining": 1
   },
   "1642403": {
@@ -12134,7 +12134,7 @@
     "rotation_source": "nbadepthchart.com",
     "depth_rank": 1,
     "overall_rating": 85,
-    "contract_salary": "$28,006,896",
+    "contract_salary": "$41,340,229",
     "contract_years_remaining": 3
   },
   "1630188": {
@@ -12323,7 +12323,7 @@
     "rotation_source": "nbadepthchart.com",
     "depth_rank": 1,
     "overall_rating": 82,
-    "contract_salary": "$8,035,714",
+    "contract_salary": "$30,113,042",
     "contract_years_remaining": 2
   }
 }
