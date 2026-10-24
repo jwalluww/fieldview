@@ -145,23 +145,23 @@
         "cap_number": "$5,000,000",
         "stats": {},
         "stats_season": 2026
+      },
+      {
+        "name": "Andrew Vorhees",
+        "depth": 2,
+        "injured": false,
+        "attainment": "23/7",
+        "standard_slot": "LG",
+        "standard_pos": "OL",
+        "cap_number": "$1,725,528",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "C": [
       {
-        "name": "Vega Ioane",
-        "depth": 1,
-        "injured": false,
-        "attainment": "26/1",
-        "standard_slot": "C",
-        "standard_pos": "OL",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Cam Jurgens",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "T/Phi",
         "standard_slot": "C",
@@ -172,7 +172,7 @@
       },
       {
         "name": "Andre James",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "C",
@@ -184,8 +184,19 @@
     ],
     "RG": [
       {
-        "name": "Emery Jones Jr.",
+        "name": "Vega Ioane",
         "depth": 1,
+        "injured": false,
+        "attainment": "26/1",
+        "standard_slot": "RG",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Emery Jones Jr.",
+        "depth": 2,
         "injured": false,
         "attainment": "25/3",
         "standard_slot": "RG",
@@ -193,17 +204,6 @@
         "cap_number": "$1,425,800",
         "stats": {},
         "stats_season": 2026
-      },
-      {
-        "name": "Andrew Vorhees",
-        "depth": 2,
-        "injured": false,
-        "attainment": "23/7",
-        "standard_slot": "RG",
-        "standard_pos": "OL",
-        "cap_number": "$1,725,528",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "RT": [
@@ -625,19 +625,6 @@
           "TKL": 2
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Carl Jones Jr.",
-        "depth": 3,
-        "injured": false,
-        "attainment": "W/Chi",
-        "standard_slot": "ILB_R",
-        "standard_pos": "LB",
-        "cap_number": "$725,833",
-        "stats": {
-          "TKL": 3
-        },
-        "stats_season": 2026
       }
     ],
     "SLB": [
@@ -1025,19 +1012,8 @@
         "stats_season": null
       },
       {
-        "name": "T.j. Tampa Jr.",
-        "depth": 3,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$1,249,614",
-        "stats": {},
-        "stats_season": 2026
-      },
-      {
         "name": "Adam Randall",
-        "depth": 4,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1048,7 +1024,7 @@
       },
       {
         "name": "Bilhal Kone",
-        "depth": 5,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1059,7 +1035,7 @@
       },
       {
         "name": "Durham Smythe",
-        "depth": 6,
+        "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1074,7 +1050,7 @@
       },
       {
         "name": "Jahquez Robinson",
-        "depth": 7,
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1085,7 +1061,7 @@
       },
       {
         "name": "Skylar Thompson",
-        "depth": 8,
+        "depth": 7,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1096,7 +1072,7 @@
       },
       {
         "name": "Danny Pinter",
-        "depth": 9,
+        "depth": 8,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1104,6 +1080,19 @@
         "cap_number": "$2,750,000",
         "stats": {},
         "stats_season": null
+      }
+    ],
+    "DFR": [
+      {
+        "name": "T.j. Tampa Jr.",
+        "depth": 1,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "DFR",
+        "standard_pos": "DEF",
+        "cap_number": "$1,249,614",
+        "stats": {},
+        "stats_season": 2026
       }
     ]
   }

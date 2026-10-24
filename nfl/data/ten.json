@@ -505,21 +505,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Jordan Elliott",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/SF",
-        "standard_slot": "RDT",
-        "standard_pos": "DI",
-        "cap_number": "$2,845,000",
-        "stats": {
-          "TKL": 2
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Nazir Stackhouse",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "W/GB",
         "standard_slot": "RDT",
@@ -937,17 +924,6 @@
         "cap_number": null,
         "stats": {},
         "stats_season": 2026
-      },
-      {
-        "name": "Chase Wilson",
-        "depth": 2,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "LB",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "CB": [
@@ -988,6 +964,19 @@
           "PD": 1
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Erick Hallett II",
+        "depth": 3,
+        "injured": false,
+        "attainment": "P/Det",
+        "standard_slot": "S",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 1
+        },
+        "stats_season": 2026
       }
     ],
     "IR": [
@@ -1014,19 +1003,8 @@
         "stats_season": null
       },
       {
-        "name": "Dorian Mausi",
-        "depth": 3,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$540,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Tanoh Kpassagnon",
-        "depth": 4,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1037,7 +1015,7 @@
       },
       {
         "name": "Jaren Kanak",
-        "depth": 5,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1048,7 +1026,7 @@
       },
       {
         "name": "Jaylen Harrell",
-        "depth": 6,
+        "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1059,7 +1037,7 @@
       },
       {
         "name": "Kendell Brooks",
-        "depth": 7,
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1070,12 +1048,25 @@
       },
       {
         "name": "Milo Eifler",
-        "depth": 8,
+        "depth": 7,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
         "standard_pos": "DEF",
         "cap_number": "$590,000",
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "DFR": [
+      {
+        "name": "Dorian Mausi",
+        "depth": 1,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "DFR",
+        "standard_pos": "DEF",
+        "cap_number": "$540,000",
         "stats": {},
         "stats_season": null
       }

@@ -211,17 +211,6 @@
         "cap_number": "$3,805,157",
         "stats": {},
         "stats_season": 2026
-      },
-      {
-        "name": "Albert Reese",
-        "depth": 3,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "RT",
-        "standard_pos": "OL",
-        "cap_number": "$891,666",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "TE": [
@@ -396,19 +385,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Ahmani Marshall",
-        "depth": 4,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Anthony Tyus III",
-        "depth": 5,
+        "depth": 4,
         "injured": false,
         "attainment": "SF25",
         "standard_slot": "RB",
@@ -416,6 +394,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": 2026
+      },
+      {
+        "name": "Ahmani Marshall",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LDE": [
@@ -1044,19 +1033,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Bam Martin-scott",
-        "depth": 5,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$545,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Brady Christensen",
-        "depth": 6,
+        "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1067,7 +1045,7 @@
       },
       {
         "name": "Cam Jackson",
-        "depth": 7,
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1080,7 +1058,7 @@
       },
       {
         "name": "Nic Scourton",
-        "depth": 8,
+        "depth": 7,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1091,7 +1069,7 @@
       },
       {
         "name": "Chris Brazzell II",
-        "depth": 9,
+        "depth": 8,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1110,6 +1088,19 @@
         "standard_slot": "NFI",
         "standard_pos": "DEF",
         "cap_number": "$17,560,000",
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "DFR": [
+      {
+        "name": "Bam Martin-scott",
+        "depth": 1,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "DFR",
+        "standard_pos": "DEF",
+        "cap_number": "$545,000",
         "stats": {},
         "stats_season": null
       }

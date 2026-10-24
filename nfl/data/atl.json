@@ -317,7 +317,7 @@
         "attainment": "SF26",
         "standard_slot": "QB",
         "standard_pos": "QB",
-        "cap_number": null,
+        "cap_number": "$0",
         "stats": {},
         "stats_season": null
       },
@@ -530,18 +530,15 @@
         "stats_season": 2026
       },
       {
-        "name": "Bralen Trice",
+        "name": "Charles Snowden",
         "depth": 2,
         "injured": false,
-        "attainment": "24/3",
+        "attainment": "P/Was",
         "standard_slot": "LOLB",
         "standard_pos": "EDGE",
-        "cap_number": "$639,167",
-        "stats": {
-          "TKL": 1,
-          "PD": 1
-        },
-        "stats_season": 2026
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LILB": [
@@ -686,17 +683,6 @@
           "QB HIT": 1
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Malcolm Dewalt IV",
-        "depth": 3,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "LCB",
-        "standard_pos": "CB",
-        "cap_number": "$891,666",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "SS": [
@@ -898,6 +884,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Colby Sorsdal",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "OG": [
@@ -915,17 +912,6 @@
       {
         "name": "Josh Thompson",
         "depth": 2,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "OG",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Colby Sorsdal",
-        "depth": 3,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "OG",
@@ -954,6 +940,17 @@
         "depth": 1,
         "injured": false,
         "attainment": "U/Cin",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "TJ Quinn",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
         "standard_slot": "LB",
         "standard_pos": "DEF",
         "cap_number": null,
@@ -1006,22 +1003,8 @@
         "stats_season": 2026
       },
       {
-        "name": "A.j. Terrell Jr.",
-        "depth": 2,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$13,500,000",
-        "stats": {
-          "TKL": 3,
-          "PD": 2
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Da'shawn Hand",
-        "depth": 3,
+        "depth": 2,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1032,7 +1015,7 @@
       },
       {
         "name": "Cameron Williams",
-        "depth": 4,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1043,7 +1026,7 @@
       },
       {
         "name": "Jd Bertrand",
-        "depth": 5,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1053,19 +1036,8 @@
         "stats_season": null
       },
       {
-        "name": "Beaux Collins",
-        "depth": 6,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$540,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Trey Sermon",
-        "depth": 7,
+        "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1076,7 +1048,7 @@
       },
       {
         "name": "Jalon Walker",
-        "depth": 8,
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1132,6 +1104,33 @@
         "standard_slot": "SUS",
         "standard_pos": "DEF",
         "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "DFR": [
+      {
+        "name": "A.j. Terrell Jr.",
+        "depth": 1,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "DFR",
+        "standard_pos": "DEF",
+        "cap_number": "$13,500,000",
+        "stats": {
+          "TKL": 3,
+          "PD": 2
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Beaux Collins",
+        "depth": 2,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "DFR",
+        "standard_pos": "DEF",
+        "cap_number": "$540,000",
         "stats": {},
         "stats_season": null
       }

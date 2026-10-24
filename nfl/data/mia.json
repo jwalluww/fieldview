@@ -438,15 +438,18 @@
         "stats_season": 2026
       },
       {
-        "name": "Andre Jones Jr.",
+        "name": "Rodney Mcgraw",
         "depth": 3,
         "injured": false,
-        "attainment": "P/Buf",
+        "attainment": "CF26",
         "standard_slot": "LE",
         "standard_pos": "EDGE",
-        "cap_number": "$955,556",
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$590,000",
+        "stats": {
+          "TKL": 1,
+          "QB HIT": 1
+        },
+        "stats_season": 2026
       }
     ],
     "LDT": [
@@ -889,20 +892,6 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Rodney Mcgraw",
-        "depth": 4,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "ED",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {
-          "TKL": 1,
-          "QB HIT": 1
-        },
-        "stats_season": 2026
       }
     ],
     "DT": [
@@ -972,19 +961,8 @@
         "stats_season": null
       },
       {
-        "name": "Kyle Louis",
-        "depth": 2,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$732,815",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Trey Moore",
-        "depth": 3,
+        "depth": 2,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -995,7 +973,7 @@
       },
       {
         "name": "De'von Achane",
-        "depth": 4,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1012,7 +990,7 @@
       },
       {
         "name": "Rene Konga",
-        "depth": 5,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1023,7 +1001,7 @@
       },
       {
         "name": "Cole Turner",
-        "depth": 6,
+        "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1048,13 +1026,13 @@
     ],
     "DFR": [
       {
-        "name": "Storm Duck",
+        "name": "Kyle Louis",
         "depth": 1,
         "injured": false,
         "attainment": null,
         "standard_slot": "DFR",
         "standard_pos": "DEF",
-        "cap_number": "$1,081,668",
+        "cap_number": "$732,815",
         "stats": {},
         "stats_season": null
       }

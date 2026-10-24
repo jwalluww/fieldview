@@ -21,6 +21,17 @@
           "YAC": 28
         },
         "stats_season": 2026
+      },
+      {
+        "name": "David Sills V",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/Atl",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RWR": [
@@ -576,21 +587,6 @@
           "QB HIT": 1
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Christian Rozeboom",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/Car",
-        "standard_slot": "ILB_L",
-        "standard_pos": "LB",
-        "cap_number": "$1,550,000",
-        "stats": {
-          "TKL": 5,
-          "PD": 2,
-          "TFL": 1
-        },
-        "stats_season": 2026
       }
     ],
     "MLB": [
@@ -1010,8 +1006,23 @@
     ],
     "IR": [
       {
-        "name": "Jalen Mcmillan",
+        "name": "Christian Rozeboom",
         "depth": 1,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$1,550,000",
+        "stats": {
+          "TKL": 5,
+          "PD": 2,
+          "TFL": 1
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Jalen Mcmillan",
+        "depth": 2,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1024,7 +1035,7 @@
       },
       {
         "name": "Josh Hayes",
-        "depth": 2,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1035,25 +1046,12 @@
       },
       {
         "name": "Mohamed Kamara",
-        "depth": 3,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
         "standard_pos": "DEF",
         "cap_number": "$565,000",
-        "stats": {},
-        "stats_season": null
-      }
-    ],
-    "DFR": [
-      {
-        "name": "David Sills V",
-        "depth": 1,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "DFR",
-        "standard_pos": "DEF",
-        "cap_number": null,
         "stats": {},
         "stats_season": null
       }

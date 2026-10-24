@@ -384,17 +384,17 @@
     ],
     "DE": [
       {
-        "name": "Sebastian Joseph-day",
+        "name": "Keeanu Benton",
         "depth": 1,
         "injured": false,
-        "attainment": "U/Ten",
+        "attainment": "23/2",
         "standard_slot": "LE",
         "standard_pos": "DI",
-        "cap_number": "$3,650,000",
+        "cap_number": "$4,299,295",
         "stats": {
-          "TKL": 3,
-          "TFL": 1,
-          "QB HIT": 1
+          "TKL": 8,
+          "TFL": 2,
+          "QB HIT": 2
         },
         "stats_season": 2026
       },
@@ -412,23 +412,8 @@
     ],
     "NT": [
       {
-        "name": "Keeanu Benton",
-        "depth": 1,
-        "injured": false,
-        "attainment": "23/2",
-        "standard_slot": "NT",
-        "standard_pos": "DI",
-        "cap_number": "$4,299,295",
-        "stats": {
-          "TKL": 8,
-          "TFL": 2,
-          "QB HIT": 2
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Yahya Black",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "25/5",
         "standard_slot": "NT",
@@ -671,26 +656,11 @@
     ],
     "SS": [
       {
-        "name": "Rayshawn Jenkins",
-        "depth": 1,
-        "injured": false,
-        "attainment": "U/Cle",
-        "standard_slot": "SS",
-        "standard_pos": "S",
-        "cap_number": "$1,075,000",
-        "stats": {
-          "TKL": 10
-        },
-        "stats_season": 2026
-      }
-    ],
-    "FS": [
-      {
         "name": "Jaquan Brisker",
         "depth": 1,
         "injured": false,
         "attainment": "U/Chi",
-        "standard_slot": "FS",
+        "standard_slot": "SS",
         "standard_pos": "S",
         "cap_number": "$5,500,000",
         "stats": {
@@ -700,10 +670,12 @@
           "QB HIT": 1
         },
         "stats_season": 2026
-      },
+      }
+    ],
+    "FS": [
       {
         "name": "Robert Spears-jennings",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "26/7",
         "standard_slot": "FS",
@@ -824,7 +796,7 @@
     ],
     "WR": [
       {
-        "name": "Isaiah Hodgins",
+        "name": "Marquez Valdes-scantling",
         "depth": 1,
         "injured": false,
         "attainment": "SF26",
@@ -855,6 +827,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": 2026
+      },
+      {
+        "name": "Isaiah Hodgins",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "OT": [
@@ -1052,18 +1035,22 @@
         "stats_season": null
       },
       {
-        "name": "Daequan Hardy",
+        "name": "Sebastian Joseph-day",
         "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
         "standard_pos": "DEF",
-        "cap_number": "$515,000",
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$3,650,000",
+        "stats": {
+          "TKL": 3,
+          "TFL": 1,
+          "QB HIT": 1
+        },
+        "stats_season": 2026
       },
       {
-        "name": "Cole Burgess",
+        "name": "Daequan Hardy",
         "depth": 7,
         "injured": true,
         "attainment": null,
@@ -1074,8 +1061,19 @@
         "stats_season": null
       },
       {
-        "name": "Logan Lee",
+        "name": "Cole Burgess",
         "depth": 8,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$515,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Logan Lee",
+        "depth": 9,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",

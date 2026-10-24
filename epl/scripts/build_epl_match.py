@@ -193,7 +193,64 @@ def find_token_set_match(fpl_name, ea_team_norm, by_team):
     return _unique_card(hits)
 
 
-def find_ea_match(fpl_name, fpl_team, by_name, by_name_team, by_team):
+# EA's granular position -> the FPL group(s) it may legitimately sit in.
+# Wingers/wide mids and wing-backs are genuinely split across FPL's buckets
+# (e.g. Saka is an EA RW but an FPL MID), so they accept two groups;
+# keepers, centre-backs/full-backs, holding/central mids and strikers don't.
+EA_POS_TO_FPL_GROUPS = {
+    'GK': {'GKP'},
+    'CB': {'DEF'}, 'LB': {'DEF'}, 'RB': {'DEF'},
+    'LWB': {'DEF', 'MID'}, 'RWB': {'DEF', 'MID'},
+    'CDM': {'MID'}, 'CM': {'MID'},
+    'CAM': {'MID', 'FWD'}, 'LM': {'MID', 'FWD'}, 'RM': {'MID', 'FWD'},
+    'LW': {'MID', 'FWD'}, 'RW': {'MID', 'FWD'},
+    'ST': {'FWD'}, 'CF': {'FWD'},
+}
+
+
+def find_league_token_match(fpl_name, fpl_group, by_team):
+    """Final tier: no team-scoped match found, so look across ALL of EA's
+    EPL cards. Real need: EA's club label lags real transfers (Emiliano
+    Martinez is Aston Villa on EA, Chelsea on FPL), so every team-scoped
+    tier above can't see him; and FPL's legal name is longer than EA's
+    ("Emiliano Martinez Romero" vs "Emiliano Martinez"). A card qualifies
+    on the same first-token + shared-further-token test as
+    find_token_overlap_match (shared token must be 4+ letters so "de"/"da"
+    can't link strangers), on exact token-set equality, or on sharing two
+    or more 4+-letter tokens whatever the first token ("Francisco Evanilson
+    de Lima Barbosa" vs EA's "F. Evanilson de Lima Barbosa", "Junior
+    Kroupi" vs "Eli Junior Kroupi"). Accepted only if
+    exactly one card qualifies league-wide AND its EA position is
+    compatible with the player's FPL position group."""
+    words = fpl_name.split()
+    if not words:
+        return None
+    first = normalize_for_matching(words[0])
+    tokens = {normalize_for_matching(w) for w in words}
+    strong, weak = [], []
+    for rows in by_team.values():
+        for r in rows:
+            r_words = clean(r['name']).split()
+            if not r_words:
+                continue
+            r_first = normalize_for_matching(r_words[0])
+            r_tokens = {normalize_for_matching(w) for w in r_words}
+            shared = {x for x in (r_tokens - {r_first}) & (tokens - {first}) if len(x) >= 4}
+            if (r_first == first and shared) or r_tokens == tokens:
+                strong.append(r)
+            elif len({x for x in r_tokens & tokens if len(x) >= 4}) >= 2:
+                weak.append(r)
+    # the looser two-shared-tokens rule only runs when no strict hit exists,
+    # so it can't add a second candidate to a player the strict rules resolve
+    card = _unique_card(strong) if strong else _unique_card(weak)
+    if card is None:
+        return None
+    if fpl_group not in EA_POS_TO_FPL_GROUPS.get(clean(card['position']), set()):
+        return None
+    return card
+
+
+def find_ea_match(fpl_name, fpl_team, fpl_group, by_name, by_name_team, by_team):
     lookup_name = SOCCER_NAME_ALIASES.get(fpl_name, fpl_name)
     if lookup_name is None:
         return None, None
@@ -218,6 +275,10 @@ def find_ea_match(fpl_name, fpl_team, by_name, by_name_team, by_team):
     if swap_match is not None:
         return swap_match, 'token_set_swap'
 
+    league_match = find_league_token_match(lookup_name, fpl_group, by_team)
+    if league_match is not None:
+        return league_match, 'league_token'
+
     return None, None
 
 
@@ -230,14 +291,14 @@ def build_match():
     by_name, by_name_team, by_team = build_ea_index(ea)
 
     matches = []
-    match_source_counts = {'name_team': 0, 'name_only': 0, 'token_overlap': 0, 'token_set_swap': 0, 'unmatched': 0}
+    match_source_counts = {'name_team': 0, 'name_only': 0, 'token_overlap': 0, 'token_set_swap': 0, 'league_token': 0, 'unmatched': 0}
     unmatched_rows = []
 
     for _, r in fpl.iterrows():
         fpl_name = f"{clean(r['first_name'])} {clean(r['second_name'])}".strip()
         fpl_team = clean(r['team_name'])
 
-        ea_row, match_source = find_ea_match(fpl_name, fpl_team, by_name, by_name_team, by_team)
+        ea_row, match_source = find_ea_match(fpl_name, fpl_team, clean(r['position_short']), by_name, by_name_team, by_team)
         if ea_row is None:
             match_source = 'unmatched'
             unmatched_rows.append({'name': fpl_name, 'team': fpl_team, 'web_name': clean(r['web_name'])})
@@ -272,6 +333,7 @@ def build_match():
     print(f"  via name only (unique): {match_source_counts['name_only']}")
     print(f"  via team-scoped token overlap (partial-legal-name match): {match_source_counts['token_overlap']}")
     print(f"  via team-scoped token set match (full name-order swap): {match_source_counts['token_set_swap']}")
+    print(f"  via league-wide token match + position group (team label lag / long legal names): {match_source_counts['league_token']}")
     print(f"  unmatched: {match_source_counts['unmatched']}")
     with open(os.path.join('epl', 'data', 'unmatched_epl.txt'), 'w', encoding='utf-8') as f:
         for u in unmatched_rows:

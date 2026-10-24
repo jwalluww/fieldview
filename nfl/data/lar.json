@@ -6,25 +6,8 @@
   "depth_chart": {
     "LWR": [
       {
-        "name": "Davante Adams",
-        "depth": 1,
-        "injured": false,
-        "attainment": "CC/NYJ",
-        "standard_slot": "LWR",
-        "standard_pos": "WR",
-        "cap_number": "$28,000,000",
-        "stats": {
-          "TGT": 49,
-          "REC": 30,
-          "YDS": 480,
-          "TDs": 4,
-          "YAC": 124
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Jordan Whittington",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "24/6",
         "standard_slot": "LWR",
@@ -39,7 +22,7 @@
       },
       {
         "name": "CJ Daniels",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "26/6",
         "standard_slot": "LWR",
@@ -123,7 +106,7 @@
         "attainment": "CF21",
         "standard_slot": "LT",
         "standard_pos": "OL",
-        "cap_number": null,
+        "cap_number": "$24,323,611",
         "stats": {},
         "stats_season": 2026
       },
@@ -512,6 +495,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Jalen Hunt",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LOLB": [
@@ -545,6 +539,17 @@
           "QB HIT": 1
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Darryl Peterson III",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "LOLB",
+        "standard_pos": "EDGE",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LILB": [
@@ -881,19 +886,8 @@
     ],
     "ED": [
       {
-        "name": "Darryl Peterson III",
-        "depth": 1,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "ED",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Garrett Nelson",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "ED",
@@ -977,8 +971,25 @@
     ],
     "IR": [
       {
-        "name": "Kobie Turner",
+        "name": "Davante Adams",
         "depth": 1,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$28,000,000",
+        "stats": {
+          "TGT": 49,
+          "REC": 30,
+          "YDS": 480,
+          "TDs": 4,
+          "YAC": 124
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Kobie Turner",
+        "depth": 2,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -992,7 +1003,7 @@
       },
       {
         "name": "Terrance Ferguson",
-        "depth": 2,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1009,7 +1020,7 @@
       },
       {
         "name": "Ronnie Rivers",
-        "depth": 3,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1026,7 +1037,7 @@
       },
       {
         "name": "Myles Garrett",
-        "depth": 4,
+        "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1037,7 +1048,7 @@
       },
       {
         "name": "Justin Dedich",
-        "depth": 5,
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1048,7 +1059,7 @@
       },
       {
         "name": "Poona Ford",
-        "depth": 6,
+        "depth": 7,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1063,12 +1074,12 @@
       },
       {
         "name": "Blake Grupe",
-        "depth": 7,
+        "depth": 8,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
         "standard_pos": "DEF",
-        "cap_number": "$826,944",
+        "cap_number": "$456,944",
         "stats": {
           "FG": "1/1",
           "FG%": "100%",
@@ -1078,7 +1089,7 @@
       },
       {
         "name": "Eddie Walls III",
-        "depth": 8,
+        "depth": 9,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1089,23 +1100,12 @@
       },
       {
         "name": "Matthew Caldwell",
-        "depth": 9,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$517,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Keir Thomas",
         "depth": 10,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
         "standard_pos": "DEF",
-        "cap_number": "$565,000",
+        "cap_number": "$517,000",
         "stats": {},
         "stats_season": null
       },

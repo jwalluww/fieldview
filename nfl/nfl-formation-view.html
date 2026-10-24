@@ -1432,8 +1432,12 @@ function updateHeader() {
   logo.alt = currentTeam;
   document.getElementById('teamNameEl').textContent = team.name;
   const asOf = maddenMeta[currentTeam];
-  document.getElementById('maddenAsOf').textContent = asOf ? 'Ratings as of ' + asOf
-    : (Object.keys(maddenMeta).length ? 'Ratings date unknown' : '');
+  // "_iteration" (EA's ratings iteration, e.g. "Week 6 Ratings") is not a team key
+  const iter = maddenMeta._iteration && maddenMeta._iteration.label
+    ? maddenMeta._iteration.label.replace(/\s*Ratings$/i, '') : '';
+  const prefix = iter ? 'Madden ratings: ' + iter + ', as of ' : 'Ratings as of ';
+  document.getElementById('maddenAsOf').textContent = asOf ? prefix + asOf
+    : (Object.keys(maddenMeta).some(k => !k.startsWith('_')) ? 'Ratings date unknown' : '');
 }
 
 function positionHoverCard(node) {

@@ -90,19 +90,8 @@
     ],
     "LT": [
       {
-        "name": "Josh Simmons",
-        "depth": 1,
-        "injured": false,
-        "attainment": "25/1",
-        "standard_slot": "LT",
-        "standard_pos": "OL",
-        "cap_number": "$3,335,308",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Kahlil Benson",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "LT",
@@ -396,17 +385,6 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Nate Carter",
-        "depth": 5,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "FB": [
@@ -601,22 +579,6 @@
           "INTs": 1,
           "PD": 1,
           "TFL": 1
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Cam Jones",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "WILL",
-        "standard_pos": "LB",
-        "cap_number": "$826,944",
-        "stats": {
-          "TKL": 6,
-          "SACKS": 0.5,
-          "TFL": 1,
-          "QB HIT": 3
         },
         "stats_season": 2026
       }
@@ -941,6 +903,17 @@
           "TKL": 3
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Aiden Fisher",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "CB": [
@@ -1010,15 +983,15 @@
         "stats_season": 2026
       },
       {
-        "name": "Cooper Mcdonald",
+        "name": "Josh Simmons",
         "depth": 2,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
         "standard_pos": "DEF",
-        "cap_number": "$565,833",
+        "cap_number": "$3,335,308",
         "stats": {},
-        "stats_season": 2026
+        "stats_season": null
       },
       {
         "name": "John Michael Gyllenborg",
@@ -1087,6 +1060,19 @@
         "cap_number": "$1,636,449",
         "stats": {},
         "stats_season": null
+      }
+    ],
+    "DFR": [
+      {
+        "name": "Cooper Mcdonald",
+        "depth": 1,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "DFR",
+        "standard_pos": "DEF",
+        "cap_number": "$565,833",
+        "stats": {},
+        "stats_season": 2026
       }
     ]
   }

@@ -175,17 +175,6 @@
         "cap_number": "$688,333",
         "stats": {},
         "stats_season": 2026
-      },
-      {
-        "name": "James Brockermeyer",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "C",
-        "standard_pos": "OL",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "RG": [
@@ -260,19 +249,8 @@
         "stats_season": 2026
       },
       {
-        "name": "E.j. Jenkins",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF24",
-        "standard_slot": "TE",
-        "standard_pos": "TE",
-        "cap_number": "$1,025,166",
-        "stats": {},
-        "stats_season": 2026
-      },
-      {
         "name": "Zach Ertz",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "U/Was",
         "standard_slot": "TE",
@@ -365,34 +343,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Carson Steele",
+        "name": "Elijah Mitchell",
         "depth": 3,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": "$781,667",
-        "stats": {
-          "REC": 1,
-          "RE YDS": 4,
-          "TGT": 2
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Jaydon Blue",
-        "depth": 4,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": "$725,833",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Ian Wheeler",
-        "depth": 5,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "RB",
@@ -885,6 +837,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Evan Neal",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "OG",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "ED": [
@@ -1018,8 +981,23 @@
         "stats_season": null
       },
       {
-        "name": "Johnny Wilson",
+        "name": "Carson Steele",
         "depth": 5,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$471,667",
+        "stats": {
+          "REC": 1,
+          "RE YDS": 4,
+          "TGT": 2
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Johnny Wilson",
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",

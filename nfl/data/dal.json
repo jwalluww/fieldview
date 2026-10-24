@@ -329,6 +329,17 @@
         "cap_number": "$2,500,000",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Kyle Trask",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "QB",
+        "standard_pos": "QB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RB": [
@@ -709,17 +720,6 @@
           "PD": 2
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Caelen Carson",
-        "depth": 3,
-        "injured": false,
-        "attainment": "24/5",
-        "standard_slot": "LCB",
-        "standard_pos": "CB",
-        "cap_number": "$1,138,569",
-        "stats": {},
-        "stats_season": 2026
       }
     ],
     "SS": [
@@ -734,6 +734,19 @@
         "stats": {
           "TKL": 17,
           "PD": 1
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Juanyeh Thomas",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "SS",
+        "standard_pos": "S",
+        "cap_number": "$763,333",
+        "stats": {
+          "TKL": 1
         },
         "stats_season": 2026
       }
@@ -972,21 +985,6 @@
         "stats_season": null
       }
     ],
-    "S": [
-      {
-        "name": "Juanyeh Thomas",
-        "depth": 1,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "S",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {
-          "TKL": 1
-        },
-        "stats_season": 2026
-      }
-    ],
     "IR": [
       {
         "name": "Jalen Thompson",
@@ -1052,19 +1050,8 @@
         "stats_season": null
       },
       {
-        "name": "Marist Liufau",
-        "depth": 6,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$1,552,231",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Princeton Fant",
-        "depth": 7,
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1075,7 +1062,7 @@
       },
       {
         "name": "Kelvin Gilliam",
-        "depth": 8,
+        "depth": 7,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1086,7 +1073,7 @@
       },
       {
         "name": "DJ Rogers",
-        "depth": 9,
+        "depth": 8,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1097,12 +1084,25 @@
       },
       {
         "name": "Matt Hennessy",
-        "depth": 10,
+        "depth": 9,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
         "standard_pos": "DEF",
         "cap_number": "$1,262,500",
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "DFR": [
+      {
+        "name": "Marist Liufau",
+        "depth": 1,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "DFR",
+        "standard_pos": "DEF",
+        "cap_number": "$1,552,231",
         "stats": {},
         "stats_season": null
       }

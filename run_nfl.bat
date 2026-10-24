@@ -30,7 +30,9 @@ echo ============================================
 call :run_step "scrape_depth.py" "python nfl\scripts\scrape_depth.py"
 call :run_step "scrape_otc.py" "python nfl\scripts\scrape_otc.py"
 call :run_step "scrape_stats.py" "python nfl\scripts\scrape_stats.py"
-call :run_step "scrape_madden.py" "python nfl\scripts\scrape_madden.py"
+call :run_step "scrape_madden_ea.py" "python nfl\scripts\scrape_madden_ea.py"
+REM scrape_madden.py (maddenratings.com) retired 2026-10 in favor of EA's official API; left in place, unused:
+REM call :run_step "scrape_madden.py" "python nfl\scripts\scrape_madden.py"
 call :run_step "scrape_contracts_spotrac.py" "python nfl\scripts\scrape_contracts_spotrac.py"
 call :run_step "build_db.py" "python nfl\scripts\build_db.py"
 call :run_step "build_match.py" "python nfl\scripts\build_match.py"

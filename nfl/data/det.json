@@ -69,6 +69,17 @@
           "YAC": 128
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Deandre Carter",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/Cle",
+        "standard_slot": "SWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LT": [
@@ -99,8 +110,19 @@
     ],
     "C": [
       {
-        "name": "Juice Scruggs",
+        "name": "Cade Mays",
         "depth": 1,
+        "injured": false,
+        "attainment": "22/6",
+        "standard_slot": "C",
+        "standard_pos": "OL",
+        "cap_number": "$2,771,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Juice Scruggs",
+        "depth": 2,
         "injured": false,
         "attainment": "T/Hou",
         "standard_slot": "C",
@@ -111,7 +133,7 @@
       },
       {
         "name": "Seth Mclaughlin",
-        "depth": 2,
+        "depth": 3,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "C",
@@ -654,26 +676,32 @@
         "stats_season": 2026
       },
       {
-        "name": "Christian Izien",
+        "name": "Bishop Fitzgerald",
         "depth": 2,
         "injured": false,
-        "attainment": "U/TB",
+        "attainment": "P/Pit",
         "standard_slot": "SS",
         "standard_pos": "S",
-        "cap_number": "$1,955,000",
-        "stats": {
-          "TKL": 18,
-          "SACKS": 1.0,
-          "PD": 1,
-          "TFL": 4
-        },
-        "stats_season": 2026
+        "cap_number": "$786,667",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "FS": [
       {
-        "name": "Keith Abney II",
+        "name": "Brian Branch",
         "depth": 1,
+        "injured": false,
+        "attainment": "23/2",
+        "standard_slot": "FS",
+        "standard_pos": "S",
+        "cap_number": "$6,475,498",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Keith Abney II",
+        "depth": 2,
         "injured": false,
         "attainment": "26/5",
         "standard_slot": "FS",
@@ -686,17 +714,6 @@
           "TFL": 1
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Bishop Fitzgerald",
-        "depth": 2,
-        "injured": false,
-        "attainment": "P/Pit",
-        "standard_slot": "FS",
-        "standard_pos": "S",
-        "cap_number": "$786,667",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "RCB": [
@@ -745,6 +762,22 @@
           "PD": 7,
           "TFL": 1,
           "QB HIT": 1
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Christian Izien",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/TB",
+        "standard_slot": "NB",
+        "standard_pos": "CB",
+        "cap_number": "$1,955,000",
+        "stats": {
+          "TKL": 18,
+          "SACKS": 1.0,
+          "PD": 1,
+          "TFL": 4
         },
         "stats_season": 2026
       }
@@ -812,17 +845,6 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Deandre Carter",
-        "depth": 4,
-        "injured": false,
-        "attainment": "U/Cle",
-        "standard_slot": "LWR",
-        "standard_pos": "WR",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "OT": [
@@ -866,19 +888,8 @@
     ],
     "DT": [
       {
-        "name": "Chris Smith",
-        "depth": 1,
-        "injured": false,
-        "attainment": "CF23",
-        "standard_slot": "RDT",
-        "standard_pos": "DI",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Ben Stille",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "RDT",
@@ -889,9 +900,20 @@
       },
       {
         "name": "Jeffrey M'ba",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "SF26*",
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Aidan Keanaaina",
+        "depth": 3,
+        "injured": false,
+        "attainment": null,
         "standard_slot": "RDT",
         "standard_pos": "DI",
         "cap_number": null,
@@ -935,6 +957,17 @@
         "depth": 2,
         "injured": false,
         "attainment": "SF25",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Myles Bryant",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF26",
         "standard_slot": "CB",
         "standard_pos": "DEF",
         "cap_number": null,
@@ -1086,30 +1119,6 @@
         "standard_slot": "NFI",
         "standard_pos": "DEF",
         "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      }
-    ],
-    "DFR": [
-      {
-        "name": "Brian Branch",
-        "depth": 1,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "DFR",
-        "standard_pos": "DEF",
-        "cap_number": "$6,475,498",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Cade Mays",
-        "depth": 2,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "DFR",
-        "standard_pos": "DEF",
-        "cap_number": "$2,771,000",
         "stats": {},
         "stats_season": null
       }

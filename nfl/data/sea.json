@@ -235,24 +235,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Elijah Arroyo",
-        "depth": 3,
-        "injured": false,
-        "attainment": "25/2",
-        "standard_slot": "TE",
-        "standard_pos": "TE",
-        "cap_number": "$2,003,039",
-        "stats": {
-          "TGT": 2,
-          "REC": 1,
-          "YDS": 17,
-          "YAC": 3
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Nick Kallerup",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "CF25",
         "standard_slot": "TE",
@@ -263,7 +247,7 @@
       },
       {
         "name": "Josiah Deguara",
-        "depth": 5,
+        "depth": 4,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "TE",
@@ -274,7 +258,7 @@
       },
       {
         "name": "Jackson Acker",
-        "depth": 6,
+        "depth": 5,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "TE",
@@ -336,8 +320,19 @@
     ],
     "RB": [
       {
-        "name": "Emanuel Wilson",
+        "name": "Zach Charbonnet",
         "depth": 1,
+        "injured": false,
+        "attainment": "23/2",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": "$2,187,843",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Emanuel Wilson",
+        "depth": 2,
         "injured": false,
         "attainment": "U/GB",
         "standard_slot": "RB",
@@ -355,7 +350,7 @@
       },
       {
         "name": "George Holani",
-        "depth": 2,
+        "depth": 3,
         "injured": false,
         "attainment": "CF24",
         "standard_slot": "RB",
@@ -373,7 +368,7 @@
       },
       {
         "name": "Velus Jones Jr.",
-        "depth": 3,
+        "depth": 4,
         "injured": false,
         "attainment": "SF25",
         "standard_slot": "RB",
@@ -390,7 +385,7 @@
       },
       {
         "name": "Robert Henry Jr.",
-        "depth": 4,
+        "depth": 5,
         "injured": false,
         "attainment": "P/Was",
         "standard_slot": "RB",
@@ -959,6 +954,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": 2026
+      },
+      {
+        "name": "Josh Ross",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "CB": [
@@ -1043,8 +1049,24 @@
         "stats_season": 2026
       },
       {
-        "name": "Robbie Ouzts",
+        "name": "Elijah Arroyo",
         "depth": 3,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$2,003,039",
+        "stats": {
+          "TGT": 2,
+          "REC": 1,
+          "YDS": 17,
+          "YAC": 3
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Robbie Ouzts",
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1055,7 +1077,7 @@
       },
       {
         "name": "Jake Bobo",
-        "depth": 4,
+        "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1066,7 +1088,7 @@
       },
       {
         "name": "Mason Richman",
-        "depth": 5,
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1077,7 +1099,7 @@
       },
       {
         "name": "Bud Clark",
-        "depth": 6,
+        "depth": 7,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1115,19 +1137,8 @@
     ],
     "DFR": [
       {
-        "name": "Zach Charbonnet",
-        "depth": 1,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "DFR",
-        "standard_pos": "DEF",
-        "cap_number": "$2,187,843",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Anthony Bradford",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": null,
         "standard_slot": "DFR",

@@ -57,17 +57,6 @@
           "CAR": 1
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Malik Turner",
-        "depth": 2,
-        "injured": false,
-        "attainment": "SF24",
-        "standard_slot": "RWR",
-        "standard_pos": "WR",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "SWR": [
@@ -496,17 +485,6 @@
           "TKL": 2
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Naquan Jones",
-        "depth": 3,
-        "injured": false,
-        "attainment": "P/Min",
-        "standard_slot": "LDT",
-        "standard_pos": "DI",
-        "cap_number": "$1,080,000",
-        "stats": {},
-        "stats_season": 2026
       }
     ],
     "RDT": [
@@ -591,8 +569,21 @@
     ],
     "WLB": [
       {
-        "name": "Jaden Dugger",
+        "name": "Dre Greenlaw",
         "depth": 1,
+        "injured": false,
+        "attainment": "CC/Den",
+        "standard_slot": "WILL",
+        "standard_pos": "LB",
+        "cap_number": "$3,405,556",
+        "stats": {
+          "TKL": 18
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Jaden Dugger",
+        "depth": 2,
         "injured": false,
         "attainment": "26/5",
         "standard_slot": "WILL",
@@ -603,19 +594,6 @@
           "SACKS": 1.0,
           "TFL": 1,
           "QB HIT": 1
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Garret Wallow",
-        "depth": 2,
-        "injured": false,
-        "attainment": "W/Den",
-        "standard_slot": "WILL",
-        "standard_pos": "LB",
-        "cap_number": "$1,075,000",
-        "stats": {
-          "TKL": 5
         },
         "stats_season": 2026
       },
@@ -650,8 +628,21 @@
         "stats_season": 2026
       },
       {
-        "name": "Luke Gifford",
+        "name": "Garret Wallow",
         "depth": 2,
+        "injured": false,
+        "attainment": "W/Den",
+        "standard_slot": "MIKE",
+        "standard_pos": "LB",
+        "cap_number": "$1,075,000",
+        "stats": {
+          "TKL": 5
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Luke Gifford",
+        "depth": 3,
         "injured": false,
         "attainment": "U/Ten",
         "standard_slot": "MIKE",
@@ -659,19 +650,6 @@
         "cap_number": "$1,972,000",
         "stats": {
           "TKL": 3
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Jalen Graham",
-        "depth": 3,
-        "injured": false,
-        "attainment": "P/Was",
-        "standard_slot": "MIKE",
-        "standard_pos": "LB",
-        "cap_number": null,
-        "stats": {
-          "TKL": 2
         },
         "stats_season": 2026
       }
@@ -892,6 +870,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Malik Turner",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF24",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "OT": [
@@ -955,19 +944,32 @@
           "QB HIT": 1
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Naquan Jones",
+        "depth": 3,
+        "injured": false,
+        "attainment": "P/Min",
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": 2026
       }
     ],
     "LB": [
       {
-        "name": "Eugene Asante",
+        "name": "Jalen Graham",
         "depth": 1,
         "injured": false,
-        "attainment": "SF26",
+        "attainment": "P/Was",
         "standard_slot": "LB",
         "standard_pos": "DEF",
         "cap_number": null,
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "TKL": 2
+        },
+        "stats_season": 2026
       }
     ],
     "CB": [
@@ -1185,21 +1187,6 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
-      }
-    ],
-    "SUS": [
-      {
-        "name": "Dre Greenlaw",
-        "depth": 1,
-        "injured": false,
-        "attainment": null,
-        "standard_slot": "SUS",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {
-          "TKL": 18
-        },
-        "stats_season": 2026
       }
     ],
     "DFR": [

@@ -48,7 +48,7 @@ MADDEN_NAME_ALIASES = {
     'Vega Ioane': 'Olaivavega Ioane',
     'Hollywood Brown': 'Marquise Brown',
     'Joshua Palmer': 'Josh Palmer',
-    'Josh Uche': 'Josh Uche',
+    'Josh Uche': 'Joshua Uche',  # EA spells it Joshua (old source: Josh); was 'Josh Uche'
     'Olu Fashanu': 'Olumuyiwa Fashanu',
     'Jaylahn Tuimoloau': 'JT Tuimoloau',
     'DJ Glaze': 'Delmar Glaze',
@@ -63,6 +63,10 @@ MADDEN_NAME_ALIASES = {
     'Irv Charles': 'Irvin Charles',
     'Rob Beal Jr.': 'Robert Beal Jr.',
     'Ben Yurosek': 'Benjamin Yurosek',
+    # EA-era additions (2026-10), OurLads name -> EA's spelling:
+    'Mitch Tinsley': 'Mitchell Tinsley',
+    'Nate Thomas': 'Nathan Thomas',
+    'Cameron Heyward': 'Cam Heyward',
 }
 
 TEAM_ABB_MAP = {
@@ -196,27 +200,40 @@ def find_madden_player(name, team_madden_players, all_madden_players, allow_cros
     would have silently regressed him from matched to unmatched."""
     lookup_name = MADDEN_NAME_ALIASES.get(name) or NAME_ALIASES.get(name)
     target = normalize_madden(lookup_name if lookup_name is not None else name)
-    target_words = set(target.split())
+    # EA's own spellings (Madden source since 2026-10) differ from
+    # maddenratings.com's in places the aliases were built around ("Nnamdi
+    # Madubuike", "Mike Onwenu", "Pat Surtain II" are EA's names; the old
+    # aliases point at the old source's spelling). So the player's own name
+    # is tried too, after the aliased one -- an alias that points the wrong
+    # way for EA just falls through to the raw name instead of missing.
+    raw_target = normalize_madden(name)
+    targets = [(target, set(target.split()))]
+    if raw_target != target:
+        targets.append((raw_target, set(raw_target.split())))
     # Prefer a match within the player's own team first, to avoid colliding
     # with a different real person who happens to share the same name on
     # another team (e.g. two different "Justin Jefferson"s).
-    for mp in team_madden_players:
-        if mp["normalized"] == target:
-            return mp
-    for mp in team_madden_players:
-        if target_words and target_words.issubset(set(mp["normalized"].split())):
-            return mp
+    for tgt, _ in targets:
+        for mp in team_madden_players:
+            if mp["normalized"] == tgt:
+                return mp
+    for _, words in targets:
+        for mp in team_madden_players:
+            if words and words.issubset(set(mp["normalized"].split())):
+                return mp
     if not allow_cross_team:
         return None
     # Fall back to a league-wide search (handles recent trades/signings not
     # yet reflected under the right team in the Madden export). Only safe
     # when the name isn't shared by a different real player elsewhere.
-    for mp in all_madden_players:
-        if mp["normalized"] == target:
-            return mp
-    for mp in all_madden_players:
-        if target_words and target_words.issubset(set(mp["normalized"].split())):
-            return mp
+    for tgt, _ in targets:
+        for mp in all_madden_players:
+            if mp["normalized"] == tgt:
+                return mp
+    for _, words in targets:
+        for mp in all_madden_players:
+            if words and words.issubset(set(mp["normalized"].split())):
+                return mp
     return None
 
 STAT_MAP = {

@@ -39,6 +39,8 @@ SOCCER_NAME_ALIASES = {
     # token does match, but that tier requires first-token equality
     # first). Confirmed same player, same club (Everton) both sides.
     'Vitalii Mykolenko': 'Vitaliy Mykolenko',
+    # FPL carries the double-barrelled legal surname, EA just "Dominic Solanke" (same club, Spurs).
+    'Dominic Solanke-Mitchell': 'Dominic Solanke',
     # These three all follow the same real pattern: sofifa's full-legal-
     # name field carries a formal/additional given name FPL's
     # first_name/second_name never includes at all (a nickname on FPL's

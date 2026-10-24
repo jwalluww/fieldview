@@ -1,4 +1,5 @@
 import re
+import unicodedata
 
 # nbadepthcharts.com/NBA's name_utils.py mirrors these two functions from
 # this file's original home (build_master.py) -- this is the NFL side of
@@ -114,6 +115,10 @@ def normalize_madden(name):
     artifact."""
     if not name:
         return ''
+    # Fold accents (Estimé -> Estime, Nuñez -> Nunez) rather than letting the
+    # [^a-z ] strip below delete the accented letter outright -- EA's Madden
+    # names drop accents OurLads keeps, and deleting gave 'estim' != 'estime'.
+    name = unicodedata.normalize('NFKD', name).encode('ascii', 'ignore').decode()
     name = name.lower().replace('-', ' ')
     name = re.sub(r'\b(jr|sr|ii|iii|iv)\b\.?', '', name)
     name = re.sub(r"[^a-z ]", "", name)
