@@ -41,7 +41,9 @@ echo ============================================
 
 call :run_step "fetch_stats.py" "python nba\scripts\fetch_stats.py"
 call :run_step "scrape_contracts_spotrac.py" "python nba\scripts\scrape_contracts_spotrac.py"
-call :run_step "scrape_2kratings.py" "python nba\scripts\scrape_2kratings.py"
+call :run_step "scrape_nba2kapi.py" "python nba\scripts\scrape_nba2kapi.py"
+REM scrape_2kratings.py (2kratings.com trickle scraper) retired 2026-10 in favor of nba2kapi; left in place, unused:
+REM call :run_step "scrape_2kratings.py" "python nba\scripts\scrape_2kratings.py"
 call :run_step "scrape_nbadepthcharts.py" "python nba\scripts\scrape_nbadepthcharts.py"
 call :run_step "build_nba_db.py" "python nba\scripts\build_nba_db.py"
 call :run_step "build_nba_match.py" "python nba\scripts\build_nba_match.py"

@@ -22,6 +22,9 @@ NBA_NAME_ALIASES = {
     # unified by accent-folding since they're different base letters, not
     # different accents on the same one.
     'Egor Dёmin': 'Egor Demin',
+    # nba2kapi (2K27) spells these the long way; nba_api uses the short form
+    'Alexandre Sarr': 'Alex Sarr',
+    'Carlton Carrington': 'Bub Carrington',
 }
 
 

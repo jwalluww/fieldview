@@ -153,6 +153,8 @@ body {
 }
 
 /* ── LEFT: compact court ── */
+.asof { font-size: 13px; font-weight: 400; letter-spacing: 0; text-transform: none; margin-left: 10px; }
+
 .left-col { width: 598px; flex-shrink: 0; }
 
 .court-label {
@@ -391,7 +393,7 @@ body {
 <div class="wrap">
   <div class="left-col">
     <div class="court-label">
-      <span>Starting Five</span>
+      <span>Starting Five<span class="asof" id="ratingsAsOf" title="Ratings from nba2kapi.com (data: 2kratings.com)"></span></span>
       <span class="depth-chart-updated" id="depthChartUpdated"></span>
     </div>
 
@@ -571,12 +573,26 @@ function computePositionRanks(players) {
   return rankMap;
 }
 
+// "2K ratings as of <date>": when the 2K ratings last changed (ratings_last_changed in ratings_meta.json); nothing if missing.
+async function loadRatingsMeta() {
+  try {
+    const res = await fetch('data/ratings_meta.json');
+    const meta = await res.json();
+    if (meta.ratings_last_changed) {
+      const [y, m, d] = meta.ratings_last_changed.split('-').map(Number);
+      const txt = new Date(y, m - 1, d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      document.getElementById('ratingsAsOf').textContent = '2K ratings as of ' + txt;
+    }
+  } catch (e) {}
+}
+
 async function loadAllPlayers() {
   try {
     const res = await fetch('data/nba_players_master.json');
     const raw = await res.json();
     allPlayers = Object.values(raw).map(mapPlayer);
     positionRanks = computePositionRanks(allPlayers);
+    loadRatingsMeta();
   } catch (e) {
     console.error('Failed to load nba_players_master.json:', e);
     allPlayers = [];

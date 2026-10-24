@@ -81,16 +81,18 @@ jobs:
       - name: Run NBA contracts scraper
         run: python nba/scripts/scrape_contracts_spotrac.py
 
-      # scrape_2kratings.py is NOT run here -- same reasoning as
-      # fetch_stats.py above. The local "FieldView NBA 2K Ratings Scrape"
-      # Task Scheduler job (daily, 09:15) already owns nba_ratings_2k.json
-      # and ratings_2k_scrape_state.json via the same 3-team trickle logic
-      # this step would otherwise run again from a second, independent
-      # process -- running it here too doesn't add coverage (it's the same
-      # rolling-pool state file either way, not a bigger sample), it just
-      # doubles the odds of both writers landing in the same run/commit
-      # window. This job now reads whatever the local trickle already
-      # committed and runs build/match/export against it.
+      # 2K ratings now come from nba2kapi (a JSON mirror of 2kratings.com's
+      # data, whole current-era pool per call) -- no local Task Scheduler job
+      # needed any more. NBA2KAPI_KEY is a repo secret; if it is missing or
+      # rejected the script falls back to the keyless public endpoint, and a
+      # failed/short pull keeps the previous nba_ratings_2k.json (exit 0).
+      - name: Run NBA 2K ratings fetcher (nba2kapi)
+        env:
+          NBA2KAPI_KEY: ${{ secrets.NBA2KAPI_KEY }}
+        run: python nba/scripts/scrape_nba2kapi.py
+
+      # scrape_2kratings.py (2kratings.com trickle scraper, local-only) retired
+      # 2026-10; left in place, unused:
       # - name: Run NBA 2k ratings scraper
       #   run: python nba/scripts/scrape_2kratings.py
 
