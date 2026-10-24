@@ -1,0 +1,25 @@
+name: NBA stats-source recon
+
+# Manual only. Research probe: hits each candidate NBA stats source once from a
+# GitHub-hosted runner and logs status/latency/fields. Commits nothing.
+on:
+  workflow_dispatch:
+
+jobs:
+  recon:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+      - name: Probe NBA stats sources
+        env:
+          PYTHONIOENCODING: utf-8
+          BALLDONTLIE_API_KEY: ${{ secrets.BALLDONTLIE_API_KEY }}
+        run: python nba/scripts/recon_nba_sources.py
