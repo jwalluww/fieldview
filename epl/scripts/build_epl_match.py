@@ -1,40 +1,36 @@
 """epl/scripts/build_epl_match.py
 
 Phase 2 (EPL): joins fpl_players (base population, roster+season stats)
-against sofifa_ratings (granular position + overall_rating/potential),
-the two raw tables Phase 1 (build_epl_db.py) loaded, and writes a
+against ea_ratings (EA's official FC ratings: granular position +
+overall_rating), the two raw tables Phase 1 (build_epl_db.py) loaded, and writes a
 resolved player_match table back to the same DB. Same role as
 mlb/scripts/build_mlb_match.py.
 
 Base population is fpl_players (FPL's own bootstrap-static, live and
 current), same reasoning as NHL's roster-vs-stats precedent: FPL is
-"who's really on a team's roster today," sofifa's FC26 database is a
-squad snapshot that can lag behind real transfers/promotions. Confirmed
-this actually matters here, not hypothetically -- see EPL_TEAM_ALIASES
-below.
+"who's really on a team's roster today."
 
-No shared ID space between FPL and sofifa (confirmed in recon and again
-here), so matching is name-based via shared/scripts/soccer_name_utils.py,
-same situation as NHL's ratings site. Exact (name, team) match preferred;
-falls back to a name-only match ONLY if it's unique across all of sofifa
-(same two-tier lookup as NBA's build_nba_match.py's find_match).
+RATINGS SOURCE (2026-10): EA's official ratings API replaced sofifa
+(which only re-publishes EA's data). EA's card id is the sofifa player
+id and lands in the existing sofifa_id field. The table keeps the same
+column shape the old ea_ratings table had (name, team_name,
+position, overall_rating, sofifa_id) minus potential, which EA does not
+publish; `name` is EA's firstName + lastName.
 
-EPL_TEAM_ALIASES (FPL team_name -> sofifa team_name) verified against
-both sources' real live output, not guessed -- 17 of FPL's 20 teams are
-just naming variants (e.g. "Man City" / "Manchester City"). The other 3
-are a genuine roster mismatch, not a naming difference: FPL's live
-2026-27 teams include Coventry City, Hull City, and Ipswich Town, while
-sofifa's FC26 database still has Burnley, West Ham United, and
-Wolverhampton Wanderers in the EPL-13 pull instead -- the two sources
-disagree on which 3 clubs hold the league's last 3 promotion/relegation
-slots (likely sofifa's squad-update snapshot lagging real 2026-27
-confirmation). Players on either side's mismatched trio get no
-team-based tiebreak; they can still resolve through the name-only
-fallback if their name is unique in sofifa, otherwise they're
-genuinely unmatched -- not a bug to "fix" by forcing a team match that
-isn't real.
+No shared ID space between FPL and EA (FPL's code/opta_code are not
+sofifa ids), so matching is name-based via
+shared/scripts/soccer_name_utils.py. Exact (name, team) match preferred;
+falls back to a name-only match ONLY if it's unique across all of EA's
+EPL cards (same two-tier lookup as NBA's build_nba_match.py's find_match),
+then the team-scoped token tiers.
 
-standard_pos holds sofifa's GRANULAR position (ST/CAM/CDM/LB/CB/...),
+EPL_TEAM_ALIASES (FPL team_name -> EA team label) verified against the
+real live output of both sources, not guessed. Unlike sofifa's old
+pull, EA's EPL cards cover all 20 of FPL's current clubs, including
+Coventry City, Hull City and Ipswich -- 5 of the 20 are naming variants
+(e.g. "Man City" / "Manchester City"), the rest agree as-is.
+
+standard_pos holds EA's GRANULAR position (ST/CAM/CDM/LB/CB/...),
 not a coarse group -- position_group holds FPL's coarse GKP/DEF/MID/FWD
 instead. This is the reverse of NFL's ourlads_pos(specific)/
 standard_pos(group) naming, deliberately: in soccer the ST/CB/CDM-style
@@ -54,27 +50,14 @@ from soccer_name_utils import normalize_name, normalize_for_matching, SOCCER_NAM
 DB_PATH = os.path.join('epl', 'data', 'fieldview.duckdb')
 
 # Verified against real live output from both sources (see module
-# docstring) -- 17 real naming variants. The 3 FPL teams with no entry
-# here (Coventry City, Hull City, Ipswich Town) have no sofifa
-# counterpart at all in the current EPL-13 pull, not a missed alias.
+# docstring) -- only the 5 genuine naming variants; the other 15 FPL
+# team names are identical to EA's labels.
 EPL_TEAM_ALIASES = {
-    'Arsenal': 'Arsenal FC',
-    'Aston Villa': 'Aston Villa',
     'Bournemouth': 'AFC Bournemouth',
-    'Brentford': 'Brentford',
-    'Brighton': 'Brighton & Hove Albion',
-    'Chelsea': 'Chelsea FC',
-    'Crystal Palace': 'Crystal Palace',
-    'Everton': 'Everton FC',
-    'Fulham': 'Fulham FC',
+    'Ipswich Town': 'Ipswich',
     'Leeds': 'Leeds United',
-    'Liverpool': 'Liverpool FC',
     'Man City': 'Manchester City',
-    'Man Utd': 'Manchester United',
-    'Newcastle': 'Newcastle United',
-    "Nott'm Forest": 'Nottingham Forest',
-    'Spurs': 'Tottenham Hotspur',
-    'Sunderland': 'Sunderland AFC',
+    'Newcastle': 'Newcastle Utd',
 }
 
 # FPL admin/game-mechanics columns stripped before the remaining season
@@ -99,20 +82,36 @@ def stats_dict(row):
     return {k: clean(v) for k, v in row.items() if k not in FPL_ADMIN_COLS}
 
 
-def build_sofifa_index(sofifa):
+def build_ea_index(ea):
     by_name = {}
     by_name_team = {}
     by_team = {}
-    for _, r in sofifa.iterrows():
-        name_norm = normalize_for_matching(clean(r['name']))
+    for _, r in ea.iterrows():
         team_norm = normalize_for_matching(clean(r['team_name']))
-        by_name.setdefault(name_norm, []).append(r)
-        by_name_team[(name_norm, team_norm)] = r
-        by_team.setdefault(team_norm, []).append(r)
+        # EA stores a card under its legal first+last name AND, for players
+        # known by a shorter name, a commonName ("Heung Min Son"). FPL often
+        # carries one or the other, so every card is indexed under both
+        # (same sofifa_id on each copy -- the tiers dedupe by it).
+        variants = [r]
+        common = clean(r['common_name'])
+        if common and normalize_for_matching(common) != normalize_for_matching(clean(r['name'])):
+            alt = r.copy()
+            alt['name'] = common
+            variants.append(alt)
+        for v in variants:
+            name_norm = normalize_for_matching(clean(v['name']))
+            by_name.setdefault(name_norm, []).append(v)
+            by_name_team[(name_norm, team_norm)] = v
+            by_team.setdefault(team_norm, []).append(v)
     return by_name, by_name_team, by_team
 
 
-def find_token_overlap_match(fpl_name, sofifa_team_norm, by_team):
+def _unique_card(hits):
+    """One hit, counting a card's legal-name and commonName copies as one."""
+    return hits[0] if len({clean(h['sofifa_id']) for h in hits}) == 1 else None
+
+
+def find_token_overlap_match(fpl_name, ea_team_norm, by_team):
     """Real, non-hypothetical need: sofifa and FPL disagree on how much
     of a player's full legal name they store, and not in one consistent
     direction -- confirmed on 3 different real players in the same run:
@@ -130,7 +129,7 @@ def find_token_overlap_match(fpl_name, sofifa_team_norm, by_team):
     row on that team satisfies it -- an ambiguous (0 or 2+) result is
     left unmatched rather than guessed.
     """
-    candidates = by_team.get(sofifa_team_norm, [])
+    candidates = by_team.get(ea_team_norm, [])
     if not candidates:
         return None
     fpl_words = fpl_name.split()
@@ -149,21 +148,21 @@ def find_token_overlap_match(fpl_name, sofifa_team_norm, by_team):
 
     hits = []
     for r in candidates:
-        sofifa_words = clean(r['name']).split()
-        if not sofifa_words:
+        ea_words = clean(r['name']).split()
+        if not ea_words:
             continue
-        sofifa_first_norm = normalize_for_matching(sofifa_words[0])
-        if sofifa_first_norm != fpl_first_norm:
+        ea_first_norm = normalize_for_matching(ea_words[0])
+        if ea_first_norm != fpl_first_norm:
             continue
-        sofifa_tokens = {normalize_for_matching(w) for w in sofifa_words}
+        ea_tokens = {normalize_for_matching(w) for w in ea_words}
         # exclude the (already-matched) first token from the overlap check
-        if (sofifa_tokens - {sofifa_first_norm}) & (fpl_tokens - {fpl_first_norm}):
+        if (ea_tokens - {ea_first_norm}) & (fpl_tokens - {fpl_first_norm}):
             hits.append(r)
 
-    return hits[0] if len(hits) == 1 else None
+    return _unique_card(hits)
 
 
-def find_token_set_match(fpl_name, sofifa_team_norm, by_team):
+def find_token_set_match(fpl_name, ea_team_norm, by_team):
     """Catches a genuine full name-order swap (e.g. FPL's "Mitoma
     Kaoru" vs sofifa's "Kaoru Mitoma") that find_token_overlap_match()
     can't reach -- that function requires the first word of both names
@@ -175,7 +174,7 @@ def find_token_set_match(fpl_name, sofifa_team_norm, by_team):
     the player's own team, only accepted if exactly one candidate
     qualifies -- same ambiguity bar as find_token_overlap_match.
     """
-    candidates = by_team.get(sofifa_team_norm, [])
+    candidates = by_team.get(ea_team_norm, [])
     if not candidates:
         return None
     fpl_tokens = {normalize_for_matching(w) for w in fpl_name.split()}
@@ -184,31 +183,31 @@ def find_token_set_match(fpl_name, sofifa_team_norm, by_team):
 
     hits = []
     for r in candidates:
-        sofifa_words = clean(r['name']).split()
-        if not sofifa_words:
+        ea_words = clean(r['name']).split()
+        if not ea_words:
             continue
-        sofifa_tokens = {normalize_for_matching(w) for w in sofifa_words}
-        if sofifa_tokens == fpl_tokens:
+        ea_tokens = {normalize_for_matching(w) for w in ea_words}
+        if ea_tokens == fpl_tokens:
             hits.append(r)
 
-    return hits[0] if len(hits) == 1 else None
+    return _unique_card(hits)
 
 
-def find_sofifa_match(fpl_name, fpl_team, by_name, by_name_team, by_team):
+def find_ea_match(fpl_name, fpl_team, by_name, by_name_team, by_team):
     lookup_name = SOCCER_NAME_ALIASES.get(fpl_name, fpl_name)
     if lookup_name is None:
         return None, None
     name_norm = normalize_for_matching(normalize_name(lookup_name))
 
-    sofifa_team = EPL_TEAM_ALIASES.get(fpl_team, fpl_team)
-    team_norm = normalize_for_matching(sofifa_team)
+    ea_team = EPL_TEAM_ALIASES.get(fpl_team, fpl_team)
+    team_norm = normalize_for_matching(ea_team)
 
     exact = by_name_team.get((name_norm, team_norm))
     if exact is not None:
         return exact, 'name_team'
 
     candidates = by_name.get(name_norm, [])
-    if len(candidates) == 1:
+    if len({clean(c['sofifa_id']) for c in candidates}) == 1:
         return candidates[0], 'name_only'
 
     token_match = find_token_overlap_match(lookup_name, team_norm, by_team)
@@ -225,10 +224,10 @@ def find_sofifa_match(fpl_name, fpl_team, by_name, by_name_team, by_team):
 def build_match():
     con = duckdb.connect(DB_PATH)
     fpl = con.execute("SELECT * FROM fpl_players ORDER BY row_id").fetchdf()
-    sofifa = con.execute("SELECT * FROM sofifa_ratings").fetchdf()
+    ea = con.execute("SELECT * FROM ea_ratings").fetchdf()
     con.close()
 
-    by_name, by_name_team, by_team = build_sofifa_index(sofifa)
+    by_name, by_name_team, by_team = build_ea_index(ea)
 
     matches = []
     match_source_counts = {'name_team': 0, 'name_only': 0, 'token_overlap': 0, 'token_set_swap': 0, 'unmatched': 0}
@@ -238,8 +237,8 @@ def build_match():
         fpl_name = f"{clean(r['first_name'])} {clean(r['second_name'])}".strip()
         fpl_team = clean(r['team_name'])
 
-        sofifa_row, match_source = find_sofifa_match(fpl_name, fpl_team, by_name, by_name_team, by_team)
-        if sofifa_row is None:
+        ea_row, match_source = find_ea_match(fpl_name, fpl_team, by_name, by_name_team, by_team)
+        if ea_row is None:
             match_source = 'unmatched'
             unmatched_rows.append({'name': fpl_name, 'team': fpl_team, 'web_name': clean(r['web_name'])})
         match_source_counts[match_source] += 1
@@ -251,10 +250,9 @@ def build_match():
             'team': fpl_team,
             'team_short': clean(r['team_short_name']),
             'position_group': clean(r['position_short']),
-            'standard_pos': clean(sofifa_row['position']) if sofifa_row is not None else None,
-            'overall_rating': clean(sofifa_row['overall_rating']) if sofifa_row is not None else None,
-            'potential': clean(sofifa_row['potential']) if sofifa_row is not None else None,
-            'sofifa_id': clean(sofifa_row['sofifa_id']) if sofifa_row is not None else None,
+            'standard_pos': clean(ea_row['position']) if ea_row is not None else None,
+            'overall_rating': clean(ea_row['overall_rating']) if ea_row is not None else None,
+            'sofifa_id': clean(ea_row['sofifa_id']) if ea_row is not None else None,
             'match_source': match_source,
             'stats': stats_dict(r),
         })
@@ -269,7 +267,7 @@ def build_match():
     total = len(match_df)
     matched = total - match_source_counts['unmatched']
     print(f"player_match: {total} players")
-    print(f"Matched to sofifa_ratings: {matched} / {total} ({matched / total:.1%})")
+    print(f"Matched to EA ratings: {matched} / {total} ({matched / total:.1%})")
     print(f"  via name+team: {match_source_counts['name_team']}")
     print(f"  via name only (unique): {match_source_counts['name_only']}")
     print(f"  via team-scoped token overlap (partial-legal-name match): {match_source_counts['token_overlap']}")

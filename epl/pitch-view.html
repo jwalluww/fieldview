@@ -153,6 +153,8 @@ body {
 }
 
 /* ── LEFT: compact pitch ── */
+.asof { font-size: 13px; font-weight: 400; letter-spacing: 0; text-transform: none; margin-left: 10px; }
+
 .left-col { width: 560px; flex-shrink: 0; }
 
 .court-label {
@@ -384,7 +386,7 @@ body {
 <div class="wrap">
   <div class="left-col">
     <div class="court-label">
-      <span id="formationLabel">Starting XI (4-3-3)</span>
+      <span><span id="formationLabel">Starting XI (4-3-3)</span><span class="asof" id="ratingsAsOf"></span></span>
       <select id="formationSelect" class="formation-select" onchange="setFormation(this.value)">
         <option value="433">4-3-3</option>
         <option value="442">4-4-2</option>
@@ -593,7 +595,6 @@ function mapPlayer(p) {
     positionGroup: p.position_group,   // coarse: GKP/DEF/MID/FWD
     standardPos: p.standard_pos,       // granular sofifa slot, e.g. "RB" -- null for 207/604 (unmatched)
     rating: p.overall_rating,          // null if no sofifa match -- never defaulted, never shown as "NR"
-    potential: p.potential,
     minutes: s.minutes,
     goals: s.goals_scored,
     assists: s.assists,
@@ -603,11 +604,25 @@ function mapPlayer(p) {
   };
 }
 
+// "Ratings as of <date>" caption: when EA last changed these ratings (ratings_last_changed in ratings_meta.json); nothing if missing.
+async function loadRatingsMeta() {
+  try {
+    const res = await fetch('data/ratings_meta.json');
+    const meta = await res.json();
+    if (meta.ratings_last_changed) {
+      const [y, m, d] = meta.ratings_last_changed.split('-').map(Number);
+      const txt = new Date(y, m - 1, d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      document.getElementById('ratingsAsOf').textContent = 'Ratings as of ' + txt;
+    }
+  } catch (e) {}
+}
+
 async function loadAllPlayers() {
   try {
     const res = await fetch('data/epl_players_master.json');
     const raw = await res.json();
     allPlayers = Object.values(raw).map(mapPlayer);
+    loadRatingsMeta();
   } catch (e) {
     console.error('Failed to load epl_players_master.json:', e);
     allPlayers = [];
@@ -845,7 +860,7 @@ function popupHTML(p) {
       <div class="popup-stat"><div class="popup-stat-val">${p.form != null ? p.form : '—'}</div><div class="popup-stat-label">Form</div></div>
     </div>
     <div class="popup-divider"></div>
-    ${p.rating != null ? `<div class="popup-row"><span class="popup-row-label">sofifa</span><span class="popup-row-val">${p.rating} OVR${p.potential != null ? ' / ' + p.potential + ' POT' : ''}</span></div>` : ''}
+    ${p.rating != null ? `<div class="popup-row"><span class="popup-row-label">EA FC</span><span class="popup-row-val">${p.rating} OVR</span></div>` : ''}
     <div class="popup-row"><span class="popup-row-label">Team</span><span class="popup-row-val">${TEAMS[p.team] ? TEAMS[p.team].name : p.team}</span></div>
   `;
 }

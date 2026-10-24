@@ -155,6 +155,8 @@ body {
 }
 
 /* ── LEFT: compact pitch ── */
+.asof { font-size: 13px; font-weight: 400; letter-spacing: 0; text-transform: none; margin-left: 10px; }
+
 .left-col { width: 560px; flex-shrink: 0; }
 
 .court-label {
@@ -386,7 +388,7 @@ body {
 <div class="wrap">
   <div class="left-col">
     <div class="court-label">
-      <span id="formationLabel">Starting XI (4-3-3)</span>
+      <span><span id="formationLabel">Starting XI (4-3-3)</span><span class="asof" id="ratingsAsOf"></span></span>
       <select id="formationSelect" class="formation-select" onchange="setFormation(this.value)">
         <option value="433">4-3-3</option>
         <option value="442">4-4-2</option>
@@ -607,7 +609,6 @@ function mapPlayer(p) {
     positionGroup: p.position_group,   // coarse: G/D/M/F (ESPN's own single-letter codes)
     standardPos: p.standard_pos,       // granular sofifa slot, e.g. "RB" -- null for 230/1010 (unmatched)
     rating: p.overall_rating,          // null if no sofifa match -- never defaulted, never shown as "NR"
-    potential: p.potential,
     jersey: p.jersey,
     minutes: s.minutes_played,
     goals: s.goals,
@@ -616,11 +617,25 @@ function mapPlayer(p) {
   };
 }
 
+// "Ratings as of <date>" caption: when EA last changed these ratings (ratings_last_changed in ratings_meta.json); nothing if missing.
+async function loadRatingsMeta() {
+  try {
+    const res = await fetch('data/ratings_meta.json');
+    const meta = await res.json();
+    if (meta.ratings_last_changed) {
+      const [y, m, d] = meta.ratings_last_changed.split('-').map(Number);
+      const txt = new Date(y, m - 1, d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      document.getElementById('ratingsAsOf').textContent = 'Ratings as of ' + txt;
+    }
+  } catch (e) {}
+}
+
 async function loadAllPlayers() {
   try {
     const res = await fetch('data/mls_players_master.json');
     const raw = await res.json();
     allPlayers = Object.values(raw).map(mapPlayer);
+    loadRatingsMeta();
   } catch (e) {
     console.error('Failed to load mls_players_master.json:', e);
     allPlayers = [];
@@ -844,7 +859,7 @@ function popupHTML(p) {
       <div class="popup-stat"><div class="popup-stat-val">${p.pointsAdded != null ? p.pointsAdded.toFixed(1) : '—'}</div><div class="popup-stat-label">Pts Add</div></div>
     </div>
     <div class="popup-divider"></div>
-    ${p.rating != null ? `<div class="popup-row"><span class="popup-row-label">sofifa</span><span class="popup-row-val">${p.rating} OVR${p.potential != null ? ' / ' + p.potential + ' POT' : ''}</span></div>` : ''}
+    ${p.rating != null ? `<div class="popup-row"><span class="popup-row-label">EA FC</span><span class="popup-row-val">${p.rating} OVR</span></div>` : ''}
     <div class="popup-row"><span class="popup-row-label">Team</span><span class="popup-row-val">${TEAMS[p.team] ? TEAMS[p.team].name : p.team}</span></div>
   `;
 }

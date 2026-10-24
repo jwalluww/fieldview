@@ -15,7 +15,7 @@ import pandas as pd
 DB_PATH = os.path.join('epl', 'data', 'fieldview.duckdb')
 DEFAULT_OUT_PATH = os.path.join('epl', 'data', 'epl_players_master_db.json')
 
-INT_FIELDS = {'overall_rating', 'potential', 'sofifa_id'}
+INT_FIELDS = {'overall_rating', 'sofifa_id'}
 
 
 def clean(field, v):
@@ -45,7 +45,6 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             'position_group': clean('position_group', r['position_group']),
             'standard_pos': clean('standard_pos', r['standard_pos']),
             'overall_rating': clean('overall_rating', r['overall_rating']),
-            'potential': clean('potential', r['potential']),
             'sofifa_id': clean('sofifa_id', r['sofifa_id']),
             'match_source': clean('match_source', r['match_source']),
             'stats': r['stats'] if isinstance(r['stats'], dict) else None,

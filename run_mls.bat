@@ -1,4 +1,7 @@
 @echo off
+REM UPDATE 2026-10: the sofifa step below was replaced by shared\scripts\scrape_ea_fc.py
+REM (EA's official ratings API, writes mls\data\ea_fc_mls.json, read by build_mls_match.py).
+REM The older notes in this header about scrape_sofifa.py are historical.
 REM run_mls.bat -- runs the full MLS data pipeline locally, end to end.
 REM
 REM Real step order confirmed by reading mls\scripts\ and shared\scripts\
@@ -54,7 +57,9 @@ echo ============================================
 
 call :run_step "scrape_espn_roster.py" "python mls\scripts\scrape_espn_roster.py"
 call :run_step "fetch_asa_stats.py" "python mls\scripts\fetch_asa_stats.py"
-call :run_step "scrape_sofifa.py" "python shared\scripts\scrape_sofifa.py 39 mls\data\mls_sofifa.json"
+call :run_step "scrape_ea_fc.py" "python shared\scripts\scrape_ea_fc.py mls mls\data\ea_fc_mls.json"
+REM scrape_sofifa.py retired 2026-10 (ratings now come from EA's official API via scrape_ea_fc.py); left in place, unused:
+REM call :run_step "scrape_sofifa.py" "python shared\scripts\scrape_sofifa.py 39 mls\data\mls_sofifa.json"
 call :run_step "build_mls_match.py" "python mls\scripts\build_mls_match.py"
 call :run_step "export_mls_master.py" "python mls\scripts\export_mls_master.py mls\data\mls_players_master.json"
 

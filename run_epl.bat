@@ -1,4 +1,7 @@
 @echo off
+REM UPDATE 2026-10: the sofifa step below was replaced by shared\scripts\scrape_ea_fc.py
+REM (EA's official ratings API, writes epl\data\ea_fc_epl.json, read by build_epl_db.py).
+REM The older notes in this header about scrape_sofifa.py are historical.
 REM run_epl.bat -- runs the full EPL data pipeline locally, end to end.
 REM
 REM Real step order confirmed by reading epl\scripts\ and shared\scripts\
@@ -44,7 +47,9 @@ echo  EPL pipeline -- starting
 echo ============================================
 
 call :run_step "scrape_fpl.py" "python epl\scripts\scrape_fpl.py"
-call :run_step "scrape_sofifa.py" "python shared\scripts\scrape_sofifa.py 13 epl\data\sofifa_epl.json"
+call :run_step "scrape_ea_fc.py" "python shared\scripts\scrape_ea_fc.py epl epl\data\ea_fc_epl.json"
+REM scrape_sofifa.py retired 2026-10 (ratings now come from EA's official API via scrape_ea_fc.py); left in place, unused:
+REM call :run_step "scrape_sofifa.py" "python shared\scripts\scrape_sofifa.py 13 epl\data\sofifa_epl.json"
 call :run_step "build_epl_db.py" "python epl\scripts\build_epl_db.py"
 call :run_step "build_epl_match.py" "python epl\scripts\build_epl_match.py"
 call :run_step "export_epl_master.py" "python epl\scripts\export_epl_master.py epl\data\epl_players_master.json"

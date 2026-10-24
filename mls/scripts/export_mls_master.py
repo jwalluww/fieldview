@@ -8,7 +8,7 @@ CLI arg, defaults to a safe non-production _default.json path otherwise.
 No DuckDB layer for MLS (unlike EPL/MLB/NBA/NFL) -- per spec, this reads
 build_mls_match.py's JSON output directly rather than a database table.
 
-standard_pos holds sofifa's granular position (ST/CAM/CDM/LB/CB/...);
+standard_pos holds EA's (formerly sofifa's) granular position (ST/CAM/CDM/LB/CB/...);
 position_group holds ESPN's coarse position (Forward/Defender/...) --
 same two-tier convention as epl/scripts/build_epl_match.py, deliberately
 the reverse of NFL's ourlads_pos(specific)/standard_pos(group) naming
@@ -41,7 +41,6 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             'position_group': p['position_group'],
             'standard_pos': p['standard_pos'],
             'overall_rating': p['overall_rating'],
-            'potential': p['potential'],
             'sofifa_id': p['sofifa_id'],
             'sofifa_match_source': p['sofifa_match_source'],
             'asa_player_id': p['asa_player_id'],

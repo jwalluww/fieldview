@@ -227,9 +227,13 @@ jobs:
         continue-on-error: true
         run: python epl/scripts/scrape_fpl.py
 
-      - name: Run sofifa scraper
+      - name: Run EA FC ratings fetcher
         continue-on-error: true
-        run: python shared/scripts/scrape_sofifa.py 13 epl/data/sofifa_epl.json
+        run: python shared/scripts/scrape_ea_fc.py epl epl/data/ea_fc_epl.json
+      # sofifa scraper retired 2026-10 (EA's official ratings API replaced it); disabled, not deleted:
+      # - name: Run sofifa scraper
+      #   continue-on-error: true
+      #   run: python shared/scripts/scrape_sofifa.py 13 epl/data/sofifa_epl.json
 
       - name: Load raw sources into DuckDB
         continue-on-error: true
@@ -281,9 +285,13 @@ jobs:
         continue-on-error: true
         run: python mls/scripts/fetch_asa_stats.py
 
-      - name: Run sofifa scraper
+      - name: Run EA FC ratings fetcher
         continue-on-error: true
-        run: python shared/scripts/scrape_sofifa.py 39 mls/data/mls_sofifa.json
+        run: python shared/scripts/scrape_ea_fc.py mls mls/data/ea_fc_mls.json
+      # sofifa scraper retired 2026-10 (EA's official ratings API replaced it); disabled, not deleted:
+      # - name: Run sofifa scraper
+      #   continue-on-error: true
+      #   run: python shared/scripts/scrape_sofifa.py 39 mls/data/mls_sofifa.json
 
       - name: Run matching
         continue-on-error: true
