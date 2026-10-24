@@ -14,7 +14,12 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install requests
-      - run: python shared/scripts/ea_ip_test.py
+      - name: Run test (capture all output)
+        run: |
+          mkdir -p shared/data
+          python shared/scripts/ea_ip_test.py > shared/data/ea_ip_test_result.txt 2>&1 || true
+          echo "python exit/log captured" >> shared/data/ea_ip_test_result.txt
+          cat shared/data/ea_ip_test_result.txt
       - name: Commit result
         run: |
           git config user.name "github-actions"

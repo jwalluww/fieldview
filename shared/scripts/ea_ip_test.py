@@ -27,6 +27,3 @@ for slug, limit in CASES:
     print(line)
     lines.append(line)
 
-os.makedirs("shared/data", exist_ok=True)
-with open("shared/data/ea_ip_test_result.txt", "w", encoding="utf-8") as f:
-    f.write("\n".join(lines) + "\n")
