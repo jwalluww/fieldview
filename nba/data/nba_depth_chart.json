@@ -1,5 +1,5 @@
 {
-  "last_changed": "2026-10-24",
+  "last_changed": "2026-10-27",
   "depth_chart": [
     {
       "player_id": 1630168,
@@ -282,6 +282,15 @@
       "draft_pick": 28
     },
     {
+      "player_id": 1631169,
+      "team": "BKN",
+      "position": "PF/SF",
+      "depth_rank": 3,
+      "status_flags": [],
+      "sheet_name": "Josh Minott",
+      "draft_pick": null
+    },
+    {
       "player_id": 1642879,
       "team": "BKN",
       "position": "PG",
@@ -300,30 +309,12 @@
       "draft_pick": null
     },
     {
-      "player_id": 1629611,
-      "team": "BKN",
-      "position": "SG/SF/PG",
-      "depth_rank": 3,
-      "status_flags": [],
-      "sheet_name": "Terance Mann",
-      "draft_pick": null
-    },
-    {
       "player_id": 1641761,
       "team": "BKN",
       "position": "PF/C",
       "depth_rank": 4,
       "status_flags": [],
       "sheet_name": "Grant Nelson",
-      "draft_pick": null
-    },
-    {
-      "player_id": 1631169,
-      "team": "BKN",
-      "position": "PF/SF",
-      "depth_rank": 4,
-      "status_flags": [],
-      "sheet_name": "Josh Minott",
       "draft_pick": null
     },
     {
@@ -336,6 +327,15 @@
       ],
       "sheet_name": "Tyler Bilodeau",
       "draft_pick": 43
+    },
+    {
+      "player_id": 1629611,
+      "team": "BKN",
+      "position": "SG/SF/PG",
+      "depth_rank": 4,
+      "status_flags": [],
+      "sheet_name": "Terance Mann",
+      "draft_pick": null
     },
     {
       "player_id": 1629011,
@@ -872,13 +872,15 @@
       "draft_pick": null
     },
     {
-      "player_id": 1642878,
+      "player_id": null,
       "team": "CLE",
       "position": "PG",
       "depth_rank": 2,
-      "status_flags": [],
-      "sheet_name": "Tyrese Proctor",
-      "draft_pick": null
+      "status_flags": [
+        "rookie"
+      ],
+      "sheet_name": "Meleek Thomas",
+      "draft_pick": 34
     },
     {
       "player_id": 1642281,
@@ -935,15 +937,13 @@
       "draft_pick": null
     },
     {
-      "player_id": null,
+      "player_id": 1642878,
       "team": "CLE",
       "position": "PG",
       "depth_rank": 3,
-      "status_flags": [
-        "rookie"
-      ],
-      "sheet_name": "Meleek Thomas",
-      "draft_pick": 34
+      "status_flags": [],
+      "sheet_name": "Tyrese Proctor",
+      "draft_pick": null
     },
     {
       "player_id": 1642400,
@@ -1224,15 +1224,6 @@
       "draft_pick": null
     },
     {
-      "player_id": 1630192,
-      "team": "DEN",
-      "position": "C/PF",
-      "depth_rank": 3,
-      "status_flags": [],
-      "sheet_name": "Zeke Nnaji",
-      "draft_pick": null
-    },
-    {
       "player_id": 1641747,
       "team": "DEN",
       "position": "PF/C",
@@ -1260,6 +1251,17 @@
       "draft_pick": null
     },
     {
+      "player_id": null,
+      "team": "DEN",
+      "position": "SF/PF",
+      "depth_rank": 3,
+      "status_flags": [
+        "rookie"
+      ],
+      "sheet_name": "Bryce Hopkins",
+      "draft_pick": 49
+    },
+    {
       "player_id": 1631124,
       "team": "DEN",
       "position": "SG/SF",
@@ -1269,15 +1271,13 @@
       "draft_pick": null
     },
     {
-      "player_id": null,
+      "player_id": 1630192,
       "team": "DEN",
-      "position": "SF/PF",
+      "position": "C/PF",
       "depth_rank": 4,
-      "status_flags": [
-        "rookie"
-      ],
-      "sheet_name": "Bryce Hopkins",
-      "draft_pick": 49
+      "status_flags": [],
+      "sheet_name": "Zeke Nnaji",
+      "draft_pick": null
     },
     {
       "player_id": 1641715,
@@ -1547,21 +1547,21 @@
       "draft_pick": null
     },
     {
-      "player_id": 204001,
-      "team": "GSW",
-      "position": "C",
-      "depth_rank": 3,
-      "status_flags": [],
-      "sheet_name": "Kristaps Porziņģis",
-      "draft_pick": null
-    },
-    {
       "player_id": 1629646,
       "team": "GSW",
       "position": "C/PF",
       "depth_rank": 3,
       "status_flags": [],
       "sheet_name": "Charles Bassey",
+      "draft_pick": null
+    },
+    {
+      "player_id": null,
+      "team": "GSW",
+      "position": "PF",
+      "depth_rank": 3,
+      "status_flags": [],
+      "sheet_name": "Graham Ike",
       "draft_pick": null
     },
     {
@@ -1592,12 +1592,12 @@
       "draft_pick": null
     },
     {
-      "player_id": null,
+      "player_id": 204001,
       "team": "GSW",
-      "position": "PF",
+      "position": "C",
       "depth_rank": 4,
       "status_flags": [],
-      "sheet_name": "Graham Ike",
+      "sheet_name": "Kristaps Porziņģis",
       "draft_pick": null
     },
     {
@@ -1992,13 +1992,15 @@
       "draft_pick": null
     },
     {
-      "player_id": 1627739,
+      "player_id": null,
       "team": "LAC",
       "position": "PG",
       "depth_rank": 2,
-      "status_flags": [],
-      "sheet_name": "Kris Dunn",
-      "draft_pick": null
+      "status_flags": [
+        "rookie"
+      ],
+      "sheet_name": "Keaton Wagler",
+      "draft_pick": 5
     },
     {
       "player_id": 1629622,
@@ -2306,12 +2308,12 @@
       "draft_pick": null
     },
     {
-      "player_id": 1642366,
+      "player_id": 1630191,
       "team": "MEM",
-      "position": "PF/C",
+      "position": "C/PF",
       "depth_rank": 2,
       "status_flags": [],
-      "sheet_name": "Quinten Post",
+      "sheet_name": "Isaiah Stewart",
       "draft_pick": null
     },
     {
@@ -2351,21 +2353,21 @@
       "draft_pick": null
     },
     {
-      "player_id": 1630191,
-      "team": "MEM",
-      "position": "C/PF",
-      "depth_rank": 3,
-      "status_flags": [],
-      "sheet_name": "Isaiah Stewart",
-      "draft_pick": null
-    },
-    {
       "player_id": 1641707,
       "team": "MEM",
       "position": "PF",
       "depth_rank": 3,
       "status_flags": [],
       "sheet_name": "Taylor Hendricks",
+      "draft_pick": null
+    },
+    {
+      "player_id": 1642366,
+      "team": "MEM",
+      "position": "PF/C",
+      "depth_rank": 3,
+      "status_flags": [],
+      "sheet_name": "Quinten Post",
       "draft_pick": null
     },
     {
@@ -3220,15 +3222,6 @@
       "draft_pick": null
     },
     {
-      "player_id": 1641755,
-      "team": "NYK",
-      "position": "SG/SF",
-      "depth_rank": 4,
-      "status_flags": [],
-      "sheet_name": "Kevin McCullar Jr.",
-      "draft_pick": null
-    },
-    {
       "player_id": 1628392,
       "team": "OKC",
       "position": "C",
@@ -3256,21 +3249,21 @@
       "draft_pick": null
     },
     {
-      "player_id": 1631114,
+      "player_id": 1642349,
       "team": "OKC",
-      "position": "SF/SG",
+      "position": "PG/SG/SF",
       "depth_rank": 1,
       "status_flags": [],
-      "sheet_name": "Jalen Williams",
+      "sheet_name": "Ajay Mitchell",
       "draft_pick": null
     },
     {
-      "player_id": 1641717,
+      "player_id": 1642272,
       "team": "OKC",
       "position": "SG/PG",
       "depth_rank": 1,
       "status_flags": [],
-      "sheet_name": "Cason Wallace",
+      "sheet_name": "Jared McCain",
       "draft_pick": null
     },
     {
@@ -3294,12 +3287,23 @@
       "draft_pick": null
     },
     {
-      "player_id": 1642349,
+      "player_id": null,
       "team": "OKC",
-      "position": "PG/SG/SF",
+      "position": "PG",
+      "depth_rank": 2,
+      "status_flags": [
+        "rookie"
+      ],
+      "sheet_name": "Bennett Stirtz",
+      "draft_pick": 16
+    },
+    {
+      "player_id": 1629026,
+      "team": "OKC",
+      "position": "SF/PF",
       "depth_rank": 2,
       "status_flags": [],
-      "sheet_name": "Ajay Mitchell",
+      "sheet_name": "Kenrich Williams",
       "draft_pick": null
     },
     {
@@ -3312,15 +3316,6 @@
       "draft_pick": null
     },
     {
-      "player_id": 1642272,
-      "team": "OKC",
-      "position": "SG/PG",
-      "depth_rank": 2,
-      "status_flags": [],
-      "sheet_name": "Jared McCain",
-      "draft_pick": null
-    },
-    {
       "player_id": 1642850,
       "team": "OKC",
       "position": "C",
@@ -3330,32 +3325,12 @@
       "draft_pick": null
     },
     {
-      "player_id": null,
-      "team": "OKC",
-      "position": "PG",
-      "depth_rank": 3,
-      "status_flags": [
-        "rookie"
-      ],
-      "sheet_name": "Bennett Stirtz",
-      "draft_pick": 16
-    },
-    {
       "player_id": 1642260,
       "team": "OKC",
       "position": "PG",
       "depth_rank": 3,
       "status_flags": [],
       "sheet_name": "Nikola Topić",
-      "draft_pick": null
-    },
-    {
-      "player_id": 1629026,
-      "team": "OKC",
-      "position": "SF/PF",
-      "depth_rank": 3,
-      "status_flags": [],
-      "sheet_name": "Kenrich Williams",
       "draft_pick": null
     },
     {
@@ -3371,21 +3346,28 @@
       "player_id": null,
       "team": "OKC",
       "position": "SG",
-      "depth_rank": 4,
+      "depth_rank": 3,
       "status_flags": [],
       "sheet_name": "Josh Dix",
       "draft_pick": null
     },
     {
-      "player_id": null,
+      "player_id": 1631114,
       "team": "OKC",
-      "position": "SG/SF",
+      "position": "SF/SG",
       "depth_rank": 4,
-      "status_flags": [
-        "rookie"
-      ],
-      "sheet_name": "Otega Oweh",
-      "draft_pick": 41
+      "status_flags": [],
+      "sheet_name": "Jalen Williams",
+      "draft_pick": null
+    },
+    {
+      "player_id": 1641717,
+      "team": "OKC",
+      "position": "SG/PG",
+      "depth_rank": 4,
+      "status_flags": [],
+      "sheet_name": "Cason Wallace",
+      "draft_pick": null
     },
     {
       "player_id": 1628976,
@@ -4947,16 +4929,16 @@
       "draft_pick": 35
     },
     {
-      "sheet_name": "Alpha Diallo",
-      "team": "DEN",
-      "position": "SF",
-      "draft_pick": null
-    },
-    {
       "sheet_name": "Bryce Hopkins",
       "team": "DEN",
       "position": "SF/PF",
       "draft_pick": 49
+    },
+    {
+      "sheet_name": "Alpha Diallo",
+      "team": "DEN",
+      "position": "SF",
+      "draft_pick": null
     },
     {
       "sheet_name": "Ugonna Onyenso",
@@ -5023,6 +5005,12 @@
       "team": "LAC",
       "position": "PG",
       "draft_pick": 55
+    },
+    {
+      "sheet_name": "Keaton Wagler",
+      "team": "LAC",
+      "position": "PG",
+      "draft_pick": 5
     },
     {
       "sheet_name": "AK Okereke",
@@ -5131,12 +5119,6 @@
       "team": "OKC",
       "position": "C",
       "draft_pick": 12
-    },
-    {
-      "sheet_name": "Otega Oweh",
-      "team": "OKC",
-      "position": "SG/SF",
-      "draft_pick": 41
     },
     {
       "sheet_name": "Josh Dix",
