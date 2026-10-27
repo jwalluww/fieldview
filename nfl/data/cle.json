@@ -14,11 +14,11 @@
         "standard_pos": "WR",
         "cap_number": "$2,251,926",
         "stats": {
-          "TGT": 34,
-          "REC": 17,
-          "YDS": 345,
+          "TGT": 42,
+          "REC": 20,
+          "YDS": 372,
           "TDs": 3,
-          "YAC": 111
+          "YAC": 119
         },
         "stats_season": 2026
       },
@@ -44,10 +44,10 @@
         "standard_pos": "WR",
         "cap_number": "$10,372,400",
         "stats": {
-          "TGT": 19,
-          "REC": 12,
-          "YDS": 150,
-          "YAC": 39
+          "TGT": 23,
+          "REC": 16,
+          "YDS": 171,
+          "YAC": 42
         },
         "stats_season": 2026
       },
@@ -78,11 +78,11 @@
         "standard_pos": "WR",
         "cap_number": "$3,590,623",
         "stats": {
-          "TGT": 35,
-          "REC": 22,
-          "YDS": 186,
-          "YAC": 88,
-          "CAR": 6
+          "TGT": 45,
+          "REC": 30,
+          "YDS": 315,
+          "YAC": 170,
+          "CAR": 9
         },
         "stats_season": 2026
       },
@@ -197,17 +197,6 @@
         "cap_number": "$1,249,841",
         "stats": {},
         "stats_season": 2026
-      },
-      {
-        "name": "Teven Jenkins",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/Chi",
-        "standard_slot": "RG",
-        "standard_pos": "OL",
-        "cap_number": "$2,732,000",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "RT": [
@@ -233,11 +222,11 @@
         "standard_pos": "TE",
         "cap_number": "$1,532,474",
         "stats": {
-          "TGT": 30,
-          "REC": 19,
-          "YDS": 166,
+          "TGT": 39,
+          "REC": 25,
+          "YDS": 257,
           "TDs": 3,
-          "YAC": 95
+          "YAC": 155
         },
         "stats_season": 2026
       },
@@ -259,19 +248,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Carsen Ryan",
-        "depth": 3,
-        "injured": false,
-        "attainment": "26/7",
-        "standard_slot": "TE",
-        "standard_pos": "TE",
-        "cap_number": "$915,122",
-        "stats": {},
-        "stats_season": 2026
-      },
-      {
         "name": "John Fitzpatrick",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "U/GB",
         "standard_slot": "TE",
@@ -291,13 +269,13 @@
         "standard_pos": "QB",
         "cap_number": "$40,959,128",
         "stats": {
-          "CMP": 111,
-          "ATT": 174,
-          "YDS": 1174,
+          "CMP": 136,
+          "ATT": 210,
+          "YDS": 1482,
           "TDs": 7,
-          "INTs": 2,
-          "SACKS": 24,
-          "RU YDS": 196
+          "INTs": 3,
+          "SACKS": 25,
+          "RU YDS": 215
         },
         "stats_season": 2026
       },
@@ -316,8 +294,19 @@
         "stats_season": 2026
       },
       {
-        "name": "Taylen Green",
+        "name": "Dillon Gabriel",
         "depth": 3,
+        "injured": false,
+        "attainment": "25/3",
+        "standard_slot": "QB",
+        "standard_pos": "QB",
+        "cap_number": "$1,415,073",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Taylen Green",
+        "depth": 4,
         "injured": false,
         "attainment": "26/6",
         "standard_slot": "QB",
@@ -337,18 +326,35 @@
         "standard_pos": "RB",
         "cap_number": "$2,591,390",
         "stats": {
-          "CAR": 73,
-          "RU YDS": 221,
-          "RU TDs": 1,
-          "REC": 18,
-          "RE YDS": 102,
-          "TGT": 20
+          "CAR": 90,
+          "RU YDS": 317,
+          "RU TDs": 3,
+          "REC": 19,
+          "RE YDS": 110,
+          "TGT": 21
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Dylan Sampson",
+        "depth": 2,
+        "injured": false,
+        "attainment": "25/4",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": "$1,108,474",
+        "stats": {
+          "CAR": 6,
+          "RU YDS": 45,
+          "REC": 3,
+          "RE YDS": 32,
+          "TGT": 3
         },
         "stats_season": 2026
       },
       {
         "name": "Jaleel Mclaughlin",
-        "depth": 2,
+        "depth": 3,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "RB",
@@ -366,7 +372,7 @@
       },
       {
         "name": "Audric Estim\u00e9",
-        "depth": 3,
+        "depth": 4,
         "injured": false,
         "attainment": "P/Min",
         "standard_slot": "RB",
@@ -381,7 +387,7 @@
       },
       {
         "name": "Jaret Patterson",
-        "depth": 4,
+        "depth": 5,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "RB",
@@ -433,10 +439,10 @@
         "standard_pos": "EDGE",
         "cap_number": "$1,145,000",
         "stats": {
-          "TKL": 8,
+          "TKL": 11,
           "SACKS": 1.0,
-          "TFL": 3,
-          "QB HIT": 2
+          "TFL": 5,
+          "QB HIT": 3
         },
         "stats_season": 2026
       }
@@ -451,9 +457,9 @@
         "standard_pos": "DI",
         "cap_number": "$5,307,824",
         "stats": {
-          "TKL": 6,
+          "TKL": 7,
           "SACKS": 3.5,
-          "TFL": 5,
+          "TFL": 6,
           "QB HIT": 8
         },
         "stats_season": 2026
@@ -501,10 +507,10 @@
         "standard_pos": "DI",
         "cap_number": "$1,011,666",
         "stats": {
-          "TKL": 3,
-          "SACKS": 1.5,
+          "TKL": 5,
+          "SACKS": 2.5,
           "TFL": 1,
-          "QB HIT": 7
+          "QB HIT": 8
         },
         "stats_season": 2026
       }
@@ -519,7 +525,7 @@
         "standard_pos": "EDGE",
         "cap_number": "$3,851,982",
         "stats": {
-          "TKL": 11,
+          "TKL": 12,
           "SACKS": 3.0,
           "TFL": 5,
           "QB HIT": 4
@@ -552,7 +558,7 @@
         "standard_pos": "LB",
         "cap_number": "$2,681,909",
         "stats": {
-          "TKL": 22,
+          "TKL": 26,
           "SACKS": 1.0,
           "PD": 1,
           "TFL": 3,
@@ -584,10 +590,10 @@
         "standard_pos": "LB",
         "cap_number": "$2,628,000",
         "stats": {
-          "TKL": 23,
+          "TKL": 30,
           "SACKS": 1.0,
           "PD": 2,
-          "TFL": 3,
+          "TFL": 5,
           "QB HIT": 3
         },
         "stats_season": 2026
@@ -601,7 +607,7 @@
         "standard_pos": "LB",
         "cap_number": "$1,005,000",
         "stats": {
-          "TKL": 3
+          "TKL": 4
         },
         "stats_season": 2026
       },
@@ -629,9 +635,9 @@
         "standard_pos": "CB",
         "cap_number": "$19,048,412",
         "stats": {
-          "TKL": 15,
-          "INTs": 1,
-          "PD": 4,
+          "TKL": 16,
+          "INTs": 2,
+          "PD": 7,
           "QB HIT": 1
         },
         "stats_season": 2026
@@ -658,12 +664,12 @@
         "standard_pos": "S",
         "cap_number": "$9,053,000",
         "stats": {
-          "TKL": 17,
+          "TKL": 22,
           "SACKS": 1.0,
           "INTs": 1,
-          "PD": 3,
+          "PD": 4,
           "TFL": 1,
-          "QB HIT": 1
+          "QB HIT": 3
         },
         "stats_season": 2026
       },
@@ -705,7 +711,7 @@
         "standard_pos": "S",
         "cap_number": "$3,520,000",
         "stats": {
-          "TKL": 13,
+          "TKL": 19,
           "SACKS": 1.0,
           "INTs": 1,
           "PD": 2,
@@ -722,9 +728,9 @@
         "standard_pos": "S",
         "cap_number": "$1,518,217",
         "stats": {
-          "TKL": 11,
+          "TKL": 14,
           "PD": 3,
-          "TFL": 1
+          "TFL": 2
         },
         "stats_season": 2026
       }
@@ -739,7 +745,7 @@
         "standard_pos": "CB",
         "cap_number": "$4,916,000",
         "stats": {
-          "TKL": 15,
+          "TKL": 16,
           "PD": 2,
           "TFL": 1
         },
@@ -770,9 +776,10 @@
         "standard_pos": "CB",
         "cap_number": "$1,102,583",
         "stats": {
-          "TKL": 11,
+          "TKL": 13,
           "INTs": 1,
-          "PD": 5
+          "PD": 6,
+          "TFL": 1
         },
         "stats_season": 2026
       },
@@ -929,8 +936,19 @@
         "stats_season": null
       },
       {
-        "name": "Sam Kamara",
+        "name": "Eric Johnson",
         "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Sam Kamara",
+        "depth": 3,
         "injured": false,
         "attainment": "SF22",
         "standard_slot": "RDT",
@@ -943,17 +961,6 @@
           "QB HIT": 1
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Eric Johnson",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "RDT",
-        "standard_pos": "DI",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "LB": [
@@ -1008,8 +1015,19 @@
     ],
     "IR": [
       {
-        "name": "Raheim Sanders",
+        "name": "Teven Jenkins",
         "depth": 1,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$2,732,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Raheim Sanders",
+        "depth": 2,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1026,7 +1044,7 @@
       },
       {
         "name": "Alex Wright",
-        "depth": 2,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1037,7 +1055,7 @@
       },
       {
         "name": "Edefuan Ulofoshio",
-        "depth": 3,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1048,7 +1066,7 @@
       },
       {
         "name": "Elijah Chatman",
-        "depth": 4,
+        "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1059,7 +1077,7 @@
       },
       {
         "name": "Damarri Mathis",
-        "depth": 5,
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1123,19 +1141,8 @@
     ],
     "DFR": [
       {
-        "name": "Dillon Gabriel",
-        "depth": 1,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "DFR",
-        "standard_pos": "DEF",
-        "cap_number": "$1,415,073",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Kalia Davis",
-        "depth": 2,
+        "depth": 1,
         "injured": true,
         "attainment": null,
         "standard_slot": "DFR",
@@ -1143,17 +1150,6 @@
         "cap_number": "$2,000,000",
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Dylan Sampson",
-        "depth": 3,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "DFR",
-        "standard_pos": "DEF",
-        "cap_number": "$798,474",
-        "stats": {},
-        "stats_season": 2026
       }
     ]
   }

@@ -31,41 +31,22 @@
         "standard_pos": "WR",
         "cap_number": "$1,664,706",
         "stats": {
-          "TGT": 5,
-          "REC": 2,
-          "YDS": 20,
+          "TGT": 8,
+          "REC": 3,
+          "YDS": 33,
           "TDs": 1,
-          "YAC": 7
+          "YAC": 13
         },
         "stats_season": 2026
       }
     ],
     "RWR": [
       {
-        "name": "Jacob Cowing",
-        "depth": 1,
-        "injured": false,
-        "attainment": "24/4",
-        "standard_slot": "RWR",
-        "standard_pos": "WR",
-        "cap_number": "$1,207,177",
-        "stats": {
-          "TGT": 5,
-          "REC": 1,
-          "YDS": 9,
-          "YAC": 3,
-          "CAR": 1
-        },
-        "stats_season": 2026
-      }
-    ],
-    "SWR": [
-      {
         "name": "Deebo Samuel Sr.",
         "depth": 1,
         "injured": false,
         "attainment": "U/Was",
-        "standard_slot": "SWR",
+        "standard_slot": "RWR",
         "standard_pos": "WR",
         "cap_number": "$4,880,000",
         "stats": {
@@ -79,20 +60,50 @@
         "stats_season": 2026
       },
       {
-        "name": "Jordan Watkins",
+        "name": "Jacob Cowing",
         "depth": 2,
+        "injured": false,
+        "attainment": "24/4",
+        "standard_slot": "RWR",
+        "standard_pos": "WR",
+        "cap_number": "$1,207,177",
+        "stats": {
+          "TGT": 10,
+          "REC": 4,
+          "YDS": 47,
+          "YAC": 7,
+          "CAR": 2
+        },
+        "stats_season": 2026
+      }
+    ],
+    "SWR": [
+      {
+        "name": "Jordan Watkins",
+        "depth": 1,
         "injured": false,
         "attainment": "25/4",
         "standard_slot": "SWR",
         "standard_pos": "WR",
         "cap_number": "$1,171,454",
         "stats": {
-          "TGT": 3,
-          "REC": 3,
-          "YDS": 82,
-          "YAC": 33
+          "TGT": 9,
+          "REC": 6,
+          "YDS": 138,
+          "YAC": 35
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Christian Kirk",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/Hou",
+        "standard_slot": "SWR",
+        "standard_pos": "WR",
+        "cap_number": "$2,960,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LT": [
@@ -225,11 +236,11 @@
         "standard_pos": "TE",
         "cap_number": "$14,147,529",
         "stats": {
-          "TGT": 36,
-          "REC": 26,
-          "YDS": 337,
+          "TGT": 46,
+          "REC": 34,
+          "YDS": 425,
           "TDs": 5,
-          "YAC": 173
+          "YAC": 213
         },
         "stats_season": 2026
       },
@@ -242,9 +253,9 @@
         "standard_pos": "TE",
         "cap_number": "$3,514,000",
         "stats": {
-          "TGT": 4,
-          "REC": 2,
-          "YDS": 19,
+          "TGT": 5,
+          "REC": 3,
+          "YDS": 33,
           "YAC": 16
         },
         "stats_season": 2026
@@ -293,13 +304,13 @@
         "standard_pos": "QB",
         "cap_number": "$23,709,530",
         "stats": {
-          "CMP": 119,
-          "ATT": 171,
-          "YDS": 1460,
-          "TDs": 14,
-          "INTs": 2,
-          "SACKS": 5,
-          "RU YDS": 156
+          "CMP": 146,
+          "ATT": 211,
+          "YDS": 1748,
+          "TDs": 15,
+          "INTs": 4,
+          "SACKS": 7,
+          "RU YDS": 161
         },
         "stats_season": 2026
       },
@@ -338,12 +349,12 @@
         "standard_pos": "RB",
         "cap_number": "$10,856,472",
         "stats": {
-          "CAR": 77,
-          "RU YDS": 350,
-          "RU TDs": 7,
-          "REC": 28,
-          "RE YDS": 190,
-          "TGT": 35
+          "CAR": 84,
+          "RU YDS": 389,
+          "RU TDs": 8,
+          "REC": 34,
+          "RE YDS": 251,
+          "TGT": 42
         },
         "stats_season": 2026
       },
@@ -356,11 +367,12 @@
         "standard_pos": "RB",
         "cap_number": "$1,241,686",
         "stats": {
-          "CAR": 45,
-          "RU YDS": 170,
-          "REC": 2,
-          "RE YDS": 8,
-          "TGT": 3
+          "CAR": 57,
+          "RU YDS": 233,
+          "RU TDs": 1,
+          "REC": 3,
+          "RE YDS": 4,
+          "TGT": 6
         },
         "stats_season": 2026
       },
@@ -373,8 +385,11 @@
         "standard_pos": "RB",
         "cap_number": "$1,114,921",
         "stats": {
-          "CAR": 4,
-          "RU YDS": 15
+          "CAR": 5,
+          "RU YDS": 21,
+          "REC": 1,
+          "RE YDS": 11,
+          "TGT": 1
         },
         "stats_season": 2026
       },
@@ -400,9 +415,9 @@
         "standard_pos": "RB",
         "cap_number": "$2,896,000",
         "stats": {
-          "REC": 5,
-          "RE YDS": 65,
-          "TGT": 8
+          "REC": 8,
+          "RE YDS": 76,
+          "TGT": 11
         },
         "stats_season": 2026
       }
@@ -433,25 +448,10 @@
         "standard_pos": "EDGE",
         "cap_number": "$5,424,238",
         "stats": {
-          "TKL": 3,
+          "TKL": 4,
           "SACKS": 1.0,
           "TFL": 1,
           "QB HIT": 1
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Ogbo Okoronkwo",
-        "depth": 3,
-        "injured": false,
-        "attainment": "U/Phi",
-        "standard_slot": "LE",
-        "standard_pos": "EDGE",
-        "cap_number": null,
-        "stats": {
-          "TKL": 2,
-          "SACKS": 1.0,
-          "QB HIT": 3
         },
         "stats_season": 2026
       }
@@ -482,7 +482,7 @@
         "standard_pos": "DI",
         "cap_number": "$895,000",
         "stats": {
-          "TKL": 2
+          "TKL": 5
         },
         "stats_season": 2026
       }
@@ -577,7 +577,7 @@
         "standard_pos": "LB",
         "cap_number": "$3,405,556",
         "stats": {
-          "TKL": 18
+          "TKL": 22
         },
         "stats_season": 2026
       },
@@ -590,9 +590,9 @@
         "standard_pos": "LB",
         "cap_number": "$1,010,837",
         "stats": {
-          "TKL": 18,
+          "TKL": 19,
           "SACKS": 1.0,
-          "TFL": 1,
+          "TFL": 2,
           "QB HIT": 1
         },
         "stats_season": 2026
@@ -619,10 +619,10 @@
         "standard_pos": "LB",
         "cap_number": "$17,865,471",
         "stats": {
-          "TKL": 28,
+          "TKL": 34,
           "SACKS": 0.5,
           "PD": 3,
-          "TFL": 1,
+          "TFL": 3,
           "QB HIT": 3
         },
         "stats_season": 2026
@@ -664,7 +664,7 @@
         "standard_pos": "CB",
         "cap_number": "$1,742,693",
         "stats": {
-          "TKL": 14,
+          "TKL": 17,
           "INTs": 3,
           "PD": 5
         },
@@ -679,7 +679,7 @@
         "standard_pos": "CB",
         "cap_number": "$1,075,000",
         "stats": {
-          "TKL": 4,
+          "TKL": 6,
           "PD": 3
         },
         "stats_season": 2026
@@ -711,7 +711,7 @@
         "standard_pos": "S",
         "cap_number": "$1,259,734",
         "stats": {
-          "TKL": 13,
+          "TKL": 16,
           "PD": 3,
           "QB HIT": 1
         },
@@ -728,7 +728,7 @@
         "standard_pos": "S",
         "cap_number": "$3,905,055",
         "stats": {
-          "TKL": 21,
+          "TKL": 23,
           "PD": 2,
           "TFL": 1
         },
@@ -743,7 +743,7 @@
         "standard_pos": "S",
         "cap_number": "$1,445,000",
         "stats": {
-          "TKL": 2
+          "TKL": 4
         },
         "stats_season": 2026
       }
@@ -758,7 +758,7 @@
         "standard_pos": "CB",
         "cap_number": "$8,870,000",
         "stats": {
-          "TKL": 15,
+          "TKL": 17,
           "PD": 1
         },
         "stats_season": 2026
@@ -918,6 +918,21 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Ogbo Okoronkwo",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/Phi",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 2,
+          "SACKS": 1.0,
+          "QB HIT": 3
+        },
+        "stats_season": 2026
       }
     ],
     "DT": [
@@ -933,21 +948,8 @@
         "stats_season": null
       },
       {
-        "name": "Kevin Givens",
-        "depth": 2,
-        "injured": false,
-        "attainment": "CF19",
-        "standard_slot": "RDT",
-        "standard_pos": "DI",
-        "cap_number": null,
-        "stats": {
-          "QB HIT": 1
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Naquan Jones",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "P/Min",
         "standard_slot": "RDT",
@@ -967,7 +969,7 @@
         "standard_pos": "DEF",
         "cap_number": null,
         "stats": {
-          "TKL": 2
+          "TKL": 3
         },
         "stats_season": 2026
       }
@@ -1185,19 +1187,6 @@
         "standard_slot": "LEFT",
         "standard_pos": "DEF",
         "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      }
-    ],
-    "DFR": [
-      {
-        "name": "Christian Kirk",
-        "depth": 1,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "DFR",
-        "standard_pos": "DEF",
-        "cap_number": "$2,960,000",
         "stats": {},
         "stats_season": null
       }
