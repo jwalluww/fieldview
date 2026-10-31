@@ -623,6 +623,7 @@ body {
   <button class="view-tab" onclick="setView('pergame', this)">Per Game</button>
   <button class="view-tab" onclick="setView('financial', this)">Financial</button>
   <button class="view-tab" onclick="setView('bio', this)">Bio</button>
+  <button class="view-tab" onclick="setView('advanced', this)">Advanced</button>
 </div>
 
 <!-- Filter bar -->
@@ -698,6 +699,16 @@ body {
         <th onclick="sortBy('rpg')" id="th-rpg" style="display:none">RPG <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('apg')" id="th-apg" style="display:none">APG <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('mpg')" id="th-mpg" style="display:none">MPG <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('ts_pct')" id="th-ts_pct" style="display:none">TS% <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('usg_pct')" id="th-usg_pct" style="display:none">USG% <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('trb_pct')" id="th-trb_pct" style="display:none">TRB% <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('ast_pct')" id="th-ast_pct" style="display:none">AST% <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('tov_pct')" id="th-tov_pct" style="display:none">TOV% <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('bpm')" id="th-bpm" style="display:none">BPM <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('vorp')" id="th-vorp" style="display:none">VORP <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('ws_per_48')" id="th-ws_per_48" style="display:none">WS/48 <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('adv_mp')" id="th-adv_mp" style="display:none">MP <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('adv_games')" id="th-adv_games" style="display:none">G <span class="sort-icon">↕</span></th>
       </tr>
     </thead>
     <tbody id="tableBody"></tbody>
@@ -784,12 +795,17 @@ let currentView = 'overview';
 let selectedTeams = new Set();
 let selectedPositions = new Set();
 
+// Basketball-Reference advanced columns (Advanced tab). ts_pct is a 0-1
+// fraction in the data; the rest are already in percent / counting units.
+const ADV_COLS = ['ts_pct','usg_pct','trb_pct','ast_pct','tov_pct','bpm','vorp','ws_per_48','adv_mp','adv_games'];
+
 // View definitions: columns to show
 const VIEWS = {
   overview:  { cols: ['team','pos','name','status','rating','salary'],                          sort: 'rating' },
   pergame:   { cols: ['team','pos','name','ppg','rpg','apg','mpg'],                              sort: 'ppg' },
   financial: { cols: ['team','pos','name','salary','years_remaining','status'],                  sort: 'salary' },
   bio:       { cols: ['team','pos','name','height','weight','games_played','games_started'],     sort: 'name' },
+  advanced:  { cols: ['team','pos','name','ts_pct','usg_pct','trb_pct','ast_pct','tov_pct','bpm','vorp','ws_per_48','adv_mp','adv_games'], sort: 'adv_mp' },
 };
 
 function setView(viewKey, btn) {
@@ -802,12 +818,12 @@ function setView(viewKey, btn) {
   updateColumns(view.cols);
 
   sortCol = view.sort;
-  sortDir = (view.sort === 'rating' || view.sort === 'salary' || view.sort === 'ppg') ? 'desc' : 'asc';
+  sortDir = (view.sort === 'rating' || view.sort === 'salary' || view.sort === 'ppg' || view.sort === 'adv_mp') ? 'desc' : 'asc';
   applyFilters();
 }
 
 function updateColumns(cols) {
-  const allCols = ['team','pos','name','status','rating','salary','years_remaining','height','weight','games_played','games_started','ppg','rpg','apg','mpg'];
+  const allCols = ['team','pos','name','status','rating','salary','years_remaining','height','weight','games_played','games_started','ppg','rpg','apg','mpg', ...ADV_COLS];
 
   const colMap = {
     team: 'th-team', pos: 'th-pos', name: 'th-name', status: 'th-status',
@@ -815,6 +831,7 @@ function updateColumns(cols) {
     height: 'th-height', weight: 'th-weight', games_played: 'th-games_played',
     games_started: 'th-games_started', ppg: 'th-ppg', rpg: 'th-rpg', apg: 'th-apg', mpg: 'th-mpg',
   };
+  ADV_COLS.forEach(c => { colMap[c] = 'th-' + c; });
 
   allCols.forEach(col => {
     const th = document.getElementById(colMap[col]);
@@ -850,6 +867,7 @@ async function loadAll() {
       salary: player.contract_salary || null,
       salary_raw: parseSalary(player.contract_salary),
       years_remaining: player.contract_years_remaining != null ? player.contract_years_remaining : null,
+      ...Object.fromEntries(ADV_COLS.map(c => [c, player[c] != null ? player[c] : null])),
     });
   }
 
@@ -1014,7 +1032,7 @@ function sortBy(col) {
     sortDir = sortDir === 'asc' ? 'desc' : 'asc';
   } else {
     sortCol = col;
-    sortDir = (col === 'rating' || col === 'salary' || col === 'ppg' || col === 'rpg' || col === 'apg' || col === 'mpg') ? 'desc' : 'asc';
+    sortDir = (col === 'rating' || col === 'salary' || col === 'ppg' || col === 'rpg' || col === 'apg' || col === 'mpg' || ADV_COLS.includes(col)) ? 'desc' : 'asc';
   }
 
   document.querySelectorAll('.table thead th').forEach(th => {
@@ -1054,7 +1072,9 @@ function sortPlayers() {
       case 'rpg':               av = a.rpg;    bv = b.rpg;    break;
       case 'apg':               av = a.apg;    bv = b.apg;    break;
       case 'mpg':               av = a.mpg;    bv = b.mpg;    break;
-      default:                 av = a.rating; bv = b.rating;
+      default:
+        if (ADV_COLS.includes(sortCol)) { av = a[sortCol]; bv = b[sortCol]; }
+        else { av = a.rating; bv = b.rating; }
     }
     const aNull = av == null || av === '';
     const bNull = bv == null || bv === '';
@@ -1164,6 +1184,17 @@ function renderTable() {
       if (cols.includes(col)) {
         const val = p[col];
         row += '<td style="text-align:center;font-family:\'Barlow Condensed\',sans-serif;font-weight:700;font-size:16px;color:var(--text)">' + (val != null ? val : '<span style="color:var(--text-muted)">—</span>') + '</td>';
+      }
+    });
+    ADV_COLS.forEach(col => {
+      if (cols.includes(col)) {
+        const val = p[col];
+        const txt = val == null ? null
+          : col === 'ts_pct' ? (val * 100).toFixed(1) + '%'
+          : col === 'ws_per_48' ? val.toFixed(3)
+          : (col === 'adv_mp' || col === 'adv_games') ? String(val)
+          : val.toFixed(1);
+        row += '<td style="text-align:center;font-family:Barlow Condensed,sans-serif;font-weight:700;font-size:16px;color:var(--text)">' + (txt != null ? txt : '<span style="color:var(--text-muted)">—</span>') + '</td>';
       }
     });
     row += '</tr>';

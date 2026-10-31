@@ -268,17 +268,20 @@ body {
 .subs-pop {
   position: absolute; z-index: 50;
   background: var(--surface2); border: 1px solid var(--border2); border-radius: 8px;
-  padding: 6px; width: 184px; box-shadow: 0 8px 20px rgba(0,0,0,.4);
+  padding: 6px; width: 200px; max-height: 280px; overflow-y: auto; box-shadow: 0 8px 20px rgba(0,0,0,.4);
   display: none;
 }
 .subs-pop.open { display: block; }
-.subs-pop-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 9px; letter-spacing: .5px; text-transform: uppercase; color: var(--text-dim); padding: 2px 4px 5px; }
+.subs-pop-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 9px; letter-spacing: .5px; text-transform: uppercase; color: var(--text-dim); padding: 2px 4px 5px; display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.sort-toggle { display: inline-flex; border: 1px solid var(--border2); border-radius: 5px; overflow: hidden; flex-shrink: 0; }
+.sort-toggle button { background: none; border: none; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: .5px; text-transform: uppercase; padding: 2px 7px; cursor: pointer; }
+.sort-toggle button.active { background: rgba(0,212,255,.15); color: var(--accent); }
 .subs-row { display: flex; align-items: center; gap: 6px; padding: 5px 4px; border-radius: 5px; cursor: pointer; }
 .subs-row:hover { background: var(--border); }
-.subs-dot { width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0; display:flex; align-items:center; justify-content:center; font-size:7px; font-weight:900; color:#05261a; font-family:'Barlow Condensed'; }
-.subs-name { font-size: 11px; font-weight: 600; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.subs-mpg { font-size: 9px; color: var(--text-dim); flex-shrink: 0; }
-.subs-empty { font-size: 10px; color: var(--text-dim); padding: 4px; }
+.subs-dot { width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:900; color:#05261a; font-family:'Barlow Condensed'; }
+.subs-name { font-size: 13px; font-weight: 600; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.subs-mpg { font-size: 11px; color: var(--text-dim); flex-shrink: 0; }
+.subs-empty { font-size: 11px; color: var(--text-dim); padding: 4px; }
 
 /* ── RIGHT: full bench list, no scroll ── */
 .right-col { flex: 1; min-width: 0; }
@@ -393,7 +396,7 @@ body {
 <div class="wrap">
   <div class="left-col">
     <div class="court-label">
-      <span>Starting Five<span class="asof" id="ratingsAsOf" title="Ratings from nba2kapi.com (data: 2kratings.com)"></span><span class="asof" id="statsAsOf" title="Stats and rosters from ESPN"></span></span>
+      <span>Starting Five<span class="asof" id="ratingsAsOf" title="Ratings from nba2kapi.com (data: 2kratings.com). Advanced stats: Basketball-Reference"></span><span class="asof" id="statsAsOf" title="Stats and rosters from ESPN"></span></span>
       <span class="depth-chart-updated" id="depthChartUpdated"></span>
     </div>
 
@@ -428,7 +431,7 @@ body {
   </div>
 
   <div class="right-col">
-    <div class="rotation-title">Bench &amp; Rotation (by Minutes Per Game)</div>
+    <div class="rotation-title"><span id="benchTitle">Bench &amp; Rotation</span><span class="sort-toggle" data-sort-toggle></span></div>
     <div class="bench-list" id="benchList"></div>
   </div>
 </div>
@@ -706,19 +709,52 @@ function renderCourt() {
 // ══════════════════════════════════════════
 // BENCH & ROTATION LIST
 // ══════════════════════════════════════════
+// Shared sub sort (popover + bench list): '2k' (rating desc) or 'mpg' (minutes desc).
+// Nulls sort last in both modes; the other metric breaks ties. Default = mpg (the old order).
+const SUBSORT_KEY = 'fieldview_nba_subsort';
+let subSort = 'mpg';
+try { const v = localStorage.getItem(SUBSORT_KEY); if (v === '2k' || v === 'mpg') subSort = v; } catch (e) {}
+
+function sortSubs(list) {
+  const primary = subSort === '2k' ? 'rating' : 'mpg';
+  const secondary = subSort === '2k' ? 'mpg' : 'rating';
+  const cmp = (a, b, k) => (a[k] == null) - (b[k] == null) || (b[k] - a[k]) || 0;
+  return list.slice().sort((a, b) => cmp(a, b, primary) || cmp(a, b, secondary));
+}
+
+function renderSortToggles() {
+  document.querySelectorAll('[data-sort-toggle]').forEach(el => {
+    el.innerHTML = `<button data-sort="2k" class="${subSort === '2k' ? 'active' : ''}">2K</button>` +
+                   `<button data-sort="mpg" class="${subSort === 'mpg' ? 'active' : ''}">MPG</button>`;
+    el.querySelectorAll('button').forEach(btn => btn.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      setSubSort(btn.dataset.sort);
+    }));
+  });
+}
+
+function setSubSort(mode) {
+  subSort = mode;
+  try { localStorage.setItem(SUBSORT_KEY, mode); } catch (e) {}
+  renderBenchList();
+  if (openPopoverPos) fillSubsPopover(openPopoverPos);
+}
+
 function renderBenchList() {
   const list = document.getElementById('benchList');
   const startingIds = new Set(ZONE_ORDER.map(pos => getStarter(pos)?.id).filter(Boolean));
   const bench = teamPlayers
-    .filter(p => !startingIds.has(p.id))
-    .sort((a, b) => (b.mpg || 0) - (a.mpg || 0));
+    .filter(p => !startingIds.has(p.id));
+  document.getElementById('benchTitle').textContent =
+    'Bench & Rotation (by ' + (subSort === '2k' ? '2K Rating' : 'Minutes Per Game') + ')';
+  renderSortToggles();
 
   if (!bench.length) {
     list.innerHTML = '<div class="bench-empty">No bench players on this roster yet.</div>';
     return;
   }
 
-  list.innerHTML = bench.map((p, i) => {
+  list.innerHTML = sortSubs(bench).map((p, i) => {
     const rc = ratingColor(p.rating);
     return `
       <div class="bench-row">
@@ -753,6 +789,30 @@ function attachPopupHandlers(container) {
 // ══════════════════════════════════════════
 let openPopoverPos = null;
 
+function fillSubsPopover(pos) {
+  const popover = document.getElementById('subsPop');
+  const allStarterIds = new Set(ZONE_ORDER.map(z => getStarter(z)?.id).filter(Boolean));
+  const subs = sortSubs(teamPlayers.filter(p => !allStarterIds.has(p.id)));
+
+  popover.innerHTML = `<div class="subs-pop-label"><span>Sub in (any position)</span><span class="sort-toggle" data-sort-toggle></span></div>` +
+    (subs.length ? subs.map(s => `
+      <div class="subs-row" data-pid="${s.id}">
+        <div class="subs-dot" style="background:${ratingColor(s.rating)}">${s.rating || '—'}</div>
+        <div class="subs-name">${s.name}</div>
+        <div class="subs-mpg">${s.mpg != null ? s.mpg : '—'}</div>
+      </div>`).join('') : `<div class="subs-empty">No bench players available</div>`);
+  renderSortToggles();
+
+  popover.querySelectorAll('.subs-row').forEach(row => {
+    row.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      substitutePlayer(row.dataset.pid, pos);
+      popover.classList.remove('open');
+      openPopoverPos = null;
+    });
+  });
+}
+
 function attachSubsPopoverHandlers(layer) {
   layer.querySelectorAll('.player-card').forEach(card => {
     card.addEventListener('click', (e) => {
@@ -765,18 +825,7 @@ function attachSubsPopoverHandlers(layer) {
         openPopoverPos = null;
         return;
       }
-      const allStarterIds = new Set(ZONE_ORDER.map(z => getStarter(z)?.id).filter(Boolean));
-      const subs = teamPlayers
-        .filter(p => !allStarterIds.has(p.id))
-        .sort((a, b) => (b.mpg || 0) - (a.mpg || 0));
-
-      popover.innerHTML = `<div class="subs-pop-label">Sub in (any position)</div>` +
-        (subs.length ? subs.map(s => `
-          <div class="subs-row" data-pid="${s.id}">
-            <div class="subs-dot" style="background:${ratingColor(s.rating)}">${s.rating || '—'}</div>
-            <div class="subs-name">${s.name}</div>
-            <div class="subs-mpg">${s.mpg != null ? s.mpg : '—'}</div>
-          </div>`).join('') : `<div class="subs-empty">No bench players available</div>`);
+      fillSubsPopover(pos);
 
       const courtCanvas = card.closest('.court-canvas');
       const rect = card.getBoundingClientRect();
@@ -785,15 +834,6 @@ function attachSubsPopoverHandlers(layer) {
       popover.style.top = (rect.top - parentRect.top) + 'px';
       popover.classList.add('open');
       openPopoverPos = pos;
-
-      popover.querySelectorAll('.subs-row').forEach(row => {
-        row.addEventListener('click', (ev) => {
-          ev.stopPropagation();
-          substitutePlayer(row.dataset.pid, pos);
-          popover.classList.remove('open');
-          openPopoverPos = null;
-        });
-      });
     });
   });
 }

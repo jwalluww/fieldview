@@ -5,16 +5,12 @@ REM Real step order confirmed against nba\PIPELINE.md's "Execution order"
 REM section and .github\workflows\scrape.yml's "scrape-nba" job
 REM (2026-08-23) -- NOT assumed from any prior summary.
 REM
-REM fetch_stats.py IS included here (unlike scrape.yml's cloud job, which
-REM has it commented out) -- CLAUDE.md and PIPELINE.md both confirm
-REM stats.nba.com blocks the hosted GitHub Actions runner's IP but works
-REM fine locally, and this script is documented as "runs locally/manually
-REM only." A local orchestrator is exactly that context.
-REM
-REM scrape_2kratings.py is still the real daily-trickle scraper (3 random
-REM teams/run against its own rolling pool state file) -- running it here
-REM does one more trickle pass, not a full 30-team pull. That's its real
-REM current behavior, not a limitation of this orchestrator.
+REM Step order mirrors scrape.yml's "scrape-nba" job (ESPN stats first --
+REM every matcher reads nba_stats.json -- then Basketball-Reference advanced
+REM stats, then the other scrapers), 2026-10-31. fetch_stats.py
+REM (stats.nba.com) and scrape_2kratings.py are retired and not called; the
+REM ratings come from nba2kapi (scrape_nba2kapi.py). Every NBA source now
+REM runs in the cloud; nothing here is local-only.
 REM
 REM Does NOT git add/commit/push anything (unlike the cloud job's final
 REM step) -- this only regenerates local nba\data\*.json /
@@ -41,6 +37,7 @@ echo ============================================
 
 REM fetch_stats.py retired 2026-10 (stats.nba.com unreachable); ESPN replaces it:
 call :run_step "fetch_espn_stats.py" "python nba\scripts\fetch_espn_stats.py"
+call :run_step "scrape_bbr_advanced.py" "python nba\scripts\scrape_bbr_advanced.py"
 call :run_step "scrape_contracts_spotrac.py" "python nba\scripts\scrape_contracts_spotrac.py"
 call :run_step "scrape_nba2kapi.py" "python nba\scripts\scrape_nba2kapi.py"
 REM scrape_2kratings.py (2kratings.com trickle scraper) retired 2026-10 in favor of nba2kapi; left in place, unused:

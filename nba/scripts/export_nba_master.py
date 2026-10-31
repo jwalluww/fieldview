@@ -22,7 +22,16 @@ DEFAULT_OUT_PATH = os.path.join('nba', 'data', 'nba_players_master_db.json')
 # Fields that are ints in the original schema but round-trip through
 # DuckDB as DOUBLE (nullable numeric columns upcast to float64 in pandas).
 INT_FIELDS = {'weight', 'games_played', 'games_started', 'depth_rank',
-              'overall_rating', 'contract_years_remaining'}
+              'overall_rating', 'contract_years_remaining', 'adv_games', 'adv_mp'}
+
+# Basketball-Reference advanced fields (nba_stats.json's own ESPN
+# ts_pct/per/ast_ratio/tov_ratio/vorp/usg/reb stay raw there -- BBR replaces them).
+BBR_FIELDS = ('ts_pct', 'usg_pct', 'trb_pct', 'ast_pct', 'tov_pct', 'stl_pct',
+              'blk_pct', 'per', 'ws_per_48', 'obpm', 'dbpm', 'bpm', 'vorp',
+              'adv_mp', 'adv_games', 'adv_season')
+# The box-score part of nba_stats.json's prev_season block (its ESPN advanced
+# fields are dropped for the same reason).
+PREV_BOX_FIELDS = ('season', 'ppg', 'rpg', 'apg', 'mpg', 'games_played', 'games_started')
 
 
 def clean(field, v):
@@ -57,7 +66,42 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             pm.depth_rank,
             pm.overall_rating,
             pm.contract_salary,
-            pm.contract_years_remaining
+            pm.contract_years_remaining,
+            s.stats_season,
+            s.prev_season,
+            s.injury_status,
+            pm.ts_pct,
+            pm.usg_pct,
+            pm.trb_pct,
+            pm.ast_pct,
+            pm.tov_pct,
+            pm.stl_pct,
+            pm.blk_pct,
+            pm.per,
+            pm.ws_per_48,
+            pm.obpm,
+            pm.dbpm,
+            pm.bpm,
+            pm.vorp,
+            pm.adv_mp,
+            pm.adv_games,
+            pm.adv_season,
+            pm.prev_ts_pct,
+            pm.prev_usg_pct,
+            pm.prev_trb_pct,
+            pm.prev_ast_pct,
+            pm.prev_tov_pct,
+            pm.prev_stl_pct,
+            pm.prev_blk_pct,
+            pm.prev_per,
+            pm.prev_ws_per_48,
+            pm.prev_obpm,
+            pm.prev_dbpm,
+            pm.prev_bpm,
+            pm.prev_vorp,
+            pm.prev_adv_mp,
+            pm.prev_adv_games,
+            pm.prev_adv_season
         FROM nba_stats s
         JOIN player_match pm ON pm.player_id = s.player_id
         ORDER BY s.row_id
@@ -88,6 +132,15 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             'contract_salary': clean('contract_salary', r['contract_salary']),
             'contract_years_remaining': clean('contract_years_remaining', r['contract_years_remaining']),
         }
+        for f in BBR_FIELDS:
+            entry[f] = clean(f, r[f])
+        entry['adv_prev'] = ({f: clean(f, r['prev_' + f]) for f in BBR_FIELDS}
+                             if pd.notna(r['prev_adv_season']) else None)
+        entry['stats_season'] = clean('stats_season', r['stats_season'])
+        prev = r['prev_season']
+        entry['prev_season'] = ({f: clean(f, prev.get(f)) for f in PREV_BOX_FIELDS}
+                                if isinstance(prev, dict) else None)
+        entry['injury_status'] = clean('injury_status', r['injury_status'])
         master[str(pid)] = entry
 
     with open(out_path, 'w', encoding='utf-8') as f:

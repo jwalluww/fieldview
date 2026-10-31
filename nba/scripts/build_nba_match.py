@@ -31,6 +31,13 @@ from build_nba_master import (
 
 DB_PATH = os.path.join('nba', 'data', 'fieldview.duckdb')
 
+# Basketball-Reference advanced fields carried into player_match (current
+# season as-is, prior season prefixed prev_). BBR's games/mp become adv_games/
+# adv_mp so they never collide with ESPN's games_played/mpg.
+BBR_FIELDS = ('ts_pct', 'usg_pct', 'trb_pct', 'ast_pct', 'tov_pct', 'stl_pct',
+              'blk_pct', 'per', 'ws_per_48', 'obpm', 'dbpm', 'bpm', 'vorp')
+BBR_RENAME = {'games': 'adv_games', 'mp': 'adv_mp'}
+
 
 def to_int_or_none(v):
     return None if pd.isna(v) else int(v)
@@ -62,7 +69,15 @@ def build_match():
     contracts_df = con.execute("SELECT * FROM nba_contracts ORDER BY row_id").fetchdf()
     ratings_df = con.execute("SELECT * FROM nba_ratings ORDER BY row_id").fetchdf()
     depth_df = con.execute("SELECT * FROM nba_depth_chart ORDER BY row_id").fetchdf()
+    bbr_df = con.execute("SELECT * FROM nba_bbr_advanced").fetchdf()
     con.close()
+
+    # (player_id, season_idx) -> BBR row; a player_id appearing twice in one
+    # season (two BBR players folding to one ESPN id) keeps the last row.
+    bbr_by_key = {}
+    for _, row in bbr_df.iterrows():
+        bbr_by_key[(int(row['player_id']), int(row['season_idx']))] = {
+            k: (None if pd.isna(v) else v) for k, v in row.items()}
 
     contracts_by_id = build_dict_last_wins(contracts_df)
     ratings_by_id = build_dict_last_wins(ratings_df)
@@ -89,7 +104,15 @@ def build_match():
         rotation = resolve_rotation(pid, p.get('rotation_status'), depth_by_id)
         team = resolve_team(pid, p.get('team'), depth_by_id)
 
+        bbr_cols = {}
+        for idx, prefix in ((0, ''), (1, 'prev_')):
+            b = bbr_by_key.get((pid, idx))
+            for f in BBR_FIELDS + tuple(BBR_RENAME):
+                bbr_cols[prefix + BBR_RENAME.get(f, f)] = b[f] if b else None
+            bbr_cols[prefix + 'adv_season'] = b['season'] if b else None
+
         matches.append({
+            **bbr_cols,
             'player_id': pid,
             'team': team,
             'position': resolve_position(
@@ -120,6 +143,7 @@ def build_match():
     print(f"Matched contracts: {matched_contract} / {total}")
     print(f"Matched 2k ratings: {matched_rating} / {total}")
     print(f"rotation_status from nbadepthchart.com: {from_depth_chart} / {total}")
+    print(f"BBR advanced (current / prior season): {match_df['bpm'].notna().sum()} / {match_df['prev_bpm'].notna().sum()}")
 
 
 if __name__ == '__main__':

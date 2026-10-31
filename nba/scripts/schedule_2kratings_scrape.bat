@@ -1,4 +1,11 @@
 @echo off
+REM RETIRED 2026-10-31: 2K ratings now come from nba2kapi in the cloud job (scrape_nba2kapi.py); scrape_2kratings.py is retired and re-scraping 2kratings.com here overwrote API-sourced rows in nba_ratings_2k.json.
+REM This file is intentionally a no-op so a Task Scheduler job that still
+REM points at it cannot overwrite the cloud pipeline's committed files.
+REM The original steps are kept below, unreachable. Disable the Task
+REM Scheduler job; do not delete this file.
+exit /b 0
+
 REM nba/scripts/schedule_2kratings_scrape.bat
 REM
 REM Intended to be run once daily by a Windows Task Scheduler task

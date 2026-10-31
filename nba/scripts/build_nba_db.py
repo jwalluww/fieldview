@@ -88,6 +88,24 @@ def load_nba_depth_chart():
     return pd.DataFrame(rows)
 
 
+def load_bbr_advanced():
+    """Flat rows from bbr_advanced.json (matched rows only -- the file's
+    `unmatched` list is a subset of `advanced`, like the other sources).
+    season_idx 0 = current season, 1 = prior (order of the file's `seasons`)."""
+    path = os.path.join('nba', 'data', 'bbr_advanced.json')
+    with open(path, encoding='utf-8') as f:
+        data = json.load(f)
+    idx = {label: i for i, label in enumerate(data['seasons'])}
+    rows = []
+    for r in data['advanced']:
+        if r.get('player_id') is None:
+            continue
+        row = dict(r)
+        row['season_idx'] = idx[row['season']]
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+
 def build_db():
     con = duckdb.connect(DB_PATH)
     try:
@@ -99,6 +117,9 @@ def build_db():
 
         print("Loading nba_ratings...")
         write_table(con, 'nba_ratings', load_nba_ratings())
+
+        print("Loading nba_bbr_advanced...")
+        write_table(con, 'nba_bbr_advanced', load_bbr_advanced())
 
         print("Loading nba_depth_chart...")
         write_table(con, 'nba_depth_chart', load_nba_depth_chart())

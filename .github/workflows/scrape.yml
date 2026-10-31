@@ -73,7 +73,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install nba_api requests beautifulsoup4 pandas duckdb
+        run: pip install requests beautifulsoup4 pandas duckdb
 
       # fetch_stats.py (stats.nba.com) retired 2026-10: it blocks runners.
       # ESPN supplies rosters + stats; must run first -- the matchers below
@@ -81,6 +81,13 @@ jobs:
       - name: Run NBA stats fetcher (ESPN)
         continue-on-error: true
         run: python nba/scripts/fetch_espn_stats.py
+
+      # Basketball-Reference advanced stats (2 requests, >= 4s apart; a 429 or
+      # challenge page keeps the old bbr_advanced.json). Needs the ESPN
+      # universe in nba_stats.json, so it runs right after it.
+      - name: Run NBA advanced stats scraper (Basketball-Reference)
+        continue-on-error: true
+        run: python nba/scripts/scrape_bbr_advanced.py
 
       - name: Run NBA contracts scraper
         run: python nba/scripts/scrape_contracts_spotrac.py
