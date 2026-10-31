@@ -75,8 +75,12 @@ jobs:
       - name: Install dependencies
         run: pip install nba_api requests beautifulsoup4 pandas duckdb
 
-      # - name: Run NBA stats scraper
-      #   run: python nba/scripts/fetch_stats.py
+      # fetch_stats.py (stats.nba.com) retired 2026-10: it blocks runners.
+      # ESPN supplies rosters + stats; must run first -- the matchers below
+      # read nba_stats.json. A failed/short pull keeps the old file (exit 0).
+      - name: Run NBA stats fetcher (ESPN)
+        continue-on-error: true
+        run: python nba/scripts/fetch_espn_stats.py
 
       - name: Run NBA contracts scraper
         run: python nba/scripts/scrape_contracts_spotrac.py

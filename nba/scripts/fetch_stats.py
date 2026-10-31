@@ -1,3 +1,8 @@
+# RETIRED 2026-10 -- replaced by fetch_espn_stats.py (ESPN, cloud-friendly).
+# stats.nba.com blocks GitHub-hosted runners and no longer answers locally
+# either, so nothing commits this script's output any more. Left in place per
+# the retire-don't-delete convention; do not run it (it would overwrite the
+# ESPN-keyed nba_stats.json with nba_api ids).
 import json
 import os
 import random

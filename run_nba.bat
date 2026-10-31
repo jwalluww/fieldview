@@ -39,7 +39,8 @@ echo ============================================
 echo  NBA pipeline -- starting
 echo ============================================
 
-call :run_step "fetch_stats.py" "python nba\scripts\fetch_stats.py"
+REM fetch_stats.py retired 2026-10 (stats.nba.com unreachable); ESPN replaces it:
+call :run_step "fetch_espn_stats.py" "python nba\scripts\fetch_espn_stats.py"
 call :run_step "scrape_contracts_spotrac.py" "python nba\scripts\scrape_contracts_spotrac.py"
 call :run_step "scrape_nba2kapi.py" "python nba\scripts\scrape_nba2kapi.py"
 REM scrape_2kratings.py (2kratings.com trickle scraper) retired 2026-10 in favor of nba2kapi; left in place, unused:
