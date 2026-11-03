@@ -65,7 +65,7 @@
         "attainment": "23/3",
         "standard_slot": "RWR",
         "standard_pos": "WR",
-        "cap_number": "$1,979,382",
+        "cap_number": "$2,017,844",
         "stats": {
           "TGT": 1,
           "REC": 1,
@@ -78,26 +78,8 @@
     ],
     "SWR": [
       {
-        "name": "Jaylin Noel",
-        "depth": 1,
-        "injured": false,
-        "attainment": "25/3",
-        "standard_slot": "SWR",
-        "standard_pos": "WR",
-        "cap_number": "$1,469,740",
-        "stats": {
-          "TGT": 23,
-          "REC": 19,
-          "YDS": 331,
-          "TDs": 2,
-          "YAC": 114,
-          "CAR": 4
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Xavier Hutchinson",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "23/6",
         "standard_slot": "SWR",
@@ -223,24 +205,24 @@
     ],
     "RT": [
       {
-        "name": "Braden Smith",
-        "depth": 1,
-        "injured": false,
-        "attainment": "U/Ind",
-        "standard_slot": "RT",
-        "standard_pos": "OL",
-        "cap_number": "$5,007,353",
-        "stats": {},
-        "stats_season": 2026
-      },
-      {
         "name": "Trent Brown",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "U/Cin",
         "standard_slot": "RT",
         "standard_pos": "OL",
         "cap_number": "$4,911,765",
+        "stats": {},
+        "stats_season": 2026
+      },
+      {
+        "name": "Braden Smith",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/Ind",
+        "standard_slot": "RT",
+        "standard_pos": "OL",
+        "cap_number": "$5,007,353",
         "stats": {},
         "stats_season": 2026
       }
@@ -303,7 +285,7 @@
         "attainment": "21/5",
         "standard_slot": "TE",
         "standard_pos": "TE",
-        "cap_number": "$1,215,000",
+        "cap_number": "$1,230,000",
         "stats": {
           "TGT": 2,
           "REC": 2,
@@ -421,13 +403,24 @@
         "stats_season": 2026
       },
       {
-        "name": "Deuce Vaughn",
+        "name": "Emari Demercado",
         "depth": 4,
         "injured": false,
-        "attainment": "SF26",
+        "attainment": "W/Dal",
         "standard_slot": "RB",
         "standard_pos": "RB",
-        "cap_number": null,
+        "cap_number": "$699,722",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Joshua Pitsenberger",
+        "depth": 5,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": "$137,500",
         "stats": {},
         "stats_season": null
       }
@@ -526,18 +519,15 @@
         "stats_season": 2026
       },
       {
-        "name": "Jaden Crumedy",
+        "name": "Naquan Jones",
         "depth": 3,
         "injured": false,
-        "attainment": "P/GB",
+        "attainment": "P/SF",
         "standard_slot": "RDT",
         "standard_pos": "DI",
-        "cap_number": "$1,075,000",
-        "stats": {
-          "SACKS": 0.5,
-          "QB HIT": 1
-        },
-        "stats_season": 2026
+        "cap_number": "$597,222",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RDE": [
@@ -1066,8 +1056,26 @@
         "stats_season": null
       },
       {
-        "name": "Ali Gaye",
+        "name": "Jaylin Noel",
         "depth": 5,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$1,469,740",
+        "stats": {
+          "TGT": 23,
+          "REC": 19,
+          "YDS": 331,
+          "TDs": 2,
+          "YAC": 114,
+          "CAR": 4
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Ali Gaye",
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1078,7 +1086,7 @@
       },
       {
         "name": "Mario Edwards Jr.",
-        "depth": 6,
+        "depth": 7,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1093,7 +1101,7 @@
       },
       {
         "name": "Jayden Higgins",
-        "depth": 7,
+        "depth": 8,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1104,7 +1112,7 @@
       },
       {
         "name": "Graham Mertz",
-        "depth": 8,
+        "depth": 9,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1115,7 +1123,7 @@
       },
       {
         "name": "Dylan Horton",
-        "depth": 9,
+        "depth": 10,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1126,7 +1134,7 @@
       },
       {
         "name": "K.c. Ossai",
-        "depth": 10,
+        "depth": 11,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1137,7 +1145,7 @@
       },
       {
         "name": "Solomon Byrd",
-        "depth": 11,
+        "depth": 12,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",

@@ -126,19 +126,8 @@
     ],
     "C": [
       {
-        "name": "John Michael Schmitz Jr.",
-        "depth": 1,
-        "injured": false,
-        "attainment": "23/2",
-        "standard_slot": "C",
-        "standard_pos": "OL",
-        "cap_number": "$4,332,788",
-        "stats": {},
-        "stats_season": 2026
-      },
-      {
         "name": "Bryan Hudson",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "SF24",
         "standard_slot": "C",
@@ -146,6 +135,17 @@
         "cap_number": "$885,000",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "John Michael Schmitz Jr.",
+        "depth": 2,
+        "injured": false,
+        "attainment": "23/2",
+        "standard_slot": "C",
+        "standard_pos": "OL",
+        "cap_number": "$4,332,788",
+        "stats": {},
+        "stats_season": 2026
       }
     ],
     "RG": [
@@ -341,26 +341,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Tyrone Tracy Jr.",
-        "depth": 2,
-        "injured": false,
-        "attainment": "24/5",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": "$1,146,588",
-        "stats": {
-          "CAR": 19,
-          "RU YDS": 55,
-          "RU TDs": 2,
-          "REC": 5,
-          "RE YDS": 54,
-          "TGT": 7
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Devin Singletary",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "U/Hou",
         "standard_slot": "RB",
@@ -377,6 +359,17 @@
         "stats_season": 2026
       },
       {
+        "name": "Gregory Desrosiers",
+        "depth": 3,
+        "injured": false,
+        "attainment": "P/LAC",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
         "name": "Grant Finley",
         "depth": 4,
         "injured": false,
@@ -390,6 +383,17 @@
       {
         "name": "Phil Mafah",
         "depth": 5,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Eric Gray",
+        "depth": 6,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "RB",
@@ -502,7 +506,7 @@
         "stats_season": null
       },
       {
-        "name": "Josh Tupou",
+        "name": "Dean Lowry",
         "depth": 4,
         "injured": false,
         "attainment": "SF26",
@@ -865,19 +869,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Jason Brownlee",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "LWR",
-        "standard_pos": "WR",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Jalin Hyatt",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "23/3",
         "standard_slot": "LWR",
@@ -1000,8 +993,26 @@
     ],
     "IR": [
       {
-        "name": "Chauncey Golston",
+        "name": "Tyrone Tracy Jr.",
         "depth": 1,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$1,146,588",
+        "stats": {
+          "CAR": 19,
+          "RU YDS": 55,
+          "RU TDs": 2,
+          "REC": 5,
+          "RE YDS": 54,
+          "TGT": 7
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Chauncey Golston",
+        "depth": 2,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1014,7 +1025,7 @@
       },
       {
         "name": "Korie Black",
-        "depth": 2,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1025,7 +1036,7 @@
       },
       {
         "name": "Tremaine Edmunds",
-        "depth": 3,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1042,7 +1053,7 @@
       },
       {
         "name": "Braxton Berrios",
-        "depth": 4,
+        "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1055,7 +1066,7 @@
       },
       {
         "name": "Brian Burns",
-        "depth": 5,
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1069,7 +1080,7 @@
       },
       {
         "name": "Jaxson Dart",
-        "depth": 6,
+        "depth": 7,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1087,7 +1098,7 @@
       },
       {
         "name": "Calvin Austin III",
-        "depth": 7,
+        "depth": 8,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1098,7 +1109,7 @@
       },
       {
         "name": "Jarrick Bernard-converse",
-        "depth": 8,
+        "depth": 9,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1109,7 +1120,7 @@
       },
       {
         "name": "Roy Robertson-harris",
-        "depth": 9,
+        "depth": 10,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1120,7 +1131,7 @@
       },
       {
         "name": "Gunner Olszewski",
-        "depth": 10,
+        "depth": 11,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1131,7 +1142,7 @@
       },
       {
         "name": "Thaddeus Dixon",
-        "depth": 11,
+        "depth": 12,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1142,7 +1153,7 @@
       },
       {
         "name": "Rico Payton",
-        "depth": 12,
+        "depth": 13,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",

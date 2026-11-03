@@ -6,20 +6,18 @@
   "depth_chart": {
     "LWR": [
       {
-        "name": "Efton Chism III",
+        "name": "A.j. Brown",
         "depth": 1,
         "injured": false,
-        "attainment": "CF25",
+        "attainment": "T/Phi",
         "standard_slot": "LWR",
         "standard_pos": "WR",
-        "cap_number": "$1,013,333",
+        "cap_number": "$7,040,000",
         "stats": {
-          "TGT": 15,
-          "REC": 10,
-          "YDS": 114,
-          "TDs": 1,
-          "YAC": 25,
-          "CAR": 1
+          "TGT": 20,
+          "REC": 9,
+          "YDS": 101,
+          "YAC": 23
         },
         "stats_season": 2026
       },
@@ -32,29 +30,31 @@
         "standard_pos": "WR",
         "cap_number": "$1,523,539",
         "stats": {
-          "TGT": 12,
-          "REC": 6,
-          "YDS": 147,
-          "TDs": 1,
-          "YAC": 28
+          "TGT": 13,
+          "REC": 7,
+          "YDS": 190,
+          "TDs": 2,
+          "YAC": 32
         },
         "stats_season": 2026
       }
     ],
     "RWR": [
       {
-        "name": "A.j. Brown",
+        "name": "Efton Chism III",
         "depth": 1,
         "injured": false,
-        "attainment": "T/Phi",
+        "attainment": "CF25",
         "standard_slot": "RWR",
         "standard_pos": "WR",
-        "cap_number": "$7,040,000",
+        "cap_number": "$1,013,333",
         "stats": {
           "TGT": 20,
-          "REC": 9,
-          "YDS": 101,
-          "YAC": 23
+          "REC": 15,
+          "YDS": 151,
+          "TDs": 1,
+          "YAC": 38,
+          "CAR": 1
         },
         "stats_season": 2026
       }
@@ -69,11 +69,11 @@
         "standard_pos": "WR",
         "cap_number": "$3,707,333",
         "stats": {
-          "TGT": 34,
-          "REC": 23,
-          "YDS": 256,
-          "TDs": 3,
-          "YAC": 81
+          "TGT": 37,
+          "REC": 26,
+          "YDS": 332,
+          "TDs": 4,
+          "YAC": 117
         },
         "stats_season": 2026
       }
@@ -195,13 +195,13 @@
         "attainment": "U/LAC",
         "standard_slot": "TE",
         "standard_pos": "TE",
-        "cap_number": "$13,600,000",
+        "cap_number": "$10,740,000",
         "stats": {
-          "TGT": 31,
-          "REC": 26,
-          "YDS": 296,
+          "TGT": 34,
+          "REC": 29,
+          "YDS": 326,
           "TDs": 2,
-          "YAC": 171
+          "YAC": 183
         },
         "stats_season": 2026
       },
@@ -214,9 +214,9 @@
         "standard_pos": "TE",
         "cap_number": "$1,227,038",
         "stats": {
-          "TGT": 16,
-          "REC": 12,
-          "YDS": 168,
+          "TGT": 20,
+          "REC": 13,
+          "YDS": 173,
           "TDs": 2,
           "YAC": 61
         },
@@ -266,13 +266,13 @@
         "standard_pos": "QB",
         "cap_number": "$9,992,663",
         "stats": {
-          "CMP": 141,
-          "ATT": 214,
-          "YDS": 1784,
-          "TDs": 13,
+          "CMP": 157,
+          "ATT": 234,
+          "YDS": 1983,
+          "TDs": 15,
           "INTs": 8,
-          "SACKS": 13,
-          "RU YDS": 211
+          "SACKS": 16,
+          "RU YDS": 216
         },
         "stats_season": 2026
       },
@@ -314,12 +314,12 @@
         "standard_pos": "RB",
         "cap_number": "$7,423,529",
         "stats": {
-          "CAR": 77,
-          "RU YDS": 285,
+          "CAR": 96,
+          "RU YDS": 367,
           "RU TDs": 2,
-          "REC": 20,
-          "RE YDS": 204,
-          "TGT": 24
+          "REC": 23,
+          "RE YDS": 212,
+          "TGT": 27
         },
         "stats_season": 2026
       },
@@ -350,8 +350,8 @@
         "standard_pos": "RB",
         "cap_number": "$1,005,000",
         "stats": {
-          "CAR": 35,
-          "RU YDS": 151,
+          "CAR": 42,
+          "RU YDS": 189,
           "REC": 2,
           "RE YDS": 16,
           "TGT": 2
@@ -367,11 +367,24 @@
         "standard_pos": "RB",
         "cap_number": null,
         "stats": {
+          "CAR": 2,
+          "RU YDS": 6,
           "REC": 2,
           "RE YDS": 9,
           "TGT": 2
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Terrell Jennings",
+        "depth": 5,
+        "injured": false,
+        "attainment": "CF24",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LDE": [
@@ -384,7 +397,7 @@
         "standard_pos": "DI",
         "cap_number": "$28,500,000",
         "stats": {
-          "TKL": 9,
+          "TKL": 10,
           "SACKS": 1.0,
           "TFL": 2,
           "QB HIT": 2
@@ -400,7 +413,7 @@
         "standard_pos": "DI",
         "cap_number": "$1,075,000",
         "stats": {
-          "TKL": 3,
+          "TKL": 4,
           "SACKS": 2.0,
           "TFL": 3,
           "QB HIT": 2
@@ -418,8 +431,10 @@
         "standard_pos": "DI",
         "cap_number": "$1,145,000",
         "stats": {
-          "TKL": 6,
-          "QB HIT": 2
+          "TKL": 8,
+          "SACKS": 1.5,
+          "TFL": 2,
+          "QB HIT": 5
         },
         "stats_season": 2026
       },
@@ -449,9 +464,9 @@
         "cap_number": "$17,100,000",
         "stats": {
           "TKL": 5,
-          "SACKS": 3.0,
+          "SACKS": 3.5,
           "TFL": 3,
-          "QB HIT": 6
+          "QB HIT": 7
         },
         "stats_season": 2026
       },
@@ -482,7 +497,7 @@
         "standard_pos": "EDGE",
         "cap_number": "$7,546,666",
         "stats": {
-          "TKL": 5,
+          "TKL": 6,
           "SACKS": 1.0,
           "TFL": 2,
           "QB HIT": 4
@@ -498,12 +513,12 @@
         "standard_pos": "EDGE",
         "cap_number": "$1,573,994",
         "stats": {
-          "TKL": 10,
-          "SACKS": 1.5,
+          "TKL": 11,
+          "SACKS": 3.0,
           "INTs": 1,
           "PD": 1,
-          "TFL": 3,
-          "QB HIT": 6
+          "TFL": 4,
+          "QB HIT": 8
         },
         "stats_season": 2026
       }
@@ -518,7 +533,8 @@
         "standard_pos": "LB",
         "cap_number": "$12,320,000",
         "stats": {
-          "TKL": 20,
+          "TKL": 21,
+          "PD": 2,
           "TFL": 1,
           "QB HIT": 2
         },
@@ -563,11 +579,11 @@
         "standard_pos": "LB",
         "cap_number": "$8,555,000",
         "stats": {
-          "TKL": 29,
-          "SACKS": 1.0,
+          "TKL": 32,
+          "SACKS": 1.5,
           "PD": 1,
-          "TFL": 2,
-          "QB HIT": 5
+          "TFL": 4,
+          "QB HIT": 6
         },
         "stats_season": 2026
       },
@@ -596,9 +612,10 @@
         "cap_number": "$1,010,000",
         "stats": {
           "TKL": 13,
-          "SACKS": 5.5,
+          "SACKS": 6.0,
+          "PD": 1,
           "TFL": 7,
-          "QB HIT": 10
+          "QB HIT": 11
         },
         "stats_season": 2026
       }
@@ -613,7 +630,7 @@
         "standard_pos": "CB",
         "cap_number": "$22,000,000",
         "stats": {
-          "TKL": 13,
+          "TKL": 20,
           "PD": 1,
           "TFL": 1
         },
@@ -628,7 +645,7 @@
         "standard_pos": "CB",
         "cap_number": "$1,075,000",
         "stats": {
-          "TKL": 20,
+          "TKL": 21,
           "INTs": 1,
           "PD": 4,
           "TFL": 1
@@ -636,17 +653,15 @@
         "stats_season": 2026
       },
       {
-        "name": "Kindle Vildor",
+        "name": "Karon Prunty",
         "depth": 3,
         "injured": false,
-        "attainment": "U/TB",
+        "attainment": "26/5",
         "standard_slot": "LCB",
         "standard_pos": "CB",
-        "cap_number": "$836,111",
+        "cap_number": "$991,837",
         "stats": {
-          "TKL": 6,
-          "PD": 1,
-          "TFL": 1
+          "TKL": 1
         },
         "stats_season": 2026
       }
@@ -661,9 +676,10 @@
         "standard_pos": "S",
         "cap_number": "$1,271,614",
         "stats": {
-          "TKL": 18,
+          "TKL": 20,
           "INTs": 1,
-          "PD": 3
+          "PD": 3,
+          "TFL": 1
         },
         "stats_season": 2026
       },
@@ -677,21 +693,9 @@
         "cap_number": "$1,005,000",
         "stats": {
           "TKL": 5,
-          "PD": 1
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Elliott Davison",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "SS",
-        "standard_pos": "S",
-        "cap_number": "$590,000",
-        "stats": {
-          "TKL": 2,
-          "PD": 1
+          "SACKS": 0.5,
+          "PD": 1,
+          "QB HIT": 1
         },
         "stats_season": 2026
       }
@@ -706,8 +710,9 @@
         "standard_pos": "S",
         "cap_number": "$9,000,000",
         "stats": {
-          "TKL": 16,
-          "PD": 2,
+          "TKL": 20,
+          "INTs": 1,
+          "PD": 3,
           "QB HIT": 1
         },
         "stats_season": 2026
@@ -734,7 +739,7 @@
         "standard_pos": "S",
         "cap_number": "$2,998,529",
         "stats": {
-          "TKL": 1
+          "TKL": 2
         },
         "stats_season": 2026
       }
@@ -749,21 +754,23 @@
         "standard_pos": "CB",
         "cap_number": "$11,405,458",
         "stats": {
-          "TKL": 15,
+          "TKL": 18,
           "PD": 5
         },
         "stats_season": 2026
       },
       {
-        "name": "Karon Prunty",
+        "name": "Kindle Vildor",
         "depth": 2,
         "injured": false,
-        "attainment": "26/5",
+        "attainment": "U/TB",
         "standard_slot": "RCB",
         "standard_pos": "CB",
-        "cap_number": "$991,837",
+        "cap_number": "$836,111",
         "stats": {
-          "TKL": 1
+          "TKL": 6,
+          "PD": 1,
+          "TFL": 1
         },
         "stats_season": 2026
       }
@@ -778,10 +785,10 @@
         "standard_pos": "CB",
         "cap_number": "$6,702,500",
         "stats": {
-          "TKL": 22,
+          "TKL": 25,
           "SACKS": 1.0,
           "INTs": 1,
-          "PD": 5,
+          "PD": 6,
           "TFL": 2,
           "QB HIT": 1
         },
