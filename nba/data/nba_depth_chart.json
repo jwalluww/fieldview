@@ -1,5 +1,5 @@
 {
-  "last_changed": "2026-11-03",
+  "last_changed": "2026-11-10",
   "depth_chart": [
     {
       "player_id": 4431680,
@@ -20,13 +20,15 @@
       "draft_pick": null
     },
     {
-      "player_id": 2490149,
+      "player_id": 5149077,
       "team": "ATL",
-      "position": "PG/SG",
+      "position": "PG",
       "depth_rank": 1,
-      "status_flags": [],
-      "sheet_name": "CJ McCollum",
-      "draft_pick": null
+      "status_flags": [
+        "rookie"
+      ],
+      "sheet_name": "Kingston Flemings",
+      "draft_pick": 8
     },
     {
       "player_id": 4869342,
@@ -65,15 +67,13 @@
       "draft_pick": null
     },
     {
-      "player_id": 5149077,
+      "player_id": 2490149,
       "team": "ATL",
-      "position": "PG",
+      "position": "PG/SG",
       "depth_rank": 2,
-      "status_flags": [
-        "rookie"
-      ],
-      "sheet_name": "Kingston Flemings",
-      "draft_pick": 8
+      "status_flags": [],
+      "sheet_name": "CJ McCollum",
+      "draft_pick": null
     },
     {
       "player_id": 4397183,
@@ -188,21 +188,21 @@
       "draft_pick": null
     },
     {
+      "player_id": 5279130,
+      "team": "BKN",
+      "position": "PG",
+      "depth_rank": 1,
+      "status_flags": [],
+      "sheet_name": "Nolan Traoré",
+      "draft_pick": null
+    },
+    {
       "player_id": 4278104,
       "team": "BKN",
       "position": "SF/PF",
       "depth_rank": 1,
       "status_flags": [],
       "sheet_name": "Michael Porter Jr.",
-      "draft_pick": null
-    },
-    {
-      "player_id": 4702177,
-      "team": "BKN",
-      "position": "SG",
-      "depth_rank": 1,
-      "status_flags": [],
-      "sheet_name": "Keon Ellis",
       "draft_pick": null
     },
     {
@@ -253,12 +253,12 @@
       "draft_pick": 6
     },
     {
-      "player_id": 5279130,
+      "player_id": 4702177,
       "team": "BKN",
-      "position": "PG",
+      "position": "SG",
       "depth_rank": 2,
       "status_flags": [],
-      "sheet_name": "Nolan Traoré",
+      "sheet_name": "Keon Ellis",
       "draft_pick": null
     },
     {
@@ -269,17 +269,6 @@
       "status_flags": [],
       "sheet_name": "Danny Wolf",
       "draft_pick": null
-    },
-    {
-      "player_id": 4870564,
-      "team": "BKN",
-      "position": "PF",
-      "depth_rank": 3,
-      "status_flags": [
-        "rookie"
-      ],
-      "sheet_name": "Joshua Jefferson",
-      "draft_pick": 28
     },
     {
       "player_id": 4687718,
@@ -309,6 +298,26 @@
       "draft_pick": null
     },
     {
+      "player_id": 3907823,
+      "team": "BKN",
+      "position": "SG/SF/PG",
+      "depth_rank": 3,
+      "status_flags": [],
+      "sheet_name": "Terance Mann",
+      "draft_pick": null
+    },
+    {
+      "player_id": 4870564,
+      "team": "BKN",
+      "position": "PF",
+      "depth_rank": 4,
+      "status_flags": [
+        "rookie"
+      ],
+      "sheet_name": "Joshua Jefferson",
+      "draft_pick": 28
+    },
+    {
       "player_id": 4702670,
       "team": "BKN",
       "position": "PF/C",
@@ -329,21 +338,12 @@
       "draft_pick": 43
     },
     {
-      "player_id": 3907823,
-      "team": "BKN",
-      "position": "SG/SF/PG",
-      "depth_rank": 4,
-      "status_flags": [],
-      "sheet_name": "Terance Mann",
-      "draft_pick": null
-    },
-    {
-      "player_id": 4351852,
+      "player_id": 4397424,
       "team": "BOS",
       "position": "C",
       "depth_rank": 1,
       "status_flags": [],
-      "sheet_name": "Mitchell Robinson",
+      "sheet_name": "Neemias Queta",
       "draft_pick": null
     },
     {
@@ -353,15 +353,6 @@
       "depth_rank": 1,
       "status_flags": [],
       "sheet_name": "Jayson Tatum",
-      "draft_pick": null
-    },
-    {
-      "player_id": 4683689,
-      "team": "BOS",
-      "position": "SF/PF",
-      "depth_rank": 1,
-      "status_flags": [],
-      "sheet_name": "Jordan Walsh",
       "draft_pick": null
     },
     {
@@ -383,12 +374,21 @@
       "draft_pick": null
     },
     {
-      "player_id": 4397424,
+      "player_id": 5175647,
+      "team": "BOS",
+      "position": "SG/SF",
+      "depth_rank": 1,
+      "status_flags": [],
+      "sheet_name": "Hugo González",
+      "draft_pick": null
+    },
+    {
+      "player_id": 4351852,
       "team": "BOS",
       "position": "C",
       "depth_rank": 2,
       "status_flags": [],
-      "sheet_name": "Neemias Queta",
+      "sheet_name": "Mitchell Robinson",
       "draft_pick": null
     },
     {
@@ -398,6 +398,15 @@
       "depth_rank": 2,
       "status_flags": [],
       "sheet_name": "Payton Pritchard",
+      "draft_pick": null
+    },
+    {
+      "player_id": 4683689,
+      "team": "BOS",
+      "position": "SF/PF",
+      "depth_rank": 2,
+      "status_flags": [],
+      "sheet_name": "Jordan Walsh",
       "draft_pick": null
     },
     {
@@ -419,16 +428,7 @@
       "draft_pick": null
     },
     {
-      "player_id": 5175647,
-      "team": "BOS",
-      "position": "SG/SF",
-      "depth_rank": 2,
-      "status_flags": [],
-      "sheet_name": "Hugo González",
-      "draft_pick": null
-    },
-    {
-      "player_id": 5142621,
+      "player_id": null,
       "team": "BOS",
       "position": "C",
       "depth_rank": 3,
@@ -643,7 +643,7 @@
       "draft_pick": null
     },
     {
-      "player_id": null,
+      "player_id": 5176517,
       "team": "CHA",
       "position": "PF/SF",
       "depth_rank": 4,
@@ -946,7 +946,7 @@
       "draft_pick": null
     },
     {
-      "player_id": 4431734,
+      "player_id": null,
       "team": "CLE",
       "position": "SF",
       "depth_rank": 3,
@@ -1929,12 +1929,12 @@
       "draft_pick": null
     },
     {
-      "player_id": 4432170,
+      "player_id": 3448,
       "team": "LAC",
       "position": "C",
       "depth_rank": 1,
       "status_flags": [],
-      "sheet_name": "Isaiah Jackson",
+      "sheet_name": "Brook Lopez",
       "draft_pick": null
     },
     {
@@ -1974,12 +1974,12 @@
       "draft_pick": null
     },
     {
-      "player_id": 3448,
+      "player_id": 4432170,
       "team": "LAC",
       "position": "C",
       "depth_rank": 2,
       "status_flags": [],
-      "sheet_name": "Brook Lopez",
+      "sheet_name": "Isaiah Jackson",
       "draft_pick": null
     },
     {
@@ -2115,12 +2115,12 @@
       "draft_pick": null
     },
     {
-      "player_id": 4433137,
+      "player_id": 4592691,
       "team": "LAL",
       "position": "SF/PF",
       "depth_rank": 1,
       "status_flags": [],
-      "sheet_name": "Ziaire Williams",
+      "sheet_name": "Jake LaRavia",
       "draft_pick": null
     },
     {
@@ -2169,12 +2169,12 @@
       "draft_pick": null
     },
     {
-      "player_id": 4592691,
+      "player_id": 4433137,
       "team": "LAL",
       "position": "SF/PF",
       "depth_rank": 2,
       "status_flags": [],
-      "sheet_name": "Jake LaRavia",
+      "sheet_name": "Ziaire Williams",
       "draft_pick": null
     },
     {
@@ -2600,15 +2600,6 @@
       "draft_pick": null
     },
     {
-      "player_id": 4591725,
-      "team": "MIL",
-      "position": "PG",
-      "depth_rank": 1,
-      "status_flags": [],
-      "sheet_name": "Ryan Rollins",
-      "draft_pick": null
-    },
-    {
       "player_id": 4432848,
       "team": "MIL",
       "position": "SF/PF",
@@ -2616,6 +2607,17 @@
       "status_flags": [],
       "sheet_name": "Jaime Jaquez Jr.",
       "draft_pick": null
+    },
+    {
+      "player_id": 5082206,
+      "team": "MIL",
+      "position": "SG/PG",
+      "depth_rank": 1,
+      "status_flags": [
+        "rookie"
+      ],
+      "sheet_name": "Brayden Burries",
+      "draft_pick": 10
     },
     {
       "player_id": 4395725,
@@ -2654,15 +2656,13 @@
       "draft_pick": null
     },
     {
-      "player_id": 5082206,
+      "player_id": 4591725,
       "team": "MIL",
-      "position": "SG/PG",
+      "position": "PG",
       "depth_rank": 2,
-      "status_flags": [
-        "rookie"
-      ],
-      "sheet_name": "Brayden Burries",
-      "draft_pick": 10
+      "status_flags": [],
+      "sheet_name": "Ryan Rollins",
+      "draft_pick": null
     },
     {
       "player_id": 4397475,
@@ -2882,15 +2882,6 @@
       "depth_rank": 3,
       "status_flags": [],
       "sheet_name": "Zyon Pullin",
-      "draft_pick": null
-    },
-    {
-      "player_id": 4592699,
-      "team": "MIN",
-      "position": "PF/C",
-      "depth_rank": 4,
-      "status_flags": [],
-      "sheet_name": "Enrique Freeman",
       "draft_pick": null
     },
     {
@@ -3334,6 +3325,15 @@
       "draft_pick": null
     },
     {
+      "player_id": 4702384,
+      "team": "OKC",
+      "position": "SF/SG",
+      "depth_rank": 3,
+      "status_flags": [],
+      "sheet_name": "Nique Clifford",
+      "draft_pick": null
+    },
+    {
       "player_id": 4684208,
       "team": "OKC",
       "position": "SG",
@@ -3367,6 +3367,15 @@
       "depth_rank": 4,
       "status_flags": [],
       "sheet_name": "Cason Wallace",
+      "draft_pick": null
+    },
+    {
+      "player_id": 4432185,
+      "team": "OKC",
+      "position": "SG/SF",
+      "depth_rank": 4,
+      "status_flags": [],
+      "sheet_name": "Micah Peavy",
       "draft_pick": null
     },
     {
@@ -4091,6 +4100,15 @@
       "draft_pick": null
     },
     {
+      "player_id": 4709131,
+      "team": "SAC",
+      "position": "PG/SG",
+      "depth_rank": 3,
+      "status_flags": [],
+      "sheet_name": "Sean Pedulla",
+      "draft_pick": null
+    },
+    {
       "player_id": 4917149,
       "team": "SAC",
       "position": "SF/PF",
@@ -4111,30 +4129,12 @@
       "draft_pick": null
     },
     {
-      "player_id": 4702384,
-      "team": "SAC",
-      "position": "SG/SF",
-      "depth_rank": 3,
-      "status_flags": [],
-      "sheet_name": "Nique Clifford",
-      "draft_pick": null
-    },
-    {
       "player_id": 3907387,
       "team": "SAC",
       "position": "PG/C",
       "depth_rank": 4,
       "status_flags": [],
       "sheet_name": "Ben Simmons",
-      "draft_pick": null
-    },
-    {
-      "player_id": 4709131,
-      "team": "SAC",
-      "position": "PG/SG",
-      "depth_rank": 4,
-      "status_flags": [],
-      "sheet_name": "Sean Pedulla",
       "draft_pick": null
     },
     {
@@ -4788,10 +4788,10 @@
   ],
   "unmatched": [
     {
-      "sheet_name": "Michael Ajayi",
-      "team": "CHA",
-      "position": "PF/SF",
-      "draft_pick": null
+      "sheet_name": "Chris Cenac",
+      "team": "BOS",
+      "position": "C",
+      "draft_pick": 27
     },
     {
       "sheet_name": "Khalifa Diop",
@@ -4803,6 +4803,12 @@
       "sheet_name": "Nae'qwan Tomlin",
       "team": "CLE",
       "position": "PF",
+      "draft_pick": null
+    },
+    {
+      "sheet_name": "Tristan Enaruna",
+      "team": "CLE",
+      "position": "SF",
       "draft_pick": null
     },
     {
