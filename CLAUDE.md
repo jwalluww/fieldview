@@ -14,12 +14,12 @@ All six sports ship a FieldView + TableView with real data and a real cloud job 
 
 | Sport | State | Players / rated | Ratings source |
 |---|---|---|---|
-| **NFL** | FormationView (offense + defense together, "Opponent View" phase 1) with a click-to-open player sidebar; TableView with per-tab column picker. | 2,369 / Madden on 1,842 (77.8%) | **EA drop-api, Madden 27**, weekly iteration (Week 6 now) |
+| **NFL** | FormationView (offense + defense together, "Opponent View" phase 1) with a player sidebar (On/Off toggle); TableView with per-tab column picker. | 2,369 / Madden on 1,842 (77.8%) | **EA drop-api, Madden 27**, weekly iteration (Week 6 now) |
 | **NBA** | CourtView (positionless subs, undo, **2K/MPG sub sort**, **player sidebar**) + TableView (Overview/Per Game/Financial/Bio/**Advanced**). **ESPN universe** (30 rosters), Basketball-Reference advanced stats. | 526 / 519 rated (98.7%) | **nba2kapi.com** (JSON mirror of 2kratings.com), cloud job, keyless fallback |
 | **MLB** | DiamondView with player sidebar + on/off toggle, 40-man roster incl. injured; TableView. | 1,359 / 1,354 (99.6%) | **MLB The Show official API** (`series == "Live"`) |
-| **NHL** | IceView + TableView. No sidebar, no "ratings as of" caption. | 797 / 715 (89.7%) | **nhlratings.net via ScraperAPI** (EA publishes only its top 300 NHL players) |
-| **EPL** | PitchView with 6-formation switcher + TableView incl. Advanced tab. | 668 / 558 (83.5%) | **EA drop-api, FC 27** (EA id == sofifa id) |
-| **MLS** | PitchView with formation switcher + TableView (Age, xG-family Advanced columns). | 1,069 / 777 (72.7%) | **EA drop-api, FC 27** |
+| **NHL** | IceView (**player sidebar**, prior-season fallback) + TableView. No "ratings as of" caption. | 797 / 715 (89.7%) | **nhlratings.net via ScraperAPI** (EA publishes only its top 300 NHL players) |
+| **EPL** | PitchView with 6-formation switcher + **player sidebar** + TableView incl. Advanced tab. | 668 / 558 (83.5%) | **EA drop-api, FC 27** (EA id == sofifa id) |
+| **MLS** | PitchView with formation switcher + **player sidebar** + TableView (Age, xG-family Advanced columns). | 1,069 / 777 (72.7%) | **EA drop-api, FC 27** |
 
 - **Ratings-as-of captions:** NFL ("Madden ratings: Week 6, as of <date>"), NBA, MLB, EPL, MLS show one; NHL has none (source has no date).
 - **`potential` is gone** from MLB, EPL and MLS (no source publishes it). NHL's master still carries `potential` (`Low/Med/High`) but no page shows it.
@@ -82,7 +82,7 @@ All six sports ship a FieldView + TableView with real data and a real cloud job 
 
 ---
 
-## Pattern: player sidebar (built on NFL, MLB and NBA)
+## Pattern: player sidebar (all six sports)
 
 Hover is light (name / position / rating / INJ); **click opens a sidebar** (360px, `Esc`, the x button, an empty-field click or a team switch close it; the selected card keeps a cyan outline that follows a swap). No hero stat — the old hero is just the first advanced row.
 - **Layout:** header (name, jersey, team, position, bio, overall rating, INJ detail) → Advanced Stats → Season Stats grid → Substitutes. Players with no advanced values skip the advanced section.
@@ -96,7 +96,21 @@ Hover is light (name / position / rating / INJ); **click opens a sidebar** (360p
   - **NFL** — push layout (the field gets right padding; cards slim to 66px under 1500px so ~22 cards never overlap); always on. Qualifiers come from `nfl/data/advanced_meta.json` (`league_max_games`, `field_season`) and each player's `adv_volume`: QB `att >= 14×G`, RB `car >= 6.25×G`, WR/TE `tgt >= 1.875×G` (G = the season's max team games; gate inert if the sidecar is empty or `adv_volume` absent). Percentile population = same `standard_pos` across all loaded players. NB-slot comparisons across CB/S compare shared stats only.
   - **MLB** — replaces the batting-order/pitching-staff column (`body.sb-open`; the field doesn't resize); header **Sidebar On/Off toggle**, `localStorage` key `fieldview_mlb_sidebar` (default ON; OFF = original popover + full hover card; `?player=` written only when ON). Everything computed client-side from `batting_stats`/`pitching_stats` (statsapi rates are strings — use counts). Qualifiers: batters PA ≥ 3.1×G, SP IP ≥ 1.0×G, RP IP ≥ 0.25×G, G = 162 once the season is complete else the max games played (`leagueG`). **`inningsPitched` is in thirds** ("85.2" = 85⅔, `ipToNum()`). Pitchers ranked within role (SP if GS ≥ half of games). Two-way players get both sections. Field height is fixed (`--fh`), never `min-height`.
   - **NBA** (2026-11-14) — replaces `.right-col` (the bench list) like MLB, same header **Sidebar On/Off toggle**, `localStorage` `fieldview_nba_sidebar` (default ON; OFF = the old full hover popup, click-to-sub popover and bench list, exactly). Sidebar is a flex-filled column (`align-self: stretch`, inner `.sb-scroll` absolutely positioned) so the court never resizes and the page never scrolls. Seven advanced rows from the BBR fields: TS%, USG% (**style stat**, neutral bar, "higher usage than N% of Cs"), AST%, TRB%, TOV% (lower is better), BPM, WS/48 (no VORP). **Qualifier: `adv_mp >= 12 × G`**, G = the season's max `adv_games` across the master (current = 12 now; prior = 82). **Season fallback per player:** current block if qualified → else `adv_prev` if that qualifies (header shows "2025-26" + muted "this season: low sample") → else current raw values tagged low sample, no bars (prior raw if there are no current values). Population = **master position** (PG/SG/SF/PF/C, the player's real one, not the zone he stands in) × same season × qualified only. Season Stats shows This season / Last season (GP GS MPG PPG RPG APG SPG BPG FG% 3P% FT% TOV); the compare table uses this season, rows where both players have a value; advanced compare rows are labeled with each player's season. Substitutes = every bench player (positionless), sorted by the shared 2K/MPG toggle, which also appears in the section. `?team=` is now written/read (the NBA page had no URL params before) plus `?player=<ESPN player_id>`; Reset to starters sits in the court-label row. Header skips fields the master lacks (contract, injury); `injury_status` shows a red INJ pill (SUS for suspension) with the status text.
-- **Not ported:** NHL, EPL, MLS.
+- **Per-sport reference (all six sports ship the full pattern; every page has the header toggle `Sidebar: On/Off` with `localStorage` `fieldview_<sport>_sidebar`, default ON, OFF = that page's non-sidebar behavior, and `?team=` + `?player=` written only while ON):**
+
+| | Layout | Qualifier | Populations | Season fallback | Sub sort (`fieldview_<sport>_subsort`) |
+|---|---|---|---|---|---|
+| **NFL** | Push: field gets right padding, cards slim to 66px < 1500px. OFF = the original full hover card (restored from git) + the per-slot sub dropdown, no padding | QB `att ≥ 14×G`, RB `car ≥ 6.25×G`, WR/TE `tgt ≥ 1.875×G`, G = season max team games (`advanced_meta.json`, `adv_volume`); defenders by snap/target gates | `standard_pos` across all players | none (a per-field season; header names it via `advSeasonOf`) | `madden` / `depth` (default madden) |
+| **MLB** | Replaces batting-order/pitching column (`body.sb-open`, `--fh` fixed field) | batters PA ≥ 3.1×G, SP IP ≥ 1.0×G, RP IP ≥ 0.25×G, G = 162 or max GP | batter / SP / RP (`inningsPitched` in thirds, `ipToNum()`) | none (current season) | `rating` / `play` (PA batters, IP pitchers; default play) — also on the batting-order and pitching lists |
+| **NBA** | Replaces `.right-col` (flex-stretched column, inner `.sb-scroll`) | `adv_mp ≥ 12×G` (G = season max `adv_games`: 12 now, prior 82) | master position PG/SG/SF/PF/C, same season | current → `adv_prev` ("this season: low sample") → raw + low sample | `2k` / `mpg` (default mpg) |
+| **NHL** | Replaces `.right-col`; sidebar on its own dark surface (ice stays pale) | skaters GP ≥ 0.3×G and TOI/GP ≥ 8:00, goalies GP ≥ 0.2×G; G = season max skater GP (21 now, prior 83) | forwards (C/L/R), defensemen, goalies; same season | `prev_season` block (same keys as `skater_stats`/`goalie_stats`): current → prior → raw + low sample | `rating` / `toi` (GS for the goalie zone; default toi) |
+| **EPL** | Replaces `.right-col`; pitch sized to `--fh` (viewport height, capped 806px) | minutes ≥ 30×G, G = max over players of max(`starts`, round(minutes/90)) (10 now → 300 min) | `position_group` GKP/DEF/MID/FWD | none (current season only; FPL has no prior-season data) | `rating` / `min` (default min) |
+| **MLS** | same as EPL | minutes_played ≥ 30×G, G = round(max `minutes_played`/90) (30 → 900 min) | `position_group` G/D/M/F (keepers skip the advanced section) | none | `rating` / `min` |
+
+- **NHL advanced rows** (computed from the season block): Points/60, Goals/60, Shots/60, S%, EV Points/60, Faceoff% (centers only), TOI/GP (style stat, grey bar, "more ice time than N% of forwards/D"); goalies SV%, GAA (lower is better) — `goalie_stats` carries no other rate. Season Stats = This season / Last season (skaters GP G A PTS +/- PIM SOG S% TOI/GP FO%; goalies GP W L SV% GAA SO). The 0-GP exclusion and the shared D1/D2 pool still govern subs and swaps. Prior season comes from `scrape_stats.py` (`resolve_prev_season()` = stats season − 10001; tables `nhl_stats_skaters_prev`/`nhl_stats_goalies_prev`; < 500 skaters or < 50 goalies = failed fetch, old tables kept; with no tables, `build_nhl_match.py` carries `prev_season` forward from the committed master); master gains `prev_season`.
+- **EPL advanced rows** (per 90 from the FPL `stats` block; numeric strings parsed): Goals, xG, xA, xGI, Defensive Contribution, Tackles, ICT Index; keepers Saves, Goals Conceded (lower), xGC (lower), Clean Sheets. Season Stats: Starts, Minutes, Goals, Assists, xG, xA, Clean sheets, Yellow, Red (+ Saves for GK) — FPL has **no appearances field**, so no "Apps". FPL `status`/`news` drive the INJ / DOUBT / SUS pill. Formation change keeps the sidebar open only if the player is still a starter (a manual sub is wiped by `setFormation()`, so he closes it).
+- **MLS advanced rows** (per 90, ASA stats block): Goals, xG, xA, xG+xA, G-xG, A-xA, xPts Add. The ASA feed has **no goalkeeping rates**, so keepers show Minutes only and skip the advanced section; 294 of 1,070 players have no ASA stats (no advanced/season sections). Season Stats: Minutes, Goals, Assists, xG, xA, Shots, On target, Key passes, G-xG, A-xA, xPts Add. No injury data, so no INJ/SUS tag. Same formation-switcher rule as EPL.
+- **Pitch pages (EPL/MLS) fit the viewport:** `.court-canvas` is height-driven (`--fh: min(100vh − 150px, 806px)`), so the pitch is unchanged on tall screens and shrinks only enough to avoid a page scroll at 1280×900.
 
 ---
 
@@ -190,7 +204,7 @@ Hover is light (name / position / rating / INJ); **click opens a sidebar** (360p
 - **Rink:** `ICE_ZONES` order matches the drawn rink — goalie in the crease (y 7), defense y 26, forwards y 50–55. The sub popover positions itself with `getBoundingClientRect()`.
 - **Subs/bench:** `subEligiblePlayers()` and `renderBenchList()` exclude anyone with 0 GP this season (prospects, long injuries). `.player-name` light text is nearly invisible on the pale ice — keep that surface in mind for label colors.
 - **TableView:** Overview Rating column + default sort; Skaters has S%; Goalies default-sort by Save%.
-- **Schema:** `nhl_players_master.json`: `player_id, name, team_abbr, position_group, position_code, jersey_number, shoots_catches, height_in_inches, weight_in_pounds, birth_date, birth_city, birth_country, birth_state_province, skater_stats, goalie_stats, stats_source, overall_rating, potential` (potential `Low/Med/High`, not shown anywhere).
+- **Schema:** `nhl_players_master.json`: `player_id, name, team_abbr, position_group, position_code, jersey_number, shoots_catches, height_in_inches, weight_in_pounds, birth_date, birth_city, birth_country, birth_state_province, skater_stats, goalie_stats, prev_season (prior season, same keys; 750 players), stats_source, overall_rating, potential` (potential `Low/Med/High`, not shown anywhere).
 
 ---
 
@@ -251,7 +265,7 @@ Hover is light (name / position / rating / INJ); **click opens a sidebar** (360p
 - **26 players lost their Madden rating** in the switch to EA (verified: no EA card under any spelling or team; 2 depth-1: Art Green ARZ CB, Chris Braswell HOU ED). Not a matching bug.
 - **`index.html`'s NFL player-count tile sums the per-team files (2,501 rows) instead of the master (2,369).** The per-team files carry 604 rows with `standard_pos 'DEF'`; harmless to FormationView/TableView (they read the master, 0 `DEF`).
 - **NFL section labels not flagged injured:** `PS/IR` (10, practice-squad injured reserve — a likely candidate), `SUS` (4), `LEFT` (1), `CE` (1, ambiguous; Terrion Arnold SEA is dropped for having no Madden row).
-- **NFL `.field-outer` scroll bug (cause 2) is still unapplied:** `.field-outer` still uses `min-height: calc(100vh - 52px)`, so if the formation-bar/field/legend need more than the viewport (e.g. the legend wraps to two lines) the page grows past it. Spec'd fix: `min-height` → `height`. (Cause 1, the `.players-layer` 1000px floor, is fixed with `min-height:0` on `.field-canvas`.) The Madden legend move into the formation-bar row **is** in place.
+- ~~NFL `.field-outer` scroll bug~~ **fixed 2026-11-14** (`height: calc(100vh − 52px)`; no page scroll at 1280×900 / 1920×1080 with the sidebar open).
 - **NFL `attainment`** (draft round/status) is populated for 2,108 of 2,369 (suffix is read from the `dc-key` span).
 - **NFL first-initial stats fallback** dropped a handful of real nickname matches (Dru Phillips, Sai'vion Jones, Jaylon Jones, Dalton Johnson, Mike Reid) — deliberately not chased.
 - **MLB/EPL/MLS unmatched lists:** MLB 6 (`unmatched_mlb.txt`), EPL 110, MLS 292 (`unmatched_ea.txt`) — mostly no EA/Live card.
@@ -269,13 +283,13 @@ Hover is light (name / position / rating / INJ); **click opens a sidebar** (360p
 **Up Next (in order)**
 1. **Confirm the Tuesday 2026-10-27 cloud runs (2026-11-03 and 11-10 `scrape-nba` runs succeeded and committed ESPN stats, BBR 11-10, 2K ratings; the 2K step still used the keyless path because the `NBA2KAPI_KEY` secret is empty/unset on the runner):** the NBA log shows the nba2kapi bulk path ("via /api/players/bulk", fresh `ratings_last_changed`); the Madden EA fetch ran (all 32 teams carry the run's date, iteration label present); the EPL/MLS EA fetches ran clean. (And the owner-side steps above are done.)
 2. ~~**NBA stats-source recon**~~ **Done 2026-10-31:** ESPN rosters/box + Basketball-Reference advanced (see the NBA section); BPM comes from BBR.
-3. ~~**Port the sidebar pattern to NBA**~~ **Done 2026-11-14** (see the sidebar pattern). Next candidates: port to NHL/EPL/MLS if wanted.
+3. ~~**Port the sidebar pattern to NBA**~~ **Done 2026-11-14** (see the sidebar pattern). **Ported to NHL, EPL and MLS (and NFL/MLB brought to parity: toggle + sub sort) the same day** — every sport now has the full pattern.
 4. **NFL draft prospect installer** (target December, before mock-draft season): pick a prospect from a big board, drop him into a FormationView slot with an R badge and a projected Madden from a pick-number → rookie-Madden curve fit on current rookies (`load_draft_picks()` + Madden). Not a full simulator; team-need auto-mock only if phase 1 gets used. Big-board source not yet investigated.
 5. **NFL Opponent View phase 2** (your offense vs a real opponent's defense) **+ the ~22-card density/sizing pass**.
 
 **Backlog**
-- Flag `PS/IR` as injured (and decide on SUS/LEFT/CE); fix the `.field-outer` scroll bug; fix the home-page NFL count tile.
-- Port the sidebar to NHL/EPL/MLS if wanted; add an NHL "ratings as of" caption.
+- Flag `PS/IR` as injured (and decide on SUS/LEFT/CE); fix the home-page NFL count tile.
+- Add an NHL "ratings as of" caption. Sidebar polish if wanted: NHL TableView `evGoals`/`faceoffWinPct`, EPL/MLS prior-season data (no source today).
 - NHL TableView: expose `evGoals`, `evPoints`, `faceoffWinPct` (already in the data). More `nflreadpy` sources: `load_ftn_charting()`, `load_nextgen_stats()`, `load_participation()`, `load_combine()`.
 - A real raw-vs-matched ratings audit for MLB (raw snapshot exists) and NHL (needs a persisted snapshot).
 - "Genuinely evaluative metric" project (see Statistics). Confirm a full `run_all.bat` run in one foreground sitting.
