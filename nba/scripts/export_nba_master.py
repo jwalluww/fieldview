@@ -31,7 +31,8 @@ BBR_FIELDS = ('ts_pct', 'usg_pct', 'trb_pct', 'ast_pct', 'tov_pct', 'stl_pct',
               'adv_mp', 'adv_games', 'adv_season')
 # The box-score part of nba_stats.json's prev_season block (its ESPN advanced
 # fields are dropped for the same reason).
-PREV_BOX_FIELDS = ('season', 'ppg', 'rpg', 'apg', 'mpg', 'games_played', 'games_started')
+EXTRA_BOX = ('spg', 'bpg', 'fg_pct', 'three_pct', 'ft_pct', 'tov')
+PREV_BOX_FIELDS = ('season', 'ppg', 'rpg', 'apg', 'mpg', 'games_played', 'games_started') + EXTRA_BOX
 
 
 def clean(field, v):
@@ -61,6 +62,7 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             s.mpg,
             s.games_played,
             s.games_started,
+            s.spg, s.bpg, s.fg_pct, s.three_pct, s.ft_pct, s.tov,
             pm.rotation_status,
             pm.rotation_source,
             pm.depth_rank,
@@ -132,6 +134,8 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             'contract_salary': clean('contract_salary', r['contract_salary']),
             'contract_years_remaining': clean('contract_years_remaining', r['contract_years_remaining']),
         }
+        for f in EXTRA_BOX:
+            entry[f] = clean(f, r[f])
         for f in BBR_FIELDS:
             entry[f] = clean(f, r[f])
         entry['adv_prev'] = ({f: clean(f, r['prev_' + f]) for f in BBR_FIELDS}

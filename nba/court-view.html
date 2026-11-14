@@ -331,6 +331,120 @@ body {
   font-size: 13px;
 }
 
+/* ── SIDEBAR ── */
+.sb-toggle {
+  margin-left: auto;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.sb-toggle:hover { color: var(--text); }
+.sb-toggle.on { color: var(--accent); border-color: rgba(0,212,255,.4); }
+.sb-toggle + .view-toggle { margin-left: 0; }
+
+/* ── PLAYER SIDEBAR (replaces the batting-order / pitching-staff column while open) ── */
+.sidebar {
+  display: none;
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  align-self: stretch;
+  background: #14171f;
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  font-size: 13px;
+}
+body.sb-open .sidebar { display: block; }
+.sb-scroll { position: absolute; inset: 0; overflow-y: auto; border-radius: 8px; }
+body.sb-open .right-col { display: none; }
+
+.sb-close {
+  position: absolute;
+  top: 8px; right: 10px;
+  background: none; border: none;
+  color: var(--text-muted);
+  font-size: 22px; line-height: 1;
+  cursor: pointer;
+}
+.sb-close:hover { color: var(--text); }
+.sb-head { padding: 14px 40px 12px 16px; border-bottom: 1px solid var(--border); display: flex; gap: 12px; align-items: flex-start; }
+.sb-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 22px; color: var(--text); line-height: 1.1; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.sb-meta { font-size: 12px; color: var(--text-muted); margin-top: 3px; line-height: 1.5; }
+.sb-rating { text-align: center; flex-shrink: 0; }
+.sb-rating-val { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 34px; line-height: 1; }
+.sb-rating-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); }
+.sb-pill { border-radius: 3px; font-size: 10px; font-weight: 800; padding: 1px 5px; letter-spacing: 1px; }
+.sb-pill.inj { background: rgba(239,68,68,.2); color: #ef4444; border: 1px solid rgba(239,68,68,.4); }
+.sb-section { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.sb-section-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
+.sb-stat { padding: 7px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+.sb-section-title + .sb-stat { border-top: none; }
+.sb-stat-top { display: flex; justify-content: space-between; align-items: baseline; }
+.sb-stat-label { font-size: 12px; color: var(--text); }
+.sb-stat-val { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 17px; color: var(--text); }
+.sb-bar-wrap { display: flex; align-items: center; gap: 8px; margin-top: 3px; }
+.sb-bar { flex: 1; height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+.sb-bar-fill { height: 100%; border-radius: 3px; }
+.sb-low { font-size: 10px; font-weight: 400; color: var(--text-dim); margin-left: 4px; }
+.sb-pct { font-size: 11px; font-weight: 700; min-width: 58px; text-align: right; white-space: nowrap; }
+.sb-def { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.sb-caption { font-size: 10px; color: var(--text-dim); margin-top: 6px; }
+.sb-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 8px; }
+.sb-cell-label { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--text-dim); }
+.sb-cell-val { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 18px; color: var(--text); line-height: 1.2; }
+.sb-tbl { display: grid; grid-template-columns: 1fr 80px 80px; align-items: center; }
+.sb-tbl > div { padding: 4px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+.sb-tbl > div:nth-child(-n+3) { border-top: none; }
+.sb-tbl-h { text-align: right; font-size: 11px; font-weight: 700; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sb-tbl-l { font-size: 12px; color: var(--text-muted); }
+.sb-tbl-v { text-align: right; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 15px; color: var(--text); }
+.sb-tbl-v.best { font-weight: 800; color: #22c55e; }
+.sb-sub { display: flex; align-items: center; gap: 10px; padding: 7px 8px; margin: 0 -8px; cursor: pointer; border-radius: 6px; }
+.sb-sub:hover { background: var(--border); }
+.sb-sub-rating { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 18px; width: 32px; text-align: center; flex-shrink: 0; }
+.sb-sub-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; color: var(--text); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sb-sub-pos { font-size: 11px; color: var(--text-muted); }
+.sb-empty { font-size: 12px; color: var(--text-dim); }
+.sb-cmp-actions { display: flex; gap: 8px; padding: 10px 16px; border-bottom: 1px solid var(--border); }
+.sb-btn { flex: 1; padding: 8px 0; border-radius: 6px; border: 1px solid var(--border2); background: transparent; color: var(--text); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; }
+.sb-btn:hover { background: var(--border); }
+.sb-btn.primary { background: var(--accent); border-color: var(--accent); color: #000; }
+.sb-btn.primary:hover { filter: brightness(1.1); }
+.sb-cmp-head { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 14px 40px 12px 16px; border-bottom: 1px solid var(--border); }
+.sb-cmp-tagline { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); }
+.sb-cmp-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 18px; color: var(--text); line-height: 1.1; }
+.sb-cmp-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.sb-cmp-rating { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 28px; line-height: 1; margin-top: 4px; }
+.sb-cmp-row { padding: 7px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+.sb-cmp-row:first-of-type { border-top: none; }
+.sb-cmp-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px; }
+.sb-cmp-line { display: flex; align-items: center; gap: 8px; margin-top: 3px; }
+.sb-cmp-tag { width: 104px; font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sb-cmp-val { width: 46px; text-align: right; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 14px; color: var(--text); }
+.sb-cmp-pct { font-size: 11px; font-weight: 700; min-width: 58px; text-align: right; white-space: nowrap; }
+.sb-note { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.sb-sort { display: flex; align-items: center; justify-content: space-between; }
+.sb-tbl3 { display: grid; grid-template-columns: 1fr 84px 84px; align-items: center; }
+.sb-tbl3 > div { padding: 4px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+.sb-tbl3 > div:nth-child(-n+3) { border-top: none; }
+.sb-pill.sus { background: rgba(245,166,35,.15); color: var(--gold); border: 1px solid rgba(245,166,35,.4); }
+.sb-teamlogo { width: 18px; height: 18px; object-fit: contain; vertical-align: -4px; margin-right: 3px; }
+.reset-btn { background: none; border: 1px solid var(--border2); border-radius: 6px; padding: 3px 12px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); cursor: pointer; }
+.reset-btn:hover { color: var(--text); background: var(--border); }
+.court-label-r { display: flex; align-items: baseline; gap: 12px; }
+.player-card.selected { z-index: 90; }
+.player-card.selected .player-dot { box-shadow: 0 0 0 3px var(--accent), 0 0 18px rgba(0,212,255,.55); }
+.pop-inj { background: rgba(239,68,68,.2); color: #ef4444; border: 1px solid rgba(239,68,68,.4); border-radius: 3px; font-size: 10px; font-weight: 800; padding: 1px 5px; letter-spacing: 1px; }
+@media (max-width: 700px) { .sidebar { min-height: 480px; } }
+
 @media (max-width: 700px) {
   .header { padding: 0 12px; }
   .wrap { flex-direction: column; padding: 0 12px; }
@@ -381,6 +495,7 @@ body {
     <div class="teams-dropdown" id="teamsDropdown"></div>
   </div>
 
+  <button class="sb-toggle" id="sbToggle" onclick="toggleSidebarMode()" title="Click a player for a detail sidebar (Off = click to substitute)"></button>
   <div class="view-toggle">
     <button class="view-btn active">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="2" fill="currentColor"/><circle cx="2" cy="2" r="1.5" fill="currentColor" opacity=".6"/><circle cx="10" cy="2" r="1.5" fill="currentColor" opacity=".6"/><circle cx="2" cy="10" r="1.5" fill="currentColor" opacity=".6"/><circle cx="10" cy="10" r="1.5" fill="currentColor" opacity=".6"/></svg>
@@ -397,7 +512,7 @@ body {
   <div class="left-col">
     <div class="court-label">
       <span>Starting Five<span class="asof" id="ratingsAsOf" title="Ratings from nba2kapi.com (data: 2kratings.com). Advanced stats: Basketball-Reference"></span><span class="asof" id="statsAsOf" title="Stats and rosters from ESPN"></span></span>
-      <span class="depth-chart-updated" id="depthChartUpdated"></span>
+      <span class="court-label-r"><span class="depth-chart-updated" id="depthChartUpdated"></span><button class="reset-btn" id="resetStartersBtn" onclick="resetStarters()" style="display:none">Reset to starters</button></span>
     </div>
 
     <div class="court-canvas">
@@ -427,13 +542,15 @@ body {
       <div class="players-layer" id="playersLayer"></div>
       <div class="subs-pop" id="subsPop"></div>
     </div>
-    <div class="court-hint">Click a starter to see substitutes</div>
+    <div class="court-hint" id="courtHint">Click a starter to see substitutes</div>
   </div>
 
   <div class="right-col">
     <div class="rotation-title"><span id="benchTitle">Bench &amp; Rotation</span><span class="sort-toggle" data-sort-toggle></span></div>
     <div class="bench-list" id="benchList"></div>
   </div>
+
+  <aside class="sidebar" id="playerSidebar" aria-label="Player details"><div class="sb-scroll" id="sbScroll"></div></aside>
 </div>
 
 <div class="player-popup" id="playerPopup"></div>
@@ -555,6 +672,16 @@ function mapPlayer(p) {
     rating: p.overall_rating,
     salary: p.contract_salary,
     years_remaining: p.contract_years_remaining,
+    injury: p.injury_status,
+    cur: { gp: p.games_played, gs: p.games_started, mpg: p.mpg, ppg: p.ppg, rpg: p.rpg, apg: p.apg,
+           spg: p.spg, bpg: p.bpg, fg: p.fg_pct, tp: p.three_pct, ft: p.ft_pct, tov: p.tov },
+    prev: p.prev_season ? { season: p.prev_season.season, gp: p.prev_season.games_played, gs: p.prev_season.games_started,
+           mpg: p.prev_season.mpg, ppg: p.prev_season.ppg, rpg: p.prev_season.rpg, apg: p.prev_season.apg,
+           spg: p.prev_season.spg, bpg: p.prev_season.bpg, fg: p.prev_season.fg_pct, tp: p.prev_season.three_pct,
+           ft: p.prev_season.ft_pct, tov: p.prev_season.tov } : null,
+    statsSeason: p.stats_season,
+    advCur: p.adv_season ? p : null,   // BBR current-season fields live on the master row itself
+    advPrev: p.adv_prev || null,
   };
 }
 
@@ -608,6 +735,7 @@ async function loadAllPlayers() {
     const raw = await res.json();
     allPlayers = Object.values(raw).map(mapPlayer);
     positionRanks = computePositionRanks(allPlayers);
+    buildAdv();
     loadRatingsMeta();
     loadStatsMeta();
   } catch (e) {
@@ -638,6 +766,8 @@ async function loadTeam(abbr) {
   hidePopup();
   manualStarters = {};
   subUndo = {};
+  sidebarZone = null; compareId = null;
+  document.body.classList.remove('sb-open');
   teamPlayers = allPlayers.filter(p => p.team === abbr);
   updateHeader();
   renderCourt();
@@ -704,6 +834,25 @@ function renderCourt() {
   const popover = document.getElementById('subsPop');
   popover.classList.remove('open');
   openPopoverPos = null;
+
+  // Keep the sidebar in step with the court: refresh it (or close it if its zone has no player now).
+  if (sidebarZone) renderSidebar();
+  setSelectedHighlight();
+  updateResetBtn();
+}
+
+// Reset button is only shown while there are manual subs.
+function updateResetBtn() {
+  document.getElementById('resetStartersBtn').style.display = Object.keys(manualStarters).length ? '' : 'none';
+}
+
+function resetStarters() {
+  manualStarters = {};
+  subUndo = {};
+  compareId = null;
+  hidePopup();
+  renderCourt();
+  renderBenchList();
 }
 
 // ══════════════════════════════════════════
@@ -738,6 +887,7 @@ function setSubSort(mode) {
   try { localStorage.setItem(SUBSORT_KEY, mode); } catch (e) {}
   renderBenchList();
   if (openPopoverPos) fillSubsPopover(openPopoverPos);
+  if (sidebarZone && !compareId) renderSidebar();
 }
 
 function renderBenchList() {
@@ -819,6 +969,7 @@ function attachSubsPopoverHandlers(layer) {
       e.stopPropagation();
       hidePopup();
       const pos = card.dataset.pos;
+      if (sidebarOn) { openSidebar(pos); return; }
       const popover = document.getElementById('subsPop');
       if (openPopoverPos === pos) {
         popover.classList.remove('open');
@@ -843,6 +994,7 @@ function substitutePlayer(pid, targetPos) {
   if (!p) return;
   subUndo[targetPos] = manualStarters[targetPos];
   manualStarters[targetPos] = p.id;
+  compareId = null;
   hidePopup();
   renderCourt();
   renderBenchList();
@@ -900,6 +1052,17 @@ function popupHTML(p) {
   `;
 }
 
+function lightPopupHTML(p) {
+  return `
+    <div class="popup-header">
+      <div class="popup-name">${p.name}</div>
+      <div class="popup-pos">${p.pos || ''}</div>
+    </div>
+    <div class="popup-row"><span class="popup-row-label">Overall</span><span class="popup-row-val" style="color:${ratingColor(p.rating)};font-weight:700">${p.rating != null ? p.rating : '—'}</span></div>
+    ${p.injury ? '<div class="popup-row"><span class="popup-row-label">Status</span><span class="pop-inj">INJ</span></div>' : ''}
+  `;
+}
+
 function positionPopup(popup, anchorEl) {
   const rect = anchorEl.getBoundingClientRect();
   const margin = 10;
@@ -923,13 +1086,341 @@ function showPopup(pid, anchorEl) {
   const p = teamPlayers.find(pl => String(pl.id) === String(pid));
   if (!p) return;
   const popup = document.getElementById('playerPopup');
-  popup.innerHTML = popupHTML(p);
+  popup.innerHTML = sidebarOn ? lightPopupHTML(p) : popupHTML(p);
   popup.style.display = 'block';
   positionPopup(popup, anchorEl);
 }
 
 function hidePopup() {
   document.getElementById('playerPopup').style.display = 'none';
+}
+
+// ══════════════════════════════════════════
+// PLAYER SIDEBAR (click a starter; toggle in the header)
+// ══════════════════════════════════════════
+const SB_KEY = 'fieldview_nba_sidebar';
+let sidebarOn = true; // default ON
+try { sidebarOn = localStorage.getItem(SB_KEY) !== 'off'; } catch (e) {}
+let sidebarZone = null; // court zone of the player shown in the sidebar
+let compareId = null;   // candidate substitute being previewed against the starter, if any
+
+function updateSbToggle() {
+  const b = document.getElementById('sbToggle');
+  b.textContent = 'Sidebar: ' + (sidebarOn ? 'On' : 'Off');
+  b.classList.toggle('on', sidebarOn);
+  document.getElementById('courtHint').textContent = sidebarOn ? 'Click a starter for details and substitutes' : 'Click a starter to see substitutes';
+}
+
+function toggleSidebarMode() {
+  closeSidebar();
+  sidebarOn = !sidebarOn;
+  try { localStorage.setItem(SB_KEY, sidebarOn ? 'on' : 'off'); } catch (e) {}
+  document.getElementById('subsPop').classList.remove('open');
+  openPopoverPos = null;
+  hidePopup();
+  updateSbToggle();
+}
+
+// ?team= and ?player= (only while the toggle is ON); other params are preserved.
+function syncURL() {
+  if (!sidebarOn) return;
+  const params = new URLSearchParams(window.location.search);
+  params.set('team', currentTeam);
+  const sp = sidebarZone ? getStarter(sidebarZone) : null;
+  if (sp) params.set('player', sp.id); else params.delete('player');
+  history.replaceState(null, '', '?' + params.toString());
+}
+
+function setSelectedHighlight() {
+  document.querySelectorAll('#playersLayer .player-card.selected').forEach(n => n.classList.remove('selected'));
+  if (!sidebarZone) return;
+  const n = document.querySelector(`#playersLayer .player-card[data-pos="${sidebarZone}"]`);
+  if (n) n.classList.add('selected');
+}
+
+function openSidebar(zone) {
+  const swapped = sidebarZone !== zone;
+  sidebarZone = zone;
+  if (swapped) compareId = null;
+  renderSidebar(swapped);
+}
+
+function closeSidebar() {
+  sidebarZone = null;
+  compareId = null;
+  document.getElementById('sbScroll').innerHTML = '';
+  document.body.classList.remove('sb-open');
+  setSelectedHighlight();
+  syncURL();
+}
+
+// ── Advanced stats (Basketball-Reference) ──
+// Percentile color: red at 0, amber at 50, green at 99 (copied from nfl-formation-view.html).
+const PCT_RED = [239, 68, 68], PCT_AMBER = [245, 190, 40], PCT_GREEN = [34, 197, 94];
+const PCT_NEUTRAL = '#8b93b0';
+function pctColor(pct) {
+  const [a, b, t] = pct <= 50 ? [PCT_RED, PCT_AMBER, pct / 50] : [PCT_AMBER, PCT_GREEN, (pct - 50) / 49];
+  return 'rgb(' + a.map((x, i) => Math.round(x + (b[i] - x) * t)).join(',') + ')';
+}
+function ordinal(n) {
+  const r = n % 100;
+  if (r >= 11 && r <= 13) return n + 'th';
+  return n + (['th', 'st', 'nd', 'rd'][n % 10] || 'th');
+}
+
+// Qualifier: minutes >= MIN_PER_G x G, G = the season's max games across the master (current / prior).
+const MIN_PER_G = 12;
+let advG = { cur: 0, prev: 0 };
+let pctIndex = { cur: {}, prev: {} }; // season -> position -> stat key -> sorted values of every qualified player
+let popN = { cur: {}, prev: {} };     // season -> position -> number of qualified players
+
+const isNum = v => typeof v === 'number' && !isNaN(v);
+const fmtPct1 = v => v.toFixed(1) + '%';
+const fmtSigned = v => (v > 0 ? '+' : '') + v.toFixed(1);
+const fmt3 = v => (v < 0 ? '-' : '') + Math.abs(v).toFixed(3).replace(/^0/, '');
+const ADV_META = {
+  ts_pct:    { label: 'TS%',   fmt: v => (v * 100).toFixed(1) + '%', def: 'True shooting: scoring efficiency counting 2s, 3s and free throws.' },
+  usg_pct:   { label: 'USG%',  fmt: fmtPct1, style: 'usage', def: 'Share of team plays he finishes (shot, turnover, free throws) while on the floor.' },
+  ast_pct:   { label: 'AST%',  fmt: fmtPct1, def: 'Share of teammates’ baskets he assisted while on the floor.' },
+  trb_pct:   { label: 'TRB%',  fmt: fmtPct1, def: 'Share of available rebounds he grabbed while on the floor.' },
+  tov_pct:   { label: 'TOV%',  fmt: fmtPct1, lower: true, def: 'Turnovers per 100 plays he uses. Lower is better.' },
+  bpm:       { label: 'BPM',   fmt: fmtSigned, def: 'Box Plus/Minus: points per 100 possessions above an average player (0 = average).' },
+  ws_per_48: { label: 'WS/48', fmt: fmt3, def: 'Win Shares per 48 minutes (about .100 is average).' },
+};
+const ADV_LIST = ['ts_pct', 'usg_pct', 'ast_pct', 'trb_pct', 'tov_pct', 'bpm', 'ws_per_48'];
+
+const advQualified = (b, which) => !!b && isNum(b.adv_mp) && advG[which] > 0 && b.adv_mp >= MIN_PER_G * advG[which];
+
+function buildAdv() {
+  advG = { cur: 0, prev: 0 };
+  for (const p of allPlayers) {
+    if (p.advCur && p.advCur.adv_games > advG.cur) advG.cur = p.advCur.adv_games;
+    if (p.advPrev && p.advPrev.adv_games > advG.prev) advG.prev = p.advPrev.adv_games;
+  }
+  pctIndex = { cur: {}, prev: {} };
+  popN = { cur: {}, prev: {} };
+  for (const p of allPlayers) {
+    if (!p.pos) continue;
+    for (const which of ['cur', 'prev']) {
+      const b = which === 'cur' ? p.advCur : p.advPrev;
+      if (!advQualified(b, which)) continue;
+      popN[which][p.pos] = (popN[which][p.pos] || 0) + 1;
+      const idx = (pctIndex[which][p.pos] ||= {});
+      for (const k of ADV_LIST) if (isNum(b[k])) (idx[k] ||= []).push(b[k]);
+    }
+  }
+  for (const which of ['cur', 'prev']) for (const pos in pctIndex[which]) for (const k in pctIndex[which][pos]) pctIndex[which][pos][k].sort((a, b) => a - b);
+  console.info('[CourtView] qualifier G =', advG, '(minutes >= ' + MIN_PER_G + ' x G)');
+}
+
+// Which season's advanced block a player shows: current if qualified; else last season if that qualifies
+// (with a note); else current raw values (or last season's raw if there are none) tagged low sample, no bars.
+function advView(p) {
+  if (advQualified(p.advCur, 'cur')) return { which: 'cur', season: p.advCur.adv_season, b: p.advCur, qualified: true };
+  if (advQualified(p.advPrev, 'prev')) return { which: 'prev', season: p.advPrev.adv_season, b: p.advPrev, qualified: true, note: 'this season: low sample' };
+  const has = b => b && ADV_LIST.some(k => isNum(b[k]));
+  if (has(p.advCur)) return { which: 'cur', season: p.advCur.adv_season, b: p.advCur, qualified: false };
+  if (has(p.advPrev)) return { which: 'prev', season: p.advPrev.adv_season, b: p.advPrev, qualified: false };
+  return null;
+}
+
+// % of the qualified same-position population he beats (ties count half), inverted for lower-is-better stats.
+// Null when unqualified or the population is under 10. (copied from mlb/diamond-view.html)
+function percentileOf(p, v, key) {
+  const a = v && v.qualified ? v : null;
+  const arr = a && pctIndex[a.which][p.pos] && pctIndex[a.which][p.pos][key];
+  const x = a && a.b[key];
+  if (!arr || arr.length < 10 || typeof x !== 'number' || isNaN(x)) return null;
+  const lower = !!ADV_META[key].lower;
+  let beaten = 0, eq = 0;
+  for (const y of arr) {
+    if (y === x) eq++;
+    else if (lower ? y > x : y < x) beaten++;
+  }
+  beaten += 0.5 * (eq - 1); // he is one of the "tied" players; exclude himself
+  return Math.min(99, Math.round(beaten / (arr.length - 1) * 100));
+}
+
+function statPct(p, v, key) {
+  const m = ADV_META[key];
+  const pct = percentileOf(p, v, key);
+  if (pct == null) return { pct: null, color: null, text: '' };
+  return {
+    pct,
+    color: m.style ? PCT_NEUTRAL : pctColor(pct),
+    text: m.style ? 'higher usage than ' + pct + '% of ' + p.pos + 's' : ordinal(pct) + ' pct',
+  };
+}
+
+function advStatHtml(p, v, key) {
+  const m = ADV_META[key], x = v.b[key];
+  if (!isNum(x)) return '';
+  const { pct, color: c, text } = statPct(p, v, key);
+  return `
+    <div class="sb-stat">
+      <div class="sb-stat-top"><span class="sb-stat-label">${m.label}${!v.qualified ? ' <span class="sb-low">low sample</span>' : ''}</span><span class="sb-stat-val">${m.fmt(x)}</span></div>
+      ${pct != null ? `<div class="sb-bar-wrap"><div class="sb-bar"><div class="sb-bar-fill" style="width:${pct}%;background:${c}"></div></div><span class="sb-pct" style="color:${c}">${text}</span></div>` : ''}
+      <div class="sb-def">${m.def}</div>
+    </div>`;
+}
+
+function advSectionHtml(p) {
+  const v = advView(p);
+  if (!v) return '';
+  const rows = ADV_LIST.map(k => advStatHtml(p, v, k)).join('');
+  if (!rows) return '';
+  const n = popN[v.which][p.pos];
+  const caption = v.qualified
+    ? `Ranked among ${n} qualified ${p.pos}s in ${v.season} (min. ${MIN_PER_G * advG[v.which]} minutes)`
+    : `Fewer than ${MIN_PER_G * advG[v.which]} minutes in ${v.season}: not ranked`;
+  return `<div class="sb-section"><div class="sb-section-title">Advanced Stats · ${v.season}</div>
+    ${v.note ? `<div class="sb-note" style="margin:-4px 0 4px">${v.note}</div>` : ''}${rows}
+    <div class="sb-caption">${caption}</div></div>`;
+}
+
+// ── Season stats ──
+const BOX_DEFS = [
+  { label: 'GP', k: 'gp' }, { label: 'GS', k: 'gs' }, { label: 'MPG', k: 'mpg', d: 1 },
+  { label: 'PPG', k: 'ppg', d: 1 }, { label: 'RPG', k: 'rpg', d: 1 }, { label: 'APG', k: 'apg', d: 1 },
+  { label: 'SPG', k: 'spg', d: 1 }, { label: 'BPG', k: 'bpg', d: 1 },
+  { label: 'FG%', k: 'fg', d: 1 }, { label: '3P%', k: 'tp', d: 1 }, { label: 'FT%', k: 'ft', d: 1 },
+  { label: 'TOV', k: 'tov', d: 1, lower: true },
+];
+const boxText = (blk, d) => blk && isNum(blk[d.k]) ? (d.d ? blk[d.k].toFixed(d.d) : String(blk[d.k])) : '—';
+
+function seasonStatsHtml(p) {
+  const rows = BOX_DEFS.map(d => `<div class="sb-tbl-l">${d.label}</div><div class="sb-tbl-v">${boxText(p.cur, d)}</div><div class="sb-tbl-v">${boxText(p.prev, d)}</div>`).join('');
+  return `<div class="sb-section"><div class="sb-section-title">Season Stats</div>
+    <div class="sb-tbl3"><div></div><div class="sb-tbl-h">This season</div><div class="sb-tbl-h">Last season</div>${rows}</div>
+    <div class="sb-caption">${p.statsSeason || ''}${p.prev ? ' · ' + p.prev.season : ''}</div></div>`;
+}
+
+const lastName = p => p.name.split(' ').slice(1).join(' ') || p.name;
+function fmtSalary(s) {
+  const n = parseInt(String(s == null ? '' : s).replace(/[^0-9]/g, ''), 10);
+  return n ? '$' + (n / 1e6).toFixed(1) + 'M' : null;
+}
+
+function subsSectionHtml(p) {
+  const startingIds = new Set(ZONE_ORDER.map(z => getStarter(z)?.id).filter(Boolean));
+  const cands = sortSubs(teamPlayers.filter(c => !startingIds.has(c.id)));
+  const rows = cands.length ? cands.map(c => `
+      <div class="sb-sub" onclick="openCompare('${c.id}', event)">
+        <div class="sb-sub-rating" style="color:${ratingColor(c.rating)}">${c.rating != null ? c.rating : '—'}</div>
+        <div class="sb-sub-name">${c.name}</div>
+        <div class="sb-sub-pos">${c.pos || ''} · ${c.mpg != null ? c.mpg + ' mpg' : '— mpg'}</div>
+      </div>`).join('') : '<div class="sb-empty">No bench players available.</div>';
+  return `<div class="sb-section" style="border-bottom:none">
+      <div class="sb-section-title sb-sort"><span>Substitutes</span><span class="sort-toggle" data-sort-toggle></span></div>${rows}</div>`;
+}
+
+function renderSidebar(resetScroll) {
+  const el = document.getElementById('sbScroll');
+  const p = sidebarZone ? getStarter(sidebarZone) : null;
+  if (!p) { closeSidebar(); return; }
+  if (compareId) { renderCompare(el, p); return; }
+
+  const rank = positionRanks[p.id];
+  const sal = fmtSalary(p.salary);
+  const contract = sal ? 'Contract ' + sal + (p.years_remaining ? ' · ' + p.years_remaining + ' yr' + (p.years_remaining > 1 ? 's' : '') + ' left' : '') : null;
+  const bio = [p.height, p.weight != null ? p.weight + ' lbs' : null].filter(Boolean).join(' · ');
+  const line1 = `<img class="sb-teamlogo" src="${teamLogoUrl(p.team)}" alt="">${p.team} · ${rank ? rank : (p.pos || '')}`;
+  const pill = p.injury ? (p.injury === 'Suspension' ? '<span class="sb-pill sus">SUS</span>' : '<span class="sb-pill inj">INJ</span>') : '';
+  el.innerHTML = `
+    <button class="sb-close" onclick="closeSidebar()" aria-label="Close">&times;</button>
+    <div class="sb-head">
+      <div style="flex:1;min-width:0">
+        <div class="sb-name"><span>${p.jersey != null && p.jersey !== '' ? '#' + p.jersey + ' ' : ''}${p.name}</span>${pill}</div>
+        <div class="sb-meta">${line1}</div>
+        ${bio ? `<div class="sb-meta">${bio}</div>` : ''}
+        ${contract ? `<div class="sb-meta">${contract}</div>` : ''}
+        ${p.injury ? `<div class="sb-meta" style="color:#ef4444">${p.injury}</div>` : ''}
+      </div>
+      <div class="sb-rating"><div class="sb-rating-val" style="color:${ratingColor(p.rating)}">${p.rating != null ? p.rating : '—'}</div><div class="sb-rating-label">2K</div></div>
+    </div>
+    ${advSectionHtml(p)}
+    ${seasonStatsHtml(p)}
+    ${subsSectionHtml(p)}`;
+  document.body.classList.add('sb-open');
+  renderSortToggles();
+  if (resetScroll) el.scrollTop = 0;
+  setSelectedHighlight();
+  syncURL();
+}
+
+function openCompare(id, event) {
+  if (event) event.stopPropagation();
+  compareId = id;
+  renderSidebar(true);
+}
+
+function closeCompare(event) {
+  if (event) event.stopPropagation();
+  compareId = null;
+  renderSidebar(true);
+}
+
+function swapFromCompare(event) {
+  if (event) event.stopPropagation();
+  substitutePlayer(compareId, sidebarZone); // clears compareId; renderCourt() re-renders the sidebar for the new starter
+}
+
+// Starter vs. candidate. Season stats (this season) and advanced rows are compared only where both players
+// have a value; each percentile stays within the player's own position population and displayed season.
+function renderCompare(el, a) {
+  const b = teamPlayers.find(x => String(x.id) === String(compareId));
+  if (!b) { compareId = null; renderSidebar(); return; }
+
+  const rows = BOX_DEFS.map(d => {
+    const va = a.cur[d.k], vb = b.cur[d.k];
+    if (!isNum(va) || !isNum(vb)) return '';
+    const ta = boxText(a.cur, d), tb = boxText(b.cur, d);
+    let best = '';
+    if (ta !== tb) best = (d.lower ? va < vb : va > vb) ? 'a' : 'b';
+    return `<div class="sb-tbl-l">${d.label}</div><div class="sb-tbl-v${best === 'a' ? ' best' : ''}">${ta}</div><div class="sb-tbl-v${best === 'b' ? ' best' : ''}">${tb}</div>`;
+  }).join('');
+  const tableHtml = rows ? `<div class="sb-section"><div class="sb-section-title">Season Stats</div>
+      <div class="sb-tbl"><div></div><div class="sb-tbl-h">${lastName(a)}</div><div class="sb-tbl-h">${lastName(b)}</div>${rows}</div>
+      <div class="sb-caption">${a.statsSeason || ''} season</div></div>` : '';
+
+  const va = advView(a), vb = advView(b);
+  const line = (pl, v, key) => {
+    const m = ADV_META[key], x = v.b[key];
+    const { pct, color } = statPct(pl, v, key);
+    const tag = lastName(pl) + (v.which === 'prev' ? ' · ' + v.season.replace(/^20/, '') : '');
+    return `<div class="sb-cmp-line"><span class="sb-cmp-tag" title="${pl.name} · ${v.season}">${tag}</span>
+      <div class="sb-bar">${pct != null ? `<div class="sb-bar-fill" style="width:${pct}%;background:${color}"></div>` : ''}</div>
+      <span class="sb-cmp-val">${m.fmt(x)}</span>
+      <span class="sb-cmp-pct" style="color:${color || 'inherit'}">${pct != null ? ordinal(pct) : '<span class="sb-low" style="margin:0">low sample</span>'}</span></div>`;
+  };
+  let advHtml = '';
+  if (va && vb) {
+    const advRows = ADV_LIST.filter(k => isNum(va.b[k]) && isNum(vb.b[k])).map(key =>
+      `<div class="sb-cmp-row"><div class="sb-cmp-top"><span class="sb-stat-label">${ADV_META[key].label}</span></div>${line(a, va, key)}${line(b, vb, key)}</div>`).join('');
+    if (advRows) advHtml = `<div class="sb-section"><div class="sb-section-title">Advanced Stats · percentile vs. own position</div>${advRows}
+      <div class="sb-caption">${lastName(a)}: ${va.season}${va.qualified ? '' : ' (low sample)'} · ${lastName(b)}: ${vb.season}${vb.qualified ? '' : ' (low sample)'}</div></div>`;
+  }
+
+  const head = (pl, tag) => `<div>
+      <div class="sb-cmp-tagline">${tag}</div>
+      <div class="sb-cmp-name">${pl.jersey != null && pl.jersey !== '' ? '#' + pl.jersey + ' ' : ''}${pl.name}</div>
+      <div class="sb-cmp-sub">${pl.pos || ''}${pl.height ? ' · ' + pl.height : ''}</div>
+      <div class="sb-cmp-rating" style="color:${ratingColor(pl.rating)}">${pl.rating != null ? pl.rating : '—'}</div>
+    </div>`;
+
+  el.innerHTML = `
+    <button class="sb-close" onclick="closeSidebar()" aria-label="Close">&times;</button>
+    <div class="sb-cmp-head">${head(a, 'Starter')}${head(b, 'Substitute')}</div>
+    <div class="sb-cmp-actions">
+      <button class="sb-btn" onclick="closeCompare(event)">Back</button>
+      <button class="sb-btn primary" onclick="swapFromCompare(event)">Swap in</button>
+    </div>
+    ${tableHtml}${advHtml}
+    ${!tableHtml && !advHtml ? '<div class="sb-section"><div class="sb-empty">These players have no stats in common to compare.</div></div>' : ''}`;
+  document.body.classList.add('sb-open');
+  el.scrollTop = 0;
+  setSelectedHighlight();
+  syncURL();
 }
 
 // ══════════════════════════════════════════
@@ -953,10 +1444,11 @@ function toggleTeamDropdown() {
 }
 
 function selectTeam(abbr) {
+  closeSidebar();
   currentTeam = abbr;
   document.getElementById('teamsDropdown').classList.remove('open');
   buildTeamsDropdown();
-  loadTeam(currentTeam);
+  loadTeam(currentTeam).then(syncURL);
 }
 
 document.addEventListener('click', (e) => {
@@ -967,13 +1459,30 @@ document.addEventListener('click', (e) => {
     document.getElementById('subsPop').classList.remove('open');
     openPopoverPos = null;
   }
+  // Click on empty court closes the sidebar.
+  if (sidebarZone && e.target.closest('.court-canvas') && !e.target.closest('.player-card')) closeSidebar();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && sidebarZone) closeSidebar();
 });
 
 // ══════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('team') && TEAMS[urlParams.get('team')]) currentTeam = urlParams.get('team');
+const urlPlayer = urlParams.get('player');
+
+updateSbToggle();
 buildTeamsDropdown();
-loadTeam(currentTeam);
+loadTeam(currentTeam).then(() => {
+  // Reopen the sidebar if ?player= is someone currently on the court for this team; otherwise ignore it.
+  if (sidebarOn && urlPlayer) {
+    const zone = ZONE_ORDER.find(z => { const st = getStarter(z); return st && String(st.id) === urlPlayer; });
+    if (zone) openSidebar(zone);
+  }
+});
 loadDepthChartMeta();
 </script>
 </body>

@@ -15,7 +15,7 @@ All six sports ship a FieldView + TableView with real data and a real cloud job 
 | Sport | State | Players / rated | Ratings source |
 |---|---|---|---|
 | **NFL** | FormationView (offense + defense together, "Opponent View" phase 1) with a click-to-open player sidebar; TableView with per-tab column picker. | 2,369 / Madden on 1,842 (77.8%) | **EA drop-api, Madden 27**, weekly iteration (Week 6 now) |
-| **NBA** | CourtView (positionless subs, undo, **2K/MPG sub sort**) + TableView (Overview/Per Game/Financial/Bio/**Advanced**). **ESPN universe** (30 rosters), Basketball-Reference advanced stats. | 521 / 520 rated (99.8%) | **nba2kapi.com** (JSON mirror of 2kratings.com), cloud job, keyless fallback |
+| **NBA** | CourtView (positionless subs, undo, **2K/MPG sub sort**, **player sidebar**) + TableView (Overview/Per Game/Financial/Bio/**Advanced**). **ESPN universe** (30 rosters), Basketball-Reference advanced stats. | 526 / 519 rated (98.7%) | **nba2kapi.com** (JSON mirror of 2kratings.com), cloud job, keyless fallback |
 | **MLB** | DiamondView with player sidebar + on/off toggle, 40-man roster incl. injured; TableView. | 1,359 / 1,354 (99.6%) | **MLB The Show official API** (`series == "Live"`) |
 | **NHL** | IceView + TableView. No sidebar, no "ratings as of" caption. | 797 / 715 (89.7%) | **nhlratings.net via ScraperAPI** (EA publishes only its top 300 NHL players) |
 | **EPL** | PitchView with 6-formation switcher + TableView incl. Advanced tab. | 668 / 558 (83.5%) | **EA drop-api, FC 27** (EA id == sofifa id) |
@@ -82,7 +82,7 @@ All six sports ship a FieldView + TableView with real data and a real cloud job 
 
 ---
 
-## Pattern: player sidebar (built on NFL and MLB)
+## Pattern: player sidebar (built on NFL, MLB and NBA)
 
 Hover is light (name / position / rating / INJ); **click opens a sidebar** (360px, `Esc`, the x button, an empty-field click or a team switch close it; the selected card keeps a cyan outline that follows a swap). No hero stat — the old hero is just the first advanced row.
 - **Layout:** header (name, jersey, team, position, bio, overall rating, INJ detail) → Advanced Stats → Season Stats grid → Substitutes. Players with no advanced values skip the advanced section.
@@ -95,7 +95,8 @@ Hover is light (name / position / rating / INJ); **click opens a sidebar** (360p
 - **Per-sport differences:**
   - **NFL** — push layout (the field gets right padding; cards slim to 66px under 1500px so ~22 cards never overlap); always on. Qualifiers come from `nfl/data/advanced_meta.json` (`league_max_games`, `field_season`) and each player's `adv_volume`: QB `att >= 14×G`, RB `car >= 6.25×G`, WR/TE `tgt >= 1.875×G` (G = the season's max team games; gate inert if the sidecar is empty or `adv_volume` absent). Percentile population = same `standard_pos` across all loaded players. NB-slot comparisons across CB/S compare shared stats only.
   - **MLB** — replaces the batting-order/pitching-staff column (`body.sb-open`; the field doesn't resize); header **Sidebar On/Off toggle**, `localStorage` key `fieldview_mlb_sidebar` (default ON; OFF = original popover + full hover card; `?player=` written only when ON). Everything computed client-side from `batting_stats`/`pitching_stats` (statsapi rates are strings — use counts). Qualifiers: batters PA ≥ 3.1×G, SP IP ≥ 1.0×G, RP IP ≥ 0.25×G, G = 162 once the season is complete else the max games played (`leagueG`). **`inningsPitched` is in thirds** ("85.2" = 85⅔, `ipToNum()`). Pitchers ranked within role (SP if GS ≥ half of games). Two-way players get both sections. Field height is fixed (`--fh`), never `min-height`.
-- **Not ported:** NBA, NHL, EPL, MLS. **NBA is next** — the BBR advanced stats (TS%, USG%, BPM, VORP, WS/48, …) and the prior-season fallback blocks are now in the master.
+  - **NBA** (2026-11-14) — replaces `.right-col` (the bench list) like MLB, same header **Sidebar On/Off toggle**, `localStorage` `fieldview_nba_sidebar` (default ON; OFF = the old full hover popup, click-to-sub popover and bench list, exactly). Sidebar is a flex-filled column (`align-self: stretch`, inner `.sb-scroll` absolutely positioned) so the court never resizes and the page never scrolls. Seven advanced rows from the BBR fields: TS%, USG% (**style stat**, neutral bar, "higher usage than N% of Cs"), AST%, TRB%, TOV% (lower is better), BPM, WS/48 (no VORP). **Qualifier: `adv_mp >= 12 × G`**, G = the season's max `adv_games` across the master (current = 12 now; prior = 82). **Season fallback per player:** current block if qualified → else `adv_prev` if that qualifies (header shows "2025-26" + muted "this season: low sample") → else current raw values tagged low sample, no bars (prior raw if there are no current values). Population = **master position** (PG/SG/SF/PF/C, the player's real one, not the zone he stands in) × same season × qualified only. Season Stats shows This season / Last season (GP GS MPG PPG RPG APG SPG BPG FG% 3P% FT% TOV); the compare table uses this season, rows where both players have a value; advanced compare rows are labeled with each player's season. Substitutes = every bench player (positionless), sorted by the shared 2K/MPG toggle, which also appears in the section. `?team=` is now written/read (the NBA page had no URL params before) plus `?player=<ESPN player_id>`; Reset to starters sits in the court-label row. Header skips fields the master lacks (contract, injury); `injury_status` shows a red INJ pill (SUS for suspension) with the status text.
+- **Not ported:** NHL, EPL, MLS.
 
 ---
 
@@ -165,7 +166,7 @@ Hover is light (name / position / rating / INJ); **click opens a sidebar** (360p
 
 **CourtView:** substitution pool is fully positionless (any bench player fills any zone); single-level zone-keyed undo, cleared on team switch. **Sub sort:** one shared 2K / MPG toggle (popover + bench list, `localStorage` `fieldview_nba_subsort`, default MPG, nulls last). Team/Position filters use NFL depth-chart's multiselect pattern. `computePositionRanks()` ranks by 2K rating within position group (`PF 3/46`; no rating → no badge). `.subs-pop` now follows the 200px / 22px dot / 13px name / 11px text, `max-height:280px; overflow-y:auto` convention. `var(--text-muted)` (not `--text-dim`) for `.bench-stat-label`/`.popup-pos`/`.popup-stat-label`. Caption tooltip credits nba2kapi/2kratings and Basketball-Reference. **TableView Advanced tab:** TS%, USG%, TRB%, AST%, TOV%, BPM, VORP, WS/48, MP, G (default sort MP desc — tiny samples give BPM 50 / TS% 150%).
 
-**Schema:** `nba_players_master.json`: `player_id, name, team, position, jersey_number, height, weight, ppg, rpg, apg, mpg, games_played, games_started, rotation_status, rotation_source, depth_rank, overall_rating, contract_salary, contract_years_remaining`. Coverage: contract salary ~75%; rotation from nbadepthchart.com ~75%, rest `mpg_derived`.
+**Schema:** `nba_players_master.json` (now also `spg, bpg, fg_pct, three_pct, ft_pct, tov` current + the same inside `prev_season`; ESPN per-game values, percents are 0-100; added 2026-11-14 in `fetch_espn_stats.py` → `export_nba_master.py`): `player_id, name, team, position, jersey_number, height, weight, ppg, rpg, apg, mpg, games_played, games_started, rotation_status, rotation_source, depth_rank, overall_rating, contract_salary, contract_years_remaining`. Coverage: contract salary ~75%; rotation from nbadepthchart.com ~75%, rest `mpg_derived`.
 
 ---
 
@@ -266,9 +267,9 @@ Hover is light (name / position / rating / INJ); **click opens a sidebar** (360p
 ## Roadmap
 
 **Up Next (in order)**
-1. **Confirm the Tuesday 2026-10-27 cloud runs:** the NBA log shows the nba2kapi bulk path ("via /api/players/bulk", fresh `ratings_last_changed`); the Madden EA fetch ran (all 32 teams carry the run's date, iteration label present); the EPL/MLS EA fetches ran clean. (And the owner-side steps above are done.)
+1. **Confirm the Tuesday 2026-10-27 cloud runs (2026-11-03 and 11-10 `scrape-nba` runs succeeded and committed ESPN stats, BBR 11-10, 2K ratings; the 2K step still used the keyless path because the `NBA2KAPI_KEY` secret is empty/unset on the runner):** the NBA log shows the nba2kapi bulk path ("via /api/players/bulk", fresh `ratings_last_changed`); the Madden EA fetch ran (all 32 teams carry the run's date, iteration label present); the EPL/MLS EA fetches ran clean. (And the owner-side steps above are done.)
 2. ~~**NBA stats-source recon**~~ **Done 2026-10-31:** ESPN rosters/box + Basketball-Reference advanced (see the NBA section); BPM comes from BBR.
-3. **Port the sidebar pattern to NBA** (advanced rows with percentiles from the BBR fields, sub comparison, `?player=<ESPN id>`, Reset to starters) — unblocked; `prev_season`/`adv_prev` are the small-sample fallback.
+3. ~~**Port the sidebar pattern to NBA**~~ **Done 2026-11-14** (see the sidebar pattern). Next candidates: port to NHL/EPL/MLS if wanted.
 4. **NFL draft prospect installer** (target December, before mock-draft season): pick a prospect from a big board, drop him into a FormationView slot with an R badge and a projected Madden from a pick-number → rookie-Madden curve fit on current rookies (`load_draft_picks()` + Madden). Not a full simulator; team-need auto-mock only if phase 1 gets used. Big-board source not yet investigated.
 5. **NFL Opponent View phase 2** (your offense vs a real opponent's defense) **+ the ~22-card density/sizing pass**.
 

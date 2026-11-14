@@ -173,6 +173,12 @@ def fetch_byathlete(end_year):
                 'rpg': num1(vals.get('avgRebounds')),
                 'apg': num1(vals.get('avgAssists')),
                 'mpg': num1(vals.get('avgMinutes')),
+                'spg': num1(vals.get('avgSteals')),
+                'bpg': num1(vals.get('avgBlocks')),
+                'fg_pct': num1(vals.get('fieldGoalPct')),
+                'three_pct': num1(vals.get('threePointFieldGoalPct')),
+                'ft_pct': num1(vals.get('freeThrowPct')),
+                'tov': num1(vals.get('avgTurnovers')),
                 'games_played': int(vals['gamesPlayed']) if vals.get('gamesPlayed') is not None else None,
             }
         pages = (j.get('pagination') or {}).get('pages') or page
@@ -318,6 +324,8 @@ def main():
             'rpg': box['rpg'] if box else None,
             'apg': box['apg'] if box else None,
             'mpg': box['mpg'] if box else None,
+            **{k: (box[k] if box else None)
+               for k in ('spg', 'bpg', 'fg_pct', 'three_pct', 'ft_pct', 'tov')},
             'games_played': box['games_played'] if box else 0,
             'games_started': adv['games_started'] if adv else None,
             'position': bio['position'],
