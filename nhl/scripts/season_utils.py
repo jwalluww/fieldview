@@ -44,6 +44,14 @@ new NHL season. Fixed 2026-08-31.
 from datetime import date
 
 
+def resolve_prev_season(client, stats_season):
+    """The season before `stats_season` (YYYYYYYY string), or None if the manifest has no such season.
+    Seasons are consecutive ids (20252026 -> 20262027), so the previous one is id - 10001."""
+    prev_id = int(stats_season) - 10001
+    manifest = client.standings.season_standing_manifest()
+    return str(prev_id) if any(s['id'] == prev_id for s in manifest) else None
+
+
 def resolve_seasons(client, today=None):
     """Returns (roster_season, stats_season) as YYYYYYYY strings.
 

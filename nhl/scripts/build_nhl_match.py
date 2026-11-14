@@ -27,12 +27,14 @@ returning a real Cloudflare 403 mid-session (see scrape_ratings.py's
 docstring), so this ships without ratings for now, same precedent as
 MLB's first DiamondView pass shipping without theshowratings.com data.
 """
+import json
 import os
 
 import duckdb
 import pandas as pd
 
 DB_PATH = os.path.join('nhl', 'data', 'fieldview.duckdb')
+MASTER_PATH = os.path.join('nhl', 'data', 'nhl_players_master.json')
 
 # Columns stripped out of the raw stats rows before they're embedded as
 # skater_stats/goalie_stats -- everything else is real, unmodified
@@ -77,6 +79,22 @@ def build_match():
     skaters = con.execute("SELECT * FROM nhl_stats_skaters").fetchdf()
     goalies = con.execute("SELECT * FROM nhl_stats_goalies").fetchdf()
 
+    # Prior-season stats (scrape_stats.py). If the tables are missing/empty (fetch failed on a fresh runner),
+    # carry prev_season forward from the committed master instead.
+    prev_sk, prev_g = {}, {}
+    if table_exists(con, 'nhl_stats_skaters_prev') and table_exists(con, 'nhl_stats_goalies_prev'):
+        for _, r in con.execute("SELECT * FROM nhl_stats_skaters_prev").fetchdf().iterrows():
+            prev_sk[int(r['playerId'])] = stats_dict(r)
+        for _, r in con.execute("SELECT * FROM nhl_stats_goalies_prev").fetchdf().iterrows():
+            prev_g[int(r['playerId'])] = stats_dict(r)
+    if not prev_sk and not prev_g and os.path.exists(MASTER_PATH):
+        with open(MASTER_PATH, encoding='utf-8') as f:
+            for pid, p in json.load(f).items():
+                ps = p.get('prev_season')
+                if ps:
+                    (prev_g if 'savePct' in ps else prev_sk)[int(pid)] = ps
+        print(f"prev tables missing: carried prev_season forward from the committed master ({len(prev_sk)} skaters, {len(prev_g)} goalies)")
+
     has_ratings = table_exists(con, 'nhl_ratings')
     ratings_by_id = {}
     if has_ratings:
@@ -120,6 +138,10 @@ def build_match():
             'skater_stats': stats_dict(skater_row) if skater_row is not None else None,
             'goalie_stats': stats_dict(goalie_row) if goalie_row is not None else None,
             'stats_source': stats_source,
+            # Prior-season block, same keys as skater_stats / goalie_stats (kept in two columns so DuckDB
+            # sees one struct type each; the export merges them into a single prev_season).
+            'prev_skater_stats': prev_sk.get(pid) if clean(r['position_group']) != 'goalie' else None,
+            'prev_goalie_stats': prev_g.get(pid) if clean(r['position_group']) == 'goalie' else None,
         }
 
         rating_row = ratings_by_id.get(pid)

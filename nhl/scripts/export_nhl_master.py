@@ -54,6 +54,8 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             'skater_stats': r['skater_stats'] if isinstance(r['skater_stats'], dict) else None,
             'goalie_stats': r['goalie_stats'] if isinstance(r['goalie_stats'], dict) else None,
             'stats_source': clean('stats_source', r['stats_source']),
+            'prev_season': (r['prev_skater_stats'] if isinstance(r['prev_skater_stats'], dict) else
+                            r['prev_goalie_stats'] if isinstance(r['prev_goalie_stats'], dict) else None),
             'overall_rating': clean('overall_rating', r['overall_rating']),
             'potential': clean('potential', r['potential']),
         }

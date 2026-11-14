@@ -23,10 +23,13 @@ import duckdb
 import pandas as pd
 from datetime import datetime, timezone
 from nhlpy import NHLClient
-from season_utils import resolve_seasons
+from season_utils import resolve_seasons, resolve_prev_season
 
 DB_PATH = "nhl/data/fieldview.duckdb"
 PAGE_SIZE = 100
+# A prior-season pull smaller than this is treated as a failed/truncated fetch: the old prev tables are kept.
+MIN_PREV_SKATERS = 500
+MIN_PREV_GOALIES = 50
 
 
 def fetch_all_pages(fetch_fn, **kwargs):
@@ -73,3 +76,24 @@ if __name__ == "__main__":
 
     print(f"nhl_stats_skaters: {len(skaters_df)} rows loaded (season {stats_season})")
     print(f"nhl_stats_goalies: {len(goalies_df)} rows loaded (season {stats_season})")
+
+    # Prior season, for the sidebar's small-sample fallback. Failure here is never fatal: the old prev
+    # tables are kept (and build_nhl_match.py falls back to the committed master's prev_season if there are none).
+    try:
+        prev_season = resolve_prev_season(client, stats_season)
+        if not prev_season:
+            raise RuntimeError(f"no season before {stats_season} in the manifest")
+        prev_sk = fetch_all_pages(client.stats.skater_stats_summary, start_season=prev_season, end_season=prev_season)
+        prev_g = fetch_all_pages(client.stats.goalie_stats_summary, start_season=prev_season, end_season=prev_season)
+        if len(prev_sk) < MIN_PREV_SKATERS or len(prev_g) < MIN_PREV_GOALIES:
+            raise RuntimeError(f"prior season {prev_season} came back short ({len(prev_sk)} skaters, {len(prev_g)} goalies)")
+        prev_sk_df = to_df(prev_sk, "playerId", "skater", loaded_at)
+        prev_g_df = to_df(prev_g, "playerId", "goalie", loaded_at)
+        conn = duckdb.connect(DB_PATH)
+        conn.execute("CREATE OR REPLACE TABLE nhl_stats_skaters_prev AS SELECT * FROM prev_sk_df")
+        conn.execute("CREATE OR REPLACE TABLE nhl_stats_goalies_prev AS SELECT * FROM prev_g_df")
+        conn.close()
+        print(f"nhl_stats_skaters_prev: {len(prev_sk_df)} rows loaded (season {prev_season})")
+        print(f"nhl_stats_goalies_prev: {len(prev_g_df)} rows loaded (season {prev_season})")
+    except Exception as e:
+        print(f"GUARD: prior-season stats not updated ({e}); keeping the previous prev tables / master prev_season.")
