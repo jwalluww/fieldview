@@ -276,7 +276,11 @@ body {
   display: none;
 }
 .subs-pop.open { display: block; }
-.subs-pop-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 9px; letter-spacing: .5px; text-transform: uppercase; color: var(--text-dim); padding: 2px 4px 5px; }
+.subs-pop-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 9px; letter-spacing: .5px; text-transform: uppercase; color: var(--text-dim); padding: 2px 4px 5px; display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.sort-toggle { display: inline-flex; border: 1px solid var(--border2); border-radius: 5px; overflow: hidden; flex-shrink: 0; margin-left: 10px; vertical-align: middle; }
+.sort-toggle button { background: none; border: none; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: .5px; text-transform: uppercase; padding: 2px 7px; cursor: pointer; }
+.sort-toggle button.active { background: rgba(0,212,255,.15); color: var(--accent); }
+.sb-sort { display: flex; align-items: center; justify-content: space-between; }
 .subs-row { display: flex; align-items: center; gap: 8px; padding: 6px 5px; border-radius: 5px; cursor: pointer; }
 .subs-row:hover { background: var(--border); }
 .subs-dot { width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0; display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:900; color:#05261a; font-family:'Barlow Condensed'; }
@@ -553,9 +557,9 @@ body.sb-open .right-col { display: none; }
   </div>
 
   <div class="right-col">
-    <div class="rotation-title">Batting Order (by Plate Appearances)</div>
+    <div class="rotation-title"><span id="battingTitle">Batting Order (by Plate Appearances)</span><span class="sort-toggle" data-sort-toggle data-kind="bat"></span></div>
     <div class="bench-list" id="battingOrderList"></div>
-    <div class="rotation-title" style="margin-top:16px">Pitching Staff</div>
+    <div class="rotation-title" style="margin-top:16px"><span>Pitching Staff</span><span class="sort-toggle" data-sort-toggle data-kind="P"></span></div>
     <div class="bench-list" id="pitchingList"></div>
   </div>
 
@@ -885,7 +889,9 @@ function renderBattingOrder() {
   // carry a zero-PA batting_stats block.
   const batters = teamPlayers
     .filter(p => !p.injured && p.hasBatting && p.pa > 0)
-    .sort((a, b) => (b.pa || 0) - (a.pa || 0));
+    .sort((a, b) => subSort === 'rating' ? ((a.rating == null) - (b.rating == null) || (b.rating - a.rating) || (b.pa || 0) - (a.pa || 0)) : (b.pa || 0) - (a.pa || 0));
+  document.getElementById('battingTitle').textContent = 'Batting Order (by ' + (subSort === 'rating' ? 'Rating' : 'Plate Appearances') + ')';
+  renderSortToggles();
 
   if (!batters.length) {
     list.innerHTML = '<div class="bench-empty">No batting stats on this roster yet.</div>';
@@ -925,6 +931,10 @@ function renderPitchingStaff() {
     .sort((a, b) => (b.gamesStarted || 0) - (a.gamesStarted || 0));
   const bullpen = pitchers.filter(p => (p.gamesStarted || 0) === 0)
     .sort((a, b) => (b.gamesPitched || 0) - (a.gamesPitched || 0));
+  if (subSort === 'rating') {
+    const byRating = (a, b) => (a.rating == null) - (b.rating == null) || (b.rating - a.rating) || ipToNum(b.inningsPitched) - ipToNum(a.inningsPitched);
+    starters.sort(byRating); bullpen.sort(byRating);
+  }
 
   if (!pitchers.length) {
     list.innerHTML = '<div class="bench-empty">No pitching stats on this roster yet.</div>';
@@ -975,6 +985,33 @@ function attachPopupHandlers(container) {
 // ══════════════════════════════════════════
 let openPopoverPos = null;
 
+// Shared sub sort (popover, sidebar, lists): 'rating' or 'play' (PA for batters, IP for pitchers). Nulls last.
+const SUBSORT_KEY = 'fieldview_mlb_subsort';
+let subSort = 'play';
+try { const v = localStorage.getItem(SUBSORT_KEY); if (v === 'rating' || v === 'play') subSort = v; } catch (e) {}
+const playTime = (p, isP) => isP ? ipToNum(p.inningsPitched) : (p.pa || 0);
+function sortSubs(list, isP) {
+  const t = p => playTime(p, isP), r = p => p.rating;
+  const cmp = (a, b, f) => (f(a) == null) - (f(b) == null) || (f(b) - f(a)) || 0;
+  return list.slice().sort(subSort === 'rating' ? (a, b) => cmp(a, b, r) || cmp(a, b, t) : (a, b) => cmp(a, b, t) || cmp(a, b, r));
+}
+function renderSortToggles() {
+  document.querySelectorAll('[data-sort-toggle]').forEach(el => {
+    const kind = el.dataset.kind || ((sidebarZone || openPopoverPos) === 'P' ? 'P' : 'bat');
+    el.innerHTML = `<button data-sort="rating" class="${subSort === 'rating' ? 'active' : ''}">Rating</button>` +
+                   `<button data-sort="play" class="${subSort === 'play' ? 'active' : ''}">${kind === 'P' ? 'IP' : 'PA'}</button>`;
+    el.querySelectorAll('button').forEach(btn => btn.addEventListener('click', ev => { ev.stopPropagation(); setSubSort(btn.dataset.sort); }));
+  });
+}
+function setSubSort(mode) {
+  subSort = mode;
+  try { localStorage.setItem(SUBSORT_KEY, mode); } catch (e) {}
+  renderBattingOrder();
+  renderPitchingStaff();
+  if (openPopoverPos) fillSubsPopover(openPopoverPos);
+  if (sidebarZone && !compareId) renderSidebar();
+}
+
 function subEligiblePlayers(zone) {
   const allStarterIds = new Set(ZONE_ORDER.map(z => getStarter(z)?.id).filter(Boolean));
   let pool;
@@ -989,10 +1026,7 @@ function subEligiblePlayers(zone) {
     pool = teamPlayers.filter(p => p.position === zone);
   }
   pool = pool.filter(p => !allStarterIds.has(p.id) && !p.injured && hasPlayed(p));
-  if (zone === 'P') {
-    return pool.sort((a,b) => (b.gamesStarted||0) - (a.gamesStarted||0) || (b.gamesPitched||0) - (a.gamesPitched||0));
-  }
-  return pool.sort((a,b) => (b.pa||0) - (a.pa||0));
+  return sortSubs(pool, zone === 'P');
 }
 
 function subsLabel(zone) {
@@ -1001,6 +1035,28 @@ function subsLabel(zone) {
   if (ZONE_GROUP[zone] === 'IF') return 'Sub in (infielders)';
   if (ZONE_GROUP[zone] === 'OF') return 'Sub in (outfielders)';
   return 'Sub in';
+}
+
+function fillSubsPopover(zone) {
+  const popover = document.getElementById('subsPop');
+  const subs = subEligiblePlayers(zone);
+  const isP = zone === 'P';
+  popover.innerHTML = `<div class="subs-pop-label"><span>${subsLabel(zone)}</span><span class="sort-toggle" data-sort-toggle style="margin-left:0"></span></div>` +
+    (subs.length ? subs.map(s => `
+      <div class="subs-row" data-pid="${s.id}">
+        <div class="subs-dot" style="background:${ratingColor(s.rating)}">${s.rating != null ? s.rating : '—'}</div>
+        <div class="subs-name">${s.name}</div>
+        <div class="subs-mpg">${isP ? (s.inningsPitched || 0) + ' ip' : (s.pa || 0) + ' pa'}</div>
+      </div>`).join('') : `<div class="subs-empty">No eligible bench players</div>`);
+  renderSortToggles();
+  popover.querySelectorAll('.subs-row').forEach(row => {
+    row.addEventListener('click', ev => {
+      ev.stopPropagation();
+      substitutePlayer(row.dataset.pid, zone);
+      popover.classList.remove('open');
+      openPopoverPos = null;
+    });
+  });
 }
 
 function attachSubsPopoverHandlers(layer) {
@@ -1016,16 +1072,7 @@ function attachSubsPopoverHandlers(layer) {
         openPopoverPos = null;
         return;
       }
-      const subs = subEligiblePlayers(zone);
-      const isPitcherZone = zone === 'P';
-
-      popover.innerHTML = `<div class="subs-pop-label">${subsLabel(zone)}</div>` +
-        (subs.length ? subs.map(s => `
-          <div class="subs-row" data-pid="${s.id}">
-            <div class="subs-dot" style="background:${ratingColor(s.rating)}">${s.rating != null ? s.rating : '—'}</div>
-            <div class="subs-name">${s.name}</div>
-            <div class="subs-mpg">${isPitcherZone ? (s.gamesStarted || 0) + ' gs' : (s.pa || 0) + ' pa'}</div>
-          </div>`).join('') : `<div class="subs-empty">No eligible bench players</div>`);
+      fillSubsPopover(zone);
 
       const courtCanvas = card.closest('.court-canvas');
       const rect = card.getBoundingClientRect();
@@ -1035,14 +1082,6 @@ function attachSubsPopoverHandlers(layer) {
       popover.classList.add('open');
       openPopoverPos = zone;
 
-      popover.querySelectorAll('.subs-row').forEach(row => {
-        row.addEventListener('click', (ev) => {
-          ev.stopPropagation();
-          substitutePlayer(row.dataset.pid, zone);
-          popover.classList.remove('open');
-          openPopoverPos = null;
-        });
-      });
     });
   });
 }
@@ -1130,6 +1169,7 @@ function lightPopupHTML(p) {
       <div class="popup-pos">${p.position || ''}</div>
     </div>
     <div class="popup-row"><span class="popup-row-label">Overall</span><span class="popup-row-val" style="color:${ratingColor(p.rating)};font-weight:700">${p.rating != null ? p.rating : '—'}</span></div>
+    ${p.injured ? '<div class="popup-row"><span class="popup-row-label">Status</span><span class="tag tag-injured" style="color:#ef4444">INJ</span></div>' : ''}
   `;
 }
 
@@ -1443,7 +1483,7 @@ function renderSidebar(resetScroll) {
   const meta1 = [p.position + (sidebarZone !== p.position ? ' · ' + sidebarZone : ''), p.teamName].filter(Boolean).join(' · ');
   const meta2 = [p.age ? 'Age ' + p.age : null, p.bats ? 'Bats ' + p.bats : null, p.throws ? 'Throws ' + p.throws : null, p.height || null, p.weight ? p.weight + ' lbs' : null].filter(Boolean).join(' · ');
 
-  const advHtml = kinds.map(kind => `<div class="sb-section"><div class="sb-section-title">Advanced Stats${multi ? ' · ' + KIND_TITLE[kind] : ''}</div>
+  const advHtml = kinds.map(kind => `<div class="sb-section"><div class="sb-section-title">Advanced Stats${multi ? ' · ' + KIND_TITLE[kind] : ''} · ${STATS_SEASON}</div>
       ${ADV_LIST[kind].map(k => advStatHtml(p, kind, k)).join('')}
       <div class="sb-caption">${kind === 'pit' ? 'Ranked among ' + (p.adv.pit.role === 'SP' ? 'starting' : 'relief') + ' pitchers' : 'Ranked among all qualified batters'}</div></div>`).join('');
   const gridHtml = kinds.map(kind => gridSectionHtml(p, kind, multi)).join('');
@@ -1454,7 +1494,7 @@ function renderSidebar(resetScroll) {
       <div class="sb-sub" onclick="openCompare('${c.id}', event)">
         <div class="sb-sub-rating" style="color:${ratingColor(c.rating)}">${c.rating != null ? c.rating : '—'}</div>
         <div class="sb-sub-name">${c.name}</div>
-        <div class="sb-sub-pos">${c.position || ''} · ${isP ? (c.gamesStarted || 0) + ' gs' : (c.pa || 0) + ' pa'}</div>
+        <div class="sb-sub-pos">${c.position || ''} · ${isP ? (c.inningsPitched || 0) + ' ip' : (c.pa || 0) + ' pa'}</div>
       </div>`).join('') : '<div class="sb-empty">No other players available at this position.</div>';
 
   el.innerHTML = `
@@ -1471,10 +1511,11 @@ function renderSidebar(resetScroll) {
     ${advHtml}
     ${gridHtml}
     <div class="sb-section" style="border-bottom:none">
-      <div class="sb-section-title">Substitutes</div>
+      <div class="sb-section-title sb-sort"><span>Substitutes</span><span class="sort-toggle" data-sort-toggle style="margin-left:0"></span></div>
       ${subsHtml}
     </div>`;
   document.body.classList.add('sb-open');
+  renderSortToggles();
   if (resetScroll) el.scrollTop = 0;
   setSelectedHighlight();
   syncURL();
