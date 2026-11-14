@@ -157,7 +157,8 @@ body {
 /* ── LEFT: compact pitch ── */
 .asof { font-size: 13px; font-weight: 400; letter-spacing: 0; text-transform: none; margin-left: 10px; }
 
-.left-col { width: 560px; flex-shrink: 0; }
+.left-col { flex-shrink: 0; }
+:root { --fh: min(calc(100vh - 150px), 806px); }
 
 .court-label {
   display: flex;
@@ -187,8 +188,8 @@ body {
 
 .court-canvas {
   position: relative;
-  width: 100%;
-  aspect-ratio: 500/720;
+  height: var(--fh);
+  width: calc(var(--fh) * 500 / 720);
   border-radius: 8px;
 }
 
@@ -323,10 +324,130 @@ body {
   font-size: 13px;
 }
 
+/* ── SIDEBAR ── */
+.sb-toggle {
+  margin-left: auto;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.sb-toggle:hover { color: var(--text); }
+.sb-toggle.on { color: var(--accent); border-color: rgba(0,212,255,.4); }
+.sb-toggle + .view-toggle { margin-left: 0; }
+
+/* ── PLAYER SIDEBAR (replaces the batting-order / pitching-staff column while open) ── */
+.sidebar {
+  display: none;
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  align-self: stretch;
+  background: #14171f;
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  font-size: 13px;
+}
+body.sb-open .sidebar { display: block; }
+.sb-scroll { position: absolute; inset: 0; overflow-y: auto; border-radius: 8px; }
+body.sb-open .right-col { display: none; }
+
+.sb-close {
+  position: absolute;
+  top: 8px; right: 10px;
+  background: none; border: none;
+  color: var(--text-muted);
+  font-size: 22px; line-height: 1;
+  cursor: pointer;
+}
+.sb-close:hover { color: var(--text); }
+.sb-head { padding: 14px 40px 12px 16px; border-bottom: 1px solid var(--border); display: flex; gap: 12px; align-items: flex-start; }
+.sb-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 22px; color: var(--text); line-height: 1.1; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.sb-meta { font-size: 12px; color: var(--text-muted); margin-top: 3px; line-height: 1.5; }
+.sb-rating { text-align: center; flex-shrink: 0; }
+.sb-rating-val { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 34px; line-height: 1; }
+.sb-rating-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); }
+.sb-pill { border-radius: 3px; font-size: 10px; font-weight: 800; padding: 1px 5px; letter-spacing: 1px; }
+.sb-pill.inj { background: rgba(239,68,68,.2); color: #ef4444; border: 1px solid rgba(239,68,68,.4); }
+.sb-section { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.sb-section-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
+.sb-stat { padding: 7px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+.sb-section-title + .sb-stat { border-top: none; }
+.sb-stat-top { display: flex; justify-content: space-between; align-items: baseline; }
+.sb-stat-label { font-size: 12px; color: var(--text); }
+.sb-stat-val { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 17px; color: var(--text); }
+.sb-bar-wrap { display: flex; align-items: center; gap: 8px; margin-top: 3px; }
+.sb-bar { flex: 1; height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+.sb-bar-fill { height: 100%; border-radius: 3px; }
+.sb-low { font-size: 10px; font-weight: 400; color: var(--text-dim); margin-left: 4px; }
+.sb-pct { font-size: 11px; font-weight: 700; min-width: 58px; text-align: right; white-space: nowrap; }
+.sb-def { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.sb-caption { font-size: 10px; color: var(--text-dim); margin-top: 6px; }
+.sb-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 8px; }
+.sb-cell-label { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--text-dim); }
+.sb-cell-val { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 18px; color: var(--text); line-height: 1.2; }
+.sb-tbl { display: grid; grid-template-columns: 1fr 80px 80px; align-items: center; }
+.sb-tbl > div { padding: 4px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+.sb-tbl > div:nth-child(-n+3) { border-top: none; }
+.sb-tbl-h { text-align: right; font-size: 11px; font-weight: 700; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sb-tbl-l { font-size: 12px; color: var(--text-muted); }
+.sb-tbl-v { text-align: right; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 15px; color: var(--text); }
+.sb-tbl-v.best { font-weight: 800; color: #22c55e; }
+.sb-sub { display: flex; align-items: center; gap: 10px; padding: 7px 8px; margin: 0 -8px; cursor: pointer; border-radius: 6px; }
+.sb-sub:hover { background: var(--border); }
+.sb-sub-rating { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 18px; width: 32px; text-align: center; flex-shrink: 0; }
+.sb-sub-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; color: var(--text); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sb-sub-pos { font-size: 11px; color: var(--text-muted); }
+.sb-empty { font-size: 12px; color: var(--text-dim); }
+.sb-cmp-actions { display: flex; gap: 8px; padding: 10px 16px; border-bottom: 1px solid var(--border); }
+.sb-btn { flex: 1; padding: 8px 0; border-radius: 6px; border: 1px solid var(--border2); background: transparent; color: var(--text); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; }
+.sb-btn:hover { background: var(--border); }
+.sb-btn.primary { background: var(--accent); border-color: var(--accent); color: #000; }
+.sb-btn.primary:hover { filter: brightness(1.1); }
+.sb-cmp-head { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 14px 40px 12px 16px; border-bottom: 1px solid var(--border); }
+.sb-cmp-tagline { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); }
+.sb-cmp-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 18px; color: var(--text); line-height: 1.1; }
+.sb-cmp-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.sb-cmp-rating { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 28px; line-height: 1; margin-top: 4px; }
+.sb-cmp-row { padding: 7px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+.sb-cmp-row:first-of-type { border-top: none; }
+.sb-cmp-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px; }
+.sb-cmp-line { display: flex; align-items: center; gap: 8px; margin-top: 3px; }
+.sb-cmp-tag { width: 104px; font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sb-cmp-val { width: 46px; text-align: right; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 14px; color: var(--text); }
+.sb-cmp-pct { font-size: 11px; font-weight: 700; min-width: 58px; text-align: right; white-space: nowrap; }
+.sb-note { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.sb-sort { display: flex; align-items: center; justify-content: space-between; }
+.sb-tbl3 { display: grid; grid-template-columns: 1fr 84px 84px; align-items: center; }
+.sb-tbl3 > div { padding: 4px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+.sb-tbl3 > div:nth-child(-n+3) { border-top: none; }
+.sb-pill.sus { background: rgba(245,166,35,.15); color: var(--gold); border: 1px solid rgba(245,166,35,.4); }
+.sb-teamlogo { width: 18px; height: 18px; object-fit: contain; vertical-align: -4px; margin-right: 3px; }
+.reset-btn { background: none; border: 1px solid var(--border2); border-radius: 6px; padding: 3px 12px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); cursor: pointer; }
+.reset-btn:hover { color: var(--text); background: var(--border); }
+.court-label-r { display: flex; align-items: baseline; gap: 12px; }
+.player-card.selected { z-index: 90; }
+.player-card.selected .player-dot { box-shadow: 0 0 0 3px var(--accent), 0 0 18px rgba(0,212,255,.55); }
+.pop-inj { background: rgba(239,68,68,.2); color: #ef4444; border: 1px solid rgba(239,68,68,.4); border-radius: 3px; font-size: 10px; font-weight: 800; padding: 1px 5px; letter-spacing: 1px; }
+@media (max-width: 700px) { .sidebar { min-height: 480px; } }
+
+.sort-toggle { display: inline-flex; border: 1px solid var(--border2); border-radius: 5px; overflow: hidden; flex-shrink: 0; margin-left: 10px; vertical-align: middle; }
+.sort-toggle button { background: none; border: none; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: .5px; text-transform: uppercase; padding: 2px 7px; cursor: pointer; }
+.sort-toggle button.active { background: rgba(0,212,255,.15); color: var(--accent); }
+.subs-pop-label { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+
 @media (max-width: 700px) {
   .header { padding: 0 12px; }
   .wrap { flex-direction: column; padding: 0 12px; }
   .left-col { width: 100%; }
+  .court-canvas { height: auto; width: 100%; aspect-ratio: 500/720; }
 }
 
 /* ── PLAYER STAT POPUP ── */
@@ -373,6 +494,7 @@ body {
     <div class="teams-dropdown" id="teamsDropdown"></div>
   </div>
 
+  <button class="sb-toggle" id="sbToggle" onclick="toggleSidebarMode()" title="Click a player for a detail sidebar (Off = click to substitute)"></button>
   <div class="view-toggle">
     <button class="view-btn active">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/><circle cx="6" cy="6" r="1.5" fill="currentColor"/></svg>
@@ -389,14 +511,14 @@ body {
   <div class="left-col">
     <div class="court-label">
       <span><span id="formationLabel">Starting XI (4-3-3)</span><span class="asof" id="ratingsAsOf"></span></span>
-      <select id="formationSelect" class="formation-select" onchange="setFormation(this.value)">
+      <span class="court-label-r"><select id="formationSelect" class="formation-select" onchange="setFormation(this.value)">
         <option value="433">4-3-3</option>
         <option value="442">4-4-2</option>
         <option value="352">3-5-2</option>
         <option value="343">3-4-3</option>
         <option value="451">4-5-1</option>
         <option value="532">5-3-2</option>
-      </select>
+      </select><button class="reset-btn" id="resetStartersBtn" onclick="resetStarters()" style="display:none">Reset to starters</button></span>
     </div>
 
     <div class="court-canvas">
@@ -435,13 +557,15 @@ body {
       <div class="players-layer" id="playersLayer"></div>
       <div class="subs-pop" id="subsPop"></div>
     </div>
-    <div class="court-hint">Click a starter to see substitutes</div>
+    <div class="court-hint" id="courtHint">Click a starter to see substitutes</div>
   </div>
 
   <div class="right-col">
-    <div class="rotation-title">Bench (by Minutes Played)</div>
+    <div class="rotation-title"><span id="benchTitle">Bench (by Minutes Played)</span><span class="sort-toggle" data-sort-toggle></span></div>
     <div class="bench-list" id="benchList"></div>
   </div>
+
+  <aside class="sidebar" id="playerSidebar" aria-label="Player details"><div class="sb-scroll" id="sbScroll"></div></aside>
 </div>
 
 <div class="player-popup" id="playerPopup"></div>
@@ -603,6 +727,8 @@ function mapPlayer(p) {
   // as the closest equivalent to EPL's FPL `form`).
   const s = p.stats || {};
   return {
+    age: p.age, height: p.height, weight: p.weight, citizenship: p.citizenship,
+    s: p.stats || null,              // raw stats block (the sidebar's advanced/season rows read it)
     id: p.player_id,
     name: p.name,
     team: p.team_abbreviation,
@@ -635,6 +761,7 @@ async function loadAllPlayers() {
     const res = await fetch('data/mls_players_master.json');
     const raw = await res.json();
     allPlayers = Object.values(raw).map(mapPlayer);
+    buildAdv();
     loadRatingsMeta();
   } catch (e) {
     console.error('Failed to load mls_players_master.json:', e);
@@ -646,6 +773,8 @@ async function loadTeam(abbr) {
   if (!allPlayers.length) await loadAllPlayers();
   hidePopup();
   manualStarters = {};
+  sidebarZone = null; compareId = null;
+  document.body.classList.remove('sb-open');
   teamPlayers = allPlayers.filter(p => p.team === abbr);
   updateHeader();
   renderPitch();
@@ -729,17 +858,49 @@ function renderPitch() {
   const popover = document.getElementById('subsPop');
   popover.classList.remove('open');
   openPopoverPos = null;
+
+  // Keep the sidebar in step with the pitch: refresh it (or close it if its zone has no player now).
+  if (sidebarZone) renderSidebar();
+  setSelectedHighlight();
+  updateResetBtn();
 }
 
 // ══════════════════════════════════════════
 // BENCH LIST (everyone else, ranked by minutes)
 // ══════════════════════════════════════════
+// Shared sub sort (popover, sidebar, bench list): 'rating' or 'min' (minutes played). Nulls last; the other metric breaks ties.
+// Default = min (the original order).
+const SUBSORT_KEY = 'fieldview_mls_subsort';
+let subSort = 'min';
+try { const v = localStorage.getItem(SUBSORT_KEY); if (v === 'rating' || v === 'min') subSort = v; } catch (e) {}
+function sortSubs(list) {
+  const t = p => p.minutes, r = p => p.rating;
+  const cmp = (a, b, f) => (f(a) == null) - (f(b) == null) || (f(b) - f(a)) || 0;
+  return list.slice().sort(subSort === 'rating' ? (a, b) => cmp(a, b, r) || cmp(a, b, t) : (a, b) => cmp(a, b, t) || cmp(a, b, r));
+}
+function renderSortToggles() {
+  document.querySelectorAll('[data-sort-toggle]').forEach(el => {
+    el.innerHTML = `<button data-sort="rating" class="${subSort === 'rating' ? 'active' : ''}">Rating</button>` +
+                   `<button data-sort="min" class="${subSort === 'min' ? 'active' : ''}">Min</button>`;
+    el.querySelectorAll('button').forEach(btn => btn.addEventListener('click', ev => { ev.stopPropagation(); setSubSort(btn.dataset.sort); }));
+  });
+}
+function setSubSort(mode) {
+  subSort = mode;
+  try { localStorage.setItem(SUBSORT_KEY, mode); } catch (e) {}
+  renderBenchList();
+  if (openPopoverPos) fillSubsPopover(openPopoverPos);
+  if (sidebarZone && !compareId) renderSidebar();
+}
+
 function renderBenchList() {
   const list = document.getElementById('benchList');
   const startingIds = new Set(Object.values(currentStarters).filter(Boolean).map(p => p.id));
   const bench = teamPlayers
-    .filter(p => !startingIds.has(p.id))
-    .sort((a, b) => (b.minutes || 0) - (a.minutes || 0));
+    .filter(p => !startingIds.has(p.id));
+  bench.splice(0, bench.length, ...sortSubs(bench));
+  document.getElementById('benchTitle').textContent = 'Bench (by ' + (subSort === 'rating' ? 'Rating' : 'Minutes Played') + ')';
+  renderSortToggles();
 
   if (!bench.length) {
     list.innerHTML = '<div class="bench-empty">No bench players on this roster yet.</div>';
@@ -783,14 +944,34 @@ let openPopoverPos = null;
 function subEligiblePlayers(zone) {
   const allStarterIds = new Set(Object.values(currentStarters).filter(Boolean).map(p => p.id));
   const group = groupForZone(zone);
-  return teamPlayers
-    .filter(p => p.positionGroup === group && !allStarterIds.has(p.id))
-    .sort((a,b) => (b.minutes||0) - (a.minutes||0));
+  return sortSubs(teamPlayers
+    .filter(p => p.positionGroup === group && !allStarterIds.has(p.id)));
 }
 
 const GROUP_LABEL = { G: 'goalkeepers', D: 'defenders', M: 'midfielders', F: 'forwards' };
 function subsLabel(zone) {
   return `Sub in (${GROUP_LABEL[groupForZone(zone)] || groupForZone(zone)})`;
+}
+
+function fillSubsPopover(zone) {
+  const popover = document.getElementById('subsPop');
+  const subs = subEligiblePlayers(zone);
+  popover.innerHTML = `<div class="subs-pop-label"><span>${subsLabel(zone)}</span><span class="sort-toggle" data-sort-toggle style="margin-left:0"></span></div>` +
+    (subs.length ? subs.map(s => `
+      <div class="subs-row" data-pid="${s.id}">
+        <div class="subs-dot" style="background:${ratingColor(s.rating)}">${s.rating != null ? s.rating : '—'}</div>
+        <div class="subs-name">${s.webName || s.name}</div>
+        <div class="subs-mpg">${s.minutes != null ? s.minutes + "'" : '—'}</div>
+      </div>`).join('') : `<div class="subs-empty">No eligible bench players</div>`);
+  renderSortToggles();
+  popover.querySelectorAll('.subs-row').forEach(row => {
+    row.addEventListener('click', ev => {
+      ev.stopPropagation();
+      substitutePlayer(row.dataset.pid, zone);
+      popover.classList.remove('open');
+      openPopoverPos = null;
+    });
+  });
 }
 
 function attachSubsPopoverHandlers(layer) {
@@ -799,21 +980,14 @@ function attachSubsPopoverHandlers(layer) {
       e.stopPropagation();
       hidePopup();
       const zone = card.dataset.pos;
+      if (sidebarOn) { openSidebar(zone); return; }
       const popover = document.getElementById('subsPop');
       if (openPopoverPos === zone) {
         popover.classList.remove('open');
         openPopoverPos = null;
         return;
       }
-      const subs = subEligiblePlayers(zone);
-
-      popover.innerHTML = `<div class="subs-pop-label">${subsLabel(zone)}</div>` +
-        (subs.length ? subs.map(s => `
-          <div class="subs-row" data-pid="${s.id}">
-            <div class="subs-dot" style="background:${ratingColor(s.rating)}">${s.rating != null ? s.rating : '—'}</div>
-            <div class="subs-name">${s.name}</div>
-            <div class="subs-mpg">${s.minutes != null ? s.minutes + "'" : '—'}</div>
-          </div>`).join('') : `<div class="subs-empty">No eligible bench players</div>`);
+      fillSubsPopover(zone);
 
       const pitchCanvas = card.closest('.court-canvas');
       const rect = card.getBoundingClientRect();
@@ -823,14 +997,6 @@ function attachSubsPopoverHandlers(layer) {
       popover.classList.add('open');
       openPopoverPos = zone;
 
-      popover.querySelectorAll('.subs-row').forEach(row => {
-        row.addEventListener('click', (ev) => {
-          ev.stopPropagation();
-          substitutePlayer(row.dataset.pid, zone);
-          popover.classList.remove('open');
-          openPopoverPos = null;
-        });
-      });
     });
   });
 }
@@ -839,6 +1005,7 @@ function substitutePlayer(pid, targetZone) {
   const p = teamPlayers.find(pl => String(pl.id) === String(pid));
   if (!p) return;
   manualStarters[targetZone] = p.id;
+  compareId = null;
   hidePopup();
   renderPitch();
   renderBenchList();
@@ -861,6 +1028,18 @@ function popupHTML(p) {
     <div class="popup-divider"></div>
     ${p.rating != null ? `<div class="popup-row"><span class="popup-row-label">EA FC</span><span class="popup-row-val">${p.rating} OVR</span></div>` : ''}
     <div class="popup-row"><span class="popup-row-label">Team</span><span class="popup-row-val">${TEAMS[p.team] ? TEAMS[p.team].name : p.team}</span></div>
+  `;
+}
+
+function lightPopupHTML(p) {
+  const inj = typeof availabilityOf === 'function' ? availabilityOf(p) : null;
+  return `
+    <div class="popup-header">
+      <div class="popup-name">${p.name}</div>
+      <div class="popup-pos">${p.standardPos || p.positionGroup || ''}</div>
+    </div>
+    <div class="popup-row"><span class="popup-row-label">Overall</span><span class="popup-row-val" style="color:${ratingColor(p.rating)};font-weight:700">${p.rating != null ? p.rating : '—'}</span></div>
+    ${inj ? `<div class="popup-row"><span class="popup-row-label">Status</span><span class="pop-inj">${inj.pill}</span></div>` : ''}
   `;
 }
 
@@ -887,13 +1066,339 @@ function showPopup(pid, anchorEl) {
   const p = teamPlayers.find(pl => String(pl.id) === String(pid));
   if (!p) return;
   const popup = document.getElementById('playerPopup');
-  popup.innerHTML = popupHTML(p);
+  popup.innerHTML = sidebarOn ? lightPopupHTML(p) : popupHTML(p);
   popup.style.display = 'block';
   positionPopup(popup, anchorEl);
 }
 
 function hidePopup() {
   document.getElementById('playerPopup').style.display = 'none';
+}
+
+// ══════════════════════════════════════════
+// PLAYER SIDEBAR (click a starter; toggle in the header)
+// ══════════════════════════════════════════
+const SB_KEY = 'fieldview_mls_sidebar';
+const STATS_SEASON = '2026'; // ASA season_name (fetch_asa_stats.py SEASON)
+let sidebarOn = true; // default ON
+try { sidebarOn = localStorage.getItem(SB_KEY) !== 'off'; } catch (e) {}
+let sidebarZone = null; // pitch zone of the player shown in the sidebar
+let compareId = null;   // candidate substitute being previewed against the starter, if any
+
+function updateSbToggle() {
+  const b = document.getElementById('sbToggle');
+  b.textContent = 'Sidebar: ' + (sidebarOn ? 'On' : 'Off');
+  b.classList.toggle('on', sidebarOn);
+  document.getElementById('courtHint').textContent = sidebarOn ? 'Click a starter for details and substitutes' : 'Click a starter to see substitutes';
+}
+
+function toggleSidebarMode() {
+  closeSidebar();
+  sidebarOn = !sidebarOn;
+  try { localStorage.setItem(SB_KEY, sidebarOn ? 'on' : 'off'); } catch (e) {}
+  document.getElementById('subsPop').classList.remove('open');
+  openPopoverPos = null;
+  hidePopup();
+  updateSbToggle();
+}
+
+// ?team= and ?player= (only while the toggle is ON); other params are preserved.
+function syncURL() {
+  if (!sidebarOn) return;
+  const params = new URLSearchParams(window.location.search);
+  params.set('team', currentTeam);
+  const sp = sidebarZone ? getStarter(sidebarZone) : null;
+  if (sp) params.set('player', sp.id); else params.delete('player');
+  history.replaceState(null, '', '?' + params.toString());
+}
+
+function setSelectedHighlight() {
+  document.querySelectorAll('#playersLayer .player-card.selected').forEach(n => n.classList.remove('selected'));
+  if (!sidebarZone) return;
+  const n = document.querySelector(`#playersLayer .player-card[data-pos="${sidebarZone}"]`);
+  if (n) n.classList.add('selected');
+}
+
+function openSidebar(zone) {
+  const swapped = sidebarZone !== zone;
+  sidebarZone = zone;
+  if (swapped) compareId = null;
+  renderSidebar(swapped);
+}
+
+function closeSidebar() {
+  sidebarZone = null;
+  compareId = null;
+  document.getElementById('sbScroll').innerHTML = '';
+  document.body.classList.remove('sb-open');
+  setSelectedHighlight();
+  syncURL();
+}
+
+// Reset button is only shown while there are manual subs.
+function updateResetBtn() {
+  document.getElementById('resetStartersBtn').style.display = Object.keys(manualStarters).length ? '' : 'none';
+}
+
+function resetStarters() {
+  manualStarters = {};
+  compareId = null;
+  hidePopup();
+  renderPitch();
+  renderBenchList();
+}
+
+// ── Advanced stats (per 90 minutes, from the FPL stats block) ──
+// Percentile color: red at 0, amber at 50, green at 99 (copied from nfl-formation-view.html).
+const PCT_RED = [239, 68, 68], PCT_AMBER = [245, 190, 40], PCT_GREEN = [34, 197, 94];
+const PCT_NEUTRAL = '#8b93b0';
+function pctColor(pct) {
+  const [a, b, t] = pct <= 50 ? [PCT_RED, PCT_AMBER, pct / 50] : [PCT_AMBER, PCT_GREEN, (pct - 50) / 49];
+  return 'rgb(' + a.map((x, i) => Math.round(x + (b[i] - x) * t)).join(',') + ')';
+}
+function ordinal(n) {
+  const r = n % 100;
+  if (r >= 11 && r <= 13) return n + 'th';
+  return n + (['th', 'st', 'nd', 'rd'][n % 10] || 'th');
+}
+
+
+// Qualifier: minutes >= MIN_PER_G x G. ASA has no "team matches played" field, so G is derived from the data:
+// the most 90-minute matches any player has logged = round(max minutes_played / 90).
+const MIN_PER_G = 30;
+let leagueG = 0;
+let pctIndex = {}; // position group -> stat key -> sorted values of every qualified player
+let popN = {};     // position group -> number of qualified players
+
+const isNum = v => typeof v === 'number' && !isNaN(v);
+const GROUP_NAME = { G: 'goalkeepers', D: 'defenders', M: 'midfielders', F: 'forwards' };
+const per90 = key => s => { const t = s[key], m = s.minutes_played; return isNum(t) && isNum(m) && m > 0 ? t / m * 90 : null; };
+const f2 = v => v.toFixed(2);
+const fS = v => (v > 0 ? '+' : '') + v.toFixed(2);
+const OUT_ADV = {
+  g90:   { label: 'Goals/90',    val: per90('goals'),                     fmt: f2, def: 'Goals scored per 90 minutes.' },
+  xg90:  { label: 'xG/90',       val: per90('xgoals'),                    fmt: f2, def: 'Expected goals per 90: the quality of his shots, whether or not they went in.' },
+  xa90:  { label: 'xA/90',       val: per90('xassists'),                  fmt: f2, def: 'Expected assists per 90: the quality of the passes he plays to teammates\u2019 shots.' },
+  xgi90: { label: 'xG+xA/90',    val: per90('xgoals_plus_xassists'),      fmt: f2, def: 'Expected goals plus expected assists per 90.' },
+  gxg90: { label: 'G-xG/90',     val: per90('goals_minus_xgoals'),        fmt: fS, def: 'Finishing: goals above (or below) expected per 90. A mix of skill and luck.' },
+  axa90: { label: 'A-xA/90',     val: per90('primary_assists_minus_xassists'), fmt: fS, def: 'Assists above (or below) expected per 90. Mostly teammates\u2019 finishing.' },
+  xpa90: { label: 'xPts Add/90', val: per90('xpoints_added'),             fmt: fS, def: 'Expected points added for his team per 90, from the quality of his actions.' },
+};
+// Keepers: ASA's player xgoals feed carries no goalkeeping rates (no saves, no goals conceded; their goal/assist
+// columns are ~all zero), so keepers skip the advanced section.
+const advMeta = p => p.positionGroup === 'G' ? {} : OUT_ADV;
+const advKeys = p => Object.keys(advMeta(p));
+
+const qualified = p => !!p.s && isNum(p.s.minutes_played) && leagueG > 0 && p.s.minutes_played >= MIN_PER_G * leagueG;
+
+function buildAdv() {
+  leagueG = 0;
+  for (const p of allPlayers) {
+    if (!p.s) continue;
+    const g = Math.round((p.s.minutes_played || 0) / 90);
+    if (g > leagueG) leagueG = g;
+  }
+  pctIndex = {}; popN = {};
+  for (const p of allPlayers) {
+    if (!qualified(p) || p.positionGroup === 'G') continue;
+    const g = p.positionGroup, meta = advMeta(p);
+    popN[g] = (popN[g] || 0) + 1;
+    const idx = (pctIndex[g] ||= {});
+    for (const k of advKeys(p)) { const v = meta[k].val(p.s); if (isNum(v)) (idx[k] ||= []).push(v); }
+  }
+  for (const g in pctIndex) for (const k in pctIndex[g]) pctIndex[g][k].sort((a, b) => a - b);
+  console.info('[PitchView] qualifier G =', leagueG, '(minutes >= ' + MIN_PER_G * leagueG + ')');
+}
+
+// % of the qualified same-group population he beats (ties count half), inverted for lower-is-better stats.
+// Null when unqualified or the population is under 10. (copied from mlb/diamond-view.html)
+function percentileOf(p, key) {
+  const arr = qualified(p) && pctIndex[p.positionGroup] && pctIndex[p.positionGroup][key];
+  const x = p.s ? advMeta(p)[key].val(p.s) : null;
+  if (!arr || arr.length < 10 || typeof x !== 'number' || isNaN(x)) return null;
+  const lower = !!advMeta(p)[key].lower;
+  let beaten = 0, eq = 0;
+  for (const y of arr) {
+    if (y === x) eq++;
+    else if (lower ? y > x : y < x) beaten++;
+  }
+  beaten += 0.5 * (eq - 1); // he is one of the "tied" players; exclude himself
+  return Math.min(99, Math.round(beaten / (arr.length - 1) * 100));
+}
+
+function statPct(p, key) {
+  const pct = percentileOf(p, key);
+  return pct == null ? { pct: null, color: null, text: '' } : { pct, color: pctColor(pct), text: ordinal(pct) + ' pct' };
+}
+
+function advStatHtml(p, key) {
+  const m = advMeta(p)[key], x = p.s ? m.val(p.s) : null;
+  if (!isNum(x)) return '';
+  const { pct, color: c, text } = statPct(p, key);
+  return `
+    <div class="sb-stat">
+      <div class="sb-stat-top"><span class="sb-stat-label">${m.label}${!qualified(p) ? ' <span class="sb-low">low sample</span>' : ''}</span><span class="sb-stat-val">${m.fmt(x)}</span></div>
+      ${pct != null ? `<div class="sb-bar-wrap"><div class="sb-bar"><div class="sb-bar-fill" style="width:${pct}%;background:${c}"></div></div><span class="sb-pct" style="color:${c}">${text}</span></div>` : ''}
+      <div class="sb-def">${m.def}</div>
+    </div>`;
+}
+
+function advSectionHtml(p) {
+  const rows = advKeys(p).map(k => advStatHtml(p, k)).join('');
+  if (!rows) return '';
+  const q = qualified(p);
+  const caption = q
+    ? `Ranked among ${popN[p.positionGroup]} qualified ${GROUP_NAME[p.positionGroup]} (min. ${MIN_PER_G * leagueG} minutes)`
+    : `Fewer than ${MIN_PER_G * leagueG} minutes: not ranked`;
+  return `<div class="sb-section"><div class="sb-section-title">Advanced Stats · ${STATS_SEASON}</div>${rows}
+    <div class="sb-caption">${caption}</div></div>`;
+}
+
+// ── Season stats (current season only; from the master's ASA stats block) ──
+const gi = k => s => isNum(s[k]) ? s[k] : null;
+const BOX_OUT = [
+  { label: 'Minutes', val: gi('minutes_played') }, { label: 'Goals', val: gi('goals') }, { label: 'Assists', val: gi('primary_assists') },
+  { label: 'xG', val: gi('xgoals'), txt: f2 }, { label: 'xA', val: gi('xassists'), txt: f2 },
+  { label: 'Shots', val: gi('shots') }, { label: 'On target', val: gi('shots_on_target') }, { label: 'Key passes', val: gi('key_passes') },
+  { label: 'G-xG', val: gi('goals_minus_xgoals'), txt: fS }, { label: 'A-xA', val: gi('primary_assists_minus_xassists'), txt: fS },
+  { label: 'xPts Add', val: gi('xpoints_added'), txt: fS },
+];
+const BOX_GK = [{ label: 'Minutes', val: gi('minutes_played') }];
+const boxDefs = p => p.positionGroup === 'G' ? BOX_GK : BOX_OUT;
+const boxText = (d, p) => { const v = p.s ? d.val(p.s) : null; return v == null ? '—' : (d.txt ? d.txt(v) : String(v)); };
+
+function seasonStatsHtml(p) {
+  if (!p.s) return '';
+  return `<div class="sb-section"><div class="sb-section-title">Season Stats</div>
+    <div class="sb-grid">${boxDefs(p).map(d => `<div class="sb-cell"><div class="sb-cell-label">${d.label}</div><div class="sb-cell-val">${boxText(d, p)}</div></div>`).join('')}</div>
+    <div class="sb-caption">${STATS_SEASON} season</div></div>`;
+}
+
+const lastName = p => p.name.split(' ').slice(1).join(' ') || p.name;
+function ageOf(birth) {
+  if (!birth) return null;
+  const d = new Date(birth + 'T00:00:00');
+  if (isNaN(d.getTime())) return null;
+  const now = new Date();
+  let a = now.getFullYear() - d.getFullYear();
+  if (now.getMonth() < d.getMonth() || (now.getMonth() === d.getMonth() && now.getDate() < d.getDate())) a--;
+  return a;
+}
+// The ESPN roster + ASA feeds carry no injury/availability data, so there is no INJ/SUS tag on MLS.
+const availabilityOf = () => null;
+
+function subsSectionHtml(p) {
+  const cands = subEligiblePlayers(sidebarZone);
+  const rows = cands.length ? cands.map(c => `
+      <div class="sb-sub" onclick="openCompare('${c.id}', event)">
+        <div class="sb-sub-rating" style="color:${ratingColor(c.rating)}">${c.rating != null ? c.rating : '—'}</div>
+        <div class="sb-sub-name">${c.name}</div>
+        <div class="sb-sub-pos">${c.standardPos || c.positionGroup} · ${c.minutes != null ? c.minutes + "'" : '—'}</div>
+      </div>`).join('') : '<div class="sb-empty">No other players available in this group.</div>';
+  return `<div class="sb-section" style="border-bottom:none">
+      <div class="sb-section-title sb-sort"><span>Substitutes</span><span class="sort-toggle" data-sort-toggle></span></div>${rows}</div>`;
+}
+
+function renderSidebar(resetScroll) {
+  const el = document.getElementById('sbScroll');
+  const p = sidebarZone ? getStarter(sidebarZone) : null;
+  if (!p) { closeSidebar(); return; }
+  if (compareId) { renderCompare(el, p); return; }
+
+  const inches = p.height != null && p.height > 0 ? p.height : null;
+  const ht = inches ? Math.floor(inches / 12) + "'" + Math.round(inches % 12) + '"' : null;
+  const meta1 = `<img class="sb-teamlogo" src="${teamLogoUrl(p.team)}" alt="">${TEAMS[p.team] ? TEAMS[p.team].name : p.team} · ${p.standardPos || p.positionGroup}`;
+  const meta2 = [p.age != null ? 'Age ' + p.age : null, ht, p.weight ? p.weight + ' lbs' : null, p.citizenship].filter(Boolean).join(' · ');
+  el.innerHTML = `
+    <button class="sb-close" onclick="closeSidebar()" aria-label="Close">&times;</button>
+    <div class="sb-head">
+      <div style="flex:1;min-width:0">
+        <div class="sb-name"><span>${p.jersey ? '#' + p.jersey + ' ' : ''}${p.name}</span></div>
+        <div class="sb-meta">${meta1}</div>
+        ${meta2 ? `<div class="sb-meta">${meta2}</div>` : ''}
+      </div>
+      <div class="sb-rating"><div class="sb-rating-val" style="color:${ratingColor(p.rating)}">${p.rating != null ? p.rating : '—'}</div><div class="sb-rating-label">EA FC</div></div>
+    </div>
+    ${advSectionHtml(p)}
+    ${seasonStatsHtml(p)}
+    ${subsSectionHtml(p)}`;
+  document.body.classList.add('sb-open');
+  renderSortToggles();
+  if (resetScroll) el.scrollTop = 0;
+  setSelectedHighlight();
+  syncURL();
+}
+
+function openCompare(id, event) {
+  if (event) event.stopPropagation();
+  compareId = id;
+  renderSidebar(true);
+}
+
+function closeCompare(event) {
+  if (event) event.stopPropagation();
+  compareId = null;
+  renderSidebar(true);
+}
+
+function swapFromCompare(event) {
+  if (event) event.stopPropagation();
+  substitutePlayer(compareId, sidebarZone); // clears compareId; renderPitch() re-renders the sidebar for the new starter
+}
+
+// Starter vs. candidate (same position group). Stats are compared only where both players have a value;
+// each percentile stays within the player's own group.
+function renderCompare(el, a) {
+  const b = teamPlayers.find(x => String(x.id) === String(compareId));
+  if (!b) { compareId = null; renderSidebar(); return; }
+
+  const rows = boxDefs(a).map(d => {
+    const va = a.s ? d.val(a.s) : null, vb = b.s ? d.val(b.s) : null;
+    if (va == null || vb == null) return '';
+    const ta = boxText(d, a), tb = boxText(d, b);
+    let best = '';
+    if (ta !== tb) best = (d.lower ? va < vb : va > vb) ? 'a' : 'b';
+    return `<div class="sb-tbl-l">${d.label}</div><div class="sb-tbl-v${best === 'a' ? ' best' : ''}">${ta}</div><div class="sb-tbl-v${best === 'b' ? ' best' : ''}">${tb}</div>`;
+  }).join('');
+  const tableHtml = rows ? `<div class="sb-section"><div class="sb-section-title">Season Stats</div>
+      <div class="sb-tbl"><div></div><div class="sb-tbl-h">${lastName(a)}</div><div class="sb-tbl-h">${lastName(b)}</div>${rows}</div>
+      <div class="sb-caption">${STATS_SEASON} season</div></div>` : '';
+
+  const line = (pl, key) => {
+    const m = advMeta(pl)[key], x = m.val(pl.s);
+    const { pct, color } = statPct(pl, key);
+    return `<div class="sb-cmp-line"><span class="sb-cmp-tag" title="${pl.name}">${lastName(pl)}</span>
+      <div class="sb-bar">${pct != null ? `<div class="sb-bar-fill" style="width:${pct}%;background:${color}"></div>` : ''}</div>
+      <span class="sb-cmp-val">${m.fmt(x)}</span>
+      <span class="sb-cmp-pct" style="color:${color || 'inherit'}">${pct != null ? ordinal(pct) : '<span class="sb-low" style="margin:0">low sample</span>'}</span></div>`;
+  };
+  let advHtml = '';
+  if (a.s && b.s) {
+    const shared = advKeys(a).filter(k => advKeys(b).includes(k) && isNum(advMeta(a)[k].val(a.s)) && isNum(advMeta(b)[k].val(b.s)));
+    const advRows = shared.map(key => `<div class="sb-cmp-row"><div class="sb-cmp-top"><span class="sb-stat-label">${advMeta(a)[key].label}</span></div>${line(a, key)}${line(b, key)}</div>`).join('');
+    if (advRows) advHtml = `<div class="sb-section"><div class="sb-section-title">Advanced Stats · ${STATS_SEASON} · percentile vs. own group</div>${advRows}</div>`;
+  }
+
+  const head = (pl, tag) => `<div>
+      <div class="sb-cmp-tagline">${tag}</div>
+      <div class="sb-cmp-name">${pl.name}</div>
+      <div class="sb-cmp-sub">${pl.standardPos || pl.positionGroup}</div>
+      <div class="sb-cmp-rating" style="color:${ratingColor(pl.rating)}">${pl.rating != null ? pl.rating : '—'}</div>
+    </div>`;
+
+  el.innerHTML = `
+    <button class="sb-close" onclick="closeSidebar()" aria-label="Close">&times;</button>
+    <div class="sb-cmp-head">${head(a, 'Starter')}${head(b, 'Substitute')}</div>
+    <div class="sb-cmp-actions">
+      <button class="sb-btn" onclick="closeCompare(event)">Back</button>
+      <button class="sb-btn primary" onclick="swapFromCompare(event)">Swap in</button>
+    </div>
+    ${tableHtml}${advHtml}
+    ${!tableHtml && !advHtml ? '<div class="sb-section"><div class="sb-empty">These players have no stats in common to compare.</div></div>' : ''}`;
+  document.body.classList.add('sb-open');
+  el.scrollTop = 0;
+  setSelectedHighlight();
+  syncURL();
 }
 
 // ══════════════════════════════════════════
@@ -917,10 +1422,11 @@ function toggleTeamDropdown() {
 }
 
 function selectTeam(abbr) {
+  closeSidebar();
   currentTeam = abbr;
   document.getElementById('teamsDropdown').classList.remove('open');
   buildTeamsDropdown();
-  loadTeam(currentTeam);
+  loadTeam(currentTeam).then(syncURL);
 }
 
 function setFormation(key) {
@@ -934,8 +1440,13 @@ function setFormation(key) {
   hidePopup();
   document.getElementById('subsPop').classList.remove('open');
   openPopoverPos = null;
+  // Zone names don't map across formations: keep the sidebar open only if its player is still a starter.
+  const keepId = sidebarZone && getStarter(sidebarZone) ? getStarter(sidebarZone).id : null;
+  sidebarZone = null; compareId = null;
   renderPitch();
   renderBenchList();
+  const zone = keepId == null ? null : ZONE_ORDER.find(z => getStarter(z) && getStarter(z).id === keepId);
+  if (zone) openSidebar(zone); else closeSidebar();
 }
 
 document.addEventListener('click', (e) => {
@@ -946,6 +1457,12 @@ document.addEventListener('click', (e) => {
     document.getElementById('subsPop').classList.remove('open');
     openPopoverPos = null;
   }
+  // Click on empty pitch closes the sidebar.
+  if (sidebarZone && e.target.closest('.court-canvas') && !e.target.closest('.player-card')) closeSidebar();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && sidebarZone) closeSidebar();
 });
 
 // ══════════════════════════════════════════
@@ -954,7 +1471,18 @@ document.addEventListener('click', (e) => {
 buildTeamsDropdown();
 document.getElementById('formationSelect').value = currentFormation;
 document.getElementById('formationLabel').textContent = 'Starting XI (' + FORMATIONS[currentFormation].label + ')';
-loadTeam(currentTeam);
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('team') && TEAMS[urlParams.get('team')]) currentTeam = urlParams.get('team');
+const urlPlayer = urlParams.get('player');
+
+updateSbToggle();
+loadTeam(currentTeam).then(() => {
+  // Reopen the sidebar if ?player= is someone currently on the pitch for this team; otherwise ignore it.
+  if (sidebarOn && urlPlayer) {
+    const zone = ZONE_ORDER.find(z => { const st = getStarter(z); return st && String(st.id) === urlPlayer; });
+    if (zone) openSidebar(zone);
+  }
+});
 </script>
 </body>
 </html>
