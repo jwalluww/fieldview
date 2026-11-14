@@ -173,7 +173,7 @@ body {
 /* ── FIELD ── */
 .field-outer {
   padding: 16px 24px 8px;
-  min-height: calc(100vh - 52px);
+  height: calc(100vh - 52px);
   display: flex;
   flex-direction: column;
 }
@@ -376,6 +376,183 @@ body {
 }
 .hc-madden { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 15px; }
 .hc-inj { color: #ef4444; font-weight: 800; font-size: 11px; letter-spacing: .5px; }
+
+.card-header {
+  padding: 11px 13px 9px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.card-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 13px;
+  color: #fff;
+  flex-shrink: 0;
+  border: 2px solid rgba(255,255,255,0.2);
+}
+
+.card-nameblock { flex: 1; min-width: 0; }
+
+.card-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--text);
+  line-height: 1.1;
+}
+
+.card-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.card-ratings {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 1px solid var(--border);
+}
+
+.card-rating-cell {
+  padding: 8px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  border-right: 1px solid var(--border);
+}
+.card-rating-cell:last-child { border-right: none; }
+
+.crc-val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.crc-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.card-footer {
+  padding: 8px 13px;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* ── HOVER CARD STAT ROWS ── */
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 13px;
+  border-top: 1px solid var(--border);
+}
+.stat-row-label {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.stat-row-val {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--text);
+}
+
+/* ── SUB DROPDOWN ── */
+.sub-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  background: #14171f;
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  z-index: 600;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.8);
+  overflow: hidden;
+  display: none;
+}
+.sub-dropdown.open { display: block; }
+.sub-dropdown-header {
+  padding: 7px 12px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,0.3);
+}
+.sub-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background .15s;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.sub-option:last-child { border-bottom: none; }
+.sub-option:hover { background: var(--border); }
+.sub-option-madden {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 1;
+  width: 32px;
+  flex-shrink: 0;
+  text-align: center;
+}
+.sub-option-info { flex: 1; min-width: 0; }
+.sub-option-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sub-option-meta {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+.sub-option.active-player {
+  background: rgba(0,212,255,0.06);
+}
+
+
+/* ── ORIGINAL FULL HOVER CARD (shown when the sidebar is OFF) ── */
+.hover-card.full { width: 300px; max-width: none; padding: 0; border-radius: 10px; overflow: hidden; font-size: 13px; box-shadow: 0 16px 48px rgba(0,0,0,0.8); }
+.player-node:hover .hover-card.full { pointer-events: auto; }
+.sub-dropdown-header { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.sort-toggle { display: inline-flex; border: 1px solid var(--border2); border-radius: 5px; overflow: hidden; flex-shrink: 0; }
+.sort-toggle button { background: none; border: none; color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: .5px; text-transform: uppercase; padding: 2px 7px; cursor: pointer; }
+.sort-toggle button.active { background: rgba(0,212,255,.15); color: var(--accent); }
+.sb-sort { display: flex; align-items: center; justify-content: space-between; }
+.sb-toggle { margin-left: auto; background: var(--surface2); border: 1px solid var(--border2); border-radius: 8px; padding: 7px 14px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); cursor: pointer; }
+.sb-toggle:hover { color: var(--text); }
+.sb-toggle.on { color: var(--accent); border-color: rgba(0,212,255,.4); }
+.sb-toggle + .view-toggle { margin-left: 12px; }
 
 /* ── SELECTED CARD (sidebar open for this player) ── */
 .player-node.selected { z-index: 90; }
@@ -583,6 +760,7 @@ body.sb-open .field-outer { padding-right: 384px; }
     <button class="ctrl-btn reset-btn" id="resetStartersBtn" onclick="resetStarters()" style="display:none">Reset to starters</button>
   </div>
 
+  <button class="sb-toggle" id="sbToggle" onclick="toggleSidebarMode()" title="Click a player for a detail sidebar (Off = original hover card and sub dropdown)"></button>
   <div class="view-toggle">
     <button class="view-btn active">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="2" fill="currentColor"/><circle cx="2" cy="2" r="1.5" fill="currentColor" opacity=".6"/><circle cx="10" cy="2" r="1.5" fill="currentColor" opacity=".6"/><circle cx="2" cy="10" r="1.5" fill="currentColor" opacity=".6"/><circle cx="10" cy="10" r="1.5" fill="currentColor" opacity=".6"/></svg>
@@ -789,6 +967,7 @@ let allPlayers = null; // flat array of every player, mapped from players_master
 let teamData = null;   // { base_defense, players: [...] } for the currently selected team
 // Track current starters (overrides from depth chart default)
 let currentStarters = {}; // { formationPos: playerObject }
+let activeSubDropdown = null; // currently open dropdown pos key (sidebar OFF)
 let currentOnFieldIds = new Set(); // player_id of players currently on the field
 
 function maddenColor(r) {
@@ -945,6 +1124,202 @@ function advStatHtml(p, key) {
     </div>`;
 }
 
+// Real terciles computed from this season's actual data (100+ pass
+// attempts for QB stats, 50+ carries for RB stats). qbr uses ESPN's own
+// stated design (50 = average) instead of an empirical tercile, since
+// the QBR-qualified sample is smaller and skews toward established
+// starters -- an empirical split there would overstate what counts as
+// "elite".
+const STAT_TIERS = {
+  epa_per_play:       { low: 0.001,  high: 0.127,  lowerIsBetter: false },
+  success_rate:       { low: 43.459, high: 47.681, lowerIsBetter: false },
+  cpoe:               { low: -1.671, high: 2.612,  lowerIsBetter: false },
+  ngs_time_to_throw:  { low: 2.794,  high: 2.868,  lowerIsBetter: true },
+  qbr:                { low: 45,     high: 65,     lowerIsBetter: false },
+  ryoe_per_att:       { low: 0.239,  high: 0.702,  lowerIsBetter: false },
+  yac_per_att:        { low: 1.8,    high: 2.2,    lowerIsBetter: false },
+  broken_tackle_rate: { low: 5.839,  high: 8.092,  lowerIsBetter: false },
+  box_rate:           { low: 22.069, high: 29.348, lowerIsBetter: true },
+  target_share:       { low: 5.16,   high: 8.621,  lowerIsBetter: false },
+  target_share_wrte:    { low: 11.831, high: 17.409, lowerIsBetter: false },
+  avg_separation:       { low: 2.73,   high: 3.267,  lowerIsBetter: false },
+  yac_above_expectation:{ low: 0.143,  high: 0.774,  lowerIsBetter: false },
+  drop_rate:            { low: 2.4,    high: 4.9,    lowerIsBetter: true },
+  broken_tackle_rate_rec:{ low: 2.941, high: 6.25,   lowerIsBetter: false },
+  // Defenders: keyed <stat>_<standard_pos>. Terciles of qualified players (300+
+  // defensive snaps, or 10+ targets for coverage stats) in the def_advanced_season data.
+  pressures_per100_edge:      { low: 3.016, high: 4.147, lowerIsBetter: false },
+  pressures_per100_di:        { low: 1.336, high: 1.963, lowerIsBetter: false },
+  sacks_per100_edge:          { low: 0.666, high: 1.12, lowerIsBetter: false },
+  sacks_per100_di:            { low: 0.216, high: 0.628, lowerIsBetter: false },
+  tfl_per100_edge:            { low: 0.959, high: 1.556, lowerIsBetter: false },
+  tfl_per100_di:              { low: 0.716, high: 1.05, lowerIsBetter: false },
+  tfl_per100_lb:              { low: 0.508, high: 0.82, lowerIsBetter: false },
+  tkl_per100_edge:            { low: 5.993, high: 7.324, lowerIsBetter: false },
+  tkl_per100_di:              { low: 6.205, high: 7.819, lowerIsBetter: false },
+  tkl_per100_lb:              { low: 11.781, high: 14.171, lowerIsBetter: false },
+  missed_tackle_rate_edge:    { low: 5.914, high: 9.979, lowerIsBetter: true },
+  missed_tackle_rate_di:      { low: 5.3, high: 9.331, lowerIsBetter: true },
+  missed_tackle_rate_lb:      { low: 6.009, high: 8.882, lowerIsBetter: true },
+  missed_tackle_rate_s:       { low: 7.039, high: 9.483, lowerIsBetter: true },
+  missed_tackle_rate_cb:      { low: 7.801, high: 12.797, lowerIsBetter: true },
+  comp_pct_allowed_lb:        { low: 70.342, high: 78.358, lowerIsBetter: true },
+  comp_pct_allowed_s:         { low: 61.736, high: 69.928, lowerIsBetter: true },
+  comp_pct_allowed_cb:        { low: 57.082, high: 64.627, lowerIsBetter: true },
+  rating_allowed_lb:          { low: 89.297, high: 106.287, lowerIsBetter: true },
+  rating_allowed_s:           { low: 89.18, high: 106.348, lowerIsBetter: true },
+  rating_allowed_cb:          { low: 81.547, high: 96.072, lowerIsBetter: true },
+  yds_per_target_allowed_lb:  { low: 6.3, high: 7.629, lowerIsBetter: true },
+  yds_per_target_allowed_s:   { low: 7.6, high: 9.364, lowerIsBetter: true },
+  yds_per_target_allowed_cb:  { low: 6.7, high: 7.9, lowerIsBetter: true },
+  int_pd_per_target_s:        { low: 10.085, high: 18.698, lowerIsBetter: false },
+  int_pd_per_target_cb:       { low: 11.61, high: 17.951, lowerIsBetter: false },
+};
+
+// 10th-90th percentile of the same qualified players, [low, high, N], for tooltips.
+const DEF_RANGES = {
+  pressures_per100_edge: [1.885, 5.353, 84],
+  pressures_per100_di: [0.617, 3.312, 98],
+  sacks_per100_edge: [0.345, 1.788, 84],
+  sacks_per100_di: [0, 0.924, 98],
+  tfl_per100_edge: [0.554, 2.239, 84],
+  tfl_per100_di: [0.319, 1.57, 98],
+  tfl_per100_lb: [0.285, 1.261, 74],
+  tkl_per100_edge: [4.706, 8.703, 84],
+  tkl_per100_di: [4.529, 9.495, 98],
+  tkl_per100_lb: [9.869, 17.615, 74],
+  missed_tackle_rate_edge: [2.57, 15.51, 80],
+  missed_tackle_rate_di: [3.06, 13.43, 94],
+  missed_tackle_rate_lb: [4.1, 13.68, 74],
+  missed_tackle_rate_s: [4.73, 13.76, 84],
+  missed_tackle_rate_cb: [4.34, 17.56, 98],
+  comp_pct_allowed_lb: [63.6, 86.88, 88],
+  comp_pct_allowed_s: [54.72, 78, 93],
+  comp_pct_allowed_cb: [49.85, 72.07, 128],
+  rating_allowed_lb: [74.65, 121.72, 88],
+  rating_allowed_s: [67.32, 131.24, 93],
+  rating_allowed_cb: [66.33, 119.51, 128],
+  yds_per_target_allowed_lb: [5.07, 9.55, 88],
+  yds_per_target_allowed_s: [6.12, 11.34, 93],
+  yds_per_target_allowed_cb: [5.24, 9.03, 128],
+  int_pd_per_target_s: [5.017, 29.473, 93],
+  int_pd_per_target_cb: [6.667, 23.654, 128],
+  adot_allowed_lb: [2.47, 5.8, 88],
+  adot_allowed_s: [5.52, 13.46, 93],
+  adot_allowed_cb: [6.27, 13.53, 128],
+};
+
+// The season the tier cutoffs and DEF_RANGES above were computed from (regular
+// season only); tooltips cite this, not the live def_advanced_season.
+const DEF_CUTOFF_SEASON = 2025;
+
+const DEF_ADV_FIELDS = ['pressures_per100', 'sacks_per100', 'tfl_per100', 'tkl_per100', 'missed_tackle_rate',
+  'comp_pct_allowed', 'rating_allowed', 'yds_per_target_allowed', 'adot_allowed', 'int_pd_per_target'];
+
+// Layout per defensive position: hero stat, grid stats, grid columns, compact-line keys.
+const DEF_CARD = {
+  EDGE: { hero: 'pressures_per100', grid: ['sacks_per100', 'tfl_per100', 'missed_tackle_rate'], cols: 3, compact: ['TKL', 'SACK'] },
+  DI:   { hero: 'pressures_per100', grid: ['tfl_per100', 'tkl_per100', 'missed_tackle_rate'], cols: 3, compact: ['TKL', 'SACK'] },
+  LB:   { hero: 'missed_tackle_rate', grid: ['tfl_per100', 'tkl_per100', 'rating_allowed', 'yds_per_target_allowed'], cols: 2, compact: ['TKL', 'TFL'] },
+  S:    { hero: 'rating_allowed', grid: ['comp_pct_allowed', 'adot_allowed', 'int_pd_per_target', 'missed_tackle_rate'], cols: 2, compact: ['TKL', 'INT', 'PBU'] },
+  CB:   { hero: 'rating_allowed', grid: ['comp_pct_allowed', 'adot_allowed', 'int_pd_per_target', 'missed_tackle_rate'], cols: 2, compact: ['TKL', 'INT', 'PBU'] },
+};
+
+const DEF_STAT_META = {
+  pressures_per100:   { label: 'Pressures/100', dec: 1, unit: '', per100: true, tip: 'QB pressures (sacks, hits and hurries) per 100 defensive snaps.' },
+  sacks_per100:       { label: 'Sacks/100', dec: 2, unit: '', per100: true, tip: 'Sacks per 100 defensive snaps.' },
+  tfl_per100:         { label: 'TFL/100', dec: 2, unit: '', per100: true, tip: 'Tackles for loss per 100 defensive snaps.' },
+  tkl_per100:         { label: 'Tkl/100', dec: 1, unit: '', per100: true, tip: 'Combined tackles per 100 defensive snaps. A volume stat: it reflects role and scheme as much as skill.' },
+  missed_tackle_rate: { label: 'Missed Tkl%', dec: 1, unit: '%', tip: 'Share of tackle attempts that were missed (missed / (tackles + missed)). Lower is better.' },
+  comp_pct_allowed:   { label: 'Comp% Allowed', dec: 1, unit: '%', tip: 'Completion percentage on passes thrown at him in coverage. Lower is better.' },
+  rating_allowed:     { label: 'Rating Allowed', dec: 1, unit: '', tip: 'Passer rating of quarterbacks when targeting him in coverage. Lower is better.' },
+  yds_per_target_allowed: { label: 'Yds/Tgt Allowed', dec: 1, unit: '', tip: 'Passing yards allowed per target in coverage. Lower is better.' },
+  adot_allowed:       { label: 'aDOT Allowed', dec: 1, unit: '', tip: 'Average depth of the targets thrown at him. Not a quality stat -- it describes how he is tested (deep vs. short/underneath), not how well he covers.' },
+  int_pd_per_target:  { label: 'INT+PD/Tgt', dec: 1, unit: '%', tip: 'Interceptions plus passes defended per 100 targets. Higher is better.' },
+};
+
+function defTooltip(key, pos) {
+  const m = DEF_STAT_META[key];
+  const r = DEF_RANGES[key + '_' + pos.toLowerCase()];
+  let tip = m.tip;
+  if (r) {
+    const qual = (m.per100 || key === 'missed_tackle_rate') ? '300+ snaps' : '10+ targets';
+    tip += ' Typical range (' + DEF_CUTOFF_SEASON + ', ' + pos + ', ' + qual + '): about ' + r[0].toFixed(m.dec) + m.unit + ' to ' + r[1].toFixed(m.dec) + m.unit + '.';
+  }
+  if (m.per100) tip += ' The denominator is all defensive snaps, so it understates players who often drop into coverage; compare within a position group only.';
+  return tip;
+}
+
+function buildDefAdvBlock(p) {
+  const cfg = DEF_CARD[p.standard_pos];
+  const pos = p.standard_pos;
+  const season = p.def_advanced_season != null ? p.def_advanced_season : '';
+  const fmt = (key) => {
+    const v = p[key];
+    return v != null ? v.toFixed(DEF_STAT_META[key].dec) + DEF_STAT_META[key].unit : '—';
+  };
+  const dot = (key, size) => (key === 'adot_allowed' || p[key] == null) ? '' : tierDot(key + '_' + pos.toLowerCase(), p[key], size);
+  const st = p.stats || {};
+  const stat = (...ks) => { for (const k of ks) if (st[k] != null) return st[k]; return null; };
+  const compact = [
+    cfg.compact.includes('TKL') && stat('TKL') != null ? stat('TKL') + ' tkl' : null,
+    cfg.compact.includes('SACK') && stat('SACK', 'SACKS') != null ? stat('SACK', 'SACKS') + ' sack' : null,
+    cfg.compact.includes('TFL') && stat('TFL') != null ? stat('TFL') + ' TFL' : null,
+    cfg.compact.includes('INT') && stat('INT') != null ? stat('INT') + ' INT' : null,
+    cfg.compact.includes('PBU') && stat('PBU', 'PD') != null ? stat('PBU', 'PD') + ' PD' : null,
+    p.snap_pct != null ? Math.round(p.snap_pct) + '% snaps' : null,
+  ].filter(v => v != null).join(' · ');
+  // TKL/SACK/etc. and snap % come from the stats block's season, which can differ from the advanced season.
+  const compactLabel = compact && p.stats_season != null && p.stats_season !== p.def_advanced_season ? p.stats_season + ': ' : '';
+  const rows = [cfg.hero, ...cfg.grid].map(key => ({
+    label: DEF_STAT_META[key].label,
+    tooltip: defTooltip(key, pos),
+    dot: dot(key, 8),
+    display: fmt(key),
+  }));
+  return `
+        ${buildStatRows(rows)}
+        ${compact ? `
+          <div style="padding:7px 13px 2px;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--text-muted)">${compactLabel}${compact}</div>
+        ` : ''}
+        ${season ? `<div style="padding:0 13px 6px;text-align:center;font-size:9px;color:var(--text-dim)">Advanced: ${season}</div>` : ''}
+      `;
+}
+
+function tierColor(statKey, value) {
+  if (value == null) return null;
+  const t = STAT_TIERS[statKey];
+  if (!t) return null;
+  const aboveHigh = value >= t.high;
+  const belowLow = value <= t.low;
+  if (t.lowerIsBetter) {
+    if (belowLow) return '#22c55e';
+    if (aboveHigh) return '#ef4444';
+  } else {
+    if (aboveHigh) return '#22c55e';
+    if (belowLow) return '#ef4444';
+  }
+  return '#eab308';
+}
+
+function tierDot(statKey, value, size) {
+  const c = tierColor(statKey, value);
+  const px = size || 7;
+  return c ? `<span style="width:${px}px;height:${px}px;border-radius:50%;background:${c};display:inline-block"></span>` : '';
+}
+
+// Shared hover-card layout: a single column of equal-weight rows, replacing
+// the old "hero stat + small grid" pattern. Each row's own border-top does
+// the dividing, so callers don't need to wrap this in a bordered container.
+function buildStatRows(rows) {
+  return rows.map(r => `
+        <div class="stat-row">
+          <span class="stat-row-label" title="${r.tooltip || ''}">${r.label}</span>
+          <span class="stat-row-val">${r.dot || ''}${r.display}</span>
+        </div>
+      `).join('');
+}
+
 function parseCap(capStr) {
   if (!capStr) return 0;
   return parseInt(capStr.replace(/[$,]/g, '')) || 0;
@@ -1066,7 +1441,7 @@ function syncURL() {
     def: currentDefPersonnel
   });
   const sbPlayer = sidebarPos ? getStarter(sidebarPos) : null;
-  if (sbPlayer) params.set('player', sbPlayer.id);
+  if (sidebarOn && sbPlayer) params.set('player', sbPlayer.id);
   history.replaceState(null, '', '?' + params.toString());
 }
 
@@ -1114,6 +1489,50 @@ function getStarter(formationPos) {
 
 const INJURED_SLOTS = ['IR', 'PUP', 'NFI', 'PUP-R', 'DFR'];
 
+// Sidebar On/Off (header toggle). OFF = the original full hover card and the sub dropdown, no push padding.
+const SB_KEY = 'fieldview_nfl_sidebar';
+let sidebarOn = true; // default ON
+try { sidebarOn = localStorage.getItem(SB_KEY) !== 'off'; } catch (e) {}
+
+// Sub sort (sidebar list + sub dropdown): 'madden' (rating desc, the old order) or 'depth' (depth-chart rank asc). Nulls last.
+const SUBSORT_KEY = 'fieldview_nfl_subsort';
+let subSort = 'madden';
+try { const v = localStorage.getItem(SUBSORT_KEY); if (v === 'madden' || v === 'depth') subSort = v; } catch (e) {}
+function sortToggleHtml() {
+  return `<button data-sort="madden" class="${subSort === 'madden' ? 'active' : ''}" onclick="setSubSort('madden', event)">Madden</button>` +
+         `<button data-sort="depth" class="${subSort === 'depth' ? 'active' : ''}" onclick="setSubSort('depth', event)">Depth</button>`;
+}
+function setSubSort(mode, event) {
+  if (event) event.stopPropagation();
+  subSort = mode;
+  try { localStorage.setItem(SUBSORT_KEY, mode); } catch (e) {}
+  if (sidebarPos && !compareId) renderSidebar();
+  if (!sidebarOn) {
+    const open = activeSubDropdown;
+    document.querySelectorAll('#playersLayer .sub-dropdown').forEach(dd => {
+      const pos = dd.id.replace('sub-', '');
+      dd.outerHTML = buildSubDropdown(pos, getStarter(pos));
+    });
+    if (open) { const el = document.getElementById('sub-' + open); if (el) el.classList.add('open'); }
+  }
+}
+
+function updateSbToggle() {
+  const b = document.getElementById('sbToggle');
+  b.textContent = 'Sidebar: ' + (sidebarOn ? 'On' : 'Off');
+  b.classList.toggle('on', sidebarOn);
+}
+
+function toggleSidebarMode() {
+  closeSidebar();
+  closeSubDropdown();
+  sidebarOn = !sidebarOn;
+  try { localStorage.setItem(SB_KEY, sidebarOn ? 'on' : 'off'); } catch (e) {}
+  updateSbToggle();
+  renderFormation();
+  syncURL();
+}
+
 function getSubCandidates(formationPos) {
   if (!teamData) return [];
   // Find the standard_pos for this slot from current starter or coord map
@@ -1130,7 +1549,10 @@ function getSubCandidates(formationPos) {
   // badge in buildPlayerNode) -- INJURED_SLOTS is kept in case that's
   // revisited, but nothing currently filters on it here.
   const candidates = teamData.players.filter(p => targetPositions.includes(p.standard_pos));
-  candidates.sort((a, b) => (b.madden || 0) - (a.madden || 0));
+  const nl = (a, b) => (a == null) - (b == null);
+  candidates.sort(subSort === 'depth'
+    ? (a, b) => nl(a.depth, b.depth) || (a.depth - b.depth) || (b.madden || 0) - (a.madden || 0)
+    : (a, b) => (b.madden || 0) - (a.madden || 0));
   // Dedupe by id, and exclude anyone already on the field
   const seen = new Set();
   return candidates.filter(p => {
@@ -1171,6 +1593,14 @@ function selectSub(formationPos, playerId, event) {
     oldNode.replaceWith(wrapper.firstElementChild);
   }
 
+  if (!sidebarOn) {
+    // Every OTHER slot's dropdown was baked with the old on-field set -- refresh their (hidden) markup in place.
+    closeSubDropdown();
+    document.querySelectorAll('#playersLayer .sub-dropdown').forEach(dd => {
+      const pos = dd.id.replace('sub-', '');
+      dd.outerHTML = buildSubDropdown(pos, getStarter(pos));
+    });
+  }
   // The sidebar follows the incoming player (and moves the highlight to the new card).
   if (sidebarPos === formationPos) renderSidebar();
   updateResetBtn();
@@ -1300,6 +1730,14 @@ function compareTableHtml(a, b, last) {
     ${cap ? `<div class="sb-caption">${cap}</div>` : ''}</div>`;
 }
 
+// Season the advanced rows come from: defenders use def_advanced_season; offense uses the per-field season in advanced_meta.json.
+function advSeasonOf(p, cfg) {
+  if (cfg.compact) return p.def_advanced_season || null;
+  const fs = advMeta.field_season || {};
+  const k = cfg.list.find(x => p[x] != null && fs[x]);
+  return k ? fs[k] : null;
+}
+
 function renderSidebar(resetScroll) {
   const el = document.getElementById('playerSidebar');
   const p = sidebarPos ? getStarter(sidebarPos) : null;
@@ -1319,7 +1757,7 @@ function renderSidebar(resetScroll) {
   // Advanced section: skipped entirely when the player has no advanced values.
   let listHtml = '';
   if (cfg && cfg.list.some(k => p[k] != null)) {
-    listHtml = `<div class="sb-section"><div class="sb-section-title">Advanced Stats</div>${cfg.list.map(k => advStatHtml(p, k)).join('')}
+    listHtml = `<div class="sb-section"><div class="sb-section-title">Advanced Stats${advSeasonOf(p, cfg) ? ' · ' + advSeasonOf(p, cfg) : ''}</div>${cfg.list.map(k => advStatHtml(p, k)).join('')}
       ${cfg.compact && p.def_advanced_season ? `<div class="sb-caption">Advanced: ${p.def_advanced_season}</div>` : ''}</div>`;
   }
   const subs = getSubCandidates(sidebarPos);
@@ -1327,7 +1765,7 @@ function renderSidebar(resetScroll) {
       <div class="sb-sub" onclick="openCompare('${c.id}', event)">
         <div class="sb-sub-madden" style="color:${maddenColor(c.madden)}">${c.madden || '—'}</div>
         <div class="sb-sub-name">${c.name}</div>
-        <div class="sb-sub-pos">${c.standard_pos}${c.injured ? ' · <span style="color:#ef4444">INJ</span>' : ''}</div>
+        <div class="sb-sub-pos">${c.standard_pos}${c.depth ? ' · D' + c.depth : ''}${c.injured ? ' · <span style="color:#ef4444">INJ</span>' : ''}</div>
       </div>`).join('') : '<div class="sb-empty">No other players available at this position.</div>';
 
   el.innerHTML = `
@@ -1348,7 +1786,7 @@ function renderSidebar(resetScroll) {
     ${listHtml}
     ${gridSectionHtml(p)}
     <div class="sb-section" style="border-bottom:none">
-      <div class="sb-section-title">Substitutes</div>
+      <div class="sb-section-title sb-sort"><span>Substitutes</span><span class="sort-toggle">${sortToggleHtml()}</span></div>
       ${subsHtml}
     </div>`;
   el.classList.add('open');
@@ -1425,6 +1863,51 @@ function renderCompare(el, a) {
   syncURL();
 }
 
+function buildSubDropdown(formationPos, currentPlayer) {
+  const candidates = getSubCandidates(formationPos);
+  if (candidates.length === 0) return '';
+
+  const options = candidates.map(p => {
+    const mc = maddenColor(p.madden);
+    const parts = p.name.split(' ');
+    const displayName = parts.length > 1 ? parts.slice(1).join(' ') : parts[0];
+    return `
+      <div class="sub-option"
+           onclick="selectSub('${formationPos}', '${p.id}', event)">
+        <div class="sub-option-madden" style="color:${mc}">${p.madden || '—'}</div>
+        <div class="sub-option-info">
+          <div class="sub-option-name">${displayName}</div>
+          <div class="sub-option-meta">${p.standard_slot || ''} · ${p.cap_number || '—'}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  return `
+    <div class="sub-dropdown" id="sub-${formationPos}">
+      <div class="sub-dropdown-header"><span>Substitute ${formationPos}</span><span class="sort-toggle" data-sort-toggle>${sortToggleHtml()}</span></div>
+      ${options}
+    </div>
+  `;
+}
+
+function openSubDropdown(formationPos, event) {
+  event.stopPropagation();
+  // Close any open dropdown first
+  closeSubDropdown();
+  activeSubDropdown = formationPos;
+  const el = document.getElementById('sub-' + formationPos);
+  if (el) el.classList.add('open');
+}
+
+function closeSubDropdown() {
+  if (activeSubDropdown) {
+    const el = document.getElementById('sub-' + activeSubDropdown);
+    if (el) el.classList.remove('open');
+    activeSubDropdown = null;
+  }
+}
+
 function updateHeader() {
   const team = TEAMS[currentTeam];
   const logo = document.getElementById('teamLogoEl');
@@ -1468,6 +1951,147 @@ function positionHoverCard(node) {
   card.style.setProperty('--hx', hx + 'px');
 }
 
+function buildFullHoverCard(p, pos) {
+  // pos is the formation slot key (LWR/SWR/RWR/TE2...), not the player's
+  // position -- WR/TE cards must branch on standard_pos instead.
+  const isWRTE = p.standard_pos === 'WR' || p.standard_pos === 'TE';
+  // Defensive stat keys only render for defensive positions ('DEF' is the
+  // generic bucket for reserve-list defenders).
+  const isDefPos = ['EDGE','DI','LB','CB','S','DEF'].includes(p.standard_pos);
+  const DEF_STAT_KEYS = ['TKL','SACK','SACKS','INT','INTs','PBU','PD','TFL','QB_HIT','QB HIT','FF'];
+  // Defenders with at least one advanced value get the QB/RB-style card; anyone
+  // else keeps the generic card exactly as before.
+  const useDefCard = !!DEF_CARD[p.standard_pos] && DEF_ADV_FIELDS.some(k => p[k] != null);
+  const shownStats = p.stats ? Object.entries(p.stats).filter(([k]) => isDefPos || !DEF_STAT_KEYS.includes(k)) : [];
+  const team = TEAMS[currentTeam];
+  const initials = p.name.split(' ').map(w => w[0]).join('').slice(0, 2);
+  const mc = maddenColor(p.madden);
+  return `
+    <div class="hover-card full">
+      <div class="card-header">
+        <div class="card-avatar" style="background:${team.colors[0]};border-color:${team.colors[1]}">${initials}</div>
+        <div class="card-nameblock" style="flex:1">
+          <div class="card-name" style="display:flex;align-items:center;gap:6px">
+            <span>${p.jersey ? '#'+p.jersey+' ' : ''}${p.name}</span>
+            ${p.injured ? `<span title="${[p.injury_detail, p.injury_status].filter(Boolean).join(' — ')}" style="background:rgba(239,68,68,.2);color:#ef4444;border:1px solid rgba(239,68,68,.4);border-radius:3px;font-size:9px;font-weight:800;padding:1px 5px;letter-spacing:1px">INJ</span>` : ''}
+            ${p.years_pro === 0 ? `<span style="background:rgba(34,197,94,.1);color:#22c55e;border:1px solid rgba(34,197,94,.3);border-radius:3px;font-size:9px;font-weight:800;padding:1px 5px;letter-spacing:1px">R</span>` : ''}
+          </div>
+          <div class="card-meta">${pos}${p.age ? ' · Age '+p.age : ''}${p.years_pro != null ? ' · Yr '+p.years_pro+' NFL' : ''}${p.draft_year ? ' · Drafted '+p.draft_year : ''}${p.college ? ' · '+p.college : ''}${p.height ? ' · '+p.height : ''}${p.weight ? ' · '+p.weight+' lbs' : ''}</div>
+        </div>
+        ${(pos === 'QB' || pos === 'RB' || isWRTE || useDefCard) ? `
+          <div style="text-align:center;flex-shrink:0">
+            <div class="crc-val" style="color:${mc};font-size:24px">${p.madden || '—'}</div>
+            <div class="crc-label">Madden</div>
+          </div>
+        ` : ''}
+      </div>
+      ${pos === 'RB' ? `
+        ${(p.ryoe_per_att != null || p.yac_per_att != null || p.broken_tackle_rate != null || p.box_rate != null || p.target_share != null) ? `
+          ${buildStatRows([
+            { label: 'RYOE/att', tooltip: "Rush Yards Over Expected per attempt -- how many yards a carry gains vs. what's expected given blocking, defenders in the box, and other context. Typical range (2025, 100+ carry backs): about -0.8 (poor) to +1.3 (elite); 0 is average by definition.", dot: tierDot('ryoe_per_att', p.ryoe_per_att, 8), display: p.ryoe_per_att != null ? (p.ryoe_per_att > 0 ? '+' : '') + p.ryoe_per_att.toFixed(2) : '—' },
+            { label: 'YAC/att', tooltip: "Yards After Contact per attempt -- how many yards a back gains after first contact. Typical range (2025, 100+ carry backs): about 1.4 (poor) to 3.0 (elite); around 2.0 is roughly average.", dot: tierDot('yac_per_att', p.yac_per_att, 8), display: p.yac_per_att != null ? p.yac_per_att.toFixed(2) : '—' },
+            { label: 'Brk Tkl%', tooltip: "Broken tackles per touch (carries + receptions). Typical range (2025, 100+ touch backs): about 1.6% (low) to 12.7% (elite); around 6.5% is roughly average.", dot: tierDot('broken_tackle_rate', p.broken_tackle_rate, 8), display: p.broken_tackle_rate != null ? p.broken_tackle_rate.toFixed(1) + '%' : '—' },
+            { label: 'Box Rate', tooltip: "Share of carries run into a stacked box (8+ defenders). Typical range (2025): about 11% to 45%. Lower generally means defenses respect the passing game more -- this reflects the whole offense's threat level, not just the runner himself.", dot: tierDot('box_rate', p.box_rate, 8), display: p.box_rate != null ? Math.round(p.box_rate) + '%' : '—' },
+            { label: 'Tgt Share', tooltip: "Share of the team's total pass targets this back receives. Typical range (2025, 20+ target backs): about 3% (early-down runner) to 24% (elite receiving back); around 8% is roughly average.", dot: tierDot('target_share', p.target_share, 8), display: p.target_share != null ? p.target_share.toFixed(1) + '%' : '—' },
+          ])}
+        ` : ''}
+        ${p.stats && (p.stats['CAR'] != null || p.stats['RUSH_YDS'] != null || p.stats['RUSH_TDS'] != null) ? `
+          <div style="padding:7px 13px;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--text-muted)">
+            ${[
+              p.stats['CAR'] != null ? p.stats['CAR'] + ' car' : null,
+              p.stats['RUSH_YDS'] != null ? p.stats['RUSH_YDS'] + ' yds' : null,
+              p.stats['RUSH_TDS'] != null ? p.stats['RUSH_TDS'] + ' TD' : null,
+              p.snap_pct != null ? Math.round(p.snap_pct) + '% snaps' : null,
+            ].filter(v => v != null).join(' · ')}
+          </div>
+        ` : ''}
+      ` : isWRTE ? `
+        ${(p.target_share != null || p.adot != null || p.air_yards_share != null || p.avg_separation != null || p.drop_rate != null || p.broken_tackle_rate_rec != null) ? `
+          ${buildStatRows([
+            { label: 'YAC Above Exp', tooltip: "Yards After Catch vs. NFL's expected-YAC model (based on speed, separation, and defender pursuit angles at the catch) -- isolates what the receiver did with the ball from what the play design/blocking provided. Typical range (2025): about 0.1 (poor) to 0.8+ (elite); 0 is average by definition.", dot: tierDot('yac_above_expectation', p.yac_above_expectation, 8), display: p.yac_above_expectation != null ? (p.yac_above_expectation > 0 ? '+' : '') + p.yac_above_expectation.toFixed(2) : '—' },
+            { label: 'Tgt Share', tooltip: "Share of the team's total pass targets this player receives. Typical range (2025, 40+ target WR/TE): about 12% (low) to 17%+ (elite); varies a lot by role.", dot: tierDot('target_share_wrte', p.target_share, 8), display: p.target_share != null ? p.target_share.toFixed(1) + '%' : '—' },
+            { label: 'aDOT', tooltip: "Average Depth of Target -- how far downfield this player's targets travel on average. Not a quality stat -- describes role (deep threat vs. possession/slot receiver), not skill.", dot: '', display: p.adot != null ? p.adot.toFixed(1) : '—' },
+            { label: 'Air Yd Shr', tooltip: "Share of the team's total intended air yards directed at this player. Same role indicator as aDOT, not a quality signal.", dot: '', display: p.air_yards_share != null ? p.air_yards_share.toFixed(1) + '%' : '—' },
+            { label: 'Sep', tooltip: "Average distance (yards) from the nearest defender when the ball arrives -- a tracking-based route-running signal. Typical range (2025, 40+ target WR/TE): about 2.7 (tight) to 3.3+ (open); higher is generally better.", dot: tierDot('avg_separation', p.avg_separation, 8), display: p.avg_separation != null ? p.avg_separation.toFixed(2) : '—' },
+            { label: 'Drop%', tooltip: "Share of catchable targets dropped. Typical range (2025, 40+ target WR/TE): about 2.4% (good) to 4.9%+ (poor); lower is better.", dot: tierDot('drop_rate', p.drop_rate, 8), display: p.drop_rate != null ? p.drop_rate.toFixed(1) + '%' : '—' },
+            { label: 'Brk Tkl%', tooltip: "Broken tackles per reception. Typical range (2025, 40+ target WR/TE): about 2.9% (low) to 6.3%+ (elite).", dot: tierDot('broken_tackle_rate_rec', p.broken_tackle_rate_rec, 8), display: p.broken_tackle_rate_rec != null ? p.broken_tackle_rate_rec.toFixed(1) + '%' : '—' },
+          ])}
+        ` : ''}
+        ${p.stats && (p.stats['REC'] != null || p.stats['REC_YDS'] != null || p.stats['REC_TDS'] != null) ? `
+          <div style="padding:7px 13px;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--text-muted)">
+            ${[
+              p.stats['REC'] != null ? p.stats['REC'] + ' rec' : null,
+              p.stats['REC_YDS'] != null ? p.stats['REC_YDS'] + ' yds' : null,
+              p.stats['REC_TDS'] != null ? p.stats['REC_TDS'] + ' TD' : null,
+              p.snap_pct != null ? Math.round(p.snap_pct) + '% snaps' : null,
+            ].filter(v => v != null).join(' · ')}
+          </div>
+        ` : ''}
+      ` : pos === 'QB' ? `
+        ${(p.epa_per_play != null || p.success_rate != null || p.cpoe != null || p.ngs_time_to_throw != null || p.qbr != null) ? `
+          ${buildStatRows([
+            { label: 'QBR', tooltip: "ESPN's Total QBR -- a 0-100 all-in-one rating of overall efficiency. ESPN scales it so 50 = average; 65+ is very good, below 40 is poor.", dot: tierDot('qbr', p.qbr, 8), display: p.qbr != null ? p.qbr.toFixed(1) : '—' },
+            { label: 'EPA/DB', tooltip: "Expected Points Added per dropback -- points added vs. a league-average outcome in the same situation. Typical range: about -0.10 (poor) to +0.25 (elite); 0.00-0.10 is roughly average.", dot: tierDot('epa_per_play', p.epa_per_play, 8), display: p.epa_per_play != null ? (p.epa_per_play > 0 ? '+' : '') + p.epa_per_play.toFixed(2) : '—' },
+            { label: 'Success', tooltip: "Success rate -- share of dropbacks that meaningfully move the offense closer to a first down or score. Typical range: about 40% (poor) to 55%+ (elite); 46-48% is roughly average.", dot: tierDot('success_rate', p.success_rate, 8), display: p.success_rate != null ? Math.round(p.success_rate) + '%' : '—' },
+            { label: 'CPOE', tooltip: "Completion % Over Expected -- accuracy vs. expected, given throw difficulty. Typical range: about -5% (poor) to +5-8% (elite); 0% is average.", dot: tierDot('cpoe', p.cpoe, 8), display: p.cpoe != null ? (p.cpoe > 0 ? '+' : '') + p.cpoe.toFixed(1) : '—' },
+            { label: 'TTT', tooltip: "Time to throw -- average seconds from snap to release. Typically 2.4-3.0s. Faster isn't automatically better or worse -- it depends on scheme and play style.", dot: tierDot('ngs_time_to_throw', p.ngs_time_to_throw, 8), display: p.ngs_time_to_throw != null ? p.ngs_time_to_throw.toFixed(2) + 's' : '—' },
+          ])}
+        ` : ''}
+        ${p.stats && (p.stats['PASS_YDS'] != null || p.stats['PASS_TDS'] != null || p.stats['INT'] != null) ? `
+          <div style="padding:7px 13px;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--text-muted)">
+            ${[
+              p.stats['PASS_YDS'] != null ? p.stats['PASS_YDS'] + ' yds' : null,
+              p.stats['PASS_TDS'] != null ? p.stats['PASS_TDS'] + ' TD' : null,
+              p.stats['INT'] != null ? p.stats['INT'] + ' INT' : null,
+            ].filter(v => v != null).join(' · ')}
+          </div>
+        ` : ''}
+      ` : useDefCard ? `${buildDefAdvBlock(p)}` : `
+        <div class="card-ratings">
+          <div class="card-rating-cell">
+            <div class="crc-val" style="color:${mc}">${p.madden || '—'}</div>
+            <div class="crc-label">Madden</div>
+          </div>
+          <div class="card-rating-cell">
+            <div class="crc-val" style="color:var(--gold)">${p.age || '—'}</div>
+            <div class="crc-label">Age</div>
+          </div>
+          <div class="card-rating-cell">
+            <div class="crc-val" style="color:var(--text-muted)">${p.snap_pct != null ? Math.round(p.snap_pct) + '%' : '—'}</div>
+            <div class="crc-label">${p.snap_pct != null ? 'Snaps' : ''}</div>
+          </div>
+        </div>
+        ${shownStats.length > 0 ? `
+          <div style="padding:8px 13px;border-top:1px solid var(--border)">
+            <div style="font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:6px">${p.stats_season || ''} STATS</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px 12px">
+              ${shownStats.map(([k,v]) => `
+                <div style="display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid rgba(255,255,255,0.04)">
+                  <span style="font-size:10px;color:var(--text-muted)">${k}</span>
+                  <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:var(--text)">${v}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+      `}
+      <div class="card-footer" style="flex-direction:column;gap:4px;align-items:flex-start">
+        ${p.years_remaining != null && p.avg_annual_remaining != null ? `
+          <div style="display:flex;justify-content:space-between;width:100%;align-items:center">
+            <span style="font-family:'Barlow Condensed';font-weight:700;font-size:13px;color:var(--gold)">${p.years_remaining} yrs remaining · ${formatMoneyShort(p.avg_annual_remaining)}/yr avg</span>
+          </div>
+        ` : `
+          <div style="display:flex;justify-content:space-between;width:100%;align-items:center">
+            <span style="font-family:'Barlow Condensed';font-weight:700;font-size:13px;color:var(--gold)">${p.cap_raw ? formatMoneyShort(p.cap_raw) : '—'}</span>
+            <span style="font-size:10px;color:var(--text-dim)">cap hit</span>
+          </div>
+        `}
+        ${p.attainment ? `<div style="font-size:10px;color:var(--text-muted)">Attained: <span style="color:var(--text)">${p.attainment}</span></div>` : ''}
+      </div>
+    </div>
+  `;
+}
+
 // Light hover tooltip: name, position, Madden, INJ designation. Everything else lives in the sidebar.
 function buildHoverCard(p, pos) {
   const mc = maddenColor(p.madden);
@@ -1493,7 +2117,7 @@ function buildPlayerNode(p, pos, coords, delay, flipCard) {
   return `
     <div class="player-node ${flipCard ? 'flip-card' : ''}" data-pos="${pos}"
          style="left:${coords.x}%;top:${coords.y}%;animation-delay:${delay}ms"
-         onclick="openSidebar('${pos}', event)"
+         onclick="${sidebarOn ? `openSidebar('${pos}', event)` : `openSubDropdown('${pos}', event)`}"
          onmouseenter="positionHoverCard(this)">
       <div class="p-card" style="background:${team.colors[0]}">
         ${p.injured ? `<div class="p-badge-inj" title="${[p.injury_detail, p.injury_status].filter(Boolean).join(' — ')}">INJ</div>` : ''}
@@ -1503,7 +2127,8 @@ function buildPlayerNode(p, pos, coords, delay, flipCard) {
         ${p.madden_rank ? `<div class="p-rank">${p.madden_rank} / ${p.madden_rank_total} ${p.madden_pos_label || ''}</div>` : ''}
       </div>
       <div class="p-pos-bar">${pos}</div>
-      ${buildHoverCard(p, pos)}
+      ${sidebarOn ? '' : buildSubDropdown(pos, p)}
+      ${sidebarOn ? buildHoverCard(p, pos) : buildFullHoverCard(p, pos)}
     </div>
   `;
 }
@@ -1685,6 +2310,7 @@ document.addEventListener('click', e => {
   if (!e.target.closest('.team-selector-wrap')) {
     document.getElementById('teamsDropdown').classList.remove('open');
   }
+  if (!sidebarOn && !e.target.closest('.sub-dropdown')) closeSubDropdown();
   // Click on empty field closes the sidebar.
   if (sidebarPos && e.target.closest('.field-canvas') && !e.target.closest('.player-node')) {
     closeSidebar();
@@ -1703,6 +2329,7 @@ const urlPlayer = params.get('player');
 
 currentTeam = (urlTeam && TEAMS[urlTeam]) ? urlTeam : (localStorage.getItem('fieldview_team') || 'BUF');
 
+updateSbToggle();
 loadTeam(currentTeam).then(() => {
   syncFieldHeight();
   if (urlOff) {
@@ -1718,7 +2345,7 @@ loadTeam(currentTeam).then(() => {
     });
   }
   // Reopen the sidebar if ?player= is someone currently on the field for this team; otherwise ignore it.
-  if (urlPlayer) {
+  if (sidebarOn && urlPlayer) {
     const slot = [...document.querySelectorAll('#playersLayer .player-node')].map(n => n.dataset.pos)
       .find(pos => { const st = getStarter(pos); return st && st.id === urlPlayer; });
     if (slot) openSidebar(slot);
