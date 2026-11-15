@@ -660,6 +660,49 @@ body.sb-open .field-outer { padding-right: 384px; }
 .sb-cmp-val { width: 46px; text-align: right; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 14px; color: var(--text); }
 .sb-cmp-pct { width: 52px; text-align: right; font-size: 11px; font-weight: 700; }
 
+/* ── DRAFT INSTALLER (rookies are view state; PROJ = a projection, never a real Madden rating) ── */
+.draft-btn { border: 1px solid var(--border2); }
+.draft-btn.active { border-color: var(--accent); }
+.p-card.proj { border: 1.5px dashed #f5c542; border-bottom: none; }
+.p-pos-bar.proj { border: 1.5px dashed #f5c542; border-top: none; }
+.p-badge-rk { position: absolute; top: -6px; left: -6px; background: #22c55e; color: #04210f; border-radius: 4px; font-size: 9px; font-weight: 800; padding: 1px 4px; letter-spacing: .5px; z-index: 5; }
+.p-proj { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 11px; letter-spacing: 1.5px; color: #f5c542; line-height: 1; }
+.player-node.drop-target .p-card, .player-node.drop-target .p-pos-bar { box-shadow: 0 0 0 2px #f5c542, 0 0 18px rgba(245,197,66,.65); }
+.player-node.drop-target { animation: none; }
+.hc-proj { color: #f5c542; font-weight: 800; font-size: 10px; letter-spacing: 1px; }
+.sb-pill.proj { background: rgba(245,197,66,.12); color: #f5c542; border: 1px solid rgba(245,197,66,.4); }
+.dp-head { padding: 14px 40px 10px 16px; border-bottom: 1px solid var(--border); }
+.dp-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 22px; color: var(--text); line-height: 1.1; }
+.dp-banner { position: sticky; top: 0; z-index: 3; background: #1b1f2b; border-bottom: 1px solid var(--border2); padding: 8px 16px; font-size: 12px; color: var(--text); display: flex; align-items: center; gap: 8px; }
+.dp-banner b { color: #f5c542; }
+.dp-banner .sb-btn { flex: 0 0 auto; padding: 4px 10px; font-size: 13px; }
+.dp-pick { display: flex; align-items: center; gap: 10px; padding: 7px 8px; margin: 0 -8px; border-radius: 6px; cursor: pointer; }
+.dp-pick:hover { background: var(--border); }
+.dp-pick.sel { background: rgba(0,212,255,.12); outline: 1px solid rgba(0,212,255,.45); }
+.dp-pick.used { cursor: default; opacity: .9; }
+.dp-pick-no { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 16px; color: var(--text); min-width: 74px; }
+.dp-pick-from { font-size: 11px; color: var(--text-muted); }
+.dp-pick-use { flex: 1; min-width: 0; font-size: 12px; color: #22c55e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dp-x { background: none; border: none; color: var(--text-muted); font-size: 16px; cursor: pointer; padding: 0 4px; }
+.dp-x:hover { color: #ef4444; }
+.dp-ctrls { display: flex; gap: 6px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
+.dp-ctrls select, .dp-ctrls input { background: var(--surface2); color: var(--text); border: 1px solid var(--border2); border-radius: 6px; padding: 5px 8px; font-size: 12px; font-family: inherit; }
+.dp-ctrls input { flex: 1; min-width: 90px; }
+.dp-row { display: flex; align-items: center; gap: 8px; padding: 6px 8px; margin: 0 -8px; border-radius: 6px; cursor: pointer; }
+.dp-row:hover { background: var(--border); }
+.dp-row.sel { background: rgba(245,197,66,.14); outline: 1px solid rgba(245,197,66,.5); }
+.dp-rk { font-size: 11px; color: var(--text-muted); width: 30px; text-align: right; flex-shrink: 0; }
+.dp-nm { flex: 1; min-width: 0; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dp-nm small { font-family: 'Barlow', sans-serif; font-weight: 400; font-size: 11px; color: var(--text-muted); margin-left: 4px; }
+.dp-ps { font-size: 11px; font-weight: 700; color: var(--text-muted); width: 34px; flex-shrink: 0; }
+.dp-pr { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 16px; width: 28px; text-align: right; flex-shrink: 0; }
+.sb-kv { display: flex; justify-content: space-between; gap: 10px; padding: 4px 0; font-size: 12px; border-top: 1px solid rgba(255,255,255,0.05); }
+.sb-kv:first-of-type { border-top: none; }
+.sb-kv span:first-child { color: var(--text-muted); }
+.sb-kv span:last-child { color: var(--text); font-weight: 600; text-align: right; }
+.sb-verdict { font-size: 13px; font-weight: 600; margin-top: 8px; }
+.sb-verdict.reach { color: #fb923c; } .sb-verdict.steal { color: #22c55e; } .sb-verdict.fair { color: var(--text-muted); }
+
 /* ── LEGEND ── */
 .legend-strip {
   margin-left: auto;
@@ -757,6 +800,7 @@ body.sb-open .field-outer { padding-right: 384px; }
       <!-- rebuilt per-team by updateDefPersonnelButtons(), same
            base/nickel key logic the old setUnit('defense', ...) used -->
     </div>
+    <button class="ctrl-btn draft-btn" id="draftBtn" onclick="toggleDraftPanel()" title="Mock-draft a rookie into this team's lineup (projected rating)">Draft</button>
     <button class="ctrl-btn reset-btn" id="resetStartersBtn" onclick="resetStarters()" style="display:none">Reset to starters</button>
   </div>
 
@@ -1441,7 +1485,9 @@ function syncURL() {
     def: currentDefPersonnel
   });
   const sbPlayer = sidebarPos ? getStarter(sidebarPos) : null;
-  if (sidebarOn && sbPlayer) params.set('player', sbPlayer.id);
+  if (sidebarOn && sbPlayer && !sbPlayer.isRookie) params.set('player', sbPlayer.id);
+  const rk = Object.entries(currentStarters).filter(([, r]) => r.isRookie).map(([slot, r]) => `${r.pick}:${r.prospect_id}:${slot}`);
+  if (rk.length) params.set('draft', rk.join(','));
   history.replaceState(null, '', '?' + params.toString());
 }
 
@@ -1569,8 +1615,12 @@ function selectSub(formationPos, playerId, event) {
   // Find the player object
   const p = teamData.players.find(p => p.id === playerId);
   if (!p) return;
+  setStarterAt(formationPos, p);
+}
 
-  currentStarters[formationPos] = p;
+// Puts a player (a vet sub or a mock-draft rookie) into a slot, or restores the natural starter when p is null.
+function setStarterAt(formationPos, p) {
+  if (p) currentStarters[formationPos] = p; else delete currentStarters[formationPos];
 
   // Recompute currentOnFieldIds and every slot's coords/flip from scratch --
   // cheap (no DOM work), and buildFormationSlots() already encodes all of
@@ -1604,6 +1654,9 @@ function selectSub(formationPos, playerId, event) {
   // The sidebar follows the incoming player (and moves the highlight to the new card).
   if (sidebarPos === formationPos) renderSidebar();
   updateResetBtn();
+  if (draftOpen) renderDraftPanel(true);
+  applyDropTargets();
+  syncURL();
 }
 
 // Reset button is only shown while there are manual subs on either side.
@@ -1616,7 +1669,9 @@ function updateResetBtn() {
 function resetStarters() {
   currentStarters = {};
   compareId = null;
+  draftSel = { pick: null, prospect: null }; // rookies are manual starters too: Reset clears them
   renderFormation();
+  syncURL();
 }
 
 // ── PLAYER SIDEBAR ──
@@ -1632,6 +1687,7 @@ function setSelectedHighlight() {
 
 function openSidebar(pos, event) {
   if (event) event.stopPropagation();
+  draftOpen = false; draftSel = { pick: null, prospect: null }; updateDraftBtn(); applyDropTargets();
   const swapped = sidebarPos !== pos;
   sidebarPos = pos;
   if (swapped) compareId = null;
@@ -1641,6 +1697,7 @@ function openSidebar(pos, event) {
 function closeSidebar() {
   sidebarPos = null;
   compareId = null;
+  draftOpen = false; draftSel = { pick: null, prospect: null }; updateDraftBtn(); applyDropTargets();
   document.getElementById('playerSidebar').classList.remove('open');
   document.body.classList.remove('sb-open');
   setSelectedHighlight();
@@ -1743,6 +1800,7 @@ function renderSidebar(resetScroll) {
   const p = sidebarPos ? getStarter(sidebarPos) : null;
   if (!p) { closeSidebar(); return; }
   if (compareId) { renderCompare(el, p); return; }
+  if (p.isRookie) { renderRookieSidebar(el, p, resetScroll); return; }
   const team = TEAMS[currentTeam];
   const mc = maddenColor(p.madden);
   const cfg = SIDEBAR_CARD[p.standard_pos];
@@ -1821,7 +1879,7 @@ function renderCompare(el, a) {
   if (!b) { compareId = null; renderSidebar(); return; }
   const cfgA = SIDEBAR_CARD[a.standard_pos], cfgB = SIDEBAR_CARD[b.standard_pos];
   const keysB = cfgB ? cfgB.list : [];
-  const keys = cfgA ? cfgA.list.filter(k => keysB.includes(k) && (a[k] != null || b[k] != null)) : [];
+  const keys = cfgA && !a.isRookie ? cfgA.list.filter(k => keysB.includes(k) && (a[k] != null || b[k] != null)) : [];
   const last = pl => { const w = pl.name.split(' '); return w.length > 1 ? w.slice(1).join(' ') : w[0]; };
 
   const line = (pl, key) => {
@@ -1840,8 +1898,9 @@ function renderCompare(el, a) {
   const head = (pl, tag) => `<div>
       <div class="sb-cmp-tagline">${tag}</div>
       <div class="sb-cmp-name">${pl.jersey ? '#' + pl.jersey + ' ' : ''}${pl.name}</div>
-      <div class="sb-cmp-sub">${pl.standard_pos}${pl.age ? ' · Age ' + pl.age : ''}</div>
+      <div class="sb-cmp-sub">${pl.standard_pos}${pl.isRookie ? ' · R' + pl.round + ' #' + pl.pick + ' · projected' : (pl.age ? ' · Age ' + pl.age : '')}</div>
       <div class="sb-cmp-madden" style="color:${maddenColor(pl.madden)}">${pl.madden || '—'}</div>
+      ${pl.isRookie ? `<div class="sb-cmp-sub">range ${pl.proj.lo}–${pl.proj.hi}</div>` : ''}
     </div>`;
 
   el.innerHTML = `
@@ -1851,7 +1910,7 @@ function renderCompare(el, a) {
       <button class="sb-btn" onclick="closeCompare(event)">Back</button>
       <button class="sb-btn primary" onclick="swapFromCompare(event)">Swap in</button>
     </div>
-    ${compareTableHtml(a, b, last)}
+    ${a.isRookie ? `<div class="sb-section"><div class="sb-caption" style="margin-top:0">A rookie has no stats yet: only the ratings are compared (his is a projection from draft position).</div></div>` : compareTableHtml(a, b, last)}
     ${rows ? `<div class="sb-section"><div class="sb-section-title">Advanced Stats · percentile vs. own position</div>${rows}
       ${a.standard_pos !== b.standard_pos ? `<div class="sb-caption">Different positions: only shared stats are compared, each ranked within his own position.</div>` : ''}</div>` : ''}
     `;
@@ -2095,6 +2154,16 @@ function buildFullHoverCard(p, pos) {
 // Light hover tooltip: name, position, Madden, INJ designation. Everything else lives in the sidebar.
 function buildHoverCard(p, pos) {
   const mc = maddenColor(p.madden);
+  if (p.isRookie) return `
+    <div class="hover-card">
+      <div class="hc-name">${p.name}</div>
+      <div class="hc-meta">
+        <span>${p.standard_pos}${pos !== p.standard_pos ? ' · ' + pos : ''}</span>
+        <span class="hc-madden" style="color:${mc}">${p.madden}</span>
+        <span class="hc-proj">PROJ</span>
+      </div>
+    </div>
+  `;
   return `
     <div class="hover-card">
       <div class="hc-name">${p.name}</div>
@@ -2117,18 +2186,20 @@ function buildPlayerNode(p, pos, coords, delay, flipCard) {
   return `
     <div class="player-node ${flipCard ? 'flip-card' : ''}" data-pos="${pos}"
          style="left:${coords.x}%;top:${coords.y}%;animation-delay:${delay}ms"
-         onclick="${sidebarOn ? `openSidebar('${pos}', event)` : `openSubDropdown('${pos}', event)`}"
+         onclick="nodeClick('${pos}', event)"
          onmouseenter="positionHoverCard(this)">
-      <div class="p-card" style="background:${team.colors[0]}">
+      <div class="p-card${p.isRookie ? ' proj' : ''}" style="background:${team.colors[0]}">
+        ${p.isRookie ? `<div class="p-badge-rk" title="Mock-draft rookie">R</div>` : ''}
         ${p.injured ? `<div class="p-badge-inj" title="${[p.injury_detail, p.injury_status].filter(Boolean).join(' — ')}">INJ</div>` : ''}
         <div class="p-jersey">${p.jersey ? '#'+p.jersey : ' '}</div>
         <div class="p-lastname">${lastName}</div>
         <div class="p-madden" style="color:${mc}">${p.madden || '—'}</div>
+        ${p.isRookie ? `<div class="p-proj" title="Projected from draft position, not a real Madden rating">PROJ</div>` : ''}
         ${p.madden_rank ? `<div class="p-rank">${p.madden_rank} / ${p.madden_rank_total} ${p.madden_pos_label || ''}</div>` : ''}
       </div>
-      <div class="p-pos-bar">${pos}</div>
-      ${sidebarOn ? '' : buildSubDropdown(pos, p)}
-      ${sidebarOn ? buildHoverCard(p, pos) : buildFullHoverCard(p, pos)}
+      <div class="p-pos-bar${p.isRookie ? ' proj' : ''}">${pos}</div>
+      ${sidebarOn || p.isRookie ? '' : buildSubDropdown(pos, p)}
+      ${sidebarOn || p.isRookie ? buildHoverCard(p, pos) : buildFullHoverCard(p, pos)}
     </div>
   `;
 }
@@ -2220,8 +2291,9 @@ function renderFormation() {
   if (sidebarPos) {
     if (layer.querySelector(`.player-node[data-pos="${sidebarPos}"]`)) renderSidebar();
     else closeSidebar();
-  }
+  } else if (draftOpen) renderDraftPanel(true);
   updateResetBtn();
+  applyDropTargets();
 }
 
 function setOffPersonnel(pers, btn) {
@@ -2318,14 +2390,341 @@ document.addEventListener('click', e => {
 });
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && sidebarPos) closeSidebar();
+  if (e.key === 'Escape') {
+    if (draftOpen && draftSel.prospect) { draftSel.prospect = null; renderDraftPanel(true); applyDropTargets(); }
+    else if (sidebarPos || draftOpen) closeSidebar();
+  }
 });
+
+// ── DRAFT INSTALLER (Phase 1: team-first) ──
+// A mock-draft rookie is view state exactly like a manual sub: it lives in currentStarters (flagged isRookie),
+// is never written to data, and disappears with Reset / team switch. The rating is a PROJECTION from where he
+// is picked (data/rookie_curve.json), nudged toward where the board ranks him.
+//   s = pick number the rookie is placed at;  e = consensus_rank (fallback pfn_rank; none -> e = s)
+//   base = curve[pos][s];  pull = curve[pos][min(e, 257)]
+//   point = base + DRAFT_PULL * (pull - base), clamped to base +/- BAND_Z * resid_sd[pos]
+//   band  = base +/- BAND_Z * resid_sd[pos]
+// TUNABLE CONSTANTS:
+const DRAFT_PULL = 0.30;     // how far the board rank moves the projection off the draft-slot curve (0 = ignore the board, 1 = fully trust it)
+const BAND_Z = 1.28;         // z of the ~80% band, and the clamp on the board pull (in units of the position's residual SD)
+const DRAFT_MAX_ROUND = 3;   // the panel offers the team's picks in rounds 1..DRAFT_MAX_ROUND
+const FAIR_BAND = 5;         // |pick - board rank| within this many picks reads as "fair value", beyond it reach / steal
+const DRAFT_LIST_CAP = 150;  // rows rendered in the prospect list (use filter/search for the rest)
+const DRAFT_POSITIONS = ['QB', 'RB', 'WR', 'TE', 'OL', 'EDGE', 'DI', 'LB', 'CB', 'S'];
+
+let draftOpen = false;
+let draftSel = { pick: null, prospect: null }; // pick = chosen pick number; prospect = prospect_id waiting for a slot
+let draftSort = 'consensus';                   // 'consensus' | 'pfn'
+let draftPosFilter = '';
+let draftSearch = '';
+let draftData = null;                          // { curve, prospects, byId, order, meta } once loaded
+let draftDataPromise = null;
+
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+function loadDraftData() {
+  if (!draftDataPromise) {
+    draftDataPromise = (async () => {
+      try {
+        const [curve, prospects, order, meta] = await Promise.all(['rookie_curve', 'draft_prospects', 'draft_order', 'draft_meta']
+          .map(n => fetch('data/' + n + '.json').then(r => { if (!r.ok) throw new Error(n + ' ' + r.status); return r.json(); })));
+        const byId = {};
+        prospects.forEach(p => { byId[p.prospect_id] = p; });
+        draftData = { curve, prospects, byId, order, meta };
+      } catch (e) { console.error('Draft data unavailable:', e); draftData = null; }
+      return draftData;
+    })();
+  }
+  return draftDataPromise;
+}
+
+function projectRookie(pr, pickNo) {
+  const pts = draftData.curve.point[pr.standard_pos], sd = draftData.curve.resid_sd[pr.standard_pos];
+  const at = n => pts[Math.min(Math.max(Math.round(n), 1), pts.length) - 1];
+  const e = pr.consensus_rank != null ? pr.consensus_rank : (pr.pfn_rank != null ? pr.pfn_rank : pickNo);
+  const base = at(pickNo), pull = at(e), half = BAND_Z * sd;
+  const point = Math.min(base + half, Math.max(base - half, base + DRAFT_PULL * (pull - base)));
+  const cap = (draftData.curve.coefficients || {}).rating_cap || 99; // the curve is capped (EA's best launch rookie is 84); keep the band under it too
+  return { base, pull, point, lo: base - half, hi: Math.min(base + half, cap), e };
+}
+
+function makeRookie(row, pr) {
+  const pj = projectRookie(pr, row.pick);
+  return {
+    id: 'rk:' + pr.prospect_id, isRookie: true, prospect_id: pr.prospect_id, prospect: pr,
+    name: pr.name, standard_pos: pr.standard_pos, school: pr.school,
+    pick: row.pick, round: row.round, from: row.original_team !== row.team ? row.original_team : null,
+    proj: { base: pj.base, pull: pj.pull, point: pj.point, lo: Math.round(pj.lo), hi: Math.round(pj.hi), e: pj.e },
+    madden: Math.round(pj.point), jersey: null, injured: false, depth: null, years_pro: 0,
+  };
+}
+
+const rookieEntries = () => Object.entries(currentStarters).filter(([, r]) => r.isRookie).map(([slot, r]) => ({ slot, r }));
+const teamDraftPicks = () => draftData ? draftData.order.filter(o => o.team === currentTeam && o.round <= DRAFT_MAX_ROUND) : [];
+
+// Same pool rules as subs: FS/SS take any S, NB takes CB or S, every other slot takes its occupant's standard_pos.
+function slotPositions(pos) {
+  if (pos === 'FS' || pos === 'SS') return ['S'];
+  if (pos === 'NB') return ['CB', 'S'];
+  const p = getStarter(pos);
+  return p && p.standard_pos ? [p.standard_pos] : [];
+}
+function eligibleSlots(pr) {
+  return [...document.querySelectorAll('#playersLayer .player-node')].map(n => n.dataset.pos)
+    .filter(pos => slotPositions(pos).includes(pr.standard_pos));
+}
+function applyDropTargets() {
+  document.querySelectorAll('#playersLayer .player-node.drop-target').forEach(n => n.classList.remove('drop-target'));
+  if (!draftOpen || !draftSel.prospect || !draftData) return;
+  const pr = draftData.byId[draftSel.prospect];
+  if (!pr) return;
+  eligibleSlots(pr).forEach(pos => {
+    const n = document.querySelector(`#playersLayer .player-node[data-pos="${pos}"]`);
+    if (n) n.classList.add('drop-target');
+  });
+}
+
+// Every card click goes through here: placing a rookie, opening a sidebar, or the sidebar-OFF sub dropdown.
+function nodeClick(pos, event) {
+  if (draftOpen && draftSel.prospect) {
+    if (event) event.stopPropagation();
+    const pr = draftData && draftData.byId[draftSel.prospect];
+    if (pr && slotPositions(pos).includes(pr.standard_pos)) placeRookieFromPanel(pos);
+    return; // a click on a non-highlighted slot while placing does nothing (Cancel / Esc leaves placing)
+  }
+  const p = getStarter(pos);
+  // rookies always use the sidebar (it is the only place their projection is explained), even with the toggle Off
+  if (sidebarOn || (p && p.isRookie)) openSidebar(pos, event); else openSubDropdown(pos, event);
+}
+
+function placeRookieFromPanel(slot) {
+  const pr = draftData.byId[draftSel.prospect];
+  const row = draftData.order.find(o => o.pick === draftSel.pick);
+  if (!pr || !row) return;
+  compareId = null;
+  draftSel = { pick: null, prospect: null };
+  setStarterAt(slot, makeRookie(row, pr)); // refreshes the field node, the panel and the URL
+}
+
+function removeRookie(slot, event) {
+  if (event) event.stopPropagation();
+  compareId = null;
+  setStarterAt(slot, null);
+}
+
+function clearDraft(event) {
+  if (event) event.stopPropagation();
+  rookieEntries().forEach(({ slot }) => { delete currentStarters[slot]; });
+  compareId = null;
+  draftSel = { pick: null, prospect: null };
+  renderFormation();
+  syncURL();
+}
+
+function updateDraftBtn() {
+  const b = document.getElementById('draftBtn');
+  if (b) b.classList.toggle('active', draftOpen);
+}
+
+function toggleDraftPanel() {
+  const wasOpen = draftOpen;
+  closeSidebar(); // frees the shared right-hand column (and resets the panel state)
+  if (wasOpen) return;
+  draftOpen = true;
+  updateDraftBtn();
+  const el = document.getElementById('playerSidebar');
+  el.innerHTML = '<button class="sb-close" onclick="closeSidebar()" aria-label="Close">&times;</button><div class="sb-section sb-empty">Loading draft board…</div>';
+  el.classList.add('open');
+  document.body.classList.add('sb-open');
+  syncFieldHeight();
+  loadDraftData().then(() => { if (draftOpen) renderDraftPanel(); });
+}
+
+function selectDraftPick(pick) {
+  draftSel = { pick: draftSel.pick === pick ? null : pick, prospect: null };
+  renderDraftPanel(true);
+  applyDropTargets();
+}
+function selectDraftProspect(id) {
+  draftSel.prospect = draftSel.prospect === id ? null : id;
+  renderDraftPanel(true);
+  applyDropTargets();
+}
+function setDraftSort(mode) { draftSort = mode; renderDraftPanel(true); }
+
+function draftBoardRows() {
+  const used = new Set(rookieEntries().map(({ r }) => r.prospect_id));
+  const q = draftSearch.trim().toLowerCase();
+  const key = p => draftSort === 'pfn' ? [p.pfn_rank, p.consensus_rank] : [p.consensus_rank, p.pfn_rank];
+  const cmp = (a, b) => (a == null) - (b == null) || (a - b) || 0;
+  return draftData.prospects
+    .filter(p => !used.has(p.prospect_id) && (!draftPosFilter || p.standard_pos === draftPosFilter)
+      && (!q || p.name.toLowerCase().includes(q) || p.school.toLowerCase().includes(q)))
+    .sort((a, b) => { const ka = key(a), kb = key(b); return cmp(ka[0], kb[0]) || cmp(ka[1], kb[1]) || a.name.localeCompare(b.name); });
+}
+
+function draftListHtml() {
+  const rows = draftBoardRows();
+  const pick = draftSel.pick;
+  const html = rows.slice(0, DRAFT_LIST_CAP).map(p => {
+    const rk = draftSort === 'pfn' ? p.pfn_rank : p.consensus_rank;
+    const proj = Math.round(projectRookie(p, pick).point);
+    return `<div class="dp-row${draftSel.prospect === p.prospect_id ? ' sel' : ''}" onclick="selectDraftProspect('${p.prospect_id}')">
+      <span class="dp-rk">${rk != null ? '#' + rk : '—'}</span>
+      <span class="dp-nm">${esc(p.name)}<small>${esc(p.school)}</small></span>
+      <span class="dp-ps">${p.standard_pos}</span>
+      <span class="dp-pr" style="color:${maddenColor(proj)}" title="Projected rating if taken at #${pick}">${proj}</span>
+    </div>`;
+  }).join('');
+  return (html || '<div class="sb-empty">No prospects match.</div>') +
+    (rows.length > DRAFT_LIST_CAP ? `<div class="sb-caption">${rows.length - DRAFT_LIST_CAP} more: narrow with the position filter or search.</div>` : '');
+}
+
+function renderDraftList() {
+  const el = document.getElementById('dpList');
+  if (el) el.innerHTML = draftListHtml();
+}
+
+function renderDraftPanel(keepScroll) {
+  const el = document.getElementById('playerSidebar');
+  const st = keepScroll ? el.scrollTop : 0;
+  draftOpen = true;
+  updateDraftBtn();
+  if (!draftData) {
+    el.innerHTML = '<button class="sb-close" onclick="closeSidebar()" aria-label="Close">&times;</button><div class="sb-section sb-empty">Draft data is unavailable right now.</div>';
+  } else {
+    const team = TEAMS[currentTeam];
+    const picks = teamDraftPicks();
+    const taken = new Map(rookieEntries().map(({ slot, r }) => [r.pick, { slot, r }]));
+    const pr = draftSel.prospect ? draftData.byId[draftSel.prospect] : null;
+    let banner = '';
+    if (pr) {
+      const n = eligibleSlots(pr).length;
+      banner = `<div class="dp-banner"><span style="flex:1">${n
+        ? `Placing <b>${esc(pr.name)}</b> (${pr.standard_pos}) at #${draftSel.pick}: click a highlighted slot.`
+        : `No ${pr.standard_pos} slot in this personnel for <b>${esc(pr.name)}</b>; change the offense/defense package.`}</span>
+        <button class="sb-btn" onclick="selectDraftProspect('${pr.prospect_id}')">Cancel</button></div>`;
+    }
+    const pickRows = picks.length ? picks.map(o => {
+      const t = taken.get(o.pick);
+      const from = o.original_team !== o.team ? `<span class="dp-pick-from">from ${esc((TEAMS[o.original_team] || {}).name || o.original_team)}</span>` : '';
+      if (t) return `<div class="dp-pick used"><span class="dp-pick-no">R${o.round} #${o.pick}</span>
+        <span class="dp-pick-use">${esc(t.r.name)} · ${t.slot} · ${t.r.madden}</span>
+        <button class="dp-x" title="Remove this rookie" onclick="removeRookie('${t.slot}', event)">&times;</button></div>`;
+      return `<div class="dp-pick${draftSel.pick === o.pick ? ' sel' : ''}" onclick="selectDraftPick(${o.pick})">
+        <span class="dp-pick-no">R${o.round} #${o.pick}</span>${from}</div>`;
+    }).join('') : `<div class="sb-empty">${esc(team.name)} hold no picks in rounds 1–${DRAFT_MAX_ROUND}.</div>`;
+    const board = draftSel.pick ? `<div class="sb-section">
+        <div class="sb-section-title sb-sort"><span>Board · pick #${draftSel.pick}</span>
+          <span class="sort-toggle"><button class="${draftSort === 'consensus' ? 'active' : ''}" onclick="setDraftSort('consensus')">Consensus</button><button class="${draftSort === 'pfn' ? 'active' : ''}" onclick="setDraftSort('pfn')">PFN</button></span></div>
+        <div class="dp-ctrls">
+          <select onchange="draftPosFilter=this.value; renderDraftList()"><option value="">All positions</option>${DRAFT_POSITIONS.map(p => `<option value="${p}"${draftPosFilter === p ? ' selected' : ''}>${p}</option>`).join('')}</select>
+          <input type="search" placeholder="Search name or school" value="${esc(draftSearch)}" oninput="draftSearch=this.value; renderDraftList()">
+        </div>
+        <div id="dpList">${draftListHtml()}</div></div>` : '';
+    const asOf = draftData.meta && draftData.meta.board_last_changed;
+    el.innerHTML = `
+      <button class="sb-close" onclick="closeSidebar()" aria-label="Close">&times;</button>
+      <div class="dp-head"><div class="dp-title">Mock draft · ${esc(team.name)}</div>
+        <div class="sb-meta">Pick a selection, choose a prospect, then click a highlighted slot.</div></div>
+      ${banner}
+      <div class="sb-section"><div class="sb-section-title sb-sort"><span>Picks · rounds 1–${DRAFT_MAX_ROUND}</span>
+        ${taken.size ? `<button class="sb-btn" style="flex:0 0 auto;padding:2px 10px;font-size:12px" onclick="clearDraft(event)">Clear draft</button>` : ''}</div>${pickRows}</div>
+      ${board}
+      <div class="sb-section" style="border-bottom:none"><div class="sb-caption" style="margin-top:0">Board as of ${esc(asOf || 'unknown')} - PFN, MockDraftHero.</div>
+        <div class="sb-caption">Ratings are projections from where a player is drafted, not real Madden ratings.</div></div>`;
+  }
+  el.classList.add('open');
+  document.body.classList.add('sb-open');
+  el.scrollTop = st;
+  syncFieldHeight();
+  syncURL();
+}
+
+function renderRookieSidebar(el, p, resetScroll) {
+  const pr = p.prospect, m = pr.measurables || {}, team = TEAMS[currentTeam];
+  const mc = maddenColor(p.madden);
+  const pickLabel = `R${p.round} #${p.pick}` + (p.from ? ` (from ${(TEAMS[p.from] || {}).name || p.from})` : '');
+  const bRank = pr.consensus_rank != null ? ['Consensus', pr.consensus_rank] : (pr.pfn_rank != null ? ['PFN', pr.pfn_rank] : null);
+  let verdict = '';
+  if (bRank) {
+    const d = p.pick - bRank[1];
+    const [cls, word] = d < -FAIR_BAND ? ['reach', 'reach'] : (d > FAIR_BAND ? ['steal', 'steal'] : ['fair', 'fair value']);
+    verdict = `<div class="sb-verdict ${cls}">${bRank[0]} #${bRank[1]}, taken #${p.pick}: ${word}</div>`;
+  } else verdict = `<div class="sb-verdict fair">Not on either board.</div>`;
+  const kv = (k, v) => v == null || v === '' ? '' : `<div class="sb-kv"><span>${k}</span><span>${esc(v)}</span></div>`;
+  const num = (v, unit, d) => v == null ? null : (d != null ? v.toFixed(d) : v) + (unit || '');
+  const pfnRows = [kv('PFN grade', pr.pfn_grade != null ? Number(pr.pfn_grade).toFixed(1) : null), kv('PFN rank', pr.pfn_rank != null ? '#' + pr.pfn_rank : null),
+    kv('PFN position rank', pr.pfn_position_rank != null ? '#' + pr.pfn_position_rank : null), kv('PFN comp', pr.pfn_comp), kv('Consensus rank', pr.consensus_rank != null ? '#' + pr.consensus_rank : null),
+    kv('CFB 27 overall', pr.cfb27_ovr)].join('');
+  const meas = [kv('Height', m.height), kv('Weight', m.weight != null ? m.weight + ' lbs' : null), kv('Arm', num(m.arm, '"')), kv('Hand', num(m.hand, '"')),
+    kv('Wingspan', num(m.wingspan, '"')), kv('40-yard', num(m.forty, ' s')), kv('10-yard split', num(m.ten_split, ' s')), kv('Vertical', num(m.vert, '"')),
+    kv('Broad jump', num(m.broad, '"')), kv('3-cone', num(m.three_cone, ' s')), kv('Shuttle', num(m.shuttle, ' s')), kv('Bench', num(m.bench)), kv('RAS', num(m.ras))].join('');
+  const subs = getSubCandidates(sidebarPos);
+  const subsHtml = subs.length ? subs.map(c => `
+      <div class="sb-sub" onclick="openCompare('${c.id}', event)">
+        <div class="sb-sub-madden" style="color:${maddenColor(c.madden)}">${c.madden || '—'}</div>
+        <div class="sb-sub-name">${c.name}</div>
+        <div class="sb-sub-pos">${c.standard_pos}${c.depth ? ' · D' + c.depth : ''}${c.injured ? ' · <span style="color:#ef4444">INJ</span>' : ''}</div>
+      </div>`).join('') : '<div class="sb-empty">No other players available at this position.</div>';
+  const meta2 = [pr.school, m.height, m.weight != null ? m.weight + ' lbs' : null, pr.eligibility].filter(Boolean).join(' · ');
+  el.innerHTML = `
+    <button class="sb-close" onclick="closeSidebar()" aria-label="Close">&times;</button>
+    <div class="sb-head">
+      <div style="flex:1;min-width:0">
+        <div class="sb-name"><span>${esc(p.name)}</span><span class="sb-pill rookie">R</span><span class="sb-pill proj">PROJ</span></div>
+        <div class="sb-meta">${p.standard_pos}${sidebarPos !== p.standard_pos ? ' · ' + sidebarPos : ''} · ${esc(team.name)}</div>
+        <div class="sb-meta">${esc(meta2)}</div>
+        <div class="sb-contract">${esc(pickLabel)}</div>
+      </div>
+      <div class="sb-madden"><div class="sb-madden-val" style="color:${mc}">${p.madden}</div><div class="sb-madden-label">Projected</div>
+        <div class="sb-madden-label" style="letter-spacing:0">(${p.proj.lo}–${p.proj.hi})</div></div>
+    </div>
+    <div class="sb-section"><div class="sb-section-title">Projection</div>
+      <div class="sb-kv"><span>Projected rating</span><span>${p.madden} (${p.proj.lo}–${p.proj.hi})</span></div>
+      ${verdict}
+      <div class="sb-caption">From where he is drafted (slot #${p.pick}), nudged ${Math.round(DRAFT_PULL * 100)}% toward his board rank. Not a real Madden rating.</div></div>
+    ${pfnRows ? `<div class="sb-section"><div class="sb-section-title">Board &amp; scouting</div>${pfnRows}</div>` : ''}
+    ${meas ? `<div class="sb-section"><div class="sb-section-title">Measurables</div>${meas}</div>` : ''}
+    <div class="sb-section" style="border-bottom:none">
+      <div class="sb-section-title sb-sort"><span>Substitutes</span><span class="sort-toggle">${sortToggleHtml()}</span></div>
+      ${subsHtml}
+      <button class="sb-btn" style="width:100%;margin-top:10px" onclick="removeRookie('${sidebarPos}', event)">Remove rookie</button>
+    </div>`;
+  el.classList.add('open');
+  document.body.classList.add('sb-open');
+  if (resetScroll) el.scrollTop = 0;
+  setSelectedHighlight();
+  syncFieldHeight();
+  syncURL();
+}
+
+// ?draft=<pick>:<prospect_id>:<slotKey>,...  Unknown picks/ids/slots are ignored.
+async function restoreDraftFromUrl(str) {
+  if (!str) return;
+  const data = await loadDraftData();
+  if (!data || !teamData) return;
+  const teamPicks = new Map(teamDraftPicks().map(o => [o.pick, o]));
+  const usedPicks = new Set(), usedPros = new Set();
+  let any = false;
+  for (const part of str.split(',')) {
+    const [pk, id, slot] = part.split(':');
+    const row = teamPicks.get(Number(pk)), pr = data.byId[id];
+    if (!row || !pr || usedPicks.has(row.pick) || usedPros.has(id) || !slot) continue;
+    if (!document.querySelector(`#playersLayer .player-node[data-pos="${slot}"]`) || !slotPositions(slot).includes(pr.standard_pos)) continue;
+    usedPicks.add(row.pick); usedPros.add(id);
+    currentStarters[slot] = makeRookie(row, pr);
+    any = true;
+  }
+  if (any) { renderFormation(); syncURL(); }
+}
 
 const params = new URLSearchParams(window.location.search);
 const urlTeam = params.get('team');
 const urlOff  = params.get('off');
 const urlDef  = params.get('def');
 const urlPlayer = params.get('player');
+const urlDraft = params.get('draft');
 
 currentTeam = (urlTeam && TEAMS[urlTeam]) ? urlTeam : (localStorage.getItem('fieldview_team') || 'BUF');
 
@@ -2344,6 +2743,7 @@ loadTeam(currentTeam).then(() => {
       if (btn.getAttribute('onclick')?.includes(urlDef)) btn.click();
     });
   }
+  restoreDraftFromUrl(urlDraft);
   // Reopen the sidebar if ?player= is someone currently on the field for this team; otherwise ignore it.
   if (sidebarOn && urlPlayer) {
     const slot = [...document.querySelectorAll('#playersLayer .player-node')].map(n => n.dataset.pos)

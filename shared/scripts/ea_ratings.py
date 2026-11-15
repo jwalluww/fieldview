@@ -66,7 +66,7 @@ def _get_page(slug, params, retries):
     return None
 
 
-def fetch_all(slug, extra_params=None, min_total=None, validate=None, retries=4):
+def fetch_all(slug, extra_params=None, min_total=None, validate=None, retries=4, dedupe=False):
     """Fetch every card for `slug`.
 
     extra_params: extra query params (e.g. {'gender': 0}, {'iteration': ...}).
@@ -75,6 +75,11 @@ def fetch_all(slug, extra_params=None, min_total=None, validate=None, retries=4)
                   response and returns None.
     validate:     optional callable(items) -> None if fine, else a string
                   reason. The caller's edition/sanity check.
+    dedupe:       opt-in, default OFF (every other sport keeps the strict
+                  guard). When True, repeated card ids are collapsed to the
+                  first occurrence (and logged) instead of rejecting the pull.
+                  The College Football launch iteration repeats 2 ids; the
+                  truncation check still runs on the raw count first.
     Returns the list of cards, or None (caller keeps its old snapshot).
     """
     limit = PAGE_SIZE.get(slug, DEFAULT_PAGE_SIZE)
@@ -106,6 +111,15 @@ def fetch_all(slug, extra_params=None, min_total=None, validate=None, retries=4)
         print(f'  ea_ratings: {slug} truncated pull ({len(items)} of {total}) -- rejecting')
         return None
     ids = {c.get('id') for c in items}
+    if len(ids) != len(items) and dedupe:
+        seen, uniq = set(), []
+        for c in items:
+            if c.get('id') in seen:
+                continue
+            seen.add(c.get('id'))
+            uniq.append(c)
+        print(f'  ea_ratings: {slug} dropped {len(items) - len(uniq)} duplicate card id(s) (dedupe=True)')
+        items, ids = uniq, seen
     if len(ids) != len(items):
         print(f'  ea_ratings: {slug} returned duplicate card ids ({len(items)} cards, {len(ids)} unique) -- rejecting')
         return None

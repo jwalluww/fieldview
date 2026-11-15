@@ -50,6 +50,12 @@ jobs:
       - name: Export player master
         run: python nfl/scripts/export_master.py nfl/data/players_master.json
 
+      # Draft prospects (FormationView draft installer): independent of the player pipeline above and
+      # never touches players_master.json. Any failed source keeps the previous draft_* files (exit 0).
+      - name: Refresh draft prospects, draft order and board meta
+        continue-on-error: true
+        run: python nfl/scripts/scrape_draft_prospects.py
+
       - name: Commit updated data
         run: |
           git config user.name "github-actions"
