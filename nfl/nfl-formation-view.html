@@ -696,6 +696,31 @@ body.sb-open .field-outer { padding-right: 384px; }
 .dp-nm small { font-family: 'Barlow', sans-serif; font-weight: 400; font-size: 11px; color: var(--text-muted); margin-left: 4px; }
 .dp-ps { font-size: 11px; font-weight: 700; color: var(--text-muted); width: 34px; flex-shrink: 0; }
 .dp-pr { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 16px; width: 28px; text-align: right; flex-shrink: 0; }
+.draft-menu-wrap { position: relative; display: inline-block; }
+.draft-menu { display: none; position: absolute; top: calc(100% + 4px); left: 0; z-index: 60; min-width: 230px; background: var(--surface2); border: 1px solid var(--border2); border-radius: 8px; padding: 4px; box-shadow: 0 8px 24px rgba(0,0,0,.5); }
+.draft-menu.open { display: block; }
+.draft-menu button, .draft-menu a { display: block; width: 100%; text-align: left; background: none; border: none; color: var(--text); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 15px; padding: 7px 10px; border-radius: 6px; cursor: pointer; text-decoration: none; }
+.draft-menu button:hover, .draft-menu a:hover { background: var(--border); }
+.draft-menu small { display: block; font-family: 'Barlow', sans-serif; font-weight: 400; font-size: 11px; color: var(--text-muted); }
+.dp-round { font-size: 10px; font-weight: 800; letter-spacing: 1px; color: var(--text-muted); text-transform: uppercase; margin: 8px 0 2px; }
+.dp-note { font-size: 12px; color: var(--text-muted); background: rgba(245,197,66,.08); border: 1px solid rgba(245,197,66,.3); border-radius: 6px; padding: 8px 10px; margin: 10px 0; }
+.dp-imp-ta { width: 100%; min-height: 120px; box-sizing: border-box; background: var(--surface2); color: var(--text); border: 1px solid var(--border2); border-radius: 6px; padding: 8px; font-family: monospace; font-size: 11px; resize: vertical; }
+.dp-sum { font-size: 12px; color: var(--text); line-height: 1.5; }
+.dp-sum b { color: #f5c542; }
+.dp-list { font-size: 11px; color: var(--text-muted); max-height: 90px; overflow-y: auto; margin: 2px 0 6px; line-height: 1.4; }
+.dp-haul { display: flex; align-items: center; gap: 8px; padding: 6px 8px; margin: 0 -8px; border-radius: 6px; }
+.dp-haul.go { cursor: pointer; }
+.dp-haul.go:hover { background: var(--border); }
+.dp-haul-no { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 14px; color: var(--text); min-width: 62px; }
+.dp-haul-st { font-size: 11px; width: 78px; text-align: right; flex-shrink: 0; color: var(--text-muted); }
+.dp-haul-st.on { color: #22c55e; font-weight: 700; }
+.dp-trade { font-size: 10px; color: var(--text-muted); margin: -2px 0 4px 70px; }
+.cs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 4px; }
+.cs-cell { background: rgba(255,255,255,.04); border-radius: 6px; padding: 5px 6px; text-align: center; }
+.cs-cell b { display: block; font-family: 'Barlow Condensed', sans-serif; font-size: 16px; color: var(--text); }
+.cs-cell span { font-size: 10px; color: var(--text-muted); }
+.sb-sub-r { font-size: 9px; font-weight: 800; color: #f5c542; border: 1px solid rgba(245,197,66,.45); border-radius: 3px; padding: 0 3px; margin-left: 4px; letter-spacing: .5px; }
+.sb-btn:disabled { opacity: .45; cursor: not-allowed; }
 .sb-kv { display: flex; justify-content: space-between; gap: 10px; padding: 4px 0; font-size: 12px; border-top: 1px solid rgba(255,255,255,0.05); }
 .sb-kv:first-of-type { border-top: none; }
 .sb-kv span:first-child { color: var(--text-muted); }
@@ -800,7 +825,14 @@ body.sb-open .field-outer { padding-right: 384px; }
       <!-- rebuilt per-team by updateDefPersonnelButtons(), same
            base/nickel key logic the old setUnit('defense', ...) used -->
     </div>
-    <button class="ctrl-btn draft-btn" id="draftBtn" onclick="toggleDraftPanel()" title="Mock-draft a rookie into this team's lineup (projected rating)">Draft</button>
+    <span class="draft-menu-wrap">
+      <button class="ctrl-btn draft-btn" id="draftBtn" onclick="toggleDraftMenu(event)" title="Mock-draft rookies into this team's lineup (projected ratings)">Draft &#9662;</button>
+      <div class="draft-menu" id="draftMenu">
+        <button onclick="openDraftPanel('pick')">Pick players<small>Choose a pick, then a prospect</small></button>
+        <a href="https://mockdrafthero.com" target="_blank" rel="noopener" onclick="closeDraftMenu()">Mock Draft Hero &#8599;<small>Outside site, opens in a new tab</small></a>
+        <button onclick="openDraftPanel('import')">Import mock<small>Paste a Mock Draft Hero export</small></button>
+      </div>
+    </span>
     <button class="ctrl-btn reset-btn" id="resetStartersBtn" onclick="resetStarters()" style="display:none">Reset to starters</button>
   </div>
 
@@ -1011,6 +1043,10 @@ let allPlayers = null; // flat array of every player, mapped from players_master
 let teamData = null;   // { base_defense, players: [...] } for the currently selected team
 // Track current starters (overrides from depth chart default)
 let currentStarters = {}; // { formationPos: playerObject }
+let autoPlaced = {};      // { formationPos: rookie } from an imported mock (see ensureAutoPlacement)
+let importRookies = [];   // the imported mock's rookies for the selected team (starting or bench)
+let autoKey = null;       // team|off|def the current autoPlaced was computed for
+let importState = null;   // the loaded mock import (see the draft block), or null
 let activeSubDropdown = null; // currently open dropdown pos key (sidebar OFF)
 let currentOnFieldIds = new Set(); // player_id of players currently on the field
 
@@ -1470,6 +1506,7 @@ async function loadAllPlayers() {
 
 async function loadTeam(abbr) {
   if (!allPlayers) await loadAllPlayers();
+  if (importState) { await loadDraftData(); buildImportModel(); }
   const players = allPlayers.filter(p => p.team === abbr);
   teamData = { base_defense: players[0]?.base_defense || '', players };
   updateHeader();
@@ -1486,7 +1523,7 @@ function syncURL() {
   });
   const sbPlayer = sidebarPos ? getStarter(sidebarPos) : null;
   if (sidebarOn && sbPlayer && !sbPlayer.isRookie) params.set('player', sbPlayer.id);
-  const rk = Object.entries(currentStarters).filter(([, r]) => r.isRookie).map(([slot, r]) => `${r.pick}:${r.prospect_id}:${slot}`);
+  const rk = Object.entries(currentStarters).filter(([, r]) => r.isRookie && !r.fromImport).map(([slot, r]) => `${r.pick}:${r.prospect_id}:${slot}`);
   if (rk.length) params.set('draft', rk.join(','));
   history.replaceState(null, '', '?' + params.toString());
 }
@@ -1501,10 +1538,17 @@ function syncFieldHeight() {
 
 window.addEventListener('resize', syncFieldHeight);
 
+// Lineup layers, top wins: manual subs (currentStarters) > import auto-placement (autoPlaced) > natural depth chart.
 function getStarter(formationPos) {
   if (!teamData) return null;
-  // Check if user has subbed someone in
   if (currentStarters[formationPos]) return currentStarters[formationPos];
+  const a = autoPlaced[formationPos];
+  if (a && !Object.values(currentStarters).some(m => m.id === a.id)) return a; // a rookie the user moved by hand is not also auto-placed
+  return naturalStarter(formationPos);
+}
+
+function naturalStarter(formationPos) {
+  if (!teamData) return null;
   // TE2 (12-personnel second tight end) isn't a real standard_slot value —
   // it's the depth-2 player within the TE group. Handle it explicitly so
   // it gets the same sub-candidate pool (standard_pos 'TE') as TE1.
@@ -1594,7 +1638,8 @@ function getSubCandidates(formationPos) {
   // Injured-list players ARE eligible sub options (see the on-field INJ
   // badge in buildPlayerNode) -- INJURED_SLOTS is kept in case that's
   // revisited, but nothing currently filters on it here.
-  const candidates = teamData.players.filter(p => targetPositions.includes(p.standard_pos));
+  const candidates = teamData.players.filter(p => targetPositions.includes(p.standard_pos))
+    .concat(importRookies.filter(r => targetPositions.includes(r.standard_pos))); // imported rookies are bench options too
   const nl = (a, b) => (a == null) - (b == null);
   candidates.sort(subSort === 'depth'
     ? (a, b) => nl(a.depth, b.depth) || (a.depth - b.depth) || (b.madden || 0) - (a.madden || 0)
@@ -1609,11 +1654,13 @@ function getSubCandidates(formationPos) {
   });
 }
 
+const findPlayerById = id => teamData.players.find(p => p.id === id) || importRookies.find(r => r.id === id) || null;
+
 function selectSub(formationPos, playerId, event) {
   if (event) event.stopPropagation();
   compareId = null;
   // Find the player object
-  const p = teamData.players.find(p => p.id === playerId);
+  const p = findPlayerById(playerId);
   if (!p) return;
   setStarterAt(formationPos, p);
 }
@@ -1670,6 +1717,7 @@ function resetStarters() {
   currentStarters = {};
   compareId = null;
   draftSel = { pick: null, prospect: null }; // rookies are manual starters too: Reset clears them
+  autoKey = null;                            // back to the auto-placed import lineup (if any)
   renderFormation();
   syncURL();
 }
@@ -1822,8 +1870,8 @@ function renderSidebar(resetScroll) {
   const subsHtml = subs.length ? subs.map(c => `
       <div class="sb-sub" onclick="openCompare('${c.id}', event)">
         <div class="sb-sub-madden" style="color:${maddenColor(c.madden)}">${c.madden || '—'}</div>
-        <div class="sb-sub-name">${c.name}</div>
-        <div class="sb-sub-pos">${c.standard_pos}${c.depth ? ' · D' + c.depth : ''}${c.injured ? ' · <span style="color:#ef4444">INJ</span>' : ''}</div>
+        <div class="sb-sub-name">${c.name}${c.isRookie ? '<span class="sb-sub-r" title="Mock-draft rookie: projected rating">R · PROJ</span>' : ''}</div>
+        <div class="sb-sub-pos">${c.standard_pos}${c.isRookie ? ' · R' + c.round + ' #' + c.pick : ''}${c.depth ? ' · D' + c.depth : ''}${c.injured ? ' · <span style="color:#ef4444">INJ</span>' : ''}</div>
       </div>`).join('') : '<div class="sb-empty">No other players available at this position.</div>';
 
   el.innerHTML = `
@@ -1875,11 +1923,11 @@ function swapFromCompare(event) {
 // Starter vs. candidate. Only stats both positions carry are compared; each player's
 // percentile stays within his own standard_pos.
 function renderCompare(el, a) {
-  const b = teamData.players.find(x => x.id === compareId);
+  const b = findPlayerById(compareId);
   if (!b) { compareId = null; renderSidebar(); return; }
   const cfgA = SIDEBAR_CARD[a.standard_pos], cfgB = SIDEBAR_CARD[b.standard_pos];
   const keysB = cfgB ? cfgB.list : [];
-  const keys = cfgA && !a.isRookie ? cfgA.list.filter(k => keysB.includes(k) && (a[k] != null || b[k] != null)) : [];
+  const keys = cfgA && !a.isRookie && !b.isRookie ? cfgA.list.filter(k => keysB.includes(k) && (a[k] != null || b[k] != null)) : [];
   const last = pl => { const w = pl.name.split(' '); return w.length > 1 ? w.slice(1).join(' ') : w[0]; };
 
   const line = (pl, key) => {
@@ -1910,7 +1958,7 @@ function renderCompare(el, a) {
       <button class="sb-btn" onclick="closeCompare(event)">Back</button>
       <button class="sb-btn primary" onclick="swapFromCompare(event)">Swap in</button>
     </div>
-    ${a.isRookie ? `<div class="sb-section"><div class="sb-caption" style="margin-top:0">A rookie has no stats yet: only the ratings are compared (his is a projection from draft position).</div></div>` : compareTableHtml(a, b, last)}
+    ${a.isRookie || b.isRookie ? `<div class="sb-section"><div class="sb-caption" style="margin-top:0">A rookie has no NFL stats yet: only the ratings are compared (his is a projection from draft position).</div></div>` : compareTableHtml(a, b, last)}
     ${rows ? `<div class="sb-section"><div class="sb-section-title">Advanced Stats · percentile vs. own position</div>${rows}
       ${a.standard_pos !== b.standard_pos ? `<div class="sb-caption">Different positions: only shared stats are compared, each ranked within his own position.</div>` : ''}</div>` : ''}
     `;
@@ -1935,8 +1983,8 @@ function buildSubDropdown(formationPos, currentPlayer) {
            onclick="selectSub('${formationPos}', '${p.id}', event)">
         <div class="sub-option-madden" style="color:${mc}">${p.madden || '—'}</div>
         <div class="sub-option-info">
-          <div class="sub-option-name">${displayName}</div>
-          <div class="sub-option-meta">${p.standard_slot || ''} · ${p.cap_number || '—'}</div>
+          <div class="sub-option-name">${displayName}${p.isRookie ? '<span class="sb-sub-r" title="Mock-draft rookie: projected rating">R · PROJ</span>' : ''}</div>
+          <div class="sub-option-meta">${p.isRookie ? 'R' + p.round + ' #' + p.pick + ' · projected' : (p.standard_slot || '') + ' · ' + (p.cap_number || '—')}</div>
         </div>
       </div>
     `;
@@ -2271,6 +2319,7 @@ function renderFormation() {
   const offCoordMap = FORMATION_COORDS.offense[currentOffPersonnel] || FORMATION_COORDS.offense['11'];
   const defCoordMap = FORMATION_COORDS.defense[currentDefPersonnel] || {};
 
+  ensureAutoPlacement();
   currentOnFieldIds = new Set();
   const slots = [
     ...buildFormationSlots(offCoordMap, currentOffPersonnel),
@@ -2379,6 +2428,7 @@ async function selectTeam(abbr) {
 }
 
 document.addEventListener('click', e => {
+  if (!e.target.closest('.draft-menu-wrap')) closeDraftMenu();
   if (!e.target.closest('.team-selector-wrap')) {
     document.getElementById('teamsDropdown').classList.remove('open');
   }
@@ -2407,7 +2457,7 @@ document.addEventListener('keydown', e => {
 // TUNABLE CONSTANTS:
 const DRAFT_PULL = 0.30;     // how far the board rank moves the projection off the draft-slot curve (0 = ignore the board, 1 = fully trust it)
 const BAND_Z = 1.28;         // z of the ~80% band, and the clamp on the board pull (in units of the position's residual SD)
-const DRAFT_MAX_ROUND = 3;   // the panel offers the team's picks in rounds 1..DRAFT_MAX_ROUND
+const DRAFT_MAX_ROUND = 7;   // the panel offers the team's picks in rounds 1..DRAFT_MAX_ROUND
 const FAIR_BAND = 5;         // |pick - board rank| within this many picks reads as "fair value", beyond it reach / steal
 const DRAFT_LIST_CAP = 150;  // rows rendered in the prospect list (use filter/search for the rest)
 const DRAFT_POSITIONS = ['QB', 'RB', 'WR', 'TE', 'OL', 'EDGE', 'DI', 'LB', 'CB', 'S'];
@@ -2430,7 +2480,9 @@ function loadDraftData() {
           .map(n => fetch('data/' + n + '.json').then(r => { if (!r.ok) throw new Error(n + ' ' + r.status); return r.json(); })));
         const byId = {};
         prospects.forEach(p => { byId[p.prospect_id] = p; });
-        draftData = { curve, prospects, byId, order, meta };
+        // rookie_scale.json is optional: without it the contract line is simply omitted
+        const scale = await fetch('data/rookie_scale.json').then(r => r.ok ? r.json() : null).catch(() => null);
+        draftData = { curve, prospects, byId, order, meta, scale };
       } catch (e) { console.error('Draft data unavailable:', e); draftData = null; }
       return draftData;
     })();
@@ -2459,14 +2511,14 @@ function makeRookie(row, pr) {
   };
 }
 
-const rookieEntries = () => Object.entries(currentStarters).filter(([, r]) => r.isRookie).map(([slot, r]) => ({ slot, r }));
+const rookieEntries = () => Object.entries(currentStarters).filter(([, r]) => r.isRookie && !r.fromImport).map(([slot, r]) => ({ slot, r }));
 const teamDraftPicks = () => draftData ? draftData.order.filter(o => o.team === currentTeam && o.round <= DRAFT_MAX_ROUND) : [];
 
 // Same pool rules as subs: FS/SS take any S, NB takes CB or S, every other slot takes its occupant's standard_pos.
-function slotPositions(pos) {
+function slotPositions(pos, occupant) {
   if (pos === 'FS' || pos === 'SS') return ['S'];
   if (pos === 'NB') return ['CB', 'S'];
-  const p = getStarter(pos);
+  const p = occupant || getStarter(pos);
   return p && p.standard_pos ? [p.standard_pos] : [];
 }
 function eligibleSlots(pr) {
@@ -2526,10 +2578,16 @@ function updateDraftBtn() {
   if (b) b.classList.toggle('active', draftOpen);
 }
 
-function toggleDraftPanel() {
-  const wasOpen = draftOpen;
+let draftMode = 'pick'; // 'pick' (manual) | 'import'
+function closeDraftMenu() { const m = document.getElementById('draftMenu'); if (m) m.classList.remove('open'); }
+function toggleDraftMenu(event) {
+  if (event) event.stopPropagation();
+  document.getElementById('draftMenu').classList.toggle('open');
+}
+function openDraftPanel(mode) {
+  closeDraftMenu();
   closeSidebar(); // frees the shared right-hand column (and resets the panel state)
-  if (wasOpen) return;
+  draftMode = mode;
   draftOpen = true;
   updateDraftBtn();
   const el = document.getElementById('playerSidebar');
@@ -2537,7 +2595,7 @@ function toggleDraftPanel() {
   el.classList.add('open');
   document.body.classList.add('sb-open');
   syncFieldHeight();
-  loadDraftData().then(() => { if (draftOpen) renderDraftPanel(); });
+  loadDraftData().then(() => { if (draftOpen) { buildImportModel(); renderDraftPanel(); } });
 }
 
 function selectDraftPick(pick) {
@@ -2585,55 +2643,65 @@ function renderDraftList() {
   if (el) el.innerHTML = draftListHtml();
 }
 
+function pickPanelHtml() {
+  const team = TEAMS[currentTeam];
+  if (importState) {
+    return `<div class="dp-head"><div class="dp-title">Mock draft · ${esc(team.name)}</div></div>
+      <div class="sb-section"><div class="dp-note">A mock import is loaded, so picking by hand is off. Clear the import to pick players yourself.</div>
+        <button class="sb-btn" style="width:100%" onclick="clearImport(event)">Clear import</button>
+        <button class="sb-btn" style="width:100%;margin-top:8px" onclick="openDraftPanel('import')">View imported mock</button></div>`;
+  }
+  const picks = teamDraftPicks();
+  const taken = new Map(rookieEntries().map(({ slot, r }) => [r.pick, { slot, r }]));
+  const pr = draftSel.prospect ? draftData.byId[draftSel.prospect] : null;
+  let banner = '';
+  if (pr) {
+    const n = eligibleSlots(pr).length;
+    banner = `<div class="dp-banner"><span style="flex:1">${n
+      ? `Placing <b>${esc(pr.name)}</b> (${pr.standard_pos}) at #${draftSel.pick}: click a highlighted slot.`
+      : `No ${pr.standard_pos} slot in this personnel for <b>${esc(pr.name)}</b>; change the offense/defense package.`}</span>
+      <button class="sb-btn" onclick="selectDraftProspect('${pr.prospect_id}')">Cancel</button></div>`;
+  }
+  let lastRound = 0;
+  const pickRows = picks.length ? picks.map(o => {
+    const t = taken.get(o.pick);
+    const hdr = o.round !== lastRound ? `<div class="dp-round">Round ${o.round}</div>` : '';
+    lastRound = o.round;
+    const from = o.original_team !== o.team ? `<span class="dp-pick-from">from ${esc((TEAMS[o.original_team] || {}).name || o.original_team)}</span>` : '';
+    if (t) return hdr + `<div class="dp-pick used"><span class="dp-pick-no">R${o.round} #${o.pick}</span>
+      <span class="dp-pick-use">${esc(t.r.name)} · ${t.slot} · ${t.r.madden}</span>
+      <button class="dp-x" title="Remove this rookie" onclick="removeRookie('${t.slot}', event)">&times;</button></div>`;
+    return hdr + `<div class="dp-pick${draftSel.pick === o.pick ? ' sel' : ''}" onclick="selectDraftPick(${o.pick})">
+      <span class="dp-pick-no">R${o.round} #${o.pick}</span>${from}</div>`;
+  }).join('') : `<div class="sb-empty">${esc(team.name)} hold no picks in rounds 1–${DRAFT_MAX_ROUND}.</div>`;
+  const board = draftSel.pick ? `<div class="sb-section">
+      <div class="sb-section-title sb-sort"><span>Board · pick #${draftSel.pick}</span>
+        <span class="sort-toggle"><button class="${draftSort === 'consensus' ? 'active' : ''}" onclick="setDraftSort('consensus')">Consensus</button><button class="${draftSort === 'pfn' ? 'active' : ''}" onclick="setDraftSort('pfn')">PFN</button></span></div>
+      <div class="dp-ctrls">
+        <select onchange="draftPosFilter=this.value; renderDraftList()"><option value="">All positions</option>${DRAFT_POSITIONS.map(p => `<option value="${p}"${draftPosFilter === p ? ' selected' : ''}>${p}</option>`).join('')}</select>
+        <input type="search" placeholder="Search name or school" value="${esc(draftSearch)}" oninput="draftSearch=this.value; renderDraftList()">
+      </div>
+      <div id="dpList">${draftListHtml()}</div></div>` : '';
+  const asOf = draftData.meta && draftData.meta.board_last_changed;
+  return `
+    <div class="dp-head"><div class="dp-title">Mock draft · ${esc(team.name)}</div>
+      <div class="sb-meta">Pick a selection, choose a prospect, then click a highlighted slot.</div></div>
+    ${banner}
+    <div class="sb-section"><div class="sb-section-title sb-sort"><span>Picks · rounds 1–${DRAFT_MAX_ROUND}</span>
+      ${taken.size ? `<button class="sb-btn" style="flex:0 0 auto;padding:2px 10px;font-size:12px" onclick="clearDraft(event)">Clear draft</button>` : ''}</div>${pickRows}</div>
+    ${board}
+    <div class="sb-section" style="border-bottom:none"><div class="sb-caption" style="margin-top:0">Board as of ${esc(asOf || 'unknown')} - PFN, MockDraftHero.</div>
+      <div class="sb-caption">Ratings are projections from where a player is drafted, not real Madden ratings.</div></div>`;
+}
+
 function renderDraftPanel(keepScroll) {
   const el = document.getElementById('playerSidebar');
   const st = keepScroll ? el.scrollTop : 0;
   draftOpen = true;
   updateDraftBtn();
-  if (!draftData) {
-    el.innerHTML = '<button class="sb-close" onclick="closeSidebar()" aria-label="Close">&times;</button><div class="sb-section sb-empty">Draft data is unavailable right now.</div>';
-  } else {
-    const team = TEAMS[currentTeam];
-    const picks = teamDraftPicks();
-    const taken = new Map(rookieEntries().map(({ slot, r }) => [r.pick, { slot, r }]));
-    const pr = draftSel.prospect ? draftData.byId[draftSel.prospect] : null;
-    let banner = '';
-    if (pr) {
-      const n = eligibleSlots(pr).length;
-      banner = `<div class="dp-banner"><span style="flex:1">${n
-        ? `Placing <b>${esc(pr.name)}</b> (${pr.standard_pos}) at #${draftSel.pick}: click a highlighted slot.`
-        : `No ${pr.standard_pos} slot in this personnel for <b>${esc(pr.name)}</b>; change the offense/defense package.`}</span>
-        <button class="sb-btn" onclick="selectDraftProspect('${pr.prospect_id}')">Cancel</button></div>`;
-    }
-    const pickRows = picks.length ? picks.map(o => {
-      const t = taken.get(o.pick);
-      const from = o.original_team !== o.team ? `<span class="dp-pick-from">from ${esc((TEAMS[o.original_team] || {}).name || o.original_team)}</span>` : '';
-      if (t) return `<div class="dp-pick used"><span class="dp-pick-no">R${o.round} #${o.pick}</span>
-        <span class="dp-pick-use">${esc(t.r.name)} · ${t.slot} · ${t.r.madden}</span>
-        <button class="dp-x" title="Remove this rookie" onclick="removeRookie('${t.slot}', event)">&times;</button></div>`;
-      return `<div class="dp-pick${draftSel.pick === o.pick ? ' sel' : ''}" onclick="selectDraftPick(${o.pick})">
-        <span class="dp-pick-no">R${o.round} #${o.pick}</span>${from}</div>`;
-    }).join('') : `<div class="sb-empty">${esc(team.name)} hold no picks in rounds 1–${DRAFT_MAX_ROUND}.</div>`;
-    const board = draftSel.pick ? `<div class="sb-section">
-        <div class="sb-section-title sb-sort"><span>Board · pick #${draftSel.pick}</span>
-          <span class="sort-toggle"><button class="${draftSort === 'consensus' ? 'active' : ''}" onclick="setDraftSort('consensus')">Consensus</button><button class="${draftSort === 'pfn' ? 'active' : ''}" onclick="setDraftSort('pfn')">PFN</button></span></div>
-        <div class="dp-ctrls">
-          <select onchange="draftPosFilter=this.value; renderDraftList()"><option value="">All positions</option>${DRAFT_POSITIONS.map(p => `<option value="${p}"${draftPosFilter === p ? ' selected' : ''}>${p}</option>`).join('')}</select>
-          <input type="search" placeholder="Search name or school" value="${esc(draftSearch)}" oninput="draftSearch=this.value; renderDraftList()">
-        </div>
-        <div id="dpList">${draftListHtml()}</div></div>` : '';
-    const asOf = draftData.meta && draftData.meta.board_last_changed;
-    el.innerHTML = `
-      <button class="sb-close" onclick="closeSidebar()" aria-label="Close">&times;</button>
-      <div class="dp-head"><div class="dp-title">Mock draft · ${esc(team.name)}</div>
-        <div class="sb-meta">Pick a selection, choose a prospect, then click a highlighted slot.</div></div>
-      ${banner}
-      <div class="sb-section"><div class="sb-section-title sb-sort"><span>Picks · rounds 1–${DRAFT_MAX_ROUND}</span>
-        ${taken.size ? `<button class="sb-btn" style="flex:0 0 auto;padding:2px 10px;font-size:12px" onclick="clearDraft(event)">Clear draft</button>` : ''}</div>${pickRows}</div>
-      ${board}
-      <div class="sb-section" style="border-bottom:none"><div class="sb-caption" style="margin-top:0">Board as of ${esc(asOf || 'unknown')} - PFN, MockDraftHero.</div>
-        <div class="sb-caption">Ratings are projections from where a player is drafted, not real Madden ratings.</div></div>`;
-  }
+  const close = '<button class="sb-close" onclick="closeSidebar()" aria-label="Close">&times;</button>';
+  if (!draftData) el.innerHTML = close + '<div class="sb-section sb-empty">Draft data is unavailable right now.</div>';
+  else el.innerHTML = close + (draftMode === 'import' ? importPanelHtml() : pickPanelHtml());
   el.classList.add('open');
   document.body.classList.add('sb-open');
   el.scrollTop = st;
@@ -2664,10 +2732,21 @@ function renderRookieSidebar(el, p, resetScroll) {
   const subsHtml = subs.length ? subs.map(c => `
       <div class="sb-sub" onclick="openCompare('${c.id}', event)">
         <div class="sb-sub-madden" style="color:${maddenColor(c.madden)}">${c.madden || '—'}</div>
-        <div class="sb-sub-name">${c.name}</div>
-        <div class="sb-sub-pos">${c.standard_pos}${c.depth ? ' · D' + c.depth : ''}${c.injured ? ' · <span style="color:#ef4444">INJ</span>' : ''}</div>
+        <div class="sb-sub-name">${c.name}${c.isRookie ? '<span class="sb-sub-r" title="Mock-draft rookie: projected rating">R · PROJ</span>' : ''}</div>
+        <div class="sb-sub-pos">${c.standard_pos}${c.isRookie ? ' · R' + c.round + ' #' + c.pick : ''}${c.depth ? ' · D' + c.depth : ''}${c.injured ? ' · <span style="color:#ef4444">INJ</span>' : ''}</div>
       </div>`).join('') : '<div class="sb-empty">No other players available at this position.</div>';
   const meta2 = [pr.school, m.height, m.weight != null ? m.weight + ' lbs' : null, pr.eligibility].filter(Boolean).join(' · ');
+  const money = v => '$' + (v / 1e6).toFixed(1) + 'M';
+  const sc = draftData && draftData.scale && draftData.scale.picks ? draftData.scale.picks[String(p.pick)] : null;
+  const contractHtml = sc ? `<div class="sb-section"><div class="sb-section-title">Rookie contract</div>
+      <div class="sb-kv"><span>Projected contract (est.)</span><span>${sc.years} yrs / ${money(sc.total_value)} (${money(sc.apy)}/yr), ${money(sc.signing_bonus)} signing bonus</span></div>
+      ${sc.fifth_year_option ? '<div class="sb-kv"><span>Option</span><span>5th-year option</span></div>' : ''}
+      <div class="sb-caption">Slotted by pick #${p.pick}. ${esc(draftData.scale.source)}, as of ${esc(draftData.scale.as_of)}. Real contracts are set after the draft.</div></div>` : '';
+  const cs = pr.college_stats;
+  const csHtml = cs && cs.stats && cs.stats.length ? `<div class="sb-section"><div class="sb-section-title">College stats · ${esc(cs.season)}${cs.school ? ' · ' + esc(cs.school) : ''}</div>
+      <div class="cs-grid">${(cs.gp != null ? [['GP', cs.gp]] : []).concat(cs.stats).map(([k, v]) => `<div class="cs-cell"><b>${esc(v)}</b><span>${esc(k)}</span></div>`).join('')}</div>
+      ${cs.career && cs.career.length ? `<div class="sb-caption">Career: ${cs.career.map(([k, v]) => esc(v) + ' ' + esc(k)).join(' · ')}</div>` : ''}</div>` : '';
+  const tradeHtml = p.trade && p.trade.length ? `<div class="sb-caption">Trade (as listed in the mock): ${p.trade.map(esc).join(' | ')}</div>` : '';
   el.innerHTML = `
     <button class="sb-close" onclick="closeSidebar()" aria-label="Close">&times;</button>
     <div class="sb-head">
@@ -2676,6 +2755,7 @@ function renderRookieSidebar(el, p, resetScroll) {
         <div class="sb-meta">${p.standard_pos}${sidebarPos !== p.standard_pos ? ' · ' + sidebarPos : ''} · ${esc(team.name)}</div>
         <div class="sb-meta">${esc(meta2)}</div>
         <div class="sb-contract">${esc(pickLabel)}</div>
+        ${p.fromImport && !p.matched ? '<div class="sb-meta" style="color:#f5c542">Not on the prospect board: rated from the pick alone.</div>' : ''}
       </div>
       <div class="sb-madden"><div class="sb-madden-val" style="color:${mc}">${p.madden}</div><div class="sb-madden-label">Projected</div>
         <div class="sb-madden-label" style="letter-spacing:0">(${p.proj.lo}–${p.proj.hi})</div></div>
@@ -2684,12 +2764,13 @@ function renderRookieSidebar(el, p, resetScroll) {
       <div class="sb-kv"><span>Projected rating</span><span>${p.madden} (${p.proj.lo}–${p.proj.hi})</span></div>
       ${verdict}
       <div class="sb-caption">From where he is drafted (slot #${p.pick}), nudged ${Math.round(DRAFT_PULL * 100)}% toward his board rank. Not a real Madden rating.</div></div>
-    ${pfnRows ? `<div class="sb-section"><div class="sb-section-title">Board &amp; scouting</div>${pfnRows}</div>` : ''}
+    ${contractHtml}${csHtml}
+    ${pfnRows ? `<div class="sb-section"><div class="sb-section-title">Board &amp; scouting</div>${pfnRows}${tradeHtml}</div>` : (tradeHtml ? `<div class="sb-section">${tradeHtml}</div>` : '')}
     ${meas ? `<div class="sb-section"><div class="sb-section-title">Measurables</div>${meas}</div>` : ''}
     <div class="sb-section" style="border-bottom:none">
       <div class="sb-section-title sb-sort"><span>Substitutes</span><span class="sort-toggle">${sortToggleHtml()}</span></div>
       ${subsHtml}
-      <button class="sb-btn" style="width:100%;margin-top:10px" onclick="removeRookie('${sidebarPos}', event)">Remove rookie</button>
+      ${p.fromImport ? '<div class="sb-caption">Part of the imported mock: sub another player in, or Clear import in the Draft menu.</div>' : `<button class="sb-btn" style="width:100%;margin-top:10px" onclick="removeRookie('${sidebarPos}', event)">Remove rookie</button>`}
     </div>`;
   el.classList.add('open');
   document.body.classList.add('sb-open');
@@ -2699,9 +2780,229 @@ function renderRookieSidebar(el, p, resetScroll) {
   syncURL();
 }
 
+// ── MOCK DRAFT HERO TEXT IMPORT ──
+// Paste of MDH's "save text" export. Pick lines: "<pick>. <Team nickname> - <Player> (<POS>, <School>)". The team on a pick
+// line is already the owner at selection time, so the indented "TRADE:" lines are kept for display only.
+const MOCK_KEY = 'fieldview_nfl_mock';
+const MOCK_TEAMS = {
+  chargers: 'LAC', titans: 'TEN', dolphins: 'MIA', jets: 'NYJ', eagles: 'PHI', buccaneers: 'TB', cardinals: 'ARZ', falcons: 'ATL',
+  texans: 'HOU', saints: 'NO', commanders: 'WAS', cowboys: 'DAL', raiders: 'LV', browns: 'CLE', seahawks: 'SEA', panthers: 'CAR',
+  patriots: 'NE', giants: 'NYG', ravens: 'BAL', chiefs: 'KC', steelers: 'PIT', lions: 'DET', broncos: 'DEN', '49ers': 'SF',
+  bills: 'BUF', colts: 'IND', vikings: 'MIN', bengals: 'CIN', packers: 'GB', bears: 'CHI', rams: 'LAR', jaguars: 'JAX',
+};
+// MDH position -> standard_pos (OT / IOL steer auto-placement toward tackle / interior slots)
+const MOCK_POS = { QB: 'QB', RB: 'RB', WR: 'WR', TE: 'TE', OT: 'OL', IOL: 'OL', OL: 'OL', EDGE: 'EDGE', DL: 'DI', DI: 'DI', LB: 'LB', CB: 'CB', S: 'S' };
+const MOCK_OL_PREF = { OT: ['LT', 'RT'], IOL: ['LG', 'C', 'RG'] };
+const MOCK_MAX_PICK = 257;
+const SCHOOL_ALIAS_JS = { 'app state': 'appalachian state', 'california': 'cal', 'north carolina state': 'nc state', 'uconn': 'connecticut',
+  'massachusetts': 'umass', 'south florida': 'usf', 'florida atlantic': 'fau', 'miami fl': 'miami', 'miami (fl)': 'miami',
+  'southern california': 'usc', 'louisiana state': 'lsu', 'texas christian': 'tcu', 'brigham young': 'byu', 'central florida': 'ucf',
+  'southern methodist': 'smu', 'texas-san antonio': 'utsa' };
+// Same rules as name_utils.normalize_madden (accent fold, hyphen -> space, drop Jr/Sr/II/III/IV, letters only).
+const nName = n => String(n || '').normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/-/g, ' ')
+  .replace(/\b(jr|sr|ii|iii|iv)\b\.?/g, '').replace(/[^a-z ]/g, '').replace(/\s+/g, ' ').trim();
+const nSchool = s => { s = String(s || '').toLowerCase().trim(); s = SCHOOL_ALIAS_JS[s] || s; return s.replace(/[^a-z0-9]/g, ''); };
+const slugJs = s => String(s || '').toLowerCase().replace(/'/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+function parseMdhMock(text) {
+  const out = { ranking: null, picks: [], skipped: [], warnings: [] };
+  const seenPick = new Set(), seenPlayer = new Set();
+  let last = null;
+  String(text || '').split(/\r?\n/).forEach((raw, i) => {
+    const t = raw.trim();
+    if (!t) return;
+    if (/^TRADE:/i.test(t)) { if (last) last.trade.push(t.replace(/^TRADE:\s*/i, '')); return; }
+    if (/^Pre-Draft Rankings:/i.test(t)) { out.ranking = t.replace(/^Pre-Draft Rankings:\s*/i, ''); last = null; return; }
+    if (/^Draft Results from/i.test(t)) { last = null; return; }
+    last = null;
+    const skip = why => out.skipped.push({ line: i + 1, text: t, why });
+    const m = t.match(/^(\d{1,3})\.\s+(.+)$/);
+    if (!m) return skip('not a pick line');
+    const pick = Number(m[1]), rest = m[2];
+    const sep = rest.indexOf(' - ');                      // FIRST " - " only: names hold hyphens without spaces
+    if (sep < 0) return skip("no ' - ' between team and player");
+    const nick = rest.slice(0, sep).trim(), body = rest.slice(sep + 3).trim();
+    const b = body.match(/^(.+?)\s+\(([A-Za-z0-9]{1,6}),\s*(.+)\)$/);   // "(POS, School)" from the END; school may hold "(FL)"
+    if (!b) return skip('no "(POS, School)" at the end');
+    const name = b[1].trim(), posRaw = b[2].toUpperCase(), school = b[3].trim();
+    const key = nick.toLowerCase();
+    const team = MOCK_TEAMS[key] || MOCK_TEAMS[key.split(/\s+/).pop()];
+    if (!team) return skip(`unknown team "${nick}"`);
+    const pos = MOCK_POS[posRaw];
+    if (!pos) return skip(`unmapped position "${b[2]}"`);
+    if (pick < 1 || pick > MOCK_MAX_PICK) return skip(`pick ${pick} outside 1-${MOCK_MAX_PICK}`);
+    const pk = nName(name) + '|' + nSchool(school);
+    if (seenPick.has(pick)) { out.warnings.push(`Pick ${pick} appears more than once; kept the first (${name} ignored).`); return; }
+    if (seenPlayer.has(pk)) { out.warnings.push(`${name} is picked twice; kept the first (#${pick} ignored).`); return; }
+    seenPick.add(pick); seenPlayer.add(pk);
+    last = { pick, team, name, posRaw, pos, school, trade: [] };
+    out.picks.push(last);
+  });
+  return out;
+}
+
+function matchProspect(p, ix) {
+  const nm = nName(p.name), sc = nSchool(p.school);
+  const byNameSchool = ix.ns.get(nm + '|' + sc);
+  if (byNameSchool) return byNameSchool;
+  const byName = ix.n.get(nm) || [];
+  if (byName.length === 1) return byName[0];
+  const toks = nm.split(' '), last = toks[toks.length - 1], ini = toks[0][0];
+  const alt = (ix.s.get(sc) || []).filter(c => { const t = nName(c.name).split(' '); return t[t.length - 1] === last && t[0][0] === ini; });
+  return alt.length === 1 ? alt[0] : null;
+}
+
+function loadImportFromStorage() {
+  try {
+    const v = JSON.parse(localStorage.getItem(MOCK_KEY));
+    return v && Array.isArray(v.picks) && v.picks.length ? v : null;
+  } catch (e) { return null; }
+}
+function saveImport() {
+  try {
+    if (importState) localStorage.setItem(MOCK_KEY, JSON.stringify(importState)); else localStorage.removeItem(MOCK_KEY);
+  } catch (e) {}
+}
+
+let importModel = null; // { entries, matched, unmatched[] } built from importState + the board
+// Match every imported pick to the board and build the selected team's rookies (importRookies).
+function buildImportModel() {
+  importRookies = []; importModel = null;
+  if (!importState || !draftData) return;
+  const ix = { ns: new Map(), n: new Map(), s: new Map() };
+  draftData.prospects.forEach(p => {
+    const nm = nName(p.name), sc = nSchool(p.school);
+    ix.ns.set(nm + '|' + sc, p);
+    (ix.n.get(nm) || ix.n.set(nm, []).get(nm)).push(p);
+    (ix.s.get(sc) || ix.s.set(sc, []).get(sc)).push(p);
+  });
+  const entries = [], unmatched = [];
+  importState.picks.forEach(e => {
+    let pr = matchProspect(e, ix), matched = !!pr;
+    if (pr) pr = Object.assign({}, pr, { standard_pos: e.pos });   // he is drafted at the mock's position
+    else {
+      unmatched.push(`#${e.pick} ${e.name} (${e.posRaw}, ${e.school})`);
+      pr = { prospect_id: 'imp-' + slugJs(e.name) + '-' + slugJs(e.school), name: e.name, school: e.school, standard_pos: e.pos,
+        raw_pos: { mdh: e.posRaw }, consensus_rank: null, pfn_rank: null, pfn_grade: null, pfn_position_rank: null, pfn_comp: null,
+        measurables: {}, eligibility: null, cfb27_ovr: null, college_stats: null, synthetic: true };
+    }
+    entries.push({ e, pr, matched });
+  });
+  importModel = { entries, matched: entries.filter(x => x.matched).length, unmatched };
+  importRookies = entries.filter(x => x.e.team === currentTeam).map(({ e, pr, matched }) => {
+    const o = draftData.order.find(r => r.pick === e.pick) || {};
+    const row = { pick: e.pick, round: o.round || Math.min(7, Math.ceil(e.pick / 32)), original_team: o.original_team || e.team, team: e.team };
+    const r = makeRookie(row, pr);
+    r.fromImport = true; r.from = null; /* the mock's own TRADE text replaces the draft-order 'from' */ r.trade = e.trade; r.posRaw = e.posRaw; r.matched = matched;
+    return r;
+  }).sort((a, b) => a.pick - b.pick);
+}
+
+// Auto-placement (import only): rookies in DESCENDING projected rating; each takes the eligible slot whose natural occupant has the
+// lowest rating, if the rookie's projected point beats it, else he benches. OT prefers tackle slots, IOL interior slots, then any OL slot.
+function ensureAutoPlacement() {
+  const key = [currentTeam, currentOffPersonnel, currentDefPersonnel, importState ? importState.imported_at : ''].join('|');
+  if (key === autoKey) return;
+  autoKey = key; autoPlaced = {};
+  if (!importRookies.length || !teamData) return;
+  const offMap = FORMATION_COORDS.offense[currentOffPersonnel] || FORMATION_COORDS.offense['11'];
+  const defMap = FORMATION_COORDS.defense[currentDefPersonnel] || {};
+  const slots = [...Object.keys(offMap), ...(currentOffPersonnel === '12' ? ['TE2'] : []), ...Object.keys(defMap)];
+  const placed = {};
+  [...importRookies].sort((a, b) => b.proj.point - a.proj.point).forEach(r => {
+    const open = slots.filter(pos => {
+      if (placed[pos]) return false;
+      const occ = naturalStarter(pos);
+      return occ && slotPositions(pos, occ).includes(r.standard_pos);
+    });
+    const weakest = list => list.reduce((w, pos) => (!w || (naturalStarter(pos).madden || 0) < (naturalStarter(w).madden || 0)) ? pos : w, null);
+    const pref = MOCK_OL_PREF[r.posRaw];
+    const tries = pref ? [open.filter(pos => pref.includes(pos)), open] : [open];
+    for (const list of tries) {
+      const pos = weakest(list);
+      if (pos && r.proj.point > (naturalStarter(pos).madden || 0)) { placed[pos] = r; break; }
+    }
+  });
+  autoPlaced = placed;
+}
+
+let importText = '', importError = '';
+function importDraftInput(v) { importText = v; }
+
+function doImport() {
+  const ta = document.getElementById('dpImportTa');
+  if (ta) importText = ta.value;
+  const parsed = parseMdhMock(importText);
+  if (!parsed.picks.length) {
+    importError = 'No pick lines found. Paste the "save text" export from Mock Draft Hero (lines like "23. Patriots - KJ Bolden (S, Georgia)").';
+    renderDraftPanel(true); return;
+  }
+  if (rookieEntries().length && !confirm('Importing a mock clears the rookies you drafted by hand. Continue?')) return;
+  importError = '';
+  rookieEntries().forEach(({ slot }) => { delete currentStarters[slot]; });
+  compareId = null; draftSel = { pick: null, prospect: null };
+  importState = Object.assign({ version: 1, imported_at: new Date().toISOString(), raw: importText }, parsed);
+  saveImport();
+  importText = '';
+  buildImportModel();
+  autoKey = null;
+  renderFormation();   // re-places the selected team's rookies, then refreshes the panel
+  syncURL();
+}
+
+function clearImport(event) {
+  if (event) event.stopPropagation();
+  importState = null; importModel = null; importRookies = []; autoPlaced = {}; autoKey = null;
+  Object.keys(currentStarters).forEach(k => { if (currentStarters[k].fromImport) delete currentStarters[k]; });
+  saveImport();
+  compareId = null;
+  renderFormation();
+  syncURL();
+}
+
+function importPanelHtml() {
+  const team = TEAMS[currentTeam];
+  let sum = '';
+  if (importState) {
+    const picks = importState.picks.length, m = importModel;
+    const list = (arr, head) => arr.length ? `<div class="dp-sum"><b>${arr.length}</b> ${head}</div><div class="dp-list">${arr.map(x => esc(x)).join('<br>')}</div>` : '';
+    const skipped = importState.skipped.map(s => `line ${s.line}: ${s.text} (${s.why})`);
+    sum = `<div class="sb-section"><div class="sb-section-title sb-sort"><span>Imported mock</span>
+        <button class="sb-btn" style="flex:0 0 auto;padding:2px 10px;font-size:12px" onclick="clearImport(event)">Clear import</button></div>
+      <div class="dp-sum"><b>${picks}</b> picks parsed${m ? ` · <b>${m.matched}</b> matched to the board · <b>${m.unmatched.length}</b> unmatched` : ''} · <b>${importState.skipped.length}</b> skipped lines</div>
+      ${m ? list(m.unmatched, 'unmatched (rated from the pick alone)') : ''}${list(skipped, 'skipped lines')}${list(importState.warnings, 'warnings')}
+      <div class="sb-caption">${esc(importState.ranking || 'Mock Draft Hero')} · imported ${esc(String(importState.imported_at || '').slice(0, 10))}. Saved in this browser only.</div></div>`;
+  }
+  let haul = '';
+  if (importState) {
+    const onField = {};
+    document.querySelectorAll('#playersLayer .player-node').forEach(n => { const st = getStarter(n.dataset.pos); if (st) onField[st.id] = n.dataset.pos; });
+    const rows = importRookies.map(r => {
+      const slot = onField[r.id];
+      const tr = r.trade && r.trade.length ? `<div class="dp-trade">${r.trade.map(esc).join('<br>')}</div>` : '';
+      return `<div class="dp-haul${slot ? ' go' : ''}"${slot ? ` onclick="openSidebar('${slot}', event)"` : ''}>
+        <span class="dp-haul-no">R${r.round} #${r.pick}</span>
+        <span class="dp-nm">${esc(r.name)}<small>${esc(r.school)}</small></span>
+        <span class="dp-ps">${r.standard_pos}</span>
+        <span class="dp-pr" style="color:${maddenColor(r.madden)}" title="Projected rating">${r.madden}</span>
+        <span class="dp-haul-st${slot ? ' on' : ''}">${slot ? 'starting at ' + slot : 'bench'}</span></div>${tr}`;
+    }).join('') || `<div class="sb-empty">${esc(team.name)} have no picks in this mock.</div>`;
+    haul = `<div class="sb-section"><div class="sb-section-title"><span>${esc(team.name)} haul</span></div>${rows}
+      <div class="sb-caption">Auto-placed best projected rating first; a rookie starts only where he beats the current starter. Bench rookies are in the substitute lists.</div></div>`;
+  }
+  return `<div class="dp-head"><div class="dp-title">Import mock · ${esc(team.name)}</div>
+      <div class="sb-meta">Paste a Mock Draft Hero "save text" export. Rookies are auto-placed in every team's lineup.</div></div>
+    ${sum}${haul}
+    <div class="sb-section" style="border-bottom:none"><div class="sb-section-title"><span>${importState ? 'Replace with another mock' : 'Paste mock'}</span></div>
+      <textarea class="dp-imp-ta" id="dpImportTa" placeholder="Draft Results from Mock Draft Hero&#10;1. Chargers - Leonard Moore (CB, Notre Dame)&#10;..." oninput="importDraftInput(this.value)">${esc(importText)}</textarea>
+      ${importError ? `<div class="dp-note" style="margin:6px 0">${esc(importError)}</div>` : ''}
+      <button class="sb-btn primary" style="width:100%;margin-top:8px" onclick="doImport()">Import</button>
+      <div class="sb-caption">Parsed in your browser; nothing is uploaded. Ratings are projections, not real Madden ratings.</div></div>`;
+}
+
 // ?draft=<pick>:<prospect_id>:<slotKey>,...  Unknown picks/ids/slots are ignored.
 async function restoreDraftFromUrl(str) {
-  if (!str) return;
+  if (!str || importState) return; // a loaded mock import disables manual picks (and their URL)
   const data = await loadDraftData();
   if (!data || !teamData) return;
   const teamPicks = new Map(teamDraftPicks().map(o => [o.pick, o]));
@@ -2728,6 +3029,7 @@ const urlDraft = params.get('draft');
 
 currentTeam = (urlTeam && TEAMS[urlTeam]) ? urlTeam : (localStorage.getItem('fieldview_team') || 'BUF');
 
+importState = loadImportFromStorage();
 updateSbToggle();
 loadTeam(currentTeam).then(() => {
   syncFieldHeight();

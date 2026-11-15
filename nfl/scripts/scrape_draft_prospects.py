@@ -290,6 +290,38 @@ def attach_cfb(prospects, cards):
 
 
 # ------------------------------------------------------------------ main
+def parse_college_stats(text):
+    """MDH 'stats' string -> {season, school, gp, stats[[label, value]...], career[[label, value]...]} or None.
+    Format: '2025: Ohio State | 13 GP | 87 Rec | ...; 2026: ...; Career: 38 GP | ...' (latest season block wins)."""
+    if not text or not text.strip():
+        return None
+    def items(parts):
+        out = []
+        for part in parts:
+            bits = part.strip().split(' ', 1)
+            if len(bits) == 2 and bits[0]:
+                out.append([bits[1].strip(), bits[0]])
+        return out
+    seasons, career = [], None
+    for blk in text.split(';'):
+        blk = blk.strip()
+        if ':' not in blk:
+            continue
+        head, rest = blk.split(':', 1)
+        head = head.strip()
+        parts = [x for x in rest.split('|')]
+        if head.lower() == 'career':
+            career = items(parts)
+        elif head.isdigit():
+            seasons.append((head, parts[0].strip(), items(parts[1:])))
+    if not seasons:
+        return None
+    season, school, rows = seasons[-1]
+    gp = next((v for k, v in rows if k == 'GP'), None)
+    return {'season': season, 'school': school, 'gp': gp,
+            'stats': [r for r in rows if r[0] != 'GP'], 'career': career}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--simulate-fail', choices=['mdh', 'pfn', 'cfb'])
@@ -351,6 +383,7 @@ def main():
                 'ras': to_float(r.get('ras_score')),
             },
             'cfb27_ovr': None,
+            'college_stats': parse_college_stats(r.get('stats')),
         })
     log('  position mapping (raw -> standard_pos: count):')
     for raw, (sp, n) in sorted(pos_counts.items(), key=lambda kv: -kv[1][1]):
