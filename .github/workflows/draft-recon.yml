@@ -1,0 +1,25 @@
+name: Draft prospect source recon
+
+# Manual only. Research probe: hits each candidate draft-prospect source once
+# from a GitHub-hosted runner and logs status/latency/row counts. Commits nothing.
+on:
+  workflow_dispatch:
+
+jobs:
+  recon:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install requests
+      - name: Probe draft sources
+        env:
+          PYTHONIOENCODING: utf-8
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
+        run: python nfl/scripts/recon_draft_sources.py
