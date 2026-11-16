@@ -12,6 +12,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FieldView — NBA Player Table</title>
+<meta name="description" content="NBA TableView: sortable player table with 2K ratings, per-game stats, contracts, bio and advanced stats.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FieldView">
+<meta property="og:title" content="FieldView — NBA Player Table">
+<meta property="og:description" content="NBA TableView: sortable player table with 2K ratings, per-game stats, contracts, bio and advanced stats.">
+<meta property="og:url" content="https://jwalluww.github.io/fieldview/nba/player-table.html">
+<meta property="og:image" content="https://jwalluww.github.io/fieldview/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -718,6 +727,9 @@ body {
 </div>
 
 <script>
+// Escape text from data (names, teams, injury text) before it goes into innerHTML
+const escapeHtml = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
 // ══════════════════════════════════════════
 // TEAMS
 // ══════════════════════════════════════════
@@ -1122,10 +1134,10 @@ function renderMobileList() {
     const initials = p.name.split(' ').map(w => w[0]).join('').slice(0,2);
     return `
       <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
-        <div style="width:32px;height:32px;border-radius:50%;background:${team.colors[0]};display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:9px;color:#fff;flex-shrink:0">${p.abbr}</div>
+        <div style="width:32px;height:32px;border-radius:50%;background:${team.colors[0]};display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:9px;color:#fff;flex-shrink:0">${escapeHtml(p.abbr)}</div>
         <div style="flex:1;min-width:0">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</div>
-          <div style="font-size:11px;color:var(--text-muted);margin-top:1px"><span class="std-pos">${p.pos}</span>${p.status ? ' · <span class="tag tag-' + p.status + '">' + STATUS_LABEL[p.status] + '</span>' : ''}</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escapeHtml(p.name)}</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:1px"><span class="std-pos">${escapeHtml(p.pos)}</span>${p.status ? ' · <span class="tag tag-' + p.status + '">' + STATUS_LABEL[p.status] + '</span>' : ''}</div>
         </div>
         <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:${rc};flex-shrink:0">${p.rating || '—'}</div>
         <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:var(--gold);flex-shrink:0;text-align:right">${p.salary || '—'}</div>
@@ -1153,15 +1165,15 @@ function renderTable() {
 
     let row = '<tr>';
     if (cols.includes('team'))
-      row += '<td><div class="cell-team"><img class="team-logo-cell" src="' + teamLogoUrl(p.abbr) + '" alt="' + p.abbr + '" loading="lazy"><span>' + p.abbr + '</span></div></td>';
+      row += '<td><div class="cell-team"><img class="team-logo-cell" src="' + teamLogoUrl(p.abbr) + '" alt="' + escapeHtml(p.abbr) + '" loading="lazy"><span>' + escapeHtml(p.abbr) + '</span></div></td>';
     if (cols.includes('pos'))
-      row += '<td style="text-align:center"><span class="std-pos">' + (p.pos || '—') + '</span></td>';
+      row += '<td style="text-align:center"><span class="std-pos">' + escapeHtml(p.pos || '—') + '</span></td>';
     if (cols.includes('name'))
       row += '<td><div class="cell-player">' +
-        '<div class="player-initials" style="background:' + team.colors[0] + '">' + initials + '</div>' +
+        '<div class="player-initials" style="background:' + team.colors[0] + '">' + escapeHtml(initials) + '</div>' +
         '<div class="player-name-block">' +
-          '<div class="player-name">' + p.name + '</div>' +
-          '<div class="player-sub">' + (p.jersey != null ? '#' + p.jersey : '') + '</div>' +
+          '<div class="player-name">' + escapeHtml(p.name) + '</div>' +
+          '<div class="player-sub">' + (p.jersey != null ? '#' + escapeHtml(p.jersey) : '') + '</div>' +
         '</div>' +
       '</div></td>';
     if (cols.includes('status'))
@@ -1169,13 +1181,13 @@ function renderTable() {
     if (cols.includes('rating'))
       row += '<td class="cell-rating" style="color:' + rc + '">' + (p.rating || '—') + '</td>';
     if (cols.includes('salary'))
-      row += '<td class="cell-salary">' + (p.salary || '—') + '</td>';
+      row += '<td class="cell-salary">' + escapeHtml(p.salary || '—') + '</td>';
     if (cols.includes('years_remaining'))
       row += '<td style="text-align:center;color:var(--text-muted);font-family:\'Barlow Condensed\',sans-serif;font-weight:600">' + (p.years_remaining != null ? p.years_remaining : '—') + '</td>';
     if (cols.includes('height'))
-      row += '<td style="text-align:center;color:var(--text-muted);font-family:\'Barlow Condensed\',sans-serif;font-weight:600">' + (p.height || '—') + '</td>';
+      row += '<td style="text-align:center;color:var(--text-muted);font-family:\'Barlow Condensed\',sans-serif;font-weight:600">' + escapeHtml(p.height || '—') + '</td>';
     if (cols.includes('weight'))
-      row += '<td style="text-align:center;color:var(--text-muted);font-family:\'Barlow Condensed\',sans-serif;font-weight:600">' + (p.weight || '—') + '</td>';
+      row += '<td style="text-align:center;color:var(--text-muted);font-family:\'Barlow Condensed\',sans-serif;font-weight:600">' + escapeHtml(p.weight || '—') + '</td>';
     if (cols.includes('games_played'))
       row += '<td style="text-align:center;color:var(--text-muted);font-family:\'Barlow Condensed\',sans-serif;font-weight:600">' + (p.games_played != null ? p.games_played : '—') + '</td>';
     if (cols.includes('games_started'))
@@ -1232,5 +1244,6 @@ loadAll().then(() => {
 window.addEventListener('resize', updateStickyOffset);
 window.addEventListener('resize', renderMobileList);
 </script>
+<script src="../shared/site.js" data-credits="ESPN · Basketball-Reference · nba2kapi/2kratings · Spotrac · nbadepthcharts.com"></script>
 </body>
 </html>

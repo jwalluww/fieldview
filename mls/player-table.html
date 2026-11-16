@@ -11,7 +11,16 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FieldView — Player Table</title>
+<title>FieldView — MLS Player Table</title>
+<meta name="description" content="MLS TableView: sortable player table with EA FC ratings and expected-goals stats.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FieldView">
+<meta property="og:title" content="FieldView — MLS Player Table">
+<meta property="og:description" content="MLS TableView: sortable player table with EA FC ratings and expected-goals stats.">
+<meta property="og:url" content="https://jwalluww.github.io/fieldview/mls/player-table.html">
+<meta property="og:image" content="https://jwalluww.github.io/fieldview/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -559,6 +568,9 @@ body {
 </div>
 
 <script>
+// Escape text from data (names, teams, injury text) before it goes into innerHTML
+const escapeHtml = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
 // ══════════════════════════════════════════
 // TEAMS -- reused verbatim from pitch-view.html
 // ══════════════════════════════════════════
@@ -913,10 +925,10 @@ function renderMobileList() {
   list.innerHTML = filteredPlayers.map(p => {
     return `
       <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
-        <img class="team-logo-cell" src="${teamLogoUrl(p.abbr)}" alt="${p.abbr}" loading="lazy">
+        <img class="team-logo-cell" src="${teamLogoUrl(p.abbr)}" alt="${escapeHtml(p.abbr)}" loading="lazy">
         <div style="flex:1;min-width:0">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</div>
-          <div style="font-size:11px;color:var(--text-muted);margin-top:1px">${p.standardPos || POSITION_LABELS[p.position] || p.position || '—'}</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escapeHtml(p.name)}</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:1px">${escapeHtml(p.standardPos || POSITION_LABELS[p.position] || p.position || '—')}</div>
         </div>
       </div>
     `;
@@ -941,13 +953,13 @@ function renderTable() {
 
     let row = '<tr>';
     if (cols.includes('team'))
-      row += '<td><div class="cell-team"><img class="team-logo-cell" src="' + teamLogoUrl(p.abbr) + '" alt="' + p.abbr + '" loading="lazy"><span>' + p.abbr + '</span></div></td>';
+      row += '<td><div class="cell-team"><img class="team-logo-cell" src="' + teamLogoUrl(p.abbr) + '" alt="' + escapeHtml(p.abbr) + '" loading="lazy"><span>' + escapeHtml(p.abbr) + '</span></div></td>';
     if (cols.includes('position'))
-      row += '<td class="cell-pos">' + (p.standardPos || POSITION_LABELS[p.position] || p.position || '—') + '</td>';
+      row += '<td class="cell-pos">' + escapeHtml(p.standardPos || POSITION_LABELS[p.position] || p.position || '—') + '</td>';
     if (cols.includes('name'))
       row += '<td><div class="cell-player">' +
-        '<div class="player-initials">' + initials + '</div>' +
-        '<div class="player-name-block"><div class="player-name">' + p.name + '</div></div>' +
+        '<div class="player-initials">' + escapeHtml(initials) + '</div>' +
+        '<div class="player-name-block"><div class="player-name">' + escapeHtml(p.name) + '</div></div>' +
       '</div></td>';
     if (cols.includes('age'))
       row += '<td class="cell-stat">' + (p.age != null ? p.age : '—') + '</td>';
@@ -1014,5 +1026,6 @@ loadAll().then(() => {
 window.addEventListener('resize', updateStickyOffset);
 window.addEventListener('resize', renderMobileList);
 </script>
+<script src="../shared/site.js" data-credits="ESPN · American Soccer Analysis · EA Sports (EA FC)"></script>
 </body>
 </html>

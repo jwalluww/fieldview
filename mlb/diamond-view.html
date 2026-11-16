@@ -11,7 +11,16 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FieldView — DiamondView</title>
+<title>FieldView — MLB DiamondView</title>
+<meta name="description" content="MLB DiamondView: every team on the diamond with MLB The Show ratings, advanced stats, batting order, pitching staff and substitutions.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FieldView">
+<meta property="og:title" content="FieldView — MLB DiamondView">
+<meta property="og:description" content="MLB DiamondView: every team on the diamond with MLB The Show ratings, advanced stats, batting order, pitching staff and substitutions.">
+<meta property="og:url" content="https://jwalluww.github.io/fieldview/mlb/diamond-view.html">
+<meta property="og:image" content="https://jwalluww.github.io/fieldview/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -569,6 +578,9 @@ body.sb-open .right-col { display: none; }
 <div class="player-popup" id="playerPopup"></div>
 
 <script>
+// Escape text from data (names, teams, injury text) before it goes into innerHTML
+const escapeHtml = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
 // ══════════════════════════════════════════
 // TEAMS
 // ══════════════════════════════════════════
@@ -840,9 +852,9 @@ function renderField() {
       `;
     }
     return `
-      <div class="player-card" data-pos="${zone}" data-pid="${p.id}" style="left:${dz.x}%; top:${dz.y}%"${fill ? ` title="Playing out of position (natural: ${p.position})"` : ''}>
+      <div class="player-card" data-pos="${zone}" data-pid="${escapeHtml(p.id)}" style="left:${dz.x}%; top:${dz.y}%"${fill ? ` title="Playing out of position (natural: ${escapeHtml(p.position)})"` : ''}>
         <div class="player-dot" style="background:${ratingColor(p.rating)}">${p.rating != null ? p.rating : '—'}</div>
-        <div class="player-name">${p.name}</div>
+        <div class="player-name">${escapeHtml(p.name)}</div>
         <div class="player-rank${fill ? ' fillin' : ''}">${zone}</div>
       </div>
     `;
@@ -901,16 +913,16 @@ function renderBattingOrder() {
   list.innerHTML = batters.map((p, i) => {
     const rc = ratingColor(p.rating);
     return `
-      <div class="bench-row" data-pid="${p.id}">
+      <div class="bench-row" data-pid="${escapeHtml(p.id)}">
         <div class="bench-rank">${i + 1}</div>
         <div class="bench-dot" style="background:${rc}">${p.rating != null ? p.rating : '—'}</div>
         <div class="bench-name-block">
-          <div class="bench-name">${p.name}</div>
-          <div class="bench-meta">${p.position || ''}${p.playerType === 'two_way' ? ' <span class="tag tag-rotation">TWP</span>' : ''}</div>
+          <div class="bench-name">${escapeHtml(p.name)}</div>
+          <div class="bench-meta">${escapeHtml(p.position || '')}${p.playerType === 'two_way' ? ' <span class="tag tag-rotation">TWP</span>' : ''}</div>
         </div>
         <div class="bench-stat"><div class="bench-stat-val">${p.hr != null ? p.hr : '—'}</div><div class="bench-stat-label">hr</div></div>
         <div class="bench-stat"><div class="bench-stat-val">${p.rbi != null ? p.rbi : '—'}</div><div class="bench-stat-label">rbi</div></div>
-        <div class="bench-stat"><div class="bench-stat-val">${p.ops || '—'}</div><div class="bench-stat-label">ops</div></div>
+        <div class="bench-stat"><div class="bench-stat-val">${escapeHtml(p.ops || '—')}</div><div class="bench-stat-label">ops</div></div>
         <div class="bench-stat"><div class="bench-stat-val">${p.pa || '—'}</div><div class="bench-stat-label">pa</div></div>
       </div>
     `;
@@ -943,18 +955,18 @@ function renderPitchingStaff() {
 
   function pitcherRow(p) {
     const rc = ratingColor(p.rating);
-    const wl = (p.wins != null && p.losses != null) ? `${p.wins}-${p.losses}` : '—';
+    const wl = (p.wins != null && p.losses != null) ? `${escapeHtml(p.wins)}-${escapeHtml(p.losses)}` : '—';
     return `
-      <div class="bench-row" data-pid="${p.id}">
+      <div class="bench-row" data-pid="${escapeHtml(p.id)}">
         <div class="bench-dot" style="background:${rc}">${p.rating != null ? p.rating : '—'}</div>
         <div class="bench-name-block">
-          <div class="bench-name">${p.name}</div>
+          <div class="bench-name">${escapeHtml(p.name)}</div>
           <div class="bench-meta">${p.gamesStarted > 0 ? '<span class="tag tag-starter">SP</span>' : '<span class="tag tag-bench">RP</span>'}${p.playerType === 'two_way' ? ' <span class="tag tag-rotation">TWP</span>' : ''}</div>
         </div>
-        <div class="bench-stat"><div class="bench-stat-val">${p.whip || '—'}</div><div class="bench-stat-label">whip</div></div>
-        <div class="bench-stat"><div class="bench-stat-val">${wl}</div><div class="bench-stat-label">w-l</div></div>
+        <div class="bench-stat"><div class="bench-stat-val">${escapeHtml(p.whip || '—')}</div><div class="bench-stat-label">whip</div></div>
+        <div class="bench-stat"><div class="bench-stat-val">${escapeHtml(wl)}</div><div class="bench-stat-label">w-l</div></div>
         <div class="bench-stat"><div class="bench-stat-val">${p.so != null ? p.so : '—'}</div><div class="bench-stat-label">so</div></div>
-        <div class="bench-stat"><div class="bench-stat-val">${p.inningsPitched || '—'}</div><div class="bench-stat-label">ip</div></div>
+        <div class="bench-stat"><div class="bench-stat-val">${escapeHtml(p.inningsPitched || '—')}</div><div class="bench-stat-label">ip</div></div>
       </div>
     `;
   }
@@ -1043,9 +1055,9 @@ function fillSubsPopover(zone) {
   const isP = zone === 'P';
   popover.innerHTML = `<div class="subs-pop-label"><span>${subsLabel(zone)}</span><span class="sort-toggle" data-sort-toggle style="margin-left:0"></span></div>` +
     (subs.length ? subs.map(s => `
-      <div class="subs-row" data-pid="${s.id}">
+      <div class="subs-row" data-pid="${escapeHtml(s.id)}">
         <div class="subs-dot" style="background:${ratingColor(s.rating)}">${s.rating != null ? s.rating : '—'}</div>
-        <div class="subs-name">${s.name}</div>
+        <div class="subs-name">${escapeHtml(s.name)}</div>
         <div class="subs-mpg">${isP ? (s.inningsPitched || 0) + ' ip' : (s.pa || 0) + ' pa'}</div>
       </div>`).join('') : `<div class="subs-empty">No eligible bench players</div>`);
   renderSortToggles();
@@ -1100,20 +1112,20 @@ function substitutePlayer(pid, targetZone) {
 function battingStatGrid(p) {
   return `
     <div class="popup-stat-grid">
-      <div class="popup-stat"><div class="popup-stat-val">${p.avg || '—'}</div><div class="popup-stat-label">AVG</div></div>
+      <div class="popup-stat"><div class="popup-stat-val">${escapeHtml(p.avg || '—')}</div><div class="popup-stat-label">AVG</div></div>
       <div class="popup-stat"><div class="popup-stat-val">${p.hr != null ? p.hr : '—'}</div><div class="popup-stat-label">HR</div></div>
       <div class="popup-stat"><div class="popup-stat-val">${p.rbi != null ? p.rbi : '—'}</div><div class="popup-stat-label">RBI</div></div>
-      <div class="popup-stat"><div class="popup-stat-val">${p.ops || '—'}</div><div class="popup-stat-label">OPS</div></div>
+      <div class="popup-stat"><div class="popup-stat-val">${escapeHtml(p.ops || '—')}</div><div class="popup-stat-label">OPS</div></div>
     </div>
   `;
 }
 function pitchingStatGrid(p) {
-  const wl = (p.wins != null && p.losses != null) ? `${p.wins}-${p.losses}` : '—';
+  const wl = (p.wins != null && p.losses != null) ? `${escapeHtml(p.wins)}-${escapeHtml(p.losses)}` : '—';
   return `
     <div class="popup-stat-grid">
-      <div class="popup-stat"><div class="popup-stat-val">${p.era || '—'}</div><div class="popup-stat-label">ERA</div></div>
-      <div class="popup-stat"><div class="popup-stat-val">${p.whip || '—'}</div><div class="popup-stat-label">WHIP</div></div>
-      <div class="popup-stat"><div class="popup-stat-val">${wl}</div><div class="popup-stat-label">W-L</div></div>
+      <div class="popup-stat"><div class="popup-stat-val">${escapeHtml(p.era || '—')}</div><div class="popup-stat-label">ERA</div></div>
+      <div class="popup-stat"><div class="popup-stat-val">${escapeHtml(p.whip || '—')}</div><div class="popup-stat-label">WHIP</div></div>
+      <div class="popup-stat"><div class="popup-stat-val">${escapeHtml(wl)}</div><div class="popup-stat-label">W-L</div></div>
       <div class="popup-stat"><div class="popup-stat-val">${p.so != null ? p.so : '—'}</div><div class="popup-stat-label">SO</div></div>
     </div>
   `;
@@ -1149,15 +1161,15 @@ function popupHTML(p) {
 
   return `
     <div class="popup-header">
-      <div class="popup-jersey">${p.jersey != null ? '#' + p.jersey : ''}</div>
-      <div class="popup-name">${p.name}</div>
-      <div class="popup-pos">${p.position || ''}</div>
+      <div class="popup-jersey">${p.jersey != null ? '#' + escapeHtml(p.jersey) : ''}</div>
+      <div class="popup-name">${escapeHtml(p.name)}</div>
+      <div class="popup-pos">${escapeHtml(p.position || '')}</div>
     </div>
     ${statsSection}
     <div class="popup-divider"></div>
     <div class="popup-row"><span class="popup-row-label">Games</span><span class="popup-row-val">${games}</span></div>
-    ${bio ? `<div class="popup-row"><span class="popup-row-label">Bio</span><span class="popup-row-val">${bio}</span></div>` : ''}
-    ${bt ? `<div class="popup-row"><span class="popup-row-label">B/T</span><span class="popup-row-val">${bt}</span></div>` : ''}
+    ${bio ? `<div class="popup-row"><span class="popup-row-label">Bio</span><span class="popup-row-val">${escapeHtml(bio)}</span></div>` : ''}
+    ${bt ? `<div class="popup-row"><span class="popup-row-label">B/T</span><span class="popup-row-val">${escapeHtml(bt)}</span></div>` : ''}
   `;
 }
 
@@ -1165,8 +1177,8 @@ function popupHTML(p) {
 function lightPopupHTML(p) {
   return `
     <div class="popup-header">
-      <div class="popup-name">${p.name}</div>
-      <div class="popup-pos">${p.position || ''}</div>
+      <div class="popup-name">${escapeHtml(p.name)}</div>
+      <div class="popup-pos">${escapeHtml(p.position || '')}</div>
     </div>
     <div class="popup-row"><span class="popup-row-label">Overall</span><span class="popup-row-val" style="color:${ratingColor(p.rating)};font-weight:700">${p.rating != null ? p.rating : '—'}</span></div>
     ${p.injured ? '<div class="popup-row"><span class="popup-row-label">Status</span><span class="tag tag-injured" style="color:#ef4444">INJ</span></div>' : ''}
@@ -1491,20 +1503,20 @@ function renderSidebar(resetScroll) {
   const subs = subEligiblePlayers(sidebarZone);
   const isP = sidebarZone === 'P';
   const subsHtml = subs.length ? subs.map(c => `
-      <div class="sb-sub" onclick="openCompare('${c.id}', event)">
+      <div class="sb-sub" onclick="openCompare('${escapeHtml(c.id)}', event)">
         <div class="sb-sub-rating" style="color:${ratingColor(c.rating)}">${c.rating != null ? c.rating : '—'}</div>
-        <div class="sb-sub-name">${c.name}</div>
-        <div class="sb-sub-pos">${c.position || ''} · ${isP ? (c.inningsPitched || 0) + ' ip' : (c.pa || 0) + ' pa'}</div>
+        <div class="sb-sub-name">${escapeHtml(c.name)}</div>
+        <div class="sb-sub-pos">${escapeHtml(c.position || '')} · ${isP ? (c.inningsPitched || 0) + ' ip' : (c.pa || 0) + ' pa'}</div>
       </div>`).join('') : '<div class="sb-empty">No other players available at this position.</div>';
 
   el.innerHTML = `
     <button class="sb-close" onclick="closeSidebar()" aria-label="Close">&times;</button>
     <div class="sb-head">
       <div style="flex:1;min-width:0">
-        <div class="sb-name"><span>${p.jersey ? '#' + p.jersey + ' ' : ''}${p.name}</span>${p.injured ? '<span class="sb-pill inj">INJ</span>' : ''}</div>
-        <div class="sb-meta">${meta1}</div>
-        ${meta2 ? `<div class="sb-meta">${meta2}</div>` : ''}
-        ${isFillIn(sidebarZone) ? `<div class="sb-meta" style="color:var(--gold)">Playing out of position (natural: ${p.position})</div>` : ''}
+        <div class="sb-name"><span>${p.jersey ? '#' + escapeHtml(p.jersey) + ' ' : ''}${escapeHtml(p.name)}</span>${p.injured ? '<span class="sb-pill inj">INJ</span>' : ''}</div>
+        <div class="sb-meta">${escapeHtml(meta1)}</div>
+        ${meta2 ? `<div class="sb-meta">${escapeHtml(meta2)}</div>` : ''}
+        ${isFillIn(sidebarZone) ? `<div class="sb-meta" style="color:var(--gold)">Playing out of position (natural: ${escapeHtml(p.position)})</div>` : ''}
       </div>
       <div class="sb-rating"><div class="sb-rating-val" style="color:${ratingColor(p.rating)}">${p.rating != null ? p.rating : '—'}</div><div class="sb-rating-label">Overall</div></div>
     </div>
@@ -1559,14 +1571,14 @@ function renderCompare(el, a) {
     }).join('');
     if (!rows) return '';
     return `<div class="sb-section"><div class="sb-section-title">Season Stats${multi ? ' · ' + KIND_TITLE[kind] : ''}</div>
-      <div class="sb-tbl"><div></div><div class="sb-tbl-h">${lastName(a)}</div><div class="sb-tbl-h">${lastName(b)}</div>${rows}</div>
+      <div class="sb-tbl"><div></div><div class="sb-tbl-h">${escapeHtml(lastName(a))}</div><div class="sb-tbl-h">${escapeHtml(lastName(b))}</div>${rows}</div>
       <div class="sb-caption">${STATS_SEASON} season</div></div>`;
   };
 
   const line = (pl, kind, key) => {
     const m = ADV[kind][key], v = advVal(pl, kind, key);
     const { pct, color } = statPct(pl, kind, key);
-    return `<div class="sb-cmp-line"><span class="sb-cmp-tag">${lastName(pl)}</span>
+    return `<div class="sb-cmp-line"><span class="sb-cmp-tag">${escapeHtml(lastName(pl))}</span>
       <div class="sb-bar">${pct != null ? `<div class="sb-bar-fill" style="width:${pct}%;background:${color}"></div>` : ''}</div>
       <span class="sb-cmp-val">${v != null ? m.fmt(v) : '—'}</span>
       <span class="sb-cmp-pct" style="color:${color || 'inherit'}">${pct != null ? ordinal(pct) : (v != null && isLowSample(pl, kind) ? '<span class="sb-low" style="margin:0">low sample</span>' : '')}</span></div>`;
@@ -1579,8 +1591,8 @@ function renderCompare(el, a) {
 
   const head = (pl, tag) => `<div>
       <div class="sb-cmp-tagline">${tag}</div>
-      <div class="sb-cmp-name">${pl.jersey ? '#' + pl.jersey + ' ' : ''}${pl.name}</div>
-      <div class="sb-cmp-sub">${pl.position || ''}${pl.age ? ' · Age ' + pl.age : ''}</div>
+      <div class="sb-cmp-name">${pl.jersey ? '#' + escapeHtml(pl.jersey) + ' ' : ''}${escapeHtml(pl.name)}</div>
+      <div class="sb-cmp-sub">${escapeHtml(pl.position || '')}${pl.age ? ' · Age ' + pl.age : ''}</div>
       <div class="sb-cmp-rating" style="color:${ratingColor(pl.rating)}">${pl.rating != null ? pl.rating : '—'}</div>
     </div>`;
 
@@ -1649,7 +1661,7 @@ document.addEventListener('keydown', e => {
 // INIT
 // ══════════════════════════════════════════
 const urlParams = new URLSearchParams(window.location.search);
-if (urlParams.get('team') && TEAMS[urlParams.get('team')]) currentTeam = urlParams.get('team');
+if (urlParams.get('team') && Object.prototype.hasOwnProperty.call(TEAMS, urlParams.get('team'))) currentTeam = urlParams.get('team');
 const urlPlayer = urlParams.get('player');
 
 updateSbToggle();
@@ -1663,5 +1675,6 @@ loadTeam(currentTeam).then(() => {
   }
 });
 </script>
+<script src="../shared/site.js" data-credits="MLB Stats API · MLB The Show"></script>
 </body>
 </html>

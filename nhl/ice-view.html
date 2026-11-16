@@ -11,7 +11,16 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FieldView — IceView</title>
+<title>FieldView — NHL IceView</title>
+<meta name="description" content="NHL IceView: every team on the ice with ratings, advanced stats and substitutions.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FieldView">
+<meta property="og:title" content="FieldView — NHL IceView">
+<meta property="og:description" content="NHL IceView: every team on the ice with ratings, advanced stats and substitutions.">
+<meta property="og:url" content="https://jwalluww.github.io/fieldview/nhl/ice-view.html">
+<meta property="og:image" content="https://jwalluww.github.io/fieldview/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -538,6 +547,9 @@ body.sb-open .right-col { display: none; }
 <div class="player-popup" id="playerPopup"></div>
 
 <script>
+// Escape text from data (names, teams, injury text) before it goes into innerHTML
+const escapeHtml = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
 // ══════════════════════════════════════════
 // TEAMS
 // ══════════════════════════════════════════
@@ -794,10 +806,10 @@ function renderRink() {
       `;
     }
     return `
-      <div class="player-card" data-pos="${zone}" data-pid="${p.id}" style="left:${dz.x}%; top:${dz.y}%">
+      <div class="player-card" data-pos="${zone}" data-pid="${escapeHtml(p.id)}" style="left:${dz.x}%; top:${dz.y}%">
         <div class="player-dot" style="background:${ratingColor(p.rating)}">${p.rating != null ? p.rating : '—'}</div>
-        <div class="player-name">${p.name}</div>
-        <div class="player-rank">${ZONE_LABEL[zone]}${p.jersey != null ? ' · #' + p.jersey : ''}</div>
+        <div class="player-name">${escapeHtml(p.name)}</div>
+        <div class="player-rank">${escapeHtml(ZONE_LABEL[zone])}${p.jersey != null ? ' · #' + p.jersey : ''}</div>
       </div>
     `;
   }).join('');
@@ -886,12 +898,12 @@ function renderBenchList() {
         <div class="bench-stat"><div class="bench-stat-val">${formatToi(p.toiPerGame) || '—'}</div><div class="bench-stat-label">toi</div></div>
       `;
     return `
-      <div class="bench-row" data-pid="${p.id}">
+      <div class="bench-row" data-pid="${escapeHtml(p.id)}">
         <div class="bench-rank">${i + 1}</div>
         <div class="bench-dot" style="background:${dotColor}">${dotVal}</div>
         <div class="bench-name-block">
-          <div class="bench-name">${p.name}</div>
-          <div class="bench-meta">${p.positionCode || ''}</div>
+          <div class="bench-name">${escapeHtml(p.name)}</div>
+          <div class="bench-meta">${escapeHtml(p.positionCode || '')}</div>
         </div>
         ${stats}
       </div>
@@ -950,9 +962,9 @@ function fillSubsPopover(zone) {
   const isGoalie = zone === 'G';
   popover.innerHTML = `<div class="subs-pop-label"><span>${subsLabel(zone)}</span><span class="sort-toggle" data-sort-toggle style="margin-left:0"></span></div>` +
     (subs.length ? subs.map(s => `
-      <div class="subs-row" data-pid="${s.id}">
+      <div class="subs-row" data-pid="${escapeHtml(s.id)}">
         <div class="subs-dot" style="background:${ratingColor(s.rating)}">${s.rating != null ? s.rating : '—'}</div>
-        <div class="subs-name">${s.name}</div>
+        <div class="subs-name">${escapeHtml(s.name)}</div>
         <div class="subs-mpg">${isGoalie ? (s.gamesStarted || 0) + ' gs' : (formatToi(s.toiPerGame) || '—')}</div>
       </div>`).join('') : `<div class="subs-empty">No eligible bench players</div>`);
   renderSortToggles();
@@ -1037,23 +1049,23 @@ function popupHTML(p) {
 
   return `
     <div class="popup-header">
-      <div class="popup-jersey">${p.jersey != null ? '#' + p.jersey : ''}</div>
-      <div class="popup-name">${p.name}</div>
-      <div class="popup-pos">${p.positionCode || ''}</div>
+      <div class="popup-jersey">${p.jersey != null ? '#' + escapeHtml(p.jersey) : ''}</div>
+      <div class="popup-name">${escapeHtml(p.name)}</div>
+      <div class="popup-pos">${escapeHtml(p.positionCode || '')}</div>
     </div>
     ${statsSection}
     <div class="popup-divider"></div>
     <div class="popup-row"><span class="popup-row-label">Games</span><span class="popup-row-val">${games}</span></div>
-    ${bio ? `<div class="popup-row"><span class="popup-row-label">Bio</span><span class="popup-row-val">${bio}</span></div>` : ''}
-    ${shootsCatches ? `<div class="popup-row"><span class="popup-row-label">Hand</span><span class="popup-row-val">${shootsCatches}</span></div>` : ''}
+    ${bio ? `<div class="popup-row"><span class="popup-row-label">Bio</span><span class="popup-row-val">${escapeHtml(bio)}</span></div>` : ''}
+    ${shootsCatches ? `<div class="popup-row"><span class="popup-row-label">Hand</span><span class="popup-row-val">${escapeHtml(shootsCatches)}</span></div>` : ''}
   `;
 }
 
 function lightPopupHTML(p) {
   return `
     <div class="popup-header">
-      <div class="popup-name">${p.name}</div>
-      <div class="popup-pos">${p.positionCode || ''}</div>
+      <div class="popup-name">${escapeHtml(p.name)}</div>
+      <div class="popup-pos">${escapeHtml(p.positionCode || '')}</div>
     </div>
     <div class="popup-row"><span class="popup-row-label">Overall</span><span class="popup-row-val" style="color:${ratingColor(p.rating)};font-weight:700">${p.rating != null ? p.rating : '—'}</span></div>
   `;
@@ -1355,10 +1367,10 @@ function subsSectionHtml(p) {
   const isG = sidebarZone === 'G';
   const cands = subEligiblePlayers(sidebarZone);
   const rows = cands.length ? cands.map(c => `
-      <div class="sb-sub" onclick="openCompare('${c.id}', event)">
+      <div class="sb-sub" onclick="openCompare('${escapeHtml(c.id)}', event)">
         <div class="sb-sub-rating" style="color:${ratingColor(c.rating)}">${c.rating != null ? c.rating : '—'}</div>
-        <div class="sb-sub-name">${c.name}</div>
-        <div class="sb-sub-pos">${c.positionCode || ''} · ${isG ? (c.gamesStarted || 0) + ' gs' : (formatToi(c.toiPerGame) || '—')}</div>
+        <div class="sb-sub-name">${escapeHtml(c.name)}</div>
+        <div class="sb-sub-pos">${escapeHtml(c.positionCode || '')} · ${isG ? (c.gamesStarted || 0) + ' gs' : (formatToi(c.toiPerGame) || '—')}</div>
       </div>`).join('') : '<div class="sb-empty">No other players available at this position.</div>';
   return `<div class="sb-section" style="border-bottom:none">
       <div class="sb-section-title sb-sort"><span>Substitutes</span><span class="sort-toggle" data-sort-toggle></span></div>${rows}</div>`;
@@ -1371,16 +1383,16 @@ function renderSidebar(resetScroll) {
   if (compareId) { renderCompare(el, p); return; }
 
   const age = ageOf(p.birthDate);
-  const meta1 = `<img class="sb-teamlogo" src="${teamLogoUrl(p.team)}" alt="">${p.team} · ${p.positionCode || ''}${sidebarZone !== p.positionCode && ZONE_LABEL[sidebarZone] !== p.positionCode ? ' · playing ' + ZONE_LABEL[sidebarZone] : ''}`;
+  const meta1 = `<img class="sb-teamlogo" src="${teamLogoUrl(p.team)}" alt="">${escapeHtml(p.team)} · ${escapeHtml(p.positionCode || '')}${sidebarZone !== p.positionCode && ZONE_LABEL[sidebarZone] !== p.positionCode ? ' · playing ' + escapeHtml(ZONE_LABEL[sidebarZone]) : ''}`;
   const meta2 = [age != null ? 'Age ' + age : null, formatHeight(p.heightIn), p.weight != null ? p.weight + ' lbs' : null,
                  p.shoots ? (p.positionCode === 'G' ? 'Catches ' : 'Shoots ') + p.shoots : null].filter(Boolean).join(' · ');
   el.innerHTML = `
     <button class="sb-close" onclick="closeSidebar()" aria-label="Close">&times;</button>
     <div class="sb-head">
       <div style="flex:1;min-width:0">
-        <div class="sb-name"><span>${p.jersey != null ? '#' + p.jersey + ' ' : ''}${p.name}</span></div>
+        <div class="sb-name"><span>${p.jersey != null ? '#' + escapeHtml(p.jersey) + ' ' : ''}${escapeHtml(p.name)}</span></div>
         <div class="sb-meta">${meta1}</div>
-        ${meta2 ? `<div class="sb-meta">${meta2}</div>` : ''}
+        ${meta2 ? `<div class="sb-meta">${escapeHtml(meta2)}</div>` : ''}
       </div>
       <div class="sb-rating"><div class="sb-rating-val" style="color:${ratingColor(p.rating)}">${p.rating != null ? p.rating : '—'}</div><div class="sb-rating-label">Overall</div></div>
     </div>
@@ -1426,7 +1438,7 @@ function renderCompare(el, a) {
     return `<div class="sb-tbl-l">${d.label}</div><div class="sb-tbl-v${best === 'a' ? ' best' : ''}">${ta}</div><div class="sb-tbl-v${best === 'b' ? ' best' : ''}">${tb}</div>`;
   }).join('');
   const tableHtml = rows ? `<div class="sb-section"><div class="sb-section-title">Season Stats</div>
-      <div class="sb-tbl"><div></div><div class="sb-tbl-h">${lastName(a)}</div><div class="sb-tbl-h">${lastName(b)}</div>${rows}</div>
+      <div class="sb-tbl"><div></div><div class="sb-tbl-h">${escapeHtml(lastName(a))}</div><div class="sb-tbl-h">${escapeHtml(lastName(b))}</div>${rows}</div>
       <div class="sb-caption">${seasonLabel(a.curSeason)} season</div></div>` : '';
 
   const va = advView(a), vb = advView(b);
@@ -1434,7 +1446,7 @@ function renderCompare(el, a) {
     const m = advMeta(pl)[key], x = m.val(v.b, pl);
     const { pct, color } = statPct(pl, v, key);
     const tag = lastName(pl) + (v.which === 'prev' ? ' · ' + seasonLabel(v.season).replace(/^20/, '') : '');
-    return `<div class="sb-cmp-line"><span class="sb-cmp-tag" title="${pl.name} · ${seasonLabel(v.season)}">${tag}</span>
+    return `<div class="sb-cmp-line"><span class="sb-cmp-tag" title="${escapeHtml(pl.name)} · ${seasonLabel(v.season)}">${tag}</span>
       <div class="sb-bar">${pct != null ? `<div class="sb-bar-fill" style="width:${pct}%;background:${color}"></div>` : ''}</div>
       <span class="sb-cmp-val">${m.fmt(x)}</span>
       <span class="sb-cmp-pct" style="color:${color || 'inherit'}">${pct != null ? ordinal(pct) : '<span class="sb-low" style="margin:0">low sample</span>'}</span></div>`;
@@ -1445,13 +1457,13 @@ function renderCompare(el, a) {
     const advRows = shared.map(key =>
       `<div class="sb-cmp-row"><div class="sb-cmp-top"><span class="sb-stat-label">${advMeta(a)[key].label}</span></div>${line(a, va, key)}${line(b, vb, key)}</div>`).join('');
     if (advRows) advHtml = `<div class="sb-section"><div class="sb-section-title">Advanced Stats · percentile vs. own group</div>${advRows}
-      <div class="sb-caption">${lastName(a)}: ${seasonLabel(va.season)}${va.qualified ? '' : ' (low sample)'} · ${lastName(b)}: ${seasonLabel(vb.season)}${vb.qualified ? '' : ' (low sample)'}</div></div>`;
+      <div class="sb-caption">${escapeHtml(lastName(a))}: ${seasonLabel(va.season)}${va.qualified ? '' : ' (low sample)'} · ${escapeHtml(lastName(b))}: ${seasonLabel(vb.season)}${vb.qualified ? '' : ' (low sample)'}</div></div>`;
   }
 
   const head = (pl, tag) => `<div>
       <div class="sb-cmp-tagline">${tag}</div>
-      <div class="sb-cmp-name">${pl.jersey != null ? '#' + pl.jersey + ' ' : ''}${pl.name}</div>
-      <div class="sb-cmp-sub">${pl.positionCode || ''}${pl.heightIn ? ' · ' + formatHeight(pl.heightIn) : ''}</div>
+      <div class="sb-cmp-name">${pl.jersey != null ? '#' + escapeHtml(pl.jersey) + ' ' : ''}${escapeHtml(pl.name)}</div>
+      <div class="sb-cmp-sub">${escapeHtml(pl.positionCode || '')}${pl.heightIn ? ' · ' + formatHeight(pl.heightIn) : ''}</div>
       <div class="sb-cmp-rating" style="color:${ratingColor(pl.rating)}">${pl.rating != null ? pl.rating : '—'}</div>
     </div>`;
 
@@ -1518,7 +1530,7 @@ document.addEventListener('keydown', e => {
 // INIT
 // ══════════════════════════════════════════
 const urlParams = new URLSearchParams(window.location.search);
-if (urlParams.get('team') && TEAMS[urlParams.get('team')]) currentTeam = urlParams.get('team');
+if (urlParams.get('team') && Object.prototype.hasOwnProperty.call(TEAMS, urlParams.get('team'))) currentTeam = urlParams.get('team');
 const urlPlayer = urlParams.get('player');
 
 updateSbToggle();
@@ -1531,5 +1543,6 @@ loadTeam(currentTeam).then(() => {
   }
 });
 </script>
+<script src="../shared/site.js" data-credits="NHL API · nhlratings.net"></script>
 </body>
 </html>

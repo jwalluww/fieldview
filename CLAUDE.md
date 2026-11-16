@@ -324,3 +324,10 @@ Mock-draft a 2027 prospect into the selected team's FormationView. Rookies are *
 **Future State:** ReView (replays, highlights, box scores, tweets, podcasts) after every sport's FieldView/TableView are dialed in; mobile responsiveness pass (desktop-only for now); a real custom domain if AdSense is ever pursued; real per-game soccer formations (needs a match-day lineup provider and a tighter freshness model — parked, not the same as the shipped formation switcher).
 
 **Dropped:** NBA Big/Wing/Guard bucket UI (superseded by positionless subs); OOTP as an MLB ratings source (legal exposure); historical rating trends and player comparison (outside scope); the `www.fieldview.com` CNAME (domain owned by someone else).
+
+## Pre-launch hardening (2026-11-15)
+
+- **Site chrome:** `shared/site.js` (included at the bottom of every page with `data-credits="..."`) injects the trademark/credits footer and the <768px dismissible notice (`localStorage` `fieldview_smallscreen_dismissed`); the footer sits below the viewport-height app, so field views now scroll ~120px to reach it. `favicon.svg`, `og-image.png` (1200x630 of the home page), `404.html` (absolute `/fieldview/` paths), `privacy.html`, per-page description/Open Graph tags.
+- **XSS rule:** every page has one `escapeHtml()` (verbatim copy; NFL's `esc` is an alias). Anything from data/URL/localStorage/pasted text that reaches `innerHTML` goes through it; the NFL mock import validates localStorage on load; `?team=` uses `hasOwnProperty`. Verified by poisoning the master JSON with an `<img onerror>` payload (Playwright).
+- **Workflows:** top-level `permissions: contents: read` on all three; each `scrape.yml` job keeps `contents: write`. No `pull_request_target`, no fork-PR triggers.
+- gitleaks full-history scan: only hits are a third-party public Google Maps key + page token inside a scraped page (commit 596c42b, file no longer in the tree).

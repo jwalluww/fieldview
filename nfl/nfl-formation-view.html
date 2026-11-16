@@ -11,7 +11,16 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FieldView — Formation</title>
+<title>FieldView — NFL Formation View</title>
+<meta name="description" content="NFL FormationView: offense and defense on the field in their real positions with Madden ratings, advanced stats, substitutions and a 2027 mock-draft rookie installer.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FieldView">
+<meta property="og:title" content="FieldView — NFL Formation View">
+<meta property="og:description" content="NFL FormationView: offense and defense on the field in their real positions with Madden ratings, advanced stats, substitutions and a 2027 mock-draft rookie installer.">
+<meta property="og:url" content="https://jwalluww.github.io/fieldview/nfl/nfl-formation-view.html">
+<meta property="og:image" content="https://jwalluww.github.io/fieldview/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -897,6 +906,9 @@ body.sb-open .field-outer { padding-right: 384px; }
 <aside class="sidebar" id="playerSidebar" aria-label="Player details"></aside>
 
 <script>
+// Escape text from data (names, teams, injury text) before it goes into innerHTML
+const escapeHtml = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
 const TEAMS = {
   ARZ: { name: "Arizona Cardinals",    colors: ["#97233f","#ffb612"] },
   ATL: { name: "Atlanta Falcons",      colors: ["#a71930","#a5acaf"] },
@@ -1831,7 +1843,7 @@ function compareTableHtml(a, b, last) {
   const cap = ca && cb && a.stats_season === b.stats_season ? ca
     : [ca && last(a) + ' ' + ca, cb && last(b) + ' ' + cb].filter(Boolean).join(' · ');
   return `<div class="sb-section"><div class="sb-section-title">Season Stats</div>
-    <div class="sb-tbl"><div></div><div class="sb-tbl-h">${last(a)}</div><div class="sb-tbl-h">${last(b)}</div>${cells}</div>
+    <div class="sb-tbl"><div></div><div class="sb-tbl-h">${escapeHtml(last(a))}</div><div class="sb-tbl-h">${escapeHtml(last(b))}</div>${cells}</div>
     ${cap ? `<div class="sb-caption">${cap}</div>` : ''}</div>`;
 }
 
@@ -1868,24 +1880,24 @@ function renderSidebar(resetScroll) {
   }
   const subs = getSubCandidates(sidebarPos);
   const subsHtml = subs.length ? subs.map(c => `
-      <div class="sb-sub" onclick="openCompare('${c.id}', event)">
+      <div class="sb-sub" onclick="openCompare('${escapeHtml(c.id)}', event)">
         <div class="sb-sub-madden" style="color:${maddenColor(c.madden)}">${c.madden || '—'}</div>
-        <div class="sb-sub-name">${c.name}${c.isRookie ? '<span class="sb-sub-r" title="Mock-draft rookie: projected rating">R · PROJ</span>' : ''}</div>
-        <div class="sb-sub-pos">${c.standard_pos}${c.isRookie ? ' · R' + c.round + ' #' + c.pick : ''}${c.depth ? ' · D' + c.depth : ''}${c.injured ? ' · <span style="color:#ef4444">INJ</span>' : ''}</div>
+        <div class="sb-sub-name">${escapeHtml(c.name)}${c.isRookie ? '<span class="sb-sub-r" title="Mock-draft rookie: projected rating">R · PROJ</span>' : ''}</div>
+        <div class="sb-sub-pos">${escapeHtml(c.standard_pos)}${c.isRookie ? ' · R' + c.round + ' #' + c.pick : ''}${c.depth ? ' · D' + c.depth : ''}${c.injured ? ' · <span style="color:#ef4444">INJ</span>' : ''}</div>
       </div>`).join('') : '<div class="sb-empty">No other players available at this position.</div>';
 
   el.innerHTML = `
     <button class="sb-close" onclick="closeSidebar()" aria-label="Close">&times;</button>
     <div class="sb-head">
       <div style="flex:1;min-width:0">
-        <div class="sb-name"><span>${p.jersey ? '#' + p.jersey + ' ' : ''}${p.name}</span>
+        <div class="sb-name"><span>${p.jersey ? '#' + escapeHtml(p.jersey) + ' ' : ''}${escapeHtml(p.name)}</span>
           ${p.injured ? `<span class="sb-pill inj">INJ</span>` : ''}
           ${p.years_pro === 0 ? `<span class="sb-pill rookie">R</span>` : ''}
         </div>
-        <div class="sb-meta">${meta1}</div>
-        ${meta2 ? `<div class="sb-meta">${meta2}</div>` : ''}
-        ${p.injured && injText ? `<div class="sb-meta" style="color:#ef4444">${injText}</div>` : ''}
-        ${contract ? `<div class="sb-contract">${contract}</div>` : ''}
+        <div class="sb-meta">${escapeHtml(meta1)}</div>
+        ${meta2 ? `<div class="sb-meta">${escapeHtml(meta2)}</div>` : ''}
+        ${p.injured && injText ? `<div class="sb-meta" style="color:#ef4444">${escapeHtml(injText)}</div>` : ''}
+        ${contract ? `<div class="sb-contract">${escapeHtml(contract)}</div>` : ''}
       </div>
       <div class="sb-madden"><div class="sb-madden-val" style="color:${mc}">${p.madden || '—'}</div><div class="sb-madden-label">Madden</div></div>
     </div>
@@ -1933,7 +1945,7 @@ function renderCompare(el, a) {
   const line = (pl, key) => {
     const m = ADV_STATS[key];
     const { pct, color } = statPct(pl, key);
-    return `<div class="sb-cmp-line"><span class="sb-cmp-tag">${last(pl)}</span>
+    return `<div class="sb-cmp-line"><span class="sb-cmp-tag">${escapeHtml(last(pl))}</span>
       <div class="sb-bar">${pct != null ? `<div class="sb-bar-fill" style="width:${pct}%;background:${color}"></div>` : ''}</div>
       <span class="sb-cmp-val">${pl[key] != null ? m.fmt(pl[key]) : '—'}</span>
       <span class="sb-cmp-pct" style="color:${color || 'inherit'}">${pct != null ? ordinal(pct) : (pl[key] != null && isLowSample(pl, key) ? '<span class="sb-low" style="margin:0">low sample</span>' : '')}</span></div>`;
@@ -1945,8 +1957,8 @@ function renderCompare(el, a) {
 
   const head = (pl, tag) => `<div>
       <div class="sb-cmp-tagline">${tag}</div>
-      <div class="sb-cmp-name">${pl.jersey ? '#' + pl.jersey + ' ' : ''}${pl.name}</div>
-      <div class="sb-cmp-sub">${pl.standard_pos}${pl.isRookie ? ' · R' + pl.round + ' #' + pl.pick + ' · projected' : (pl.age ? ' · Age ' + pl.age : '')}</div>
+      <div class="sb-cmp-name">${pl.jersey ? '#' + escapeHtml(pl.jersey) + ' ' : ''}${escapeHtml(pl.name)}</div>
+      <div class="sb-cmp-sub">${escapeHtml(pl.standard_pos)}${pl.isRookie ? ' · R' + pl.round + ' #' + pl.pick + ' · projected' : (pl.age ? ' · Age ' + pl.age : '')}</div>
       <div class="sb-cmp-madden" style="color:${maddenColor(pl.madden)}">${pl.madden || '—'}</div>
       ${pl.isRookie ? `<div class="sb-cmp-sub">range ${pl.proj.lo}–${pl.proj.hi}</div>` : ''}
     </div>`;
@@ -1980,10 +1992,10 @@ function buildSubDropdown(formationPos, currentPlayer) {
     const displayName = parts.length > 1 ? parts.slice(1).join(' ') : parts[0];
     return `
       <div class="sub-option"
-           onclick="selectSub('${formationPos}', '${p.id}', event)">
+           onclick="selectSub('${formationPos}', '${escapeHtml(p.id)}', event)">
         <div class="sub-option-madden" style="color:${mc}">${p.madden || '—'}</div>
         <div class="sub-option-info">
-          <div class="sub-option-name">${displayName}${p.isRookie ? '<span class="sb-sub-r" title="Mock-draft rookie: projected rating">R · PROJ</span>' : ''}</div>
+          <div class="sub-option-name">${escapeHtml(displayName)}${p.isRookie ? '<span class="sb-sub-r" title="Mock-draft rookie: projected rating">R · PROJ</span>' : ''}</div>
           <div class="sub-option-meta">${p.isRookie ? 'R' + p.round + ' #' + p.pick + ' · projected' : (p.standard_slot || '') + ' · ' + (p.cap_number || '—')}</div>
         </div>
       </div>
@@ -2076,14 +2088,14 @@ function buildFullHoverCard(p, pos) {
   return `
     <div class="hover-card full">
       <div class="card-header">
-        <div class="card-avatar" style="background:${team.colors[0]};border-color:${team.colors[1]}">${initials}</div>
+        <div class="card-avatar" style="background:${team.colors[0]};border-color:${team.colors[1]}">${escapeHtml(initials)}</div>
         <div class="card-nameblock" style="flex:1">
           <div class="card-name" style="display:flex;align-items:center;gap:6px">
-            <span>${p.jersey ? '#'+p.jersey+' ' : ''}${p.name}</span>
-            ${p.injured ? `<span title="${[p.injury_detail, p.injury_status].filter(Boolean).join(' — ')}" style="background:rgba(239,68,68,.2);color:#ef4444;border:1px solid rgba(239,68,68,.4);border-radius:3px;font-size:9px;font-weight:800;padding:1px 5px;letter-spacing:1px">INJ</span>` : ''}
+            <span>${p.jersey ? '#'+escapeHtml(p.jersey)+' ' : ''}${escapeHtml(p.name)}</span>
+            ${p.injured ? `<span title="${escapeHtml([p.injury_detail, p.injury_status].filter(Boolean).join(' — '))}" style="background:rgba(239,68,68,.2);color:#ef4444;border:1px solid rgba(239,68,68,.4);border-radius:3px;font-size:9px;font-weight:800;padding:1px 5px;letter-spacing:1px">INJ</span>` : ''}
             ${p.years_pro === 0 ? `<span style="background:rgba(34,197,94,.1);color:#22c55e;border:1px solid rgba(34,197,94,.3);border-radius:3px;font-size:9px;font-weight:800;padding:1px 5px;letter-spacing:1px">R</span>` : ''}
           </div>
-          <div class="card-meta">${pos}${p.age ? ' · Age '+p.age : ''}${p.years_pro != null ? ' · Yr '+p.years_pro+' NFL' : ''}${p.draft_year ? ' · Drafted '+p.draft_year : ''}${p.college ? ' · '+p.college : ''}${p.height ? ' · '+p.height : ''}${p.weight ? ' · '+p.weight+' lbs' : ''}</div>
+          <div class="card-meta">${pos}${p.age ? ' · Age '+p.age : ''}${p.years_pro != null ? ' · Yr '+p.years_pro+' NFL' : ''}${p.draft_year ? ' · Drafted '+p.draft_year : ''}${p.college ? ' · '+escapeHtml(p.college) : ''}${p.height ? ' · '+escapeHtml(p.height) : ''}${p.weight ? ' · '+p.weight+' lbs' : ''}</div>
         </div>
         ${(pos === 'QB' || pos === 'RB' || isWRTE || useDefCard) ? `
           <div style="text-align:center;flex-shrink:0">
@@ -2193,7 +2205,7 @@ function buildFullHoverCard(p, pos) {
             <span style="font-size:10px;color:var(--text-dim)">cap hit</span>
           </div>
         `}
-        ${p.attainment ? `<div style="font-size:10px;color:var(--text-muted)">Attained: <span style="color:var(--text)">${p.attainment}</span></div>` : ''}
+        ${p.attainment ? `<div style="font-size:10px;color:var(--text-muted)">Attained: <span style="color:var(--text)">${escapeHtml(p.attainment)}</span></div>` : ''}
       </div>
     </div>
   `;
@@ -2204,9 +2216,9 @@ function buildHoverCard(p, pos) {
   const mc = maddenColor(p.madden);
   if (p.isRookie) return `
     <div class="hover-card">
-      <div class="hc-name">${p.name}</div>
+      <div class="hc-name">${escapeHtml(p.name)}</div>
       <div class="hc-meta">
-        <span>${p.standard_pos}${pos !== p.standard_pos ? ' · ' + pos : ''}</span>
+        <span>${escapeHtml(p.standard_pos)}${pos !== p.standard_pos ? ' · ' + pos : ''}</span>
         <span class="hc-madden" style="color:${mc}">${p.madden}</span>
         <span class="hc-proj">PROJ</span>
       </div>
@@ -2214,11 +2226,11 @@ function buildHoverCard(p, pos) {
   `;
   return `
     <div class="hover-card">
-      <div class="hc-name">${p.name}</div>
+      <div class="hc-name">${escapeHtml(p.name)}</div>
       <div class="hc-meta">
-        <span>${p.standard_pos || pos}${pos !== p.standard_pos ? ' · ' + pos : ''}</span>
+        <span>${escapeHtml(p.standard_pos || pos)}${pos !== p.standard_pos ? ' · ' + pos : ''}</span>
         <span class="hc-madden" style="color:${mc}">${p.madden || '—'}</span>
-        ${p.injured ? `<span class="hc-inj">INJ${p.injury_status ? ' · ' + p.injury_status : ''}</span>` : ''}
+        ${p.injured ? `<span class="hc-inj">INJ${p.injury_status ? ' · ' + escapeHtml(p.injury_status) : ''}</span>` : ''}
       </div>
     </div>
   `;
@@ -2238,12 +2250,12 @@ function buildPlayerNode(p, pos, coords, delay, flipCard) {
          onmouseenter="positionHoverCard(this)">
       <div class="p-card${p.isRookie ? ' proj' : ''}" style="background:${team.colors[0]}">
         ${p.isRookie ? `<div class="p-badge-rk" title="Mock-draft rookie">R</div>` : ''}
-        ${p.injured ? `<div class="p-badge-inj" title="${[p.injury_detail, p.injury_status].filter(Boolean).join(' — ')}">INJ</div>` : ''}
-        <div class="p-jersey">${p.jersey ? '#'+p.jersey : ' '}</div>
-        <div class="p-lastname">${lastName}</div>
+        ${p.injured ? `<div class="p-badge-inj" title="${escapeHtml([p.injury_detail, p.injury_status].filter(Boolean).join(' — '))}">INJ</div>` : ''}
+        <div class="p-jersey">${p.jersey ? '#' + escapeHtml(p.jersey) : ' '}</div>
+        <div class="p-lastname">${escapeHtml(lastName)}</div>
         <div class="p-madden" style="color:${mc}">${p.madden || '—'}</div>
         ${p.isRookie ? `<div class="p-proj" title="Projected from draft position, not a real Madden rating">PROJ</div>` : ''}
-        ${p.madden_rank ? `<div class="p-rank">${p.madden_rank} / ${p.madden_rank_total} ${p.madden_pos_label || ''}</div>` : ''}
+        ${p.madden_rank ? `<div class="p-rank">${p.madden_rank} / ${p.madden_rank_total} ${escapeHtml(p.madden_pos_label || '')}</div>` : ''}
       </div>
       <div class="p-pos-bar${p.isRookie ? ' proj' : ''}">${pos}</div>
       ${sidebarOn || p.isRookie ? '' : buildSubDropdown(pos, p)}
@@ -2470,7 +2482,7 @@ let draftSearch = '';
 let draftData = null;                          // { curve, prospects, byId, order, meta } once loaded
 let draftDataPromise = null;
 
-const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const esc = escapeHtml;
 
 function loadDraftData() {
   if (!draftDataPromise) {
@@ -2630,7 +2642,7 @@ function draftListHtml() {
     return `<div class="dp-row${draftSel.prospect === p.prospect_id ? ' sel' : ''}" onclick="selectDraftProspect('${p.prospect_id}')">
       <span class="dp-rk">${rk != null ? '#' + rk : '—'}</span>
       <span class="dp-nm">${esc(p.name)}<small>${esc(p.school)}</small></span>
-      <span class="dp-ps">${p.standard_pos}</span>
+      <span class="dp-ps">${escapeHtml(p.standard_pos)}</span>
       <span class="dp-pr" style="color:${maddenColor(proj)}" title="Projected rating if taken at #${pick}">${proj}</span>
     </div>`;
   }).join('');
@@ -2730,10 +2742,10 @@ function renderRookieSidebar(el, p, resetScroll) {
     kv('Broad jump', num(m.broad, '"')), kv('3-cone', num(m.three_cone, ' s')), kv('Shuttle', num(m.shuttle, ' s')), kv('Bench', num(m.bench)), kv('RAS', num(m.ras))].join('');
   const subs = getSubCandidates(sidebarPos);
   const subsHtml = subs.length ? subs.map(c => `
-      <div class="sb-sub" onclick="openCompare('${c.id}', event)">
+      <div class="sb-sub" onclick="openCompare('${escapeHtml(c.id)}', event)">
         <div class="sb-sub-madden" style="color:${maddenColor(c.madden)}">${c.madden || '—'}</div>
-        <div class="sb-sub-name">${c.name}${c.isRookie ? '<span class="sb-sub-r" title="Mock-draft rookie: projected rating">R · PROJ</span>' : ''}</div>
-        <div class="sb-sub-pos">${c.standard_pos}${c.isRookie ? ' · R' + c.round + ' #' + c.pick : ''}${c.depth ? ' · D' + c.depth : ''}${c.injured ? ' · <span style="color:#ef4444">INJ</span>' : ''}</div>
+        <div class="sb-sub-name">${escapeHtml(c.name)}${c.isRookie ? '<span class="sb-sub-r" title="Mock-draft rookie: projected rating">R · PROJ</span>' : ''}</div>
+        <div class="sb-sub-pos">${escapeHtml(c.standard_pos)}${c.isRookie ? ' · R' + c.round + ' #' + c.pick : ''}${c.depth ? ' · D' + c.depth : ''}${c.injured ? ' · <span style="color:#ef4444">INJ</span>' : ''}</div>
       </div>`).join('') : '<div class="sb-empty">No other players available at this position.</div>';
   const meta2 = [pr.school, m.height, m.weight != null ? m.weight + ' lbs' : null, pr.eligibility].filter(Boolean).join(' · ');
   const money = v => '$' + (v / 1e6).toFixed(1) + 'M';
@@ -2752,7 +2764,7 @@ function renderRookieSidebar(el, p, resetScroll) {
     <div class="sb-head">
       <div style="flex:1;min-width:0">
         <div class="sb-name"><span>${esc(p.name)}</span><span class="sb-pill rookie">R</span><span class="sb-pill proj">PROJ</span></div>
-        <div class="sb-meta">${p.standard_pos}${sidebarPos !== p.standard_pos ? ' · ' + sidebarPos : ''} · ${esc(team.name)}</div>
+        <div class="sb-meta">${escapeHtml(p.standard_pos)}${sidebarPos !== p.standard_pos ? ' · ' + sidebarPos : ''} · ${esc(team.name)}</div>
         <div class="sb-meta">${esc(meta2)}</div>
         <div class="sb-contract">${esc(pickLabel)}</div>
         ${p.fromImport && !p.matched ? '<div class="sb-meta" style="color:#f5c542">Not on the prospect board: rated from the pick alone.</div>' : ''}
@@ -2855,7 +2867,15 @@ function matchProspect(p, ix) {
 function loadImportFromStorage() {
   try {
     const v = JSON.parse(localStorage.getItem(MOCK_KEY));
-    return v && Array.isArray(v.picks) && v.picks.length ? v : null;
+    if (!v || !Array.isArray(v.picks)) return null;
+    // localStorage is editable: keep only well-formed picks (integer pick 1-257, known team/position, string name/school)
+    v.picks = v.picks.filter(e => e && Number.isInteger(e.pick) && e.pick >= 1 && e.pick <= MOCK_MAX_PICK
+      && Object.prototype.hasOwnProperty.call(TEAMS, e.team) && Object.values(MOCK_POS).includes(e.pos)
+      && typeof e.name === 'string' && typeof e.school === 'string' && typeof e.posRaw === 'string'
+      && (e.trade == null || (Array.isArray(e.trade) && e.trade.every(t => typeof t === 'string'))));
+    v.picks.forEach(e => { if (!Array.isArray(e.trade)) e.trade = []; });
+    ['skipped', 'warnings'].forEach(k => { v[k] = Array.isArray(v[k]) ? v[k].map(String) : []; });
+    return v.picks.length ? v : null;
   } catch (e) { return null; }
 }
 function saveImport() {
@@ -2983,7 +3003,7 @@ function importPanelHtml() {
       return `<div class="dp-haul${slot ? ' go' : ''}"${slot ? ` onclick="openSidebar('${slot}', event)"` : ''}>
         <span class="dp-haul-no">R${r.round} #${r.pick}</span>
         <span class="dp-nm">${esc(r.name)}<small>${esc(r.school)}</small></span>
-        <span class="dp-ps">${r.standard_pos}</span>
+        <span class="dp-ps">${esc(r.standard_pos)}</span>
         <span class="dp-pr" style="color:${maddenColor(r.madden)}" title="Projected rating">${r.madden}</span>
         <span class="dp-haul-st${slot ? ' on' : ''}">${slot ? 'starting at ' + slot : 'bench'}</span></div>${tr}`;
     }).join('') || `<div class="sb-empty">${esc(team.name)} have no picks in this mock.</div>`;
@@ -3012,7 +3032,7 @@ async function restoreDraftFromUrl(str) {
     const [pk, id, slot] = part.split(':');
     const row = teamPicks.get(Number(pk)), pr = data.byId[id];
     if (!row || !pr || usedPicks.has(row.pick) || usedPros.has(id) || !slot) continue;
-    if (!document.querySelector(`#playersLayer .player-node[data-pos="${slot}"]`) || !slotPositions(slot).includes(pr.standard_pos)) continue;
+    if (!document.querySelector(`#playersLayer .player-node[data-pos="${CSS.escape(slot)}"]`) || !slotPositions(slot).includes(pr.standard_pos)) continue;
     usedPicks.add(row.pick); usedPros.add(id);
     currentStarters[slot] = makeRookie(row, pr);
     any = true;
@@ -3027,7 +3047,10 @@ const urlDef  = params.get('def');
 const urlPlayer = params.get('player');
 const urlDraft = params.get('draft');
 
-currentTeam = (urlTeam && TEAMS[urlTeam]) ? urlTeam : (localStorage.getItem('fieldview_team') || 'BUF');
+let savedTeam = null;
+try { savedTeam = localStorage.getItem('fieldview_team'); } catch (e) {}
+currentTeam = (urlTeam && Object.prototype.hasOwnProperty.call(TEAMS, urlTeam)) ? urlTeam
+  : ((savedTeam && Object.prototype.hasOwnProperty.call(TEAMS, savedTeam)) ? savedTeam : 'BUF');
 
 importState = loadImportFromStorage();
 updateSbToggle();
@@ -3054,5 +3077,6 @@ loadTeam(currentTeam).then(() => {
   }
 });
 </script>
+<script src="../shared/site.js" data-credits="nflverse · OurLads · OverTheCap · ESPN (QBR) · EA Sports (Madden) · PFN · Mock Draft Hero"></script>
 </body>
 </html>

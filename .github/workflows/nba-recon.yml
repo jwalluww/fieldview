@@ -5,6 +5,10 @@ name: NBA stats-source recon
 on:
   workflow_dispatch:
 
+# Read-only token: this probe never commits.
+permissions:
+  contents: read
+
 jobs:
   recon:
     runs-on: ubuntu-latest

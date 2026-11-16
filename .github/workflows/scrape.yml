@@ -5,6 +5,10 @@ on:
     - cron: '0 10 * * 2'  # Every Tuesday at 10am UTC
   workflow_dispatch:        # Allows manual trigger from GitHub UI
 
+# Default-deny; each job below grants itself contents: write (it commits data).
+permissions:
+  contents: read
+
 jobs:
   scrape:
     runs-on: ubuntu-latest

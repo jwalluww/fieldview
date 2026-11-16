@@ -12,6 +12,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FieldView</title>
+<meta name="description" content="FieldView: players on the field, court, ice and pitch in their real positions, with substitutions and sortable stat tables for the NFL, NBA, MLB, NHL, Premier League and MLS.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FieldView">
+<meta property="og:title" content="FieldView">
+<meta property="og:description" content="FieldView: players on the field, court, ice and pitch in their real positions, with substitutions and sortable stat tables for the NFL, NBA, MLB, NHL, Premier League and MLS.">
+<meta property="og:url" content="https://jwalluww.github.io/fieldview/">
+<meta property="og:image" content="https://jwalluww.github.io/fieldview/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -462,11 +471,6 @@ body {
 
 </div>
 
-<div class="footer">
-  Data: OurLads · Madden 26 · Over The Cap · nflreadpy &nbsp;·&nbsp;
-  <a href="https://github.com/jwalluww/fieldview" target="_blank">GitHub</a>
-</div>
-
 <script>
 const SPORTS = {
   nfl: {
@@ -686,22 +690,15 @@ const NFL_TEAMS = [
 function updatePlayerCount(sport) {
   document.getElementById('playerCount').textContent = '—';
   if (sport === 'nfl') {
-    let total = 0;
-    let loaded = 0;
-    NFL_TEAMS.forEach(abbr => {
-      fetch(`nfl/data/${abbr}.json`)
-        .then(r => r.json())
-        .then(d => {
-          for (const players of Object.values(d.depth_chart || {})) {
-            total += players.length;
-          }
-          loaded++;
-          if (loaded === NFL_TEAMS.length && currentSport === 'nfl') {
-            document.getElementById('playerCount').textContent = total.toLocaleString();
-          }
-        })
-        .catch(() => { loaded++; });
-    });
+    // Same source the NFL pages read (players_master.json), not the per-team OurLads files
+    fetch('nfl/data/players_master.json')
+      .then(r => r.json())
+      .then(d => {
+        if (currentSport === 'nfl') {
+          document.getElementById('playerCount').textContent = (Array.isArray(d) ? d : Object.values(d)).length.toLocaleString();
+        }
+      })
+      .catch(() => {});
   } else if (sport === 'nba') {
     fetch('nba/data/nba_players_master.json')
       .then(r => r.json())
@@ -769,5 +766,6 @@ if (requestedSport && SPORTS[requestedSport] && SPORTS[requestedSport].tagline) 
   updatePlayerCount('nfl');
 }
 </script>
+<script src="shared/site.js" data-credits="nflverse · OurLads · OverTheCap · Spotrac · ESPN · Basketball-Reference · nba2kapi/2kratings · MLB The Show · nhlratings.net · FPL · American Soccer Analysis · EA Sports · PFN · Mock Draft Hero"></script>
 </body>
 </html>

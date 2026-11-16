@@ -11,7 +11,16 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FieldView — Player Table</title>
+<title>FieldView — NFL Player Table</title>
+<meta name="description" content="NFL TableView: sortable, filterable player table with Madden ratings, contracts, passing, rushing, receiving and defensive stats.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FieldView">
+<meta property="og:title" content="FieldView — NFL Player Table">
+<meta property="og:description" content="NFL TableView: sortable, filterable player table with Madden ratings, contracts, passing, rushing, receiving and defensive stats.">
+<meta property="og:url" content="https://jwalluww.github.io/fieldview/nfl/depth-chart.html">
+<meta property="og:image" content="https://jwalluww.github.io/fieldview/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -759,6 +768,9 @@ body {
 </div>
 
 <script>
+// Escape text from data (names, teams, injury text) before it goes into innerHTML
+const escapeHtml = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
 // ══════════════════════════════════════════
 // TEAMS
 // ══════════════════════════════════════════
@@ -1455,10 +1467,10 @@ function renderMobileList() {
     const initials = p.name.split(' ').map(w => w[0]).join('').slice(0,2);
     return `
       <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
-        <div style="width:32px;height:32px;border-radius:50%;background:${team.colors[0]};display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:9px;color:#fff;flex-shrink:0">${p.abbr}</div>
+        <div style="width:32px;height:32px;border-radius:50%;background:${team.colors[0]};display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:9px;color:#fff;flex-shrink:0">${escapeHtml(p.abbr)}</div>
         <div style="flex:1;min-width:0">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</div>
-          <div style="font-size:11px;color:var(--text-muted);margin-top:1px">${p.ourladsPos} · <span class="std-pos">${p.standard_pos}</span>${p.injured ? ' · <span style="color:var(--red)">INJ</span>' : ''}</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escapeHtml(p.name)}</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:1px">${escapeHtml(p.ourladsPos)} · <span class="std-pos">${escapeHtml(p.standard_pos)}</span>${p.injured ? ' · <span style="color:var(--red)">INJ</span>' : ''}</div>
         </div>
         <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:${mc};flex-shrink:0">${p.madden || '—'}</div>
         <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:var(--gold);flex-shrink:0;text-align:right">${p.cap_number || '—'}</div>
@@ -1486,27 +1498,27 @@ function renderTable() {
 
     let row = '<tr>';
     if (cols.includes('team'))
-      row += '<td><div class="cell-team"><img class="team-logo-cell" src="' + teamLogoUrl(p.abbr) + '" alt="' + p.abbr + '" loading="lazy"><span>' + p.abbr + '</span></div></td>';
+      row += '<td><div class="cell-team"><img class="team-logo-cell" src="' + teamLogoUrl(p.abbr) + '" alt="' + escapeHtml(p.abbr) + '" loading="lazy"><span>' + escapeHtml(p.abbr) + '</span></div></td>';
     if (cols.includes('ourlads_pos'))
-      row += '<td class="cell-pos">' + p.ourladsPos + '</td>';
+      row += '<td class="cell-pos">' + escapeHtml(p.ourladsPos) + '</td>';
     if (cols.includes('pos'))
-      row += '<td style="text-align:center"><span class="std-pos">' + (p.standard_pos || '—') + '</span></td>';
+      row += '<td style="text-align:center"><span class="std-pos">' + escapeHtml(p.standard_pos || '—') + '</span></td>';
     if (cols.includes('name'))
       row += '<td><div class="cell-player">' +
-        '<div class="player-initials" style="background:' + team.colors[0] + '">' + initials + '</div>' +
+        '<div class="player-initials" style="background:' + team.colors[0] + '">' + escapeHtml(initials) + '</div>' +
         '<div class="player-name-block">' +
-          '<div class="player-name">' + p.name + '</div>' +
+          '<div class="player-name">' + escapeHtml(p.name) + '</div>' +
           '<div class="player-sub">' +
             (p.injured ? '<span class="tag tag-inj">INJ</span>' : '') +
             (p.years_pro === 0 ? '<span class="tag tag-rookie">R</span>' : '') +
-            (p.attainment ? '<span>' + p.attainment + '</span>' : '') +
+            (p.attainment ? '<span>' + escapeHtml(p.attainment) + '</span>' : '') +
           '</div>' +
         '</div>' +
       '</div></td>';
     if (cols.includes('age'))
       row += '<td style="text-align:center;color:var(--text-muted);font-family:\'Barlow Condensed\',sans-serif;font-weight:600">' + (p.age || '—') + '</td>';
     if (cols.includes('college'))
-      row += '<td style="color:var(--text-muted);font-family:\'Barlow Condensed\',sans-serif;font-weight:600">' + (p.college || '—') + '</td>';
+      row += '<td style="color:var(--text-muted);font-family:\'Barlow Condensed\',sans-serif;font-weight:600">' + escapeHtml(p.college || '—') + '</td>';
     if (cols.includes('draft_year'))
       row += '<td style="text-align:center;color:var(--text-muted);font-family:\'Barlow Condensed\',sans-serif;font-weight:600">' + (p.draft_year || '—') + '</td>';
     if (cols.includes('years_pro'))
@@ -1569,5 +1581,6 @@ loadAll().then(() => {
 window.addEventListener('resize', updateStickyOffset);
 window.addEventListener('resize', renderMobileList);
 </script>
+<script src="../shared/site.js" data-credits="nflverse · OurLads · OverTheCap · Spotrac · ESPN (QBR) · EA Sports (Madden)"></script>
 </body>
 </html>
