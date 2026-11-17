@@ -22,9 +22,11 @@ Sources (all verified 3edef0a / draft-recon run from a GitHub runner):
     kept per prospect (cfb27_ovr); the ~11k cards are never stored. A failure
     leaves cfb27_ovr null for everybody.
 
-Guards (keep the old files, exit 0, log why): an MDH file non-200 or unparsable,
-< 400 MDH prospects, draft order not 224-262 picks / < 32 teams / an unknown team
-code. `--simulate-fail mdh|pfn|cfb` forces a failure of one source (verification only).
+Order of work: OverTheCap first (draft_order.json + rookie_scale.json, each with its own keep-old
+guard), then MockDraftHero (prospects/board). An OTC failure KEEPS the existing OTC order; MDH's
+simulated order is used only when no OTC order exists. Guards (keep the old files, exit 0, log why):
+an MDH file non-200 or unparsable, < 400 MDH prospects (prospect files only), OTC order not 224-262
+contiguous picks / < 32 teams / an unknown team code. `--simulate-fail mdh|pfn|cfb` forces a failure of one source (verification only).
 """
 import argparse
 import csv
@@ -325,6 +327,20 @@ def parse_college_stats(text):
             'stats': [r for r in rows if r[0] != 'GP'], 'career': career}
 
 
+def write_order(order, src, now):
+    """Write draft_order.json + record the source in draft_meta.json (merged: the prospect fields stay as they were)."""
+    os.makedirs(os.path.dirname(ORDER_PATH) or '.', exist_ok=True)
+    with open(ORDER_PATH, 'w', encoding='utf-8') as f:
+        f.write(dumps(order))
+    meta = load_json(META_PATH) or {}
+    srcs = dict(meta.get('sources') or {})
+    srcs.update({'draft_order_picks': len(order), 'draft_order_source': src})
+    meta['sources'] = srcs
+    meta['draft_order_fetched_at'] = now.strftime('%Y-%m-%dT%H:%M:%SZ')
+    with open(META_PATH, 'w', encoding='utf-8') as f:
+        f.write(json.dumps(meta, indent=2))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--simulate-fail', choices=['mdh', 'pfn', 'cfb', 'otc'])
@@ -338,37 +354,57 @@ def main():
     now = datetime.now(timezone.utc)
     log('Draft prospects refresh')
 
-    mdh = fetch_mdh(sim)
-    if mdh is None:
-        log('KEEPING old draft files: MockDraftHero fetch failed'); return 0
-    players = mdh['players']
-    if len(players) < MIN_MDH_PROSPECTS:
-        log(f'KEEPING old draft files: only {len(players)} MDH prospects (< {MIN_MDH_PROSPECTS})'); return 0
-    # Draft order: OverTheCap first (real traded picks); MDH's simulated order only if OTC fails.
-    order, order_src, soup = None, 'otc', None
-    if sim != 'otc':
-        soup = otc_draft.fetch_soup()
+    # ---- 1) OverTheCap FIRST: draft order + rookie scale never depend on MockDraftHero being up.
+    soup = None if sim == 'otc' else otc_draft.fetch_soup()
+    order, order_src = None, None
     if soup is not None:
-        order, why = otc_draft.parse_order(soup)
+        notes = []
+        order, why = otc_draft.parse_order(soup, otc_draft.fetch_standings(), notes)
         if order is None:
             log(f'  OTC order rejected: {why}')
-    else:
-        log('  OTC draft page unavailable')
-    if order is None:
-        order, why = build_order(mdh['order'], mdh['rounds'])
-        order_src = 'mdh'
-        if order is None:
-            log(f'KEEPING old draft files: {why}'); return 0
-        log('  WARNING: using MockDraftHero simulated draft order (OTC failed)')
-    # Rookie contract scale from the same OTC pull (own keep-old guard; never blocks the rest).
-    if soup is not None and args.out_dir == DATA:
+        else:
+            order_src = 'otc'
+            log(f'  OTC draft order: {len(order)} picks')
+            for n_ in notes:
+                log(n_)
         scale = otc_draft.parse_scale(soup)
         if scale is not None:
             import build_rookie_scale
-            build_rookie_scale.write_scale(scale)
+            build_rookie_scale.write_scale(scale, os.path.join(os.path.dirname(ORDER_PATH) or '.', 'rookie_scale.json'))
         else:
             log('  OTC rookie scale not parsed: keeping old rookie_scale.json')
-    log(f'  MDH: {len(players)} prospects, {len(mdh["board"])} board rows; draft order: {len(order)} picks from {order_src}')
+    else:
+        log('  OTC draft page unavailable')
+    if order is not None:
+        write_order(order, 'otc', now)
+    else:
+        prev_order, prev_meta0 = load_json(ORDER_PATH), load_json(META_PATH) or {}
+        prev_src = (prev_meta0.get('sources') or {}).get('draft_order_source')
+        if prev_order and prev_src == 'otc':
+            log(f'  OTC failed: KEEPING the existing OTC draft order ({len(prev_order)} picks, draft_order_source=otc)')
+            order_src = 'otc'
+        else:
+            log('  OTC failed and there is no existing OTC order: the MockDraftHero order may be used as the fallback')
+
+    # ---- 2) MockDraftHero: prospects / board (and the order fallback only when there is no OTC order at all)
+    mdh = fetch_mdh(sim)
+    if mdh is None:
+        log('KEEPING old prospect/board files: MockDraftHero fetch failed (draft order + rookie scale above are unaffected)'); return 0
+    players = mdh['players']
+    if len(players) < MIN_MDH_PROSPECTS:
+        log(f'KEEPING old prospect/board files: only {len(players)} MDH prospects (< {MIN_MDH_PROSPECTS})'); return 0
+    if order_src is None:
+        order, why = build_order(mdh['order'], mdh['rounds'])
+        if order is None:
+            log(f'  MDH order rejected: {why}')
+            if load_json(ORDER_PATH) is None:
+                log('KEEPING old draft files: no usable draft order'); return 0
+        else:
+            log('  WARNING: using MockDraftHero simulated draft order (OTC failed and no existing OTC order)')
+            write_order(order, 'mdh', now)
+            order_src = 'mdh'
+    order = load_json(ORDER_PATH) or []
+    log(f'  MDH: {len(players)} prospects, {len(mdh["board"])} board rows; draft order on disk: {len(order)} picks')
 
     # ---- universe + position mapping
     prospects, ids, dropped, unmapped = [], set(), [], {}
@@ -486,22 +522,23 @@ def main():
     prev_meta = load_json(META_PATH) or {}
     digest = hashlib.sha256((dumps(prospects) + dumps(order)).encode('utf-8')).hexdigest()
     changed = prev_meta.get('content_hash') != digest
-    meta = {
+    meta = dict(prev_meta)
+    meta.update({
         'fetched_at': now.strftime('%Y-%m-%dT%H:%M:%SZ'),
         'board_last_changed': now.strftime('%Y-%m-%d') if changed or not prev_meta.get('board_last_changed') else prev_meta['board_last_changed'],
         'content_hash': digest,
         'sources': {
-            'mdh_players': len(players), 'mdh_board': len(mdh['board']), 'draft_order_picks': len(order), 'draft_order_source': order_src,
+            'mdh_players': len(players), 'mdh_board': len(mdh['board']), 'draft_order_picks': len(order), 'draft_order_source': order_src or (prev_meta.get('sources') or {}).get('draft_order_source'),
             'pfn_prospects': pfn_stats['prospects'], 'pfn_matched': pfn_stats['matched'],
             'cfb27_cards': cfb_stats.get('cards', 0), 'cfb27_matched': cfb_stats.get('matched', 0),
         },
         'prospects': len(prospects), 'pfn_ok': pfn is not None, 'cfb_ok': cards is not None,
-    }
+    })
     os.makedirs(os.path.dirname(PROSPECTS_PATH) or '.', exist_ok=True)
-    for path, obj in ((PROSPECTS_PATH, prospects), (ORDER_PATH, order), (META_PATH, meta)):
+    for path, obj in ((PROSPECTS_PATH, prospects), (META_PATH, meta)):
         with open(path, 'w', encoding='utf-8') as f:
             f.write(dumps(obj) if path != META_PATH else json.dumps(obj, indent=2))
-    log(f'  wrote {len(prospects)} prospects, {len(order)} picks; board_last_changed={meta["board_last_changed"]} (changed={changed})')
+    log(f'  wrote {len(prospects)} prospects (draft order on disk: {len(order)} picks); board_last_changed={meta["board_last_changed"]} (changed={changed})')
     return 0
 
 

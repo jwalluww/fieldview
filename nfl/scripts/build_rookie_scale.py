@@ -14,12 +14,12 @@ import otc_draft
 OUT = os.path.join('nfl', 'data', 'rookie_scale.json')
 
 
-def write_scale(picks):
+def write_scale(picks, path=OUT):
     out = {'source': 'overthecap.com/draft (OTC projected 2027 rookie scale)',
            'as_of': datetime.now(timezone.utc).strftime('%Y-%m-%d'), 'cap_year': 2027,
            'note': 'Estimate: OTC projection by overall pick; real contracts are set after the draft.',
            'picks': {str(n): picks[n] for n in sorted(picks)}}
-    with open(OUT, 'w', encoding='utf-8') as f:
+    with open(path, 'w', encoding='utf-8') as f:
         json.dump(out, f, separators=(',', ':'))
     r1 = sum(1 for p in picks.values() if p['fifth_year_option'])
     print(f'wrote {len(picks)} picks ({r1} with 5th-year option); #1 ${picks[1]["total_value"]:,} '
