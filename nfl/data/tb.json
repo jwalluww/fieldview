@@ -6,8 +6,26 @@
   "depth_chart": {
     "LWR": [
       {
-        "name": "Ted Hurst III",
+        "name": "Tez Johnson",
         "depth": 1,
+        "injured": false,
+        "attainment": "25/7",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": "$1,035,985",
+        "stats": {
+          "TGT": 20,
+          "REC": 11,
+          "YDS": 254,
+          "TDs": 1,
+          "YAC": 57,
+          "CAR": 3
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Ted Hurst III",
+        "depth": 2,
         "injured": false,
         "attainment": "26/3",
         "standard_slot": "LWR",
@@ -21,17 +39,6 @@
           "YAC": 28
         },
         "stats_season": 2026
-      },
-      {
-        "name": "David Sills V",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/Atl",
-        "standard_slot": "LWR",
-        "standard_pos": "WR",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "RWR": [
@@ -49,24 +56,6 @@
           "YDS": 278,
           "TDs": 2,
           "YAC": 126,
-          "CAR": 3
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Tez Johnson",
-        "depth": 2,
-        "injured": false,
-        "attainment": "25/7",
-        "standard_slot": "RWR",
-        "standard_pos": "WR",
-        "cap_number": "$1,035,985",
-        "stats": {
-          "TGT": 20,
-          "REC": 11,
-          "YDS": 254,
-          "TDs": 1,
-          "YAC": 57,
           "CAR": 3
         },
         "stats_season": 2026
@@ -358,6 +347,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Cooper Rush",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "QB",
+        "standard_pos": "QB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RB": [
@@ -421,17 +421,6 @@
         "cap_number": null,
         "stats": {},
         "stats_season": 2026
-      },
-      {
-        "name": "Barika Kpeenu",
-        "depth": 5,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "LDE": [
@@ -899,6 +888,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "David Sills V",
+        "depth": 4,
+        "injured": false,
+        "attainment": "U/Atl",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "OT": [
@@ -920,6 +920,17 @@
         "depth": 1,
         "injured": false,
         "attainment": "CF26",
+        "standard_slot": "OG",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Luke Haggard",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF23",
         "standard_slot": "OG",
         "standard_pos": "DEF",
         "cap_number": null,
@@ -971,19 +982,6 @@
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "LB",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      }
-    ],
-    "CB": [
-      {
-        "name": "Brandon Johnson",
-        "depth": 1,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "CB",
         "standard_pos": "DEF",
         "cap_number": null,
         "stats": {},
