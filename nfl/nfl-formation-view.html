@@ -247,13 +247,6 @@ body {
   gap: 0;
 }
 .player-node:hover { z-index: 100; }
-/* Defense mirrors offense across the LOS: the position label sits ABOVE the card (offense: below), so both sides' cards are equally far off the line. */
-.player-node.def { flex-direction: column-reverse; }
-.player-node.def .p-card { border-radius: 0 0 8px 8px; border-top: none; border-bottom: 1.5px solid rgba(255,255,255,0.15); }
-.player-node.def .p-pos-bar { border-radius: 6px 6px 0 0; border-top: 1.5px solid rgba(255,255,255,0.15); border-bottom: none; }
-.player-node.def .p-card.proj { border: 1.5px dashed #f5c542; border-top: none; }
-.player-node.def .p-pos-bar.proj { border: 1.5px dashed #f5c542; border-bottom: none; }
-.player-node.def .p-badge-inj, .player-node.def .p-badge-rk { top: auto; bottom: -6px; }
 
 .p-card {
   width: 96px;
@@ -999,56 +992,56 @@ const FORMATION_COORDS = {
   },
   defense: {
     'base43': {
-      RCB:  {x:6,  y:43},
-      LCB:  {x:94, y:43},
+      RCB:  {x:6, y:33},
+      LCB:  {x:94, y:33},
       FS:   {x:30, y:8},
       SS:   {x:70, y:12},
-      WILL:  {x:36, y:28},
-      MIKE:  {x:50, y:24},
-      SAM:  {x:64, y:28},
-      RE:  {x:32, y:43},
-      RDT:  {x:44, y:43},
-      LDT:  {x:56, y:43},
-      LE:  {x:68, y:43},
+      WILL:  {x:36, y:25},
+      MIKE:  {x:50, y:21},
+      SAM:  {x:64, y:25},
+      RE:  {x:32, y:41},
+      RDT:  {x:44, y:41},
+      LDT:  {x:56, y:41},
+      LE:  {x:68, y:41},
     },
     'base34': {
-      RCB:    {x:6,  y:43},
-      LCB:    {x:94, y:43},
+      RCB:    {x:6, y:33},
+      LCB:    {x:94, y:33},
       FS:     {x:30, y:8},
       SS:     {x:70, y:12},
-      ROLB:   {x:26, y:39},
-      ILB_R:  {x:56, y:26},
-      ILB_L:  {x:44, y:26},
-      LOLB:   {x:74, y:39},
-      RE:     {x:42, y:43},
-      NT:     {x:50, y:43},
-      LE:     {x:58, y:43},
+      ROLB:   {x:26, y:37},
+      ILB_R:  {x:56, y:23},
+      ILB_L:  {x:44, y:23},
+      LOLB:   {x:74, y:37},
+      RE:     {x:42, y:41},
+      NT:     {x:50, y:41},
+      LE:     {x:58, y:41},
     },
     'nickel': {
-      RCB:  {x:6,  y:43},
-      LCB:  {x:94, y:43},
-      NB:   {x:17, y:43},
+      RCB:  {x:6, y:33},
+      LCB:  {x:94, y:33},
+      NB:   {x:17, y:33},
       FS:   {x:30, y:8},
       SS:   {x:70, y:12},
-      WILL: {x:44, y:26},
-      MIKE: {x:56, y:26},
-      RE:   {x:32, y:43},
-      RDT:  {x:44, y:43},
-      LDT:  {x:56, y:43},
-      LE:   {x:68, y:43},
+      WILL: {x:44, y:25},
+      MIKE: {x:56, y:21},
+      RE:   {x:32, y:41},
+      RDT:  {x:44, y:41},
+      LDT:  {x:56, y:41},
+      LE:   {x:68, y:41},
     },
     'nickel34': {
-      RCB:   {x:6,  y:43},
-      LCB:   {x:94, y:43},
-      NB:    {x:17, y:43},
+      RCB:   {x:6, y:33},
+      LCB:   {x:94, y:33},
+      NB:    {x:17, y:33},
       FS:    {x:30, y:8},
       SS:    {x:70, y:12},
-      ILB_R: {x:44, y:26},
-      ILB_L: {x:56, y:26},
-      ROLB:  {x:32, y:43},
-      RE:    {x:44, y:43},
-      LE:    {x:56, y:43},
-      LOLB:  {x:68, y:43},
+      ILB_R: {x:44, y:23},
+      ILB_L: {x:56, y:23},
+      ROLB:  {x:32, y:41},
+      RE:    {x:44, y:41},
+      LE:    {x:56, y:41},
+      LOLB:  {x:68, y:41},
     },
   }
 };
@@ -2253,7 +2246,7 @@ function buildPlayerNode(p, pos, coords, delay, flipCard, isDef = false) {
   const lastName = parts.length > 1 ? parts.slice(1).join(' ') : parts[0];
 
   return `
-    <div class="player-node ${flipCard ? 'flip-card' : ''}${isDef ? ' def' : ''}" data-pos="${pos}"
+    <div class="player-node ${flipCard ? 'flip-card' : ''}" data-pos="${pos}"
          style="left:${coords.x}%;top:${coords.y}%;animation-delay:${delay}ms"
          onclick="nodeClick('${pos}', event)"
          onmouseenter="positionHoverCard(this)">
