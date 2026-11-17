@@ -3,14 +3,16 @@
 Weekly draft-prospect refresh for the FormationView draft installer. Independent
 of the player pipeline: touches only
   nfl/data/draft_prospects.json  one record per 2027 prospect (below)
-  nfl/data/draft_order.json      [{pick, round, team, original_team}]
+  nfl/data/draft_order.json      [{pick, round, team, original_team}]  (OverTheCap; MDH only as fallback)
+  nfl/data/rookie_scale.json     projected rookie contract by pick (same OTC pull)
   nfl/data/draft_meta.json       board_last_changed (diff-based), counts, fetched_at
 
 Sources (all verified 3edef0a / draft-recon run from a GitHub runner):
   - MockDraftHero (fan site, static files; keep-old-snapshot on ANY failure):
       players.csv           the universe (~840 prospects, bio + measurables)
       board-mockdrafthero.csv  its consensus order (weighted blend of other boards)
-      draft-order.csv + rounds.csv  pick, team (current owner), odds_team (original)
+      draft-order.csv + rounds.csv  FALLBACK draft order only: its order is odds-simulated (185 of 257 picks
+                            "traded"), so OverTheCap's page (real trades, standings projection) is primary
     Its mirrored boards (board-drafttek.csv, board-pfsn.csv) are deliberately
     NOT fetched or republished.
   - PFN: /nfl-draft-hq/api/prospect-grades?year=2027 -> rank, grade, positionRank,
@@ -42,6 +44,7 @@ sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(HERE, '..', '..', 'shared', 'scripts'))
 from name_utils import normalize_madden  # noqa: E402
 import ea_ratings                        # noqa: E402
+import otc_draft                         # noqa: E402
 
 DATA = os.path.join('nfl', 'data')
 PROSPECTS_PATH = os.path.join(DATA, 'draft_prospects.json')
@@ -324,7 +327,7 @@ def parse_college_stats(text):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--simulate-fail', choices=['mdh', 'pfn', 'cfb'])
+    ap.add_argument('--simulate-fail', choices=['mdh', 'pfn', 'cfb', 'otc'])
     ap.add_argument('--out-dir', default=DATA, help=argparse.SUPPRESS)
     args = ap.parse_args()
     global PROSPECTS_PATH, ORDER_PATH, META_PATH
@@ -341,10 +344,31 @@ def main():
     players = mdh['players']
     if len(players) < MIN_MDH_PROSPECTS:
         log(f'KEEPING old draft files: only {len(players)} MDH prospects (< {MIN_MDH_PROSPECTS})'); return 0
-    order, why = build_order(mdh['order'], mdh['rounds'])
+    # Draft order: OverTheCap first (real traded picks); MDH's simulated order only if OTC fails.
+    order, order_src, soup = None, 'otc', None
+    if sim != 'otc':
+        soup = otc_draft.fetch_soup()
+    if soup is not None:
+        order, why = otc_draft.parse_order(soup)
+        if order is None:
+            log(f'  OTC order rejected: {why}')
+    else:
+        log('  OTC draft page unavailable')
     if order is None:
-        log(f'KEEPING old draft files: {why}'); return 0
-    log(f'  MDH: {len(players)} prospects, {len(mdh["board"])} board rows, {len(order)} picks')
+        order, why = build_order(mdh['order'], mdh['rounds'])
+        order_src = 'mdh'
+        if order is None:
+            log(f'KEEPING old draft files: {why}'); return 0
+        log('  WARNING: using MockDraftHero simulated draft order (OTC failed)')
+    # Rookie contract scale from the same OTC pull (own keep-old guard; never blocks the rest).
+    if soup is not None and args.out_dir == DATA:
+        scale = otc_draft.parse_scale(soup)
+        if scale is not None:
+            import build_rookie_scale
+            build_rookie_scale.write_scale(scale)
+        else:
+            log('  OTC rookie scale not parsed: keeping old rookie_scale.json')
+    log(f'  MDH: {len(players)} prospects, {len(mdh["board"])} board rows; draft order: {len(order)} picks from {order_src}')
 
     # ---- universe + position mapping
     prospects, ids, dropped, unmapped = [], set(), [], {}
@@ -467,7 +491,7 @@ def main():
         'board_last_changed': now.strftime('%Y-%m-%d') if changed or not prev_meta.get('board_last_changed') else prev_meta['board_last_changed'],
         'content_hash': digest,
         'sources': {
-            'mdh_players': len(players), 'mdh_board': len(mdh['board']), 'draft_order_picks': len(order),
+            'mdh_players': len(players), 'mdh_board': len(mdh['board']), 'draft_order_picks': len(order), 'draft_order_source': order_src,
             'pfn_prospects': pfn_stats['prospects'], 'pfn_matched': pfn_stats['matched'],
             'cfb27_cards': cfb_stats.get('cards', 0), 'cfb27_matched': cfb_stats.get('matched', 0),
         },

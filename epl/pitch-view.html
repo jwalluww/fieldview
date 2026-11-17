@@ -286,7 +286,8 @@ body {
 .subs-empty { font-size: 10px; color: var(--text-dim); padding: 4px; }
 
 /* ── RIGHT: full bench list, no scroll ── */
-.right-col { flex: 1; min-width: 0; }
+.right-col { flex: 1; min-width: 0; align-self: stretch; contain: size; display: flex; flex-direction: column; }
+/* the bench list scrolls inside the column so the page itself never scrolls (right-col is sized by the pitch/ice column) */
 
 .rotation-title {
   font-family: 'Barlow Condensed', sans-serif;
@@ -298,7 +299,7 @@ body {
   margin-bottom: 10px;
 }
 
-.bench-list { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.bench-list { border: 1px solid var(--border); border-radius: 8px; overflow-x: hidden; overflow-y: auto; flex: 1 1 0; min-height: 0; }
 .bench-row { display: flex; align-items: center; gap: 10px; padding: 6px 12px; border-bottom: 1px solid var(--border); background: var(--surface); }
 .bench-row:last-child { border-bottom: none; }
 .bench-rank { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; color: var(--text-dim); width: 14px; text-align: center; flex-shrink: 0; }
@@ -1506,6 +1507,6 @@ loadTeam(currentTeam).then(() => {
   }
 });
 </script>
-<script src="../shared/site.js" data-credits="FPL · EA Sports (EA FC)"></script>
+<script src="../shared/site.js" data-mode="popup" data-credits="FPL · EA Sports (EA FC)"></script>
 </body>
 </html>
