@@ -247,6 +247,13 @@ body {
   gap: 0;
 }
 .player-node:hover { z-index: 100; }
+/* Defense mirrors offense across the LOS: the position label sits ABOVE the card (offense: below), so both sides' cards are equally far off the line. */
+.player-node.def { flex-direction: column-reverse; }
+.player-node.def .p-card { border-radius: 0 0 8px 8px; border-top: none; border-bottom: 1.5px solid rgba(255,255,255,0.15); }
+.player-node.def .p-pos-bar { border-radius: 6px 6px 0 0; border-top: 1.5px solid rgba(255,255,255,0.15); border-bottom: none; }
+.player-node.def .p-card.proj { border: 1.5px dashed #f5c542; border-top: none; }
+.player-node.def .p-pos-bar.proj { border: 1.5px dashed #f5c542; border-bottom: none; }
+.player-node.def .p-badge-inj, .player-node.def .p-badge-rk { top: auto; bottom: -6px; }
 
 .p-card {
   width: 96px;
@@ -992,56 +999,56 @@ const FORMATION_COORDS = {
   },
   defense: {
     'base43': {
-      RCB:  {x:6,  y:46.5},
-      LCB:  {x:94, y:46.5},
+      RCB:  {x:6,  y:43},
+      LCB:  {x:94, y:43},
       FS:   {x:30, y:8},
       SS:   {x:70, y:12},
       WILL:  {x:36, y:28},
       MIKE:  {x:50, y:24},
       SAM:  {x:64, y:28},
-      RE:  {x:32, y:46.5},
-      RDT:  {x:44, y:46.5},
-      LDT:  {x:56, y:46.5},
-      LE:  {x:68, y:46.5},
+      RE:  {x:32, y:43},
+      RDT:  {x:44, y:43},
+      LDT:  {x:56, y:43},
+      LE:  {x:68, y:43},
     },
     'base34': {
-      RCB:    {x:6,  y:46.5},
-      LCB:    {x:94, y:46.5},
+      RCB:    {x:6,  y:43},
+      LCB:    {x:94, y:43},
       FS:     {x:30, y:8},
       SS:     {x:70, y:12},
-      ROLB:   {x:26, y:42.5},
+      ROLB:   {x:26, y:39},
       ILB_R:  {x:56, y:26},
       ILB_L:  {x:44, y:26},
-      LOLB:   {x:74, y:42.5},
-      RE:     {x:42, y:46.5},
-      NT:     {x:50, y:46.5},
-      LE:     {x:58, y:46.5},
+      LOLB:   {x:74, y:39},
+      RE:     {x:42, y:43},
+      NT:     {x:50, y:43},
+      LE:     {x:58, y:43},
     },
     'nickel': {
-      RCB:  {x:6,  y:46.5},
-      LCB:  {x:94, y:46.5},
-      NB:   {x:17, y:46.5},
+      RCB:  {x:6,  y:43},
+      LCB:  {x:94, y:43},
+      NB:   {x:17, y:43},
       FS:   {x:30, y:8},
       SS:   {x:70, y:12},
       WILL: {x:44, y:26},
       MIKE: {x:56, y:26},
-      RE:   {x:32, y:46.5},
-      RDT:  {x:44, y:46.5},
-      LDT:  {x:56, y:46.5},
-      LE:   {x:68, y:46.5},
+      RE:   {x:32, y:43},
+      RDT:  {x:44, y:43},
+      LDT:  {x:56, y:43},
+      LE:   {x:68, y:43},
     },
     'nickel34': {
-      RCB:   {x:6,  y:46.5},
-      LCB:   {x:94, y:46.5},
-      NB:    {x:17, y:46.5},
+      RCB:   {x:6,  y:43},
+      LCB:   {x:94, y:43},
+      NB:    {x:17, y:43},
       FS:    {x:30, y:8},
       SS:    {x:70, y:12},
       ILB_R: {x:44, y:26},
       ILB_L: {x:56, y:26},
-      ROLB:  {x:32, y:46.5},
-      RE:    {x:44, y:46.5},
-      LE:    {x:56, y:46.5},
-      LOLB:  {x:68, y:46.5},
+      ROLB:  {x:32, y:43},
+      RE:    {x:44, y:43},
+      LE:    {x:56, y:43},
+      LOLB:  {x:68, y:43},
     },
   }
 };
@@ -1549,6 +1556,8 @@ function syncFieldHeight() {
 }
 
 window.addEventListener('resize', syncFieldHeight);
+// The field can finish growing after the first sync (flex layout); keep the layer exactly as tall as the drawn field so y 50 is the dashed LOS.
+if (window.ResizeObserver) { const fb = document.querySelector('.field-bg'); if (fb) new ResizeObserver(syncFieldHeight).observe(fb); }
 
 // Lineup layers, top wins: manual subs (currentStarters) > import auto-placement (autoPlaced) > natural depth chart.
 function getStarter(formationPos) {
@@ -1690,7 +1699,7 @@ function setStarterAt(formationPos, p) {
   const defCoordMap = FORMATION_COORDS.defense[currentDefPersonnel] || {};
   const slots = [
     ...buildFormationSlots(offCoordMap, currentOffPersonnel),
-    ...buildFormationSlots(defCoordMap, currentDefPersonnel),
+    ...buildFormationSlots(defCoordMap, currentDefPersonnel, true),
   ];
 
   // Rebuild only the substituted slot's node.
@@ -1698,7 +1707,7 @@ function setStarterAt(formationPos, p) {
   const changedSlot = slots.find(s => s.pos === formationPos);
   if (oldNode && changedSlot) {
     const wrapper = document.createElement('div');
-    wrapper.innerHTML = buildPlayerNode(changedSlot.starter, changedSlot.pos, changedSlot.coords, 0, changedSlot.flip).trim();
+    wrapper.innerHTML = buildPlayerNode(changedSlot.starter, changedSlot.pos, changedSlot.coords, 0, changedSlot.flip, changedSlot.def).trim();
     oldNode.replaceWith(wrapper.firstElementChild);
   }
 
@@ -2236,7 +2245,7 @@ function buildHoverCard(p, pos) {
   `;
 }
 
-function buildPlayerNode(p, pos, coords, delay, flipCard) {
+function buildPlayerNode(p, pos, coords, delay, flipCard, isDef = false) {
   if (!p) return '';
   const team = TEAMS[currentTeam];
   const mc = maddenColor(p.madden);
@@ -2244,7 +2253,7 @@ function buildPlayerNode(p, pos, coords, delay, flipCard) {
   const lastName = parts.length > 1 ? parts.slice(1).join(' ') : parts[0];
 
   return `
-    <div class="player-node ${flipCard ? 'flip-card' : ''}" data-pos="${pos}"
+    <div class="player-node ${flipCard ? 'flip-card' : ''}${isDef ? ' def' : ''}" data-pos="${pos}"
          style="left:${coords.x}%;top:${coords.y}%;animation-delay:${delay}ms"
          onclick="nodeClick('${pos}', event)"
          onmouseenter="positionHoverCard(this)">
@@ -2304,7 +2313,7 @@ function resolvePos(ourladsPos) {
   return POS_ALIAS[ourladsPos] || ourladsPos;
 }
 
-function buildFormationSlots(coordMap, personnel) {
+function buildFormationSlots(coordMap, personnel, isDef = false) {
   const slots = [];
   for (const [pos, coords] of Object.entries(coordMap)) {
     if (pos === 'TE' && personnel === '12') {
@@ -2312,14 +2321,14 @@ function buildFormationSlots(coordMap, personnel) {
       const te2 = getStarter('TE2');
       if (te1) currentOnFieldIds.add(te1.id);
       if (te2) currentOnFieldIds.add(te2.id);
-      slots.push({ pos: 'TE', coords, starter: te1, flip: false });
-      slots.push({ pos: 'TE2', coords: TE2_COORD, starter: te2, flip: false });
+      slots.push({ pos: 'TE', coords, starter: te1, flip: false, def: isDef });
+      slots.push({ pos: 'TE2', coords: TE2_COORD, starter: te2, flip: false, def: isDef });
       continue;
     }
     const starter = getStarter(pos);
     if (starter) currentOnFieldIds.add(starter.id);
     const forceFlip = ['QB', 'RB', 'FB', 'HB'].includes(pos);
-    slots.push({ pos, coords, starter, flip: forceFlip || coords.y > 72 });
+    slots.push({ pos, coords, starter, flip: forceFlip || coords.y > 72, def: isDef });
   }
   return slots;
 }
@@ -2335,13 +2344,13 @@ function renderFormation() {
   currentOnFieldIds = new Set();
   const slots = [
     ...buildFormationSlots(offCoordMap, currentOffPersonnel),
-    ...buildFormationSlots(defCoordMap, currentDefPersonnel),
+    ...buildFormationSlots(defCoordMap, currentDefPersonnel, true),
   ];
 
   let html = '';
   let delay = 0;
   for (const slot of slots) {
-    html += buildPlayerNode(slot.starter, slot.pos, slot.coords, delay, slot.flip);
+    html += buildPlayerNode(slot.starter, slot.pos, slot.coords, delay, slot.flip, slot.def);
     delay += 40;
   }
 
