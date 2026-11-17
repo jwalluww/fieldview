@@ -15,10 +15,7 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
                   "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 }
-# robots.txt: `User-agent: *` sets `Crawl-delay: 5`. The whole league is on
-# this one page (confirmed 3663 rows, no pagination), so a single request
-# normally never needs it — kept only in case this script grows a retry
-# or a second request later.
+# robots.txt: `User-agent: *` sets `Crawl-delay: 5`; honored between the 32 per-team requests (~3 min).
 CRAWL_DELAY = 5
 
 
@@ -75,7 +72,8 @@ def parse_table(html):
             continue
 
         canonical_name = normalize_name(raw_name)
-        team_raw = tds[2].get_text(strip=True)
+        # the team cell holds the abbreviation twice (two spans) in the filtered tables: take the first
+        team_raw = tds[2].get_text("|", strip=True).split("|")[0]
 
         records.append({
             "name": canonical_name,
@@ -92,14 +90,61 @@ def parse_table(html):
     return records
 
 
+MIN_ROWS = 1500   # per-team pulls total ~1,900-2,000; fewer than this is a failed/blocked pull
+MIN_TEAMS = 30
+PAGE_CAP = 100    # the unfiltered page and any filtered view are cut at 100 rows
+
+
+def fetch_team_slugs(html):
+    """Team filter values (ari, atl, ...) read from the page's own <select name=team>."""
+    soup = BeautifulSoup(html, "html.parser")
+    sel = soup.find("select", attrs={"name": "team"})
+    if sel is None:
+        raise RuntimeError("team filter <select> not found")
+    return [o.get("value") for o in sel.find_all("option") if o.get("value")]
+
+
 def main():
-    print(f"Fetching {URL} ...")
-    html = fetch_page()
-
-    records = parse_table(html)
-    print(f"Parsed {len(records)} contract records")
-
     out_path = os.path.join("nfl", "data", "spotrac_contracts.json")
+    print(f"Fetching {URL} ...")
+    # Spotrac now serves only the first 100 rows of the league-wide table (it used to serve all
+    # ~4,500), so pull one filtered table per team (a team has ~60 rows, under the cap).
+    # Keep-old guard: any fetch/parse failure, a short table or too few teams leaves the existing
+    # snapshot untouched and exits 0 (a Spotrac outage must never block the NFL job).
+    try:
+        resp = requests.get(URL, headers=HEADERS, timeout=30)
+        if resp.status_code != 200:
+            print(f"GUARD: Spotrac returned HTTP {resp.status_code}; keeping existing {out_path}")
+            return
+        slugs = fetch_team_slugs(resp.text)
+        records, teams_ok = [], 0
+        for slug in slugs:
+            time.sleep(CRAWL_DELAY)
+            r = requests.post(f"{URL}/_/team/{slug}", data="ajax=table", timeout=30,
+                              headers={**HEADERS, "Content-Type": "application/x-www-form-urlencoded"})
+            if r.status_code != 200:
+                print(f"  {slug}: HTTP {r.status_code} -- skipped")
+                continue
+            rows = parse_table(r.text)
+            if len(rows) >= PAGE_CAP:
+                print(f"  WARNING {slug}: {len(rows)} rows hit the {PAGE_CAP}-row cap; rows beyond it are missing")
+            records.extend(rows)
+            teams_ok += 1
+    except Exception as e:
+        print(f"GUARD: Spotrac fetch/parse failed ({e}); keeping existing {out_path}")
+        return
+    seen, deduped = set(), []
+    for rec in records:
+        key = (rec["name_norm"], rec["team"], rec["pos"])
+        if key not in seen:
+            seen.add(key)
+            deduped.append(rec)
+    records = deduped
+    print(f"Parsed {len(records)} contract records from {teams_ok} teams")
+    if teams_ok < MIN_TEAMS or len(records) < MIN_ROWS:
+        print(f"GUARD: {teams_ok} teams / {len(records)} rows (< {MIN_TEAMS} / {MIN_ROWS}); keeping existing {out_path}")
+        return
+
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(records, f, indent=2)
     print(f"Saved to {out_path}")

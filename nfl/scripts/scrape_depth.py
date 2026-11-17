@@ -43,7 +43,7 @@ SKIP_POSITIONS = {'EXE', 'RES', 'KR', 'PR', 'LS', 'K', 'P', 'KO', 'PK'}
 # Injured-list sections are kept (flagged injured) so those players show up in
 # the table; build_match.py resolves their position and they get no depth slot.
 # DFR = designated for return (e.g. Brian Branch), same treatment as IR/PUP/NFI.
-INJURED_SECTIONS = {'PUP', 'IR', 'NFI', 'PUP-R', 'DFR'}
+INJURED_SECTIONS = {'PUP', 'IR', 'NFI', 'PUP-R', 'DFR', 'PS/IR'}
 
 # Standard slot mapping per scheme
 # Each entry: ourlads_code -> (standard_slot, standard_pos)

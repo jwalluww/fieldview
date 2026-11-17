@@ -33,8 +33,8 @@ DB_PATH = os.path.join('nfl', 'data', 'fieldview.duckdb')
 # OurLads' reserve/practice-squad rows use generic labels that
 # scrape_depth's SLOT_MAPs don't cover, so they land as standard_pos 'DEF'.
 # 'CE' is ambiguous (Terrion Arnold, a CB, sits under it), so it and the
-# status labels (SUS, PS/IR, LEFT) fall through to the Madden position.
-INJURED_SECTIONS = {'PUP', 'IR', 'NFI', 'PUP-R', 'DFR'}
+# status labels (SUS, LEFT) fall through to the Madden position.
+INJURED_SECTIONS = {'PUP', 'IR', 'NFI', 'PUP-R', 'DFR', 'PS/IR'}
 RESERVE_LABEL_MAP = {'ED': 'EDGE', 'CB': 'CB', 'S': 'S', 'LB': 'LB', 'OG': 'OL'}
 MADDEN_POS_MAP = {
     'QB': 'QB', 'HB': 'RB', 'FB': 'RB', 'WR': 'WR', 'TE': 'TE',

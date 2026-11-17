@@ -227,11 +227,26 @@ def find_match(record, by_name, by_name_team):
     return candidates[0] if len(candidates) == 1 else None
 
 
-def comparable(records):
-    """Rating content only -- loaded_at/player_id aside -- for the diff."""
-    drop = {'loaded_at', 'player_id'}
-    return sorted(({k: v for k, v in r.items() if k not in drop} for r in records),
-                  key=lambda r: (r['2k_name'], r['team']))
+RATING_FIELDS = ('overall_rating', 'attr_3pt', 'attr_dnk')
+
+
+def _rkey(r):
+    return r.get('profile_url') or r['2k_name']
+
+
+def rating_diff(old_records, new_records):
+    """Real rating changes: per card (keyed by profile_url), the overall and the two attributes only.
+    loaded_at, team, player_id, positions and every other metadata field are ignored, so a transfer or an
+    ID re-match never bumps the date. Returns (overalls_changed, attrs_changed, cards_added_or_removed)."""
+    old = {_rkey(r): r for r in old_records}
+    new = {_rkey(r): r for r in new_records}
+    overall = attrs = 0
+    for k in old.keys() & new.keys():
+        if old[k].get('overall_rating') != new[k].get('overall_rating'):
+            overall += 1
+        if any(old[k].get(f) != new[k].get(f) for f in RATING_FIELDS[1:]):
+            attrs += 1
+    return overall, attrs, len(old.keys() ^ new.keys())
 
 
 def main():
@@ -260,12 +275,18 @@ def main():
 
     today = date.today().isoformat()
     old_records = prev_out.get('ratings') or []
-    if old_records and prev_meta.get('ratings_last_changed') and comparable(old_records) == comparable(records):
-        changed = prev_meta['ratings_last_changed']
-        print(f'{len(records)} ratings unchanged since {changed}')
+    if old_records and prev_meta.get('ratings_last_changed'):
+        n_overall, n_attrs, n_set = rating_diff(old_records, records)
+        if n_overall == 0 and n_attrs == 0 and n_set == 0:
+            changed = prev_meta['ratings_last_changed']
+            print(f'{len(records)} ratings unchanged since {changed} (0 overall ratings moved)')
+        else:
+            changed = today
+            print(f'{len(records)} cards: {n_overall} overall ratings changed, {n_attrs} attribute changes, '
+                  f'{n_set} cards added/removed; ratings_last_changed={changed}')
     else:
         changed = today
-        print(f'{len(records)} ratings changed (or first run), ratings_last_changed={changed}')
+        print(f'{len(records)} cards (first run), ratings_last_changed={changed}')
 
     os.makedirs(os.path.dirname(OUT_PATH), exist_ok=True)
     with open(OUT_PATH, 'w', encoding='utf-8') as f:

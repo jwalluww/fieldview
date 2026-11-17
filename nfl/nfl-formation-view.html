@@ -737,6 +737,38 @@ body.sb-open .field-outer { padding-right: 384px; }
 .sb-verdict { font-size: 13px; font-weight: 600; margin-top: 8px; }
 .sb-verdict.reach { color: #fb923c; } .sb-verdict.steal { color: #22c55e; } .sb-verdict.fair { color: var(--text-muted); }
 
+/* ── TEAM NEEDS ── */
+.needs-strip { width: 100%; max-width: 1400px; margin: 0 auto 6px; height: 28px; flex: 0 0 auto; display: flex; align-items: center; gap: 10px; padding: 0 10px; box-sizing: border-box; background: var(--surface2); border: 1px solid var(--border2); border-radius: 6px; cursor: pointer; white-space: nowrap; overflow: hidden; }
+.needs-strip:hover, .needs-strip.open { border-color: rgba(0,212,255,.5); }
+.ns-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); }
+.ns-chips { display: flex; align-items: center; gap: 8px; }
+.ns-chip { display: inline-flex; align-items: center; gap: 6px; padding: 1px 8px; border-radius: 4px; background: rgba(255,255,255,.05); }
+.ns-chip b { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 15px; letter-spacing: 1px; color: var(--text); }
+.ns-chip:hover { background: rgba(0,212,255,.14); }
+.ns-more { margin-left: auto; font-size: 11px; color: var(--text-muted); }
+.nd { display: inline-flex; gap: 2px; }
+.nd i { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.14); }
+.nd i.on.t1 { background: #8b93b0; } .nd i.on.t2 { background: #f5be28; } .nd i.on.t3 { background: #ef4444; }
+.player-node.need-hl .p-card { box-shadow: 0 0 0 2px rgba(0,212,255,.7), 0 0 14px rgba(0,212,255,.45); }
+.nm-row { display: flex; align-items: baseline; gap: 8px; padding: 4px 0; font-size: 12px; }
+.nm-g { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 15px; min-width: 38px; color: var(--text); }
+.nm-s { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 15px; color: var(--text); min-width: 22px; }
+.nm-r { flex: 1; min-width: 0; color: var(--text-muted); font-size: 11px; line-height: 1.35; }
+.nq-card { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.06); }
+.nq-card:last-child { border-bottom: none; }
+.nq-top { display: flex; align-items: center; gap: 8px; }
+.nq-g { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 17px; color: var(--text); min-width: 40px; }
+.nq-full { flex: 1; font-size: 11px; color: var(--text-muted); }
+.nq-score { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 20px; min-width: 26px; text-align: right; }
+.nq-bar { height: 5px; background: rgba(255,255,255,.08); border-radius: 3px; overflow: hidden; margin: 5px 0; }
+.nq-fill { height: 100%; border-radius: 3px; }
+.nq-reason { font-size: 11px; color: var(--text-muted); line-height: 1.4; margin-bottom: 4px; }
+.nq-pl { display: flex; align-items: baseline; gap: 8px; font-size: 12px; padding: 1px 0; }
+.nq-r { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 15px; width: 24px; text-align: right; flex-shrink: 0; }
+.nq-n { flex: 1; min-width: 0; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nq-m { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
+.dp-fit { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 12px; color: var(--accent); border: 1px solid rgba(0,212,255,.4); background: rgba(0,212,255,.08); border-radius: 3px; padding: 0 5px; min-width: 18px; text-align: center; flex-shrink: 0; }
+
 /* ── LEGEND ── */
 .legend-strip {
   margin-left: auto;
@@ -859,6 +891,9 @@ body.sb-open .field-outer { padding-right: 384px; }
 </header>
 
 <div class="field-outer">
+  <div class="needs-strip" id="needsStrip" role="button" tabindex="0" onclick="openNeedsPanel()" onkeydown="if(event.key==='Enter')openNeedsPanel()" title="Open Team Needs">
+    <span class="ns-label">Needs:</span><span class="ns-chips" id="needsChips"></span><span class="ns-more">All 11 groups &rsaquo;</span>
+  </div>
   <div class="formation-bar">
     <div class="formation-label" id="offFormationLabel">11 Personnel · Shotgun Spread</div>
     <span class="formation-label" style="opacity:.5; letter-spacing:0; text-transform:none; font-size:13px;">vs</span>
@@ -1591,7 +1626,7 @@ function naturalStarter(formationPos) {
   return null;
 }
 
-const INJURED_SLOTS = ['IR', 'PUP', 'NFI', 'PUP-R', 'DFR'];
+const INJURED_SLOTS = ['IR', 'PUP', 'NFI', 'PUP-R', 'DFR', 'PS/IR'];
 
 // Sidebar On/Off (header toggle). OFF = the original full hover card and the sub dropdown, no push padding.
 const SB_KEY = 'fieldview_nfl_sidebar';
@@ -1716,6 +1751,8 @@ function setStarterAt(formationPos, p) {
   if (sidebarPos === formationPos) renderSidebar();
   updateResetBtn();
   if (draftOpen) renderDraftPanel(true);
+  else if (needsOpen) renderNeedsPanel(true);
+  updateNeedsStrip();
   applyDropTargets();
   syncURL();
 }
@@ -1749,6 +1786,7 @@ function setSelectedHighlight() {
 
 function openSidebar(pos, event) {
   if (event) event.stopPropagation();
+  needsOpen = false;
   draftOpen = false; draftSel = { pick: null, prospect: null }; updateDraftBtn(); applyDropTargets();
   const swapped = sidebarPos !== pos;
   sidebarPos = pos;
@@ -1758,10 +1796,12 @@ function openSidebar(pos, event) {
 
 function closeSidebar() {
   sidebarPos = null;
+  needsOpen = false;
   compareId = null;
   draftOpen = false; draftSel = { pick: null, prospect: null }; updateDraftBtn(); applyDropTargets();
   document.getElementById('playerSidebar').classList.remove('open');
   document.body.classList.remove('sb-open');
+  updateNeedsStrip();
   setSelectedHighlight();
   syncFieldHeight();
   syncURL();
@@ -2355,6 +2395,8 @@ function renderFormation() {
     if (layer.querySelector(`.player-node[data-pos="${sidebarPos}"]`)) renderSidebar();
     else closeSidebar();
   } else if (draftOpen) renderDraftPanel(true);
+  else if (needsOpen) renderNeedsPanel(true);
+  updateNeedsStrip();
   updateResetBtn();
   applyDropTargets();
 }
@@ -2456,9 +2498,289 @@ document.addEventListener('click', e => {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     if (draftOpen && draftSel.prospect) { draftSel.prospect = null; renderDraftPanel(true); applyDropTargets(); }
-    else if (sidebarPos || draftOpen) closeSidebar();
+    else if (sidebarPos || draftOpen || needsOpen) closeSidebar();
   }
 });
+
+// ── TEAM NEEDS ──
+// Live, client-side, from players_master.json. Nothing here is written to data. Every weight/threshold is a named constant:
+// tune the numbers, not the logic.
+//   starters = the team's top-N HEALTHY players in the group by Madden (rookies at their unrounded projected rating).
+//   signals (0-1, higher = more need): now (1 - mean league percentile of the starters' Madden), performance (1 - mean advanced
+//   percentile; dropped + weights renormalized when no starter has one), horizon (share of starters on a last-year contract or past
+//   the age cliff), depth (1 - league percentile of the best backup; no backup = 1).  score = round(100 x raw x positional value).
+const NEED_GROUPS = ['QB', 'RB', 'WR', 'TE', 'OT', 'IOL', 'EDGE', 'DI', 'LB', 'CB', 'S'];
+const NEED_STARTERS = { QB: 1, RB: 1, WR: 3, TE: 1, OT: 2, IOL: 3, EDGE: 2, DI: 2, LB: 2, CB: 3, S: 2 }; // 11 personnel + nickel baseline, scheme-neutral
+const NEED_WEIGHTS = { now: 0.45, performance: 0.20, horizon: 0.20, depth: 0.15 };
+const NEED_VALUE = { QB: 1.00, EDGE: 0.90, OT: 0.85, WR: 0.80, CB: 0.80, DI: 0.70, S: 0.60, IOL: 0.60, LB: 0.55, TE: 0.55, RB: 0.50 };
+const NEED_AGE_CLIFF = { RB: 28, WR: 30, CB: 30, TE: 31, EDGE: 31, DI: 31, LB: 31, S: 31, OT: 32, IOL: 32, QB: 35 };
+const NEED_LAST_YEAR = 1;                 // years_remaining <= this = "on his last year" (1 = the current season is the final one)
+const NEED_TIERS = [50, 35, 20];          // score >= each = 3 / 2 / 1 dots
+const NEED_STRIP_TOP = 3;                 // chips in the strip and rows in the Draft panel
+const NEED_PERF_WARN = 0.55;              // performance signal at/above this is mentioned in the reason line
+const NEED_DEPTH_WARN = 0.70;             // depth signal at/above this is mentioned ("weak backup")
+const FIT_FLOOR = 0.3, FIT_SPAN = 64, FIT_NO_RANK = 0.5; // board value: 1 up to the pick, linear to FIT_FLOOR at pick + FIT_SPAN; no rank -> FIT_NO_RANK
+const NEED_LABEL = { QB: 'QB', RB: 'RB', WR: 'WR', TE: 'TE', OT: 'OT', IOL: 'IOL', EDGE: 'EDGE', DI: 'DI', LB: 'LB', CB: 'CB', S: 'S' };
+const NEED_NAME = { QB: 'Quarterback', RB: 'Running back', WR: 'Wide receiver', TE: 'Tight end', OT: 'Offensive tackle', IOL: 'Interior OL', EDGE: 'Edge rusher', DI: 'Interior DL', LB: 'Linebacker', CB: 'Cornerback', S: 'Safety' };
+
+let needsOpen = false;
+
+// Prospect / rookie group. OL splits by his listed position: OT -> tackle, everything else (OG, C, IOL, OL) -> interior.
+function prospectNeedGroup(pr, posRaw) {
+  if (pr.standard_pos !== 'OL') return NEED_STARTERS[pr.standard_pos] ? pr.standard_pos : null;
+  const raw = String(posRaw || (pr.raw_pos && (pr.raw_pos.mdh || pr.raw_pos.mdh_board || pr.raw_pos.pfn)) || '').toUpperCase();
+  return /^(OT|T|LT|RT)$/.test(raw) ? 'OT' : 'IOL';
+}
+function needGroupOf(p) {
+  if (p.isRookie) return prospectNeedGroup(p.prospect, p.posRaw);
+  const sp = p.standard_pos;
+  if (sp !== 'OL') return NEED_STARTERS[sp] ? sp : null;
+  const l = p.madden_pos_label, s = p.standard_slot;
+  if (l === 'LT' || l === 'RT') return 'OT';
+  if (l === 'LG' || l === 'C' || l === 'RG') return 'IOL';
+  if (s === 'LT' || s === 'RT') return 'OT';
+  if (s === 'LG' || s === 'C' || s === 'RG' || s === 'OG') return 'IOL';
+  return null;
+}
+const needRating = p => p.isRookie ? p.proj.point : p.madden;
+
+// midrank percentile (0-100) of v in an array
+function needPct(v, arr) {
+  if (!arr.length) return 0;
+  let below = 0, eq = 0;
+  for (const x of arr) { if (x < v) below++; else if (x === v) eq++; }
+  return (below + 0.5 * eq) / arr.length * 100;
+}
+
+// League baseline (every team's healthy veterans only), built once: per group the population of starters / best backups
+// and each team's own starter percentile (for the "ranks Nth of 32" line).
+let needsBase = null;
+function buildNeedsBase() {
+  const byTeam = {};
+  for (const p of allPlayers) {
+    if (p.injured || p.madden == null) continue;
+    const g = needGroupOf(p);
+    if (!g) continue;
+    const t = byTeam[p.team] = byTeam[p.team] || {};
+    (t[g] = t[g] || []).push(p.madden);
+  }
+  const start = {}, back = {};
+  NEED_GROUPS.forEach(g => { start[g] = []; back[g] = []; });
+  for (const t in byTeam) for (const g of NEED_GROUPS) {
+    const r = (byTeam[t][g] || []).sort((a, b) => b - a), n = NEED_STARTERS[g];
+    r.slice(0, n).forEach(v => start[g].push(v));
+    if (r.length > n) back[g].push(r[n]);
+  }
+  const teamNow = {};
+  for (const t in byTeam) {
+    teamNow[t] = {};
+    for (const g of NEED_GROUPS) {
+      const r = (byTeam[t][g] || []).slice().sort((a, b) => b - a).slice(0, NEED_STARTERS[g]);
+      let s = 0;
+      for (let i = 0; i < NEED_STARTERS[g]; i++) s += i < r.length ? needPct(r[i], start[g]) : 0;
+      teamNow[t][g] = s / NEED_STARTERS[g];
+    }
+  }
+  needsBase = { start, back, teamNow, teams: Object.keys(byTeam).length };
+}
+
+// Mean of a player's non-style advanced-stat percentiles (qualified only); null when he has none.
+function needAdvPct(p) {
+  const cfg = SIDEBAR_CARD[p.standard_pos];
+  if (!cfg) return null;
+  const v = [];
+  for (const k of cfg.list) {
+    if (ADV_STATS[k].style || p[k] == null) continue;
+    const pc = percentileOf(p, k);
+    if (pc != null) v.push(pc);
+  }
+  return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null;
+}
+
+const needsRookies = () => { const m = new Map(); rookieEntries().forEach(({ r }) => m.set(r.id, r)); importRookies.forEach(r => m.set(r.id, r)); return [...m.values()]; };
+const tierOf = s => s >= NEED_TIERS[0] ? 3 : s >= NEED_TIERS[1] ? 2 : s >= NEED_TIERS[2] ? 1 : 0;
+
+// Needs for the selected team. opts.skipId leaves one rookie out (used for the "before" half of a rookie's need change).
+function computeNeeds(opts) {
+  if (!allPlayers || !teamData) return null;
+  if (!needsBase) buildNeedsBase();
+  const skipId = opts && opts.skipId;
+  const pool = {};
+  NEED_GROUPS.forEach(g => { pool[g] = []; });
+  for (const p of teamData.players) {
+    if (p.injured || p.madden == null) continue;
+    const g = needGroupOf(p);
+    if (g) pool[g].push(p);
+  }
+  for (const r of needsRookies()) {
+    if (r.id === skipId) continue;
+    const g = needGroupOf(r);
+    if (g) pool[g].push(r);
+  }
+  const byGroup = {};
+  for (const g of NEED_GROUPS) {
+    const n = NEED_STARTERS[g];
+    const sorted = pool[g].sort((a, b) => needRating(b) - needRating(a));
+    const starters = sorted.slice(0, n), backup = sorted[n] || null;
+    // now
+    let sp = 0;
+    starters.forEach(p => { sp += needPct(needRating(p), needsBase.start[g]); });
+    const nowPct = sp / n;                                   // missing starters count as the 0th percentile
+    const now = 1 - nowPct / 100;
+    // performance (veterans with at least one qualified advanced percentile)
+    const adv = starters.filter(p => !p.isRookie).map(needAdvPct).filter(v => v != null);
+    const perf = adv.length ? 1 - (adv.reduce((a, b) => a + b, 0) / adv.length) / 100 : null;
+    // horizon
+    let last = 0, cliff = 0, flagged = 0;
+    starters.forEach(p => {
+      if (p.isRookie) return;
+      const l = p.years_remaining != null && p.years_remaining <= NEED_LAST_YEAR, c = p.age != null && p.age >= NEED_AGE_CLIFF[g];
+      if (l) last++;
+      if (c) cliff++;
+      if (l || c) flagged++;
+    });
+    const horizon = flagged / n;
+    // depth
+    const depth = backup ? 1 - needPct(needRating(backup), needsBase.back[g]) / 100 : 1;
+    // combine (performance dropped + weights renormalized when nobody has an advanced value)
+    let w = NEED_WEIGHTS.now + NEED_WEIGHTS.horizon + NEED_WEIGHTS.depth;
+    let raw = NEED_WEIGHTS.now * now + NEED_WEIGHTS.horizon * horizon + NEED_WEIGHTS.depth * depth;
+    if (perf != null) { w += NEED_WEIGHTS.performance; raw += NEED_WEIGHTS.performance * perf; }
+    raw /= w;
+    const score = Math.round(100 * raw * NEED_VALUE[g]);
+    // league rank of the starters ("ranks Nth of 32"): the other teams' veteran-only values vs this team's, rookies included
+    let rank = 1;
+    for (const t in needsBase.teamNow) if (t !== currentTeam && needsBase.teamNow[t][g] > nowPct) rank++;
+    // reason line, from the signals that drove it
+    const parts = [];
+    if (starters.length < n) parts.push(`only ${starters.length} healthy starter${starters.length === 1 ? '' : 's'}`);
+    parts.push(`starters rank ${ordinal(rank)} of ${needsBase.teams}`);
+    if (perf != null && perf >= NEED_PERF_WARN) parts.push(`advanced stats below average (${ordinal(Math.round((1 - perf) * 100))} pct)`);
+    if (last) parts.push(`${last} of ${n} on his last year`);
+    if (cliff) parts.push(`${cliff} past the age cliff (${NEED_AGE_CLIFF[g]}+)`);
+    if (!backup) parts.push('no backup');
+    else if (depth >= NEED_DEPTH_WARN) parts.push(`weak backup (${Math.round(needRating(backup))})`);
+    byGroup[g] = { g, n, starters, backup, now, perf, horizon, depth, raw, score, tier: tierOf(score), rank, reason: parts.join('; ') };
+  }
+  const ranked = NEED_GROUPS.slice().sort((a, b) => byGroup[b].score - byGroup[a].score || NEED_VALUE[b] - NEED_VALUE[a]);
+  return { byGroup, ranked };
+}
+
+let needsCache = { sig: null, val: null };
+function getNeeds() {
+  if (!allPlayers || !teamData) return null;
+  const sig = currentTeam + '|' + needsRookies().map(r => r.id).sort().join(',');
+  if (needsCache.sig !== sig) needsCache = { sig, val: computeNeeds() };
+  return needsCache.val;
+}
+
+const needDots = t => `<span class="nd" aria-label="${t} of 3">${[1, 2, 3].map(i => `<i class="${i <= t ? 'on t' + t : ''}"></i>`).join('')}</span>`;
+
+function updateNeedsStrip() {
+  const el = document.getElementById('needsChips'), strip = document.getElementById('needsStrip');
+  if (!el) return;
+  const nd = getNeeds();
+  if (!nd) { el.innerHTML = ''; return; }
+  el.innerHTML = nd.ranked.slice(0, NEED_STRIP_TOP).map(g => {
+    const b = nd.byGroup[g];
+    return `<span class="ns-chip t${b.tier}" data-group="${g}" title="${escapeHtml(NEED_NAME[g] + ' · need ' + b.score + ' · ' + b.reason)}" onmouseenter="needHighlight('${g}')" onmouseleave="needHighlight(null)"><b>${NEED_LABEL[g]}</b>${needDots(b.tier)}</span>`;
+  }).join('');
+  if (strip) strip.classList.toggle('open', needsOpen);
+}
+
+// Light highlight on the cards currently on the field for one group (hovering a strip chip).
+function needHighlight(g) {
+  document.querySelectorAll('#playersLayer .player-node.need-hl').forEach(n => n.classList.remove('need-hl'));
+  if (!g) return;
+  document.querySelectorAll('#playersLayer .player-node').forEach(n => {
+    const st = getStarter(n.dataset.pos);
+    if (st && needGroupOf(st) === g) n.classList.add('need-hl');
+  });
+}
+
+function needsMiniHtml() {
+  const nd = getNeeds();
+  if (!nd) return '';
+  const rows = nd.ranked.slice(0, NEED_STRIP_TOP).map(g => {
+    const b = nd.byGroup[g];
+    return `<div class="nm-row"><span class="nm-g">${NEED_LABEL[g]}</span>${needDots(b.tier)}<span class="nm-s">${b.score}</span><span class="nm-r">${escapeHtml(b.reason)}</span></div>`;
+  }).join('');
+  return `<div class="sb-section"><div class="sb-section-title sb-sort"><span>Top team needs</span>
+      <button class="sb-btn" style="flex:0 0 auto;padding:2px 10px;font-size:12px" onclick="openNeedsPanel()">Team needs</button></div>${rows}</div>`;
+}
+
+function openNeedsPanel() {
+  closeSidebar();            // frees the shared right-hand column (and resets the other panels)
+  needsOpen = true;
+  renderNeedsPanel();
+}
+
+function renderNeedsPanel(keepScroll) {
+  const el = document.getElementById('playerSidebar');
+  const st = keepScroll ? el.scrollTop : 0;
+  const nd = getNeeds(), team = TEAMS[currentTeam];
+  const close = '<button class="sb-close" onclick="closeSidebar()" aria-label="Close">&times;</button>';
+  if (!nd) { el.innerHTML = close + '<div class="sb-section sb-empty">Team needs are unavailable right now.</div>'; }
+  else {
+    const rookieN = needsRookies().length;
+    const cards = nd.ranked.map(g => {
+      const b = nd.byGroup[g];
+      const col = ['#4a5170', '#8b93b0', '#f5be28', '#ef4444'][b.tier];
+      const list = b.starters.map(p => `<div class="nq-pl"><span class="nq-r" style="color:${maddenColor(needRating(p))}">${p.isRookie ? Math.round(p.proj.point) : p.madden}</span>
+          <span class="nq-n">${esc(p.name)}${p.isRookie ? '<span class="sb-sub-r" title="Mock-draft rookie: projected rating">R · PROJ</span>' : ''}</span>
+          <span class="nq-m">${p.isRookie ? 'R' + p.round + ' #' + p.pick : (p.age != null ? 'Age ' + p.age : '')}${!p.isRookie && p.years_remaining != null ? ' · ' + p.years_remaining + (p.years_remaining === 1 ? ' yr left' : ' yrs left') : ''}</span></div>`).join('')
+        || '<div class="sb-empty" style="padding:4px 0">No healthy rated players.</div>';
+      return `<div class="nq-card"><div class="nq-top"><span class="nq-g">${NEED_LABEL[g]}</span><span class="nq-full">${NEED_NAME[g]}</span>${needDots(b.tier)}<span class="nq-score" style="color:${col}">${b.score}</span></div>
+        <div class="nq-bar"><div class="nq-fill" style="width:${Math.min(100, b.score)}%;background:${col}"></div></div>
+        <div class="nq-reason">${esc(b.reason)}</div>${list}</div>`;
+    }).join('');
+    el.innerHTML = close + `<div class="dp-head"><div class="dp-title">Team needs · ${esc(team.name)}</div>
+      <div class="sb-meta">Higher = bigger need. Starters are the top healthy players per group by Madden (${NEED_GROUPS.map(g => NEED_LABEL[g] + ' ' + NEED_STARTERS[g]).join(', ')})${rookieN ? '; ' + rookieN + ' drafted rookie' + (rookieN === 1 ? '' : 's') + ' counted at the projected rating' : ''}.</div></div>
+      <div class="sb-section" style="padding-top:4px">${cards}</div>
+      <div class="sb-section" style="border-bottom:none"><div class="sb-caption" style="margin-top:0">Score = starter quality (${Math.round(NEED_WEIGHTS.now * 100)}%), advanced stats (${Math.round(NEED_WEIGHTS.performance * 100)}%), contract/age horizon (${Math.round(NEED_WEIGHTS.horizon * 100)}%) and depth (${Math.round(NEED_WEIGHTS.depth * 100)}%), scaled by positional value. Injured players are excluded; the lineup and package on screen do not change it.</div></div>`;
+  }
+  el.classList.add('open');
+  document.body.classList.add('sb-open');
+  el.scrollTop = st;
+  updateNeedsStrip();
+  syncFieldHeight();
+}
+
+// ── FIT (draft board) ──
+// fit = need(group) x board value; board value = 1 up to the pick, falling linearly to FIT_FLOOR at pick + FIT_SPAN.
+function boardValue(pr, pickNo) {
+  const r = pr.consensus_rank != null ? pr.consensus_rank : pr.pfn_rank;
+  if (r == null) return FIT_NO_RANK;
+  if (r <= pickNo) return 1;
+  return Math.max(FIT_FLOOR, 1 - (1 - FIT_FLOOR) * (r - pickNo) / FIT_SPAN);
+}
+function fitFor(pr, pickNo, nd, posRaw) {
+  const g = prospectNeedGroup(pr, posRaw);
+  const need = g && nd ? nd.byGroup[g].score : 0, bv = boardValue(pr, pickNo);
+  return { g, need, bv, fit: need * bv };
+}
+function fitBadgeHtml(f) {
+  return `<span class="dp-fit" title="${escapeHtml('Need ' + (f.g || '?') + ': ' + f.need + ' × board value ' + f.bv.toFixed(2) + ' = ' + Math.round(f.fit))}">${Math.round(f.fit)}</span>`;
+}
+
+// "Replaces X at SLOT" / "Bench", and the group's need before -> after he was added.
+function displacedAt(slot, r) {
+  const a = autoPlaced[slot];
+  if (currentStarters[slot] === r && a && a !== r && !Object.values(currentStarters).some(m => m.id === a.id)) return a;
+  return naturalStarter(slot);
+}
+function rookieFitHtml(r, slot) {
+  const g = needGroupOf(r), nd = getNeeds();
+  if (!nd || !g) return '';
+  const before = computeNeeds({ skipId: r.id }).byGroup[g].score, after = nd.byGroup[g].score;
+  const onField = slot && getStarter(slot) === r;
+  const d = onField ? displacedAt(slot, r) : null;
+  const rep = !onField ? 'Bench' : (d ? `Replaces <b>${esc(d.name)}</b> (${d.madden != null ? d.madden : '—'}) at ${esc(slot)}` : `Fills an open ${esc(slot)} slot`);
+  return `<div class="sb-section"><div class="sb-section-title">Roster fit</div>
+      <div class="sb-kv"><span>Lineup</span><span style="text-align:right">${rep}</span></div>
+      <div class="sb-kv"><span>${NEED_LABEL[g]} need</span><span>${before} → ${after}</span></div>
+      <div class="sb-caption">Needs count every drafted rookie, placed or on the bench.</div></div>`;
+}
 
 // ── DRAFT INSTALLER (Phase 1: team-first) ──
 // A mock-draft rookie is view state exactly like a manual sub: it lives in currentStarters (flagged isRookie),
@@ -2629,6 +2951,14 @@ function draftBoardRows() {
   const q = draftSearch.trim().toLowerCase();
   const key = p => draftSort === 'pfn' ? [p.pfn_rank, p.consensus_rank] : [p.consensus_rank, p.pfn_rank];
   const cmp = (a, b) => (a == null) - (b == null) || (a - b) || 0;
+  if (draftSort === 'fit') { // need x board value at the selected pick, best first (ties: consensus order)
+    const nd = getNeeds(), fits = new Map();
+    draftData.prospects.forEach(p => fits.set(p.prospect_id, fitFor(p, draftSel.pick, nd).fit));
+    return draftData.prospects
+      .filter(p => !used.has(p.prospect_id) && (!draftPosFilter || p.standard_pos === draftPosFilter)
+        && (!q || p.name.toLowerCase().includes(q) || p.school.toLowerCase().includes(q)))
+      .sort((a, b) => (fits.get(b.prospect_id) - fits.get(a.prospect_id)) || cmp(a.consensus_rank, b.consensus_rank) || cmp(a.pfn_rank, b.pfn_rank) || a.name.localeCompare(b.name));
+  }
   return draftData.prospects
     .filter(p => !used.has(p.prospect_id) && (!draftPosFilter || p.standard_pos === draftPosFilter)
       && (!q || p.name.toLowerCase().includes(q) || p.school.toLowerCase().includes(q)))
@@ -2638,6 +2968,7 @@ function draftBoardRows() {
 function draftListHtml() {
   const rows = draftBoardRows();
   const pick = draftSel.pick;
+  const nd = getNeeds();
   const html = rows.slice(0, DRAFT_LIST_CAP).map(p => {
     const rk = draftSort === 'pfn' ? p.pfn_rank : p.consensus_rank;
     const proj = Math.round(projectRookie(p, pick).point);
@@ -2645,6 +2976,7 @@ function draftListHtml() {
       <span class="dp-rk">${rk != null ? '#' + rk : '—'}</span>
       <span class="dp-nm">${esc(p.name)}<small>${esc(p.school)}</small></span>
       <span class="dp-ps">${escapeHtml(p.standard_pos)}</span>
+      ${fitBadgeHtml(fitFor(p, pick, nd))}
       <span class="dp-pr" style="color:${maddenColor(proj)}" title="Projected rating if taken at #${pick}">${proj}</span>
     </div>`;
   }).join('');
@@ -2663,7 +2995,7 @@ function pickPanelHtml() {
     return `<div class="dp-head"><div class="dp-title">Mock draft · ${esc(team.name)}</div></div>
       <div class="sb-section"><div class="dp-note">A mock import is loaded, so picking by hand is off. Clear the import to pick players yourself.</div>
         <button class="sb-btn" style="width:100%" onclick="clearImport(event)">Clear import</button>
-        <button class="sb-btn" style="width:100%;margin-top:8px" onclick="openDraftPanel('import')">View imported mock</button></div>`;
+        <button class="sb-btn" style="width:100%;margin-top:8px" onclick="openDraftPanel('import')">View imported mock</button></div>${needsMiniHtml()}`;
   }
   const picks = teamDraftPicks();
   const taken = new Map(rookieEntries().map(({ slot, r }) => [r.pick, { slot, r }]));
@@ -2690,7 +3022,7 @@ function pickPanelHtml() {
   }).join('') : `<div class="sb-empty">${esc(team.name)} hold no picks in rounds 1–${DRAFT_MAX_ROUND}.</div>`;
   const board = draftSel.pick ? `<div class="sb-section">
       <div class="sb-section-title sb-sort"><span>Board · pick #${draftSel.pick}</span>
-        <span class="sort-toggle"><button class="${draftSort === 'consensus' ? 'active' : ''}" onclick="setDraftSort('consensus')">Consensus</button><button class="${draftSort === 'pfn' ? 'active' : ''}" onclick="setDraftSort('pfn')">PFN</button></span></div>
+        <span class="sort-toggle"><button class="${draftSort === 'consensus' ? 'active' : ''}" onclick="setDraftSort('consensus')">Consensus</button><button class="${draftSort === 'pfn' ? 'active' : ''}" onclick="setDraftSort('pfn')">PFN</button><button class="${draftSort === 'fit' ? 'active' : ''}" onclick="setDraftSort('fit')" title="Need x board value at this pick">Fit</button></span></div>
       <div class="dp-ctrls">
         <select onchange="draftPosFilter=this.value; renderDraftList()"><option value="">All positions</option>${DRAFT_POSITIONS.map(p => `<option value="${p}"${draftPosFilter === p ? ' selected' : ''}>${p}</option>`).join('')}</select>
         <input type="search" placeholder="Search name or school" value="${esc(draftSearch)}" oninput="draftSearch=this.value; renderDraftList()">
@@ -2701,6 +3033,7 @@ function pickPanelHtml() {
     <div class="dp-head"><div class="dp-title">Mock draft · ${esc(team.name)}</div>
       <div class="sb-meta">Pick a selection, choose a prospect, then click a highlighted slot.</div></div>
     ${banner}
+    ${needsMiniHtml()}
     <div class="sb-section"><div class="sb-section-title sb-sort"><span>Picks · rounds 1–${DRAFT_MAX_ROUND}</span>
       ${taken.size ? `<button class="sb-btn" style="flex:0 0 auto;padding:2px 10px;font-size:12px" onclick="clearDraft(event)">Clear draft</button>` : ''}</div>${pickRows}</div>
     ${board}
@@ -2778,6 +3111,7 @@ function renderRookieSidebar(el, p, resetScroll) {
       <div class="sb-kv"><span>Projected rating</span><span>${p.madden} (${p.proj.lo}–${p.proj.hi})</span></div>
       ${verdict}
       <div class="sb-caption">From where he is drafted (slot #${p.pick}), nudged ${Math.round(DRAFT_PULL * 100)}% toward his board rank. Not a real Madden rating.</div></div>
+    ${rookieFitHtml(p, sidebarPos)}
     ${contractHtml}${csHtml}
     ${pfnRows ? `<div class="sb-section"><div class="sb-section-title">Board &amp; scouting</div>${pfnRows}${tradeHtml}</div>` : (tradeHtml ? `<div class="sb-section">${tradeHtml}</div>` : '')}
     ${meas ? `<div class="sb-section"><div class="sb-section-title">Measurables</div>${meas}</div>` : ''}
@@ -3006,6 +3340,7 @@ function importPanelHtml() {
         <span class="dp-haul-no">R${r.round} #${r.pick}</span>
         <span class="dp-nm">${esc(r.name)}<small>${esc(r.school)}</small></span>
         <span class="dp-ps">${esc(r.standard_pos)}</span>
+        ${fitBadgeHtml(fitFor(r.prospect, r.pick, computeNeeds({ skipId: r.id }), r.posRaw))}
         <span class="dp-pr" style="color:${maddenColor(r.madden)}" title="Projected rating">${r.madden}</span>
         <span class="dp-haul-st${slot ? ' on' : ''}">${slot ? 'starting at ' + slot : 'bench'}</span></div>${tr}`;
     }).join('') || `<div class="sb-empty">${esc(team.name)} have no picks in this mock.</div>`;
@@ -3014,7 +3349,7 @@ function importPanelHtml() {
   }
   return `<div class="dp-head"><div class="dp-title">Import mock · ${esc(team.name)}</div>
       <div class="sb-meta">Paste a Mock Draft Hero "save text" export. Rookies are auto-placed in every team's lineup.</div></div>
-    ${sum}${haul}
+    ${needsMiniHtml()}${sum}${haul}
     <div class="sb-section" style="border-bottom:none"><div class="sb-section-title"><span>${importState ? 'Replace with another mock' : 'Paste mock'}</span></div>
       <textarea class="dp-imp-ta" id="dpImportTa" placeholder="Draft Results from Mock Draft Hero&#10;1. Chargers - Leonard Moore (CB, Notre Dame)&#10;..." oninput="importDraftInput(this.value)">${esc(importText)}</textarea>
       ${importError ? `<div class="dp-note" style="margin:6px 0">${esc(importError)}</div>` : ''}

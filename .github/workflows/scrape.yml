@@ -42,6 +42,11 @@ jobs:
       # - name: Run Madden scraper
       #   run: python nfl/scripts/scrape_madden.py
 
+      # Spotrac contracts (years_remaining / cash fields). Keep-old guard inside the script; a failure never blocks the job.
+      - name: Run Spotrac contracts scraper
+        continue-on-error: true
+        run: python nfl/scripts/scrape_contracts_spotrac.py
+
       - name: Run QBR scraper
         run: python nfl/scripts/scrape_qbr.py
 
