@@ -76,11 +76,39 @@ def parse_order(soup, standings=None, log=None):
                 notes.append(f'  differs from modal method: pick {p} owner {owner[p]} modal original {modal_orig[p]} standings original {orig[p]}')
     else:
         notes.append('  standings unavailable/incomplete: using the modal-owner method for original_team')
+    _apply_known_picks(owner, rnd, orig, notes)
     out = [{'pick': p, 'round': rnd[p], 'team': owner[p], 'original_team': orig[p]} for p in range(1, n + 1)]
     if log is not None:
         log.append(f'  original_team method: {method}')
         log.extend(notes)
     return out, None
+
+
+# Well-reported trades the structure can't resolve (several candidate original owners). Format:
+# (draft year, round, current owner) -> original owner of that owner's round pick that is NOT its own.
+# For well-reported trades ONLY (here: Micah Parsons trade, DAL holds GB's 2027 R1). Empty this after the 2027 draft.
+KNOWN_PICKS = {(2027, 1, 'DAL'): 'GB'}
+KNOWN_YEAR = 2027
+
+
+def _apply_known_picks(owner, rnd, orig, notes):
+    """Apply KNOWN_PICKS after the standings inference: only when the owner holds 2+ picks in that round
+    or holds one the inference left unlabeled (original == owner). Labels exactly one pick; logs each override."""
+    for (yr, r, team), frm in KNOWN_PICKS.items():
+        if yr != KNOWN_YEAR:
+            continue
+        mine = [p for p in owner if rnd[p] == r and owner[p] == team]
+        if not mine:
+            continue
+        unlabeled = [p for p in mine if orig[p] == team]
+        if any(orig[p] == frm for p in mine):
+            notes.append(f'  KNOWN_PICKS {team} R{r} from {frm}: already labelled by inference, no override')
+            continue
+        if not unlabeled:
+            continue   # every pick this team holds in the round is already labelled as a different trade
+        tgt = max(unlabeled)   # the pick the inference left unlabeled (the later one if there are several)
+        notes.append(f'  KNOWN_PICKS override: pick {tgt} (R{r}, {team}) original_team {orig[tgt]} -> {frm}')
+        orig[tgt] = frm
 
 
 def _infer_modal(owner, rnd, start, rc, n):
