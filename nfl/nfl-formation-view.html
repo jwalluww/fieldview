@@ -654,6 +654,10 @@ body.sb-open .field-outer { padding-right: 384px; }
 .sb-cmp-actions { display: flex; gap: 8px; padding: 10px 16px; border-bottom: 1px solid var(--border); }
 .sb-btn { flex: 1; padding: 8px 0; border-radius: 6px; border: 1px solid var(--border2); background: transparent; color: var(--text); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; }
 .sb-btn:hover { background: var(--border); }
+.reset-btn.confirm { background: #ef4444; color: #fff; border-color: #ef4444; }
+.dp-grade { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 12px; color: #22c55e; border: 1px solid rgba(34,197,94,.45); background: rgba(34,197,94,.08); border-radius: 3px; padding: 0 5px; min-width: 20px; text-align: center; flex-shrink: 0; }
+.dp-grade.g-mid { color: #f5c542; border-color: rgba(245,197,66,.5); background: rgba(245,197,66,.08); }
+.dp-grade.g-low { color: #ef4444; border-color: rgba(239,68,68,.5); background: rgba(239,68,68,.08); }
 .sb-btn.primary { background: var(--accent); border-color: var(--accent); color: #000; }
 .sb-btn.primary:hover { filter: brightness(1.1); }
 .sb-cmp-head { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 14px 40px 12px 16px; border-bottom: 1px solid var(--border); }
@@ -875,6 +879,7 @@ body.sb-open .field-outer { padding-right: 384px; }
       </div>
     </span>
     <button class="ctrl-btn reset-btn" id="resetStartersBtn" onclick="resetStarters()" style="display:none">Reset to starters</button>
+    <button class="ctrl-btn reset-btn" id="clearDraftBtn" onclick="clearDraftHeader()" style="display:none" title="Remove every drafted rookie (manual picks or the imported mock)">Clear draft</button>
   </div>
 
   <button class="sb-toggle" id="sbToggle" onclick="toggleSidebarMode()" title="Click a player for a detail sidebar (Off = original hover card and sub dropdown)"></button>
@@ -1759,16 +1764,41 @@ function setStarterAt(formationPos, p) {
 }
 
 // Reset button is only shown while there are manual subs on either side.
+// Reset only matters while there are manual subs (manual rookies are not subs: Reset never removes them).
+// Clear draft shows whenever any rookie exists (manual picks or an imported mock).
+const isManualRookie = r => r && r.isRookie && !r.fromImport;
 function updateResetBtn() {
-  document.getElementById('resetStartersBtn').style.display = Object.keys(currentStarters).length ? '' : 'none';
+  document.getElementById('resetStartersBtn').style.display = Object.values(currentStarters).some(r => !isManualRookie(r)) ? '' : 'none';
+  const b = document.getElementById('clearDraftBtn');
+  const any = rookieEntries().length > 0 || !!importState;
+  b.style.display = any ? '' : 'none';
+  if (!any) cancelClearConfirm();
+}
+// Two-step inline confirmation (no browser dialog): "Clear draft" -> "Confirm clear?" for CLEAR_CONFIRM_MS.
+const CLEAR_CONFIRM_MS = 3000;
+let clearConfirmTimer = null;
+function cancelClearConfirm() {
+  if (clearConfirmTimer) { clearTimeout(clearConfirmTimer); clearConfirmTimer = null; }
+  const b = document.getElementById('clearDraftBtn');
+  if (b) { b.textContent = 'Clear draft'; b.classList.remove('confirm'); }
+}
+function clearDraftHeader() {
+  const b = document.getElementById('clearDraftBtn');
+  if (!clearConfirmTimer) {
+    b.textContent = 'Confirm clear?'; b.classList.add('confirm');
+    clearConfirmTimer = setTimeout(cancelClearConfirm, CLEAR_CONFIRM_MS);
+    return;
+  }
+  cancelClearConfirm();
+  if (importState) clearImport(); else clearDraft();
 }
 
 // Clears manual subs for both offense and defense; personnel choices are untouched.
 // renderFormation() refreshes the sidebar, or closes it if its player left the field.
 function resetStarters() {
-  currentStarters = {};
+  // Manual subs only: manual rookies stay in their slots; the import lineup is recomputed below.
+  Object.keys(currentStarters).forEach(k => { if (!isManualRookie(currentStarters[k])) delete currentStarters[k]; });
   compareId = null;
-  draftSel = { pick: null, prospect: null }; // rookies are manual starters too: Reset clears them
   autoKey = null;                            // back to the auto-placed import lineup (if any)
   renderFormation();
   syncURL();
@@ -1910,7 +1940,7 @@ function renderSidebar(resetScroll) {
   const injText = [p.injury_status, p.injury_detail].filter(Boolean).join(' — ');
 
   const meta1 = [p.standard_pos + (sidebarPos !== p.standard_pos ? ' · ' + sidebarPos : ''), team.name].join(' · ');
-  const meta2 = [p.age ? 'Age ' + p.age : null, p.years_pro != null ? 'Yr ' + p.years_pro + ' NFL' : null, p.height || null, p.weight ? p.weight + ' lbs' : null, p.college || null, p.draft_year ? 'Drafted ' + p.draft_year : null].filter(Boolean).join(' · ');
+  const meta2 = [p.age ? 'Age ' + p.age : null, p.years_pro != null ? 'Yr ' + p.years_pro + ' NFL' : null, p.height || null, p.weight ? p.weight + ' lbs' : null, p.college || null, draftLine(p)].filter(Boolean).join(' · ');
   const contract = p.years_remaining != null && p.avg_annual_remaining != null
     ? p.years_remaining + ' yrs remaining · ' + formatMoneyShort(p.avg_annual_remaining) + '/yr avg'
     : (p.cap_raw ? formatMoneyShort(p.cap_raw) + ' cap hit' : '');
@@ -2612,6 +2642,14 @@ function needAdvPct(p) {
   return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null;
 }
 
+// Sidebar draft line: "Round 6, #203 (2025)" / "Undrafted". The master has the round (attainment) and year but no overall
+// pick number: "#N" is added only when a player carries `draft_pick`.
+function draftLine(p) {
+  const a = String(p.attainment || '');
+  const m = /^(\d\d)\/([1-7])\*?$/.exec(a);
+  if (m) return `Round ${m[2]}${p.draft_pick ? ', #' + p.draft_pick : ''} (${p.draft_year || 2000 + Number(m[1])})`;
+  return a ? 'Undrafted' : null;
+}
 // attainment is '<yy>/<round>' (optional trailing '*'); 'U/TEAM', 'CC/TEAM', 'CF26', 'SF26', missing = undrafted.
 function draftRoundOf(p) {
   if (p.isRookie) return p.round || null;
@@ -2642,6 +2680,13 @@ function needInvestment(p, g) {
   }
   return { inv, round, name: p.name, byCommit: commit > draftInv, guar: p.cash_guaranteed_remaining };
 }
+// Pick grade (all tunable). value = board value at the pick, need = the team's raw need for the group BEFORE the pick, pv = positional value.
+const REACH_ALLOW = { QB: 3.0, EDGE: 1.5, OT: 1.5, WR: 1.3, CB: 1.3, default: 1.0 }; // how far past the pick (x pick) a rank still counts as fair
+const GRADE_STEAL_MAX = 0.15, GRADE_STEAL_SPAN = 32;   // steal bonus = min(MAX, MAX x (pick - rank) / SPAN)
+const GRADE_REACH_SLOPE = 0.6, GRADE_REACH_SPAN = 64, GRADE_VALUE_FLOOR = 0.4, GRADE_NO_RANK = 0.85;
+const GRADE_NEED_FULL = 60;                            // raw need (0-100, before positional value) that counts as a full need
+const GRADE_W = { base: 0.45, need: 0.35, pv: 0.20 };
+const GRADE_LETTERS = [[.95, 'A+'], [.90, 'A'], [.85, 'A-'], [.80, 'B+'], [.75, 'B'], [.70, 'B-'], [.65, 'C+'], [.60, 'C'], [.50, 'D']];
 const ROUND_WORD = { 1: 'first', 2: 'second', 3: 'third', 4: 'fourth', 5: 'fifth', 6: 'sixth', 7: 'seventh' };
 
 const needsRookies = () => { const m = new Map(); rookieEntries().forEach(({ r }) => m.set(r.id, r)); importRookies.forEach(r => m.set(r.id, r)); return [...m.values()]; };
@@ -2651,7 +2696,7 @@ const tierOf = s => s >= NEED_TIERS[0] ? 3 : s >= NEED_TIERS[1] ? 2 : s >= NEED_
 function computeNeeds(opts) {
   if (!allPlayers || !teamData) return null;
   if (!needsBase) buildNeedsBase();
-  const skipId = opts && opts.skipId;
+  const skipId = opts && opts.skipId, before = opts && opts.beforePick;
   const pool = {};
   NEED_GROUPS.forEach(g => { pool[g] = []; });
   for (const p of teamData.players) {
@@ -2660,7 +2705,7 @@ function computeNeeds(opts) {
     if (g) pool[g].push(p);
   }
   for (const r of needsRookies()) {
-    if (r.id === skipId) continue;
+    if (r.id === skipId || (before != null && r.pick >= before)) continue;
     const g = needGroupOf(r);
     if (g) pool[g].push(r);
   }
@@ -2725,7 +2770,7 @@ function computeNeeds(opts) {
       } else if (high.length > 1) parts.push(high.some(x => x.byCommit) ? `${high.length} starters in the team's plan (young high picks / committed contracts)` : `${high.length} young high picks starting`);
       else parts.push('young draft picks / contracts starting');
     }
-    byGroup[g] = { g, n, starters, invMean, scorePre, backup, now, perf, horizon, depth, raw, score, tier: tierOf(score), rank, reason: parts.join('; ') };
+    byGroup[g] = { g, n, rawNeed: 100 * raw, starters, invMean, scorePre, backup, now, perf, horizon, depth, raw, score, tier: tierOf(score), rank, reason: parts.join('; ') };
   }
   const ranked = NEED_GROUPS.slice().sort((a, b) => byGroup[b].score - byGroup[a].score || NEED_VALUE[b] - NEED_VALUE[a]);
   return { byGroup, ranked };
@@ -2824,6 +2869,28 @@ function fitFor(pr, pickNo, nd, posRaw) {
   const need = g && nd ? nd.byGroup[g].score : 0, bv = boardValue(pr, pickNo);
   return { g, need, bv, fit: need * bv };
 }
+// Pick grade: ndBefore = computeNeeds({beforePick}) (this team's earlier picks in the mock included, this one and later excluded).
+function gradeFor(pr, pickNo, ndBefore, posRaw) {
+  const g = prospectNeedGroup(pr, posRaw);
+  const rank = pr.consensus_rank != null ? pr.consensus_rank : pr.pfn_rank;
+  const allow = (REACH_ALLOW[g] != null ? REACH_ALLOW[g] : REACH_ALLOW.default);
+  let value;
+  if (rank == null) value = GRADE_NO_RANK;
+  else if (rank <= pickNo * allow) value = 1 + (rank < pickNo ? Math.min(GRADE_STEAL_MAX, GRADE_STEAL_MAX * (pickNo - rank) / GRADE_STEAL_SPAN) : 0);
+  else value = Math.max(GRADE_VALUE_FLOOR, 1 - GRADE_REACH_SLOPE * Math.min(1, (rank - pickNo * allow) / GRADE_REACH_SPAN));
+  const rawNeed = g && ndBefore ? ndBefore.byGroup[g].rawNeed : 0;
+  const need = Math.min(1, rawNeed / GRADE_NEED_FULL), pv = g ? NEED_VALUE[g] : 0;
+  const score = value * (GRADE_W.base + GRADE_W.need * need + GRADE_W.pv * pv);
+  return { g, rank, value, need, pv, rawNeed, score, letter: letterOf(score), noRank: rank == null };
+}
+function letterOf(score) { for (const [t, l] of GRADE_LETTERS) if (score >= t) return l; return 'F'; }
+const gradeClass = sc => sc >= GRADE_LETTERS[5][0] ? '' : sc >= GRADE_LETTERS[8][0] ? ' g-mid' : ' g-low';
+function gradeTitle(gr) {
+  return `Grade ${gr.letter}: value ${gr.value.toFixed(2)}${gr.noRank ? ' (no board rank)' : ''}, need ${gr.need.toFixed(2)} (${gr.g || '?'}), positional value ${gr.pv.toFixed(2)}, score ${gr.score.toFixed(2)}`;
+}
+function gradeBadgeHtml(gr) {
+  return `<span class="dp-grade${gradeClass(gr.score)}" title="${escapeHtml(gradeTitle(gr))}">${escapeHtml(gr.letter)}</span>`;
+}
 function fitBadgeHtml(f) {
   return `<span class="dp-fit" title="${escapeHtml('Need ' + (f.g || '?') + ': ' + f.need + ' × board value ' + f.bv.toFixed(2) + ' = ' + Math.round(f.fit))}">${Math.round(f.fit)}</span>`;
 }
@@ -2838,11 +2905,13 @@ function rookieFitHtml(r, slot) {
   const g = needGroupOf(r), nd = getNeeds();
   if (!nd || !g) return '';
   const before = computeNeeds({ skipId: r.id }).byGroup[g].score, after = nd.byGroup[g].score;
+  const gr = gradeFor(r.prospect, r.pick, computeNeeds({ beforePick: r.pick, skipId: r.id }), r.posRaw);
   const onField = slot && getStarter(slot) === r;
   const d = onField ? displacedAt(slot, r) : null;
   const rep = !onField ? 'Bench' : (d ? `Replaces <b>${esc(d.name)}</b> (${d.madden != null ? d.madden : '—'}) at ${esc(slot)}` : `Fills an open ${esc(slot)} slot`);
   return `<div class="sb-section"><div class="sb-section-title">Roster fit</div>
       <div class="sb-kv"><span>Lineup</span><span style="text-align:right">${rep}</span></div>
+      <div class="sb-kv"><span>Grade</span><span title="${escapeHtml(gradeTitle(gr))}"><b>${esc(gr.letter)}</b> (value ${gr.value.toFixed(2)}, need ${gr.need.toFixed(2)}, ${esc(gr.g || '?')})${gr.noRank ? ' · no board rank' : ''}</span></div>
       <div class="sb-kv"><span>${NEED_LABEL[g]} need</span><span>${before} → ${after}</span></div>
       <div class="sb-caption">Needs count every drafted rookie, placed or on the bench.</div></div>`;
 }
@@ -3033,7 +3102,7 @@ function draftBoardRows() {
 function draftListHtml() {
   const rows = draftBoardRows();
   const pick = draftSel.pick;
-  const nd = getNeeds();
+  const nd = getNeeds(), ndB = computeNeeds({ beforePick: pick });
   const html = rows.slice(0, DRAFT_LIST_CAP).map(p => {
     const rk = draftSort === 'pfn' ? p.pfn_rank : p.consensus_rank;
     const proj = Math.round(projectRookie(p, pick).point);
@@ -3041,7 +3110,7 @@ function draftListHtml() {
       <span class="dp-rk">${rk != null ? '#' + rk : '—'}</span>
       <span class="dp-nm">${esc(p.name)}<small>${esc(p.school)}</small></span>
       <span class="dp-ps">${escapeHtml(p.standard_pos)}</span>
-      ${fitBadgeHtml(fitFor(p, pick, nd))}
+      ${fitBadgeHtml(fitFor(p, pick, nd))}${gradeBadgeHtml(gradeFor(p, pick, ndB))}
       <span class="dp-pr" style="color:${maddenColor(proj)}" title="Projected rating if taken at #${pick}">${proj}</span>
     </div>`;
   }).join('');
@@ -3398,18 +3467,20 @@ function importPanelHtml() {
   if (importState) {
     const onField = {};
     document.querySelectorAll('#playersLayer .player-node').forEach(n => { const st = getStarter(n.dataset.pos); if (st) onField[st.id] = n.dataset.pos; });
-    const rows = importRookies.map(r => {
+    const grades = importRookies.map(r => gradeFor(r.prospect, r.pick, computeNeeds({ beforePick: r.pick, skipId: r.id }), r.posRaw));
+    const teamScore = grades.length ? grades.reduce((a, x) => a + x.score, 0) / grades.length : null;
+    const rows = importRookies.map((r, i) => {
       const slot = onField[r.id];
       const tr = r.trade && r.trade.length ? `<div class="dp-trade">${r.trade.map(esc).join('<br>')}</div>` : '';
       return `<div class="dp-haul${slot ? ' go' : ''}"${slot ? ` onclick="openSidebar('${slot}', event)"` : ''}>
         <span class="dp-haul-no">R${r.round} #${r.pick}</span>
         <span class="dp-nm">${esc(r.name)}<small>${esc(r.school)}</small></span>
         <span class="dp-ps">${esc(r.standard_pos)}</span>
-        ${fitBadgeHtml(fitFor(r.prospect, r.pick, computeNeeds({ skipId: r.id }), r.posRaw))}
+        ${fitBadgeHtml(fitFor(r.prospect, r.pick, computeNeeds({ skipId: r.id }), r.posRaw))}${gradeBadgeHtml(grades[i])}
         <span class="dp-pr" style="color:${maddenColor(r.madden)}" title="Projected rating">${r.madden}</span>
         <span class="dp-haul-st${slot ? ' on' : ''}">${slot ? 'starting at ' + slot : 'bench'}</span></div>${tr}`;
     }).join('') || `<div class="sb-empty">${esc(team.name)} have no picks in this mock.</div>`;
-    haul = `<div class="sb-section"><div class="sb-section-title"><span>${esc(team.name)} haul</span></div>${rows}
+    haul = `<div class="sb-section"><div class="sb-section-title sb-sort"><span>${esc(team.name)} haul</span>${teamScore != null ? `<span title="Mean pick score ${teamScore.toFixed(2)}">Team grade <span class="dp-grade${gradeClass(teamScore)}">${escapeHtml(letterOf(teamScore))}</span></span>` : ''}</div>${rows}
       <div class="sb-caption">Auto-placed best projected rating first; a rookie starts only where he beats the current starter. Bench rookies are in the substitute lists.</div></div>`;
   }
   return `<div class="dp-head"><div class="dp-title">Import mock · ${esc(team.name)}</div>
