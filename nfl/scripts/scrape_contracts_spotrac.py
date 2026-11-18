@@ -84,7 +84,8 @@ def parse_table(html):
             "age": parse_int(tds[3].get_text(strip=True)),
             "length_remaining": parse_int(tds[4].get_text(strip=True)),
             "cash_total_remaining": parse_money(tds[5].get_text(strip=True)),
-            "cash_guaranteed_remaining": parse_money(tds[6].get_text(strip=True)),
+            # blank guaranteed cell = nothing guaranteed = 0 (null is reserved for "no Spotrac row")
+            "cash_guaranteed_remaining": (parse_money(tds[6].get_text(strip=True)) or 0),
             "pct_guaranteed_remaining": parse_pct(tds[7].get_text(strip=True)),
         })
     return records

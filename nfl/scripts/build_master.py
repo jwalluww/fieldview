@@ -836,7 +836,8 @@ def build_master():
             row = spotrac_df.loc[row_idx]
             years_remaining = int(row['length_remaining']) if pd.notna(row['length_remaining']) else None
             cash_total = float(row['cash_total_remaining']) if pd.notna(row['cash_total_remaining']) else None
-            cash_guaranteed = float(row['cash_guaranteed_remaining']) if pd.notna(row['cash_guaranteed_remaining']) else None
+            # a Spotrac row with a blank guaranteed cell = nothing guaranteed = 0 (null is reserved for 'no Spotrac row')
+            cash_guaranteed = float(row['cash_guaranteed_remaining']) if pd.notna(row['cash_guaranteed_remaining']) else 0.0
 
             entry['years_remaining'] = years_remaining
             entry['cash_total_remaining'] = cash_total
