@@ -1481,6 +1481,7 @@ function mapPlayer(player) {
     madden_rank_total: player.madden_rank_total,
     madden_pos_label: player.madden_pos_label,
     cap_number: player.cap_number,
+    cash_guaranteed_remaining: player.cash_guaranteed_remaining,
     cap_raw: parseCap(player.cap_number),
     years_remaining: player.years_remaining,
     avg_annual_remaining: player.avg_annual_remaining,
@@ -2517,6 +2518,8 @@ const NEED_AGE_CLIFF = { RB: 28, WR: 30, CB: 30, TE: 31, EDGE: 31, DI: 31, LB: 3
 // Draft investment: a young high pick starting is the team's plan, not a hole. investment = capital x youth per starter.
 const NEED_CAPITAL = { 1: 1.0, 2: 0.6, 3: 0.35, 4: 0.15, 5: 0.15, 6: 0.15, 7: 0.15 }; // by draft round; undrafted = 0
 const NEED_CAPITAL_QB = { 1: 1.0, 2: 0.6 };                                            // QB group: rounds 3+ / undrafted = 0
+const NEED_COMMIT_FULL = { QB: 40000000, default: 20000000 };                         // guaranteed $ remaining that counts as full commitment
+const NEED_COMMIT_MIN_YEARS = 2;                                                       // years_remaining needed for a contract to count
 const NEED_YOUTH = { 0: 1.0, 1: 1.0, 2: 0.8, 3: 0.6 };                               // by years_pro; 4+ = 0
 const NEED_INV_QB = 0.75;        // QB: raw x (1 - 0.75 x investment of QB1)
 const NEED_INV_OTHER = 0.40;     // other groups: "now" x (1 - 0.40 x mean investment of the starters)
@@ -2618,21 +2621,26 @@ function draftRoundOf(p) {
 // investment = capital x youth (halved for a bust: 2+ years in and bottom 20% on both Madden and advanced percentile)
 function needInvestment(p, g) {
   const round = draftRoundOf(p);
-  if (!round) return { inv: 0, round: null };
-  const capital = (g === 'QB' ? NEED_CAPITAL_QB : NEED_CAPITAL)[round] || 0;
+  const capital = round ? (g === 'QB' ? NEED_CAPITAL_QB : NEED_CAPITAL)[round] || 0 : 0;
   // years_pro is missing for some recent picks (e.g. Cam Ward): fall back to the draft year in attainment ('25/1') vs the current season
   let yp = p.years_pro;
-  if (!p.isRookie && yp == null) {
+  if (!p.isRookie && yp == null && round) {
     const yy = Number(String(p.attainment).slice(0, 2)), season = Math.max(...allPlayers.map(x => x.stats_season || 0));
     if (season && !isNaN(yy)) yp = Math.max(0, season - (2000 + yy));
   }
   const youth = p.isRookie ? 1 : (NEED_YOUTH[yp] != null ? NEED_YOUTH[yp] : 0);
-  let inv = capital * youth;
-  if (!p.isRookie && yp >= NEED_INV_MIN_YEARS && inv > 0) {
+  const draftInv = capital * youth;
+  // contract commitment: guaranteed money still owed, 2+ years left (rookies: their draft investment covers them)
+  const full = NEED_COMMIT_FULL[g] != null ? NEED_COMMIT_FULL[g] : NEED_COMMIT_FULL.default;
+  const commit = !p.isRookie && p.years_remaining != null && p.years_remaining >= NEED_COMMIT_MIN_YEARS && p.cash_guaranteed_remaining
+    ? Math.min(1, p.cash_guaranteed_remaining / full) : 0;
+  let inv = Math.max(draftInv, commit);
+  // bust check on the combined value
+  if (!p.isRookie && (p.years_pro != null ? p.years_pro : yp) >= NEED_INV_MIN_YEARS && inv > 0) {
     const adv = needAdvPct(p);
     if (adv != null && needPct(p.madden, needsBase.start[g]) < NEED_BUST_PCT && adv < NEED_BUST_PCT) inv /= 2;
   }
-  return { inv, round, name: p.name };
+  return { inv, round, name: p.name, byCommit: commit > draftInv, guar: p.cash_guaranteed_remaining };
 }
 const ROUND_WORD = { 1: 'first', 2: 'second', 3: 'third', 4: 'fourth', 5: 'fifth', 6: 'sixth', 7: 'seventh' };
 
@@ -2710,11 +2718,12 @@ function computeNeeds(opts) {
     else if (depth >= NEED_DEPTH_WARN * (NEED_DEPTH_SCALE[g] != null ? NEED_DEPTH_SCALE[g] : 1)) parts.push(`weak backup (${Math.round(needRating(backup))})`);
     if (scorePre - score >= NEED_INV_NOTE) {
       const high = invs.filter(x => x.inv >= NEED_INV_HIGH).sort((a, b) => b.inv - a.inv);
-      if (high.length === 1 && (n === 1 || starters.length === 1 || high.length === 1)) {
+      if (high.length === 1) {
         const nm = high[0].name.split(' ').slice(1).join(' ') || high[0].name;
-        parts.push(`young ${ROUND_WORD[high[0].round]}-round ${g} (${nm}): team's plan`);
-      } else if (high.length > 1) parts.push(`${high.length} young high picks starting`);
-      else parts.push('young draft picks starting');
+        parts.push(high[0].byCommit ? `committed contract (${nm}, $${Math.round(high[0].guar / 1e6)}M guaranteed): team's plan`
+          : `young ${ROUND_WORD[high[0].round]}-round ${g} (${nm}): team's plan`);
+      } else if (high.length > 1) parts.push(high.some(x => x.byCommit) ? `${high.length} starters in the team's plan (young high picks / committed contracts)` : `${high.length} young high picks starting`);
+      else parts.push('young draft picks / contracts starting');
     }
     byGroup[g] = { g, n, starters, invMean, scorePre, backup, now, perf, horizon, depth, raw, score, tier: tierOf(score), rank, reason: parts.join('; ') };
   }
