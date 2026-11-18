@@ -2514,6 +2514,15 @@ const NEED_STARTERS = { QB: 1, RB: 1, WR: 3, TE: 1, OT: 2, IOL: 3, EDGE: 2, DI: 
 const NEED_WEIGHTS = { now: 0.45, performance: 0.20, horizon: 0.20, depth: 0.15 };
 const NEED_VALUE = { QB: 1.00, EDGE: 0.90, OT: 0.85, WR: 0.80, CB: 0.80, DI: 0.70, S: 0.60, IOL: 0.60, LB: 0.55, TE: 0.55, RB: 0.50 };
 const NEED_AGE_CLIFF = { RB: 28, WR: 30, CB: 30, TE: 31, EDGE: 31, DI: 31, LB: 31, S: 31, OT: 32, IOL: 32, QB: 35 };
+// Draft investment: a young high pick starting is the team's plan, not a hole. investment = capital x youth per starter.
+const NEED_CAPITAL = { 1: 1.0, 2: 0.6, 3: 0.35, 4: 0.15, 5: 0.15, 6: 0.15, 7: 0.15 }; // by draft round; undrafted = 0
+const NEED_YOUTH = { 0: 1.0, 1: 1.0, 2: 0.8, 3: 0.6 };                               // by years_pro; 4+ = 0
+const NEED_INV_QB = 0.75;        // QB: raw x (1 - 0.75 x investment of QB1)
+const NEED_INV_OTHER = 0.40;     // other groups: "now" x (1 - 0.40 x mean investment of the starters)
+const NEED_BUST_PCT = 20;        // years_pro >= 2 and below this percentile on Madden AND advanced stats -> investment halved
+const NEED_INV_MIN_YEARS = 2;
+const NEED_INV_NOTE = 5;         // mention the discount in the reason line when it moves the score by this many points
+const NEED_INV_HIGH = 0.5;       // a starter at/above this counts as a "young high pick"
 const NEED_LAST_YEAR = 1;                 // years_remaining <= this = "on his last year" (1 = the current season is the final one)
 const NEED_TIERS = [50, 35, 20];          // score >= each = 3 / 2 / 1 dots
 const NEED_STRIP_TOP = 3;                 // chips in the strip and rows in the Draft panel
@@ -2597,6 +2606,27 @@ function needAdvPct(p) {
   return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null;
 }
 
+// attainment is '<yy>/<round>' (optional trailing '*'); 'U/TEAM', 'CC/TEAM', 'CF26', 'SF26', missing = undrafted.
+function draftRoundOf(p) {
+  if (p.isRookie) return p.round || null;
+  const m = /^(\d\d)\/([1-7])\*?$/.exec(String(p.attainment || ''));
+  return m ? Number(m[2]) : null;
+}
+// investment = capital x youth (halved for a bust: 2+ years in and bottom 20% on both Madden and advanced percentile)
+function needInvestment(p, g) {
+  const round = draftRoundOf(p);
+  if (!round) return { inv: 0, round: null };
+  const capital = NEED_CAPITAL[round] || 0;
+  const youth = p.isRookie ? 1 : (NEED_YOUTH[p.years_pro] != null ? NEED_YOUTH[p.years_pro] : 0);
+  let inv = capital * youth;
+  if (!p.isRookie && p.years_pro >= NEED_INV_MIN_YEARS && inv > 0) {
+    const adv = needAdvPct(p);
+    if (adv != null && needPct(p.madden, needsBase.start[g]) < NEED_BUST_PCT && adv < NEED_BUST_PCT) inv /= 2;
+  }
+  return { inv, round, name: p.name };
+}
+const ROUND_WORD = { 1: 'first', 2: 'second', 3: 'third', 4: 'fourth', 5: 'fifth', 6: 'sixth', 7: 'seventh' };
+
 const needsRookies = () => { const m = new Map(); rookieEntries().forEach(({ r }) => m.set(r.id, r)); importRookies.forEach(r => m.set(r.id, r)); return [...m.values()]; };
 const tierOf = s => s >= NEED_TIERS[0] ? 3 : s >= NEED_TIERS[1] ? 2 : s >= NEED_TIERS[2] ? 1 : 0;
 
@@ -2626,7 +2656,12 @@ function computeNeeds(opts) {
     let sp = 0;
     starters.forEach(p => { sp += needPct(needRating(p), needsBase.start[g]); });
     const nowPct = sp / n;                                   // missing starters count as the 0th percentile
-    const now = 1 - nowPct / 100;
+    const now0 = 1 - nowPct / 100;
+    // investment discount
+    const invs = starters.map(p => needInvestment(p, g));
+    const invMean = invs.length ? invs.reduce((a, x) => a + x.inv, 0) / invs.length : 0;
+    const invQB = invs.length ? invs[0].inv : 0;
+    const now = g === 'QB' ? now0 : now0 * (1 - NEED_INV_OTHER * invMean);
     // performance (veterans with at least one qualified advanced percentile)
     const adv = starters.filter(p => !p.isRookie).map(needAdvPct).filter(v => v != null);
     const perf = adv.length ? 1 - (adv.reduce((a, b) => a + b, 0) / adv.length) / 100 : null;
@@ -2647,7 +2682,11 @@ function computeNeeds(opts) {
     let raw = NEED_WEIGHTS.now * now + NEED_WEIGHTS.horizon * horizon + NEED_WEIGHTS.depth * depth;
     if (perf != null) { w += NEED_WEIGHTS.performance; raw += NEED_WEIGHTS.performance * perf; }
     raw /= w;
+    let rawPre = raw;
+    if (g === 'QB') raw *= (1 - NEED_INV_QB * invQB);
+    else rawPre = (raw - NEED_WEIGHTS.now * now / w) + NEED_WEIGHTS.now * now0 / w; // same raw without the discount
     const score = Math.round(100 * raw * NEED_VALUE[g]);
+    const scorePre = Math.round(100 * (g === 'QB' ? rawPre : rawPre) * NEED_VALUE[g]);
     // league rank of the starters ("ranks Nth of 32"): the other teams' veteran-only values vs this team's, rookies included
     let rank = 1;
     for (const t in needsBase.teamNow) if (t !== currentTeam && needsBase.teamNow[t][g] > nowPct) rank++;
@@ -2660,7 +2699,15 @@ function computeNeeds(opts) {
     if (cliff) parts.push(`${cliff} past the age cliff (${NEED_AGE_CLIFF[g]}+)`);
     if (!backup) parts.push('no backup');
     else if (depth >= NEED_DEPTH_WARN) parts.push(`weak backup (${Math.round(needRating(backup))})`);
-    byGroup[g] = { g, n, starters, backup, now, perf, horizon, depth, raw, score, tier: tierOf(score), rank, reason: parts.join('; ') };
+    if (scorePre - score >= NEED_INV_NOTE) {
+      const high = invs.filter(x => x.inv >= NEED_INV_HIGH).sort((a, b) => b.inv - a.inv);
+      if (high.length === 1 && (n === 1 || starters.length === 1 || high.length === 1)) {
+        const nm = high[0].name.split(' ').slice(1).join(' ') || high[0].name;
+        parts.push(`young ${ROUND_WORD[high[0].round]}-round ${g} (${nm}): team's plan`);
+      } else if (high.length > 1) parts.push(`${high.length} young high picks starting`);
+      else parts.push('young draft picks starting');
+    }
+    byGroup[g] = { g, n, starters, invMean, scorePre, backup, now, perf, horizon, depth, raw, score, tier: tierOf(score), rank, reason: parts.join('; ') };
   }
   const ranked = NEED_GROUPS.slice().sort((a, b) => byGroup[b].score - byGroup[a].score || NEED_VALUE[b] - NEED_VALUE[a]);
   return { byGroup, ranked };
