@@ -20,7 +20,7 @@ import duckdb
 import pandas as pd
 
 from build_master import (
-    SEASON, NAME_ALIASES, SKIP_POSITIONS, MADDEN_TEAM_MAP, SNAP_POS_MAP,
+    SEASON, NAME_ALIASES, MADDEN_NAME_ALIASES, SKIP_POSITIONS, MADDEN_TEAM_MAP, SNAP_POS_MAP,
     SPOTRAC_POS_MAP, CROSSWALK_POS_ALIASES, ROSTERS_POS_ALIASES,
     normalize_team, build_madden_pos_ranks, find_madden_player, find_gsis,
     find_pfr_id, find_spotrac_contract, find_roster_gsis_for_ol,
@@ -89,6 +89,57 @@ def load_gsis_crosswalk_from_db(con):
     df['name_norm'] = df['name'].apply(
         lambda n: normalize_for_matching(normalize_name(str(n))))
     return df
+
+
+def _initial_last(name):
+    """(first initial, last name) normalized, for the nickname tier (Que -> Quandarrius Robinson)."""
+    toks = [t for t in normalize_name(str(name)).split() if t.lower().strip('.') not in ('jr', 'sr', 'ii', 'iii', 'iv', 'v')]
+    if len(toks) < 2:
+        return None
+    return toks[0][0].lower(), normalize_for_matching(toks[-1])
+
+
+def build_draft_pick_lookup(con):
+    """(season, round) -> {name_norm: [overall pick, ...]} from nflreadpy's draft picks table.
+    Empty dict if the table is missing (older DB) -- the fallback then does nothing."""
+    try:
+        df = con.execute("SELECT * FROM nflreadpy_draft_picks").fetchdf()
+    except Exception:
+        return {}
+    out = {}
+    for _, r in df.iterrows():
+        if pd.isna(r['pick']) or not r['pfr_player_name']:
+            continue
+        key = (int(r['season']), int(r['round']))
+        out.setdefault(key, {}).setdefault(
+            normalize_for_matching(normalize_name(str(r['pfr_player_name']))), []).append(int(r['pick']))
+        ini = _initial_last(r['pfr_player_name'])
+        if ini:
+            out.setdefault(key + ('init',), {}).setdefault(ini, []).append(int(r['pick']))
+    return out
+
+
+def draft_pick_fallback(entry, lookup):
+    """For a drafted player ('<yy>/<round>' attainment) with no draft_pick: unique (name, year, round) match.
+    Tries the aliased name, then the player's own name; accepts only a single candidate. Returns (pick, year) or None."""
+    m = re.match(r'^(\d\d)/([1-7])\*?$', str(entry.get('_attainment') or ''))
+    if not m:
+        return None
+    year, rnd = 2000 + int(m.group(1)), int(m.group(2))
+    names = lookup.get((year, rnd), {})
+    own = entry['canonical_name']
+    for nm in (NAME_ALIASES.get(own), MADDEN_NAME_ALIASES.get(own), own):
+        if not nm:
+            continue
+        c = names.get(normalize_for_matching(normalize_name(nm)))
+        if c and len(set(c)) == 1:
+            return c[0], year
+    # nickname tier: same first initial + same last name, unique within the year and round
+    ini = _initial_last(own)
+    c = lookup.get((year, rnd, 'init'), {}).get(ini) if ini else None
+    if c and len(set(c)) == 1:
+        return c[0], year
+    return None
 
 
 def load_nflreadpy_rosters_from_db(con):
@@ -339,6 +390,7 @@ def build_match():
         master[player_key] = {
             'row_id': int(p['row_id']),
             'inj_section': is_inj_section,
+            '_attainment': p.get('attainment'),  # only read by the draft_pick fallback
             'player_key': player_key,
             'depth': depth,
             'canonical_name': canonical_name,
@@ -379,6 +431,8 @@ def build_match():
         weight_by_gsis[gid] = int(weight) if pd.notna(weight) else None
 
     from season_utils import calculate_age
+    draft_lookup = build_draft_pick_lookup(con)
+    draft_fallback_filled = []
     for entry in master.values():
         gid = entry.get('gsis_id')
         # OL never has a gsis_id from our own matching (find_gsis() skips OL
@@ -399,6 +453,13 @@ def build_match():
         # "started" yet by get_current_season()'s Sept 1 rule shouldn't show
         # negative years of experience). build_match.py was missing this.
         entry['years_pro'] = max(0, SEASON - entry_year) if entry_year is not None else None
+        if entry['draft_pick'] is None:
+            fb = draft_pick_fallback(entry, draft_lookup)
+            if fb:
+                entry['draft_pick'] = fb[0]
+                if entry['years_pro'] is None:
+                    entry['years_pro'] = max(0, SEASON - fb[1])
+                draft_fallback_filled.append(entry['canonical_name'])
         birth_date = birth_date_by_gsis.get(gid) if gid else None
         entry['age'] = calculate_age(birth_date)
         entry['height'] = format_height(height_by_gsis.get(gid) if gid else None)

@@ -106,6 +106,13 @@ def load_nflreadpy_rosters():
     return df
 
 
+def load_draft_picks():
+    """nflreadpy draft picks (season, round, pick, pfr_player_name, gsis_id...) -- fallback source for draft_pick."""
+    import nflreadpy as nfl
+    df = nfl.load_draft_picks(list(range(2000, SEASON + 2))).to_pandas()
+    return df[['season', 'round', 'pick', 'team', 'pfr_player_name', 'gsis_id', 'position']]
+
+
 def load_gsis_crosswalk():
     url = "https://github.com/dynastyprocess/data/raw/master/files/db_playerids.csv"
     return pd.read_csv(url)
@@ -407,6 +414,8 @@ def build_db():
 
         print("Loading nflreadpy_rosters...")
         write_table(con, 'nflreadpy_rosters', load_nflreadpy_rosters())
+        print("Loading nflreadpy_draft_picks...")
+        write_table(con, 'nflreadpy_draft_picks', load_draft_picks())
 
         print("Loading gsis_crosswalk...")
         write_table(con, 'gsis_crosswalk', load_gsis_crosswalk())
