@@ -700,26 +700,32 @@
         "stats_season": 2026
       },
       {
-        "name": "Keith Abney II",
+        "name": "Andre Cisco",
         "depth": 2,
         "injured": false,
-        "attainment": "26/5",
+        "attainment": "T/NYJ",
         "standard_slot": "SS",
         "standard_pos": "S",
-        "cap_number": "$1,009,725",
-        "stats": {
-          "TKL": 8,
-          "INTs": 1,
-          "PD": 2,
-          "TFL": 1
-        },
-        "stats_season": 2026
+        "cap_number": "$745,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "FS": [
       {
-        "name": "Chuck Clark",
+        "name": "Kerby Joseph",
         "depth": 1,
+        "injured": false,
+        "attainment": "22/3",
+        "standard_slot": "FS",
+        "standard_pos": "S",
+        "cap_number": "$5,472,200",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Chuck Clark",
+        "depth": 2,
         "injured": false,
         "attainment": "U/Pit",
         "standard_slot": "FS",
@@ -736,15 +742,20 @@
         "stats_season": 2026
       },
       {
-        "name": "Andre Cisco",
-        "depth": 2,
+        "name": "Keith Abney II",
+        "depth": 3,
         "injured": false,
-        "attainment": "T/NYJ",
+        "attainment": "26/5",
         "standard_slot": "FS",
         "standard_pos": "S",
-        "cap_number": "$745,000",
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$1,009,725",
+        "stats": {
+          "TKL": 8,
+          "INTs": 1,
+          "PD": 2,
+          "TFL": 1
+        },
+        "stats_season": 2026
       }
     ],
     "RCB": [
@@ -913,19 +924,8 @@
     ],
     "DT": [
       {
-        "name": "Ben Stille",
-        "depth": 1,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "RDT",
-        "standard_pos": "DI",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Jeffrey M'ba",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "SF26*",
         "standard_slot": "RDT",
@@ -936,7 +936,7 @@
       },
       {
         "name": "Aidan Keanaaina",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "RDT",
@@ -947,7 +947,7 @@
       },
       {
         "name": "Taki Taimani",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "RDT",
@@ -986,6 +986,19 @@
           "TDs": 7,
           "YAC": 322,
           "CAR": 2
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Nick Whiteside",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": "$558,333",
+        "stats": {
+          "TKL": 1
         },
         "stats_season": 2026
       }
@@ -1181,19 +1194,6 @@
         "standard_slot": "NFI",
         "standard_pos": "DEF",
         "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      }
-    ],
-    "DFR": [
-      {
-        "name": "Kerby Joseph",
-        "depth": 1,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "DFR",
-        "standard_pos": "DEF",
-        "cap_number": "$5,472,200",
         "stats": {},
         "stats_season": null
       }

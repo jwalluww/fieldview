@@ -28,7 +28,7 @@ DEFAULT_OUT_PATH = os.path.join('nfl', 'data', 'players_master_db.json')
 # Field order mirrors build_master.py's entry dict construction exactly.
 INT_FIELDS = {
     'depth', 'jersey', 'madden', 'madden_rank', 'madden_rank_total',
-    'draft_year', 'years_pro', 'age', 'years_remaining', 'stats_season',
+    'draft_year', 'draft_pick', 'years_pro', 'age', 'years_remaining', 'stats_season',
     'penalty_count', 'def_advanced_season', 'weight',
 }
 FLOAT_FIELDS = {
@@ -93,6 +93,7 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             op.stats_season,
             pm.match_source,
             pm.draft_year,
+            pm.draft_pick,
             pm.college,
             pm.years_pro,
             pm.age,
@@ -164,6 +165,7 @@ def export_master(out_path=DEFAULT_OUT_PATH):
             'nflreadpy_name': None,
             'match_source': clean('match_source', r['match_source']),
             'draft_year': clean('draft_year', r['draft_year']),
+            'draft_pick': clean('draft_pick', r['draft_pick']),
             'college': clean('college', r['college']),
             'years_pro': clean('years_pro', r['years_pro']),
             'age': clean('age', r['age']),

@@ -15,12 +15,46 @@
         "cap_number": "$21,168,850",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Jeshaun Jones",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF24",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {
+          "TGT": 1,
+          "REC": 1,
+          "YDS": 32,
+          "YAC": 1
+        },
+        "stats_season": 2026
       }
     ],
     "RWR": [
       {
-        "name": "Tai Felton",
+        "name": "Jordan Addison",
         "depth": 1,
+        "injured": false,
+        "attainment": "23/1",
+        "standard_slot": "RWR",
+        "standard_pos": "WR",
+        "cap_number": "$4,296,411",
+        "stats": {
+          "TGT": 36,
+          "REC": 18,
+          "YDS": 277,
+          "TDs": 1,
+          "YAC": 82,
+          "CAR": 2
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Tai Felton",
+        "depth": 2,
         "injured": false,
         "attainment": "25/3",
         "standard_slot": "RWR",
@@ -541,19 +575,6 @@
           "QB HIT": 3
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Chaz Chambliss",
-        "depth": 3,
-        "injured": false,
-        "attainment": "CF25",
-        "standard_slot": "LOLB",
-        "standard_pos": "EDGE",
-        "cap_number": "$1,011,666",
-        "stats": {
-          "TKL": 4
-        },
-        "stats_season": 2026
       }
     ],
     "WLB": [
@@ -644,15 +665,15 @@
         "stats_season": 2026
       },
       {
-        "name": "Bo Richter",
+        "name": "Chaz Chambliss",
         "depth": 2,
         "injured": false,
-        "attainment": "CF24",
+        "attainment": "CF25",
         "standard_slot": "ROLB",
         "standard_pos": "EDGE",
-        "cap_number": "$1,075,000",
+        "cap_number": "$1,011,666",
         "stats": {
-          "TKL": 3
+          "TKL": 4
         },
         "stats_season": 2026
       }
@@ -874,20 +895,15 @@
         "stats_season": null
       },
       {
-        "name": "Jeshaun Jones",
+        "name": "Dee Eskridge",
         "depth": 3,
         "injured": false,
-        "attainment": "CF24",
+        "attainment": "U/Mia",
         "standard_slot": "LWR",
         "standard_pos": "WR",
         "cap_number": null,
-        "stats": {
-          "TGT": 1,
-          "REC": 1,
-          "YDS": 32,
-          "YAC": 1
-        },
-        "stats_season": 2026
+        "stats": {},
+        "stats_season": null
       }
     ],
     "OT": [
@@ -1001,24 +1017,30 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "D'anthony Bell",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "S",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "IR": [
       {
-        "name": "Jordan Addison",
+        "name": "Bo Richter",
         "depth": 1,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
         "standard_pos": "DEF",
-        "cap_number": "$4,296,411",
+        "cap_number": "$1,075,000",
         "stats": {
-          "TGT": 36,
-          "REC": 18,
-          "YDS": 277,
-          "TDs": 1,
-          "YAC": 82,
-          "CAR": 2
+          "TKL": 3
         },
         "stats_season": 2026
       },

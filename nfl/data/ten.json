@@ -56,13 +56,15 @@
           "YAC": 108
         },
         "stats_season": 2026
-      },
+      }
+    ],
+    "SWR": [
       {
         "name": "Chimere Dike",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "25/4",
-        "standard_slot": "RWR",
+        "standard_slot": "SWR",
         "standard_pos": "WR",
         "cap_number": "$1,380,238",
         "stats": {
@@ -74,24 +76,20 @@
           "CAR": 1
         },
         "stats_season": 2026
-      }
-    ],
-    "SWR": [
+      },
       {
-        "name": "Wan'dale Robinson",
-        "depth": 1,
+        "name": "Xavier Restrepo",
+        "depth": 2,
         "injured": false,
-        "attainment": "U/NYG",
+        "attainment": "CF25",
         "standard_slot": "SWR",
         "standard_pos": "WR",
-        "cap_number": "$11,270,000",
+        "cap_number": null,
         "stats": {
-          "TGT": 54,
-          "REC": 38,
-          "YDS": 272,
-          "TDs": 3,
-          "YAC": 133,
-          "CAR": 1
+          "TGT": 3,
+          "REC": 3,
+          "YDS": 31,
+          "YAC": 9
         },
         "stats_season": 2026
       }
@@ -401,6 +399,23 @@
         "stats": {
           "CAR": 1,
           "RU YDS": 3
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Michael Carter",
+        "depth": 6,
+        "injured": false,
+        "attainment": "U/Arz",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {
+          "CAR": 3,
+          "RU YDS": 7,
+          "REC": 1,
+          "RE YDS": 7,
+          "TGT": 1
         },
         "stats_season": 2026
       }
@@ -858,23 +873,18 @@
         "stats_season": null
       },
       {
-        "name": "Xavier Restrepo",
+        "name": "Jason Brownlee",
         "depth": 3,
         "injured": false,
-        "attainment": "CF25",
+        "attainment": "SF26",
         "standard_slot": "LWR",
         "standard_pos": "WR",
         "cap_number": null,
-        "stats": {
-          "TGT": 3,
-          "REC": 3,
-          "YDS": 31,
-          "YAC": 9
-        },
-        "stats_season": 2026
+        "stats": {},
+        "stats_season": null
       },
       {
-        "name": "Jason Brownlee",
+        "name": "Jamari Thrash",
         "depth": 4,
         "injured": false,
         "attainment": "SF26",
@@ -1024,19 +1034,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Fernando Carmona Jr.",
-        "depth": 4,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$716,847",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Jackson Slater",
-        "depth": 5,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1044,6 +1043,24 @@
         "cap_number": "$718,913",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Wan'dale Robinson",
+        "depth": 5,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$11,270,000",
+        "stats": {
+          "TGT": 54,
+          "REC": 38,
+          "YDS": 272,
+          "TDs": 3,
+          "YAC": 133,
+          "CAR": 1
+        },
+        "stats_season": 2026
       },
       {
         "name": "Tanoh Kpassagnon",
@@ -1097,6 +1114,17 @@
         "standard_slot": "IR",
         "standard_pos": "DEF",
         "cap_number": "$590,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Fernando Carmona Jr.",
+        "depth": 11,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$716,847",
         "stats": {},
         "stats_season": null
       }

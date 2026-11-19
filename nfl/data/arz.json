@@ -192,17 +192,6 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Albert Reese",
-        "depth": 3,
-        "injured": false,
-        "attainment": "P/Car",
-        "standard_slot": "RT",
-        "standard_pos": "OL",
-        "cap_number": "$590,000",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "TE": [
@@ -420,6 +409,19 @@
           "QB HIT": 3
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Jared Harrison-hunte",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LE",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {
+          "TKL": 3
+        },
+        "stats_season": 2026
       }
     ],
     "NT": [
@@ -544,15 +546,17 @@
         "stats_season": 2026
       },
       {
-        "name": "Karson Sharar",
+        "name": "Cody Simon",
         "depth": 2,
         "injured": false,
-        "attainment": "26/6",
+        "attainment": "25/4",
         "standard_slot": "ILB_L",
         "standard_pos": "LB",
-        "cap_number": "$967,108",
+        "cap_number": "$1,256,190",
         "stats": {
-          "TKL": 5
+          "TKL": 11,
+          "INTs": 1,
+          "PD": 1
         },
         "stats_season": 2026
       }
@@ -575,17 +579,15 @@
         "stats_season": 2026
       },
       {
-        "name": "Cody Simon",
+        "name": "Karson Sharar",
         "depth": 2,
         "injured": false,
-        "attainment": "25/4",
+        "attainment": "26/6",
         "standard_slot": "ILB_R",
         "standard_pos": "LB",
-        "cap_number": "$1,256,190",
+        "cap_number": "$967,108",
         "stats": {
-          "TKL": 11,
-          "INTs": 1,
-          "PD": 1
+          "TKL": 5
         },
         "stats_season": 2026
       }
@@ -608,24 +610,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Jordan Burch",
-        "depth": 2,
-        "injured": false,
-        "attainment": "25/3",
-        "standard_slot": "ROLB",
-        "standard_pos": "EDGE",
-        "cap_number": "$1,474,881",
-        "stats": {
-          "TKL": 10,
-          "SACKS": 1.0,
-          "TFL": 2,
-          "QB HIT": 1
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Eku Leota",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "SF25",
         "standard_slot": "ROLB",
@@ -705,24 +691,8 @@
     ],
     "FS": [
       {
-        "name": "Andrew Wingard",
-        "depth": 1,
-        "injured": false,
-        "attainment": "U/Jax",
-        "standard_slot": "FS",
-        "standard_pos": "S",
-        "cap_number": "$2,985,000",
-        "stats": {
-          "TKL": 25,
-          "INTs": 1,
-          "PD": 2,
-          "TFL": 3
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Dadrion Taylor-demerson",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "24/4",
         "standard_slot": "FS",
@@ -730,6 +700,20 @@
         "cap_number": "$1,286,711",
         "stats": {
           "TKL": 12
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Wydett Williams Jr.",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "FS",
+        "standard_pos": "S",
+        "cap_number": null,
+        "stats": {
+          "TKL": 4,
+          "PD": 1
         },
         "stats_season": 2026
       }
@@ -869,6 +853,17 @@
           "TGT": 1
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Ronnie Bell",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "OT": [
@@ -965,19 +960,6 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Jared Harrison-hunte",
-        "depth": 2,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "RE",
-        "standard_pos": "DI",
-        "cap_number": null,
-        "stats": {
-          "TKL": 3
-        },
-        "stats_season": 2026
       }
     ],
     "CB": [
@@ -995,26 +977,26 @@
         "stats_season": 2026
       }
     ],
-    "S": [
-      {
-        "name": "Wydett Williams Jr.",
-        "depth": 1,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "S",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {
-          "TKL": 4,
-          "PD": 1
-        },
-        "stats_season": 2026
-      }
-    ],
     "IR": [
       {
-        "name": "Jeremiyah Love",
+        "name": "Andrew Wingard",
         "depth": 1,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$2,985,000",
+        "stats": {
+          "TKL": 25,
+          "INTs": 1,
+          "PD": 2,
+          "TFL": 3
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Jeremiyah Love",
+        "depth": 2,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1032,7 +1014,7 @@
       },
       {
         "name": "Will Johnson",
-        "depth": 2,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1046,7 +1028,7 @@
       },
       {
         "name": "James Conner",
-        "depth": 3,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1056,8 +1038,24 @@
         "stats_season": null
       },
       {
+        "name": "Jordan Burch",
+        "depth": 5,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$1,474,881",
+        "stats": {
+          "TKL": 10,
+          "SACKS": 1.0,
+          "TFL": 2,
+          "QB HIT": 1
+        },
+        "stats_season": 2026
+      },
+      {
         "name": "Gardner Minshew II",
-        "depth": 4,
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1075,7 +1073,7 @@
       },
       {
         "name": "Michael Wilson",
-        "depth": 5,
+        "depth": 7,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1093,7 +1091,7 @@
       },
       {
         "name": "Kendrick Bourne",
-        "depth": 6,
+        "depth": 8,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1109,7 +1107,7 @@
       },
       {
         "name": "Jalen Brooks",
-        "depth": 7,
+        "depth": 9,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1125,7 +1123,7 @@
       },
       {
         "name": "Paris Johnson Jr.",
-        "depth": 8,
+        "depth": 10,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1136,7 +1134,7 @@
       },
       {
         "name": "Trey Benson",
-        "depth": 9,
+        "depth": 11,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1147,7 +1145,7 @@
       },
       {
         "name": "Kaleb Proctor",
-        "depth": 10,
+        "depth": 12,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1158,7 +1156,7 @@
       },
       {
         "name": "Chase Bisontis",
-        "depth": 11,
+        "depth": 13,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1169,7 +1167,7 @@
       },
       {
         "name": "Joey Blount",
-        "depth": 12,
+        "depth": 14,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",

@@ -934,6 +934,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Kohl Levao",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF24",
+        "standard_slot": "OG",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "ED": [
@@ -949,19 +960,8 @@
         "stats_season": null
       },
       {
-        "name": "Nathan Voorhis",
-        "depth": 2,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "ED",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Quinton Bell",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "ED",
@@ -1057,21 +1057,8 @@
         "stats_season": null
       },
       {
-        "name": "David Onyemata",
-        "depth": 4,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$4,500,000",
-        "stats": {
-          "QB HIT": 1
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Marcelino Mccrary-ball",
-        "depth": 5,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1084,7 +1071,7 @@
       },
       {
         "name": "Arian Smith",
-        "depth": 6,
+        "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1097,7 +1084,7 @@
       },
       {
         "name": "Anez Cooper",
-        "depth": 7,
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1108,7 +1095,7 @@
       },
       {
         "name": "Braiden Mcgregor",
-        "depth": 8,
+        "depth": 7,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1121,7 +1108,7 @@
       },
       {
         "name": "Kingsley Jonathan",
-        "depth": 9,
+        "depth": 8,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1132,7 +1119,7 @@
       },
       {
         "name": "Chip Trayanum",
-        "depth": 10,
+        "depth": 9,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1153,6 +1140,21 @@
         "cap_number": "$620,054",
         "stats": {},
         "stats_season": null
+      }
+    ],
+    "DFR": [
+      {
+        "name": "David Onyemata",
+        "depth": 1,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "DFR",
+        "standard_pos": "DEF",
+        "cap_number": "$4,500,000",
+        "stats": {
+          "QB HIT": 1
+        },
+        "stats_season": 2026
       }
     ]
   }

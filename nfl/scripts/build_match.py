@@ -357,6 +357,7 @@ def build_match():
     # draft_year/college/years_pro/age, keyed off the gsis_id already resolved
     entry_year_by_gsis, college_by_gsis, pfr_id_by_gsis, birth_date_by_gsis = {}, {}, {}, {}
     height_by_gsis, weight_by_gsis = {}, {}
+    draft_pick_by_gsis = {}
     dedup_rosters = rosters.drop_duplicates(subset='gsis_id', keep='first')
     for _, row in dedup_rosters.iterrows():
         gid = row['gsis_id']
@@ -364,6 +365,8 @@ def build_match():
             continue
         entry_year = row.get('entry_year')
         entry_year_by_gsis[gid] = int(entry_year) if pd.notna(entry_year) else None
+        dn = row.get('draft_number')  # overall pick; null for undrafted
+        draft_pick_by_gsis[gid] = int(dn) if pd.notna(dn) and dn > 0 else None
         college = row.get('college')
         college_by_gsis[gid] = college if pd.notna(college) else None
         pfr_id = row.get('pfr_id')
@@ -389,6 +392,7 @@ def build_match():
             gid = find_roster_gsis_for_ol(entry['canonical_name'], entry['team'], rosters)
         entry_year = entry_year_by_gsis.get(gid) if gid else None
         entry['draft_year'] = entry_year
+        entry['draft_pick'] = draft_pick_by_gsis.get(gid) if gid else None
         entry['college'] = college_by_gsis.get(gid) if gid else None
         # Clamp to 0 -- matches build_master.py's existing fix for the same
         # edge case (a player whose entry_year is the season that hasn't

@@ -449,27 +449,23 @@
           "QB HIT": 1
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Eric Watts",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LE",
+        "standard_pos": "EDGE",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LDT": [
       {
-        "name": "Jordan Phillips",
-        "depth": 1,
-        "injured": false,
-        "attainment": "25/5",
-        "standard_slot": "LDT",
-        "standard_pos": "DI",
-        "cap_number": "$1,119,576",
-        "stats": {
-          "TKL": 11,
-          "TFL": 1,
-          "QB HIT": 2
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Kenneth Grant",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "25/1",
         "standard_slot": "LDT",
@@ -483,24 +479,8 @@
     ],
     "RDT": [
       {
-        "name": "Zeek Biggers",
-        "depth": 1,
-        "injured": false,
-        "attainment": "25/7",
-        "standard_slot": "RDT",
-        "standard_pos": "DI",
-        "cap_number": "$1,030,418",
-        "stats": {
-          "TKL": 6,
-          "SACKS": 1.0,
-          "TFL": 1,
-          "QB HIT": 4
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Keith Cooper Jr.",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "P/Car",
         "standard_slot": "RDT",
@@ -510,6 +490,17 @@
           "TKL": 1
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Jordan Jefferson",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RDE": [
@@ -545,6 +536,17 @@
           "QB HIT": 2
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Max Llewellyn",
+        "depth": 3,
+        "injured": false,
+        "attainment": "26/7",
+        "standard_slot": "RE",
+        "standard_pos": "EDGE",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "WLB": [
@@ -792,6 +794,17 @@
           "FG%": "\u2014"
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Jack Browning",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "PT",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "H": [
@@ -844,6 +857,17 @@
           "TGT": 1
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Brady Boyd",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "OG": [
@@ -872,32 +896,10 @@
     ],
     "ED": [
       {
-        "name": "Eric Watts",
+        "name": "Amari Gainer",
         "depth": 1,
         "injured": false,
         "attainment": "SF26",
-        "standard_slot": "ED",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Amari Gainer",
-        "depth": 2,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "ED",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Max Llewellyn",
-        "depth": 3,
-        "injured": false,
-        "attainment": "26/7",
         "standard_slot": "ED",
         "standard_pos": "DEF",
         "cap_number": null,
@@ -907,8 +909,19 @@
     ],
     "DT": [
       {
-        "name": "Jordan Jefferson",
+        "name": "Matthew Butler",
         "depth": 1,
+        "injured": false,
+        "attainment": "W/LV",
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Chris Smith",
+        "depth": 2,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "RDT",
@@ -1002,8 +1015,39 @@
         "stats_season": null
       },
       {
-        "name": "Zach Sieler",
+        "name": "Zeek Biggers",
         "depth": 4,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$1,030,418",
+        "stats": {
+          "TKL": 6,
+          "SACKS": 1.0,
+          "TFL": 1,
+          "QB HIT": 4
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Jordan Phillips",
+        "depth": 5,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$1,119,576",
+        "stats": {
+          "TKL": 11,
+          "TFL": 1,
+          "QB HIT": 2
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Zach Sieler",
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1019,7 +1063,7 @@
       },
       {
         "name": "De'von Achane",
-        "depth": 5,
+        "depth": 7,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1036,7 +1080,7 @@
       },
       {
         "name": "Rene Konga",
-        "depth": 6,
+        "depth": 8,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1047,7 +1091,7 @@
       },
       {
         "name": "Cole Turner",
-        "depth": 7,
+        "depth": 9,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",

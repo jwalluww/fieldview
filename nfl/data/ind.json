@@ -89,6 +89,17 @@
           "YAC": 10
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Quez Watkins",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "SWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LT": [
@@ -561,23 +572,8 @@
     ],
     "WLB": [
       {
-        "name": "Jaylon Carlies",
-        "depth": 1,
-        "injured": false,
-        "attainment": "24/5",
-        "standard_slot": "WILL",
-        "standard_pos": "LB",
-        "cap_number": "$1,159,060",
-        "stats": {
-          "TKL": 6,
-          "INTs": 1,
-          "PD": 1
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Bryce Boettcher",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "26/4",
         "standard_slot": "WILL",
@@ -590,17 +586,28 @@
         "stats_season": 2026
       },
       {
-        "name": "Tahj Chambers",
+        "name": "Austin Ajiake",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF23",
+        "standard_slot": "WILL",
+        "standard_pos": "LB",
+        "cap_number": "$1,005,000",
+        "stats": {
+          "TKL": 11
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "West Weeks",
         "depth": 3,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "WILL",
         "standard_pos": "LB",
-        "cap_number": "$888,333",
-        "stats": {
-          "TKL": 2
-        },
-        "stats_season": 2026
+        "cap_number": "$442,500",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "MLB": [
@@ -622,28 +629,17 @@
         "stats_season": 2026
       },
       {
-        "name": "Austin Ajiake",
+        "name": "Tahj Chambers",
         "depth": 2,
-        "injured": false,
-        "attainment": "SF23",
-        "standard_slot": "MIKE",
-        "standard_pos": "LB",
-        "cap_number": "$1,005,000",
-        "stats": {
-          "TKL": 11
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "West Weeks",
-        "depth": 3,
         "injured": false,
         "attainment": "CF26",
         "standard_slot": "MIKE",
         "standard_pos": "LB",
-        "cap_number": "$442,500",
-        "stats": {},
-        "stats_season": null
+        "cap_number": "$888,333",
+        "stats": {
+          "TKL": 2
+        },
+        "stats_season": 2026
       }
     ],
     "LCB": [
@@ -842,19 +838,8 @@
         "stats_season": null
       },
       {
-        "name": "Quez Watkins",
-        "depth": 2,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "LWR",
-        "standard_pos": "WR",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Samori Toure",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "LWR",
@@ -986,8 +971,23 @@
     ],
     "IR": [
       {
-        "name": "Akeem Davis-gaither",
+        "name": "Jaylon Carlies",
         "depth": 1,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$1,159,060",
+        "stats": {
+          "TKL": 6,
+          "INTs": 1,
+          "PD": 1
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Akeem Davis-gaither",
+        "depth": 2,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1002,7 +1002,7 @@
       },
       {
         "name": "Mo Alie-cox",
-        "depth": 2,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1019,7 +1019,7 @@
       },
       {
         "name": "Cam Taylor-britt",
-        "depth": 3,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1035,7 +1035,7 @@
       },
       {
         "name": "Alec Pierce",
-        "depth": 4,
+        "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1051,7 +1051,7 @@
       },
       {
         "name": "Micheal Clemons",
-        "depth": 5,
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1062,7 +1062,7 @@
       },
       {
         "name": "D.j. Montgomery",
-        "depth": 6,
+        "depth": 7,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1073,7 +1073,7 @@
       },
       {
         "name": "Cameron Mitchell",
-        "depth": 7,
+        "depth": 8,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1084,7 +1084,7 @@
       },
       {
         "name": "Carson Towt",
-        "depth": 8,
+        "depth": 9,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",

@@ -142,17 +142,6 @@
         "cap_number": "$10,302,300",
         "stats": {},
         "stats_season": 2026
-      },
-      {
-        "name": "T.j. Bass",
-        "depth": 2,
-        "injured": false,
-        "attainment": "CF23",
-        "standard_slot": "LG",
-        "standard_pos": "OL",
-        "cap_number": "$5,767,000",
-        "stats": {},
-        "stats_season": 2026
       }
     ],
     "C": [
@@ -192,15 +181,15 @@
         "stats_season": 2026
       },
       {
-        "name": "Ajani Cornelius",
+        "name": "T.j. Bass",
         "depth": 2,
         "injured": false,
-        "attainment": "25/6",
+        "attainment": "CF23",
         "standard_slot": "RG",
         "standard_pos": "OL",
-        "cap_number": "$1,058,494",
+        "cap_number": "$5,767,000",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       }
     ],
     "RT": [
@@ -1042,22 +1031,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Jalen Thompson",
-        "depth": 3,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$4,622,353",
-        "stats": {
-          "TKL": 8,
-          "QB HIT": 1
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Malik Davis",
-        "depth": 4,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1068,7 +1043,7 @@
       },
       {
         "name": "Princeton Fant",
-        "depth": 5,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1079,7 +1054,7 @@
       },
       {
         "name": "Kelvin Gilliam",
-        "depth": 6,
+        "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1090,7 +1065,7 @@
       },
       {
         "name": "Matt Hennessy",
-        "depth": 7,
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1111,6 +1086,20 @@
         "cap_number": "$812,383",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Jalen Thompson",
+        "depth": 2,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "DFR",
+        "standard_pos": "DEF",
+        "cap_number": "$4,622,353",
+        "stats": {
+          "TKL": 8,
+          "QB HIT": 1
+        },
+        "stats_season": 2026
       }
     ]
   }

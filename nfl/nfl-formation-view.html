@@ -1477,6 +1477,7 @@ function mapPlayer(player) {
     age: player.age,
     years_pro: player.years_pro,
     draft_year: player.draft_year,
+    draft_pick: player.draft_pick,
     college: player.college,
     height: player.height,
     weight: player.weight,
@@ -2685,7 +2686,7 @@ const REACH_ALLOW = { QB: 3.0, EDGE: 1.5, OT: 1.5, WR: 1.3, CB: 1.3, default: 1.
 const GRADE_STEAL_MAX = 0.15, GRADE_STEAL_SPAN = 32;   // steal bonus = min(MAX, MAX x (pick - rank) / SPAN)
 const GRADE_REACH_SLOPE = 0.6, GRADE_REACH_SPAN = 64, GRADE_VALUE_FLOOR = 0.4, GRADE_NO_RANK = 0.85;
 const GRADE_NEED_FULL = 60;                            // raw need (0-100, before positional value) that counts as a full need
-const GRADE_W = { base: 0.45, need: 0.35, pv: 0.20 };
+const GRADE_NEED_BASE = 0.70, GRADE_PV_BASE = 0.50;   // score = value x (NEED_BASE + (1-NEED_BASE) x need) x (PV_BASE + (1-PV_BASE) x pv)
 const GRADE_LETTERS = [[.95, 'A+'], [.90, 'A'], [.85, 'A-'], [.80, 'B+'], [.75, 'B'], [.70, 'B-'], [.65, 'C+'], [.60, 'C'], [.50, 'D']];
 const ROUND_WORD = { 1: 'first', 2: 'second', 3: 'third', 4: 'fourth', 5: 'fifth', 6: 'sixth', 7: 'seventh' };
 
@@ -2880,7 +2881,7 @@ function gradeFor(pr, pickNo, ndBefore, posRaw) {
   else value = Math.max(GRADE_VALUE_FLOOR, 1 - GRADE_REACH_SLOPE * Math.min(1, (rank - pickNo * allow) / GRADE_REACH_SPAN));
   const rawNeed = g && ndBefore ? ndBefore.byGroup[g].rawNeed : 0;
   const need = Math.min(1, rawNeed / GRADE_NEED_FULL), pv = g ? NEED_VALUE[g] : 0;
-  const score = value * (GRADE_W.base + GRADE_W.need * need + GRADE_W.pv * pv);
+  const score = value * (GRADE_NEED_BASE + (1 - GRADE_NEED_BASE) * need) * (GRADE_PV_BASE + (1 - GRADE_PV_BASE) * pv);
   return { g, rank, value, need, pv, rawNeed, score, letter: letterOf(score), noRank: rank == null };
 }
 function letterOf(score) { for (const [t, l] of GRADE_LETTERS) if (score >= t) return l; return 'F'; }

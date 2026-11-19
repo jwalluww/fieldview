@@ -21,6 +21,17 @@
           "YAC": 53
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Tyrell Shavers",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF23",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": "$568,500",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RWR": [
@@ -172,17 +183,6 @@
         "cap_number": "$3,364,087",
         "stats": {},
         "stats_season": 2026
-      },
-      {
-        "name": "Ar'maj Reed-adams",
-        "depth": 2,
-        "injured": false,
-        "attainment": "26/7",
-        "standard_slot": "RG",
-        "standard_pos": "OL",
-        "cap_number": "$917,438",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "RT": [
@@ -924,19 +924,6 @@
         "stats_season": null
       }
     ],
-    "OG": [
-      {
-        "name": "Nick Broeker",
-        "depth": 1,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "OG",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      }
-    ],
     "ED": [
       {
         "name": "Andre Jones Jr.",
@@ -1007,6 +994,19 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Te'cory Couch",
+        "depth": 4,
+        "injured": false,
+        "attainment": "CF24",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TKL": 6
+        },
+        "stats_season": 2026
       }
     ],
     "S": [
@@ -1028,8 +1028,19 @@
     ],
     "IR": [
       {
-        "name": "Joshua Palmer",
+        "name": "Ar'maj Reed-adams",
         "depth": 1,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$917,438",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Joshua Palmer",
+        "depth": 2,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1046,7 +1057,7 @@
       },
       {
         "name": "Zane Durant",
-        "depth": 2,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1065,19 +1076,6 @@
         "standard_slot": "NFI",
         "standard_pos": "DEF",
         "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      }
-    ],
-    "DFR": [
-      {
-        "name": "Tyrell Shavers",
-        "depth": 1,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "DFR",
-        "standard_pos": "DEF",
-        "cap_number": "$568,500",
         "stats": {},
         "stats_season": null
       }
