@@ -43,9 +43,13 @@ jobs:
       #   run: python nfl/scripts/scrape_madden.py
 
       # Spotrac contracts (years_remaining / cash fields). Keep-old guard inside the script; a failure never blocks the job.
-      - name: Run Spotrac contracts scraper
+      # Spotrac retired 2026-11-20 (HTTP 403 from runners and locally); contracts now come from nflverse/OTC.
+      # - name: Run Spotrac contracts scraper
+      #   continue-on-error: true
+      #   run: python nfl/scripts/scrape_contracts_spotrac.py
+      - name: Run nflverse contracts scraper
         continue-on-error: true
-        run: python nfl/scripts/scrape_contracts_spotrac.py
+        run: python nfl/scripts/scrape_contracts_nflverse.py
 
       - name: Run QBR scraper
         run: python nfl/scripts/scrape_qbr.py
@@ -104,9 +108,13 @@ jobs:
         continue-on-error: true
         run: python nba/scripts/scrape_bbr_advanced.py
 
-      - name: Run NBA contracts scraper
+      # Spotrac retired 2026-11-20 (HTTP 403); NBA contracts now come from Basketball-Reference.
+      # - name: Run NBA contracts scraper
+      #   continue-on-error: true
+      #   run: python nba/scripts/scrape_contracts_spotrac.py
+      - name: Run NBA contracts scraper (Basketball-Reference)
         continue-on-error: true
-        run: python nba/scripts/scrape_contracts_spotrac.py
+        run: python nba/scripts/scrape_bbr_contracts.py
 
       # 2K ratings now come from nba2kapi (a JSON mirror of 2kratings.com's
       # data, whole current-era pool per call) -- no local Task Scheduler job

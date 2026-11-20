@@ -286,19 +286,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Jared Wiley",
-        "depth": 4,
-        "injured": false,
-        "attainment": "24/4",
-        "standard_slot": "TE",
-        "standard_pos": "TE",
-        "cap_number": "$1,247,155",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Thomas Odukoya",
-        "depth": 5,
+        "depth": 4,
         "injured": false,
         "attainment": "SF26*",
         "standard_slot": "TE",
@@ -309,7 +298,7 @@
       },
       {
         "name": "John Fitzpatrick",
-        "depth": 6,
+        "depth": 5,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "TE",
@@ -517,6 +506,17 @@
           "QB HIT": 1
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Bryson Eason",
+        "depth": 3,
+        "injured": false,
+        "attainment": "W/SF",
+        "standard_slot": "LDT",
+        "standard_pos": "DI",
+        "cap_number": "$885,000",
+        "stats": {},
+        "stats_season": 2026
       }
     ],
     "DT": [
@@ -537,8 +537,19 @@
         "stats_season": 2026
       },
       {
-        "name": "Marcus Harris",
+        "name": "Omarr Norman-lott",
         "depth": 2,
+        "injured": false,
+        "attainment": "25/2",
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": "$1,636,449",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Marcus Harris",
+        "depth": 3,
         "injured": false,
         "attainment": "SF25",
         "standard_slot": "RDT",
@@ -546,17 +557,6 @@
         "cap_number": "$442,500",
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Bryson Eason",
-        "depth": 3,
-        "injured": false,
-        "attainment": "W/SF",
-        "standard_slot": "RDT",
-        "standard_pos": "DI",
-        "cap_number": "$885,000",
-        "stats": {},
-        "stats_season": 2026
       }
     ],
     "RDE": [
@@ -966,21 +966,8 @@
     ],
     "LB": [
       {
-        "name": "Cole Christiansen",
-        "depth": 1,
-        "injured": false,
-        "attainment": "SF22",
-        "standard_slot": "LB",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {
-          "TKL": 3
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Aiden Fisher",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "LB",
@@ -1018,8 +1005,19 @@
     ],
     "IR": [
       {
-        "name": "L'jarius Sneed",
+        "name": "Jared Wiley",
         "depth": 1,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$1,247,155",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "L'jarius Sneed",
+        "depth": 2,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1033,7 +1031,7 @@
       },
       {
         "name": "Brashard Smith",
-        "depth": 2,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1048,7 +1046,7 @@
       },
       {
         "name": "Tyquan Thornton",
-        "depth": 3,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1065,7 +1063,7 @@
       },
       {
         "name": "Josh Simmons",
-        "depth": 4,
+        "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1076,7 +1074,7 @@
       },
       {
         "name": "Jimmy Holiday",
-        "depth": 5,
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1087,7 +1085,7 @@
       },
       {
         "name": "John Michael Gyllenborg",
-        "depth": 6,
+        "depth": 7,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1098,7 +1096,7 @@
       },
       {
         "name": "Matt Waletzko",
-        "depth": 7,
+        "depth": 8,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1109,7 +1107,7 @@
       },
       {
         "name": "Jeff Caldwell",
-        "depth": 8,
+        "depth": 9,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1120,25 +1118,12 @@
       },
       {
         "name": "Ethan Downs",
-        "depth": 9,
+        "depth": 10,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
         "standard_pos": "DEF",
         "cap_number": "$515,000",
-        "stats": {},
-        "stats_season": null
-      }
-    ],
-    "DFR": [
-      {
-        "name": "Omarr Norman-lott",
-        "depth": 1,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "DFR",
-        "standard_pos": "DEF",
-        "cap_number": "$1,636,449",
         "stats": {},
         "stats_season": null
       }

@@ -38,7 +38,8 @@ echo ============================================
 REM fetch_stats.py retired 2026-10 (stats.nba.com unreachable); ESPN replaces it:
 call :run_step "fetch_espn_stats.py" "python nba\scripts\fetch_espn_stats.py"
 call :run_step "scrape_bbr_advanced.py" "python nba\scripts\scrape_bbr_advanced.py"
-call :run_step "scrape_contracts_spotrac.py" "python nba\scripts\scrape_contracts_spotrac.py"
+REM Spotrac retired 2026-11-20 (403): call :run_step "scrape_contracts_spotrac.py" "python nba\scripts\scrape_contracts_spotrac.py"
+call :run_step "scrape_bbr_contracts.py" "python nba\scripts\scrape_bbr_contracts.py"
 call :run_step "scrape_nba2kapi.py" "python nba\scripts\scrape_nba2kapi.py"
 REM scrape_2kratings.py (2kratings.com trickle scraper) retired 2026-10 in favor of nba2kapi; left in place, unused:
 REM call :run_step "scrape_2kratings.py" "python nba\scripts\scrape_2kratings.py"

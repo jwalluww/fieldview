@@ -613,9 +613,15 @@ def build_match():
                 entry['int_pd_per_target'] = (row['int'] + ss['def_pass_defended']) / row['tgt'] * 100
 
     # Spotrac remaining-contract fuzzy match
+    # nflverse contracts carry gsis_id: join by id first, fall back to the name/pos/team match
+    gsis_idx = {}
+    if spotrac_df is not None and 'gsis_id' in spotrac_df.columns:
+        gsis_idx = {g: i for i, g in zip(spotrac_df['row_idx'], spotrac_df['gsis_id']) if isinstance(g, str) and g}
     for entry in master.values():
-        row_idx, _ = find_spotrac_contract(
-            entry['canonical_name'], entry['standard_pos'], entry['team'], spotrac_df)
+        row_idx = gsis_idx.get(entry.get('gsis_id'))
+        if row_idx is None:
+            row_idx, _ = find_spotrac_contract(
+                entry['canonical_name'], entry['standard_pos'], entry['team'], spotrac_df)
         if row_idx is not None:
             row = spotrac_df.loc[row_idx]
             years_remaining = int(row['length_remaining']) if pd.notna(row['length_remaining']) else None
