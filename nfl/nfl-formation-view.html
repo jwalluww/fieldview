@@ -2686,6 +2686,8 @@ const REACH_ALLOW = { QB: 3.0, EDGE: 1.5, OT: 1.5, WR: 1.3, CB: 1.3, default: 1.
 const GRADE_STEAL_MAX = 0.15, GRADE_STEAL_SPAN = 32;   // steal bonus = min(MAX, MAX x (pick - rank) / SPAN)
 const GRADE_REACH_SLOPE = 0.6, GRADE_REACH_SPAN = 64, GRADE_VALUE_FLOOR = 0.4, GRADE_NO_RANK = 0.85;
 const GRADE_NEED_FULL = 60;                            // raw need (0-100, before positional value) that counts as a full need
+// Sequential grading: need x GRADE_REPEAT[k], k = this team's EARLIER picks (lower pick number) at the same need group; the last entry covers the 4th and later.
+const GRADE_REPEAT = [1, 0.6, 0.35, 0.2];
 const GRADE_NEED_BASE = 0.70, GRADE_PV_BASE = 0.50;   // score = value x (NEED_BASE + (1-NEED_BASE) x need) x (PV_BASE + (1-PV_BASE) x pv)
 const GRADE_LETTERS = [[.95, 'A+'], [.90, 'A'], [.85, 'A-'], [.80, 'B+'], [.75, 'B'], [.70, 'B-'], [.65, 'C+'], [.60, 'C'], [.50, 'D']];
 const ROUND_WORD = { 1: 'first', 2: 'second', 3: 'third', 4: 'fourth', 5: 'fifth', 6: 'sixth', 7: 'seventh' };
@@ -2780,7 +2782,7 @@ function computeNeeds(opts) {
 let needsCache = { sig: null, val: null };
 function getNeeds() {
   if (!allPlayers || !teamData) return null;
-  const sig = currentTeam + '|' + needsRookies().map(r => r.id).sort().join(',');
+  const sig = currentTeam + '|' + needsRookies().map(r => r.id + '@' + r.pick + (r.posRaw || '')).sort().join(',');  // pick + position too: the same prospect re-drafted at another pick must recompute
   if (needsCache.sig !== sig) needsCache = { sig, val: computeNeeds() };
   return needsCache.val;
 }
@@ -2880,14 +2882,17 @@ function gradeFor(pr, pickNo, ndBefore, posRaw) {
   else if (rank <= pickNo * allow) value = 1 + (rank < pickNo ? Math.min(GRADE_STEAL_MAX, GRADE_STEAL_MAX * (pickNo - rank) / GRADE_STEAL_SPAN) : 0);
   else value = Math.max(GRADE_VALUE_FLOOR, 1 - GRADE_REACH_SLOPE * Math.min(1, (rank - pickNo * allow) / GRADE_REACH_SPAN));
   const rawNeed = g && ndBefore ? ndBefore.byGroup[g].rawNeed : 0;
-  const need = Math.min(1, rawNeed / GRADE_NEED_FULL), pv = g ? NEED_VALUE[g] : 0;
+  // k = this team's earlier picks (this draft) at the same group: a later pick at a group already addressed needs less.
+  const k = g ? needsRookies().filter(x => x.pick < pickNo && needGroupOf(x) === g).length : 0;
+  const rep = GRADE_REPEAT[Math.min(k, GRADE_REPEAT.length - 1)];
+  const need = Math.min(1, rawNeed / GRADE_NEED_FULL) * rep, pv = g ? NEED_VALUE[g] : 0;
   const score = value * (GRADE_NEED_BASE + (1 - GRADE_NEED_BASE) * need) * (GRADE_PV_BASE + (1 - GRADE_PV_BASE) * pv);
-  return { g, rank, value, need, pv, rawNeed, score, letter: letterOf(score), noRank: rank == null };
+  return { g, rank, value, need, pv, rawNeed, k, rep, score, letter: letterOf(score), noRank: rank == null };
 }
 function letterOf(score) { for (const [t, l] of GRADE_LETTERS) if (score >= t) return l; return 'F'; }
 const gradeClass = sc => sc >= GRADE_LETTERS[5][0] ? '' : sc >= GRADE_LETTERS[8][0] ? ' g-mid' : ' g-low';
 function gradeTitle(gr) {
-  return `Grade ${gr.letter}: value ${gr.value.toFixed(2)}${gr.noRank ? ' (no board rank)' : ''}, need ${gr.need.toFixed(2)} (${gr.g || '?'}), positional value ${gr.pv.toFixed(2)}, score ${gr.score.toFixed(2)}`;
+  return `Grade ${gr.letter}: value ${gr.value.toFixed(2)}${gr.noRank ? ' (no board rank)' : ''}, need ${gr.need.toFixed(2)} (${gr.g || '?'}${gr.k ? `; ${ordinal(gr.k + 1)} ${gr.g} this draft: need x${gr.rep}` : ''}), positional value ${gr.pv.toFixed(2)}, score ${gr.score.toFixed(2)}`;
 }
 function gradeBadgeHtml(gr) {
   return `<span class="dp-grade${gradeClass(gr.score)}" title="${escapeHtml(gradeTitle(gr))}">${escapeHtml(gr.letter)}</span>`;
@@ -2912,7 +2917,7 @@ function rookieFitHtml(r, slot) {
   const rep = !onField ? 'Bench' : (d ? `Replaces <b>${esc(d.name)}</b> (${d.madden != null ? d.madden : '—'}) at ${esc(slot)}` : `Fills an open ${esc(slot)} slot`);
   return `<div class="sb-section"><div class="sb-section-title">Roster fit</div>
       <div class="sb-kv"><span>Lineup</span><span style="text-align:right">${rep}</span></div>
-      <div class="sb-kv"><span>Grade</span><span title="${escapeHtml(gradeTitle(gr))}"><b>${esc(gr.letter)}</b> (value ${gr.value.toFixed(2)}, need ${gr.need.toFixed(2)}, ${esc(gr.g || '?')})${gr.noRank ? ' · no board rank' : ''}</span></div>
+      <div class="sb-kv"><span>Grade</span><span title="${escapeHtml(gradeTitle(gr))}"><b>${esc(gr.letter)}</b> (value ${gr.value.toFixed(2)}, need ${gr.need.toFixed(2)}, ${esc(gr.g || '?')})${gr.k ? ` · ${ordinal(gr.k + 1)} ${esc(gr.g)} this draft: need x${gr.rep}` : ''}${gr.noRank ? ' · no board rank' : ''}</span></div>
       <div class="sb-kv"><span>${NEED_LABEL[g]} need</span><span>${before} → ${after}</span></div>
       <div class="sb-caption">Needs count every drafted rookie, placed or on the bench.</div></div>`;
 }

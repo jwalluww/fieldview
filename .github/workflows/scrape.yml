@@ -105,6 +105,7 @@ jobs:
         run: python nba/scripts/scrape_bbr_advanced.py
 
       - name: Run NBA contracts scraper
+        continue-on-error: true
         run: python nba/scripts/scrape_contracts_spotrac.py
 
       # 2K ratings now come from nba2kapi (a JSON mirror of 2kratings.com's

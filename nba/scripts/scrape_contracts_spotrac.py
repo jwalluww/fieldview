@@ -145,7 +145,12 @@ def find_match(record, by_name, by_name_team):
 
 def main():
     print(f"Fetching {URL} ...")
-    html = fetch_page()
+    try:
+        html = fetch_page()
+    except requests.RequestException as e:
+        # Spotrac answers 403 to GitHub runners: keep the last contracts file (exit 0).
+        print(f"GUARD: Spotrac fetch failed ({e}); keeping existing {OUT_PATH}")
+        return
 
     records = parse_table(html)
     print(f"Parsed {len(records)} contract records")

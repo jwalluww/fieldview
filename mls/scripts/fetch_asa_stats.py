@@ -52,7 +52,15 @@ SEASON = "2026"
 def df_records(df):
     # ASA's season_name column can hold a list (per get_players) -- plain
     # to_dict("records") handles that fine, no special casing needed.
+    if hasattr(df, "to_dicts"):  # newer itscalledsoccer returns polars DataFrames
+        return _clean(df.to_dicts())
     return json.loads(df.to_json(orient="records"))
+
+
+def _clean(rows):
+    # pandas to_json turned NaN into null; do the same for polars rows
+    import math
+    return [{k: (None if isinstance(v, float) and math.isnan(v) else v) for k, v in r.items()} for r in rows]
 
 
 def main():

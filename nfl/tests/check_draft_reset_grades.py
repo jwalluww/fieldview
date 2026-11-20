@@ -139,5 +139,88 @@ with sync_playwright() as pw:
     print(json.dumps(res, indent=1))
     b.close()
 
+
+# ---- needs refresh (manual + import) and sequential grades
+SYNC = """() => { const f = computeNeeds();
+  const freshL = f.ranked.slice(0, 3).map(g => NEED_LABEL[g] + ':' + f.byGroup[g].score).join(',');
+  const stripL = [...document.querySelectorAll('#needsChips .ns-chip')].map(c => c.querySelector('b').textContent + ':' + c.title.split(' \\u00b7 ')[1].replace('need ', '')).join(',');
+  const q = (sel, a, b) => [...document.querySelectorAll(sel)].slice(0, 3).map(r => r.querySelector(a).textContent + ':' + r.querySelector(b).textContent).join(',');
+  return { freshL, stripL, mini: q('#playerSidebar .nm-row', '.nm-g', '.nm-s'), panel: q('#playerSidebar .nq-card', '.nq-g', '.nq-score') }; }"""
+SEQ = "(pick) => { const r = needsRookies().find(x => x.pick === pick); return gradeFor(r.prospect, r.pick, computeNeeds({ beforePick: r.pick }), r.posRaw).score; }"
+
+
+def synced(page, tag, what, mini=False, panel=False):
+    r = page.evaluate(SYNC)
+    ok = r['stripL'] == r['freshL'] and (not mini or r['mini'] == r['freshL']) and (not panel or r['panel'] == r['freshL'])
+    check(ok, f'{tag} needs in sync after {what}: {r}')
+
+
+def board_ok(page, tag, what):
+    bad = page.evaluate("""() => { const pick = draftSel.pick; if (!pick) return -1; const f = getNeeds(), ndB = computeNeeds({ beforePick: pick }); let n = 0, seen = 0;
+      for (const row of document.querySelectorAll('#dpList .dp-row')) { const fits = row.querySelectorAll('.dp-fit, .dp-grade'); seen++; if (fits.length < 2) n++; }
+      const first = document.querySelector('#dpList .dp-row .dp-grade');
+      return first ? n : -2; }""")
+    check(bad == 0, f'{tag} board rows carry Fit + grade badges after {what} ({bad})')
+
+
+with sync_playwright() as pw:
+    b = pw.chromium.launch()
+    for (w, h) in [(1280, 900), (1920, 1080)]:
+        tag = f'{w}x{h}'
+        page = b.new_page(viewport={'width': w, 'height': h})
+        errs = []
+        page.on('pageerror', lambda e: errs.append(str(e)))
+        load(page, 'NYJ')
+        page.evaluate("openDraftPanel('pick')"); page.wait_for_function('draftData && document.querySelector(".nm-row")')
+        synced(page, tag, 'manual start', mini=True)
+        firstpick = None
+        for i, pos in enumerate(['EDGE', 'CB']):
+            pk = page.evaluate("""([pos, i]) => { const o = draftData.order.filter(o => o.team === 'NYJ').sort((a, b) => a.pick - b.pick)[i]; if (draftSel.pick !== o.pick) selectDraftPick(o.pick);
+              const pr = draftData.prospects.filter(p => p.standard_pos === pos && p.consensus_rank).sort((a, b) => a.consensus_rank - b.consensus_rank)[0];
+              selectDraftProspect(pr.prospect_id);
+              const slot = [...document.querySelectorAll('#playersLayer .player-node.drop-target')].map(n => n.dataset.pos)[0];
+              placeRookieFromPanel(slot); return o.pick; }""", [pos, i])
+            check(page.evaluate('needsRookies().length') == i + 1, f'{tag} manual pick {i + 1} placed')
+            synced(page, tag, f'manual pick {i + 1}', mini=True)
+            if i == 0:
+                firstpick = pk
+                g0 = page.evaluate(SEQ, pk)
+            page.evaluate("() => { const o = draftData.order.filter(o => o.team === 'NYJ' && !needsRookies().some(r => r.pick === o.pick))[0]; if (o) selectDraftPick(o.pick); }")
+            board_ok(page, tag, f'manual pick {i + 1}')
+        g1 = page.evaluate(SEQ, firstpick)
+        check(abs(g1 - g0) < 1e-9, f'{tag} earlier grade frozen when a later pick is added ({g0:.3f} -> {g1:.3f})')
+        page.evaluate("openNeedsPanel()"); synced(page, tag, 'open Team Needs panel', panel=True)
+        page.evaluate("() => removeRookie(rookieEntries()[0].slot)")
+        synced(page, tag, 'manual removal (panel open)', panel=True)
+        page.evaluate("clearDraft()"); synced(page, tag, 'manual clear (panel open)', panel=True)
+        # import: three teams, panel closed / open
+        page.evaluate("openDraftPanel('import')"); page.wait_for_selector('#dpImportTa'); page.fill('#dpImportTa', FIX); page.evaluate("doImport()")
+        page.wait_for_function("importRookies.length > 0")
+        synced(page, tag, 'import NYJ', mini=True)
+        for t in ['DAL', 'MIA', 'NYJ']:
+            page.evaluate(f"selectTeam('{t}')"); page.wait_for_function(f"currentTeam === '{t}'"); page.wait_for_timeout(300)
+            synced(page, tag, f'switch to {t} (import loaded)')
+            page.evaluate("openNeedsPanel()"); synced(page, tag, f'{t} Team Needs panel', panel=True)
+            page.evaluate("openDraftPanel('import')"); page.wait_for_selector('.dp-haul'); synced(page, tag, f'{t} import panel', mini=True)
+        sig = page.evaluate("() => { getNeeds(); const a = needsCache.sig; importRookies[0].pick += 1; getNeeds(); const b = needsCache.sig; importRookies[0].pick -= 1; return a !== b; }")
+        check(sig, f'{tag} needs cache signature changes with the pick number')
+        page.evaluate("clearImport()")
+        # sequential grades: WR repeat penalty, earlier picks frozen, removal recomputes later ones
+        seq = page.evaluate("""() => { const picks = draftData.order.filter(o => o.team === 'NYJ').slice(0, 4);
+          const wrs = draftData.prospects.filter(p => p.standard_pos === 'WR' && p.consensus_rank).sort((a, b) => a.consensus_rank - b.consensus_rank).slice(0, 4);
+          importRookies = picks.map((o, i) => makeRookie(o, wrs[i]));
+          const sc = r => gradeFor(r.prospect, r.pick, computeNeeds({ beforePick: r.pick }), r.posRaw);
+          const out = importRookies.map(r => [sc(r).k, sc(r).rep]);
+          const first = sc(importRookies[0]).score, lastBefore = sc(importRookies[3]).score;
+          const removed = importRookies.splice(1, 1); const lastAfter = sc(importRookies[2]).score; const first2 = sc(importRookies[0]).score;
+          importRookies = []; return { out, same: Math.abs(first - first2) < 1e-9, later: lastAfter > lastBefore }; }""")
+        check([x[0] for x in seq['out']] == [0, 1, 2, 3] and [x[1] for x in seq['out']] == [1, 0.6, 0.35, 0.2], f'{tag} repeat penalty k/rep per WR pick {seq["out"]}')
+        check(seq['same'], f'{tag} an earlier pick grade ignores later picks')
+        check(seq['later'], f'{tag} removing a pick recomputes later grades')
+        check(not errs, f'{tag} no page errors {errs}')
+        page.close()
+    b.close()
+
+
 print('\nFAILS:', fails if fails else 'none')
 sys.exit(1 if fails else 0)
