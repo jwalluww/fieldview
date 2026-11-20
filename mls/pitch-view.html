@@ -151,13 +151,15 @@ body {
   display: flex; align-items: center; gap: 6px;
 }
 .view-btn:hover { color: var(--text); }
+.view-btn.soon { color: var(--text-muted); opacity: .6; cursor: default; font-style: italic; }
+.view-btn.soon:hover { color: var(--text-muted); }
 .view-btn.active { background: var(--border2); color: var(--text); }
 
 /* ── LAYOUT ── */
 .wrap {
   display: flex;
   gap: 20px;
-  max-width: 1130px;
+  max-width: none;
   margin: 16px auto;
   padding: 0 16px;
   align-items: flex-start;
@@ -166,7 +168,7 @@ body {
 /* ── LEFT: compact pitch ── */
 .asof { font-size: 13px; font-weight: 400; letter-spacing: 0; text-transform: none; margin-left: 10px; }
 
-.left-col { flex-shrink: 0; }
+.left-col { flex: 1; min-width: 0; }  /* landscape pitch fills the width left after the fixed 360px right column */
 :root { --fh: min(calc(100vh - 150px), 806px); }
 
 .court-label {
@@ -197,8 +199,8 @@ body {
 
 .court-canvas {
   position: relative;
-  height: var(--fh);
-  width: calc(var(--fh) * 500 / 720);
+  width: min(100%, calc(var(--fh) * 720 / 500));   /* landscape 720x500, height-capped by --fh so the page never scrolls */
+  aspect-ratio: 720 / 500;
   border-radius: 8px;
 }
 
@@ -252,7 +254,10 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100px;
-  color: var(--text);
+  color: #fff;
+  background: rgba(0,0,0,.55);   /* dark pill so the name reads on the light pitch */
+  padding: 1px 7px;
+  border-radius: 9px;
 }
 
 .player-rank {
@@ -265,7 +270,10 @@ body {
   /* var(--text-muted) is low-contrast against the green pitch --
      switched to var(--text), matching how NBA's court-view.html
      already handles this same line against its wood court. */
-  color: var(--text);
+  color: #fff;
+  background: rgba(0,0,0,.55);
+  padding: 0 6px;
+  border-radius: 8px;
 }
 
 .court-hint { font-size: 10px; color: var(--text-dim); margin-top: 8px; font-style: italic; }
@@ -288,7 +296,7 @@ body {
 .subs-empty { font-size: 10px; color: var(--text-dim); padding: 4px; }
 
 /* ── RIGHT: full bench list, no scroll ── */
-.right-col { flex: 1; min-width: 0; align-self: stretch; contain: size; display: flex; flex-direction: column; }
+.right-col { flex: 0 0 360px; width: 360px; min-width: 0; align-self: stretch; contain: size; display: flex; flex-direction: column; }
 /* the bench list scrolls inside the column so the page itself never scrolls (right-col is sized by the pitch/ice column) */
 
 .rotation-title {
@@ -357,7 +365,8 @@ body {
 .sidebar {
   display: none;
   position: relative;
-  flex: 1;
+  flex: 0 0 360px;
+  width: 360px;
   min-width: 0;
   align-self: stretch;
   background: #14171f;
@@ -457,7 +466,8 @@ body.sb-open .right-col { display: none; }
   .header { padding: 0 12px; }
   .wrap { flex-direction: column; padding: 0 12px; }
   .left-col { width: 100%; }
-  .court-canvas { height: auto; width: 100%; aspect-ratio: 500/720; }
+  .court-canvas { width: 100%; aspect-ratio: 720/500; }
+  .right-col, .sidebar { flex: 1 1 auto; width: 100%; }
 }
 
 /* ── PLAYER STAT POPUP ── */
@@ -510,10 +520,7 @@ body.sb-open .right-col { display: none; }
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/><circle cx="6" cy="6" r="1.5" fill="currentColor"/></svg>
       PitchView
     </button>
-    <button class="view-btn" onclick="window.location='player-table.html'">
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="3" rx="1" fill="currentColor"/><rect x="1" y="5" width="10" height="3" rx="1" fill="currentColor" opacity=".5"/><rect x="1" y="9" width="10" height="2" rx="1" fill="currentColor" opacity=".3"/></svg>
-      Table
-    </button>
+    <span class="view-btn soon" title="Replays, box scores and highlights">ReView: coming soon</span>
   </div>
 </header>
 
@@ -532,37 +539,37 @@ body.sb-open .right-col { display: none; }
     </div>
 
     <div class="court-canvas">
-      <svg class="court-bg" viewBox="0 0 500 720" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <svg class="court-bg" viewBox="0 0 720 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <defs>
-          <pattern id="pitch-stripes" x="0" y="0" width="500" height="72" patternUnits="userSpaceOnUse">
-            <rect width="500" height="36" fill="#2d8a4e"/>
-            <rect y="36" width="500" height="36" fill="#2a8049"/>
+          <pattern id="pitch-stripes" x="0" y="0" width="72" height="500" patternUnits="userSpaceOnUse">
+            <rect width="36" height="500" fill="#2d8a4e"/>
+            <rect x="36" width="36" height="500" fill="#2a8049"/>
           </pattern>
         </defs>
-        <rect width="500" height="720" rx="10" fill="url(#pitch-stripes)"/>
+        <rect width="720" height="500" rx="10" fill="url(#pitch-stripes)"/>
         <!-- outer boundary -->
-        <rect x="14" y="14" width="472" height="692" fill="none" stroke="white" stroke-opacity="0.55" stroke-width="3"/>
+        <rect x="14" y="14" width="692" height="472" fill="none" stroke="white" stroke-opacity="0.55" stroke-width="3"/>
         <!-- halfway line + center circle -->
-        <line x1="14" y1="360" x2="486" y2="360" stroke="white" stroke-opacity="0.5" stroke-width="2.5"/>
-        <circle cx="250" cy="360" r="55" fill="none" stroke="white" stroke-opacity="0.5" stroke-width="2.5"/>
-        <circle cx="250" cy="360" r="3" fill="white" fill-opacity="0.6"/>
-        <!-- own goal (bottom): penalty box, six-yard box, arc -->
-        <rect x="120" y="586" width="260" height="120" fill="none" stroke="white" stroke-opacity="0.5" stroke-width="2.5"/>
-        <rect x="190" y="664" width="120" height="42" fill="none" stroke="white" stroke-opacity="0.5" stroke-width="2.5"/>
-        <path d="M 175 586 A 55 55 0 0 1 325 586" fill="none" stroke="white" stroke-opacity="0.5" stroke-width="2.5"/>
-        <circle cx="250" cy="612" r="3" fill="white" fill-opacity="0.6"/>
-        <line x1="120" y1="706" x2="380" y2="706" stroke="white" stroke-opacity="0.7" stroke-width="4"/>
-        <!-- attacking goal (top): penalty box, six-yard box, arc -->
-        <rect x="120" y="14" width="260" height="120" fill="none" stroke="white" stroke-opacity="0.5" stroke-width="2.5"/>
-        <rect x="190" y="14" width="120" height="42" fill="none" stroke="white" stroke-opacity="0.5" stroke-width="2.5"/>
-        <path d="M 175 134 A 55 55 0 0 0 325 134" fill="none" stroke="white" stroke-opacity="0.5" stroke-width="2.5"/>
-        <circle cx="250" cy="108" r="3" fill="white" fill-opacity="0.6"/>
-        <line x1="120" y1="14" x2="380" y2="14" stroke="white" stroke-opacity="0.7" stroke-width="4"/>
+        <line x1="360" y1="14" x2="360" y2="486" stroke="white" stroke-opacity="0.5" stroke-width="2.5"/>
+        <circle cx="360" cy="250" r="55" fill="none" stroke="white" stroke-opacity="0.5" stroke-width="2.5"/>
+        <circle cx="360" cy="250" r="3" fill="white" fill-opacity="0.6"/>
+        <!-- own goal (left): penalty box, six-yard box, arc -->
+        <rect x="14" y="120" width="120" height="260" fill="none" stroke="white" stroke-opacity="0.5" stroke-width="2.5"/>
+        <rect x="14" y="190" width="42" height="120" fill="none" stroke="white" stroke-opacity="0.5" stroke-width="2.5"/>
+        <path d="M 134 175 A 55 55 0 0 1 134 325" fill="none" stroke="white" stroke-opacity="0.5" stroke-width="2.5"/>
+        <circle cx="108" cy="250" r="3" fill="white" fill-opacity="0.6"/>
+        <line x1="14" y1="120" x2="14" y2="380" stroke="white" stroke-opacity="0.7" stroke-width="4"/>
+        <!-- attacking goal (right): penalty box, six-yard box, arc -->
+        <rect x="586" y="120" width="120" height="260" fill="none" stroke="white" stroke-opacity="0.5" stroke-width="2.5"/>
+        <rect x="664" y="190" width="42" height="120" fill="none" stroke="white" stroke-opacity="0.5" stroke-width="2.5"/>
+        <path d="M 586 175 A 55 55 0 0 0 586 325" fill="none" stroke="white" stroke-opacity="0.5" stroke-width="2.5"/>
+        <circle cx="612" cy="250" r="3" fill="white" fill-opacity="0.6"/>
+        <line x1="706" y1="120" x2="706" y2="380" stroke="white" stroke-opacity="0.7" stroke-width="4"/>
         <!-- corner arcs -->
         <path d="M 14 30 A 16 16 0 0 0 30 14" fill="none" stroke="white" stroke-opacity="0.5" stroke-width="2"/>
-        <path d="M 470 14 A 16 16 0 0 0 486 30" fill="none" stroke="white" stroke-opacity="0.5" stroke-width="2"/>
-        <path d="M 14 690 A 16 16 0 0 1 30 706" fill="none" stroke="white" stroke-opacity="0.5" stroke-width="2"/>
-        <path d="M 486 690 A 16 16 0 0 1 470 706" fill="none" stroke="white" stroke-opacity="0.5" stroke-width="2"/>
+        <path d="M 690 14 A 16 16 0 0 0 706 30" fill="none" stroke="white" stroke-opacity="0.5" stroke-width="2"/>
+        <path d="M 14 470 A 16 16 0 0 1 30 486" fill="none" stroke="white" stroke-opacity="0.5" stroke-width="2"/>
+        <path d="M 706 470 A 16 16 0 0 1 690 486" fill="none" stroke="white" stroke-opacity="0.5" stroke-width="2"/>
       </svg>
       <div class="players-layer" id="playersLayer"></div>
       <div class="subs-pop" id="subsPop"></div>
@@ -671,13 +678,13 @@ const FORMATIONS = {
   }},
   '352': { label: '3-5-2', zones: {
     GK:   { x: 50, y: 90 },
-    DEF1: { x: 25, y: 78 }, DEF2: { x: 50, y: 82 }, DEF3: { x: 75, y: 78 },
+    DEF1: { x: 25, y: 78 }, DEF2: { x: 50, y: 76 }, DEF3: { x: 75, y: 78 },
     MID1: { x: 8,  y: 52 }, MID2: { x: 30, y: 56 }, MID3: { x: 50, y: 58 }, MID4: { x: 70, y: 56 }, MID5: { x: 92, y: 52 },
     FWD1: { x: 35, y: 16 }, FWD2: { x: 65, y: 16 },
   }},
   '343': { label: '3-4-3', zones: {
     GK:   { x: 50, y: 90 },
-    DEF1: { x: 25, y: 78 }, DEF2: { x: 50, y: 82 }, DEF3: { x: 75, y: 78 },
+    DEF1: { x: 25, y: 78 }, DEF2: { x: 50, y: 76 }, DEF3: { x: 75, y: 78 },
     MID1: { x: 12, y: 50 }, MID2: { x: 38, y: 54 }, MID3: { x: 62, y: 54 }, MID4: { x: 88, y: 50 },
     FWD1: { x: 18, y: 18 }, FWD2: { x: 50, y: 12 }, FWD3: { x: 82, y: 18 },
   }},
@@ -689,11 +696,15 @@ const FORMATIONS = {
   }},
   '532': { label: '5-3-2', zones: {
     GK:   { x: 50, y: 90 },
-    DEF1: { x: 8,  y: 70 }, DEF2: { x: 28, y: 78 }, DEF3: { x: 50, y: 81 }, DEF4: { x: 72, y: 78 }, DEF5: { x: 92, y: 70 },
+    DEF1: { x: 8,  y: 70 }, DEF2: { x: 28, y: 78 }, DEF3: { x: 50, y: 76 }, DEF4: { x: 72, y: 78 }, DEF5: { x: 92, y: 70 },
     MID1: { x: 25, y: 50 }, MID2: { x: 50, y: 55 }, MID3: { x: 75, y: 50 },
     FWD1: { x: 35, y: 16 }, FWD2: { x: 65, y: 16 },
   }},
 };
+
+// The registry above is authored portrait (GK at the bottom, attacking up). The pitch is landscape, GK on the left
+// attacking left -> right: rotate every zone 90 degrees clockwise, (x, y) -> (100 - y, x), once at load.
+Object.values(FORMATIONS).forEach(f => Object.values(f.zones).forEach(z => { const x = z.x, y = z.y; z.x = 100 - y; z.y = x; }));
 
 // Derives the position-group from a zone's name prefix instead of
 // hand-maintaining a separate ZONE_GROUP dict per formation (6 of

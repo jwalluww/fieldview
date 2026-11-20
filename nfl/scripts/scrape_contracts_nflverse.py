@@ -13,7 +13,7 @@ Field meaning (S = the current NFL season; per-year rows come from OTC's `season
                             guaranteed_salary) for S (the signing bonus guaranteed in S is already paid; this
                             reproduces Spotrac's definition: Hurts 23.2M, Mayfield 51.3M, Allen 53.8M)
   rows with no per-year data (rookies drafted this year) fall back to the active contract_history entry
-  (years = yrs - (S - year_signed), cash/guarantees = total/guarantees prorated by years remaining).
+  (years = yrs - (S - year_signed); cash = total and guaranteed = the contract's `guaranteed` column, both prorated by years remaining).
 Guard (keep the old file, exit 0): fetch failure, < 1,500 usable rows, < 1,200 with a gsis_id.
 Run from the repo root: python nfl/scripts/scrape_contracts_nflverse.py
 """
@@ -80,7 +80,11 @@ def derive(x, S):
     if rem < 1:
         return None
     frac = rem / yrs
-    return rem, (c.get('total') or 0) * frac, (c.get('guarantees') or 0) * frac
+    # guaranteed = the contract's `guaranteed` column (guaranteed at signing), not the whole deal: 2026 round 3+ rookies
+    # carry only their signing-bonus guarantee (Haulcy 1.6M of 7.1M); round 1-2 deals are fully guaranteed in OTC's data
+    g = x.get('guaranteed')
+    g = c.get('guarantees') if g is None else g
+    return rem, (c.get('total') or 0) * frac, (g or 0) * frac
 
 
 def main():

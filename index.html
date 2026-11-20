@@ -261,6 +261,7 @@ body {
 
 .view-card.formation .card-label { color: var(--green); }
 .view-card.table .card-label { color: var(--accent); }
+.view-card.soon { opacity: .5; cursor: default; pointer-events: none; }
 
 .card-desc {
   font-size: 13px;
@@ -419,30 +420,16 @@ body {
       </div>
     </a>
 
-    <a href="nfl/depth-chart.html" class="view-card table" id="tableCard">
+    <div class="view-card table soon" id="tableCard" aria-disabled="true">
       <div class="card-accent"></div>
       <div class="card-icon">
-        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-          <rect x="3" y="5" width="20" height="3" rx="1" fill="#00d4ff"/>
-          <rect x="3" y="11" width="20" height="3" rx="1" fill="#00d4ff" opacity=".6"/>
-          <rect x="3" y="17" width="20" height="3" rx="1" fill="#00d4ff" opacity=".35"/>
-        </svg>
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="9" stroke="#00d4ff" stroke-width="1.6"/><path d="M11 9.5l6 3.5-6 3.5z" fill="#00d4ff"/></svg>
       </div>
       <div class="card-body">
-        <div class="card-label" id="tableLabel">Player Table</div>
-        <div class="card-desc" id="tableDesc">Full league roster data. Filter, sort, and search across all 32 teams and every position.</div>
-        <div class="card-features" id="tableFeatures">
-          <span class="card-feature">Sortable</span>
-          <span class="card-feature">Filterable</span>
-          <span class="card-feature">All Positions</span>
-          <span class="card-feature">Contract Data</span>
-          <span class="card-feature">Season Stats</span>
-        </div>
+        <div class="card-label">ReView</div>
+        <div class="card-desc">Replays, box scores and highlights. Coming soon.</div>
       </div>
-      <div class="card-arrow">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M10 4l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-    </a>
+    </div>
 
   </div>
 
@@ -476,7 +463,6 @@ const SPORTS = {
   nfl: {
     tagline: 'NFL Intelligence Platform',
     formationHref: 'nfl/nfl-formation-view.html',
-    tableHref: 'nfl/depth-chart.html',
     formationLabel: 'Formation View',
     formationDesc: 'See your team lined up on the field. Real starters, Madden ratings, live substitutions.',
     formationFeatures: ['All 32 Teams', 'Live Subs', 'Madden OVR', 'Cap Data', '2025 Stats'],
@@ -490,7 +476,6 @@ const SPORTS = {
   nba: {
     tagline: 'NBA Intelligence Platform',
     formationHref: 'nba/court-view.html',
-    tableHref: 'nba/player-table.html',
     formationLabel: 'CourtView',
     formationDesc: 'See the current starting five on the court, plus a rotation ranked by minutes played.',
     formationFeatures: ['Court Zones', 'Rotation Rank', 'Overall Rating', 'Live Subs'],
@@ -507,7 +492,6 @@ const SPORTS = {
   mlb: {
     tagline: 'MLB Intelligence Platform',
     formationHref: 'mlb/diamond-view.html',
-    tableHref: 'mlb/player-table.html',
     formationLabel: 'DiamondView',
     formationDesc: 'See the current defensive alignment on the diamond, plus batting order and bench.',
     formationFeatures: ['Team Logos', 'Defensive Alignment', 'Batting Order', 'Live Subs'],
@@ -523,7 +507,6 @@ const SPORTS = {
   nhl: {
     tagline: 'NHL Intelligence Platform',
     formationHref: 'nhl/ice-view.html',
-    tableHref: 'nhl/player-table.html',
     formationLabel: 'IceView',
     formationDesc: 'See the current line on the ice -- forwards, defense, and starting goalie -- plus a bench ranked by time on ice.',
     formationFeatures: ['Team Logos', 'Ice Zones', 'TOI Rotation', 'Skater + Goalie Stats'],
@@ -539,7 +522,6 @@ const SPORTS = {
   epl: {
     tagline: 'EPL Intelligence Platform',
     formationHref: 'epl/pitch-view.html',
-    tableHref: 'epl/player-table.html',
     formationLabel: 'PitchView',
     formationDesc: 'See the current starting XI in a fixed 4-3-3 -- ranked by real minutes played, plus a bench ranked the same way.',
     formationFeatures: ['4-3-3 Formation', 'Minutes Rank', 'EA FC Ratings', 'Live Subs'],
@@ -556,7 +538,6 @@ const SPORTS = {
   mls: {
     tagline: 'MLS Intelligence Platform',
     formationHref: 'mls/pitch-view.html',
-    tableHref: 'mls/player-table.html',
     formationLabel: 'PitchView',
     formationDesc: 'See the current starting XI in a fixed 4-3-3 -- ranked by real minutes played, plus a bench ranked the same way.',
     formationFeatures: ['4-3-3 Formation', 'Minutes Rank', 'EA FC Ratings', 'ASA Advanced Stats'],
@@ -661,17 +642,12 @@ function selectSport(sport) {
   document.getElementById('taglineEl').textContent = cfg.tagline;
 
   const formationCard = document.getElementById('formationCard');
-  const tableCard = document.getElementById('tableCard');
   formationCard.href = cfg.formationHref;
-  tableCard.href = cfg.tableHref;
 
   document.getElementById('formationLabel').textContent = cfg.formationLabel;
   document.getElementById('formationDesc').textContent = cfg.formationDesc;
   document.getElementById('formationFeatures').innerHTML = cfg.formationFeatures.map(f => `<span class="card-feature">${f}</span>`).join('');
 
-  document.getElementById('tableLabel').textContent = cfg.tableLabel;
-  document.getElementById('tableDesc').textContent = cfg.tableDesc;
-  document.getElementById('tableFeatures').innerHTML = cfg.tableFeatures.map(f => `<span class="card-feature">${f}</span>`).join('');
 
   document.getElementById('teamCount').textContent = cfg.teamCount;
   document.getElementById('sourceCount').textContent = cfg.sourceCount;

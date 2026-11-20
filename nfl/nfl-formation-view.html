@@ -140,6 +140,8 @@ body {
   display: flex; align-items: center; gap: 6px;
 }
 .view-btn:hover { color: var(--text); }
+.view-btn.soon { color: var(--text-muted); opacity: .6; cursor: default; font-style: italic; }
+.view-btn.soon:hover { color: var(--text-muted); }
 .view-btn.active { background: var(--border2); color: var(--text); }
 
 /* ── TEAM DROPDOWN ── */
@@ -888,10 +890,7 @@ body.sb-open .field-outer { padding-right: 384px; }
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="2" fill="currentColor"/><circle cx="2" cy="2" r="1.5" fill="currentColor" opacity=".6"/><circle cx="10" cy="2" r="1.5" fill="currentColor" opacity=".6"/><circle cx="2" cy="10" r="1.5" fill="currentColor" opacity=".6"/><circle cx="10" cy="10" r="1.5" fill="currentColor" opacity=".6"/></svg>
       Formation
     </button>
-    <button class="view-btn" onclick="window.location='depth-chart.html'">
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="3" rx="1" fill="currentColor"/><rect x="1" y="5" width="10" height="3" rx="1" fill="currentColor" opacity=".5"/><rect x="1" y="9" width="10" height="2" rx="1" fill="currentColor" opacity=".3"/></svg>
-      Table
-    </button>
+    <span class="view-btn soon" title="Replays, box scores and highlights">ReView: coming soon</span>
   </div>
 </header>
 

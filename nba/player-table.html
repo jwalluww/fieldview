@@ -698,7 +698,7 @@ body {
         <th onclick="sortBy('name')" id="th-name">Player <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('status')" id="th-status">Role <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('rating')" id="th-rating" class="sorted">OVR <span class="sort-icon">↓</span></th>
-        <th onclick="sortBy('salary')" id="th-salary">Salary <span class="sort-icon">↕</span></th>
+        <th onclick="sortBy('salary')" id="th-salary" title="Average salary per remaining contract year">Salary (avg/yr) <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('years_remaining')" id="th-years_remaining" style="display:none">Yrs Left <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('height')" id="th-height" style="display:none">Height <span class="sort-icon">↕</span></th>
         <th onclick="sortBy('weight')" id="th-weight" style="display:none">Weight <span class="sort-icon">↕</span></th>
@@ -1140,7 +1140,7 @@ function renderMobileList() {
           <div style="font-size:11px;color:var(--text-muted);margin-top:1px"><span class="std-pos">${escapeHtml(p.pos)}</span>${p.status ? ' · <span class="tag tag-' + p.status + '">' + STATUS_LABEL[p.status] + '</span>' : ''}</div>
         </div>
         <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:${rc};flex-shrink:0">${p.rating || '—'}</div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:var(--gold);flex-shrink:0;text-align:right">${p.salary || '—'}</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:var(--gold);flex-shrink:0;text-align:right" title="Average salary per year">${p.salary || '—'}</div>
       </div>
     `;
   }).join('');

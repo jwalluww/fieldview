@@ -57,7 +57,7 @@
   }
 
   // One source of truth: the disclaimer, credits and links, appended to a footer or the popup.
-  function fillCredits(box) {
+  function fillCredits(box, withTables) {
     box.appendChild(el('p', { text: 'Not affiliated with or endorsed by the NFL, NBA, MLB, NHL, MLS, Premier League, EA Sports, 2K or their teams. Team names and logos are trademarks of their owners.' }));
     if (credits) box.appendChild(el('p', { text: 'Data: ' + credits + '. Data belongs to its sources.' }));
     var links = el('p');
@@ -67,6 +67,16 @@
     links.appendChild(document.createTextNode(' · '));
     links.appendChild(link('https://github.com/jwalluww/fieldview', 'GitHub', true));
     box.appendChild(links);
+    if (withTables) {   // the table pages are hidden from the nav but still load at their URLs
+      var t = el('p', { class: 'fv-tables' });
+      t.appendChild(document.createTextNode('League tables: '));
+      [['NFL', 'nfl/depth-chart.html'], ['NBA', 'nba/player-table.html'], ['MLB', 'mlb/player-table.html'],
+       ['NHL', 'nhl/player-table.html'], ['EPL', 'epl/player-table.html'], ['MLS', 'mls/player-table.html']].forEach(function (x, i) {
+        if (i) t.appendChild(document.createTextNode(' · '));
+        t.appendChild(link(root + x[1], x[0]));
+      });
+      box.appendChild(t);
+    }
   }
 
   function addFooter() {
@@ -91,7 +101,7 @@
     var x = el('button', { type: 'button', class: 'fv-modal-x', 'aria-label': 'Close', text: '×' });
     var box = el('div', { class: 'fv-modal', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Credits and disclaimer' },
       [x, el('h2', { text: 'Credits & disclaimer' })]);
-    fillCredits(box);
+    fillCredits(box, true);
     var back = el('div', { id: 'fvCredits', class: 'fv-modal-back' }, [box]);
     back.addEventListener('click', function (e) { if (e.target === back) closeModal(); });
     x.addEventListener('click', closeModal);
