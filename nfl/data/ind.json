@@ -6,11 +6,48 @@
   "depth_chart": {
     "LWR": [
       {
+        "name": "Deion Burks",
+        "depth": 1,
+        "injured": false,
+        "attainment": "26/7",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": "$915,122",
+        "stats": {
+          "TGT": 14,
+          "REC": 6,
+          "YDS": 60,
+          "YAC": 20,
+          "CAR": 3
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Ashton Dulin",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF19",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": "$3,570,000",
+        "stats": {
+          "TGT": 15,
+          "REC": 7,
+          "YDS": 144,
+          "TDs": 1,
+          "YAC": 107,
+          "CAR": 2
+        },
+        "stats_season": 2026
+      }
+    ],
+    "RWR": [
+      {
         "name": "Laquon Treadwell",
         "depth": 1,
         "injured": false,
         "attainment": "SF24",
-        "standard_slot": "LWR",
+        "standard_slot": "RWR",
         "standard_pos": "WR",
         "cap_number": "$1,262,500",
         "stats": {
@@ -27,48 +64,11 @@
         "depth": 2,
         "injured": false,
         "attainment": "CC/Mia",
-        "standard_slot": "LWR",
+        "standard_slot": "RWR",
         "standard_pos": "WR",
         "cap_number": "$537,500",
         "stats": {
           "TGT": 2
-        },
-        "stats_season": 2026
-      }
-    ],
-    "RWR": [
-      {
-        "name": "Ashton Dulin",
-        "depth": 1,
-        "injured": false,
-        "attainment": "CF19",
-        "standard_slot": "RWR",
-        "standard_pos": "WR",
-        "cap_number": "$3,570,000",
-        "stats": {
-          "TGT": 15,
-          "REC": 7,
-          "YDS": 144,
-          "TDs": 1,
-          "YAC": 107,
-          "CAR": 2
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Deion Burks",
-        "depth": 2,
-        "injured": false,
-        "attainment": "26/7",
-        "standard_slot": "RWR",
-        "standard_pos": "WR",
-        "cap_number": "$915,122",
-        "stats": {
-          "TGT": 14,
-          "REC": 6,
-          "YDS": 60,
-          "YAC": 20,
-          "CAR": 3
         },
         "stats_season": 2026
       }
@@ -97,7 +97,7 @@
         "attainment": "SF26",
         "standard_slot": "SWR",
         "standard_pos": "WR",
-        "cap_number": null,
+        "cap_number": "$477,778",
         "stats": {
           "TGT": 3,
           "REC": 1,
@@ -153,17 +153,6 @@
         "cap_number": "$1,182,676",
         "stats": {},
         "stats_season": 2026
-      },
-      {
-        "name": "Reid Holskey",
-        "depth": 2,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "LG",
-        "standard_pos": "OL",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "C": [
@@ -303,27 +292,8 @@
     ],
     "QB": [
       {
-        "name": "Daniel Jones",
-        "depth": 1,
-        "injured": false,
-        "attainment": "U/Min",
-        "standard_slot": "QB",
-        "standard_pos": "QB",
-        "cap_number": "$19,180,000",
-        "stats": {
-          "CMP": 205,
-          "ATT": 351,
-          "YDS": 1974,
-          "TDs": 7,
-          "INTs": 13,
-          "SACKS": 27,
-          "RU YDS": 98
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Anthony Richardson Sr.",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "23/1",
         "standard_slot": "QB",
@@ -340,7 +310,7 @@
       },
       {
         "name": "Riley Leonard",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "25/6",
         "standard_slot": "QB",
@@ -666,8 +636,25 @@
     ],
     "LCB": [
       {
-        "name": "Charvarius Ward",
+        "name": "Justin Walley",
         "depth": 1,
+        "injured": false,
+        "attainment": "25/3",
+        "standard_slot": "LCB",
+        "standard_pos": "CB",
+        "cap_number": "$1,464,549",
+        "stats": {
+          "TKL": 28,
+          "SACKS": 2.0,
+          "PD": 5,
+          "TFL": 4,
+          "QB HIT": 2
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Charvarius Ward",
+        "depth": 2,
         "injured": false,
         "attainment": "U/SF",
         "standard_slot": "LCB",
@@ -681,27 +668,16 @@
       },
       {
         "name": "Johnathan Edwards",
-        "depth": 2,
+        "depth": 3,
         "injured": false,
         "attainment": "CF25",
         "standard_slot": "LCB",
         "standard_pos": "CB",
-        "cap_number": null,
+        "cap_number": "$446,667",
         "stats": {
           "TKL": 1
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Natrone Brooks",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "LCB",
-        "standard_pos": "CB",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "SS": [
@@ -797,25 +773,8 @@
     ],
     "NB": [
       {
-        "name": "Justin Walley",
-        "depth": 1,
-        "injured": false,
-        "attainment": "25/3",
-        "standard_slot": "NB",
-        "standard_pos": "CB",
-        "cap_number": "$1,464,549",
-        "stats": {
-          "TKL": 28,
-          "SACKS": 2.0,
-          "PD": 5,
-          "TFL": 4,
-          "QB HIT": 2
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Kapena Gushiken",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "W/Phi",
         "standard_slot": "NB",
@@ -920,6 +879,17 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Reid Holskey",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "OG",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "ED": [
@@ -950,6 +920,17 @@
       {
         "name": "Shemar Bartholomew",
         "depth": 1,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Natrone Brooks",
+        "depth": 2,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "CB",
