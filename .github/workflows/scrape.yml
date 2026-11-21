@@ -69,6 +69,12 @@ jobs:
         continue-on-error: true
         run: python nfl/scripts/scrape_draft_prospects.py
 
+      # ReView (nfl/review.html): weekly recaps from ESPN. Writes only nfl/data/review/, never
+      # touches players_master.json; any failure keeps the existing week files (exit 0).
+      - name: Refresh ReView week recaps
+        continue-on-error: true
+        run: python nfl/scripts/scrape_review.py
+
       - name: Commit updated data
         run: |
           git config user.name "github-actions"

@@ -1,0 +1,44 @@
+name: ReView (NFL) recon
+
+# Manual only. Probes ESPN's scoreboard/summary endpoints once from a GitHub-hosted
+# runner and logs status, key fields and leader-id mapping. Commits nothing.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  recon:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v7
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install requests nflreadpy pandas
+      - name: Probe ESPN scoreboard + summary
+        env:
+          PYTHONIOENCODING: utf-8
+        run: |
+          python - <<'PY'
+          import requests, json
+          H = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36", "Accept": "application/json", "Referer": "https://www.espn.com/"}
+          B = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/"
+          r = requests.get(B + "scoreboard?seasontype=2&week=1", headers=H, timeout=30)
+          print("scoreboard", r.status_code, len(r.json().get("events", [])), "events")
+          ev = r.json()["events"][0]
+          s = requests.get(B + "summary?event=" + ev["id"], headers=H, timeout=30)
+          d = s.json()
+          print("summary", s.status_code, "keys:", sorted(d.keys()))
+          print("team stats:", [t["team"]["abbreviation"] for t in d["boxscore"]["teams"]])
+          print("leaders:", [c["name"] for c in d["leaders"][0]["leaders"]])
+          print("scoring plays:", len(d.get("scoringPlays", [])), "videos:", len(d.get("videos") or []))
+          import nflreadpy as n
+          p = n.load_players().to_pandas()
+          print("nflreadpy players with espn_id:", int(p["espn_id"].notna().sum()))
+          PY

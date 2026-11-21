@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TP0M77Z31N"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TP0M77Z31N');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FieldView — NFL ReView</title>
+<meta name="description" content="NFL ReView: every game of the week with final scores, top performers, scoring summaries, team stat comparisons and highlights.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FieldView">
+<meta property="og:title" content="FieldView — NFL ReView">
+<meta property="og:description" content="NFL ReView: every game of the week with final scores, top performers, scoring summaries, team stat comparisons and highlights.">
+<meta property="og:url" content="https://jwalluww.github.io/fieldview/nfl/review.html">
+<meta property="og:image" content="https://jwalluww.github.io/fieldview/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #13141a; --surface: #111318; --surface2: #181c24; --border: #1e2330; --border2: #262d3d;
+  --text: #e8eaf0; --text-muted: #6b7494; --text-dim: #404660;
+  --accent: #00d4ff; --gold: #f5a623; --green: #22c55e; --red: #ef4444;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--text); font-family: 'Barlow', sans-serif; font-size: 14px; overflow: hidden; }
+
+.header { background: #0d1118; border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; gap: 20px; height: 52px; }
+.logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 20px; letter-spacing: 2px; color: var(--accent); cursor: pointer; }
+.logo span { color: var(--text-muted); font-weight: 400; }
+.header-divider { width: 1px; height: 24px; background: var(--border2); }
+.week-sel { background: var(--surface2); border: 1px solid var(--border2); border-radius: 8px; color: var(--text); padding: 6px 12px;
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 1px; cursor: pointer; }
+.caption { color: var(--text-muted); font-size: 13px; }
+.view-toggle { margin-left: auto; display: flex; gap: 2px; background: var(--surface2); border: 1px solid var(--border2); border-radius: 8px; padding: 3px; }
+.view-btn { background: none; border: none; border-radius: 6px; padding: 5px 14px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+  font-size: 12px; letter-spacing: 1px; color: var(--text-muted); text-transform: uppercase; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+a.view-btn:hover { color: var(--text); }
+.view-btn.active { background: var(--border2); color: var(--text); }
+
+.page { height: calc(100vh - 52px); overflow-y: auto; padding: 20px 24px 28px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; max-width: 1500px; margin: 0 auto; align-items: start; }
+.msg { color: var(--text-muted); text-align: center; padding: 60px 0; }
+
+.game { background: var(--surface2); border: 1px solid var(--border2); border-radius: 12px; overflow: hidden; }
+.game.open { grid-column: 1 / -1; border-color: var(--accent); }
+.game-head { width: 100%; background: none; border: none; color: inherit; font: inherit; text-align: left; cursor: pointer; padding: 14px 16px; display: block; }
+.game-head:hover { background: rgba(255,255,255,.02); }
+.team-row { display: flex; align-items: center; gap: 12px; padding: 4px 0; color: var(--text-muted); }
+.team-row img { width: 34px; height: 34px; object-fit: contain; flex-shrink: 0; }
+.team-row .nm { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 600; letter-spacing: .5px; flex: 1; }
+.team-row .rec { font-size: 12px; color: var(--text-muted); margin-right: 8px; font-weight: 400; }
+.team-row .sc { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 600; min-width: 36px; text-align: right; }
+.team-row.win { color: var(--text); }
+.team-row.win .nm, .team-row.win .sc { font-weight: 800; }
+.game-meta { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: var(--text-muted); }
+.game-meta .hl-flag { color: var(--gold); }
+
+.detail { border-top: 1px solid var(--border2); padding: 16px 18px 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+.sec h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; font-weight: 700; }
+.sec.wide { grid-column: 1 / -1; }
+
+.statrow { margin-bottom: 11px; }
+.statrow .lbl { text-align: center; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 3px; }
+.statrow .vals { display: flex; justify-content: space-between; font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 600; margin-bottom: 3px; }
+.bar { display: flex; height: 6px; gap: 3px; }
+.bar > div { background: var(--surface); border-radius: 3px; display: flex; }
+.bar .a { justify-content: flex-end; } .bar .b { justify-content: flex-start; }
+.bar i { display: block; height: 100%; border-radius: 3px; background: var(--text-muted); }
+.bar i.lead { background: var(--accent); }
+.tabs-leg { display: flex; justify-content: space-between; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: 1px; margin-bottom: 10px; }
+
+.leader { display: flex; align-items: baseline; gap: 8px; padding: 5px 0; border-bottom: 1px solid var(--border); }
+.leader:last-child { border-bottom: none; }
+.leader .cat { width: 72px; flex-shrink: 0; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); }
+.leader .who { flex: 1; min-width: 0; }
+.leader .who a, .leader .who span.n { font-weight: 600; }
+.leader .who a { color: var(--accent); text-decoration: none; }
+.leader .who a:hover { text-decoration: underline; }
+.leader .pos { color: var(--text-muted); font-size: 11px; margin-left: 4px; }
+.leader .line { color: var(--text-muted); font-size: 12px; display: block; }
+.leader .ovr { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 13px; padding: 1px 6px; border-radius: 5px; background: #0d1118; border: 1px solid var(--border2); flex-shrink: 0; }
+.lead-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.detail { grid-template-columns: minmax(260px, .8fr) minmax(420px, 1.6fr) minmax(300px, 1fr); }
+@media (max-width: 1200px) { .detail { grid-template-columns: 1fr 1fr; } }
+.lead-cols h4 { font-family: 'Barlow Condensed', sans-serif; letter-spacing: 1px; margin-bottom: 4px; font-size: 14px; }
+
+.play { display: flex; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 13px; align-items: flex-start; }
+.play:last-child { border-bottom: none; }
+.play .when { width: 58px; flex-shrink: 0; color: var(--text-muted); font-size: 12px; padding-top: 2px; }
+.play img { width: 20px; height: 20px; object-fit: contain; margin-top: 1px; }
+.play .tx { flex: 1; min-width: 0; }
+.play .sco { color: var(--text-muted); font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 14px; white-space: nowrap; }
+
+.hls { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+.hl { display: block; text-decoration: none; color: var(--text); background: var(--surface); border: 1px solid var(--border2); border-radius: 8px; overflow: hidden; }
+.hl:hover { border-color: var(--accent); }
+.hl img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: #000; }
+.hl span { display: block; padding: 7px 9px; font-size: 12px; line-height: 1.3; }
+.none { color: var(--text-muted); font-size: 12px; font-style: italic; }
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="logo" onclick="window.location='../index.html'">Field<span>View</span></div>
+  <div class="header-divider"></div>
+  <select class="week-sel" id="weekSel" aria-label="Week"></select>
+  <span class="caption" id="caption"></span>
+  <div class="view-toggle">
+    <a class="view-btn" href="nfl-formation-view.html">Formation</a>
+    <span class="view-btn active">ReView</span>
+  </div>
+</header>
+
+<main class="page" id="page"><div class="msg">Loading…</div></main>
+
+<script>
+const escapeHtml = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const esc = escapeHtml;
+
+const ESPN_TEAM_CODES = {
+  ARZ: 'ari', ATL: 'atl', BAL: 'bal', BUF: 'buf', CAR: 'car', CHI: 'chi', CIN: 'cin', CLE: 'cle', DAL: 'dal', DEN: 'den',
+  DET: 'det', GB: 'gb', HOU: 'hou', IND: 'ind', JAX: 'jax', KC: 'kc', LAC: 'lac', LAR: 'lar', LV: 'lv', MIA: 'mia',
+  MIN: 'min', NE: 'ne', NO: 'no', NYG: 'nyg', NYJ: 'nyj', PHI: 'phi', PIT: 'pit', SF: 'sf', SEA: 'sea', TB: 'tb',
+  TEN: 'ten', WAS: 'wsh',
+};
+function teamLogoUrl(abbr) {
+  return Object.prototype.hasOwnProperty.call(ESPN_TEAM_CODES, abbr)
+    ? `https://a.espncdn.com/i/teamlogos/nfl/500/${ESPN_TEAM_CODES[abbr]}.png` : '';
+}
+function logoImg(abbr) {
+  const u = teamLogoUrl(abbr);
+  return u ? `<img src="${esc(u)}" alt="${esc(abbr)}" loading="lazy">` : '';
+}
+// Madden gradient — copied verbatim from nfl-formation-view.html
+function maddenColor(r) {
+  if (!r) return '#6b7494';
+  if (r >= 95) return '#00ff88';
+  if (r >= 90) { const t = (r-90)/5; return `hsl(${140+t*20},100%,55%)`; }
+  if (r >= 85) { const t = (r-85)/5; return `hsl(${100+t*40},100%,55%)`; }
+  if (r >= 80) { const t = (r-80)/5; return `hsl(${75+t*25},100%,55%)`; }
+  if (r >= 75) { const t = (r-75)/5; return `hsl(${55+t*20},100%,55%)`; }
+  if (r >= 70) { const t = (r-70)/5; return `hsl(${38+t*17},100%,55%)`; }
+  if (r >= 65) { const t = (r-65)/5; return `hsl(${25+t*13},100%,55%)`; }
+  return `hsl(${Math.max(0,(r-55)*2)},90%,50%)`;
+}
+function safeUrl(u) { return typeof u === 'string' && /^https:\/\//i.test(u) ? u : ''; }
+
+let INDEX = null, MASTER = {}, currentWeek = null, openGame = null;
+const weekCache = {};
+const CAT_LABEL = { pass: 'Passing', rush: 'Rushing', rec: 'Receiving', sacks: 'Sacks', tackles: 'Tackles' };
+const STAT_ROWS = [
+  ['totalYards', 'Total yards', 'num'], ['netPassingYards', 'Passing yards', 'num'], ['rushingYards', 'Rushing yards', 'num'],
+  ['turnovers', 'Turnovers', 'num'], ['thirdDownEff', '3rd down', 'frac'], ['possessionTime', 'Time of possession', 'clock'],
+];
+
+function statNum(v, kind) {
+  if (v == null) return null;
+  if (kind === 'frac') { const m = /^(\d+)-(\d+)$/.exec(v); return m && +m[2] ? +m[1] / +m[2] : 0; }
+  if (kind === 'clock') { const m = /^(\d+):(\d+)$/.exec(v); return m ? +m[1] * 60 + +m[2] : null; }
+  const n = parseFloat(v); return isNaN(n) ? null : n;
+}
+function statDisplay(v, kind) {
+  if (kind === 'frac') { const m = /^(\d+)-(\d+)$/.exec(v || ''); return m && +m[2] ? `${v} (${Math.round(100 * m[1] / m[2])}%)` : (v || '—'); }
+  return v == null ? '—' : v;
+}
+function statBars(g) {
+  const h = g.team_stats.home || {}, a = g.team_stats.away || {};
+  let out = `<div class="tabs-leg"><span>${esc(g.away.team)}</span><span>${esc(g.home.team)}</span></div>`;
+  for (const [key, label, kind] of STAT_ROWS) {
+    const av = statNum(a[key], kind), hv = statNum(h[key], kind);
+    const tot = (av || 0) + (hv || 0);
+    const aw = tot ? 100 * (av || 0) / tot : 50, hw = tot ? 100 * (hv || 0) / tot : 50;
+    // turnovers: fewer is the better side
+    const lead = av === hv ? '' : ((kind === 'num' && key === 'turnovers') ? (av < hv ? 'a' : 'b') : (av > hv ? 'a' : 'b'));
+    out += `<div class="statrow"><div class="lbl">${esc(label)}</div>
+      <div class="vals"><span>${esc(statDisplay(a[key], kind))}</span><span>${esc(statDisplay(h[key], kind))}</span></div>
+      <div class="bar"><div class="a" style="flex:1"><i class="${lead === 'a' ? 'lead' : ''}" style="width:${aw.toFixed(1)}%"></i></div>
+      <div class="b" style="flex:1"><i class="${lead === 'b' ? 'lead' : ''}" style="width:${hw.toFixed(1)}%"></i></div></div></div>`;
+  }
+  return out;
+}
+function leaderRow(l) {
+  const p = l.player_id && Object.prototype.hasOwnProperty.call(MASTER, l.player_id) ? MASTER[l.player_id] : null;
+  const name = p
+    ? `<a href="nfl-formation-view.html?team=${encodeURIComponent(l.team)}&player=${encodeURIComponent(l.player_id)}" title="Open in FormationView (sidebar opens if he is on the field)">${esc(l.name)}</a>`
+    : `<span class="n">${esc(l.name)}</span>`;
+  const ovr = p && p.madden ? `<span class="ovr" style="color:${maddenColor(p.madden)}">${esc(p.madden)}</span>` : '';
+  return `<div class="leader"><span class="cat">${esc(CAT_LABEL[l.cat] || l.cat)}</span>
+    <span class="who">${name}<span class="pos">${esc(l.pos || '')}</span><span class="line">${esc(l.line)}</span></span>${ovr}</div>`;
+}
+function leadersHtml(g) {
+  const col = t => `<div><h4>${logoImg(t).replace('<img', '<img style="width:18px;height:18px;vertical-align:-4px;margin-right:6px"')}${esc(t)}</h4>${
+    g.leaders.filter(l => l.team === t).map(leaderRow).join('') || '<div class="none">No leaders listed</div>'}</div>`;
+  return `<div class="lead-cols">${col(g.away.team)}${col(g.home.team)}</div>`;
+}
+function scoringHtml(g) {
+  if (!g.scoring_plays.length) return '<div class="none">No scoring plays</div>';
+  return g.scoring_plays.map(p => `<div class="play"><span class="when">Q${esc(p.quarter)} ${esc(p.clock)}</span>
+    ${logoImg(p.team)}<span class="tx">${esc(p.text)}</span><span class="sco">${esc(p.away)}-${esc(p.home)}</span></div>`).join('');
+}
+function highlightsHtml(g) {
+  const items = g.highlights.filter(h => safeUrl(h.url));
+  if (!items.length) return '<div class="none">No highlights for this game (ESPN publishes clips for only a couple of days).</div>';
+  return `<div class="hls">${items.map(h => {
+    const th = safeUrl(h.thumbnail);
+    return `<a class="hl" href="${esc(h.url)}" target="_blank" rel="noopener">${th ? `<img src="${esc(th)}" alt="" loading="lazy">` : ''}<span>${esc(h.title)}</span></a>`;
+  }).join('')}</div>`;
+}
+function detailHtml(g) {
+  return `<div class="detail">
+    <div class="sec"><h3>Team stats</h3>${statBars(g)}</div>
+    <div class="sec"><h3>Top performers</h3>${leadersHtml(g)}</div>
+    <div class="sec"><h3>Scoring summary</h3>${scoringHtml(g)}</div>
+    <div class="sec wide"><h3>Highlights</h3>${highlightsHtml(g)}</div></div>`;
+}
+function cardHtml(g) {
+  const row = (t, win) => `<div class="team-row${win ? ' win' : ''}">${logoImg(t.team)}<span class="nm">${esc(t.team)}</span>
+    <span class="rec">${esc(t.record)}</span><span class="sc">${esc(t.score)}</span></div>`;
+  const d = new Date(g.date);
+  const ds = isNaN(d) ? '' : d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  const open = openGame === g.id;
+  return `<div class="game${open ? ' open' : ''}" data-id="${esc(g.id)}">
+    <button class="game-head" aria-expanded="${open}" onclick="toggleGame('${esc(g.id)}')">
+      ${row(g.away, g.away.winner)}${row(g.home, g.home.winner)}
+      <div class="game-meta"><span>${esc(g.status)} · ${esc(ds)}</span>${g.highlights.length ? `<span class="hl-flag">&#9654; ${g.highlights.length} highlight${g.highlights.length > 1 ? 's' : ''}</span>` : ''}</div>
+    </button>${open ? detailHtml(g) : ''}</div>`;
+}
+
+async function loadWeek(w) {
+  if (!weekCache[w]) {
+    const res = await fetch(`data/review/week_${INDEX.season}_${w}.json`);
+    if (!res.ok) throw new Error('week ' + w);
+    weekCache[w] = await res.json();
+  }
+  return weekCache[w];
+}
+async function showWeek(w) {
+  currentWeek = w; openGame = null;
+  document.getElementById('weekSel').value = String(w);
+  try { history.replaceState(null, '', `?week=${w}`); } catch (e) {}
+  const page = document.getElementById('page');
+  try {
+    const data = await loadWeek(w);
+    page.innerHTML = `<div class="grid" id="grid">${data.games.map(cardHtml).join('')}</div>`;
+    page.scrollTop = 0;
+  } catch (e) {
+    page.innerHTML = '<div class="msg">Could not load this week.</div>';
+  }
+  document.getElementById('caption').textContent = `Through Week ${w}, as of ${INDEX.last_changed}`;
+}
+function toggleGame(id) {
+  openGame = openGame === id ? null : id;
+  const data = weekCache[currentWeek];
+  document.getElementById('grid').innerHTML = data.games.map(cardHtml).join('');
+  const el = document.querySelector(`.game[data-id="${CSS.escape(id)}"]`);
+  if (openGame && el) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+}
+
+(async function init() {
+  const page = document.getElementById('page');
+  try {
+    INDEX = await (await fetch('data/review/index.json')).json();
+  } catch (e) { page.innerHTML = '<div class="msg">No ReView data yet.</div>'; return; }
+  try { MASTER = await (await fetch('data/players_master.json')).json(); } catch (e) { MASTER = {}; }
+  const sel = document.getElementById('weekSel');
+  sel.innerHTML = INDEX.weeks.slice().reverse().map(w => `<option value="${esc(w)}">Week ${esc(w)}</option>`).join('');
+  sel.addEventListener('change', () => showWeek(+sel.value));
+  const q = parseInt(new URLSearchParams(location.search).get('week'), 10);
+  showWeek(INDEX.weeks.includes(q) ? q : INDEX.latest_week);
+})();
+</script>
+<script src="../shared/site.js" data-mode="popup" data-credits="ESPN · nflverse · EA Sports (Madden)"></script>
+</body>
+</html>

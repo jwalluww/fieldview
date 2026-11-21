@@ -420,16 +420,20 @@ body {
       </div>
     </a>
 
-    <div class="view-card table soon" id="tableCard" aria-disabled="true">
+    <a class="view-card table soon" id="tableCard" aria-disabled="true">
       <div class="card-accent"></div>
       <div class="card-icon">
         <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="9" stroke="#00d4ff" stroke-width="1.6"/><path d="M11 9.5l6 3.5-6 3.5z" fill="#00d4ff"/></svg>
       </div>
       <div class="card-body">
         <div class="card-label">ReView</div>
-        <div class="card-desc">Replays, box scores and highlights. Coming soon.</div>
+        <div class="card-desc" id="reviewDesc">Replays, box scores and highlights. Coming soon.</div>
+        <div class="card-features" id="reviewFeatures"></div>
       </div>
-    </div>
+      <div class="card-arrow">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M10 4l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
 
   </div>
 
@@ -469,6 +473,9 @@ const SPORTS = {
     tableLabel: 'Player Table',
     tableDesc: 'Full league roster data. Filter, sort, and search across all 32 teams and every position.',
     tableFeatures: ['Sortable', 'Filterable', 'All Positions', 'Contract Data', 'Season Stats'],
+    reviewHref: 'nfl/review.html',
+    reviewDesc: 'Every game of the week: scores, top performers, scoring summary, team stats and highlights.',
+    reviewFeatures: ['Weekly Recap', 'Top Performers', 'Team Stats', 'Highlights'],
     teamCount: 32,
     sourceCount: 4,
     updateCadence: 'Weekly',
@@ -643,6 +650,13 @@ function selectSport(sport) {
 
   const formationCard = document.getElementById('formationCard');
   formationCard.href = cfg.formationHref;
+
+  const reviewCard = document.getElementById('tableCard');
+  if (cfg.reviewHref) { reviewCard.href = cfg.reviewHref; reviewCard.removeAttribute('aria-disabled'); }
+  else { reviewCard.removeAttribute('href'); reviewCard.setAttribute('aria-disabled', 'true'); }
+  reviewCard.classList.toggle('soon', !cfg.reviewHref);
+  document.getElementById('reviewDesc').textContent = cfg.reviewDesc || 'Replays, box scores and highlights. Coming soon.';
+  document.getElementById('reviewFeatures').innerHTML = (cfg.reviewFeatures || []).map(f => `<span class="card-feature">${f}</span>`).join('');
 
   document.getElementById('formationLabel').textContent = cfg.formationLabel;
   document.getElementById('formationDesc').textContent = cfg.formationDesc;

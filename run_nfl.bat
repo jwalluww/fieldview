@@ -40,6 +40,7 @@ call :run_step "build_match.py" "python nfl\scripts\build_match.py"
 call :run_step "export_master.py" "python nfl\scripts\export_master.py nfl\data\players_master.json"
 REM Draft installer data (independent of the player pipeline; mirrors the cloud job's last step before the commit)
 call :run_step "scrape_draft_prospects.py" "python nfl\scripts\scrape_draft_prospects.py"
+call :run_step "scrape_review.py" "python nfl\scripts\scrape_review.py"
 
 echo.
 echo ============================================

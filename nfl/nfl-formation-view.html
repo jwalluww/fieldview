@@ -139,6 +139,7 @@ body {
   text-transform: uppercase;
   display: flex; align-items: center; gap: 6px;
 }
+.view-btn { text-decoration: none; }
 .view-btn:hover { color: var(--text); }
 .view-btn.soon { color: var(--text-muted); opacity: .6; cursor: default; font-style: italic; }
 .view-btn.soon:hover { color: var(--text-muted); }
@@ -890,7 +891,7 @@ body.sb-open .field-outer { padding-right: 384px; }
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="2" fill="currentColor"/><circle cx="2" cy="2" r="1.5" fill="currentColor" opacity=".6"/><circle cx="10" cy="2" r="1.5" fill="currentColor" opacity=".6"/><circle cx="2" cy="10" r="1.5" fill="currentColor" opacity=".6"/><circle cx="10" cy="10" r="1.5" fill="currentColor" opacity=".6"/></svg>
       Formation
     </button>
-    <span class="view-btn soon" title="Replays, box scores and highlights">ReView: coming soon</span>
+    <a class="view-btn" href="review.html" title="Weekly recap: scores, top performers, team stats, highlights">ReView</a>
   </div>
 </header>
 

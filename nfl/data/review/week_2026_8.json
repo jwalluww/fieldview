@@ -1,0 +1,3231 @@
+{
+ "season": 2026,
+ "week": 8,
+ "games": [
+  {
+   "id": "401873023",
+   "date": "2026-10-30T00:15Z",
+   "status": "Final",
+   "venue": "Lambeau Field",
+   "home": {
+    "team": "GB",
+    "name": "Green Bay Packers",
+    "score": 27,
+    "winner": true,
+    "linescore": [
+     6,
+     14,
+     7,
+     0
+    ],
+    "record": "5-3"
+   },
+   "away": {
+    "team": "CAR",
+    "name": "Carolina Panthers",
+    "score": 19,
+    "winner": false,
+    "linescore": [
+     3,
+     7,
+     3,
+     6
+    ],
+    "record": "3-4"
+   },
+   "team_stats": {
+    "away": {
+     "thirdDownEff": "5-18",
+     "totalYards": "258",
+     "netPassingYards": "176",
+     "rushingYards": "82",
+     "turnovers": "2",
+     "possessionTime": "28:57"
+    },
+    "home": {
+     "thirdDownEff": "9-16",
+     "totalYards": "354",
+     "netPassingYards": "288",
+     "rushingYards": "66",
+     "turnovers": "3",
+     "possessionTime": "31:03"
+    }
+   },
+   "leaders": [
+    {
+     "cat": "pass",
+     "team": "GB",
+     "name": "Jordan Love",
+     "espn_id": "4036378",
+     "gsis_id": "00-0036264",
+     "player_id": "00-0036264",
+     "pos": "QB",
+     "line": "30/41, 288 YDS, 3 TD, 1 INT"
+    },
+    {
+     "cat": "rush",
+     "team": "GB",
+     "name": "Josh Jacobs",
+     "espn_id": "4047365",
+     "gsis_id": "00-0035700",
+     "player_id": "00-0035700",
+     "pos": "RB",
+     "line": "21 CAR, 39 YDS, 1 TD"
+    },
+    {
+     "cat": "rec",
+     "team": "GB",
+     "name": "Christian Watson",
+     "espn_id": "4248528",
+     "gsis_id": "00-0038124",
+     "player_id": "00-0038124",
+     "pos": "WR",
+     "line": "8 REC, 113 YDS"
+    },
+    {
+     "cat": "sacks",
+     "team": "GB",
+     "name": "Brenton Cox Jr.",
+     "espn_id": "4361776",
+     "gsis_id": "00-0038463",
+     "player_id": "00-0038463",
+     "pos": "DE",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "GB",
+     "name": "Isaiah McDuffie",
+     "espn_id": "4239947",
+     "gsis_id": "00-0036658",
+     "player_id": "00-0036658",
+     "pos": "LB",
+     "line": "10"
+    },
+    {
+     "cat": "pass",
+     "team": "CAR",
+     "name": "Bryce Young",
+     "espn_id": "4685720",
+     "gsis_id": "00-0039150",
+     "player_id": "00-0039150",
+     "pos": "QB",
+     "line": "23/41, 209 YDS, 1 TD, 1 INT"
+    },
+    {
+     "cat": "rush",
+     "team": "CAR",
+     "name": "Chuba Hubbard",
+     "espn_id": "4241416",
+     "gsis_id": "00-0036555",
+     "player_id": "00-0036555",
+     "pos": "RB",
+     "line": "22 CAR, 81 YDS, 1 TD"
+    },
+    {
+     "cat": "rec",
+     "team": "CAR",
+     "name": "Tetairoa McMillan",
+     "espn_id": "4685472",
+     "gsis_id": "00-0040124",
+     "player_id": "00-0040124",
+     "pos": "WR",
+     "line": "6 REC, 58 YDS"
+    },
+    {
+     "cat": "tackles",
+     "team": "CAR",
+     "name": "Marco Wilson",
+     "espn_id": "4240595",
+     "gsis_id": "00-0036884",
+     "player_id": "00-0036884",
+     "pos": "CB",
+     "line": "8"
+    }
+   ],
+   "scoring_plays": [
+    {
+     "quarter": 1,
+     "clock": "11:43",
+     "team": "CAR",
+     "type": "FG",
+     "text": "Ryan Fitzgerald 39 Yd Field Goal ",
+     "away": 3,
+     "home": 0
+    },
+    {
+     "quarter": 1,
+     "clock": "5:08",
+     "team": "GB",
+     "type": "TD",
+     "text": "Tucker Kraft 12 Yd pass from Jordan Love (Trey Smack PAT Failed)",
+     "away": 3,
+     "home": 6
+    },
+    {
+     "quarter": 2,
+     "clock": "14:57",
+     "team": "CAR",
+     "type": "TD",
+     "text": "Chuba Hubbard 1 Yd Rush (Ryan Fitzgerald Kick)",
+     "away": 10,
+     "home": 6
+    },
+    {
+     "quarter": 2,
+     "clock": "6:33",
+     "team": "GB",
+     "type": "TD",
+     "text": "Josh Jacobs 1 Yd Rush (Trey Smack Kick)",
+     "away": 10,
+     "home": 13
+    },
+    {
+     "quarter": 2,
+     "clock": "1:46",
+     "team": "GB",
+     "type": "TD",
+     "text": "Matthew Golden 24 Yd pass from Jordan Love (Trey Smack Kick)",
+     "away": 10,
+     "home": 20
+    },
+    {
+     "quarter": 3,
+     "clock": "7:30",
+     "team": "GB",
+     "type": "TD",
+     "text": "Josh Jacobs 4 Yd pass from Jordan Love (Trey Smack Kick)",
+     "away": 10,
+     "home": 27
+    },
+    {
+     "quarter": 3,
+     "clock": "4:07",
+     "team": "CAR",
+     "type": "FG",
+     "text": "Ryan Fitzgerald 50 Yd Field Goal",
+     "away": 13,
+     "home": 27
+    },
+    {
+     "quarter": 4,
+     "clock": "5:37",
+     "team": "CAR",
+     "type": "TD",
+     "text": "Jalen Coker 26 Yd pass from Bryce Young (Two-Point Pass Conversion Failed)",
+     "away": 19,
+     "home": 27
+    }
+   ],
+   "highlights": []
+  },
+  {
+   "id": "401873026",
+   "date": "2026-11-01T18:00Z",
+   "status": "Final",
+   "venue": "Highmark Stadium",
+   "home": {
+    "team": "BUF",
+    "name": "Buffalo Bills",
+    "score": 36,
+    "winner": true,
+    "linescore": [
+     10,
+     6,
+     7,
+     13
+    ],
+    "record": "6-1"
+   },
+   "away": {
+    "team": "BAL",
+    "name": "Baltimore Ravens",
+    "score": 10,
+    "winner": false,
+    "linescore": [
+     7,
+     0,
+     3,
+     0
+    ],
+    "record": "4-4"
+   },
+   "team_stats": {
+    "away": {
+     "thirdDownEff": "3-13",
+     "totalYards": "144",
+     "netPassingYards": "68",
+     "rushingYards": "76",
+     "turnovers": "3",
+     "possessionTime": "22:24"
+    },
+    "home": {
+     "thirdDownEff": "4-14",
+     "totalYards": "426",
+     "netPassingYards": "280",
+     "rushingYards": "146",
+     "turnovers": "2",
+     "possessionTime": "37:36"
+    }
+   },
+   "leaders": [
+    {
+     "cat": "pass",
+     "team": "BUF",
+     "name": "Josh Allen",
+     "espn_id": "3918298",
+     "gsis_id": "00-0034857",
+     "player_id": "00-0034857",
+     "pos": "QB",
+     "line": "21/34, 289 YDS, 2 TD, 1 INT"
+    },
+    {
+     "cat": "rush",
+     "team": "BUF",
+     "name": "James Cook III",
+     "espn_id": "4379399",
+     "gsis_id": "00-0037248",
+     "player_id": "00-0037248",
+     "pos": "RB",
+     "line": "21 CAR, 80 YDS, 1 TD"
+    },
+    {
+     "cat": "rec",
+     "team": "BUF",
+     "name": "Dalton Kincaid",
+     "espn_id": "4385690",
+     "gsis_id": "00-0038933",
+     "player_id": "00-0038933",
+     "pos": "TE",
+     "line": "4 REC, 86 YDS, 1 TD"
+    },
+    {
+     "cat": "sacks",
+     "team": "BUF",
+     "name": "Greg Rousseau",
+     "espn_id": "4362506",
+     "gsis_id": "00-0036914",
+     "player_id": "00-0036914",
+     "pos": "LB",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "BUF",
+     "name": "Geno Stone",
+     "espn_id": "4240575",
+     "gsis_id": "00-0036199",
+     "player_id": "00-0036199",
+     "pos": "S",
+     "line": "6"
+    },
+    {
+     "cat": "pass",
+     "team": "BAL",
+     "name": "Joe Fagnano",
+     "espn_id": "4429582",
+     "gsis_id": "00-0040981",
+     "player_id": "00-0040981",
+     "pos": "QB",
+     "line": "10/21, 91 YDS, 1 INT"
+    },
+    {
+     "cat": "rush",
+     "team": "BAL",
+     "name": "Derrick Henry",
+     "espn_id": "3043078",
+     "gsis_id": "00-0032764",
+     "player_id": "00-0032764",
+     "pos": "RB",
+     "line": "11 CAR, 53 YDS, 1 TD"
+    },
+    {
+     "cat": "rec",
+     "team": "BAL",
+     "name": "Rashod Bateman",
+     "espn_id": "4360939",
+     "gsis_id": "00-0036550",
+     "player_id": "00-0036550",
+     "pos": "WR",
+     "line": "1 REC, 22 YDS"
+    },
+    {
+     "cat": "sacks",
+     "team": "BAL",
+     "name": "Nnamdi Madubuike",
+     "espn_id": "4035245",
+     "gsis_id": "00-0036130",
+     "player_id": "00-0036130",
+     "pos": "DT",
+     "line": "0.5"
+    },
+    {
+     "cat": "tackles",
+     "team": "BAL",
+     "name": "Roquan Smith",
+     "espn_id": "3915189",
+     "gsis_id": "00-0034874",
+     "player_id": "00-0034874",
+     "pos": "LB",
+     "line": "11"
+    }
+   ],
+   "scoring_plays": [
+    {
+     "quarter": 1,
+     "clock": "10:10",
+     "team": "BUF",
+     "type": "TD",
+     "text": "Josh Allen 1 Yd Rush (Tyler Bass Kick)",
+     "away": 0,
+     "home": 7
+    },
+    {
+     "quarter": 1,
+     "clock": "6:05",
+     "team": "BUF",
+     "type": "FG",
+     "text": "Tyler Bass 56 Yd Field Goal",
+     "away": 0,
+     "home": 10
+    },
+    {
+     "quarter": 1,
+     "clock": "3:18",
+     "team": "BAL",
+     "type": "TD",
+     "text": "Derrick Henry 2 Yd Rush (Tyler Loop Kick)",
+     "away": 7,
+     "home": 10
+    },
+    {
+     "quarter": 2,
+     "clock": "9:50",
+     "team": "BUF",
+     "type": "FG",
+     "text": "Tyler Bass 22 Yd Field Goal",
+     "away": 7,
+     "home": 13
+    },
+    {
+     "quarter": 2,
+     "clock": "0:09",
+     "team": "BUF",
+     "type": "FG",
+     "text": "Tyler Bass 51 Yd Field Goal",
+     "away": 7,
+     "home": 16
+    },
+    {
+     "quarter": 3,
+     "clock": "11:28",
+     "team": "BAL",
+     "type": "FG",
+     "text": "Tyler Loop 26 Yd Field Goal ",
+     "away": 10,
+     "home": 16
+    },
+    {
+     "quarter": 3,
+     "clock": "8:59",
+     "team": "BUF",
+     "type": "TD",
+     "text": "James Cook III 5 Yd Rush (Tyler Bass Kick)",
+     "away": 10,
+     "home": 23
+    },
+    {
+     "quarter": 4,
+     "clock": "12:18",
+     "team": "BUF",
+     "type": "TD",
+     "text": "DJ Moore 11 Yd pass from Josh Allen (Two-Point Pass Conversion Failed)",
+     "away": 10,
+     "home": 29
+    },
+    {
+     "quarter": 4,
+     "clock": "5:58",
+     "team": "BUF",
+     "type": "TD",
+     "text": "Dalton Kincaid 23 Yd pass from Josh Allen (Tyler Bass Kick)",
+     "away": 10,
+     "home": 36
+    }
+   ],
+   "highlights": []
+  },
+  {
+   "id": "401873031",
+   "date": "2026-11-01T18:00Z",
+   "status": "Final/OT",
+   "venue": "Paycor Stadium",
+   "home": {
+    "team": "CIN",
+    "name": "Cincinnati Bengals",
+    "score": 43,
+    "winner": true,
+    "linescore": [
+     0,
+     14,
+     9,
+     13,
+     7
+    ],
+    "record": "5-2"
+   },
+   "away": {
+    "team": "TEN",
+    "name": "Tennessee Titans",
+    "score": 36,
+    "winner": false,
+    "linescore": [
+     13,
+     0,
+     8,
+     15,
+     0
+    ],
+    "record": "1-7"
+   },
+   "team_stats": {
+    "away": {
+     "thirdDownEff": "5-12",
+     "totalYards": "440",
+     "netPassingYards": "282",
+     "rushingYards": "158",
+     "turnovers": "2",
+     "possessionTime": "32:11"
+    },
+    "home": {
+     "thirdDownEff": "7-10",
+     "totalYards": "510",
+     "netPassingYards": "435",
+     "rushingYards": "75",
+     "turnovers": "4",
+     "possessionTime": "32:12"
+    }
+   },
+   "leaders": [
+    {
+     "cat": "pass",
+     "team": "CIN",
+     "name": "Joe Burrow",
+     "espn_id": "3915511",
+     "gsis_id": "00-0036442",
+     "player_id": "00-0036442",
+     "pos": "QB",
+     "line": "38/48, 462 YDS, 5 TD, 3 INT"
+    },
+    {
+     "cat": "rush",
+     "team": "CIN",
+     "name": "Chase Brown",
+     "espn_id": "4362238",
+     "gsis_id": "00-0038597",
+     "player_id": "00-0038597",
+     "pos": "RB",
+     "line": "12 CAR, 55 YDS"
+    },
+    {
+     "cat": "rec",
+     "team": "CIN",
+     "name": "Tee Higgins",
+     "espn_id": "4239993",
+     "gsis_id": "00-0036410",
+     "player_id": "00-0036410",
+     "pos": "WR",
+     "line": "10 REC, 155 YDS, 2 TD"
+    },
+    {
+     "cat": "sacks",
+     "team": "CIN",
+     "name": "Dexter Lawrence II",
+     "espn_id": "4035483",
+     "gsis_id": "00-0035683",
+     "player_id": "00-0035683",
+     "pos": "DT",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "CIN",
+     "name": "Jordan Battle",
+     "espn_id": "4567098",
+     "gsis_id": "00-0038560",
+     "player_id": "00-0038560",
+     "pos": "S",
+     "line": "12"
+    },
+    {
+     "cat": "pass",
+     "team": "TEN",
+     "name": "Cam Ward",
+     "espn_id": "4688380",
+     "gsis_id": "00-0040676",
+     "player_id": "camward-qb-ten",
+     "pos": "QB",
+     "line": "26/40, 304 YDS, 2 TD"
+    },
+    {
+     "cat": "rush",
+     "team": "TEN",
+     "name": "Tony Pollard",
+     "espn_id": "3916148",
+     "gsis_id": "00-0035261",
+     "player_id": "00-0035261",
+     "pos": "RB",
+     "line": "21 CAR, 117 YDS, 2 TD"
+    },
+    {
+     "cat": "rec",
+     "team": "TEN",
+     "name": "Gunnar Helm",
+     "espn_id": "4686728",
+     "gsis_id": "00-0040584",
+     "player_id": "00-0040584",
+     "pos": "TE",
+     "line": "5 REC, 76 YDS"
+    },
+    {
+     "cat": "sacks",
+     "team": "TEN",
+     "name": "Jacob Martin",
+     "espn_id": "3138764",
+     "gsis_id": "00-0034163",
+     "player_id": "00-0034163",
+     "pos": "DE",
+     "line": "3"
+    },
+    {
+     "cat": "tackles",
+     "team": "TEN",
+     "name": "Anthony Hill Jr.",
+     "espn_id": "4870805",
+     "gsis_id": "00-0041479",
+     "player_id": "00-0041479",
+     "pos": "LB",
+     "line": "14"
+    }
+   ],
+   "scoring_plays": [
+    {
+     "quarter": 1,
+     "clock": "10:52",
+     "team": "TEN",
+     "type": "FG",
+     "text": "Joey Slye 46 Yd Field Goal",
+     "away": 3,
+     "home": 0
+    },
+    {
+     "quarter": 1,
+     "clock": "7:55",
+     "team": "TEN",
+     "type": "TD",
+     "text": "Tony Pollard 40 Yd Rush (Joey Slye Kick)",
+     "away": 10,
+     "home": 0
+    },
+    {
+     "quarter": 1,
+     "clock": "2:14",
+     "team": "TEN",
+     "type": "FG",
+     "text": "Joey Slye 29 Yd Field Goal",
+     "away": 13,
+     "home": 0
+    },
+    {
+     "quarter": 2,
+     "clock": "13:20",
+     "team": "CIN",
+     "type": "TD",
+     "text": "Ja'Marr Chase 30 Yd pass from Joe Burrow (Evan McPherson Kick)",
+     "away": 13,
+     "home": 7
+    },
+    {
+     "quarter": 2,
+     "clock": "0:20",
+     "team": "CIN",
+     "type": "TD",
+     "text": "Jack Endries 1 Yd pass from Joe Burrow (Evan McPherson Kick)",
+     "away": 13,
+     "home": 14
+    },
+    {
+     "quarter": 3,
+     "clock": "12:25",
+     "team": "CIN",
+     "type": "TD",
+     "text": "Tee Higgins 17 Yd pass from Joe Burrow (Evan McPherson Kick)",
+     "away": 13,
+     "home": 21
+    },
+    {
+     "quarter": 3,
+     "clock": "7:47",
+     "team": "TEN",
+     "type": "TD",
+     "text": "Tony Pollard 1 Yd Rush (Cam Ward Run for Two-Point Conversion)",
+     "away": 21,
+     "home": 21
+    },
+    {
+     "quarter": 3,
+     "clock": "0:46",
+     "team": "CIN",
+     "type": "SF",
+     "text": "Demetrius Knight Jr. Safety",
+     "away": 21,
+     "home": 23
+    },
+    {
+     "quarter": 4,
+     "clock": "11:29",
+     "team": "TEN",
+     "type": "TD",
+     "text": "Chimere Dike 11 Yd pass from Cam Ward (Joey Slye Kick)",
+     "away": 28,
+     "home": 23
+    },
+    {
+     "quarter": 4,
+     "clock": "7:13",
+     "team": "CIN",
+     "type": "TD",
+     "text": "Mike Gesicki 25 Yd pass from Joe Burrow (Two-Point Pass Conversion Failed)",
+     "away": 28,
+     "home": 29
+    },
+    {
+     "quarter": 4,
+     "clock": "3:46",
+     "team": "TEN",
+     "type": "TD",
+     "text": "Wan'Dale Robinson 15 Yd pass from Cam Ward (Cam Ward Pass to Gunnar Helm for Two-Point Conversion)",
+     "away": 36,
+     "home": 29
+    },
+    {
+     "quarter": 4,
+     "clock": "1:17",
+     "team": "CIN",
+     "type": "TD",
+     "text": "Tee Higgins 18 Yd pass from Joe Burrow (Evan McPherson Kick)",
+     "away": 36,
+     "home": 36
+    },
+    {
+     "quarter": 5,
+     "clock": "7:00",
+     "team": "CIN",
+     "type": "TD",
+     "text": "Joe Burrow 9 Yd Rush (Evan McPherson Kick)",
+     "away": 36,
+     "home": 43
+    }
+   ],
+   "highlights": []
+  },
+  {
+   "id": "401873024",
+   "date": "2026-11-01T18:00Z",
+   "status": "Final/OT",
+   "venue": "AT&T Stadium",
+   "home": {
+    "team": "DAL",
+    "name": "Dallas Cowboys",
+    "score": 30,
+    "winner": false,
+    "linescore": [
+     7,
+     7,
+     3,
+     13,
+     0
+    ],
+    "record": "3-5"
+   },
+   "away": {
+    "team": "ARZ",
+    "name": "Arizona Cardinals",
+    "score": 33,
+    "winner": true,
+    "linescore": [
+     0,
+     3,
+     7,
+     20,
+     3
+    ],
+    "record": "3-5"
+   },
+   "team_stats": {
+    "away": {
+     "thirdDownEff": "8-18",
+     "totalYards": "467",
+     "netPassingYards": "265",
+     "rushingYards": "202",
+     "turnovers": "2",
+     "possessionTime": "33:25"
+    },
+    "home": {
+     "thirdDownEff": "6-16",
+     "totalYards": "261",
+     "netPassingYards": "168",
+     "rushingYards": "93",
+     "turnovers": "0",
+     "possessionTime": "33:42"
+    }
+   },
+   "leaders": [
+    {
+     "cat": "pass",
+     "team": "DAL",
+     "name": "Dak Prescott",
+     "espn_id": "2577417",
+     "gsis_id": "00-0033077",
+     "player_id": "00-0033077",
+     "pos": "QB",
+     "line": "19/29, 195 YDS, 1 TD"
+    },
+    {
+     "cat": "rush",
+     "team": "DAL",
+     "name": "Javonte Williams",
+     "espn_id": "4361579",
+     "gsis_id": "00-0036997",
+     "player_id": "00-0036997",
+     "pos": "RB",
+     "line": "24 CAR, 56 YDS"
+    },
+    {
+     "cat": "rec",
+     "team": "DAL",
+     "name": "CeeDee Lamb",
+     "espn_id": "4241389",
+     "gsis_id": "00-0036358",
+     "player_id": "00-0036358",
+     "pos": "WR",
+     "line": "7 REC, 58 YDS"
+    },
+    {
+     "cat": "sacks",
+     "team": "DAL",
+     "name": "Quinnen Williams",
+     "espn_id": "4040982",
+     "gsis_id": "00-0035718",
+     "player_id": "00-0035718",
+     "pos": "DT",
+     "line": "2"
+    },
+    {
+     "cat": "tackles",
+     "team": "DAL",
+     "name": "Shemar James",
+     "espn_id": "4685400",
+     "gsis_id": "00-0040011",
+     "player_id": "00-0040011",
+     "pos": "LB",
+     "line": "9"
+    },
+    {
+     "cat": "pass",
+     "team": "ARZ",
+     "name": "Gardner Minshew II",
+     "espn_id": "4038524",
+     "gsis_id": "00-0035289",
+     "player_id": "00-0035289",
+     "pos": "QB",
+     "line": "17/23, 188 YDS, 3 TD"
+    },
+    {
+     "cat": "rush",
+     "team": "ARZ",
+     "name": "Tyler Allgeier",
+     "espn_id": "4373626",
+     "gsis_id": "00-0037263",
+     "player_id": "00-0037263",
+     "pos": "RB",
+     "line": "11 CAR, 147 YDS, 1 TD"
+    },
+    {
+     "cat": "rec",
+     "team": "ARZ",
+     "name": "Michael Wilson",
+     "espn_id": "4360761",
+     "gsis_id": "00-0038559",
+     "player_id": "00-0038559",
+     "pos": "WR",
+     "line": "8 REC, 111 YDS, 1 TD"
+    },
+    {
+     "cat": "sacks",
+     "team": "ARZ",
+     "name": "Andrew Billings",
+     "espn_id": "3051775",
+     "gsis_id": "00-0033066",
+     "player_id": "00-0033066",
+     "pos": "DT",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "ARZ",
+     "name": "Jack Gibbens",
+     "espn_id": "4249739",
+     "gsis_id": "00-0037596",
+     "player_id": "00-0037596",
+     "pos": "LB",
+     "line": "11"
+    }
+   ],
+   "scoring_plays": [
+    {
+     "quarter": 1,
+     "clock": "2:33",
+     "team": "DAL",
+     "type": "TD",
+     "text": "James Mitchell 0 Yd Fumble Recovery (Brandon Aubrey Kick)",
+     "away": 0,
+     "home": 7
+    },
+    {
+     "quarter": 2,
+     "clock": "5:16",
+     "team": "DAL",
+     "type": "TD",
+     "text": "Ryan Flournoy 9 Yd pass from Dak Prescott (Brandon Aubrey Kick)",
+     "away": 0,
+     "home": 14
+    },
+    {
+     "quarter": 2,
+     "clock": "1:13",
+     "team": "ARZ",
+     "type": "FG",
+     "text": "Chad Ryland 37 Yd Field Goal",
+     "away": 3,
+     "home": 14
+    },
+    {
+     "quarter": 3,
+     "clock": "6:37",
+     "team": "DAL",
+     "type": "FG",
+     "text": "Brandon Aubrey 31 Yd Field Goal",
+     "away": 3,
+     "home": 17
+    },
+    {
+     "quarter": 3,
+     "clock": "0:57",
+     "team": "ARZ",
+     "type": "TD",
+     "text": "Tyler Allgeier 63 Yd Rush (Chad Ryland Kick)",
+     "away": 10,
+     "home": 17
+    },
+    {
+     "quarter": 4,
+     "clock": "14:20",
+     "team": "DAL",
+     "type": "TD",
+     "text": "Dak Prescott 5 Yd Rush (Brandon Aubrey Kick)",
+     "away": 10,
+     "home": 24
+    },
+    {
+     "quarter": 4,
+     "clock": "10:47",
+     "team": "ARZ",
+     "type": "TD",
+     "text": "Tyler Allgeier 5 Yd pass from Gardner Minshew II (Chad Ryland Kick)",
+     "away": 17,
+     "home": 24
+    },
+    {
+     "quarter": 4,
+     "clock": "3:54",
+     "team": "DAL",
+     "type": "FG",
+     "text": "Brandon Aubrey 35 Yd Field Goal",
+     "away": 17,
+     "home": 27
+    },
+    {
+     "quarter": 4,
+     "clock": "2:11",
+     "team": "ARZ",
+     "type": "TD",
+     "text": "Trey McBride 14 Yd pass from Gardner Minshew II (Chad Ryland Kick)",
+     "away": 24,
+     "home": 27
+    },
+    {
+     "quarter": 4,
+     "clock": "1:09",
+     "team": "DAL",
+     "type": "FG",
+     "text": "Brandon Aubrey 41 Yd Field Goal",
+     "away": 24,
+     "home": 30
+    },
+    {
+     "quarter": 4,
+     "clock": "0:06",
+     "team": "ARZ",
+     "type": "TD",
+     "text": "Michael Wilson 13 Yd pass from Gardner Minshew II (Chad Ryland PAT Failed)",
+     "away": 30,
+     "home": 30
+    },
+    {
+     "quarter": 5,
+     "clock": "2:53",
+     "team": "ARZ",
+     "type": "FG",
+     "text": "Chad Ryland 42 Yd Field Goal ",
+     "away": 33,
+     "home": 30
+    }
+   ],
+   "highlights": []
+  },
+  {
+   "id": "401873030",
+   "date": "2026-11-01T18:00Z",
+   "status": "Final",
+   "venue": "Ford Field",
+   "home": {
+    "team": "DET",
+    "name": "Detroit Lions",
+    "score": 19,
+    "winner": true,
+    "linescore": [
+     3,
+     3,
+     6,
+     7
+    ],
+    "record": "5-2"
+   },
+   "away": {
+    "team": "MIN",
+    "name": "Minnesota Vikings",
+    "score": 15,
+    "winner": false,
+    "linescore": [
+     0,
+     7,
+     0,
+     8
+    ],
+    "record": "6-1"
+   },
+   "team_stats": {
+    "away": {
+     "thirdDownEff": "3-10",
+     "totalYards": "266",
+     "netPassingYards": "185",
+     "rushingYards": "81",
+     "turnovers": "1",
+     "possessionTime": "24:17"
+    },
+    "home": {
+     "thirdDownEff": "5-13",
+     "totalYards": "384",
+     "netPassingYards": "154",
+     "rushingYards": "230",
+     "turnovers": "1",
+     "possessionTime": "35:43"
+    }
+   },
+   "leaders": [
+    {
+     "cat": "pass",
+     "team": "DET",
+     "name": "Jared Goff",
+     "espn_id": "3046779",
+     "gsis_id": "00-0033106",
+     "player_id": "00-0033106",
+     "pos": "QB",
+     "line": "18/25, 176 YDS, 1 TD, 1 INT"
+    },
+    {
+     "cat": "rush",
+     "team": "DET",
+     "name": "Jahmyr Gibbs",
+     "espn_id": "4429795",
+     "gsis_id": "00-0039139",
+     "player_id": "00-0039139",
+     "pos": "RB",
+     "line": "23 CAR, 153 YDS, 1 TD"
+    },
+    {
+     "cat": "rec",
+     "team": "DET",
+     "name": "Jameson Williams",
+     "espn_id": "4426388",
+     "gsis_id": "00-0037240",
+     "player_id": "00-0037240",
+     "pos": "WR",
+     "line": "4 REC, 70 YDS, 1 TD"
+    },
+    {
+     "cat": "sacks",
+     "team": "DET",
+     "name": "Alim McNeill",
+     "espn_id": "4361662",
+     "gsis_id": "00-0036624",
+     "player_id": "00-0036624",
+     "pos": "DT",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "DET",
+     "name": "Jimmy Rolder",
+     "espn_id": "4896353",
+     "gsis_id": "00-0041442",
+     "player_id": "00-0041442",
+     "pos": "LB",
+     "line": "5"
+    },
+    {
+     "cat": "pass",
+     "team": "MIN",
+     "name": "Kyler Murray",
+     "espn_id": "3917315",
+     "gsis_id": "00-0035228",
+     "player_id": "00-0035228",
+     "pos": "QB",
+     "line": "17/29, 210 YDS, 2 TD, 1 INT"
+    },
+    {
+     "cat": "rush",
+     "team": "MIN",
+     "name": "Kyler Murray",
+     "espn_id": "3917315",
+     "gsis_id": "00-0035228",
+     "player_id": "00-0035228",
+     "pos": "QB",
+     "line": "4 CAR, 35 YDS"
+    },
+    {
+     "cat": "rec",
+     "team": "MIN",
+     "name": "Jordan Addison",
+     "espn_id": "4429205",
+     "gsis_id": "00-0038994",
+     "player_id": "00-0038994",
+     "pos": "WR",
+     "line": "3 REC, 66 YDS"
+    },
+    {
+     "cat": "sacks",
+     "team": "MIN",
+     "name": "Andrew Van Ginkel",
+     "espn_id": "3133487",
+     "gsis_id": "00-0035272",
+     "player_id": "00-0035272",
+     "pos": "LB",
+     "line": "2.5"
+    },
+    {
+     "cat": "tackles",
+     "team": "MIN",
+     "name": "Joshua Metellus",
+     "espn_id": "4046537",
+     "gsis_id": "00-0036348",
+     "player_id": "joshuametellus-s-min",
+     "pos": "S",
+     "line": "13"
+    }
+   ],
+   "scoring_plays": [
+    {
+     "quarter": 1,
+     "clock": "2:18",
+     "team": "DET",
+     "type": "FG",
+     "text": "Jake Bates 25 Yd Field Goal",
+     "away": 0,
+     "home": 3
+    },
+    {
+     "quarter": 2,
+     "clock": "14:25",
+     "team": "MIN",
+     "type": "TD",
+     "text": "Justin Jefferson 1 Yd pass from Kyler Murray (Will Reichard Kick)",
+     "away": 7,
+     "home": 3
+    },
+    {
+     "quarter": 2,
+     "clock": "0:02",
+     "team": "DET",
+     "type": "FG",
+     "text": "Jake Bates 37 Yd Field Goal",
+     "away": 7,
+     "home": 6
+    },
+    {
+     "quarter": 3,
+     "clock": "4:40",
+     "team": "DET",
+     "type": "TD",
+     "text": "Jahmyr Gibbs 30 Yd Rush (Two-Point Run Conversion Failed)",
+     "away": 7,
+     "home": 12
+    },
+    {
+     "quarter": 4,
+     "clock": "8:44",
+     "team": "MIN",
+     "type": "TD",
+     "text": "T.J. Hockenson 8 Yd pass from Kyler Murray (Kyler Murray Pass to Jordan Addison for Two-Point Conversion)",
+     "away": 15,
+     "home": 12
+    },
+    {
+     "quarter": 4,
+     "clock": "4:35",
+     "team": "DET",
+     "type": "TD",
+     "text": "Jameson Williams 7 Yd pass from Jared Goff (Jake Bates Kick)",
+     "away": 15,
+     "home": 19
+    }
+   ],
+   "highlights": []
+  },
+  {
+   "id": "401873029",
+   "date": "2026-11-01T18:00Z",
+   "status": "Final",
+   "venue": "MetLife Stadium",
+   "home": {
+    "team": "NYJ",
+    "name": "New York Jets",
+    "score": 33,
+    "winner": false,
+    "linescore": [
+     6,
+     17,
+     7,
+     3
+    ],
+    "record": "2-6"
+   },
+   "away": {
+    "team": "LV",
+    "name": "Las Vegas Raiders",
+    "score": 38,
+    "winner": true,
+    "linescore": [
+     7,
+     7,
+     14,
+     10
+    ],
+    "record": "4-4"
+   },
+   "team_stats": {
+    "away": {
+     "thirdDownEff": "7-11",
+     "totalYards": "333",
+     "netPassingYards": "238",
+     "rushingYards": "95",
+     "turnovers": "0",
+     "possessionTime": "29:58"
+    },
+    "home": {
+     "thirdDownEff": "4-11",
+     "totalYards": "439",
+     "netPassingYards": "273",
+     "rushingYards": "166",
+     "turnovers": "1",
+     "possessionTime": "30:02"
+    }
+   },
+   "leaders": [
+    {
+     "cat": "pass",
+     "team": "NYJ",
+     "name": "Geno Smith",
+     "espn_id": "15864",
+     "gsis_id": "00-0030565",
+     "player_id": "00-0030565",
+     "pos": "QB",
+     "line": "20/32, 290 YDS, 2 TD, 1 INT"
+    },
+    {
+     "cat": "rush",
+     "team": "NYJ",
+     "name": "Braelon Allen",
+     "espn_id": "4685247",
+     "gsis_id": "00-0039794",
+     "player_id": "00-0039794",
+     "pos": "RB",
+     "line": "21 CAR, 147 YDS, 1 TD"
+    },
+    {
+     "cat": "rec",
+     "team": "NYJ",
+     "name": "Adonai Mitchell",
+     "espn_id": "4597500",
+     "gsis_id": "00-0039890",
+     "player_id": "00-0039890",
+     "pos": "WR",
+     "line": "7 REC, 142 YDS, 1 TD"
+    },
+    {
+     "cat": "sacks",
+     "team": "NYJ",
+     "name": "Will McDonald IV",
+     "espn_id": "4361767",
+     "gsis_id": "00-0039142",
+     "player_id": "00-0039142",
+     "pos": "DE",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "NYJ",
+     "name": "Jamien Sherwood",
+     "espn_id": "4361331",
+     "gsis_id": "00-0036500",
+     "player_id": "00-0036500",
+     "pos": "LB",
+     "line": "14"
+    },
+    {
+     "cat": "pass",
+     "team": "LV",
+     "name": "Kirk Cousins",
+     "espn_id": "14880",
+     "gsis_id": "00-0029604",
+     "player_id": "00-0029604",
+     "pos": "QB",
+     "line": "19/26, 247 YDS, 3 TD"
+    },
+    {
+     "cat": "rush",
+     "team": "LV",
+     "name": "Mike Washington Jr.",
+     "espn_id": "4686658",
+     "gsis_id": "00-0040878",
+     "player_id": "00-0040878",
+     "pos": "RB",
+     "line": "25 CAR, 83 YDS"
+    },
+    {
+     "cat": "rec",
+     "team": "LV",
+     "name": "Brock Bowers",
+     "espn_id": "4432665",
+     "gsis_id": "00-0039338",
+     "player_id": "00-0039338",
+     "pos": "TE",
+     "line": "7 REC, 92 YDS, 2 TD"
+    },
+    {
+     "cat": "sacks",
+     "team": "LV",
+     "name": "Maxx Crosby",
+     "espn_id": "3916655",
+     "gsis_id": "00-0034973",
+     "player_id": "00-0034973",
+     "pos": "DE",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "LV",
+     "name": "Nakobe Dean",
+     "espn_id": "4426340",
+     "gsis_id": "00-0037615",
+     "player_id": "00-0037615",
+     "pos": "LB",
+     "line": "12"
+    }
+   ],
+   "scoring_plays": [
+    {
+     "quarter": 1,
+     "clock": "12:50",
+     "team": "NYJ",
+     "type": "FG",
+     "text": "Jason Sanders 21 Yd Field Goal",
+     "away": 0,
+     "home": 3
+    },
+    {
+     "quarter": 1,
+     "clock": "7:23",
+     "team": "LV",
+     "type": "TD",
+     "text": "Brock Bowers 12 Yd pass from Kirk Cousins (Matt Gay Kick)",
+     "away": 7,
+     "home": 3
+    },
+    {
+     "quarter": 1,
+     "clock": "2:13",
+     "team": "NYJ",
+     "type": "FG",
+     "text": "Jason Sanders 36 Yd Field Goal",
+     "away": 7,
+     "home": 6
+    },
+    {
+     "quarter": 2,
+     "clock": "10:56",
+     "team": "NYJ",
+     "type": "TD",
+     "text": "Isaiah Williams 18 Yd pass from Geno Smith (Jason Sanders Kick)",
+     "away": 7,
+     "home": 13
+    },
+    {
+     "quarter": 2,
+     "clock": "10:44",
+     "team": "LV",
+     "type": "TD",
+     "text": "Dylan Laube 95 Yd Kickoff Return (Matt Gay Kick)",
+     "away": 14,
+     "home": 13
+    },
+    {
+     "quarter": 2,
+     "clock": "6:18",
+     "team": "NYJ",
+     "type": "TD",
+     "text": "Adonai Mitchell 12 Yd pass from Geno Smith (Jason Sanders Kick)",
+     "away": 14,
+     "home": 20
+    },
+    {
+     "quarter": 2,
+     "clock": "0:09",
+     "team": "NYJ",
+     "type": "FG",
+     "text": "Jason Sanders 39 Yd Field Goal",
+     "away": 14,
+     "home": 23
+    },
+    {
+     "quarter": 3,
+     "clock": "9:59",
+     "team": "LV",
+     "type": "TD",
+     "text": "Brock Bowers 2 Yd pass from Kirk Cousins (Matt Gay Kick)",
+     "away": 21,
+     "home": 23
+    },
+    {
+     "quarter": 3,
+     "clock": "8:20",
+     "team": "NYJ",
+     "type": "TD",
+     "text": "Braelon Allen 21 Yd Rush (Jason Sanders Kick)",
+     "away": 21,
+     "home": 30
+    },
+    {
+     "quarter": 3,
+     "clock": "4:14",
+     "team": "LV",
+     "type": "TD",
+     "text": "Kirk Cousins 1 Yd Rush (Matt Gay Kick)",
+     "away": 28,
+     "home": 30
+    },
+    {
+     "quarter": 4,
+     "clock": "11:33",
+     "team": "LV",
+     "type": "TD",
+     "text": "Jalen Nailor 2 Yd pass from Kirk Cousins (Matt Gay Kick)",
+     "away": 35,
+     "home": 30
+    },
+    {
+     "quarter": 4,
+     "clock": "4:31",
+     "team": "NYJ",
+     "type": "FG",
+     "text": "Jason Sanders 31 Yd Field Goal",
+     "away": 35,
+     "home": 33
+    },
+    {
+     "quarter": 4,
+     "clock": "0:27",
+     "team": "LV",
+     "type": "FG",
+     "text": "Matt Gay 53 Yd Field Goal",
+     "away": 38,
+     "home": 33
+    }
+   ],
+   "highlights": []
+  },
+  {
+   "id": "401873027",
+   "date": "2026-11-01T18:00Z",
+   "status": "Final",
+   "venue": "Acrisure Stadium",
+   "home": {
+    "team": "PIT",
+    "name": "Pittsburgh Steelers",
+    "score": 27,
+    "winner": true,
+    "linescore": [
+     7,
+     13,
+     7,
+     0
+    ],
+    "record": "6-2"
+   },
+   "away": {
+    "team": "CLE",
+    "name": "Cleveland Browns",
+    "score": 6,
+    "winner": false,
+    "linescore": [
+     0,
+     6,
+     0,
+     0
+    ],
+    "record": "5-3"
+   },
+   "team_stats": {
+    "away": {
+     "thirdDownEff": "4-13",
+     "totalYards": "319",
+     "netPassingYards": "285",
+     "rushingYards": "34",
+     "turnovers": "2",
+     "possessionTime": "30:15"
+    },
+    "home": {
+     "thirdDownEff": "4-11",
+     "totalYards": "361",
+     "netPassingYards": "161",
+     "rushingYards": "200",
+     "turnovers": "1",
+     "possessionTime": "29:45"
+    }
+   },
+   "leaders": [
+    {
+     "cat": "pass",
+     "team": "PIT",
+     "name": "Aaron Rodgers",
+     "espn_id": "8439",
+     "gsis_id": "00-0023459",
+     "player_id": "00-0023459",
+     "pos": "QB",
+     "line": "13/25, 172 YDS, 1 INT"
+    },
+    {
+     "cat": "rush",
+     "team": "PIT",
+     "name": "Jaylen Warren",
+     "espn_id": "4569987",
+     "gsis_id": "00-0037228",
+     "player_id": "00-0037228",
+     "pos": "RB",
+     "line": "17 CAR, 143 YDS, 1 TD"
+    },
+    {
+     "cat": "rec",
+     "team": "PIT",
+     "name": "Darnell Washington",
+     "espn_id": "4430802",
+     "gsis_id": "00-0038558",
+     "player_id": "00-0038558",
+     "pos": "TE",
+     "line": "3 REC, 94 YDS"
+    },
+    {
+     "cat": "sacks",
+     "team": "PIT",
+     "name": "T.J. Watt",
+     "espn_id": "3045282",
+     "gsis_id": "00-0033886",
+     "player_id": "00-0033886",
+     "pos": "LB",
+     "line": "2"
+    },
+    {
+     "cat": "tackles",
+     "team": "PIT",
+     "name": "Patrick Queen",
+     "espn_id": "4242207",
+     "gsis_id": "00-0036323",
+     "player_id": "00-0036323",
+     "pos": "LB",
+     "line": "12"
+    },
+    {
+     "cat": "pass",
+     "team": "CLE",
+     "name": "Deshaun Watson",
+     "espn_id": "3122840",
+     "gsis_id": "00-0033537",
+     "player_id": "00-0033537",
+     "pos": "QB",
+     "line": "27/39, 324 YDS"
+    },
+    {
+     "cat": "rush",
+     "team": "CLE",
+     "name": "Quinshon Judkins",
+     "espn_id": "4685702",
+     "gsis_id": "00-0040784",
+     "player_id": "00-0040784",
+     "pos": "RB",
+     "line": "11 CAR, 25 YDS"
+    },
+    {
+     "cat": "rec",
+     "team": "CLE",
+     "name": "Harold Fannin Jr.",
+     "espn_id": "5083076",
+     "gsis_id": "00-0040663",
+     "player_id": "00-0040663",
+     "pos": "TE",
+     "line": "10 REC, 154 YDS"
+    },
+    {
+     "cat": "sacks",
+     "team": "CLE",
+     "name": "Adin Huntington",
+     "espn_id": "4605792",
+     "gsis_id": "00-0040255",
+     "player_id": "00-0040255",
+     "pos": "DE",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "CLE",
+     "name": "Carson Schwesinger",
+     "espn_id": "4876017",
+     "gsis_id": "00-0040579",
+     "player_id": "00-0040579",
+     "pos": "LB",
+     "line": "10"
+    }
+   ],
+   "scoring_plays": [
+    {
+     "quarter": 1,
+     "clock": "7:57",
+     "team": "PIT",
+     "type": "TD",
+     "text": "Rico Dowdle 9 Yd Rush (Chris Boswell Kick)",
+     "away": 0,
+     "home": 7
+    },
+    {
+     "quarter": 2,
+     "clock": "14:05",
+     "team": "PIT",
+     "type": "FG",
+     "text": "Chris Boswell 20 Yd Field Goal",
+     "away": 0,
+     "home": 10
+    },
+    {
+     "quarter": 2,
+     "clock": "8:43",
+     "team": "CLE",
+     "type": "FG",
+     "text": "Andre Szmyt 32 Yd Field Goal ",
+     "away": 3,
+     "home": 10
+    },
+    {
+     "quarter": 2,
+     "clock": "3:27",
+     "team": "PIT",
+     "type": "FG",
+     "text": "Chris Boswell 37 Yd Field Goal",
+     "away": 3,
+     "home": 13
+    },
+    {
+     "quarter": 2,
+     "clock": "0:45",
+     "team": "CLE",
+     "type": "FG",
+     "text": "Andre Szmyt 49 Yd Field Goal",
+     "away": 6,
+     "home": 13
+    },
+    {
+     "quarter": 2,
+     "clock": "0:01",
+     "team": "PIT",
+     "type": "TD",
+     "text": "Pat Freiermuth 1 Yd Rush (Chris Boswell Kick)",
+     "away": 6,
+     "home": 20
+    },
+    {
+     "quarter": 3,
+     "clock": "9:39",
+     "team": "PIT",
+     "type": "TD",
+     "text": "Jaylen Warren 1 Yd Rush (Chris Boswell Kick)",
+     "away": 6,
+     "home": 27
+    }
+   ],
+   "highlights": []
+  },
+  {
+   "id": "401873025",
+   "date": "2026-11-01T18:00Z",
+   "status": "Final",
+   "venue": "Raymond James Stadium",
+   "home": {
+    "team": "TB",
+    "name": "Tampa Bay Buccaneers",
+    "score": 16,
+    "winner": true,
+    "linescore": [
+     6,
+     3,
+     7,
+     0
+    ],
+    "record": "3-5"
+   },
+   "away": {
+    "team": "ATL",
+    "name": "Atlanta Falcons",
+    "score": 0,
+    "winner": false,
+    "linescore": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "record": "3-5"
+   },
+   "team_stats": {
+    "away": {
+     "thirdDownEff": "0-12",
+     "totalYards": "224",
+     "netPassingYards": "125",
+     "rushingYards": "99",
+     "turnovers": "4",
+     "possessionTime": "24:44"
+    },
+    "home": {
+     "thirdDownEff": "4-13",
+     "totalYards": "322",
+     "netPassingYards": "-2",
+     "rushingYards": "324",
+     "turnovers": "1",
+     "possessionTime": "35:16"
+    }
+   },
+   "leaders": [
+    {
+     "cat": "pass",
+     "team": "TB",
+     "name": "Baker Mayfield",
+     "espn_id": "3052587",
+     "gsis_id": "00-0034855",
+     "player_id": "00-0034855",
+     "pos": "QB",
+     "line": "0/3, 0 YDS"
+    },
+    {
+     "cat": "rush",
+     "team": "TB",
+     "name": "Bucky Irving",
+     "espn_id": "4596448",
+     "gsis_id": "00-0039361",
+     "player_id": "00-0039361",
+     "pos": "RB",
+     "line": "27 CAR, 170 YDS, 1 TD"
+    },
+    {
+     "cat": "tackles",
+     "team": "TB",
+     "name": "Antoine Winfield Jr.",
+     "espn_id": "4034790",
+     "gsis_id": "00-0036411",
+     "player_id": "00-0036411",
+     "pos": "S",
+     "line": "7"
+    },
+    {
+     "cat": "pass",
+     "team": "ATL",
+     "name": "Michael Penix Jr.",
+     "espn_id": "4360423",
+     "gsis_id": "00-0039917",
+     "player_id": "00-0039917",
+     "pos": "QB",
+     "line": "8/24, 125 YDS, 4 INT"
+    },
+    {
+     "cat": "rush",
+     "team": "ATL",
+     "name": "Bijan Robinson",
+     "espn_id": "4430807",
+     "gsis_id": "00-0038542",
+     "player_id": "00-0038542",
+     "pos": "RB",
+     "line": "19 CAR, 76 YDS"
+    },
+    {
+     "cat": "rec",
+     "team": "ATL",
+     "name": "Jahan Dotson",
+     "espn_id": "4361409",
+     "gsis_id": "00-0037741",
+     "player_id": "00-0037741",
+     "pos": "WR",
+     "line": "2 REC, 95 YDS"
+    },
+    {
+     "cat": "sacks",
+     "team": "ATL",
+     "name": "Harold Perkins Jr.",
+     "espn_id": "4685502",
+     "gsis_id": "00-0041112",
+     "player_id": "00-0041112",
+     "pos": "LB",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "ATL",
+     "name": "Kendal Daniels",
+     "espn_id": "4595343",
+     "gsis_id": "00-0041066",
+     "player_id": "00-0041066",
+     "pos": "LB",
+     "line": "13"
+    }
+   ],
+   "scoring_plays": [
+    {
+     "quarter": 1,
+     "clock": "7:43",
+     "team": "TB",
+     "type": "FG",
+     "text": "Chase McLaughlin 46 Yd Field Goal ",
+     "away": 0,
+     "home": 3
+    },
+    {
+     "quarter": 1,
+     "clock": "4:02",
+     "team": "TB",
+     "type": "FG",
+     "text": "Chase McLaughlin 34 Yd Field Goal",
+     "away": 0,
+     "home": 6
+    },
+    {
+     "quarter": 2,
+     "clock": "4:04",
+     "team": "TB",
+     "type": "FG",
+     "text": "Chase McLaughlin 42 Yd Field Goal",
+     "away": 0,
+     "home": 9
+    },
+    {
+     "quarter": 3,
+     "clock": "3:47",
+     "team": "TB",
+     "type": "TD",
+     "text": "Bucky Irving 4 Yd Rush (Chase McLaughlin Kick)",
+     "away": 0,
+     "home": 16
+    }
+   ],
+   "highlights": []
+  },
+  {
+   "id": "401873028",
+   "date": "2026-11-01T18:00Z",
+   "status": "Final",
+   "venue": "EverBank Stadium",
+   "home": {
+    "team": "JAX",
+    "name": "Jacksonville Jaguars",
+    "score": 42,
+    "winner": true,
+    "linescore": [
+     7,
+     21,
+     14,
+     0
+    ],
+    "record": "5-2"
+   },
+   "away": {
+    "team": "IND",
+    "name": "Indianapolis Colts",
+    "score": 7,
+    "winner": false,
+    "linescore": [
+     0,
+     0,
+     7,
+     0
+    ],
+    "record": "2-6"
+   },
+   "team_stats": {
+    "away": {
+     "thirdDownEff": "3-11",
+     "totalYards": "243",
+     "netPassingYards": "134",
+     "rushingYards": "109",
+     "turnovers": "3",
+     "possessionTime": "30:22"
+    },
+    "home": {
+     "thirdDownEff": "6-12",
+     "totalYards": "366",
+     "netPassingYards": "183",
+     "rushingYards": "183",
+     "turnovers": "1",
+     "possessionTime": "29:38"
+    }
+   },
+   "leaders": [
+    {
+     "cat": "pass",
+     "team": "JAX",
+     "name": "Trevor Lawrence",
+     "espn_id": "4360310",
+     "gsis_id": "00-0036971",
+     "player_id": "00-0036971",
+     "pos": "QB",
+     "line": "10/14, 210 YDS, 3 TD"
+    },
+    {
+     "cat": "rush",
+     "team": "JAX",
+     "name": "Bhayshul Tuten",
+     "espn_id": "4882093",
+     "gsis_id": "00-0040719",
+     "player_id": "00-0040719",
+     "pos": "RB",
+     "line": "16 CAR, 104 YDS, 1 TD"
+    },
+    {
+     "cat": "rec",
+     "team": "JAX",
+     "name": "Bhayshul Tuten",
+     "espn_id": "4882093",
+     "gsis_id": "00-0040719",
+     "player_id": "00-0040719",
+     "pos": "RB",
+     "line": "2 REC, 55 YDS, 1 TD"
+    },
+    {
+     "cat": "sacks",
+     "team": "JAX",
+     "name": "Foyesade Oluokun",
+     "espn_id": "3050073",
+     "gsis_id": "00-0034413",
+     "player_id": "00-0034413",
+     "pos": "LB",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "JAX",
+     "name": "Foyesade Oluokun",
+     "espn_id": "3050073",
+     "gsis_id": "00-0034413",
+     "player_id": "00-0034413",
+     "pos": "LB",
+     "line": "9"
+    },
+    {
+     "cat": "pass",
+     "team": "IND",
+     "name": "Daniel Jones",
+     "espn_id": "3917792",
+     "gsis_id": "00-0035710",
+     "player_id": null,
+     "pos": "QB",
+     "line": "19/28, 144 YDS, 1 TD, 2 INT"
+    },
+    {
+     "cat": "rush",
+     "team": "IND",
+     "name": "DJ Giddens",
+     "espn_id": "4874509",
+     "gsis_id": "00-0040179",
+     "player_id": "00-0040179",
+     "pos": "RB",
+     "line": "6 CAR, 43 YDS"
+    },
+    {
+     "cat": "rec",
+     "team": "IND",
+     "name": "Keenan Allen",
+     "espn_id": "15818",
+     "gsis_id": "00-0030279",
+     "player_id": "00-0030279",
+     "pos": "WR",
+     "line": "7 REC, 67 YDS"
+    },
+    {
+     "cat": "sacks",
+     "team": "IND",
+     "name": "Laiatu Latu",
+     "espn_id": "4426473",
+     "gsis_id": "00-0039340",
+     "player_id": "00-0039340",
+     "pos": "DE",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "IND",
+     "name": "CJ Allen",
+     "espn_id": "4870598",
+     "gsis_id": "00-0041039",
+     "player_id": "00-0041039",
+     "pos": "LB",
+     "line": "10"
+    }
+   ],
+   "scoring_plays": [
+    {
+     "quarter": 1,
+     "clock": "5:30",
+     "team": "JAX",
+     "type": "TD",
+     "text": "Brian Thomas Jr. 12 Yd pass from Trevor Lawrence (Cam Little Kick)",
+     "away": 0,
+     "home": 7
+    },
+    {
+     "quarter": 2,
+     "clock": "7:14",
+     "team": "JAX",
+     "type": "TD",
+     "text": "Nate Boerkircher 31 Yd pass from Trevor Lawrence (Cam Little Kick)",
+     "away": 0,
+     "home": 14
+    },
+    {
+     "quarter": 2,
+     "clock": "1:51",
+     "team": "JAX",
+     "type": "TD",
+     "text": "Bhayshul Tuten 39 Yd Rush (Cam Little Kick)",
+     "away": 0,
+     "home": 21
+    },
+    {
+     "quarter": 2,
+     "clock": "0:10",
+     "team": "JAX",
+     "type": "TD",
+     "text": "Rayuan Lane III 92 Yd Interception Return (Cam Little Kick)",
+     "away": 0,
+     "home": 28
+    },
+    {
+     "quarter": 3,
+     "clock": "9:08",
+     "team": "JAX",
+     "type": "TD",
+     "text": "Chris Rodriguez Jr. 28 Yd Rush (Cam Little Kick)",
+     "away": 0,
+     "home": 35
+    },
+    {
+     "quarter": 3,
+     "clock": "3:59",
+     "team": "IND",
+     "type": "TD",
+     "text": "Josh Downs 6 Yd pass from Daniel Jones (Spencer Shrader Kick)",
+     "away": 7,
+     "home": 35
+    },
+    {
+     "quarter": 3,
+     "clock": "0:00",
+     "team": "JAX",
+     "type": "TD",
+     "text": "Bhayshul Tuten 25 Yd pass from Trevor Lawrence (Cam Little Kick)",
+     "away": 7,
+     "home": 42
+    }
+   ],
+   "highlights": []
+  },
+  {
+   "id": "401873032",
+   "date": "2026-11-01T21:05Z",
+   "status": "Final",
+   "venue": "SoFi Stadium",
+   "home": {
+    "team": "LAR",
+    "name": "Los Angeles Rams",
+    "score": 24,
+    "winner": true,
+    "linescore": [
+     3,
+     7,
+     14,
+     0
+    ],
+    "record": "4-4"
+   },
+   "away": {
+    "team": "LAC",
+    "name": "Los Angeles Chargers",
+    "score": 9,
+    "winner": false,
+    "linescore": [
+     3,
+     6,
+     0,
+     0
+    ],
+    "record": "0-7"
+   },
+   "team_stats": {
+    "away": {
+     "thirdDownEff": "6-15",
+     "totalYards": "295",
+     "netPassingYards": "231",
+     "rushingYards": "64",
+     "turnovers": "2",
+     "possessionTime": "32:24"
+    },
+    "home": {
+     "thirdDownEff": "3-11",
+     "totalYards": "281",
+     "netPassingYards": "152",
+     "rushingYards": "129",
+     "turnovers": "1",
+     "possessionTime": "27:36"
+    }
+   },
+   "leaders": [
+    {
+     "cat": "pass",
+     "team": "LAR",
+     "name": "Matthew Stafford",
+     "espn_id": "12483",
+     "gsis_id": "00-0026498",
+     "player_id": "00-0026498",
+     "pos": "QB",
+     "line": "17/25, 157 YDS, 1 TD, 1 INT"
+    },
+    {
+     "cat": "rush",
+     "team": "LAR",
+     "name": "Blake Corum",
+     "espn_id": "4429096",
+     "gsis_id": "00-0039738",
+     "player_id": "00-0039738",
+     "pos": "RB",
+     "line": "11 CAR, 73 YDS, 1 TD"
+    },
+    {
+     "cat": "rec",
+     "team": "LAR",
+     "name": "Puka Nacua",
+     "espn_id": "4426515",
+     "gsis_id": "00-0039075",
+     "player_id": "00-0039075",
+     "pos": "WR",
+     "line": "11 REC, 80 YDS, 1 TD"
+    },
+    {
+     "cat": "sacks",
+     "team": "LAR",
+     "name": "Wesley Bailey",
+     "espn_id": "4430919",
+     "gsis_id": "00-0041404",
+     "player_id": "wesleybailey-edge-lar",
+     "pos": "LB",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "LAR",
+     "name": "Trent McDuffie",
+     "espn_id": "4426405",
+     "gsis_id": "00-0037191",
+     "player_id": "00-0037191",
+     "pos": "CB",
+     "line": "9"
+    },
+    {
+     "cat": "pass",
+     "team": "LAC",
+     "name": "Justin Herbert",
+     "espn_id": "4038941",
+     "gsis_id": "00-0036355",
+     "player_id": "00-0036355",
+     "pos": "QB",
+     "line": "24/32, 257 YDS, 2 INT"
+    },
+    {
+     "cat": "rush",
+     "team": "LAC",
+     "name": "Kimani Vidal",
+     "espn_id": "4430968",
+     "gsis_id": "00-0039391",
+     "player_id": "00-0039391",
+     "pos": "RB",
+     "line": "8 CAR, 23 YDS"
+    },
+    {
+     "cat": "rec",
+     "team": "LAC",
+     "name": "Ladd McConkey",
+     "espn_id": "4612826",
+     "gsis_id": "00-0039915",
+     "player_id": "00-0039915",
+     "pos": "WR",
+     "line": "4 REC, 86 YDS"
+    },
+    {
+     "cat": "sacks",
+     "team": "LAC",
+     "name": "Tuli Tuipulotu",
+     "espn_id": "4431442",
+     "gsis_id": "00-0039111",
+     "player_id": "00-0039111",
+     "pos": "LB",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "LAC",
+     "name": "Tony Jefferson",
+     "espn_id": "16195",
+     "gsis_id": "00-0030294",
+     "player_id": "00-0030294",
+     "pos": "S",
+     "line": "7"
+    }
+   ],
+   "scoring_plays": [
+    {
+     "quarter": 1,
+     "clock": "5:42",
+     "team": "LAR",
+     "type": "FG",
+     "text": "Brandon McManus 30 Yd Field Goal",
+     "away": 0,
+     "home": 3
+    },
+    {
+     "quarter": 1,
+     "clock": "0:04",
+     "team": "LAC",
+     "type": "FG",
+     "text": "Cameron Dicker 34 Yd Field Goal",
+     "away": 3,
+     "home": 3
+    },
+    {
+     "quarter": 2,
+     "clock": "10:06",
+     "team": "LAC",
+     "type": "FG",
+     "text": "Cameron Dicker 46 Yd Field Goal",
+     "away": 6,
+     "home": 3
+    },
+    {
+     "quarter": 2,
+     "clock": "1:55",
+     "team": "LAC",
+     "type": "FG",
+     "text": "Cameron Dicker 41 Yd Field Goal",
+     "away": 9,
+     "home": 3
+    },
+    {
+     "quarter": 2,
+     "clock": "0:19",
+     "team": "LAR",
+     "type": "TD",
+     "text": "Kyren Williams 1 Yd Rush (Brandon McManus Kick)",
+     "away": 9,
+     "home": 10
+    },
+    {
+     "quarter": 3,
+     "clock": "10:42",
+     "team": "LAR",
+     "type": "TD",
+     "text": "Blake Corum 23 Yd Rush (Brandon McManus Kick)",
+     "away": 9,
+     "home": 17
+    },
+    {
+     "quarter": 3,
+     "clock": "3:41",
+     "team": "LAR",
+     "type": "TD",
+     "text": "Puka Nacua 18 Yd pass from Matthew Stafford (Brandon McManus Kick)",
+     "away": 9,
+     "home": 24
+    }
+   ],
+   "highlights": []
+  },
+  {
+   "id": "401873033",
+   "date": "2026-11-01T21:25Z",
+   "status": "Final",
+   "venue": "Empower Field at Mile High",
+   "home": {
+    "team": "DEN",
+    "name": "Denver Broncos",
+    "score": 28,
+    "winner": true,
+    "linescore": [
+     3,
+     10,
+     0,
+     15
+    ],
+    "record": "6-2"
+   },
+   "away": {
+    "team": "KC",
+    "name": "Kansas City Chiefs",
+    "score": 24,
+    "winner": false,
+    "linescore": [
+     7,
+     10,
+     7,
+     0
+    ],
+    "record": "5-2"
+   },
+   "team_stats": {
+    "away": {
+     "thirdDownEff": "6-14",
+     "totalYards": "399",
+     "netPassingYards": "309",
+     "rushingYards": "90",
+     "turnovers": "0",
+     "possessionTime": "31:29"
+    },
+    "home": {
+     "thirdDownEff": "2-11",
+     "totalYards": "294",
+     "netPassingYards": "217",
+     "rushingYards": "77",
+     "turnovers": "0",
+     "possessionTime": "28:31"
+    }
+   },
+   "leaders": [
+    {
+     "cat": "pass",
+     "team": "DEN",
+     "name": "Bo Nix",
+     "espn_id": "4426338",
+     "gsis_id": "00-0039732",
+     "player_id": "00-0039732",
+     "pos": "QB",
+     "line": "20/32, 222 YDS, 2 TD"
+    },
+    {
+     "cat": "rush",
+     "team": "DEN",
+     "name": "Jonah Coleman",
+     "espn_id": "4702555",
+     "gsis_id": "00-0041496",
+     "player_id": "00-0041496",
+     "pos": "RB",
+     "line": "11 CAR, 41 YDS, 1 TD"
+    },
+    {
+     "cat": "rec",
+     "team": "DEN",
+     "name": "Jonah Coleman",
+     "espn_id": "4702555",
+     "gsis_id": "00-0041496",
+     "player_id": "00-0041496",
+     "pos": "RB",
+     "line": "4 REC, 63 YDS"
+    },
+    {
+     "cat": "sacks",
+     "team": "DEN",
+     "name": "Alex Singleton",
+     "espn_id": "2612151",
+     "gsis_id": "00-0031898",
+     "player_id": "00-0031898",
+     "pos": "LB",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "DEN",
+     "name": "Alex Singleton",
+     "espn_id": "2612151",
+     "gsis_id": "00-0031898",
+     "player_id": "00-0031898",
+     "pos": "LB",
+     "line": "14"
+    },
+    {
+     "cat": "pass",
+     "team": "KC",
+     "name": "Patrick Mahomes",
+     "espn_id": "3139477",
+     "gsis_id": "00-0033873",
+     "player_id": "00-0033873",
+     "pos": "QB",
+     "line": "30/41, 321 YDS, 3 TD"
+    },
+    {
+     "cat": "rush",
+     "team": "KC",
+     "name": "Kenneth Walker III",
+     "espn_id": "4567048",
+     "gsis_id": "00-0038134",
+     "player_id": "00-0038134",
+     "pos": "RB",
+     "line": "21 CAR, 69 YDS"
+    },
+    {
+     "cat": "rec",
+     "team": "KC",
+     "name": "Emmett Johnson",
+     "espn_id": "4832955",
+     "gsis_id": "00-0041013",
+     "player_id": "00-0041013",
+     "pos": "RB",
+     "line": "5 REC, 128 YDS, 1 TD"
+    },
+    {
+     "cat": "sacks",
+     "team": "KC",
+     "name": "George Karlaftis",
+     "espn_id": "4426659",
+     "gsis_id": "00-0037192",
+     "player_id": "00-0037192",
+     "pos": "DE",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "KC",
+     "name": "Nick Bolton",
+     "espn_id": "4362759",
+     "gsis_id": "00-0036621",
+     "player_id": "00-0036621",
+     "pos": "LB",
+     "line": "9"
+    }
+   ],
+   "scoring_plays": [
+    {
+     "quarter": 1,
+     "clock": "9:43",
+     "team": "DEN",
+     "type": "FG",
+     "text": "Wil Lutz 39 Yd Field Goal",
+     "away": 0,
+     "home": 3
+    },
+    {
+     "quarter": 1,
+     "clock": "6:04",
+     "team": "KC",
+     "type": "TD",
+     "text": "Rashee Rice 11 Yd pass from Patrick Mahomes (Harrison Butker Kick)",
+     "away": 7,
+     "home": 3
+    },
+    {
+     "quarter": 2,
+     "clock": "14:08",
+     "team": "DEN",
+     "type": "FG",
+     "text": "Wil Lutz 45 Yd Field Goal",
+     "away": 7,
+     "home": 6
+    },
+    {
+     "quarter": 2,
+     "clock": "7:40",
+     "team": "KC",
+     "type": "TD",
+     "text": "Emmett Johnson 73 Yd pass from Patrick Mahomes (Harrison Butker Kick)",
+     "away": 14,
+     "home": 6
+    },
+    {
+     "quarter": 2,
+     "clock": "1:15",
+     "team": "DEN",
+     "type": "TD",
+     "text": "Jaylen Waddle 1 Yd pass from Bo Nix (Wil Lutz Kick)",
+     "away": 14,
+     "home": 13
+    },
+    {
+     "quarter": 2,
+     "clock": "0:19",
+     "team": "KC",
+     "type": "FG",
+     "text": "Harrison Butker 45 Yd Field Goal",
+     "away": 17,
+     "home": 13
+    },
+    {
+     "quarter": 3,
+     "clock": "1:38",
+     "team": "KC",
+     "type": "TD",
+     "text": "Noah Gray 4 Yd pass from Patrick Mahomes (Harrison Butker Kick)",
+     "away": 24,
+     "home": 13
+    },
+    {
+     "quarter": 4,
+     "clock": "8:55",
+     "team": "DEN",
+     "type": "TD",
+     "text": "Nate Adkins 2 Yd pass from Bo Nix (Bo Nix Pass to Jaylen Waddle for Two-Point Conversion)",
+     "away": 24,
+     "home": 21
+    },
+    {
+     "quarter": 4,
+     "clock": "1:56",
+     "team": "DEN",
+     "type": "TD",
+     "text": "Jonah Coleman 5 Yd Rush (Wil Lutz Kick)",
+     "away": 24,
+     "home": 28
+    }
+   ],
+   "highlights": []
+  },
+  {
+   "id": "401873034",
+   "date": "2026-11-01T21:25Z",
+   "status": "Final",
+   "venue": "Hard Rock Stadium",
+   "home": {
+    "team": "MIA",
+    "name": "Miami Dolphins",
+    "score": 19,
+    "winner": false,
+    "linescore": [
+     3,
+     10,
+     0,
+     6
+    ],
+    "record": "1-6"
+   },
+   "away": {
+    "team": "NE",
+    "name": "New England Patriots",
+    "score": 24,
+    "winner": true,
+    "linescore": [
+     3,
+     0,
+     14,
+     7
+    ],
+    "record": "5-3"
+   },
+   "team_stats": {
+    "away": {
+     "thirdDownEff": "6-14",
+     "totalYards": "313",
+     "netPassingYards": "182",
+     "rushingYards": "131",
+     "turnovers": "1",
+     "possessionTime": "31:57"
+    },
+    "home": {
+     "thirdDownEff": "7-14",
+     "totalYards": "269",
+     "netPassingYards": "195",
+     "rushingYards": "74",
+     "turnovers": "1",
+     "possessionTime": "28:03"
+    }
+   },
+   "leaders": [
+    {
+     "cat": "pass",
+     "team": "MIA",
+     "name": "Malik Willis",
+     "espn_id": "4242512",
+     "gsis_id": "00-0038128",
+     "player_id": "00-0038128",
+     "pos": "QB",
+     "line": "21/32, 211 YDS, 2 TD, 1 INT"
+    },
+    {
+     "cat": "rush",
+     "team": "MIA",
+     "name": "Ollie Gordon II",
+     "espn_id": "4711533",
+     "gsis_id": "00-0040198",
+     "player_id": "00-0040198",
+     "pos": "RB",
+     "line": "19 CAR, 69 YDS"
+    },
+    {
+     "cat": "rec",
+     "team": "MIA",
+     "name": "Kevin Coleman Jr.",
+     "espn_id": "4685307",
+     "gsis_id": "00-0041529",
+     "player_id": "00-0041529",
+     "pos": "WR",
+     "line": "3 REC, 46 YDS, 1 TD"
+    },
+    {
+     "cat": "sacks",
+     "team": "MIA",
+     "name": "Chop Robinson",
+     "espn_id": "4431586",
+     "gsis_id": "00-0039911",
+     "player_id": "00-0039911",
+     "pos": "LB",
+     "line": "2"
+    },
+    {
+     "cat": "tackles",
+     "team": "MIA",
+     "name": "Jordyn Brooks",
+     "espn_id": "4043130",
+     "gsis_id": "00-0036409",
+     "player_id": "00-0036409",
+     "pos": "LB",
+     "line": "11"
+    },
+    {
+     "cat": "pass",
+     "team": "NE",
+     "name": "Drake Maye",
+     "espn_id": "4431452",
+     "gsis_id": "00-0039851",
+     "player_id": "00-0039851",
+     "pos": "QB",
+     "line": "16/20, 199 YDS, 2 TD"
+    },
+    {
+     "cat": "rush",
+     "team": "NE",
+     "name": "Rhamondre Stevenson",
+     "espn_id": "4569173",
+     "gsis_id": "00-0036875",
+     "player_id": "00-0036875",
+     "pos": "RB",
+     "line": "19 CAR, 82 YDS"
+    },
+    {
+     "cat": "rec",
+     "team": "NE",
+     "name": "DeMario Douglas",
+     "espn_id": "4427095",
+     "gsis_id": "00-0038621",
+     "player_id": "00-0038621",
+     "pos": "WR",
+     "line": "3 REC, 76 YDS, 1 TD"
+    },
+    {
+     "cat": "sacks",
+     "team": "NE",
+     "name": "Cory Durden",
+     "espn_id": "4240042",
+     "gsis_id": "00-0038653",
+     "player_id": "00-0038653",
+     "pos": "DT",
+     "line": "1.5"
+    },
+    {
+     "cat": "tackles",
+     "team": "NE",
+     "name": "Carlton Davis III",
+     "espn_id": "3916923",
+     "gsis_id": "00-0034778",
+     "player_id": "00-0034778",
+     "pos": "CB",
+     "line": "9"
+    }
+   ],
+   "scoring_plays": [
+    {
+     "quarter": 1,
+     "clock": "9:10",
+     "team": "NE",
+     "type": "FG",
+     "text": "Andy Borregales 34 Yd Field Goal",
+     "away": 3,
+     "home": 0
+    },
+    {
+     "quarter": 1,
+     "clock": "3:39",
+     "team": "MIA",
+     "type": "FG",
+     "text": "Zane Gonzalez 31 Yd Field Goal",
+     "away": 3,
+     "home": 3
+    },
+    {
+     "quarter": 2,
+     "clock": "9:27",
+     "team": "MIA",
+     "type": "FG",
+     "text": "Zane Gonzalez 52 Yd Field Goal",
+     "away": 3,
+     "home": 6
+    },
+    {
+     "quarter": 2,
+     "clock": "0:08",
+     "team": "MIA",
+     "type": "TD",
+     "text": "Malik Washington 1 Yd pass from Malik Willis (Zane Gonzalez Kick)",
+     "away": 3,
+     "home": 13
+    },
+    {
+     "quarter": 3,
+     "clock": "9:23",
+     "team": "NE",
+     "type": "TD",
+     "text": "Kyle Williams 43 Yd pass from Drake Maye (Andy Borregales Kick)",
+     "away": 10,
+     "home": 13
+    },
+    {
+     "quarter": 3,
+     "clock": "0:59",
+     "team": "NE",
+     "type": "TD",
+     "text": "Drake Maye 2 Yd Rush (Andy Borregales Kick)",
+     "away": 17,
+     "home": 13
+    },
+    {
+     "quarter": 4,
+     "clock": "12:39",
+     "team": "NE",
+     "type": "TD",
+     "text": "DeMario Douglas 48 Yd pass from Drake Maye (Andy Borregales Kick)",
+     "away": 24,
+     "home": 13
+    },
+    {
+     "quarter": 4,
+     "clock": "2:04",
+     "team": "MIA",
+     "type": "TD",
+     "text": "Kevin Coleman Jr. 35 Yd pass from Malik Willis (Two-Point Pass Conversion Failed)",
+     "away": 24,
+     "home": 19
+    }
+   ],
+   "highlights": []
+  },
+  {
+   "id": "401873035",
+   "date": "2026-11-02T01:20Z",
+   "status": "Final",
+   "venue": "Northwest Stadium",
+   "home": {
+    "team": "WAS",
+    "name": "Washington Commanders",
+    "score": 27,
+    "winner": true,
+    "linescore": [
+     3,
+     10,
+     3,
+     11
+    ],
+    "record": "2-4-1"
+   },
+   "away": {
+    "team": "PHI",
+    "name": "Philadelphia Eagles",
+    "score": 10,
+    "winner": false,
+    "linescore": [
+     10,
+     0,
+     0,
+     0
+    ],
+    "record": "2-6"
+   },
+   "team_stats": {
+    "away": {
+     "thirdDownEff": "5-15",
+     "totalYards": "268",
+     "netPassingYards": "177",
+     "rushingYards": "91",
+     "turnovers": "2",
+     "possessionTime": "33:31"
+    },
+    "home": {
+     "thirdDownEff": "5-13",
+     "totalYards": "339",
+     "netPassingYards": "204",
+     "rushingYards": "135",
+     "turnovers": "1",
+     "possessionTime": "26:29"
+    }
+   },
+   "leaders": [
+    {
+     "cat": "pass",
+     "team": "WAS",
+     "name": "Jayden Daniels",
+     "espn_id": "4426348",
+     "gsis_id": "00-0039910",
+     "player_id": "00-0039910",
+     "pos": "QB",
+     "line": "16/29, 217 YDS, 1 TD"
+    },
+    {
+     "cat": "rush",
+     "team": "WAS",
+     "name": "Rachaad White",
+     "espn_id": "4697815",
+     "gsis_id": "00-0037256",
+     "player_id": "00-0037256",
+     "pos": "RB",
+     "line": "11 CAR, 55 YDS, 1 TD"
+    },
+    {
+     "cat": "rec",
+     "team": "WAS",
+     "name": "Treylon Burks",
+     "espn_id": "4567156",
+     "gsis_id": "00-0037742",
+     "player_id": "00-0037742",
+     "pos": "WR",
+     "line": "3 REC, 81 YDS"
+    },
+    {
+     "cat": "sacks",
+     "team": "WAS",
+     "name": "Shy Tuttle",
+     "espn_id": "3886601",
+     "gsis_id": "00-0035409",
+     "player_id": "00-0035409",
+     "pos": "DT",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "WAS",
+     "name": "Nick Cross",
+     "espn_id": "4426403",
+     "gsis_id": "00-0037616",
+     "player_id": "00-0037616",
+     "pos": "S",
+     "line": "9"
+    },
+    {
+     "cat": "pass",
+     "team": "PHI",
+     "name": "Tanner McKee",
+     "espn_id": "4685201",
+     "gsis_id": "00-0038400",
+     "player_id": "00-0038400",
+     "pos": "QB",
+     "line": "23/34, 212 YDS, 1 INT"
+    },
+    {
+     "cat": "rush",
+     "team": "PHI",
+     "name": "Elijah Mitchell",
+     "espn_id": "4241555",
+     "gsis_id": "00-0036567",
+     "player_id": "00-0036567",
+     "pos": "RB",
+     "line": "11 CAR, 34 YDS"
+    },
+    {
+     "cat": "rec",
+     "team": "PHI",
+     "name": "Makai Lemon",
+     "espn_id": "4870795",
+     "gsis_id": "00-0040867",
+     "player_id": "00-0040867",
+     "pos": "WR",
+     "line": "6 REC, 57 YDS"
+    },
+    {
+     "cat": "sacks",
+     "team": "PHI",
+     "name": "Nolan Smith Jr.",
+     "espn_id": "4426331",
+     "gsis_id": "00-0039013",
+     "player_id": "00-0039013",
+     "pos": "LB",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "PHI",
+     "name": "Jeremiah Trotter Jr.",
+     "espn_id": "4432777",
+     "gsis_id": "00-0039826",
+     "player_id": "00-0039826",
+     "pos": "LB",
+     "line": "10"
+    }
+   ],
+   "scoring_plays": [
+    {
+     "quarter": 1,
+     "clock": "6:10",
+     "team": "PHI",
+     "type": "FG",
+     "text": "Jake Elliott 40 Yd Field Goal ",
+     "away": 3,
+     "home": 0
+    },
+    {
+     "quarter": 1,
+     "clock": "4:27",
+     "team": "PHI",
+     "type": "TD",
+     "text": "Saquon Barkley 3 Yd Rush (Jake Elliott Kick)",
+     "away": 10,
+     "home": 0
+    },
+    {
+     "quarter": 1,
+     "clock": "0:28",
+     "team": "WAS",
+     "type": "FG",
+     "text": "Drew Stevens 56 Yd Field Goal",
+     "away": 10,
+     "home": 3
+    },
+    {
+     "quarter": 2,
+     "clock": "4:56",
+     "team": "WAS",
+     "type": "TD",
+     "text": "Stefon Diggs 8 Yd pass from Jayden Daniels (Drew Stevens Kick)",
+     "away": 10,
+     "home": 10
+    },
+    {
+     "quarter": 2,
+     "clock": "0:19",
+     "team": "WAS",
+     "type": "FG",
+     "text": "Drew Stevens 39 Yd Field Goal",
+     "away": 10,
+     "home": 13
+    },
+    {
+     "quarter": 3,
+     "clock": "1:33",
+     "team": "WAS",
+     "type": "FG",
+     "text": "Drew Stevens 25 Yd Field Goal ",
+     "away": 10,
+     "home": 16
+    },
+    {
+     "quarter": 4,
+     "clock": "3:43",
+     "team": "WAS",
+     "type": "FG",
+     "text": "Drew Stevens 42 Yd Field Goal",
+     "away": 10,
+     "home": 19
+    },
+    {
+     "quarter": 4,
+     "clock": "1:52",
+     "team": "WAS",
+     "type": "TD",
+     "text": "Rachaad White 1 Yd Rush (Austin Ekeler Run for Two-Point Conversion)",
+     "away": 10,
+     "home": 27
+    }
+   ],
+   "highlights": []
+  },
+  {
+   "id": "401873036",
+   "date": "2026-11-03T01:15Z",
+   "status": "Final",
+   "venue": "Lumen Field",
+   "home": {
+    "team": "SEA",
+    "name": "Seattle Seahawks",
+    "score": 17,
+    "winner": false,
+    "linescore": [
+     0,
+     9,
+     0,
+     8
+    ],
+    "record": "4-4"
+   },
+   "away": {
+    "team": "CHI",
+    "name": "Chicago Bears",
+    "score": 34,
+    "winner": true,
+    "linescore": [
+     7,
+     6,
+     7,
+     14
+    ],
+    "record": "6-2"
+   },
+   "team_stats": {
+    "away": {
+     "thirdDownEff": "7-15",
+     "totalYards": "363",
+     "netPassingYards": "237",
+     "rushingYards": "126",
+     "turnovers": "1",
+     "possessionTime": "35:03"
+    },
+    "home": {
+     "thirdDownEff": "1-11",
+     "totalYards": "252",
+     "netPassingYards": "171",
+     "rushingYards": "81",
+     "turnovers": "1",
+     "possessionTime": "24:57"
+    }
+   },
+   "leaders": [
+    {
+     "cat": "pass",
+     "team": "SEA",
+     "name": "Sam Darnold",
+     "espn_id": "3912547",
+     "gsis_id": "00-0034869",
+     "player_id": "00-0034869",
+     "pos": "QB",
+     "line": "17/34, 188 YDS, 2 TD, 1 INT"
+    },
+    {
+     "cat": "rush",
+     "team": "SEA",
+     "name": "Jadarian Price",
+     "espn_id": "4685512",
+     "gsis_id": "00-0041512",
+     "player_id": "00-0041512",
+     "pos": "RB",
+     "line": "10 CAR, 29 YDS"
+    },
+    {
+     "cat": "rec",
+     "team": "SEA",
+     "name": "Jaxon Smith-Njigba",
+     "espn_id": "4430878",
+     "gsis_id": "00-0038543",
+     "player_id": "00-0038543",
+     "pos": "WR",
+     "line": "6 REC, 118 YDS, 1 TD"
+    },
+    {
+     "cat": "sacks",
+     "team": "SEA",
+     "name": "Mike Morris",
+     "espn_id": "4572055",
+     "gsis_id": "00-0038591",
+     "player_id": "00-0038591",
+     "pos": "DE",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "SEA",
+     "name": "Ernest Jones IV",
+     "espn_id": "4362851",
+     "gsis_id": "00-0036994",
+     "player_id": "00-0036994",
+     "pos": "LB",
+     "line": "13"
+    },
+    {
+     "cat": "pass",
+     "team": "CHI",
+     "name": "Caleb Williams",
+     "espn_id": "4431611",
+     "gsis_id": "00-0039918",
+     "player_id": "00-0039918",
+     "pos": "QB",
+     "line": "24/34, 247 YDS, 1 TD"
+    },
+    {
+     "cat": "rush",
+     "team": "CHI",
+     "name": "D'Andre Swift",
+     "espn_id": "4259545",
+     "gsis_id": "00-0036275",
+     "player_id": "00-0036275",
+     "pos": "RB",
+     "line": "27 CAR, 69 YDS, 3 TD"
+    },
+    {
+     "cat": "rec",
+     "team": "CHI",
+     "name": "Rome Odunze",
+     "espn_id": "4431299",
+     "gsis_id": "00-0039919",
+     "player_id": "00-0039919",
+     "pos": "WR",
+     "line": "4 REC, 87 YDS"
+    },
+    {
+     "cat": "sacks",
+     "team": "CHI",
+     "name": "Montez Sweat",
+     "espn_id": "3134690",
+     "gsis_id": "00-0035647",
+     "player_id": "00-0035647",
+     "pos": "DE",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "CHI",
+     "name": "Jeffery Simmons",
+     "espn_id": "4035369",
+     "gsis_id": "00-0035643",
+     "player_id": "00-0035643",
+     "pos": "DT",
+     "line": "6"
+    }
+   ],
+   "scoring_plays": [
+    {
+     "quarter": 1,
+     "clock": "5:25",
+     "team": "CHI",
+     "type": "TD",
+     "text": "Luther Burden III 1 Yd pass from Caleb Williams (Cairo Santos Kick)",
+     "away": 7,
+     "home": 0
+    },
+    {
+     "quarter": 2,
+     "clock": "12:50",
+     "team": "SEA",
+     "type": "FG",
+     "text": "Jason Myers 27 Yd Field Goal",
+     "away": 7,
+     "home": 3
+    },
+    {
+     "quarter": 2,
+     "clock": "6:07",
+     "team": "CHI",
+     "type": "FG",
+     "text": "Cairo Santos 44 Yd Field Goal",
+     "away": 10,
+     "home": 3
+    },
+    {
+     "quarter": 2,
+     "clock": "1:08",
+     "team": "CHI",
+     "type": "FG",
+     "text": "Cairo Santos 38 Yd Field Goal",
+     "away": 13,
+     "home": 3
+    },
+    {
+     "quarter": 2,
+     "clock": "0:30",
+     "team": "SEA",
+     "type": "TD",
+     "text": "Jaxon Smith-Njigba 43 Yd pass from Sam Darnold (Jason Myers PAT Failed)",
+     "away": 13,
+     "home": 9
+    },
+    {
+     "quarter": 3,
+     "clock": "5:38",
+     "team": "CHI",
+     "type": "TD",
+     "text": "D'Andre Swift 1 Yd Rush (Cairo Santos Kick)",
+     "away": 20,
+     "home": 9
+    },
+    {
+     "quarter": 4,
+     "clock": "11:46",
+     "team": "SEA",
+     "type": "TD",
+     "text": "Cooper Kupp 7 Yd pass from Sam Darnold (Sam Darnold Pass to Tory Horton for Two-Point Conversion)",
+     "away": 20,
+     "home": 17
+    },
+    {
+     "quarter": 4,
+     "clock": "8:28",
+     "team": "CHI",
+     "type": "TD",
+     "text": "D'Andre Swift 5 Yd Rush (Cairo Santos Kick)",
+     "away": 27,
+     "home": 17
+    },
+    {
+     "quarter": 4,
+     "clock": "4:41",
+     "team": "CHI",
+     "type": "TD",
+     "text": "D'Andre Swift 5 Yd Rush (Cairo Santos Kick)",
+     "away": 34,
+     "home": 17
+    }
+   ],
+   "highlights": []
+  }
+ ],
+ "fetched_at": "2026-11-21T13:49:59Z"
+}
