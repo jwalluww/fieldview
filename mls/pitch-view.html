@@ -168,7 +168,8 @@ body {
 /* ── LEFT: compact pitch ── */
 .asof { font-size: 13px; font-weight: 400; letter-spacing: 0; text-transform: none; margin-left: 10px; }
 
-.left-col { flex: 1; min-width: 0; }  /* landscape pitch fills the width left after the fixed 360px right column */
+.left-col { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; }  /* pitch centred in the space left of the 360px column */
+.left-col > .court-label, .left-col > .court-hint { width: min(100%, calc(var(--fh) * 720 / 500)); }  /* landscape pitch fills the width left after the fixed 360px right column */
 :root { --fh: min(calc(100vh - 150px), 806px); }
 
 .court-label {
