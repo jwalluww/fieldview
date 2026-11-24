@@ -14,11 +14,11 @@
         "standard_pos": "WR",
         "cap_number": "$9,573,000",
         "stats": {
-          "TGT": 87,
-          "REC": 59,
-          "YDS": 764,
+          "TGT": 102,
+          "REC": 68,
+          "YDS": 866,
           "TDs": 2,
-          "YAC": 173
+          "YAC": 193
         },
         "stats_season": 2026
       }
@@ -33,10 +33,11 @@
         "standard_pos": "WR",
         "cap_number": "$5,907,604",
         "stats": {
-          "TGT": 18,
-          "REC": 15,
-          "YDS": 110,
-          "YAC": 58
+          "TGT": 20,
+          "REC": 16,
+          "YDS": 116,
+          "YAC": 61,
+          "CAR": 1
         },
         "stats_season": 2026
       },
@@ -49,7 +50,7 @@
         "standard_pos": "WR",
         "cap_number": "$1,082,259",
         "stats": {
-          "TGT": 23,
+          "TGT": 24,
           "REC": 9,
           "YDS": 78,
           "TDs": 1,
@@ -68,11 +69,11 @@
         "standard_pos": "WR",
         "cap_number": "$1,075,000",
         "stats": {
-          "TGT": 54,
-          "REC": 37,
-          "YDS": 379,
+          "TGT": 61,
+          "REC": 44,
+          "YDS": 455,
           "TDs": 3,
-          "YAC": 114
+          "YAC": 119
         },
         "stats_season": 2026
       },
@@ -89,7 +90,7 @@
           "REC": 5,
           "YDS": 114,
           "YAC": 19,
-          "CAR": 2
+          "CAR": 4
         },
         "stats_season": 2026
       }
@@ -107,15 +108,15 @@
         "stats_season": 2026
       },
       {
-        "name": "Mason Murphy",
+        "name": "Asim Richards",
         "depth": 2,
         "injured": false,
-        "attainment": "W/Chi",
+        "attainment": "T/Dal",
         "standard_slot": "LT",
         "standard_pos": "OL",
-        "cap_number": "$885,000",
+        "cap_number": "$1,145,000",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       }
     ],
     "LG": [
@@ -203,13 +204,13 @@
         "stats_season": 2026
       },
       {
-        "name": "Asim Richards",
+        "name": "Mason Murphy",
         "depth": 2,
         "injured": false,
-        "attainment": "T/Dal",
+        "attainment": "W/Chi",
         "standard_slot": "RT",
         "standard_pos": "OL",
-        "cap_number": "$1,145,000",
+        "cap_number": "$885,000",
         "stats": {},
         "stats_season": 2026
       }
@@ -224,7 +225,7 @@
         "standard_pos": "TE",
         "cap_number": "$7,613,000",
         "stats": {
-          "TGT": 42,
+          "TGT": 43,
           "REC": 30,
           "YDS": 317,
           "TDs": 4,
@@ -241,11 +242,11 @@
         "standard_pos": "TE",
         "cap_number": "$3,000,000",
         "stats": {
-          "TGT": 19,
-          "REC": 12,
-          "YDS": 96,
+          "TGT": 24,
+          "REC": 14,
+          "YDS": 115,
           "TDs": 3,
-          "YAC": 56
+          "YAC": 65
         },
         "stats_season": 2026
       },
@@ -258,10 +259,10 @@
         "standard_pos": "TE",
         "cap_number": "$1,310,255",
         "stats": {
-          "TGT": 4,
-          "REC": 4,
-          "YDS": 20,
-          "YAC": 10
+          "TGT": 5,
+          "REC": 5,
+          "YDS": 26,
+          "YAC": 15
         },
         "stats_season": 2026
       },
@@ -300,13 +301,13 @@
         "standard_pos": "QB",
         "cap_number": "$2,455,620",
         "stats": {
-          "CMP": 229,
-          "ATT": 343,
-          "YDS": 2173,
-          "TDs": 15,
-          "INTs": 7,
-          "SACKS": 23,
-          "RU YDS": 187
+          "CMP": 254,
+          "ATT": 385,
+          "YDS": 2395,
+          "TDs": 16,
+          "INTs": 8,
+          "SACKS": 29,
+          "RU YDS": 221
         },
         "stats_season": 2026
       },
@@ -343,11 +344,11 @@
         "standard_pos": "RB",
         "cap_number": "$5,000,000",
         "stats": {
-          "CAR": 38,
-          "RU YDS": 142,
+          "CAR": 52,
+          "RU YDS": 218,
           "REC": 14,
           "RE YDS": 71,
-          "TGT": 18
+          "TGT": 19
         },
         "stats_season": 2026
       },
@@ -360,18 +361,35 @@
         "standard_pos": "RB",
         "cap_number": "$11,378,471",
         "stats": {
-          "CAR": 49,
-          "RU YDS": 161,
+          "CAR": 50,
+          "RU YDS": 162,
           "RU TDs": 3,
-          "REC": 28,
-          "RE YDS": 160,
-          "TGT": 35
+          "REC": 29,
+          "RE YDS": 161,
+          "TGT": 37
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "CJ Donaldson",
+        "depth": 3,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": "$835,833",
+        "stats": {
+          "CAR": 18,
+          "RU YDS": 86,
+          "REC": 8,
+          "RE YDS": 22,
+          "TGT": 10
         },
         "stats_season": 2026
       },
       {
         "name": "Audric Estim\u00e9",
-        "depth": 3,
+        "depth": 4,
         "injured": false,
         "attainment": "W/Cle",
         "standard_slot": "RB",
@@ -379,23 +397,6 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "CJ Donaldson",
-        "depth": 4,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": "$835,833",
-        "stats": {
-          "CAR": 17,
-          "RU YDS": 81,
-          "REC": 4,
-          "RE YDS": 10,
-          "TGT": 6
-        },
-        "stats_season": 2026
       },
       {
         "name": "Zamir White",
@@ -422,7 +423,8 @@
         "standard_pos": "DI",
         "cap_number": "$1,508,590",
         "stats": {
-          "TKL": 4,
+          "TKL": 5,
+          "TFL": 1,
           "QB HIT": 2
         },
         "stats_season": 2026
@@ -436,7 +438,7 @@
         "standard_pos": "DI",
         "cap_number": "$2,040,000",
         "stats": {
-          "TKL": 1
+          "TKL": 2
         },
         "stats_season": 2026
       }
@@ -451,7 +453,7 @@
         "standard_pos": "DI",
         "cap_number": "$4,348,000",
         "stats": {
-          "TKL": 5,
+          "TKL": 6,
           "SACKS": 0.5,
           "QB HIT": 4
         },
@@ -484,10 +486,10 @@
         "standard_pos": "DI",
         "cap_number": "$1,145,000",
         "stats": {
-          "TKL": 8,
-          "SACKS": 2.0,
-          "TFL": 5,
-          "QB HIT": 4
+          "TKL": 11,
+          "SACKS": 3.0,
+          "TFL": 6,
+          "QB HIT": 5
         },
         "stats_season": 2026
       }
@@ -502,7 +504,7 @@
         "standard_pos": "EDGE",
         "cap_number": "$9,474,500",
         "stats": {
-          "TKL": 15,
+          "TKL": 16,
           "SACKS": 8.5,
           "TFL": 7,
           "QB HIT": 10
@@ -551,7 +553,7 @@
         "standard_pos": "LB",
         "cap_number": "$5,300,000",
         "stats": {
-          "TKL": 29,
+          "TKL": 31,
           "SACKS": 2.0,
           "PD": 2,
           "TFL": 6,
@@ -560,16 +562,15 @@
         "stats_season": 2026
       },
       {
-        "name": "Danny Stutsman",
+        "name": "Isaiah Stalbird",
         "depth": 2,
         "injured": false,
-        "attainment": "25/4",
+        "attainment": "CF24",
         "standard_slot": "ILB_L",
         "standard_pos": "LB",
-        "cap_number": "$1,262,091",
+        "cap_number": "$1,075,000",
         "stats": {
-          "TKL": 22,
-          "PD": 1
+          "TKL": 7
         },
         "stats_season": 2026
       },
@@ -606,15 +607,17 @@
         "stats_season": 2026
       },
       {
-        "name": "Isaiah Stalbird",
+        "name": "Danny Stutsman",
         "depth": 2,
         "injured": false,
-        "attainment": "CF24",
+        "attainment": "25/4",
         "standard_slot": "ILB_R",
         "standard_pos": "LB",
-        "cap_number": "$1,075,000",
+        "cap_number": "$1,262,091",
         "stats": {
-          "TKL": 7
+          "TKL": 25,
+          "INTs": 1,
+          "PD": 2
         },
         "stats_season": 2026
       },
@@ -642,9 +645,9 @@
         "standard_pos": "EDGE",
         "cap_number": "$9,610,000",
         "stats": {
-          "TKL": 9,
+          "TKL": 10,
           "SACKS": 8.0,
-          "TFL": 5,
+          "TFL": 6,
           "QB HIT": 15
         },
         "stats_season": 2026
@@ -658,8 +661,9 @@
         "standard_pos": "EDGE",
         "cap_number": "$1,402,500",
         "stats": {
-          "TKL": 5,
-          "PD": 2
+          "TKL": 6,
+          "PD": 2,
+          "QB HIT": 1
         },
         "stats_season": 2026
       }
@@ -674,8 +678,8 @@
         "standard_pos": "CB",
         "cap_number": "$2,497,393",
         "stats": {
-          "TKL": 20,
-          "PD": 6,
+          "TKL": 24,
+          "PD": 7,
           "QB HIT": 1
         },
         "stats_season": 2026
@@ -704,7 +708,8 @@
         "standard_pos": "S",
         "cap_number": "$3,755,682",
         "stats": {
-          "TKL": 7
+          "TKL": 8,
+          "PD": 1
         },
         "stats_season": 2026
       }
@@ -719,7 +724,7 @@
         "standard_pos": "S",
         "cap_number": "$1,515,000",
         "stats": {
-          "TKL": 23,
+          "TKL": 25,
           "INTs": 2,
           "PD": 2
         },
@@ -763,7 +768,7 @@
         "standard_pos": "CB",
         "cap_number": "$1,226,809",
         "stats": {
-          "TKL": 16,
+          "TKL": 18,
           "PD": 5,
           "TFL": 1
         },
@@ -780,9 +785,11 @@
         "standard_pos": "CB",
         "cap_number": "$1,419,364",
         "stats": {
-          "TKL": 34,
+          "TKL": 38,
+          "SACKS": 1.0,
           "PD": 4,
-          "TFL": 1
+          "TFL": 2,
+          "QB HIT": 1
         },
         "stats_season": 2026
       },
@@ -892,16 +899,14 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
-      }
-    ],
-    "OG": [
+      },
       {
         "name": "Colby Sorsdal",
-        "depth": 1,
+        "depth": 3,
         "injured": false,
         "attainment": "SF26",
-        "standard_slot": "OG",
-        "standard_pos": "DEF",
+        "standard_slot": "LT",
+        "standard_pos": "OL",
         "cap_number": null,
         "stats": {},
         "stats_season": null
@@ -973,19 +978,8 @@
     ],
     "CB": [
       {
-        "name": "TJ Hall Jr.",
-        "depth": 1,
-        "injured": false,
-        "attainment": "26/7",
-        "standard_slot": "CB",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Jayden Price",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "SF25",
         "standard_slot": "CB",
@@ -995,6 +989,17 @@
           "TKL": 1
         },
         "stats_season": 2026
+      },
+      {
+        "name": "TJ Hall Jr.",
+        "depth": 2,
+        "injured": false,
+        "attainment": "26/7",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "IR": [

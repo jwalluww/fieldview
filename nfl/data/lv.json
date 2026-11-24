@@ -14,11 +14,11 @@
         "standard_pos": "WR",
         "cap_number": "$4,582,000",
         "stats": {
-          "TGT": 32,
-          "REC": 15,
-          "YDS": 121,
+          "TGT": 37,
+          "REC": 16,
+          "YDS": 137,
           "TDs": 1,
-          "YAC": 30
+          "YAC": 34
         },
         "stats_season": 2026
       },
@@ -44,11 +44,11 @@
         "standard_pos": "WR",
         "cap_number": "$3,888,378",
         "stats": {
-          "TGT": 58,
-          "REC": 34,
-          "YDS": 538,
+          "TGT": 68,
+          "REC": 36,
+          "YDS": 588,
           "TDs": 4,
-          "YAC": 118,
+          "YAC": 145,
           "CAR": 2
         },
         "stats_season": 2026
@@ -98,11 +98,11 @@
         "standard_pos": "WR",
         "cap_number": "$1,717,914",
         "stats": {
-          "TGT": 15,
-          "REC": 8,
-          "YDS": 67,
-          "TDs": 1,
-          "YAC": 24
+          "TGT": 24,
+          "REC": 16,
+          "YDS": 155,
+          "TDs": 2,
+          "YAC": 38
         },
         "stats_season": 2026
       },
@@ -133,7 +133,7 @@
         "standard_pos": "OL",
         "cap_number": "$22,540,000",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       },
       {
         "name": "Charles Grant",
@@ -271,11 +271,11 @@
         "standard_pos": "TE",
         "cap_number": "$5,825,889",
         "stats": {
-          "TGT": 49,
-          "REC": 41,
-          "YDS": 404,
+          "TGT": 53,
+          "REC": 42,
+          "YDS": 408,
           "TDs": 1,
-          "YAC": 213,
+          "YAC": 217,
           "CAR": 1
         },
         "stats_season": 2026
@@ -289,11 +289,11 @@
         "standard_pos": "TE",
         "cap_number": "$1,600,000",
         "stats": {
-          "TGT": 6,
-          "REC": 6,
-          "YDS": 73,
-          "TDs": 1,
-          "YAC": 42
+          "TGT": 7,
+          "REC": 7,
+          "YDS": 92,
+          "TDs": 2,
+          "YAC": 48
         },
         "stats_season": 2026
       },
@@ -317,7 +317,7 @@
         "standard_pos": "TE",
         "cap_number": null,
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       }
     ],
     "QB": [
@@ -330,11 +330,13 @@
         "standard_pos": "QB",
         "cap_number": "$10,412,836",
         "stats": {
-          "CMP": 23,
-          "ATT": 37,
-          "YDS": 191,
-          "SACKS": 6,
-          "RU YDS": 25
+          "CMP": 41,
+          "ATT": 74,
+          "YDS": 458,
+          "TDs": 3,
+          "INTs": 1,
+          "SACKS": 11,
+          "RU YDS": 47
         },
         "stats_season": 2026
       },
@@ -371,12 +373,12 @@
         "standard_pos": "RB",
         "cap_number": "$8,158,139",
         "stats": {
-          "CAR": 123,
-          "RU YDS": 380,
+          "CAR": 134,
+          "RU YDS": 459,
           "RU TDs": 1,
-          "REC": 46,
-          "RE YDS": 417,
-          "TGT": 59
+          "REC": 51,
+          "RE YDS": 507,
+          "TGT": 67
         },
         "stats_season": 2026
       },
@@ -389,8 +391,8 @@
         "standard_pos": "RB",
         "cap_number": "$1,164,039",
         "stats": {
-          "CAR": 79,
-          "RU YDS": 298,
+          "CAR": 88,
+          "RU YDS": 340,
           "RU TDs": 1,
           "REC": 4,
           "RE YDS": 15,
@@ -471,7 +473,7 @@
           "TKL": 18,
           "SACKS": 5.0,
           "TFL": 9,
-          "QB HIT": 21
+          "QB HIT": 22
         },
         "stats_season": 2026
       },
@@ -487,7 +489,7 @@
           "TKL": 7,
           "SACKS": 3.0,
           "TFL": 1,
-          "QB HIT": 6
+          "QB HIT": 7
         },
         "stats_season": 2026
       }
@@ -502,7 +504,7 @@
         "standard_pos": "DI",
         "cap_number": "$1,075,000",
         "stats": {
-          "TKL": 4,
+          "TKL": 6,
           "SACKS": 1.0,
           "TFL": 1,
           "QB HIT": 2
@@ -510,8 +512,23 @@
         "stats_season": 2026
       },
       {
-        "name": "Tim Keenan III",
+        "name": "Thomas Booker IV",
         "depth": 2,
+        "injured": false,
+        "attainment": "T/Phi",
+        "standard_slot": "LDT",
+        "standard_pos": "DI",
+        "cap_number": "$3,674,000",
+        "stats": {
+          "TKL": 9,
+          "TFL": 1,
+          "QB HIT": 1
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Tim Keenan III",
+        "depth": 3,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "LDT",
@@ -522,19 +539,6 @@
           "SACKS": 1.0,
           "TFL": 1,
           "QB HIT": 1
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Jj Pegues",
-        "depth": 3,
-        "injured": false,
-        "attainment": "25/6",
-        "standard_slot": "LDT",
-        "standard_pos": "DI",
-        "cap_number": "$1,071,785",
-        "stats": {
-          "TKL": 3
         },
         "stats_season": 2026
       }
@@ -573,17 +577,15 @@
         "stats_season": 2026
       },
       {
-        "name": "Thomas Booker IV",
+        "name": "Jj Pegues",
         "depth": 3,
         "injured": false,
-        "attainment": "T/Phi",
+        "attainment": "25/6",
         "standard_slot": "RDT",
         "standard_pos": "DI",
-        "cap_number": "$3,674,000",
+        "cap_number": "$1,071,785",
         "stats": {
-          "TKL": 9,
-          "TFL": 1,
-          "QB HIT": 1
+          "TKL": 3
         },
         "stats_season": 2026
       },
@@ -617,8 +619,11 @@
         "standard_slot": "RDT",
         "standard_pos": "DI",
         "cap_number": null,
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "TKL": 1,
+          "QB HIT": 1
+        },
+        "stats_season": 2026
       }
     ],
     "RDE": [
@@ -631,7 +636,7 @@
         "standard_pos": "EDGE",
         "cap_number": "$9,422,666",
         "stats": {
-          "TKL": 8,
+          "TKL": 11,
           "SACKS": 3.0,
           "TFL": 3,
           "QB HIT": 8
@@ -649,7 +654,7 @@
         "standard_pos": "LB",
         "cap_number": "$4,838,666",
         "stats": {
-          "TKL": 32,
+          "TKL": 39,
           "SACKS": 2.0,
           "TFL": 7,
           "QB HIT": 2
@@ -680,12 +685,12 @@
         "standard_pos": "LB",
         "cap_number": "$7,966,666",
         "stats": {
-          "TKL": 51,
-          "SACKS": 1.5,
+          "TKL": 57,
+          "SACKS": 2.5,
           "INTs": 1,
-          "PD": 2,
-          "TFL": 7,
-          "QB HIT": 3
+          "PD": 3,
+          "TFL": 9,
+          "QB HIT": 4
         },
         "stats_season": 2026
       },
@@ -712,7 +717,7 @@
         "standard_pos": "LB",
         "cap_number": "$1,160,000",
         "stats": {
-          "TKL": 5
+          "TKL": 6
         },
         "stats_season": 2026
       }
@@ -727,7 +732,7 @@
         "standard_pos": "CB",
         "cap_number": "$6,680,000",
         "stats": {
-          "TKL": 24,
+          "TKL": 28,
           "SACKS": 1.0,
           "PD": 4,
           "TFL": 2
@@ -743,8 +748,8 @@
         "standard_pos": "CB",
         "cap_number": "$1,211,175",
         "stats": {
-          "TKL": 3,
-          "PD": 2
+          "TKL": 6,
+          "PD": 3
         },
         "stats_season": 2026
       },
@@ -772,7 +777,7 @@
         "standard_pos": "S",
         "cap_number": "$9,555,000",
         "stats": {
-          "TKL": 47,
+          "TKL": 52,
           "SACKS": 1.0,
           "INTs": 1,
           "PD": 2,
@@ -814,9 +819,9 @@
         "standard_pos": "S",
         "cap_number": "$2,290,543",
         "stats": {
-          "TKL": 26,
+          "TKL": 27,
           "INTs": 2,
-          "PD": 4
+          "PD": 5
         },
         "stats_season": 2026
       },
@@ -829,7 +834,9 @@
         "standard_pos": "S",
         "cap_number": "$4,860,000",
         "stats": {
-          "TKL": 11
+          "TKL": 12,
+          "INTs": 1,
+          "PD": 1
         },
         "stats_season": 2026
       }
@@ -877,7 +884,7 @@
         "standard_pos": "CB",
         "cap_number": "$8,670,000",
         "stats": {
-          "TKL": 21,
+          "TKL": 24,
           "SACKS": 0.5,
           "PD": 2,
           "TFL": 1,

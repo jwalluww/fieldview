@@ -6,38 +6,38 @@
   "depth_chart": {
     "LWR": [
       {
-        "name": "Antonio Williams",
+        "name": "Treylon Burks",
         "depth": 1,
         "injured": false,
-        "attainment": "26/3",
+        "attainment": "SF25",
         "standard_slot": "LWR",
         "standard_pos": "WR",
-        "cap_number": "$1,319,767",
+        "cap_number": "$1,990,000",
         "stats": {
-          "TGT": 41,
-          "REC": 28,
-          "YDS": 326,
+          "TGT": 28,
+          "REC": 16,
+          "YDS": 290,
           "TDs": 2,
-          "YAC": 86
+          "YAC": 48
         },
         "stats_season": 2026
       }
     ],
     "RWR": [
       {
-        "name": "Treylon Burks",
+        "name": "Antonio Williams",
         "depth": 1,
         "injured": false,
-        "attainment": "SF25",
+        "attainment": "26/3",
         "standard_slot": "RWR",
         "standard_pos": "WR",
-        "cap_number": "$1,990,000",
+        "cap_number": "$1,319,767",
         "stats": {
-          "TGT": 25,
-          "REC": 14,
-          "YDS": 260,
+          "TGT": 52,
+          "REC": 37,
+          "YDS": 448,
           "TDs": 2,
-          "YAC": 47
+          "YAC": 146
         },
         "stats_season": 2026
       },
@@ -50,7 +50,7 @@
         "standard_pos": "WR",
         "cap_number": "$656,944",
         "stats": {
-          "TGT": 8,
+          "TGT": 9,
           "REC": 5,
           "YDS": 58,
           "TDs": 1,
@@ -69,11 +69,11 @@
         "standard_pos": "WR",
         "cap_number": "$8,000,000",
         "stats": {
-          "TGT": 59,
-          "REC": 36,
-          "YDS": 386,
+          "TGT": 65,
+          "REC": 40,
+          "YDS": 431,
           "TDs": 6,
-          "YAC": 148
+          "YAC": 162
         },
         "stats_season": 2026
       },
@@ -224,10 +224,10 @@
         "standard_pos": "TE",
         "cap_number": "$5,333,333",
         "stats": {
-          "TGT": 39,
-          "REC": 27,
-          "YDS": 263,
-          "YAC": 118
+          "TGT": 44,
+          "REC": 31,
+          "YDS": 329,
+          "YAC": 155
         },
         "stats_season": 2026
       },
@@ -313,13 +313,13 @@
         "standard_pos": "QB",
         "cap_number": "$10,294,541",
         "stats": {
-          "CMP": 138,
-          "ATT": 213,
-          "YDS": 1499,
+          "CMP": 161,
+          "ATT": 248,
+          "YDS": 1788,
           "TDs": 10,
           "INTs": 2,
-          "SACKS": 17,
-          "RU YDS": 280
+          "SACKS": 20,
+          "RU YDS": 335
         },
         "stats_season": 2026
       },
@@ -374,8 +374,43 @@
     ],
     "RB": [
       {
-        "name": "Rachaad White",
+        "name": "Jacory Croskey-merritt",
         "depth": 1,
+        "injured": false,
+        "attainment": "25/7",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": "$902,191",
+        "stats": {
+          "CAR": 80,
+          "RU YDS": 293,
+          "RU TDs": 3,
+          "REC": 7,
+          "RE YDS": 63,
+          "TGT": 10
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Austin Ekeler",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/LAC",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": "$895,833",
+        "stats": {
+          "CAR": 40,
+          "RU YDS": 150,
+          "REC": 12,
+          "RE YDS": 77,
+          "TGT": 15
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Rachaad White",
+        "depth": 3,
         "injured": false,
         "attainment": "U/TB",
         "standard_slot": "RB",
@@ -392,25 +427,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Austin Ekeler",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/LAC",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": "$895,833",
-        "stats": {
-          "CAR": 33,
-          "RU YDS": 109,
-          "REC": 10,
-          "RE YDS": 74,
-          "TGT": 12
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Robert Henry Jr.",
-        "depth": 3,
+        "depth": 4,
         "injured": false,
         "attainment": "W/Sea",
         "standard_slot": "RB",
@@ -424,7 +442,7 @@
       },
       {
         "name": "Craig Reynolds",
-        "depth": 4,
+        "depth": 5,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "RB",
@@ -438,7 +456,7 @@
       },
       {
         "name": "Devin Neal",
-        "depth": 5,
+        "depth": 6,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "RB",
@@ -461,7 +479,7 @@
           "TKL": 3,
           "SACKS": 1.0,
           "TFL": 1,
-          "QB HIT": 7
+          "QB HIT": 8
         },
         "stats_season": 2026
       },
@@ -474,7 +492,7 @@
         "standard_pos": "DI",
         "cap_number": "$2,661,270",
         "stats": {
-          "TKL": 1
+          "TKL": 2
         },
         "stats_season": 2026
       }
@@ -520,10 +538,10 @@
         "standard_pos": "DI",
         "cap_number": "$3,900,000",
         "stats": {
-          "TKL": 5,
-          "SACKS": 0.5,
-          "TFL": 1,
-          "QB HIT": 1
+          "TKL": 7,
+          "SACKS": 2.0,
+          "TFL": 2,
+          "QB HIT": 3
         },
         "stats_season": 2026
       },
@@ -552,10 +570,10 @@
         "standard_pos": "EDGE",
         "cap_number": "$11,470,000",
         "stats": {
-          "TKL": 14,
-          "SACKS": 3.5,
+          "TKL": 15,
+          "SACKS": 4.0,
           "TFL": 4,
-          "QB HIT": 10
+          "QB HIT": 12
         },
         "stats_season": 2026
       },
@@ -586,11 +604,11 @@
         "standard_pos": "LB",
         "cap_number": "$11,295,000",
         "stats": {
-          "TKL": 22,
+          "TKL": 27,
           "SACKS": 2.0,
           "PD": 1,
           "TFL": 4,
-          "QB HIT": 4
+          "QB HIT": 5
         },
         "stats_season": 2026
       },
@@ -604,10 +622,11 @@
         "cap_number": "$1,057,086",
         "stats": {
           "TKL": 7,
+          "SACKS": 0.5,
           "INTs": 1,
           "PD": 1,
           "TFL": 1,
-          "QB HIT": 1
+          "QB HIT": 2
         },
         "stats_season": 2026
       },
@@ -620,7 +639,7 @@
         "standard_pos": "LB",
         "cap_number": "$502,500",
         "stats": {
-          "TKL": 3
+          "TKL": 4
         },
         "stats_season": 2026
       }
@@ -635,7 +654,7 @@
         "standard_pos": "LB",
         "cap_number": "$6,765,744",
         "stats": {
-          "TKL": 37,
+          "TKL": 40,
           "SACKS": 1.0,
           "INTs": 1,
           "PD": 4,
@@ -685,7 +704,8 @@
         "cap_number": "$1,016,578",
         "stats": {
           "TKL": 5,
-          "TFL": 1
+          "TFL": 1,
+          "QB HIT": 2
         },
         "stats_season": 2026
       }
@@ -700,37 +720,24 @@
         "standard_pos": "CB",
         "cap_number": "$1,654,550",
         "stats": {
-          "TKL": 9,
+          "TKL": 12,
           "PD": 2
         },
         "stats_season": 2026
       },
       {
-        "name": "Rasul Douglas",
+        "name": "Fabian Moreau",
         "depth": 2,
         "injured": false,
-        "attainment": "U/Mia",
+        "attainment": "U/Min",
         "standard_slot": "LCB",
         "standard_pos": "CB",
-        "cap_number": "$1,975,000",
+        "cap_number": "$1,112,500",
         "stats": {
-          "TKL": 22,
-          "INTs": 3,
-          "PD": 7,
-          "TFL": 2
+          "TKL": 6,
+          "PD": 1
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Isaac Yiadom",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "LCB",
-        "standard_pos": "CB",
-        "cap_number": "$1,015,278",
-        "stats": {},
-        "stats_season": null
       }
     ],
     "SS": [
@@ -743,8 +750,9 @@
         "standard_pos": "S",
         "cap_number": "$3,402,500",
         "stats": {
-          "TKL": 35,
-          "PD": 4,
+          "TKL": 40,
+          "PD": 5,
+          "TFL": 1,
           "QB HIT": 1
         },
         "stats_season": 2026
@@ -774,7 +782,7 @@
         "standard_pos": "S",
         "cap_number": "$4,312,695",
         "stats": {
-          "TKL": 22,
+          "TKL": 23,
           "PD": 1,
           "TFL": 1
         },
@@ -789,7 +797,7 @@
         "standard_pos": "S",
         "cap_number": "$1,081,668",
         "stats": {
-          "TKL": 5
+          "TKL": 6
         },
         "stats_season": 2026
       }
@@ -811,16 +819,18 @@
         "stats_season": 2026
       },
       {
-        "name": "Fabian Moreau",
+        "name": "Rasul Douglas",
         "depth": 2,
         "injured": false,
-        "attainment": "U/Min",
+        "attainment": "U/Mia",
         "standard_slot": "RCB",
         "standard_pos": "CB",
-        "cap_number": "$1,112,500",
+        "cap_number": "$1,975,000",
         "stats": {
-          "TKL": 6,
-          "PD": 1
+          "TKL": 26,
+          "INTs": 3,
+          "PD": 9,
+          "TFL": 2
         },
         "stats_season": 2026
       }
@@ -835,11 +845,12 @@
         "standard_pos": "CB",
         "cap_number": "$5,250,000",
         "stats": {
-          "TKL": 22,
+          "TKL": 23,
+          "SACKS": 0.5,
           "INTs": 1,
           "PD": 3,
           "TFL": 5,
-          "QB HIT": 1
+          "QB HIT": 2
         },
         "stats_season": 2026
       },
@@ -852,7 +863,7 @@
         "standard_pos": "CB",
         "cap_number": "$2,100,637",
         "stats": {
-          "TKL": 15,
+          "TKL": 17,
           "TFL": 1
         },
         "stats_season": 2026
@@ -1175,26 +1186,6 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
-      }
-    ],
-    "DFR": [
-      {
-        "name": "Jacory Croskey-merritt",
-        "depth": 1,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "DFR",
-        "standard_pos": "DEF",
-        "cap_number": "$695,524",
-        "stats": {
-          "CAR": 67,
-          "RU YDS": 239,
-          "RU TDs": 2,
-          "REC": 5,
-          "RE YDS": 40,
-          "TGT": 7
-        },
-        "stats_season": 2026
       }
     ]
   }

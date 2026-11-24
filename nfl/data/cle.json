@@ -271,7 +271,7 @@
         "attainment": "26/7",
         "standard_slot": "TE",
         "standard_pos": "TE",
-        "cap_number": "$442,500",
+        "cap_number": null,
         "stats": {},
         "stats_season": 2026
       }
@@ -442,7 +442,7 @@
         "attainment": "W/Mia",
         "standard_slot": "LE",
         "standard_pos": "EDGE",
-        "cap_number": null,
+        "cap_number": "$446,667",
         "stats": {},
         "stats_season": null
       }
@@ -1045,25 +1045,8 @@
         "stats_season": null
       },
       {
-        "name": "Raheim Sanders",
-        "depth": 3,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$669,167",
-        "stats": {
-          "CAR": 9,
-          "RU YDS": 43,
-          "REC": 11,
-          "RE YDS": 74,
-          "TGT": 12
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Kalia Davis",
-        "depth": 4,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1074,7 +1057,7 @@
       },
       {
         "name": "Alex Wright",
-        "depth": 5,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1085,7 +1068,7 @@
       },
       {
         "name": "Edefuan Ulofoshio",
-        "depth": 6,
+        "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1096,7 +1079,7 @@
       },
       {
         "name": "Damarri Mathis",
-        "depth": 7,
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1145,6 +1128,25 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      }
+    ],
+    "DFR": [
+      {
+        "name": "Raheim Sanders",
+        "depth": 1,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "DFR",
+        "standard_pos": "DEF",
+        "cap_number": "$669,167",
+        "stats": {
+          "CAR": 9,
+          "RU YDS": 43,
+          "REC": 11,
+          "RE YDS": 74,
+          "TGT": 12
+        },
+        "stats_season": 2026
       }
     ]
   }

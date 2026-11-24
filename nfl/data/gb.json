@@ -436,6 +436,23 @@
           "TGT": 6
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Pierre Strong Jr.",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF25",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {
+          "CAR": 25,
+          "RU YDS": 59,
+          "REC": 10,
+          "RE YDS": 61,
+          "TGT": 12
+        },
+        "stats_season": 2026
       }
     ],
     "LDE": [
@@ -931,17 +948,6 @@
         "cap_number": null,
         "stats": {},
         "stats_season": 2026
-      },
-      {
-        "name": "D.j. Johnson",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "ED",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "DT": [
@@ -1162,24 +1168,26 @@
     ],
     "PUP": [
       {
-        "name": "Micah Parsons",
+        "name": "Luke Musgrave",
         "depth": 1,
         "injured": true,
         "attainment": null,
         "standard_slot": "PUP",
         "standard_pos": "DEF",
-        "cap_number": "$19,201,706",
+        "cap_number": "$2,696,827",
         "stats": {},
         "stats_season": null
-      },
+      }
+    ],
+    "DFR": [
       {
-        "name": "Luke Musgrave",
-        "depth": 2,
+        "name": "Micah Parsons",
+        "depth": 1,
         "injured": true,
         "attainment": null,
-        "standard_slot": "PUP",
+        "standard_slot": "DFR",
         "standard_pos": "DEF",
-        "cap_number": "$2,696,827",
+        "cap_number": "$19,201,706",
         "stats": {},
         "stats_season": null
       }

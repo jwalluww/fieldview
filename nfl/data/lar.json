@@ -135,6 +135,17 @@
         "cap_number": "$9,500,000",
         "stats": {},
         "stats_season": 2026
+      },
+      {
+        "name": "Michael Niese",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "C",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RG": [
@@ -842,7 +853,7 @@
         "attainment": "CF25",
         "standard_slot": "LWR",
         "standard_pos": "WR",
-        "cap_number": "$442,500",
+        "cap_number": null,
         "stats": {},
         "stats_season": 2026
       },
@@ -962,7 +973,7 @@
         "attainment": null,
         "standard_slot": "IR",
         "standard_pos": "DEF",
-        "cap_number": "$1,005,000",
+        "cap_number": "$798,333",
         "stats": {},
         "stats_season": null
       },
@@ -1010,33 +1021,25 @@
         "stats_season": 2026
       },
       {
-        "name": "Kobie Turner",
+        "name": "Terrance Ferguson",
         "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
         "standard_pos": "DEF",
-        "cap_number": "$4,154,267",
+        "cap_number": "$2,207,606",
         "stats": {
-          "TKL": 7,
-          "QB HIT": 1
+          "TGT": 12,
+          "REC": 7,
+          "YDS": 63,
+          "TDs": 1,
+          "YAC": 38
         },
         "stats_season": 2026
       },
       {
-        "name": "Justin Dedich",
-        "depth": 6,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$1,075,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Jaylen Watson",
-        "depth": 7,
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1052,7 +1055,7 @@
       },
       {
         "name": "Poona Ford",
-        "depth": 8,
+        "depth": 7,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1067,7 +1070,7 @@
       },
       {
         "name": "Blake Grupe",
-        "depth": 9,
+        "depth": 8,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1082,7 +1085,7 @@
       },
       {
         "name": "Eddie Walls III",
-        "depth": 10,
+        "depth": 9,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1093,7 +1096,7 @@
       },
       {
         "name": "Matthew Caldwell",
-        "depth": 11,
+        "depth": 10,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1104,7 +1107,7 @@
       },
       {
         "name": "Daniel Rickert",
-        "depth": 12,
+        "depth": 11,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1122,7 +1125,7 @@
         "attainment": null,
         "standard_slot": "SUS",
         "standard_pos": "DEF",
-        "cap_number": "$4,867,078",
+        "cap_number": null,
         "stats": {
           "TGT": 93,
           "REC": 70,
@@ -1136,21 +1139,29 @@
     ],
     "DFR": [
       {
-        "name": "Terrance Ferguson",
+        "name": "Kobie Turner",
         "depth": 1,
         "injured": true,
         "attainment": null,
         "standard_slot": "DFR",
         "standard_pos": "DEF",
-        "cap_number": "$2,207,606",
+        "cap_number": "$4,154,267",
         "stats": {
-          "TGT": 12,
-          "REC": 7,
-          "YDS": 63,
-          "TDs": 1,
-          "YAC": 38
+          "TKL": 7,
+          "QB HIT": 1
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Justin Dedich",
+        "depth": 2,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "DFR",
+        "standard_pos": "DEF",
+        "cap_number": "$1,075,000",
+        "stats": {},
+        "stats_season": null
       }
     ]
   }

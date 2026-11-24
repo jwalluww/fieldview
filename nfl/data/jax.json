@@ -14,10 +14,10 @@
         "standard_pos": "WR",
         "cap_number": "$3,998,176",
         "stats": {
-          "TGT": 25,
-          "REC": 13,
-          "YDS": 146,
-          "TDs": 2,
+          "TGT": 28,
+          "REC": 14,
+          "YDS": 164,
+          "TDs": 3,
           "YAC": 11
         },
         "stats_season": 2026
@@ -31,11 +31,11 @@
         "standard_pos": "WR",
         "cap_number": "$957,518",
         "stats": {
-          "TGT": 17,
-          "REC": 12,
-          "YDS": 190,
+          "TGT": 24,
+          "REC": 15,
+          "YDS": 234,
           "TDs": 3,
-          "YAC": 88
+          "YAC": 92
         },
         "stats_season": 2026
       }
@@ -50,11 +50,11 @@
         "standard_pos": "WR",
         "cap_number": "$6,210,588",
         "stats": {
-          "TGT": 43,
-          "REC": 29,
-          "YDS": 408,
+          "TGT": 53,
+          "REC": 33,
+          "YDS": 493,
           "TDs": 2,
-          "YAC": 77,
+          "YAC": 96,
           "CAR": 2
         },
         "stats_season": 2026
@@ -81,11 +81,11 @@
         "standard_pos": "WR",
         "cap_number": "$3,722,066",
         "stats": {
-          "TGT": 64,
-          "REC": 36,
-          "YDS": 645,
+          "TGT": 81,
+          "REC": 44,
+          "YDS": 748,
           "TDs": 6,
-          "YAC": 223,
+          "YAC": 250,
           "CAR": 2
         },
         "stats_season": 2026
@@ -99,7 +99,7 @@
         "standard_pos": "WR",
         "cap_number": "$10,602,071",
         "stats": {
-          "TKL": 24,
+          "TKL": 28,
           "INTs": 3,
           "PD": 7
         },
@@ -164,7 +164,7 @@
         "standard_pos": "OL",
         "cap_number": "$1,041,077",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       },
       {
         "name": "Eli Cox",
@@ -199,7 +199,7 @@
         "standard_pos": "OL",
         "cap_number": "$1,426,660",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       }
     ],
     "RT": [
@@ -225,11 +225,11 @@
         "standard_pos": "TE",
         "cap_number": "$3,329,639",
         "stats": {
-          "TGT": 40,
-          "REC": 32,
-          "YDS": 365,
+          "TGT": 43,
+          "REC": 35,
+          "YDS": 381,
           "TDs": 2,
-          "YAC": 140
+          "YAC": 145
         },
         "stats_season": 2026
       },
@@ -304,13 +304,13 @@
         "standard_pos": "QB",
         "cap_number": "$24,000,000",
         "stats": {
-          "CMP": 171,
-          "ATT": 259,
-          "YDS": 2284,
-          "TDs": 21,
-          "INTs": 5,
-          "SACKS": 14,
-          "RU YDS": 106
+          "CMP": 196,
+          "ATT": 306,
+          "YDS": 2585,
+          "TDs": 22,
+          "INTs": 7,
+          "SACKS": 17,
+          "RU YDS": 113
         },
         "stats_season": 2026
       },
@@ -353,12 +353,12 @@
         "standard_pos": "RB",
         "cap_number": "$1,314,130",
         "stats": {
-          "CAR": 148,
-          "RU YDS": 609,
+          "CAR": 158,
+          "RU YDS": 642,
           "RU TDs": 5,
-          "REC": 18,
-          "RE YDS": 206,
-          "TGT": 20
+          "REC": 21,
+          "RE YDS": 226,
+          "TGT": 23
         },
         "stats_season": 2026
       },
@@ -371,12 +371,12 @@
         "standard_pos": "RB",
         "cap_number": "$2,245,000",
         "stats": {
-          "CAR": 59,
-          "RU YDS": 233,
+          "CAR": 63,
+          "RU YDS": 261,
           "RU TDs": 4,
-          "REC": 4,
-          "RE YDS": 36,
-          "TGT": 5
+          "REC": 5,
+          "RE YDS": 49,
+          "TGT": 6
         },
         "stats_season": 2026
       },
@@ -391,9 +391,9 @@
         "stats": {
           "CAR": 1,
           "RU YDS": 1,
-          "REC": 2,
-          "RE YDS": 9,
-          "TGT": 8
+          "REC": 3,
+          "RE YDS": 8,
+          "TGT": 9
         },
         "stats_season": 2026
       },
@@ -439,7 +439,7 @@
           "TKL": 10,
           "SACKS": 3.0,
           "TFL": 5,
-          "QB HIT": 8
+          "QB HIT": 9
         },
         "stats_season": 2026
       },
@@ -480,8 +480,13 @@
         "standard_slot": "LDT",
         "standard_pos": "DI",
         "cap_number": "$607,500",
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "TKL": 11,
+          "SACKS": 1.5,
+          "TFL": 2,
+          "QB HIT": 3
+        },
+        "stats_season": 2026
       },
       {
         "name": "Davon Godchaux",
@@ -538,7 +543,7 @@
         "standard_pos": "DI",
         "cap_number": "$1,696,466",
         "stats": {
-          "TKL": 6,
+          "TKL": 7,
           "SACKS": 1.0,
           "TFL": 1,
           "QB HIT": 2
@@ -578,10 +583,10 @@
         "standard_pos": "DI",
         "cap_number": null,
         "stats": {
-          "TKL": 22,
+          "TKL": 26,
           "SACKS": 1.5,
-          "PD": 1,
-          "TFL": 3,
+          "PD": 3,
+          "TFL": 4,
           "QB HIT": 2
         },
         "stats_season": 2026
@@ -597,10 +602,10 @@
         "standard_pos": "EDGE",
         "cap_number": "$18,840,000",
         "stats": {
-          "TKL": 16,
-          "SACKS": 2.0,
-          "TFL": 4,
-          "QB HIT": 10
+          "TKL": 19,
+          "SACKS": 3.0,
+          "TFL": 5,
+          "QB HIT": 11
         },
         "stats_season": 2026
       },
@@ -630,10 +635,10 @@
         "standard_pos": "LB",
         "cap_number": "$1,329,234",
         "stats": {
-          "TKL": 28,
+          "TKL": 32,
           "SACKS": 1.0,
           "PD": 4,
-          "TFL": 4,
+          "TFL": 6,
           "QB HIT": 3
         },
         "stats_season": 2026
@@ -647,7 +652,7 @@
         "standard_pos": "LB",
         "cap_number": "$1,005,000",
         "stats": {
-          "TKL": 15,
+          "TKL": 16,
           "SACKS": 1.0,
           "INTs": 1,
           "PD": 2,
@@ -667,12 +672,12 @@
         "standard_pos": "LB",
         "cap_number": "$14,028,500",
         "stats": {
-          "TKL": 46,
+          "TKL": 48,
           "SACKS": 2.0,
           "INTs": 2,
-          "PD": 2,
+          "PD": 3,
           "TFL": 5,
-          "QB HIT": 5
+          "QB HIT": 6
         },
         "stats_season": 2026
       },
@@ -685,7 +690,7 @@
         "standard_pos": "LB",
         "cap_number": "$1,110,294",
         "stats": {
-          "TKL": 12,
+          "TKL": 14,
           "TFL": 1
         },
         "stats_season": 2026
@@ -701,7 +706,7 @@
         "standard_pos": "LB",
         "cap_number": "$2,100,000",
         "stats": {
-          "TKL": 13,
+          "TKL": 15,
           "PD": 2,
           "TFL": 2,
           "QB HIT": 6
@@ -732,7 +737,7 @@
         "standard_pos": "CB",
         "cap_number": "$10,602,071",
         "stats": {
-          "TKL": 24,
+          "TKL": 28,
           "INTs": 3,
           "PD": 7
         },
@@ -747,7 +752,7 @@
         "standard_pos": "CB",
         "cap_number": "$836,111",
         "stats": {
-          "TKL": 3
+          "TKL": 4
         },
         "stats_season": 2026
       }
@@ -761,12 +766,31 @@
         "standard_slot": "SS",
         "standard_pos": "S",
         "cap_number": "$650,000",
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "TKL": 37,
+          "INTs": 1,
+          "PD": 4
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Kaevon Merriweather",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "SS",
+        "standard_pos": "S",
+        "cap_number": "$826,944",
+        "stats": {
+          "TKL": 8,
+          "PD": 1,
+          "QB HIT": 1
+        },
+        "stats_season": 2026
       },
       {
         "name": "Jalen Huskey",
-        "depth": 2,
+        "depth": 3,
         "injured": false,
         "attainment": "26/3",
         "standard_slot": "SS",
@@ -791,10 +815,10 @@
         "standard_pos": "S",
         "cap_number": "$3,749,458",
         "stats": {
-          "TKL": 22,
+          "TKL": 26,
           "SACKS": 1.5,
-          "PD": 1,
-          "TFL": 3,
+          "PD": 3,
+          "TFL": 4,
           "QB HIT": 2
         },
         "stats_season": 2026
@@ -814,20 +838,6 @@
           "QB HIT": 1
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Kaevon Merriweather",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "FS",
-        "standard_pos": "S",
-        "cap_number": "$826,944",
-        "stats": {
-          "TKL": 7,
-          "QB HIT": 1
-        },
-        "stats_season": 2026
       }
     ],
     "RCB": [
@@ -840,9 +850,9 @@
         "standard_pos": "CB",
         "cap_number": "$3,926,471",
         "stats": {
-          "TKL": 19,
+          "TKL": 21,
           "INTs": 1,
-          "PD": 3,
+          "PD": 4,
           "TFL": 1
         },
         "stats_season": 2026
@@ -875,7 +885,7 @@
         "standard_pos": "CB",
         "cap_number": "$6,599,804",
         "stats": {
-          "TKL": 16,
+          "TKL": 17,
           "INTs": 3,
           "PD": 3
         },

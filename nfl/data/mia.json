@@ -14,10 +14,10 @@
         "standard_pos": "WR",
         "cap_number": "$1,231,108",
         "stats": {
-          "TGT": 25,
-          "REC": 12,
-          "YDS": 148,
-          "YAC": 63,
+          "TGT": 29,
+          "REC": 13,
+          "YDS": 156,
+          "YAC": 67,
           "CAR": 2
         },
         "stats_season": 2026
@@ -31,11 +31,11 @@
         "standard_pos": "WR",
         "cap_number": "$1,262,500",
         "stats": {
-          "TGT": 6,
-          "REC": 4,
-          "YDS": 79,
+          "TGT": 7,
+          "REC": 5,
+          "YDS": 96,
           "TDs": 1,
-          "YAC": 11
+          "YAC": 15
         },
         "stats_season": 2026
       }
@@ -50,11 +50,11 @@
         "standard_pos": "WR",
         "cap_number": "$1,303,363",
         "stats": {
-          "TGT": 35,
-          "REC": 22,
-          "YDS": 367,
+          "TGT": 45,
+          "REC": 24,
+          "YDS": 397,
           "TDs": 2,
-          "YAC": 137
+          "YAC": 138
         },
         "stats_season": 2026
       },
@@ -85,12 +85,12 @@
         "standard_pos": "WR",
         "cap_number": "$1,124,890",
         "stats": {
-          "TGT": 51,
-          "REC": 36,
-          "YDS": 400,
+          "TGT": 57,
+          "REC": 39,
+          "YDS": 430,
           "TDs": 1,
-          "YAC": 165,
-          "CAR": 9
+          "YAC": 167,
+          "CAR": 11
         },
         "stats_season": 2026
       },
@@ -103,7 +103,7 @@
         "standard_pos": "WR",
         "cap_number": "$979,869",
         "stats": {
-          "TGT": 27,
+          "TGT": 28,
           "REC": 9,
           "YDS": 88,
           "TDs": 2,
@@ -243,10 +243,10 @@
         "standard_pos": "TE",
         "cap_number": "$1,566,200",
         "stats": {
-          "TGT": 34,
-          "REC": 24,
-          "YDS": 270,
-          "YAC": 136
+          "TGT": 41,
+          "REC": 26,
+          "YDS": 282,
+          "YAC": 147
         },
         "stats_season": 2026
       },
@@ -312,11 +312,12 @@
         "standard_pos": "QB",
         "cap_number": "$885,000",
         "stats": {
-          "CMP": 17,
-          "ATT": 32,
-          "YDS": 209,
-          "SACKS": 3,
-          "RU YDS": 4
+          "CMP": 29,
+          "ATT": 65,
+          "YDS": 311,
+          "INTs": 1,
+          "SACKS": 5,
+          "RU YDS": 13
         },
         "stats_season": 2026
       },
@@ -327,7 +328,7 @@
         "attainment": "W/NYJ",
         "standard_slot": "QB",
         "standard_pos": "QB",
-        "cap_number": null,
+        "cap_number": "$446,667",
         "stats": {},
         "stats_season": null
       }
@@ -342,12 +343,12 @@
         "standard_pos": "RB",
         "cap_number": "$1,073,166",
         "stats": {
-          "CAR": 127,
-          "RU YDS": 539,
+          "CAR": 138,
+          "RU YDS": 608,
           "RU TDs": 4,
-          "REC": 11,
-          "RE YDS": 62,
-          "TGT": 15
+          "REC": 13,
+          "RE YDS": 60,
+          "TGT": 18
         },
         "stats_season": 2026
       },
@@ -360,8 +361,8 @@
         "standard_pos": "RB",
         "cap_number": "$1,265,005",
         "stats": {
-          "CAR": 25,
-          "RU YDS": 39,
+          "CAR": 30,
+          "RU YDS": 49,
           "REC": 2,
           "RE YDS": 17,
           "TGT": 4
@@ -411,9 +412,9 @@
         "standard_pos": "RB",
         "cap_number": "$885,000",
         "stats": {
-          "REC": 2,
-          "RE YDS": 28,
-          "TGT": 4
+          "REC": 3,
+          "RE YDS": 35,
+          "TGT": 5
         },
         "stats_season": 2026
       }
@@ -428,11 +429,11 @@
         "standard_pos": "EDGE",
         "cap_number": "$4,084,426",
         "stats": {
-          "TKL": 10,
+          "TKL": 13,
           "SACKS": 5.0,
-          "PD": 1,
+          "PD": 2,
           "TFL": 5,
-          "QB HIT": 13
+          "QB HIT": 14
         },
         "stats_season": 2026
       },
@@ -445,7 +446,7 @@
         "standard_pos": "EDGE",
         "cap_number": "$590,000",
         "stats": {
-          "TKL": 2,
+          "TKL": 4,
           "QB HIT": 1
         },
         "stats_season": 2026
@@ -457,7 +458,7 @@
         "attainment": "SF26",
         "standard_slot": "LE",
         "standard_pos": "EDGE",
-        "cap_number": null,
+        "cap_number": "$477,778",
         "stats": {},
         "stats_season": null
       }
@@ -472,6 +473,7 @@
         "standard_pos": "DI",
         "cap_number": "$4,990,071",
         "stats": {
+          "TKL": 1,
           "QB HIT": 1
         },
         "stats_season": 2026
@@ -487,7 +489,10 @@
         "standard_pos": "DI",
         "cap_number": "$442,500",
         "stats": {
-          "TKL": 1
+          "TKL": 2,
+          "SACKS": 1.0,
+          "TFL": 1,
+          "QB HIT": 2
         },
         "stats_season": 2026
       },
@@ -498,9 +503,9 @@
         "attainment": "SF26",
         "standard_slot": "RDT",
         "standard_pos": "DI",
-        "cap_number": null,
+        "cap_number": "$477,778",
         "stats": {},
-        "stats_season": null
+        "stats_season": 2026
       }
     ],
     "RDE": [
@@ -513,7 +518,7 @@
         "standard_pos": "EDGE",
         "cap_number": "$1,262,500",
         "stats": {
-          "TKL": 20,
+          "TKL": 21,
           "SACKS": 3.0,
           "PD": 1,
           "TFL": 5,
@@ -536,17 +541,6 @@
           "QB HIT": 2
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Max Llewellyn",
-        "depth": 3,
-        "injured": false,
-        "attainment": "26/7",
-        "standard_slot": "RE",
-        "standard_pos": "EDGE",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "WLB": [
@@ -559,22 +553,25 @@
         "standard_pos": "LB",
         "cap_number": "$6,214,166",
         "stats": {
-          "TKL": 38,
+          "TKL": 40,
+          "SACKS": 1.0,
           "PD": 2,
-          "TFL": 4,
-          "QB HIT": 1
+          "TFL": 5,
+          "QB HIT": 3
         },
         "stats_season": 2026
       },
       {
-        "name": "Shaka Heyward",
+        "name": "Willie Gay Jr.",
         "depth": 2,
         "injured": false,
-        "attainment": "P/Cin",
+        "attainment": "U/NO",
         "standard_slot": "WILL",
         "standard_pos": "LB",
-        "cap_number": "$895,833",
-        "stats": {},
+        "cap_number": "$1,262,500",
+        "stats": {
+          "TKL": 4
+        },
         "stats_season": 2026
       }
     ],
@@ -588,10 +585,10 @@
         "standard_pos": "LB",
         "cap_number": "$2,110,336",
         "stats": {
-          "TKL": 36,
+          "TKL": 44,
           "SACKS": 1.0,
-          "INTs": 1,
-          "PD": 1,
+          "INTs": 2,
+          "PD": 2,
           "TFL": 4,
           "QB HIT": 2
         },
@@ -612,21 +609,6 @@
         "stats_season": 2026
       }
     ],
-    "SLB": [
-      {
-        "name": "Willie Gay Jr.",
-        "depth": 1,
-        "injured": false,
-        "attainment": "U/NO",
-        "standard_slot": "SAM",
-        "standard_pos": "LB",
-        "cap_number": "$1,262,500",
-        "stats": {
-          "TKL": 4
-        },
-        "stats_season": 2026
-      }
-    ],
     "LCB": [
       {
         "name": "Juju Brents",
@@ -637,15 +619,28 @@
         "standard_pos": "CB",
         "cap_number": "$1,233,552",
         "stats": {
-          "TKL": 17,
-          "PD": 1,
+          "TKL": 20,
+          "PD": 2,
           "TFL": 1
         },
         "stats_season": 2026
       },
       {
-        "name": "Marcellas Dial Jr.",
+        "name": "Darrell Baker Jr.",
         "depth": 2,
+        "injured": false,
+        "attainment": "U/Ten",
+        "standard_slot": "LCB",
+        "standard_pos": "CB",
+        "cap_number": "$1,262,500",
+        "stats": {
+          "TKL": 2
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Marcellas Dial Jr.",
+        "depth": 3,
         "injured": false,
         "attainment": "W/NE",
         "standard_slot": "LCB",
@@ -665,7 +660,7 @@
         "standard_pos": "S",
         "cap_number": "$1,008,953",
         "stats": {
-          "TKL": 27,
+          "TKL": 28,
           "INTs": 3,
           "PD": 3,
           "TFL": 1
@@ -710,9 +705,12 @@
         "standard_pos": "S",
         "cap_number": "$1,262,500",
         "stats": {
-          "TKL": 10,
-          "PD": 1,
-          "TFL": 1
+          "TKL": 18,
+          "SACKS": 1.0,
+          "INTs": 1,
+          "PD": 4,
+          "TFL": 2,
+          "QB HIT": 1
         },
         "stats_season": 2026
       }
@@ -727,7 +725,7 @@
         "standard_pos": "CB",
         "cap_number": "$1,111,323",
         "stats": {
-          "TKL": 15,
+          "TKL": 18,
           "PD": 1,
           "TFL": 2
         },
@@ -758,9 +756,9 @@
         "standard_pos": "CB",
         "cap_number": "$3,461,903",
         "stats": {
-          "TKL": 24,
+          "TKL": 27,
           "INTs": 2,
-          "PD": 4,
+          "PD": 5,
           "TFL": 3,
           "QB HIT": 1
         },
@@ -775,7 +773,7 @@
         "standard_pos": "CB",
         "cap_number": "$979,482",
         "stats": {
-          "TKL": 5,
+          "TKL": 7,
           "QB HIT": 1
         },
         "stats_season": 2026
@@ -803,8 +801,10 @@
         "standard_slot": "PT",
         "standard_pos": "DEF",
         "cap_number": null,
-        "stats": {},
-        "stats_season": null
+        "stats": {
+          "FG%": "\u2014"
+        },
+        "stats_season": 2026
       }
     ],
     "H": [
@@ -1021,7 +1021,7 @@
         "attainment": null,
         "standard_slot": "IR",
         "standard_pos": "DEF",
-        "cap_number": "$1,030,418",
+        "cap_number": "$823,751",
         "stats": {
           "TKL": 6,
           "SACKS": 1.0,
@@ -1037,7 +1037,7 @@
         "attainment": null,
         "standard_slot": "IR",
         "standard_pos": "DEF",
-        "cap_number": "$1,119,576",
+        "cap_number": "$912,909",
         "stats": {
           "TKL": 11,
           "TFL": 1,
@@ -1097,19 +1097,6 @@
         "standard_slot": "IR",
         "standard_pos": "DEF",
         "cap_number": "$565,000",
-        "stats": {},
-        "stats_season": null
-      }
-    ],
-    "DFR": [
-      {
-        "name": "Darrell Baker Jr.",
-        "depth": 1,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "DFR",
-        "standard_pos": "DEF",
-        "cap_number": "$1,262,500",
         "stats": {},
         "stats_season": null
       }

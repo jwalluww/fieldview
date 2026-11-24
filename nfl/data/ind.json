@@ -6,19 +6,19 @@
   "depth_chart": {
     "LWR": [
       {
-        "name": "Deion Burks",
+        "name": "Laquon Treadwell",
         "depth": 1,
         "injured": false,
-        "attainment": "26/7",
+        "attainment": "SF24",
         "standard_slot": "LWR",
         "standard_pos": "WR",
-        "cap_number": "$915,122",
+        "cap_number": "$1,262,500",
         "stats": {
-          "TGT": 14,
-          "REC": 6,
-          "YDS": 60,
-          "YAC": 20,
-          "CAR": 3
+          "TGT": 33,
+          "REC": 19,
+          "YDS": 239,
+          "TDs": 1,
+          "YAC": 66
         },
         "stats_season": 2026
       },
@@ -43,19 +43,19 @@
     ],
     "RWR": [
       {
-        "name": "Laquon Treadwell",
+        "name": "Deion Burks",
         "depth": 1,
         "injured": false,
-        "attainment": "SF24",
+        "attainment": "26/7",
         "standard_slot": "RWR",
         "standard_pos": "WR",
-        "cap_number": "$1,262,500",
+        "cap_number": "$915,122",
         "stats": {
-          "TGT": 33,
-          "REC": 19,
-          "YDS": 239,
-          "TDs": 1,
-          "YAC": 66
+          "TGT": 14,
+          "REC": 6,
+          "YDS": 60,
+          "YAC": 20,
+          "CAR": 3
         },
         "stats_season": 2026
       },
@@ -377,6 +377,17 @@
       {
         "name": "Davon Booth",
         "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Eric Gray",
+        "depth": 5,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "RB",
@@ -1029,8 +1040,19 @@
         "stats_season": 2026
       },
       {
-        "name": "Alec Pierce",
+        "name": "Micheal Clemons",
         "depth": 5,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$4,470,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Alec Pierce",
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1043,17 +1065,6 @@
           "YAC": 10
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Micheal Clemons",
-        "depth": 6,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$4,470,000",
-        "stats": {},
-        "stats_season": null
       },
       {
         "name": "D.j. Montgomery",
