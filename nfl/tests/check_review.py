@@ -2,6 +2,8 @@
 Real data, 1280x900 and 1920x1080: default week = current, week switch, no page scroll (panels scroll inside),
 combined weekly leaders recomputed independently, game sidebar (open / x / Esc / click-out / switch / ?game= reload),
 the four Season tabs against the data files, leader and draft links into FormationView, outside links.
+Total TD: every stored week's touchdown plays parse and agree with the TD counts on the rushing / receiving leader lines.
+FormationView ?player= for a leader who is not on the field (the "not in the lineup" sidebar).
 Plus: a SIMULATED partial week (route interception), escapeHtml poisoning, missing season file, credits link.
 Screenshots go to nfl/tests/screens/review_* (gitignored).
 Usage: fieldview_env\\Scripts\\python.exe nfl/tests/check_review.py [base_url]
@@ -43,19 +45,40 @@ week = load(f'nfl/data/review/week_{idx["season"]}_{cur}.json')
 n_games = len(week['games']) + len(week.get('pending', []))
 
 
+def td_plays(g):
+    """Independent of the page: a touchdown is a score worth 6+ points."""
+    prev = 0
+    for p in g['scoring_plays']:
+        total = p['away'] + p['home']
+        if total - prev >= 6:
+            yield p
+        prev = total
+
+
+def scorer(text):
+    """Scorer in ESPN's standard wording, plus the one-off formats present in the 2026 data."""
+    for pat in (r'lateral to (.+?) for', r'(J\.Gibbs) up the middle', r'^(.+?) -?\d+ (?:Yd|yd) ', r'^(.+?) Fumble Recovery'):
+        m = re.search(pat, text)
+        if m:
+            return 'Jahmyr Gibbs' if m.group(1) == 'J.Gibbs' else m.group(1)
+
+
 def expected_leaders(wk):
     out = {k: [] for k in ('pass', 'rush', 'rec', 'sacks', 'tackles')}
-    td = {}
+    td, yards = {}, {}
     for g in wk['games']:
         for l in g['leaders']:
             m = re.search(r'(-?\d+) YDS', l['line'])
-            v = float(l['line']) if l['cat'] in ('sacks', 'tackles') else int(m.group(1))
-            out[l['cat']].append(v)
+            out[l['cat']].append(float(l['line']) if l['cat'] in ('sacks', 'tackles') else int(m.group(1)))
             if l['cat'] in ('rush', 'rec'):
-                t = re.search(r'(\d+) TD', l['line'])
-                td[l['espn_id']] = td.get(l['espn_id'], 0) + (int(t.group(1)) if t else 0)
-    out['td'] = [v for v in td.values() if v > 0]
-    return {k: [float(x) for x in sorted(v, reverse=True)[:5]] for k, v in out.items()}
+                yards[l['name']] = yards.get(l['name'], 0) + int(m.group(1))
+        for p in td_plays(g):
+            n = scorer(p['text'])
+            td[n] = td.get(n, 0) + 1
+    exp = {k: [float(x) for x in sorted(v, reverse=True)[:5]] for k, v in out.items()}
+    top = sorted(td, key=lambda n: (-td[n], -yards.get(n, -10 ** 9), n))[:5]
+    exp['td'] = [float(td[n]) for n in top]
+    return exp, top
 
 
 with sync_playwright() as pw:
@@ -74,10 +97,12 @@ with sync_playwright() as pw:
         check(page.locator('.tile').count() == n_games, f'{w}: {n_games} games in the strip')
         winners = sum(1 for g in week['games'] for s in ('home', 'away') if g[s]['winner'])
         check(page.locator('.tile .t-row.win').count() == winners, f'{w}: {winners} bold winners')
-        exp = expected_leaders(week)
+        exp, td_names = expected_leaders(week)
         for cat, vals in exp.items():
             got = [float(x) for x in page.locator(f'.combo [data-cat="{cat}"] .val').all_inner_texts()]
             check(got == vals, f'{w}: weekly {cat} top 5 {got}')
+        names = page.locator('.combo [data-cat="td"] .nm').all_inner_texts()
+        check(names == td_names, f'{w}: Total TD names {names}')
         check(page.evaluate(NOSCROLL), f'{w}: no page scroll')
         check(page.evaluate(NOHSCROLL), f'{w}: no sideways overflow')
         wb = page.locator('#weekPanel').bounding_box()
@@ -216,6 +241,145 @@ with sync_playwright() as pw:
         check(ok, f'{w}: draft pick -> {team} Draft panel')
         page.screenshot(path=os.path.join(SHOTS, f'review_draftpanel_{w}.png'))
         check(not errs, f'{w}: no page errors {errs}')
+        page.close()
+
+    # Total TD parsing: known formats, then every stored week
+    page = b.new_page(viewport={'width': 1280, 'height': 900})
+    page.goto(BASE + '/nfl/review.html')
+    page.wait_for_selector('.tile')
+    cases = [
+        ('Eli Raridon 2 Yd pass from Drake Maye (Andy Borregales Kick)', 'Eli Raridon'),
+        ('Kyren Williams 5 Yd Rush (Harrison Mevis Kick)', 'Kyren Williams'),
+        ('Josh Allen 1 Yd Run (Josh Allen Pass to Dalton Kincaid for Two-Point Conversion)', 'Josh Allen'),
+        ('T.J. Watt 35 Yd Interception Return (Chris Boswell Kick)', 'T.J. Watt'),
+        ('Devontez Walker 86 Yd Kickoff Return (Riley Patterson Kick)', 'Devontez Walker'),
+        ('Myles Price 86 Yd Punt Return (Will Reichard Kick)', 'Myles Price'),
+        ('James Mitchell 0 Yd Fumble Recovery (Brandon Aubrey Kick)', 'James Mitchell'),
+        ('Gracen Halton Fumble Recovery in End Zone (Eddy Pineiro Kick)', 'Gracen Halton'),
+        ('Oluwafemi Oladejo 14 Yd return of blocked punt (J.Slye kick)', 'Oluwafemi Oladejo'),
+        ('Brock Purdy complete pass to Mike Evans for 2 yards, lateral to Deebo Samuel for 80 yards (Eddy Pineiro Kick)', 'Deebo Samuel'),
+        ('(No Huddle) J.Gibbs up the middle for 1 yard, TOUCHDOWN. J.Bates extra point is GOOD, Center-H.Hatten, Holder-J.Fox.', 'J.Gibbs'),
+        ('(Shotgun) J.Allen pass short right to K.Shakir for 5 yards, TOUCHDOWN.', 'K.Shakir'),
+        ('Something nobody has seen', None),
+    ]
+    for text, want in cases:
+        got = page.evaluate('t => tdScorer(t)', text)
+        check(got == want, f'tdScorer -> {got!r} for "{text[:60]}"')
+    total, bad = 0, []
+    for n in idx['weeks']:
+        wk = load(f'nfl/data/review/week_{idx["season"]}_{n}.json')
+        res = page.evaluate("""wk => wk.games.map(g => touchdownPlays(g).map(p => {
+            const raw = tdScorer(p.text); return { team: p.team, text: p.text,
+              name: raw && resolveScorer(raw, p.team, wk.games.flatMap(x => x.leaders)).name }; }))""", wk)
+        for g, plays in zip(wk['games'], res):
+            total += len(plays)
+            if [p['text'] for p in plays] != [p['text'] for p in td_plays(g)]:
+                bad.append((n, 'plays differ', g['id']))
+            bad += [(n, 'unparsed', p['text']) for p in plays if not p['name']]
+            for l in g['leaders']:
+                if l['cat'] not in ('rush', 'rec'):
+                    continue
+                m = re.search(r'(\d+) TD', l['line'])
+                # this leader's rushing / receiving TDs, ignoring the extra-point note in parentheses
+                k = 0
+                for p in plays:
+                    if p['team'] != l['team'] or p['name'] != l['name']:
+                        continue
+                    body = re.sub(r'^\([^)]*\)\s*', '', p['text']).split(' (')[0]
+                    if l['cat'] == 'rec':
+                        k += ' pass' in body
+                    else:
+                        k += re.search(r'Yd (Rush|Run)|up the middle', body) is not None
+                if k != (int(m.group(1)) if m else 0):
+                    bad.append((n, l['cat'], l['name'], l['line'], k))
+    check(not bad, f'{total} touchdown plays in {len(idx["weeks"])} weeks parse and match the leader lines {bad[:6]}')
+    page.close()
+
+    # a leader who is not a default starter: "not in the lineup" sidebar
+    master = load('nfl/data/players_master.json')
+    state = """() => { const s = document.getElementById('playerSidebar'); return {
+        open: s.classList.contains('open'), text: s.textContent, name: (s.querySelector('.sb-name') || {}).textContent || '',
+        note: (s.querySelector('.sb-bench-note') || {}).textContent || '', subs: s.querySelectorAll('.sb-sub, .sort-toggle, .sb-cmp-actions').length,
+        adv: s.querySelectorAll('.sb-stat').length, grid: s.querySelectorAll('.sb-cell').length,
+        selected: document.querySelectorAll('.player-node.selected').length, url: location.search } }"""
+    fv = BASE + '/nfl/nfl-formation-view.html'
+    for (w, h) in [(1280, 900), (1920, 1080)]:
+        page = b.new_page(viewport={'width': w, 'height': h})
+        errs = []
+        page.on('pageerror', lambda e: errs.append(str(e)))
+
+        def visit(query):
+            page.goto(fv + query)
+            page.wait_for_selector('#playersLayer .player-node')
+            page.wait_for_timeout(700)
+            return page.evaluate(state)
+
+        def closed():
+            st = page.evaluate(state)
+            return not st['open'] and 'player=' not in st['url']
+
+        bench = None
+        for l in (x for g in week['games'] for x in g['leaders']):
+            p = master.get(l['player_id'] or '')
+            if not p or p['depth'] == 1 or p['standard_pos'] not in ('RB', 'WR') or not p.get('stats'):
+                continue
+            s = visit(f'?team={p["team"]}&player={l["player_id"]}')
+            if s['note']:
+                bench = (l['player_id'], p, l['name'])
+                break
+        check(bench is not None, f'{w}: found a Week {cur} leader who is not on the field')
+        pid, p, name = bench
+        query = f'?team={p["team"]}&player={pid}'
+        check(s['open'] and name.split()[-1] in s['name'] and s['note'] == f'Not in the current lineup (depth {p["depth"]})',
+              f'{w}: {name} ({p["team"]}): "{s["note"]}"')
+        check(s['subs'] == 0 and 'Substitutes' not in s['text'] and 'Swap' not in s['text'], f'{w}: no substitutes or Swap')
+        check(s['grid'] > 0 and (s['adv'] > 0) == ('Advanced Stats' in s['text']), f'{w}: season stats {s["grid"]} cells, advanced rows {s["adv"]}')
+        check(f'player={pid}' in s['url'] and s['selected'] == 0, f'{w}: ?player= kept, no card selected')
+        page.screenshot(path=os.path.join(SHOTS, f'review_bench_{w}.png'))
+        page.click('#playerSidebar .sb-close')
+        check(closed(), f'{w}: x closes and clears ?player=')
+        visit(query)
+        page.keyboard.press('Escape')
+        check(closed(), f'{w}: Esc closes and clears ?player=')
+        visit(query)
+        page.locator('.field-canvas').click(position={'x': 8, 'y': 8})
+        check(closed(), f'{w}: empty-field click closes and clears ?player=')
+        visit(query)
+        page.locator('#defPersonnelGroup .ctrl-btn').nth(1).click()
+        s = page.evaluate(state)
+        check(s['note'] != '' and f'player={pid}' in s['url'], f'{w}: personnel change keeps the card')
+        page.locator('#playersLayer .player-node[data-pos="QB"] .p-card').click()
+        s = page.evaluate(state)
+        check(s['note'] == '' and s['subs'] > 0 and 'Substitutes' in s['text'] and s['selected'] == 1 and f'player={pid}' not in s['url'],
+              f'{w}: clicking a starter shows the normal sidebar with substitutes')
+        starter = re.search(r'player=([\w-]+)', s['url']).group(1)
+        s = visit(f'?team={p["team"]}&player={starter}')
+        check(s['note'] == '' and s['subs'] > 0 and s['selected'] == 1, f'{w}: on-field ?player= unchanged')
+        visit(query)
+        page.evaluate("selectTeam(currentTeam === 'BUF' ? 'NE' : 'BUF')")
+        page.wait_for_timeout(500)
+        check(closed(), f'{w}: team switch drops it')
+        other = 'NE' if p['team'] != 'NE' else 'BUF'
+        check(not visit(f'?team={other}&player={pid}')['open'], f"{w}: another team's player ignored")
+        check(not visit(f'?team={p["team"]}&player=nope')['open'], f'{w}: unknown id ignored')
+        page.evaluate("localStorage.setItem('fieldview_nfl_sidebar', 'off')")
+        visit(query)
+        check(not page.evaluate(state)['open'], f'{w}: sidebar toggle Off: ignored')
+        page.evaluate("localStorage.removeItem('fieldview_nfl_sidebar')")
+        # a bench player that a personnel change puts on the field (backup tight end in 12 personnel)
+        tes = [(i, x) for i, x in master.items() if x['standard_slot'] == 'TE' and x['depth'] == 2 and not x['injured'] and x.get('madden')]
+        moved = None
+        for i, x in sorted(tes, key=lambda t: t[1]['team']):
+            if not visit(f'?team={x["team"]}&player={i}')['note']:
+                continue
+            page.locator('#offPersonnelGroup .ctrl-btn').nth(1).click()
+            s = page.evaluate(state)
+            if not s['note']:
+                moved = (x['canonical_name'], s)
+                break
+        check(bool(moved) and moved[1]['subs'] > 0 and moved[1]['selected'] == 1,
+              f'{w}: {moved and moved[0]} moves to the normal sidebar in 12 personnel')
+        check(not errs, f'{w}: FormationView no page errors {errs}')
         page.close()
 
     # SIMULATED partial week: the next week with 3 of the current week's games final and the rest pending

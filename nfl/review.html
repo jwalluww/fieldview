@@ -253,11 +253,11 @@ let TEAM_NAMES = Object.create(null);
 const weekCache = {};
 
 const masterPlayer = id => (id && has(MASTER, id)) ? MASTER[id] : null;
-// A matched player's name links to FormationView on the team the master has him on (so the sidebar can find him).
+// A matched player's name links to FormationView on the team the master has them on (so the sidebar can find them).
 function playerName(name, id) {
   const p = masterPlayer(id);
   return p
-    ? `<a class="plink" href="nfl-formation-view.html?team=${encodeURIComponent(p.team)}&player=${encodeURIComponent(id)}" title="${esc(name)}: open in FormationView (sidebar opens if on the field)">${esc(name)}</a>`
+    ? `<a class="plink" href="nfl-formation-view.html?team=${encodeURIComponent(p.team)}&player=${encodeURIComponent(id)}" title="${esc(name)}: open in FormationView">${esc(name)}</a>`
     : `<span class="n" title="${esc(name)}">${esc(name)}</span>`;
 }
 
@@ -291,30 +291,101 @@ const WEEK_CATS = [
   { key: 'pass', label: 'Passing yds' }, { key: 'rush', label: 'Rushing yds' }, { key: 'rec', label: 'Receiving yds' },
   { key: 'td', label: 'Total TD' }, { key: 'sacks', label: 'Sacks' }, { key: 'tackles', label: 'Tackles' },
 ];
-// League-wide top 5s built from each game's per-team leaders (one per team per category).
-// Total TD = rushing + receiving TDs on those rushing / receiving lines (passing TDs are not "scored").
+// Who scored a touchdown, from ESPN's scoring-play text (its summary has no scorer field). A pass credits the
+// receiver, a lateral the last player to receive it. Returns null for a format it does not recognise.
+function tdScorer(text) {
+  const t = String(text || '').replace(/^(\s*\([^)]*\))+\s*/, ''); // play-by-play style notes: "(No Huddle) ..."
+  const laterals = [...t.matchAll(/lateral to (.+?) for -?\d+ (?:yd|yard)/gi)];
+  if (laterals.length) return laterals[laterals.length - 1][1];
+  let m = /complete pass to (.+?) for -?\d+ (?:yd|yard)/i.exec(t);
+  if (m) return m[1];
+  const end = t.search(/\bTOUCHDOWN\b/);
+  if (end >= 0) { // play-by-play style ("J.Gibbs up the middle for 1 yard, TOUCHDOWN"): the last F.Last before TOUCHDOWN
+    const names = t.slice(0, end).match(/\b[A-Z][a-z]{0,2}\.(?:St\.\s?)?[A-Z][A-Za-z'-]+/g);
+    return names ? names[names.length - 1] : null;
+  }
+  // "Name 12 Yd Run", "Name 8 Yd pass from QB", "Name 35 Yd Interception Return", "Name Fumble Recovery in End Zone"
+  m = /^(.+?)\s+-?\d+\s+(?:yd|yard)s?\s+(?:pass from|rush|run|[a-z ]*?(?:return|recovery))/i.exec(t)
+    || /^(.+?)\s+(?:blocked\s+(?:punt|kick|field goal)|fumble|punt|kickoff|interception)\s+(?:return|recovery)/i.exec(t);
+  return m ? m[1] : null;
+}
+// The scoring plays that are touchdowns: the only scores that add 6 or more points.
+function touchdownPlays(g) {
+  let away = 0, home = 0;
+  return g.scoring_plays.filter(p => {
+    const a = Number(p.away) || 0, h = Number(p.home) || 0, gain = a - away + h - home;
+    away = a; home = h;
+    return gain >= 6 && !['FG', 'SF', 'D2P'].includes(p.type);
+  });
+}
+// Same name normalisation as scrape_review.py.
+const normName = s => String(s || '').normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase()
+  .replace(/[.'`-]/g, '').replace(/\b(jr|sr|ii|iii|iv|v)\b/g, '').replace(/[^a-z ]/g, '').split(' ').filter(Boolean).join(' ');
+// Scorer -> player on the scoring team: the week's leaders first (they carry the scraper's id crosswalk), then
+// players_master by name + team, only when unique. "J.Gibbs" matches on initial + last name.
+function resolveScorer(raw, team, leaders) {
+  const short = /^([A-Z][a-z]{0,2})\.((?:St\.\s?)?[A-Z][A-Za-z'-]+)$/.exec(raw);
+  const first = short && normName(short[1]), last = short && normName(short[2]);
+  const want = normName(raw);
+  const is = name => {
+    const n = normName(name);
+    return !!n && (short ? n.startsWith(first) && n.endsWith(' ' + last) : n === want);
+  };
+  const lead = leaders.filter(l => l.team === team && is(l.name));
+  if (lead.length && new Set(lead.map(l => normName(l.name))).size === 1) {
+    const withId = lead.find(l => masterPlayer(l.player_id));
+    if (withId) return { name: short ? withId.name : raw, player_id: withId.player_id };
+  }
+  const ids = Object.keys(MASTER).filter(id => {
+    const p = MASTER[id];
+    return p.team === team && [p.canonical_name, p.ourlads_name, p.nflreadpy_name].some(is);
+  });
+  if (ids.length === 1) return { name: short ? MASTER[ids[0]].canonical_name : raw, player_id: ids[0] };
+  return { name: short && lead.length ? lead[0].name : raw, player_id: null };
+}
+// Touchdowns scored (rushing, receiving, returns, defense; never the passer) across the week's scoring summaries.
+// yards = scrimmage yards from the player's rushing / receiving leader lines, null when he led neither.
+function weekTouchdowns(data) {
+  const leaders = data.games.flatMap(g => g.leaders);
+  const found = new Map();
+  for (const g of data.games) {
+    for (const p of touchdownPlays(g)) {
+      const raw = tdScorer(p.text);
+      if (!raw) continue;
+      const who = resolveScorer(raw.trim(), p.team, leaders);
+      const key = who.player_id || `${p.team}|${normName(who.name)}`;
+      const e = found.get(key) || { ...who, team: p.team, v: 0, yards: null };
+      e.v += 1;
+      found.set(key, e);
+    }
+  }
+  for (const e of found.values()) {
+    for (const l of leaders) {
+      if ((l.cat !== 'rush' && l.cat !== 'rec') || l.team !== e.team || normName(l.name) !== normName(e.name)) continue;
+      const y = /(-?\d+) YDS/.exec(String(l.line || ''));
+      if (y) e.yards = (e.yards || 0) + Number(y[1]);
+    }
+  }
+  return [...found.values()];
+}
+// League-wide top 5s. Yards, sacks and tackles come from each game's per-team leaders (one per team per category);
+// Total TD from the scoring summaries. Equal TDs: more known scrimmage yards first, then alphabetical.
 function weekLeaders(data) {
   const lists = { pass: [], rush: [], rec: [], sacks: [], tackles: [] };
-  const td = new Map();
   for (const g of data.games) {
     for (const l of g.leaders) {
       if (!has(lists, l.cat)) continue;
       const line = String(l.line || '');
       const yds = /(-?\d+) YDS/.exec(line);
       const v = (l.cat === 'sacks' || l.cat === 'tackles') ? parseFloat(line) : (yds ? +yds[1] : NaN);
-      if (v > 0) lists[l.cat].push({ ...l, v, tie: 0 });
-      if (l.cat === 'rush' || l.cat === 'rec') {
-        const t = /(\d+) TD/.exec(line);
-        const key = l.espn_id || `${l.name}|${l.team}`;
-        const e = td.get(key) || { ...l, v: 0, tie: 0 };
-        e.v += t ? +t[1] : 0;
-        e.tie += yds ? +yds[1] : 0; // equal TDs: more yards first
-        td.set(key, e);
-      }
+      if (v > 0) lists[l.cat].push({ ...l, v });
     }
   }
-  lists.td = [...td.values()].filter(e => e.v > 0);
-  for (const k of Object.keys(lists)) lists[k] = lists[k].sort((a, b) => b.v - a.v || b.tie - a.tie || String(a.name).localeCompare(String(b.name))).slice(0, 5);
+  lists.td = weekTouchdowns(data);
+  const yards = e => e.yards == null ? -1e9 : e.yards;
+  for (const k of Object.keys(lists)) {
+    lists[k] = lists[k].sort((a, b) => b.v - a.v || (k === 'td' ? yards(b) - yards(a) : 0) || String(a.name).localeCompare(String(b.name))).slice(0, 5);
+  }
   return lists;
 }
 function comboHtml(data) {
@@ -330,7 +401,7 @@ function weekHtml(data) {
   return `<h2 class="panel-title">This week<span class="panel-sub">${esc(sub)} · click a final game for details</span></h2>
     <div class="strip">${stripHtml(data)}</div>
     <div class="combo">${comboHtml(data)}</div>
-    <div class="footnote">League-wide leaders from each team's top performer in every final game. Total TD = rushing + receiving touchdowns by those rushing and receiving leaders.</div>`;
+    <div class="footnote">Yards, sacks and tackles: league-wide from each team's top performer in every final game. Total TD: rushing, receiving, return and defensive touchdowns from the scoring summaries (not passing).</div>`;
 }
 
 // ── GAME SIDEBAR ──

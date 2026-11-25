@@ -654,6 +654,7 @@ body.sb-open .field-outer { padding-right: 384px; }
 .sb-sub-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; color: var(--text); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .sb-sub-pos { font-size: 11px; color: var(--text-muted); }
 .sb-empty { font-size: 12px; color: var(--text-dim); }
+.sb-bench-note { color: var(--text-muted); font-style: italic; }
 .sb-cmp-actions { display: flex; gap: 8px; padding: 10px 16px; border-bottom: 1px solid var(--border); }
 .sb-btn { flex: 1; padding: 8px 0; border-radius: 6px; border: 1px solid var(--border2); background: transparent; color: var(--text); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; }
 .sb-btn:hover { background: var(--border); }
@@ -1577,6 +1578,7 @@ function syncURL() {
   });
   const sbPlayer = sidebarPos ? getStarter(sidebarPos) : null;
   if (sidebarOn && sbPlayer && !sbPlayer.isRookie) params.set('player', sbPlayer.id);
+  else if (sidebarOn && benchId) params.set('player', benchId);
   const rk = Object.entries(currentStarters).filter(([, r]) => r.isRookie && !r.fromImport).map(([slot, r]) => `${r.pick}:${r.prospect_id}:${slot}`);
   if (rk.length) params.set('draft', rk.join(','));
   history.replaceState(null, '', '?' + params.toString());
@@ -1808,6 +1810,7 @@ function resetStarters() {
 // ── PLAYER SIDEBAR ──
 let sidebarPos = null; // formation slot key of the player shown in the sidebar
 let compareId = null;  // candidate substitute being previewed against the starter, if any
+let benchId = null;    // player shown "not in the lineup" (reached by ?player=); never set together with sidebarPos
 
 function setSelectedHighlight() {
   document.querySelectorAll('#playersLayer .player-node.selected').forEach(n => n.classList.remove('selected'));
@@ -1821,6 +1824,7 @@ function openSidebar(pos, event) {
   needsOpen = false;
   draftOpen = false; draftSel = { pick: null, prospect: null }; updateDraftBtn(); applyDropTargets();
   const swapped = sidebarPos !== pos;
+  benchId = null;
   sidebarPos = pos;
   if (swapped) compareId = null;
   renderSidebar(swapped);
@@ -1828,6 +1832,7 @@ function openSidebar(pos, event) {
 
 function closeSidebar() {
   sidebarPos = null;
+  benchId = null;
   needsOpen = false;
   compareId = null;
   draftOpen = false; draftSel = { pick: null, prospect: null }; updateDraftBtn(); applyDropTargets();
@@ -1935,12 +1940,41 @@ function renderSidebar(resetScroll) {
   if (!p) { closeSidebar(); return; }
   if (compareId) { renderCompare(el, p); return; }
   if (p.isRookie) { renderRookieSidebar(el, p, resetScroll); return; }
+  const subs = getSubCandidates(sidebarPos);
+  const subsHtml = subs.length ? subs.map(c => `
+      <div class="sb-sub" onclick="openCompare('${escapeHtml(c.id)}', event)">
+        <div class="sb-sub-madden" style="color:${maddenColor(c.madden)}">${c.madden || '—'}</div>
+        <div class="sb-sub-name">${escapeHtml(c.name)}${c.isRookie ? '<span class="sb-sub-r" title="Mock-draft rookie: projected rating">R · PROJ</span>' : ''}</div>
+        <div class="sb-sub-pos">${escapeHtml(c.standard_pos)}${c.isRookie ? ' · R' + c.round + ' #' + c.pick : ''}${c.depth ? ' · D' + c.depth : ''}${c.injured ? ' · <span style="color:#ef4444">INJ</span>' : ''}</div>
+      </div>`).join('') : '<div class="sb-empty">No other players available at this position.</div>';
+
+  el.innerHTML = `
+    ${playerCardHtml(p, sidebarPos)}
+    <div class="sb-section" style="border-bottom:none">
+      <div class="sb-section-title sb-sort"><span>Substitutes</span><span class="sort-toggle">${sortToggleHtml()}</span></div>
+      ${subsHtml}
+    </div>`;
+  showSidebar(el, resetScroll);
+}
+
+function showSidebar(el, resetScroll) {
+  el.classList.add('open');
+  document.body.classList.add('sb-open');
+  if (resetScroll) el.scrollTop = 0;
+  setSelectedHighlight();
+  syncFieldHeight();
+  syncURL();
+}
+
+// Close button, header, advanced stats and season stats of a veteran. slot = formation slot (or depth-chart slot) he is shown at;
+// note = optional muted line under the header.
+function playerCardHtml(p, slot, note) {
   const team = TEAMS[currentTeam];
   const mc = maddenColor(p.madden);
   const cfg = SIDEBAR_CARD[p.standard_pos];
   const injText = [p.injury_status, p.injury_detail].filter(Boolean).join(' — ');
 
-  const meta1 = [p.standard_pos + (sidebarPos !== p.standard_pos ? ' · ' + sidebarPos : ''), team.name].join(' · ');
+  const meta1 = [p.standard_pos + (slot && slot !== p.standard_pos ? ' · ' + slot : ''), team.name].join(' · ');
   const meta2 = [p.age ? 'Age ' + p.age : null, p.years_pro != null ? 'Yr ' + p.years_pro + ' NFL' : null, p.height || null, p.weight ? p.weight + ' lbs' : null, p.college || null, draftLine(p)].filter(Boolean).join(' · ');
   const contract = p.years_remaining != null && p.avg_annual_remaining != null
     ? p.years_remaining + ' yrs remaining · ' + formatMoneyShort(p.avg_annual_remaining) + '/yr avg'
@@ -1952,15 +1986,7 @@ function renderSidebar(resetScroll) {
     listHtml = `<div class="sb-section"><div class="sb-section-title">Advanced Stats${advSeasonOf(p, cfg) ? ' · ' + advSeasonOf(p, cfg) : ''}</div>${cfg.list.map(k => advStatHtml(p, k)).join('')}
       ${cfg.compact && p.def_advanced_season ? `<div class="sb-caption">Advanced: ${p.def_advanced_season}</div>` : ''}</div>`;
   }
-  const subs = getSubCandidates(sidebarPos);
-  const subsHtml = subs.length ? subs.map(c => `
-      <div class="sb-sub" onclick="openCompare('${escapeHtml(c.id)}', event)">
-        <div class="sb-sub-madden" style="color:${maddenColor(c.madden)}">${c.madden || '—'}</div>
-        <div class="sb-sub-name">${escapeHtml(c.name)}${c.isRookie ? '<span class="sb-sub-r" title="Mock-draft rookie: projected rating">R · PROJ</span>' : ''}</div>
-        <div class="sb-sub-pos">${escapeHtml(c.standard_pos)}${c.isRookie ? ' · R' + c.round + ' #' + c.pick : ''}${c.depth ? ' · D' + c.depth : ''}${c.injured ? ' · <span style="color:#ef4444">INJ</span>' : ''}</div>
-      </div>`).join('') : '<div class="sb-empty">No other players available at this position.</div>';
-
-  el.innerHTML = `
+  return `
     <button class="sb-close" onclick="closeSidebar()" aria-label="Close">&times;</button>
     <div class="sb-head">
       <div style="flex:1;min-width:0">
@@ -1975,19 +2001,32 @@ function renderSidebar(resetScroll) {
       </div>
       <div class="sb-madden"><div class="sb-madden-val" style="color:${mc}">${p.madden || '—'}</div><div class="sb-madden-label">Madden</div></div>
     </div>
+    ${note ? `<div class="sb-section sb-empty sb-bench-note">${escapeHtml(note)}</div>` : ''}
     ${listHtml}
-    ${gridSectionHtml(p)}
-    <div class="sb-section" style="border-bottom:none">
-      <div class="sb-section-title sb-sort"><span>Substitutes</span><span class="sort-toggle">${sortToggleHtml()}</span></div>
-      ${subsHtml}
-    </div>`;
-  el.classList.add('open');
-  document.body.classList.add('sb-open');
-  if (resetScroll) el.scrollTop = 0;
-  setSelectedHighlight();
-  syncFieldHeight();
-  syncURL();
+    ${gridSectionHtml(p)}`;
 }
+
+// A player on this team who is not on the field: same card, no substitutes or Swap.
+function openBenchSidebar(id) {
+  closeSidebar();
+  benchId = id;
+  renderBenchSidebar(true);
+}
+
+function renderBenchSidebar(resetScroll) {
+  const p = teamData && teamData.players.find(x => x.id === benchId);
+  if (!p) { closeSidebar(); return; }
+  // A personnel change (or reset) can put him on the field: then show the normal sidebar for that slot.
+  const slot = onFieldSlot(p.id);
+  if (slot) { openSidebar(slot); return; }
+  const el = document.getElementById('playerSidebar');
+  el.innerHTML = playerCardHtml(p, p.standard_slot, 'Not in the current lineup' + (p.depth ? ' (depth ' + p.depth + ')' : ''));
+  showSidebar(el, resetScroll);
+}
+
+// Formation slot the player currently occupies, or undefined.
+const onFieldSlot = id => [...document.querySelectorAll('#playersLayer .player-node')].map(n => n.dataset.pos)
+  .find(pos => { const st = getStarter(pos); return st && st.id === id; });
 
 function openCompare(id, event) {
   if (event) event.stopPropagation();
@@ -2426,7 +2465,8 @@ function renderFormation() {
   if (sidebarPos) {
     if (layer.querySelector(`.player-node[data-pos="${sidebarPos}"]`)) renderSidebar();
     else closeSidebar();
-  } else if (draftOpen) renderDraftPanel(true);
+  } else if (benchId) renderBenchSidebar();
+  else if (draftOpen) renderDraftPanel(true);
   else if (needsOpen) renderNeedsPanel(true);
   updateNeedsStrip();
   updateResetBtn();
@@ -2522,7 +2562,7 @@ document.addEventListener('click', e => {
   }
   if (!sidebarOn && !e.target.closest('.sub-dropdown')) closeSubDropdown();
   // Click on empty field closes the sidebar.
-  if (sidebarPos && e.target.closest('.field-canvas') && !e.target.closest('.player-node')) {
+  if ((sidebarPos || benchId) && e.target.closest('.field-canvas') && !e.target.closest('.player-node')) {
     closeSidebar();
   }
 });
@@ -2530,7 +2570,7 @@ document.addEventListener('click', e => {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     if (draftOpen && draftSel.prospect) { draftSel.prospect = null; renderDraftPanel(true); applyDropTargets(); }
-    else if (sidebarPos || draftOpen || needsOpen) closeSidebar();
+    else if (sidebarPos || benchId || draftOpen || needsOpen) closeSidebar();
   }
 });
 
@@ -3548,11 +3588,12 @@ loadTeam(currentTeam).then(() => {
     });
   }
   restoreDraftFromUrl(urlDraft);
-  // Reopen the sidebar if ?player= is someone currently on the field for this team; otherwise ignore it.
+  // Reopen the sidebar if ?player= is on this team: his slot if he is on the field, else the "not in the lineup" card.
+  // A player from another team (or an unknown id) is ignored.
   if (sidebarOn && urlPlayer) {
-    const slot = [...document.querySelectorAll('#playersLayer .player-node')].map(n => n.dataset.pos)
-      .find(pos => { const st = getStarter(pos); return st && st.id === urlPlayer; });
+    const slot = onFieldSlot(urlPlayer);
     if (slot) openSidebar(slot);
+    else if (teamData.players.some(p => p.id === urlPlayer)) openBenchSidebar(urlPlayer);
   }
   // ?panel=draft (linked from ReView's Draft Order tab) opens the Draft panel for this team.
   if (params.get('panel') === 'draft') openDraftPanel(importState ? 'import' : 'pick');
