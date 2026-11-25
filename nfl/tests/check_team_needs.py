@@ -119,9 +119,25 @@ with sync_playwright() as pw:
         page.keyboard.press('Escape')
         # chips in the strip updated (EDGE tier / score) and no page error
         check(page.evaluate('document.documentElement.scrollHeight <= innerHeight + 1'), f'{tag} no page scroll after drafting')
-        # Reset recomputes
-        page.click('#resetStartersBtn')
-        check(page.evaluate(f"getNeeds().byGroup['{target}'].score") == before, f'{tag} Reset restores the EDGE need ({before})')
+        # Reset clears manual subs only: hidden while the only change is a rookie, and it leaves the rookie in place
+        reset, clear = page.locator('#resetStartersBtn'), page.locator('#clearDraftBtn')
+        check(not reset.is_visible() and clear.is_visible(), f'{tag} rookies only: Reset hidden, Clear draft shown')
+        starter = page.evaluate("getStarter('QB').id")
+        page.click('#playersLayer .player-node[data-pos="QB"]')
+        page.click('#playerSidebar .sb-sub >> nth=0')
+        page.click('#playerSidebar button:has-text("Swap in")')
+        check(page.evaluate("getStarter('QB').id") != starter and reset.is_visible(), f'{tag} a manual QB sub shows Reset')
+        check(page.evaluate(f"getNeeds().byGroup['{target}'].score") == after, f'{tag} a manual sub does not change the EDGE need ({after})')
+        reset.click()
+        check(page.evaluate("getStarter('QB').id") == starter and not reset.is_visible(), f'{tag} Reset restores the QB and hides')
+        check(page.evaluate(f"getStarter('{slots[0]}').isRookie === true && getNeeds().byGroup['{target}'].score") == after,
+              f'{tag} Reset keeps the rookie (EDGE need stays {after})')
+        # Clear draft (two-step) removes the rookie and recomputes
+        clear.click()
+        check(clear.inner_text().lower().startswith('confirm'), f'{tag} Clear draft asks to confirm')
+        clear.click()
+        check(page.evaluate(f"getNeeds().byGroup['{target}'].score") == before and not clear.is_visible(),
+              f'{tag} Clear draft restores the EDGE need ({before})')
         check(not errs, f'{tag} no console/page errors {errs[:2]}')
         page.close()
 

@@ -76,9 +76,11 @@ def expected_leaders(wk):
             n = scorer(p['text'])
             td[n] = td.get(n, 0) + 1
     exp = {k: [float(x) for x in sorted(v, reverse=True)[:5]] for k, v in out.items()}
-    top = sorted(td, key=lambda n: (-td[n], -yards.get(n, -10 ** 9), n))[:5]
+    ranked = sorted(td, key=lambda n: (-td[n], -yards.get(n, -10 ** 9), n))
+    top = ranked[:5]
     exp['td'] = [float(td[n]) for n in top]
-    return exp, top
+    more = [n for n in ranked[5:] if td[n] == td[top[-1]]]  # level with 5th place
+    return exp, top, more, td[top[-1]] if top else 0
 
 
 with sync_playwright() as pw:
@@ -97,12 +99,52 @@ with sync_playwright() as pw:
         check(page.locator('.tile').count() == n_games, f'{w}: {n_games} games in the strip')
         winners = sum(1 for g in week['games'] for s in ('home', 'away') if g[s]['winner'])
         check(page.locator('.tile .t-row.win').count() == winners, f'{w}: {winners} bold winners')
-        exp, td_names = expected_leaders(week)
+        exp, td_names, td_more, fifth = expected_leaders(week)
         for cat, vals in exp.items():
-            got = [float(x) for x in page.locator(f'.combo [data-cat="{cat}"] .val').all_inner_texts()]
+            got = [float(x) for x in page.locator(f'.combo [data-cat="{cat}"] > .row .val').all_inner_texts()]
             check(got == vals, f'{w}: weekly {cat} top 5 {got}')
-        names = page.locator('.combo [data-cat="td"] .nm').all_inner_texts()
+        names = page.locator('.combo [data-cat="td"] > .row .nm').all_inner_texts()
         check(names == td_names, f'{w}: Total TD names {names}')
+        # players level with 5th place: muted line that expands in place
+        more, extra = page.locator('.combo .more'), page.locator('.combo .more-rows .row')
+        check(more.count() == (1 if td_more else 0) and page.locator('.combo [data-cat="td"] .more').count() == more.count(),
+              f'{w}: tie line only under Total TD ({more.count()})')
+        if td_more:
+            label = f'+{len(td_more)} more with {fifth} TD'
+            check(more.inner_text() == label and not extra.first.is_visible(), f'{w}: "{label}", collapsed')
+            more.click()
+            got = page.locator('.combo .more-rows .row .nm').all_inner_texts()
+            ranks = page.locator('.combo .more-rows .row .rk').all_inner_texts()
+            check(extra.first.is_visible() and got == td_more and ranks == [str(6 + i) for i in range(len(td_more))]
+                  and more.get_attribute('aria-expanded') == 'true', f'{w}: expands in place {got}')
+            links = page.locator('.combo .more-rows a.plink').evaluate_all('e => e.map(a => a.getAttribute("href"))')
+            check(links and all(re.match(r'nfl-formation-view\.html\?team=\w+&player=[\w-]+$', x) for x in links),
+                  f'{w}: {len(links)} of the extra players link to FormationView')
+            check(page.evaluate(NOSCROLL) and page.evaluate(NOHSCROLL), f'{w}: expanded, no page scroll / overflow')
+            page.locator('.combo [data-cat="td"]').screenshot(path=os.path.join(SHOTS, f'review_td_ties_{w}.png'))
+            more.click()
+            check(more.inner_text() == label and not extra.first.is_visible(), f'{w}: collapses again')
+            more.click()
+            href = page.locator('.combo .more-rows a.plink').first.get_attribute('href')
+            with page.expect_navigation():
+                page.locator('.combo .more-rows a.plink').first.click()
+            page.wait_for_selector('#playerSidebar.open .sb-name')
+            check(href.split('player=')[1] in page.url, f'{w}: extra player link opens his sidebar')
+            page.goto(BASE + '/nfl/review.html')
+            page.wait_for_selector('.tile')
+            page.wait_for_load_state('networkidle')
+        # every stored week: line present exactly when someone is level with 5th place
+        wrong = []
+        for n in idx['weeks']:
+            page.select_option('#weekSel', str(n))
+            page.wait_for_function(f'document.getElementById("caption").textContent.includes("Week {n},")')
+            lst = page.evaluate(f'(() => {{ const l = weekLeaders(weekCache[{n}]); return [l.td.length, l.td.length ? l.td[l.td.length - 1].v : 0, l.tdMore.length, l.tdMore.every(e => e.v === l.td[4].v)]; }})()')
+            text = page.locator('.combo .more').all_inner_texts()
+            if text != ([f'+{lst[2]} more with {lst[1]} TD'] if lst[2] else []) or not lst[3]:
+                wrong.append((n, lst, text))
+        check(not wrong, f'{w}: tie line correct in all {len(idx["weeks"])} weeks {wrong}')
+        page.select_option('#weekSel', str(cur))
+        page.wait_for_function(f'document.querySelectorAll(".tile").length === {n_games}')
         check(page.evaluate(NOSCROLL), f'{w}: no page scroll')
         check(page.evaluate(NOHSCROLL), f'{w}: no sideways overflow')
         wb = page.locator('#weekPanel').bounding_box()

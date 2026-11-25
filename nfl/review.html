@@ -92,6 +92,8 @@ button.tile:hover { border-color: var(--text-muted); }
 .row .tm { color: var(--text-muted); font-size: 11px; flex-shrink: 0; }
 .row .val { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 15px; flex-shrink: 0; }
 .footnote { color: var(--text-muted); font-size: 11px; margin-top: 7px; }
+.more { display: block; background: none; border: none; color: var(--text-muted); font: inherit; font-size: 11px; cursor: pointer; padding: 2px 0 2px 22px; }
+.more:hover { color: var(--text); text-decoration: underline; }
 
 /* season */
 .season-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 9px 14px; border-bottom: 1px solid var(--border); }
@@ -383,16 +385,23 @@ function weekLeaders(data) {
   }
   lists.td = weekTouchdowns(data);
   const yards = e => e.yards == null ? -1e9 : e.yards;
+  let tdMore = [];
   for (const k of Object.keys(lists)) {
-    lists[k] = lists[k].sort((a, b) => b.v - a.v || (k === 'td' ? yards(b) - yards(a) : 0) || String(a.name).localeCompare(String(b.name))).slice(0, 5);
+    const all = lists[k].sort((a, b) => b.v - a.v || (k === 'td' ? yards(b) - yards(a) : 0) || String(a.name).localeCompare(String(b.name)));
+    lists[k] = all.slice(0, 5);
+    if (k === 'td') tdMore = all.slice(5).filter(e => e.v === all[4].v); // level with 5th place but cut off
   }
-  return lists;
+  return { ...lists, tdMore };
 }
 function comboHtml(data) {
   const lists = weekLeaders(data);
-  return WEEK_CATS.map(c => `<div class="card" data-cat="${c.key}"><h4>${c.label}</h4>${lists[c.key].map((l, i) =>
-    `<div class="row"><span class="rk">${i + 1}</span>${logoImg(l.team, 'logo-sm')}<span class="nm">${playerName(l.name, l.player_id)}</span><span class="val">${esc(l.v)}</span></div>`
-  ).join('') || '<div class="none">None yet</div>'}</div>`).join('');
+  const rows = (list, from) => list.map((l, i) =>
+    `<div class="row"><span class="rk">${from + i}</span>${logoImg(l.team, 'logo-sm')}<span class="nm">${playerName(l.name, l.player_id)}</span><span class="val">${esc(l.v)}</span></div>`
+  ).join('');
+  const ties = list => !list.length ? '' : `<div class="more-rows" hidden>${rows(list, 6)}</div>
+    <button type="button" class="more" aria-expanded="false" data-label="+${list.length} more with ${esc(list[0].v)} TD">+${list.length} more with ${esc(list[0].v)} TD</button>`;
+  return WEEK_CATS.map(c => `<div class="card" data-cat="${c.key}"><h4>${c.label}</h4>${
+    rows(lists[c.key], 1) || '<div class="none">None yet</div>'}${c.key === 'td' ? ties(lists.tdMore) : ''}</div>`).join('');
 }
 const gamesLeft = n => `${n} game${n === 1 ? '' : 's'} left`;
 function weekHtml(data) {
@@ -498,6 +507,14 @@ function closeSidebar() {
   syncUrl();
 }
 document.getElementById('weekPanel').addEventListener('click', e => {
+  const more = e.target.closest('.more');
+  if (more) { // show / hide the players tied with 5th place
+    const extra = more.previousElementSibling;
+    extra.hidden = !extra.hidden;
+    more.setAttribute('aria-expanded', String(!extra.hidden));
+    more.textContent = extra.hidden ? more.dataset.label : 'Show fewer';
+    return;
+  }
   const t = e.target.closest('.tile[data-game]');
   if (!t) return;
   if (t.dataset.game === openGame) closeSidebar(); else openSidebar(t.dataset.game);
