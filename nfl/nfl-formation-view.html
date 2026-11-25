@@ -3554,6 +3554,8 @@ loadTeam(currentTeam).then(() => {
       .find(pos => { const st = getStarter(pos); return st && st.id === urlPlayer; });
     if (slot) openSidebar(slot);
   }
+  // ?panel=draft (linked from ReView's Draft Order tab) opens the Draft panel for this team.
+  if (params.get('panel') === 'draft') openDraftPanel(importState ? 'import' : 'pick');
 });
 </script>
 <script src="../shared/site.js" data-mode="popup" data-credits="nflverse · OurLads · OverTheCap · ESPN (QBR) · EA Sports (Madden) · PFN · Mock Draft Hero"></script>
