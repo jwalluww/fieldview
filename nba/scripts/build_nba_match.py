@@ -27,6 +27,7 @@ import pandas as pd
 
 from build_nba_master import (
     resolve_position, resolve_rotation, resolve_team, format_salary,
+    log_position_counts,
 )
 
 DB_PATH = os.path.join('nba', 'data', 'fieldview.duckdb')
@@ -85,7 +86,8 @@ def build_match():
     # expect (a fresh dict from json.load in the original) -- avoids
     # handing them raw pandas Series/numpy scalars.
     depth_by_id = {
-        pid: {'depth_rank': int(row['depth_rank']), 'team': row['team']}
+        pid: {'depth_rank': int(row['depth_rank']), 'team': row['team'],
+              'position': row['position']}
         for pid, row in build_dict_last_wins(depth_df, drop_null=True).items()
     }
 
@@ -95,7 +97,7 @@ def build_match():
         # `position` (57 of 587 players) would otherwise reach
         # resolve_position() as float('nan'), which is truthy, and get
         # returned as-is (a garbage NaN "position") instead of correctly
-        # falling through to the contract-position/None branches.
+        # falling through to None.
         p = {k: (None if pd.isna(v) else v) for k, v in raw_p.items()}
         pid = int(p['player_id'])
         contract = contracts_by_id.get(pid)
@@ -117,7 +119,8 @@ def build_match():
             'team': team,
             'position': resolve_position(
                 p.get('position'),
-                contract['pos'] if contract is not None else None),
+                depth_by_id.get(pid, {}).get('position'),
+                rating.get('positions') if rating is not None else None),
             'rotation_status': rotation['rotation_status'],
             'rotation_source': rotation['rotation_source'],
             'depth_rank': rotation['depth_rank'],
@@ -140,6 +143,7 @@ def build_match():
     matched_rating = match_df['overall_rating'].notna().sum()
     from_depth_chart = (match_df['rotation_source'] == 'nbadepthchart.com').sum()
     print(f"player_match: {total} players")
+    log_position_counts(match_df['position'])
     print(f"Matched contracts: {matched_contract} / {total}")
     print(f"Matched 2k ratings: {matched_rating} / {total}")
     print(f"rotation_status from nbadepthchart.com: {from_depth_chart} / {total}")

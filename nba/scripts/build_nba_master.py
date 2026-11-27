@@ -1,5 +1,6 @@
 import json
 import os
+from collections import Counter
 
 STATS_PATH = os.path.join("nba", "data", "nba_stats.json")
 CONTRACTS_PATH = os.path.join("nba", "data", "contracts_nba.json")
@@ -19,10 +20,13 @@ DEPTH_RANK_TO_STATUS = {
 
 
 GRANULAR_POSITIONS = {"PG", "SG", "SF", "PF", "C"}
+POSITION_ORDER = ("PG", "SG", "SF", "PF", "C")
+# A healthy league-wide pull has about 90+ players at every position.
+MIN_PLAYERS_PER_POSITION = 40
 
 # nba_api's roster endpoint only reports coarse groups (G/F/C, plus
 # hybrids). court-view.html's court needs a specific slot per player,
-# so this is the last-resort guess when neither nba_stats nor Spotrac has
+# so this is the last-resort guess when neither the depth chart nor 2K has
 # a granular position -- not a real position determination.
 COARSE_POSITION_FALLBACK = {
     "G": "PG",
@@ -40,16 +44,40 @@ def load_json(path):
         return json.load(f)
 
 
-def resolve_position(nba_pos, contract_pos):
-    """Prefer Spotrac's granular pos (PG/SG/SF/PF/C); fall back to a
-    coarse-group guess from whichever source has a coarse label."""
-    if contract_pos in GRANULAR_POSITIONS:
-        return contract_pos
+def primary_position(raw):
+    """First token of a slash-separated position string -- the depth chart's
+    "SF/SG/PG", or 2K's "PF/SF/6'8\"" (last token is the height) -- if it is a
+    granular position, else None."""
+    if not raw:
+        return None
+    first = raw.split("/")[0].strip()
+    return first if first in GRANULAR_POSITIONS else None
+
+
+def resolve_position(nba_pos, depth_pos, ratings_positions):
+    """nbadepthcharts.com's primary position, else 2K's primary position, else
+    a coarse-group guess from ESPN's G/F/C. The contract file's pos is not a
+    source: Basketball-Reference's file only carries ESPN's coarse label."""
+    granular = primary_position(depth_pos) or primary_position(ratings_positions)
+    if granular:
+        return granular
     if nba_pos:
         return COARSE_POSITION_FALLBACK.get(nba_pos, nba_pos)
-    if contract_pos:
-        return COARSE_POSITION_FALLBACK.get(contract_pos, contract_pos)
     return None
+
+
+def log_position_counts(positions):
+    """Prints players per position and warns (never fails) when one is thin, so
+    a broken position source shows up in the job log."""
+    counts = Counter(positions)
+    other = sum(n for pos, n in counts.items() if pos not in GRANULAR_POSITIONS)
+    print("Players per position: "
+          + ", ".join(f"{pos} {counts[pos]}" for pos in POSITION_ORDER)
+          + f", other/none {other}")
+    thin = [pos for pos in POSITION_ORDER if counts[pos] < MIN_PLAYERS_PER_POSITION]
+    if thin:
+        print(f"WARNING: fewer than {MIN_PLAYERS_PER_POSITION} players at "
+              f"{', '.join(thin)} -- check the position sources")
 
 
 def format_salary(cash_total_remaining, length_remaining):
@@ -111,7 +139,11 @@ def main():
             "player_id": pid,
             "name": p.get("name"),
             "team": team,
-            "position": resolve_position(p.get("position"), contract["pos"] if contract else None),
+            "position": resolve_position(
+                p.get("position"),
+                depth_by_id.get(pid, {}).get("position"),
+                rating.get("positions") if rating else None,
+            ),
             "jersey_number": p.get("jersey_number"),
             "height": p.get("height"),
             "weight": p.get("weight"),
@@ -136,8 +168,6 @@ def main():
 
     matched_contract = sum(1 for p in output.values() if p["contract_salary"] is not None)
     matched_rating = sum(1 for p in output.values() if p["overall_rating"] is not None)
-    granular_pos = sum(1 for p in output.values() if p["position"] in GRANULAR_POSITIONS)
-    no_pos = sum(1 for p in output.values() if p["position"] is None)
     from_depth_chart = sum(1 for p in output.values() if p["rotation_source"] == "nbadepthchart.com")
     no_rotation_status = sum(1 for p in output.values() if p["rotation_status"] is None)
     team_overridden = sum(
@@ -148,8 +178,7 @@ def main():
     print(f"Wrote {len(output)} players to {OUT_PATH}")
     print(f"Matched contracts: {matched_contract} / {len(output)}")
     print(f"Matched 2k ratings: {matched_rating} / {len(output)}")
-    print(f"Granular position (Spotrac or resolved fallback): {granular_pos} / {len(output)}")
-    print(f"No position at all: {no_pos} / {len(output)}")
+    log_position_counts(p["position"] for p in output.values())
     print(f"rotation_status from nbadepthchart.com: {from_depth_chart} / {len(output)}")
     print(f"rotation_status from mpg_derived fallback: {len(output) - from_depth_chart} / {len(output)}")
     print(f"rotation_status still null: {no_rotation_status} / {len(output)}")
