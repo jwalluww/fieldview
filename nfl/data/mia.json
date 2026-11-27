@@ -800,7 +800,7 @@
         "attainment": "SF26",
         "standard_slot": "PT",
         "standard_pos": "DEF",
-        "cap_number": null,
+        "cap_number": "$390,833",
         "stats": {
           "FG%": "\u2014"
         },
@@ -816,6 +816,19 @@
         "standard_slot": "H",
         "standard_pos": "DEF",
         "cap_number": "$1,262,500",
+        "stats": {
+          "FG%": "\u2014"
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Jack Browning",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "H",
+        "standard_pos": "DEF",
+        "cap_number": "$390,833",
         "stats": {
           "FG%": "\u2014"
         },
@@ -900,6 +913,17 @@
         "depth": 1,
         "injured": false,
         "attainment": "SF26",
+        "standard_slot": "ED",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Max Llewellyn",
+        "depth": 2,
+        "injured": false,
+        "attainment": "26/7",
         "standard_slot": "ED",
         "standard_pos": "DEF",
         "cap_number": null,
@@ -993,19 +1017,8 @@
         "stats_season": 2026
       },
       {
-        "name": "Ronnie Harrison Jr.",
-        "depth": 2,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$693,333",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Trey Moore",
-        "depth": 3,
+        "depth": 2,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1016,7 +1029,7 @@
       },
       {
         "name": "Zeek Biggers",
-        "depth": 4,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1032,7 +1045,7 @@
       },
       {
         "name": "Jordan Phillips",
-        "depth": 5,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1047,7 +1060,7 @@
       },
       {
         "name": "Zach Sieler",
-        "depth": 6,
+        "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1063,7 +1076,7 @@
       },
       {
         "name": "De'von Achane",
-        "depth": 7,
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1080,7 +1093,7 @@
       },
       {
         "name": "Rene Konga",
-        "depth": 8,
+        "depth": 7,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1091,12 +1104,25 @@
       },
       {
         "name": "Cole Turner",
-        "depth": 9,
+        "depth": 8,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
         "standard_pos": "DEF",
         "cap_number": "$565,000",
+        "stats": {},
+        "stats_season": null
+      }
+    ],
+    "DFR": [
+      {
+        "name": "Ronnie Harrison Jr.",
+        "depth": 1,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "DFR",
+        "standard_pos": "DEF",
+        "cap_number": "$693,333",
         "stats": {},
         "stats_season": null
       }

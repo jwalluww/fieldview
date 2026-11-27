@@ -22,15 +22,13 @@
           "CAR": 1
         },
         "stats_season": 2026
-      }
-    ],
-    "RWR": [
+      },
       {
         "name": "Roman Wilson",
-        "depth": 1,
+        "depth": 2,
         "injured": false,
         "attainment": "24/3",
-        "standard_slot": "RWR",
+        "standard_slot": "LWR",
         "standard_pos": "WR",
         "cap_number": "$1,566,864",
         "stats": {
@@ -41,21 +39,39 @@
           "YAC": 97
         },
         "stats_season": 2026
+      }
+    ],
+    "RWR": [
+      {
+        "name": "Michael Pittman Jr.",
+        "depth": 1,
+        "injured": false,
+        "attainment": "T/Ind",
+        "standard_slot": "RWR",
+        "standard_pos": "WR",
+        "cap_number": "$8,866,666",
+        "stats": {
+          "TGT": 12,
+          "REC": 7,
+          "YDS": 89,
+          "YAC": 37
+        },
+        "stats_season": 2026
       },
       {
-        "name": "Ben Skowronek",
+        "name": "Max Hurleman",
         "depth": 2,
         "injured": false,
-        "attainment": "SF24",
+        "attainment": "CF25",
         "standard_slot": "RWR",
         "standard_pos": "WR",
         "cap_number": null,
         "stats": {
-          "TGT": 5,
-          "REC": 4,
-          "YDS": 32,
+          "TGT": 7,
+          "REC": 6,
+          "YDS": 61,
           "TDs": 1,
-          "YAC": 2
+          "YAC": 10
         },
         "stats_season": 2026
       }
@@ -115,6 +131,17 @@
         "cap_number": "$1,164,446",
         "stats": {},
         "stats_season": 2026
+      },
+      {
+        "name": "Doug Nester",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF24",
+        "standard_slot": "LG",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "C": [
@@ -244,27 +271,8 @@
     ],
     "QB": [
       {
-        "name": "Aaron Rodgers",
-        "depth": 1,
-        "injured": false,
-        "attainment": "CC/NYJ",
-        "standard_slot": "QB",
-        "standard_pos": "QB",
-        "cap_number": "$22,500,000",
-        "stats": {
-          "CMP": 220,
-          "ATT": 361,
-          "YDS": 2241,
-          "TDs": 16,
-          "INTs": 6,
-          "SACKS": 31,
-          "RU YDS": 51
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Mason Rudolph",
-        "depth": 2,
+        "depth": 1,
         "injured": false,
         "attainment": "U/Ten",
         "standard_slot": "QB",
@@ -280,7 +288,7 @@
       },
       {
         "name": "Will Howard",
-        "depth": 3,
+        "depth": 2,
         "injured": false,
         "attainment": "25/6",
         "standard_slot": "QB",
@@ -291,7 +299,7 @@
       },
       {
         "name": "Drew Allar",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "26/3",
         "standard_slot": "QB",
@@ -663,12 +671,38 @@
           "QB HIT": 1
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Jacoby Windmon",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "ROLB",
+        "standard_pos": "EDGE",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "LCB": [
       {
-        "name": "Asante Samuel Jr.",
+        "name": "Daylen Everette",
         "depth": 1,
+        "injured": false,
+        "attainment": "26/3",
+        "standard_slot": "LCB",
+        "standard_pos": "CB",
+        "cap_number": "$1,254,635",
+        "stats": {
+          "TKL": 17,
+          "INTs": 1,
+          "PD": 6
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Asante Samuel Jr.",
+        "depth": 2,
         "injured": false,
         "attainment": "U/LAC",
         "standard_slot": "LCB",
@@ -677,19 +711,6 @@
         "stats": {
           "TKL": 22,
           "PD": 9
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Doneiko Slaughter",
-        "depth": 2,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "LCB",
-        "standard_pos": "CB",
-        "cap_number": "$688,333",
-        "stats": {
-          "TKL": 4
         },
         "stats_season": 2026
       },
@@ -770,17 +791,15 @@
         "stats_season": 2026
       },
       {
-        "name": "Daylen Everette",
+        "name": "Doneiko Slaughter",
         "depth": 2,
         "injured": false,
-        "attainment": "26/3",
+        "attainment": "SF26",
         "standard_slot": "RCB",
         "standard_pos": "CB",
-        "cap_number": "$1,254,635",
+        "cap_number": "$688,333",
         "stats": {
-          "TKL": 17,
-          "INTs": 1,
-          "PD": 6
+          "TKL": 4
         },
         "stats_season": 2026
       }
@@ -876,19 +895,18 @@
         "stats_season": 2026
       },
       {
-        "name": "Max Hurleman",
+        "name": "Brandon Smith",
         "depth": 3,
         "injured": false,
-        "attainment": "CF25",
+        "attainment": "SF26",
         "standard_slot": "LWR",
         "standard_pos": "WR",
         "cap_number": null,
         "stats": {
-          "TGT": 7,
-          "REC": 6,
-          "YDS": 61,
-          "TDs": 1,
-          "YAC": 10
+          "TGT": 5,
+          "REC": 4,
+          "YDS": 39,
+          "YAC": 14
         },
         "stats_season": 2026
       }
@@ -901,19 +919,6 @@
         "attainment": "SF24",
         "standard_slot": "LT",
         "standard_pos": "OL",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      }
-    ],
-    "OG": [
-      {
-        "name": "Doug Nester",
-        "depth": 1,
-        "injured": false,
-        "attainment": "SF24",
-        "standard_slot": "OG",
-        "standard_pos": "DEF",
         "cap_number": null,
         "stats": {},
         "stats_season": null
@@ -934,10 +939,10 @@
     ],
     "LB": [
       {
-        "name": "Jacoby Windmon",
+        "name": "Elandon Roberts",
         "depth": 1,
         "injured": false,
-        "attainment": "SF26",
+        "attainment": "U/LV",
         "standard_slot": "LB",
         "standard_pos": "DEF",
         "cap_number": null,
@@ -949,17 +954,6 @@
         "depth": 2,
         "injured": false,
         "attainment": "SF26",
-        "standard_slot": "LB",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Elandon Roberts",
-        "depth": 3,
-        "injured": false,
-        "attainment": "U/LV",
         "standard_slot": "LB",
         "standard_pos": "DEF",
         "cap_number": null,
@@ -1017,8 +1011,25 @@
     ],
     "IR": [
       {
-        "name": "Mason Mccormick",
+        "name": "Ben Skowronek",
         "depth": 1,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "TGT": 5,
+          "REC": 4,
+          "YDS": 32,
+          "TDs": 1,
+          "YAC": 2
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Mason Mccormick",
+        "depth": 2,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1029,7 +1040,7 @@
       },
       {
         "name": "Jack Driscoll",
-        "depth": 2,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1040,7 +1051,7 @@
       },
       {
         "name": "Sebastian Joseph-day",
-        "depth": 3,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1055,17 +1066,6 @@
       },
       {
         "name": "Daequan Hardy",
-        "depth": 4,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$515,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
-        "name": "Cole Burgess",
         "depth": 5,
         "injured": true,
         "attainment": null,
@@ -1076,8 +1076,19 @@
         "stats_season": null
       },
       {
-        "name": "Logan Lee",
+        "name": "Cole Burgess",
         "depth": 6,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$515,000",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Logan Lee",
+        "depth": 7,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1102,24 +1113,8 @@
     ],
     "DFR": [
       {
-        "name": "Michael Pittman Jr.",
-        "depth": 1,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "DFR",
-        "standard_pos": "DEF",
-        "cap_number": "$8,866,666",
-        "stats": {
-          "TGT": 12,
-          "REC": 7,
-          "YDS": 89,
-          "YAC": 37
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Gennings Dunker",
-        "depth": 2,
+        "depth": 1,
         "injured": true,
         "attainment": null,
         "standard_slot": "DFR",

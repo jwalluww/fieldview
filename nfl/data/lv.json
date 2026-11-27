@@ -624,6 +624,17 @@
           "QB HIT": 1
         },
         "stats_season": 2026
+      },
+      {
+        "name": "David Blay Jr.",
+        "depth": 7,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RDT",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RDE": [
@@ -941,19 +952,6 @@
         "stats_season": 2026
       }
     ],
-    "OT": [
-      {
-        "name": "Amari Kight",
-        "depth": 1,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "LT",
-        "standard_pos": "OL",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      }
-    ],
     "OG": [
       {
         "name": "Niklas Henning",
@@ -1006,10 +1004,10 @@
     ],
     "CB": [
       {
-        "name": "Greedy Vance",
+        "name": "A.j. Woods",
         "depth": 1,
         "injured": false,
-        "attainment": "CF25",
+        "attainment": "SF26",
         "standard_slot": "CB",
         "standard_pos": "DEF",
         "cap_number": null,
@@ -1019,22 +1017,8 @@
     ],
     "IR": [
       {
-        "name": "Patrick Johnson",
-        "depth": 1,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$763,333",
-        "stats": {
-          "TKL": 3,
-          "QB HIT": 1
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Justin Pickett",
-        "depth": 2,
+        "depth": 1,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1045,7 +1029,7 @@
       },
       {
         "name": "Brennan Jackson",
-        "depth": 3,
+        "depth": 2,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1056,7 +1040,7 @@
       },
       {
         "name": "Chigozie Anusiem",
-        "depth": 4,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1067,7 +1051,7 @@
       },
       {
         "name": "Keyron Crawford",
-        "depth": 5,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1075,6 +1059,22 @@
         "cap_number": "$972,410",
         "stats": {},
         "stats_season": null
+      }
+    ],
+    "DFR": [
+      {
+        "name": "Patrick Johnson",
+        "depth": 1,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "DFR",
+        "standard_pos": "DEF",
+        "cap_number": "$763,333",
+        "stats": {
+          "TKL": 3,
+          "QB HIT": 1
+        },
+        "stats_season": 2026
       }
     ]
   }

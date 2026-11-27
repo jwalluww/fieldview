@@ -347,17 +347,6 @@
         "cap_number": "$477,778",
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Cooper Rush",
-        "depth": 4,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "QB",
-        "standard_pos": "QB",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "RB": [
@@ -988,6 +977,19 @@
         "stats_season": null
       }
     ],
+    "CB": [
+      {
+        "name": "Brandon Johnson",
+        "depth": 1,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "CB",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      }
+    ],
     "S": [
       {
         "name": "Silas Walters",
@@ -1014,36 +1016,8 @@
     ],
     "IR": [
       {
-        "name": "Christian Rozeboom",
-        "depth": 1,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$1,550,000",
-        "stats": {
-          "TKL": 5,
-          "PD": 2,
-          "TFL": 1
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Jalen Mcmillan",
-        "depth": 2,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$1,544,461",
-        "stats": {
-          "TGT": 1
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Mohamed Kamara",
-        "depth": 3,
+        "depth": 1,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1064,6 +1038,34 @@
         "cap_number": "$1,196,094",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Christian Rozeboom",
+        "depth": 2,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "DFR",
+        "standard_pos": "DEF",
+        "cap_number": "$1,550,000",
+        "stats": {
+          "TKL": 5,
+          "PD": 2,
+          "TFL": 1
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Jalen Mcmillan",
+        "depth": 3,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "DFR",
+        "standard_pos": "DEF",
+        "cap_number": "$1,544,461",
+        "stats": {
+          "TGT": 1
+        },
+        "stats_season": 2026
       }
     ]
   }

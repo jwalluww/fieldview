@@ -1,0 +1,1297 @@
+{
+ "season": 2026,
+ "week": 12,
+ "games": [
+  {
+   "id": "401873079",
+   "date": "2026-11-26T01:00Z",
+   "status": "Final",
+   "venue": "SoFi Stadium",
+   "home": {
+    "team": "LAR",
+    "name": "Los Angeles Rams",
+    "score": 26,
+    "winner": true,
+    "linescore": [
+     6,
+     7,
+     7,
+     6
+    ],
+    "record": "7-4"
+   },
+   "away": {
+    "team": "GB",
+    "name": "Green Bay Packers",
+    "score": 13,
+    "winner": false,
+    "linescore": [
+     3,
+     10,
+     0,
+     0
+    ],
+    "record": "6-5"
+   },
+   "team_stats": {
+    "away": {
+     "thirdDownEff": "2-8",
+     "totalYards": "244",
+     "netPassingYards": "189",
+     "rushingYards": "55",
+     "turnovers": "3",
+     "possessionTime": "19:20"
+    },
+    "home": {
+     "thirdDownEff": "8-15",
+     "totalYards": "373",
+     "netPassingYards": "132",
+     "rushingYards": "241",
+     "turnovers": "1",
+     "possessionTime": "40:40"
+    }
+   },
+   "leaders": [
+    {
+     "cat": "pass",
+     "team": "LAR",
+     "name": "Matthew Stafford",
+     "espn_id": "12483",
+     "gsis_id": "00-0026498",
+     "player_id": "00-0026498",
+     "pos": "QB",
+     "line": "16/23, 140 YDS, 1 INT"
+    },
+    {
+     "cat": "rush",
+     "team": "LAR",
+     "name": "Blake Corum",
+     "espn_id": "4429096",
+     "gsis_id": "00-0039738",
+     "player_id": "00-0039738",
+     "pos": "RB",
+     "line": "32 CAR, 184 YDS, 1 TD"
+    },
+    {
+     "cat": "rec",
+     "team": "LAR",
+     "name": "Konata Mumpfield",
+     "espn_id": "4710855",
+     "gsis_id": "00-0040590",
+     "player_id": "00-0040590",
+     "pos": "WR",
+     "line": "4 REC, 69 YDS"
+    },
+    {
+     "cat": "sacks",
+     "team": "LAR",
+     "name": "Byron Young",
+     "espn_id": "4875196",
+     "gsis_id": "00-0039137",
+     "player_id": "00-0039137",
+     "pos": "LB",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "LAR",
+     "name": "Nate Landman",
+     "espn_id": "4243181",
+     "gsis_id": "00-0037587",
+     "player_id": "00-0037587",
+     "pos": "LB",
+     "line": "5"
+    },
+    {
+     "cat": "pass",
+     "team": "GB",
+     "name": "Jordan Love",
+     "espn_id": "4036378",
+     "gsis_id": "00-0036264",
+     "player_id": "00-0036264",
+     "pos": "QB",
+     "line": "17/29, 198 YDS, 1 TD, 2 INT"
+    },
+    {
+     "cat": "rush",
+     "team": "GB",
+     "name": "Savion Williams",
+     "espn_id": "4431487",
+     "gsis_id": "00-0040009",
+     "player_id": "00-0040009",
+     "pos": "WR",
+     "line": "2 CAR, 18 YDS"
+    },
+    {
+     "cat": "rec",
+     "team": "GB",
+     "name": "Christian Watson",
+     "espn_id": "4248528",
+     "gsis_id": "00-0038124",
+     "player_id": "00-0038124",
+     "pos": "WR",
+     "line": "4 REC, 65 YDS, 1 TD"
+    },
+    {
+     "cat": "sacks",
+     "team": "GB",
+     "name": "Micah Parsons",
+     "espn_id": "4361423",
+     "gsis_id": "00-0036932",
+     "player_id": "00-0036932",
+     "pos": "DE",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "GB",
+     "name": "Isaiah McDuffie",
+     "espn_id": "4239947",
+     "gsis_id": "00-0036658",
+     "player_id": "00-0036658",
+     "pos": "LB",
+     "line": "9"
+    }
+   ],
+   "scoring_plays": [
+    {
+     "quarter": 1,
+     "clock": "9:55",
+     "team": "LAR",
+     "type": "FG",
+     "text": "Brandon McManus 43 Yd Field Goal",
+     "away": 0,
+     "home": 3
+    },
+    {
+     "quarter": 1,
+     "clock": "3:12",
+     "team": "LAR",
+     "type": "FG",
+     "text": "Brandon McManus 41 Yd Field Goal",
+     "away": 0,
+     "home": 6
+    },
+    {
+     "quarter": 1,
+     "clock": "1:28",
+     "team": "GB",
+     "type": "FG",
+     "text": "Trey Smack 54 Yd Field Goal",
+     "away": 3,
+     "home": 6
+    },
+    {
+     "quarter": 2,
+     "clock": "11:29",
+     "team": "LAR",
+     "type": "TD",
+     "text": "Kyren Williams 7 Yd Rush (Brandon McManus Kick)",
+     "away": 3,
+     "home": 13
+    },
+    {
+     "quarter": 2,
+     "clock": "8:06",
+     "team": "GB",
+     "type": "TD",
+     "text": "Christian Watson 6 Yd pass from Jordan Love (Trey Smack Kick)",
+     "away": 10,
+     "home": 13
+    },
+    {
+     "quarter": 2,
+     "clock": "1:50",
+     "team": "GB",
+     "type": "FG",
+     "text": "Trey Smack 48 Yd Field Goal",
+     "away": 13,
+     "home": 13
+    },
+    {
+     "quarter": 3,
+     "clock": "6:58",
+     "team": "LAR",
+     "type": "TD",
+     "text": "Blake Corum 1 Yd Rush (Brandon McManus Kick)",
+     "away": 13,
+     "home": 20
+    },
+    {
+     "quarter": 4,
+     "clock": "6:13",
+     "team": "LAR",
+     "type": "FG",
+     "text": "Brandon McManus 40 Yd Field Goal",
+     "away": 13,
+     "home": 23
+    },
+    {
+     "quarter": 4,
+     "clock": "0:27",
+     "team": "LAR",
+     "type": "FG",
+     "text": "Brandon McManus 30 Yd Field Goal ",
+     "away": 13,
+     "home": 26
+    }
+   ],
+   "highlights": [
+    {
+     "title": "Kyren Williams walks in for a Rams TD",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1126/8ace7e2f-5bb7-4036-be43-d3436fe9f016/8ace7e2f-5bb7-4036-be43-d3436fe9f016.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50600428/kyren-williams-walks-rams-td",
+     "duration": 24
+    },
+    {
+     "title": "Jordan Love finds Christian Watson for Packers TD",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1126/87ea7994-ab94-4c4d-919e-38dcdf0224e7/87ea7994-ab94-4c4d-919e-38dcdf0224e7.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50600543/jordan-love-finds-christian-watson-packers-td",
+     "duration": 20
+    },
+    {
+     "title": "Vicious hit on Christian Watson gets Kamren Kinchens ejected",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1126/3c1f0b4f-cb4a-4799-9a63-7fce73f878b8/3c1f0b4f-cb4a-4799-9a63-7fce73f878b8.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50600829/vicious-hit-christian-watson-gets-kamren-kinchens-ejected",
+     "duration": 41
+    },
+    {
+     "title": "Blake Corum awarded go-ahead Rams TD after review",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1126/d4c41841-0580-455a-8c45-e8b8aef3ab64/d4c41841-0580-455a-8c45-e8b8aef3ab64.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50601135/blake-corum-awarded-go-ahead-rams-td-review",
+     "duration": 26
+    },
+    {
+     "title": "Micah Parsons tallies sack for Packers in return from injury",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1126/25aaef2b-9b2c-4ae4-9bc7-91831375ce92/25aaef2b-9b2c-4ae4-9bc7-91831375ce92.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50601318/micah-parsons-tallies-sack-packers-return-injury",
+     "duration": 19
+    },
+    {
+     "title": "Rams ice win with second INT of Jordan Love",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1126/4874dde9-cf58-4cd5-b30b-6a10111da4eb/4874dde9-cf58-4cd5-b30b-6a10111da4eb.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50601532/rams-ice-win-second-int-jordan-love",
+     "duration": 22
+    },
+    {
+     "title": "Rams pick up important home win over the Packers",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1126/125366bf-f501-4d3d-9ed7-13ce1273d9e7/125366bf-f501-4d3d-9ed7-13ce1273d9e7.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50601743/rams-pick-important-home-win-packers",
+     "duration": 80
+    }
+   ]
+  },
+  {
+   "id": "401873081",
+   "date": "2026-11-26T18:00Z",
+   "status": "Final",
+   "venue": "Ford Field",
+   "home": {
+    "team": "DET",
+    "name": "Detroit Lions",
+    "score": 35,
+    "winner": false,
+    "linescore": [
+     3,
+     16,
+     7,
+     9
+    ],
+    "record": "8-3"
+   },
+   "away": {
+    "team": "CHI",
+    "name": "Chicago Bears",
+    "score": 39,
+    "winner": true,
+    "linescore": [
+     0,
+     10,
+     14,
+     15
+    ],
+    "record": "9-2"
+   },
+   "team_stats": {
+    "away": {
+     "thirdDownEff": "7-14",
+     "totalYards": "458",
+     "netPassingYards": "312",
+     "rushingYards": "146",
+     "turnovers": "1",
+     "possessionTime": "29:27"
+    },
+    "home": {
+     "thirdDownEff": "4-12",
+     "totalYards": "549",
+     "netPassingYards": "303",
+     "rushingYards": "246",
+     "turnovers": "1",
+     "possessionTime": "30:33"
+    }
+   },
+   "leaders": [
+    {
+     "cat": "pass",
+     "team": "DET",
+     "name": "Jared Goff",
+     "espn_id": "3046779",
+     "gsis_id": "00-0033106",
+     "player_id": "00-0033106",
+     "pos": "QB",
+     "line": "25/36, 313 YDS, 1 TD, 1 INT"
+    },
+    {
+     "cat": "rush",
+     "team": "DET",
+     "name": "Jahmyr Gibbs",
+     "espn_id": "4429795",
+     "gsis_id": "00-0039139",
+     "player_id": "00-0039139",
+     "pos": "RB",
+     "line": "21 CAR, 205 YDS, 3 TD"
+    },
+    {
+     "cat": "rec",
+     "team": "DET",
+     "name": "Amon-Ra St. Brown",
+     "espn_id": "4374302",
+     "gsis_id": "00-0036963",
+     "player_id": "00-0036963",
+     "pos": "WR",
+     "line": "7 REC, 146 YDS"
+    },
+    {
+     "cat": "sacks",
+     "team": "DET",
+     "name": "Derrick Moore",
+     "espn_id": "4685461",
+     "gsis_id": "00-0041441",
+     "player_id": "00-0041441",
+     "pos": "DE",
+     "line": "2"
+    },
+    {
+     "cat": "tackles",
+     "team": "DET",
+     "name": "Malcolm Rodriguez",
+     "espn_id": "4241411",
+     "gsis_id": "00-0037289",
+     "player_id": "00-0037289",
+     "pos": "LB",
+     "line": "7"
+    },
+    {
+     "cat": "pass",
+     "team": "CHI",
+     "name": "Caleb Williams",
+     "espn_id": "4431611",
+     "gsis_id": "00-0039918",
+     "player_id": "00-0039918",
+     "pos": "QB",
+     "line": "30/44, 345 YDS, 2 TD"
+    },
+    {
+     "cat": "rush",
+     "team": "CHI",
+     "name": "D'Andre Swift",
+     "espn_id": "4259545",
+     "gsis_id": "00-0036275",
+     "player_id": "00-0036275",
+     "pos": "RB",
+     "line": "9 CAR, 65 YDS, 1 TD"
+    },
+    {
+     "cat": "rec",
+     "team": "CHI",
+     "name": "D'Andre Swift",
+     "espn_id": "4259545",
+     "gsis_id": "00-0036275",
+     "player_id": "00-0036275",
+     "pos": "RB",
+     "line": "7 REC, 97 YDS"
+    },
+    {
+     "cat": "tackles",
+     "team": "CHI",
+     "name": "Cam Lewis",
+     "espn_id": "3916577",
+     "gsis_id": "00-0035357",
+     "player_id": "00-0035357",
+     "pos": "CB",
+     "line": "10"
+    }
+   ],
+   "scoring_plays": [
+    {
+     "quarter": 1,
+     "clock": "11:28",
+     "team": "DET",
+     "type": "FG",
+     "text": "Jake Bates 24 Yd Field Goal",
+     "away": 0,
+     "home": 3
+    },
+    {
+     "quarter": 2,
+     "clock": "12:51",
+     "team": "DET",
+     "type": "TD",
+     "text": "Jahmyr Gibbs 1 Yd Rush (Jake Bates Kick)",
+     "away": 0,
+     "home": 10
+    },
+    {
+     "quarter": 2,
+     "clock": "10:52",
+     "team": "CHI",
+     "type": "FG",
+     "text": "Cairo Santos 40 Yd Field Goal",
+     "away": 3,
+     "home": 10
+    },
+    {
+     "quarter": 2,
+     "clock": "4:07",
+     "team": "CHI",
+     "type": "TD",
+     "text": "Kyle Monangai 1 Yd Rush (Cairo Santos Kick)",
+     "away": 10,
+     "home": 10
+    },
+    {
+     "quarter": 2,
+     "clock": "1:13",
+     "team": "DET",
+     "type": "SF",
+     "text": "Team Safety",
+     "away": 10,
+     "home": 12
+    },
+    {
+     "quarter": 2,
+     "clock": "0:06",
+     "team": "DET",
+     "type": "TD",
+     "text": "Sam LaPorta 11 Yd pass from Jared Goff (Jake Bates Kick)",
+     "away": 10,
+     "home": 19
+    },
+    {
+     "quarter": 3,
+     "clock": "10:40",
+     "team": "CHI",
+     "type": "TD",
+     "text": "Kyle Monangai 2 Yd Rush (Cairo Santos Kick)",
+     "away": 17,
+     "home": 19
+    },
+    {
+     "quarter": 3,
+     "clock": "5:45",
+     "team": "DET",
+     "type": "TD",
+     "text": "Jahmyr Gibbs 1 Yd Rush (Jake Bates Kick)",
+     "away": 17,
+     "home": 26
+    },
+    {
+     "quarter": 3,
+     "clock": "3:09",
+     "team": "CHI",
+     "type": "TD",
+     "text": "D'Andre Swift 30 Yd Rush (Cairo Santos Kick)",
+     "away": 24,
+     "home": 26
+    },
+    {
+     "quarter": 4,
+     "clock": "14:57",
+     "team": "DET",
+     "type": "FG",
+     "text": "Jake Bates 40 Yd Field Goal ",
+     "away": 24,
+     "home": 29
+    },
+    {
+     "quarter": 4,
+     "clock": "8:20",
+     "team": "DET",
+     "type": "TD",
+     "text": "Jahmyr Gibbs 70 Yd Rush (Jake Bates PAT Failed)",
+     "away": 24,
+     "home": 35
+    },
+    {
+     "quarter": 4,
+     "clock": "7:20",
+     "team": "CHI",
+     "type": "TD",
+     "text": "Rome Odunze 41 Yd pass from Caleb Williams (Caleb Williams Run for Two-Point Conversion)",
+     "away": 32,
+     "home": 35
+    },
+    {
+     "quarter": 4,
+     "clock": "0:03",
+     "team": "CHI",
+     "type": "TD",
+     "text": "Rome Odunze 6 Yd pass from Caleb Williams (Cairo Santos Kick)",
+     "away": 39,
+     "home": 35
+    }
+   ],
+   "highlights": [
+    {
+     "title": "Jared Goff links up with Sam LaPorta for a Lions TD",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1126/668723a37b1b4ff0a58fad4246c8b63c975/668723a37b1b4ff0a58fad4246c8b63c975.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50605699/jared-goff-links-sam-laporta-lions-td",
+     "duration": 19
+    },
+    {
+     "title": "Kyle Monangai squeezes into the end zone for a Bears TD",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1126/e29a4627900f4e8c83955dd542e1e6ea978/e29a4627900f4e8c83955dd542e1e6ea978.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50605877/kyle-monangai-squeezes-end-zone-bears-td",
+     "duration": 25
+    },
+    {
+     "title": "Jahmyr Gibbs barrels into the end zone for his 2nd TD of the game",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1126/31583f2c560842adb1b5fed4b38662891004/31583f2c560842adb1b5fed4b38662891004.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50605967/jahmyr-gibbs-barrels-end-zone-2nd-td-game",
+     "duration": 16
+    },
+    {
+     "title": "D'Andre Swift finds the space for a 30-yard Bears TD",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1126/0c3a0556b7c8453883d33cae4cbb063e999/0c3a0556b7c8453883d33cae4cbb063e999.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50605992/dandre-swift-finds-space-30-yard-bears-td",
+     "duration": 27
+    },
+    {
+     "title": "Jahmyr Gibbs erupts for his 3rd TD of the game with 70-yard dash",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1126/990feb416098477993111ced8bdc4bf7968/990feb416098477993111ced8bdc4bf7968.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50606065/jahmyr-gibbs-erupts-3rd-td-game-70-yard-dash",
+     "duration": 23
+    },
+    {
+     "title": "Caleb Williams finds Rome Odunze with a 40-yard dart for a Bears TD",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1126/d3b0632e7c1d43b68740f0835b3dd1a8972/d3b0632e7c1d43b68740f0835b3dd1a8972.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50606077/caleb-williams-finds-rome-odunze-40-yard-dart-bears-td",
+     "duration": 33
+    },
+    {
+     "title": "Caleb Williams finds Rome Odunze for game-winning Bears TD vs. Lions",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1126/80eba646f65c4fa497438f536c014b981001/80eba646f65c4fa497438f536c014b981001.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50606240/caleb-williams-finds-rome-odunze-game-winning-bears-td-vs-lions",
+     "duration": 43
+    },
+    {
+     "title": "Ben Johnson proud of TEs that stepped up after Colston Loveland injury",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1126/ss_20261126_184656314_3762581/ss_20261126_184656314_3762581.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50607202/ben-johnson-proud-tes-stepped-colston-loveland-injury",
+     "duration": 51
+    },
+    {
+     "title": "Dan Campbell: Lions' Thanksgiving loss to Bears will 'sting for a while'",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1126/ss_20261126_185334549_3762586/ss_20261126_185334549_3762586.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50607220/lions-thanksgiving-loss-bears-sting-while",
+     "duration": 73
+    },
+    {
+     "title": "Chicago Bears vs. Detroit Lions: Game Highlights",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1127/e3a81111c9e14bc792063650c546a1a677/e3a81111c9e14bc792063650c546a1a677.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50606402/game-highlights",
+     "duration": 96
+    }
+   ]
+  },
+  {
+   "id": "401873080",
+   "date": "2026-11-26T21:30Z",
+   "status": "Final",
+   "venue": "AT&T Stadium",
+   "home": {
+    "team": "DAL",
+    "name": "Dallas Cowboys",
+    "score": 38,
+    "winner": false,
+    "linescore": [
+     14,
+     14,
+     3,
+     7
+    ],
+    "record": "5-7"
+   },
+   "away": {
+    "team": "PHI",
+    "name": "Philadelphia Eagles",
+    "score": 39,
+    "winner": true,
+    "linescore": [
+     0,
+     10,
+     7,
+     22
+    ],
+    "record": "4-7"
+   },
+   "team_stats": {
+    "away": {
+     "thirdDownEff": "3-10",
+     "totalYards": "369",
+     "netPassingYards": "301",
+     "rushingYards": "68",
+     "turnovers": "1",
+     "possessionTime": "24:59"
+    },
+    "home": {
+     "thirdDownEff": "7-14",
+     "totalYards": "416",
+     "netPassingYards": "265",
+     "rushingYards": "151",
+     "turnovers": "1",
+     "possessionTime": "35:01"
+    }
+   },
+   "leaders": [
+    {
+     "cat": "pass",
+     "team": "DAL",
+     "name": "Dak Prescott",
+     "espn_id": "2577417",
+     "gsis_id": "00-0033077",
+     "player_id": "00-0033077",
+     "pos": "QB",
+     "line": "19/28, 291 YDS, 2 TD, 1 INT"
+    },
+    {
+     "cat": "rush",
+     "team": "DAL",
+     "name": "Javonte Williams",
+     "espn_id": "4361579",
+     "gsis_id": "00-0036997",
+     "player_id": "00-0036997",
+     "pos": "RB",
+     "line": "29 CAR, 101 YDS, 2 TD"
+    },
+    {
+     "cat": "rec",
+     "team": "DAL",
+     "name": "CeeDee Lamb",
+     "espn_id": "4241389",
+     "gsis_id": "00-0036358",
+     "player_id": "00-0036358",
+     "pos": "WR",
+     "line": "7 REC, 134 YDS"
+    },
+    {
+     "cat": "sacks",
+     "team": "DAL",
+     "name": "Quinnen Williams",
+     "espn_id": "4040982",
+     "gsis_id": "00-0035718",
+     "player_id": "00-0035718",
+     "pos": "DT",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "DAL",
+     "name": "Jalen Thompson",
+     "espn_id": "4043089",
+     "gsis_id": "00-0035705",
+     "player_id": "00-0035705",
+     "pos": "S",
+     "line": "6"
+    },
+    {
+     "cat": "pass",
+     "team": "PHI",
+     "name": "Joe Milton",
+     "espn_id": "4360698",
+     "gsis_id": "00-0039398",
+     "player_id": "00-0039398",
+     "pos": "QB",
+     "line": "21/31, 331 YDS, 3 TD, 1 INT"
+    },
+    {
+     "cat": "rush",
+     "team": "PHI",
+     "name": "Will Shipley",
+     "espn_id": "4431545",
+     "gsis_id": "00-0039746",
+     "player_id": "00-0039746",
+     "pos": "RB",
+     "line": "10 CAR, 46 YDS"
+    },
+    {
+     "cat": "rec",
+     "team": "PHI",
+     "name": "DeVonta Smith",
+     "espn_id": "4241478",
+     "gsis_id": "00-0036912",
+     "player_id": "00-0036912",
+     "pos": "WR",
+     "line": "11 REC, 200 YDS, 2 TD"
+    },
+    {
+     "cat": "sacks",
+     "team": "PHI",
+     "name": "Jeremiah Trotter Jr.",
+     "espn_id": "4432777",
+     "gsis_id": "00-0039826",
+     "player_id": "00-0039826",
+     "pos": "LB",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "PHI",
+     "name": "Jeremiah Trotter Jr.",
+     "espn_id": "4432777",
+     "gsis_id": "00-0039826",
+     "player_id": "00-0039826",
+     "pos": "LB",
+     "line": "12"
+    }
+   ],
+   "scoring_plays": [
+    {
+     "quarter": 1,
+     "clock": "8:50",
+     "team": "DAL",
+     "type": "TD",
+     "text": "Javonte Williams 1 Yd Rush (Brandon Aubrey Kick)",
+     "away": 0,
+     "home": 7
+    },
+    {
+     "quarter": 1,
+     "clock": "0:36",
+     "team": "DAL",
+     "type": "TD",
+     "text": "KaVontae Turpin 31 Yd pass from Dak Prescott (Brandon Aubrey Kick)",
+     "away": 0,
+     "home": 14
+    },
+    {
+     "quarter": 2,
+     "clock": "8:09",
+     "team": "PHI",
+     "type": "FG",
+     "text": "Jake Elliott 48 Yd Field Goal ",
+     "away": 3,
+     "home": 14
+    },
+    {
+     "quarter": 2,
+     "clock": "5:09",
+     "team": "DAL",
+     "type": "TD",
+     "text": "Javonte Williams 12 Yd Rush (Brandon Aubrey Kick)",
+     "away": 3,
+     "home": 21
+    },
+    {
+     "quarter": 2,
+     "clock": "4:06",
+     "team": "PHI",
+     "type": "TD",
+     "text": "DeVonta Smith 50 Yd pass from Joe Milton (Jake Elliott Kick)",
+     "away": 10,
+     "home": 21
+    },
+    {
+     "quarter": 2,
+     "clock": "0:04",
+     "team": "DAL",
+     "type": "TD",
+     "text": "Javonte Williams 12 Yd pass from Dak Prescott (Brandon Aubrey Kick)",
+     "away": 10,
+     "home": 28
+    },
+    {
+     "quarter": 3,
+     "clock": "3:35",
+     "team": "DAL",
+     "type": "FG",
+     "text": "Brandon Aubrey 59 Yd Field Goal ",
+     "away": 10,
+     "home": 31
+    },
+    {
+     "quarter": 3,
+     "clock": "0:15",
+     "team": "PHI",
+     "type": "TD",
+     "text": "DeVonta Smith 45 Yd pass from Joe Milton (Jake Elliott Kick)",
+     "away": 17,
+     "home": 31
+    },
+    {
+     "quarter": 4,
+     "clock": "13:46",
+     "team": "PHI",
+     "type": "TD",
+     "text": "Kenny Moore II 3 Yd return of blocked punt. (Jake Elliott Kick)",
+     "away": 24,
+     "home": 31
+    },
+    {
+     "quarter": 4,
+     "clock": "10:11",
+     "team": "DAL",
+     "type": "TD",
+     "text": "Dak Prescott 14 Yd Rush (Brandon Aubrey Kick)",
+     "away": 24,
+     "home": 38
+    },
+    {
+     "quarter": 4,
+     "clock": "9:09",
+     "team": "PHI",
+     "type": "TD",
+     "text": "Joe Milton 15 Yd Rush (Two-Point Pass Conversion Failed)",
+     "away": 30,
+     "home": 38
+    },
+    {
+     "quarter": 4,
+     "clock": "2:10",
+     "team": "PHI",
+     "type": "TD",
+     "text": "Makai Lemon 24 Yd pass from Joe Milton (Two-Point Pass Conversion Failed)",
+     "away": 36,
+     "home": 38
+    },
+    {
+     "quarter": 4,
+     "clock": "0:02",
+     "team": "PHI",
+     "type": "FG",
+     "text": "Jake Elliott 59 Yd Field Goal",
+     "away": 39,
+     "home": 38
+    }
+   ],
+   "highlights": [
+    {
+     "title": "Eagles stun Cowboys with largest-ever Thanksgiving game comeback",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1127/452c2dab-cd99-4b19-a7b6-f7dfeb3668e1/452c2dab-cd99-4b19-a7b6-f7dfeb3668e1.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50607884/eagles-stun-cowboys-largest-ever-thanksgiving-game-comeback",
+     "duration": 85
+    },
+    {
+     "title": "Joe Milton III launches 50-yard TD to DeVonta Smith",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1126/af044482288a4b7f9f9fdbd095f360071099/af044482288a4b7f9f9fdbd095f360071099.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50607027/joe-milton-iii-launches-50-yard-td-devonta-smith",
+     "duration": 31
+    },
+    {
+     "title": "Javonte Williams completes TD hat trick before halftime for Cowboys",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1126/e349e3f6153347ab814865963675cc851194/e349e3f6153347ab814865963675cc851194.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50607100/javonte-williams-completes-td-hat-trick-half-cowboys",
+     "duration": 29
+    },
+    {
+     "title": "Eagles block Cowboys' punt, return it to house for TD",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1126/4ab309f3c07b462180a211005111ddcd1208/4ab309f3c07b462180a211005111ddcd1208.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50607524/eagles-block-cowboys-punt-return-house-td",
+     "duration": 27
+    },
+    {
+     "title": "Joe Milton III finds DeVonta Smith for another Eagles TD",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1126/24e2e220a9b84f7fa3437036720d98331200/24e2e220a9b84f7fa3437036720d98331200.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50607558/joe-milton-iii-finds-devonta-smith-another-eagles-td",
+     "duration": 28
+    },
+    {
+     "title": "Airborne Dak Prescott reaches for the pylon through contact for wild TD",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1126/6292659daa4e41a18d3baee387f9314b1199/6292659daa4e41a18d3baee387f9314b1199.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50607562/airborne-dak-prescott-reaches-pylon-contact-wild-td",
+     "duration": 21
+    },
+    {
+     "title": "Eagles inch closer with late TD, but fail on 2-point conversion",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1126/44381e8017d8424b83162384056ec0e61227/44381e8017d8424b83162384056ec0e61227.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50607700/eagles-inch-closer-late-td-fail-2-point-conversion",
+     "duration": 18
+    }
+   ]
+  },
+  {
+   "id": "401873082",
+   "date": "2026-11-27T01:20Z",
+   "status": "Final",
+   "venue": "Highmark Stadium",
+   "home": {
+    "team": "BUF",
+    "name": "Buffalo Bills",
+    "score": 13,
+    "winner": true,
+    "linescore": [
+     0,
+     7,
+     0,
+     6
+    ],
+    "record": "10-1"
+   },
+   "away": {
+    "team": "KC",
+    "name": "Kansas City Chiefs",
+    "score": 10,
+    "winner": false,
+    "linescore": [
+     0,
+     3,
+     7,
+     0
+    ],
+    "record": "8-3"
+   },
+   "team_stats": {
+    "away": {
+     "thirdDownEff": "2-11",
+     "totalYards": "241",
+     "netPassingYards": "167",
+     "rushingYards": "74",
+     "turnovers": "0",
+     "possessionTime": "23:05"
+    },
+    "home": {
+     "thirdDownEff": "9-16",
+     "totalYards": "230",
+     "netPassingYards": "64",
+     "rushingYards": "166",
+     "turnovers": "2",
+     "possessionTime": "36:55"
+    }
+   },
+   "leaders": [
+    {
+     "cat": "pass",
+     "team": "BUF",
+     "name": "Josh Allen",
+     "espn_id": "3918298",
+     "gsis_id": "00-0034857",
+     "player_id": "00-0034857",
+     "pos": "QB",
+     "line": "10/21, 81 YDS, 2 INT"
+    },
+    {
+     "cat": "rush",
+     "team": "BUF",
+     "name": "James Cook III",
+     "espn_id": "4379399",
+     "gsis_id": "00-0037248",
+     "player_id": "00-0037248",
+     "pos": "RB",
+     "line": "32 CAR, 117 YDS, 1 TD"
+    },
+    {
+     "cat": "rec",
+     "team": "BUF",
+     "name": "Khalil Shakir",
+     "espn_id": "4373678",
+     "gsis_id": "00-0037261",
+     "player_id": "00-0037261",
+     "pos": "WR",
+     "line": "3 REC, 33 YDS"
+    },
+    {
+     "cat": "sacks",
+     "team": "BUF",
+     "name": "Greg Rousseau",
+     "espn_id": "4362506",
+     "gsis_id": "00-0036914",
+     "player_id": "00-0036914",
+     "pos": "LB",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "BUF",
+     "name": "Terrel Bernard",
+     "espn_id": "4259166",
+     "gsis_id": "00-0037254",
+     "player_id": "00-0037254",
+     "pos": "LB",
+     "line": "6"
+    },
+    {
+     "cat": "pass",
+     "team": "KC",
+     "name": "Patrick Mahomes",
+     "espn_id": "3139477",
+     "gsis_id": "00-0033873",
+     "player_id": "00-0033873",
+     "pos": "QB",
+     "line": "16/29, 174 YDS"
+    },
+    {
+     "cat": "rush",
+     "team": "KC",
+     "name": "Emmett Johnson",
+     "espn_id": "4832955",
+     "gsis_id": "00-0041013",
+     "player_id": "00-0041013",
+     "pos": "RB",
+     "line": "17 CAR, 72 YDS, 1 TD"
+    },
+    {
+     "cat": "rec",
+     "team": "KC",
+     "name": "Travis Kelce",
+     "espn_id": "15847",
+     "gsis_id": "00-0030506",
+     "player_id": "00-0030506",
+     "pos": "TE",
+     "line": "4 REC, 71 YDS"
+    },
+    {
+     "cat": "sacks",
+     "team": "KC",
+     "name": "Nick Bolton",
+     "espn_id": "4362759",
+     "gsis_id": "00-0036621",
+     "player_id": "00-0036621",
+     "pos": "LB",
+     "line": "1"
+    },
+    {
+     "cat": "tackles",
+     "team": "KC",
+     "name": "Nick Bolton",
+     "espn_id": "4362759",
+     "gsis_id": "00-0036621",
+     "player_id": "00-0036621",
+     "pos": "LB",
+     "line": "14"
+    }
+   ],
+   "scoring_plays": [
+    {
+     "quarter": 2,
+     "clock": "14:32",
+     "team": "BUF",
+     "type": "TD",
+     "text": "James Cook III 5 Yd Rush (Tyler Bass Kick)",
+     "away": 0,
+     "home": 7
+    },
+    {
+     "quarter": 2,
+     "clock": "0:02",
+     "team": "KC",
+     "type": "FG",
+     "text": "Harrison Butker 26 Yd Field Goal ",
+     "away": 3,
+     "home": 7
+    },
+    {
+     "quarter": 3,
+     "clock": "11:28",
+     "team": "KC",
+     "type": "TD",
+     "text": "Emmett Johnson 1 Yd Rush (Harrison Butker Kick)",
+     "away": 10,
+     "home": 7
+    },
+    {
+     "quarter": 4,
+     "clock": "11:58",
+     "team": "BUF",
+     "type": "FG",
+     "text": "Tyler Bass 54 Yd Field Goal",
+     "away": 10,
+     "home": 10
+    },
+    {
+     "quarter": 4,
+     "clock": "0:00",
+     "team": "BUF",
+     "type": "FG",
+     "text": "Tyler Bass 57 Yd Field Goal ",
+     "away": 10,
+     "home": 13
+    }
+   ],
+   "highlights": [
+    {
+     "title": "Kansas City Chiefs vs. Buffalo Bills: Game Highlight",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1127/998419b4a7f943d7be5201414d164d2279/998419b4a7f943d7be5201414d164d2279.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50609218/game-highlight",
+     "duration": 68
+    },
+    {
+     "title": "James Cook III finds an opening for a Bills TD",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1126/6c1f1ff92b8744e6b4fd6e14c1f28a151353/6c1f1ff92b8744e6b4fd6e14c1f28a151353.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50608111/james-cook-iii-finds-opening-bills-td",
+     "duration": 24
+    },
+    {
+     "title": "Josh Allen picked off in the end zone",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1126/e14c19e746ab40b0be18263d4fc560b31395/e14c19e746ab40b0be18263d4fc560b31395.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50608223/josh-allen-picked-end-zone",
+     "duration": 16
+    },
+    {
+     "title": "Chiefs take the lead with Emmett Johnson TD",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1126/bab6828d90444774ba33d82ac7a0b1351384/bab6828d90444774ba33d82ac7a0b1351384.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50608653/chiefs-take-lead-emmett-johnson-td",
+     "duration": 31
+    },
+    {
+     "title": "Josh Allen's pass ricochets off Khalil Shakir for his second INT",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1127/1b32bd69-d907-4bd2-b65c-74ce3b3c6ce6/1b32bd69-d907-4bd2-b65c-74ce3b3c6ce6.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50608845/josh-allen-pass-ricochets-khalil-shakir-second-int",
+     "duration": 40
+    },
+    {
+     "title": "Bills capitalize on blocked punt with winning FG as time expires",
+     "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/2026/1126/ffdc2ffe037b40d48c5065f243769cc41434/ffdc2ffe037b40d48c5065f243769cc41434.jpg",
+     "url": "https://www.espn.com/video/clip/_/id/50609150/bills-capitalize-blocked-punt-winning-fg-expires",
+     "duration": 68
+    }
+   ]
+  }
+ ],
+ "partial": true,
+ "games_remaining": 12,
+ "pending": [
+  {
+   "id": "401873083",
+   "date": "2026-11-27T20:00Z",
+   "state": "pre",
+   "home": {
+    "team": "PIT"
+   },
+   "away": {
+    "team": "DEN"
+   }
+  },
+  {
+   "id": "401873087",
+   "date": "2026-11-29T18:00Z",
+   "state": "pre",
+   "home": {
+    "team": "CIN"
+   },
+   "away": {
+    "team": "NO"
+   }
+  },
+  {
+   "id": "401873088",
+   "date": "2026-11-29T18:00Z",
+   "state": "pre",
+   "home": {
+    "team": "IND"
+   },
+   "away": {
+    "team": "NYG"
+   }
+  },
+  {
+   "id": "401873089",
+   "date": "2026-11-29T18:00Z",
+   "state": "pre",
+   "home": {
+    "team": "MIA"
+   },
+   "away": {
+    "team": "NYJ"
+   }
+  },
+  {
+   "id": "401873084",
+   "date": "2026-11-29T18:00Z",
+   "state": "pre",
+   "home": {
+    "team": "MIN"
+   },
+   "away": {
+    "team": "ATL"
+   }
+  },
+  {
+   "id": "401873090",
+   "date": "2026-11-29T18:00Z",
+   "state": "pre",
+   "home": {
+    "team": "JAX"
+   },
+   "away": {
+    "team": "TEN"
+   }
+  },
+  {
+   "id": "401873085",
+   "date": "2026-11-29T18:00Z",
+   "state": "pre",
+   "home": {
+    "team": "HOU"
+   },
+   "away": {
+    "team": "BAL"
+   }
+  },
+  {
+   "id": "401873093",
+   "date": "2026-11-29T21:05Z",
+   "state": "pre",
+   "home": {
+    "team": "LAC"
+   },
+   "away": {
+    "team": "NE"
+   }
+  },
+  {
+   "id": "401873092",
+   "date": "2026-11-29T21:25Z",
+   "state": "pre",
+   "home": {
+    "team": "ARZ"
+   },
+   "away": {
+    "team": "WAS"
+   }
+  },
+  {
+   "id": "401873091",
+   "date": "2026-11-29T21:25Z",
+   "state": "pre",
+   "home": {
+    "team": "SF"
+   },
+   "away": {
+    "team": "SEA"
+   }
+  },
+  {
+   "id": "401873086",
+   "date": "2026-11-30T01:20Z",
+   "state": "pre",
+   "home": {
+    "team": "CLE"
+   },
+   "away": {
+    "team": "LV"
+   }
+  },
+  {
+   "id": "401873094",
+   "date": "2026-12-01T01:15Z",
+   "state": "pre",
+   "home": {
+    "team": "TB"
+   },
+   "away": {
+    "team": "CAR"
+   }
+  }
+ ],
+ "fetched_at": "2026-11-27T14:34:33Z"
+}

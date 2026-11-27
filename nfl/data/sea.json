@@ -208,6 +208,28 @@
         "cap_number": "$10,418,500",
         "stats": {},
         "stats_season": 2026
+      },
+      {
+        "name": "Bobby Hart",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/LAC",
+        "standard_slot": "RT",
+        "standard_pos": "OL",
+        "cap_number": "$418,056",
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Chase Lundt",
+        "depth": 3,
+        "injured": false,
+        "attainment": "P/Buf",
+        "standard_slot": "RT",
+        "standard_pos": "OL",
+        "cap_number": "$390,833",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "TE": [
@@ -317,6 +339,17 @@
         "cap_number": "$1,423,656",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Adrian Martinez",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "QB",
+        "standard_pos": "QB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "RB": [
@@ -356,26 +389,8 @@
         "stats_season": 2026
       },
       {
-        "name": "George Holani",
-        "depth": 3,
-        "injured": false,
-        "attainment": "CF24",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": "$1,075,000",
-        "stats": {
-          "CAR": 37,
-          "RU YDS": 117,
-          "RU TDs": 1,
-          "REC": 12,
-          "RE YDS": 88,
-          "TGT": 15
-        },
-        "stats_season": 2026
-      },
-      {
         "name": "Emanuel Wilson",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "U/GB",
         "standard_slot": "RB",
@@ -393,7 +408,7 @@
       },
       {
         "name": "Velus Jones Jr.",
-        "depth": 5,
+        "depth": 4,
         "injured": false,
         "attainment": "SF25",
         "standard_slot": "RB",
@@ -407,6 +422,17 @@
           "TGT": 1
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Jacob De Jesus",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "FB": [
@@ -807,6 +833,19 @@
           "TFL": 3
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Trevon Diggs",
+        "depth": 2,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RCB",
+        "standard_pos": "CB",
+        "cap_number": "$418,056",
+        "stats": {
+          "TKL": 1
+        },
+        "stats_season": 2026
       }
     ],
     "NB": [
@@ -824,19 +863,6 @@
           "PD": 3,
           "TFL": 4,
           "QB HIT": 9
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Avery Smith",
-        "depth": 2,
-        "injured": false,
-        "attainment": "T/LAC",
-        "standard_slot": "NB",
-        "standard_pos": "CB",
-        "cap_number": "$885,000",
-        "stats": {
-          "TKL": 2
         },
         "stats_season": 2026
       }
@@ -917,17 +943,6 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Bobby Hart",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/LAC",
-        "standard_slot": "LT",
-        "standard_pos": "OL",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "OG": [
@@ -989,19 +1004,6 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
-      },
-      {
-        "name": "Trevon Diggs",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "CB",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {
-          "TKL": 1
-        },
-        "stats_season": 2026
       }
     ],
     "S": [
@@ -1019,8 +1021,26 @@
     ],
     "IR": [
       {
-        "name": "Julian Neal",
+        "name": "George Holani",
         "depth": 1,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$1,075,000",
+        "stats": {
+          "CAR": 37,
+          "RU YDS": 117,
+          "RU TDs": 1,
+          "REC": 12,
+          "RE YDS": 88,
+          "TGT": 15
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Julian Neal",
+        "depth": 2,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1033,7 +1053,7 @@
       },
       {
         "name": "Elijah Arroyo",
-        "depth": 2,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1049,7 +1069,7 @@
       },
       {
         "name": "Robbie Ouzts",
-        "depth": 3,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1060,7 +1080,7 @@
       },
       {
         "name": "Jake Bobo",
-        "depth": 4,
+        "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1071,7 +1091,7 @@
       },
       {
         "name": "Mason Richman",
-        "depth": 5,
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1082,7 +1102,7 @@
       },
       {
         "name": "Bud Clark",
-        "depth": 6,
+        "depth": 7,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",

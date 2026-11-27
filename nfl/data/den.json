@@ -148,6 +148,17 @@
         "cap_number": "$10,600,000",
         "stats": {},
         "stats_season": 2026
+      },
+      {
+        "name": "Gavin Ortega",
+        "depth": 2,
+        "injured": false,
+        "attainment": "CF26",
+        "standard_slot": "LG",
+        "standard_pos": "OL",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "C": [
@@ -372,37 +383,25 @@
         "stats_season": 2026
       },
       {
-        "name": "J.k. Dobbins",
+        "name": "Tyler Badie",
         "depth": 2,
         "injured": false,
-        "attainment": "U/LAC",
+        "attainment": "P/Bal",
         "standard_slot": "RB",
         "standard_pos": "RB",
-        "cap_number": "$6,000,000",
+        "cap_number": "$735,000",
         "stats": {
-          "CAR": 99,
-          "RU YDS": 324,
-          "RU TDs": 3,
-          "REC": 9,
-          "RE YDS": 31,
-          "TGT": 10
+          "CAR": 6,
+          "RU YDS": 22,
+          "REC": 6,
+          "RE YDS": 67,
+          "TGT": 7
         },
         "stats_season": 2026
       },
       {
-        "name": "Jaret Patterson",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "RB",
-        "standard_pos": "RB",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Cody Schrader",
-        "depth": 4,
+        "depth": 3,
         "injured": false,
         "attainment": "W/Hou",
         "standard_slot": "RB",
@@ -413,6 +412,17 @@
           "RU YDS": 3
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Jaret Patterson",
+        "depth": 4,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
       }
     ],
     "FB": [
@@ -508,22 +518,6 @@
           "SACKS": 5.0,
           "TFL": 4,
           "QB HIT": 23
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Sai'vion Jones",
-        "depth": 2,
-        "injured": false,
-        "attainment": "25/3",
-        "standard_slot": "RE",
-        "standard_pos": "DI",
-        "cap_number": "$1,400,269",
-        "stats": {
-          "TKL": 2,
-          "SACKS": 1.0,
-          "TFL": 1,
-          "QB HIT": 3
         },
         "stats_season": 2026
       }
@@ -923,19 +917,6 @@
         "stats_season": null
       }
     ],
-    "OG": [
-      {
-        "name": "Gavin Ortega",
-        "depth": 1,
-        "injured": false,
-        "attainment": "CF26",
-        "standard_slot": "OG",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
-      }
-    ],
     "ED": [
       {
         "name": "David Agoha",
@@ -964,6 +945,17 @@
       {
         "name": "Jordan Miller",
         "depth": 1,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "RE",
+        "standard_pos": "DI",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Khalen Saunders",
+        "depth": 2,
         "injured": false,
         "attainment": "SF26",
         "standard_slot": "RE",
@@ -1027,8 +1019,24 @@
     ],
     "IR": [
       {
-        "name": "Eyioma Uwazurike",
+        "name": "Sai'vion Jones",
         "depth": 1,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$1,400,269",
+        "stats": {
+          "TKL": 2,
+          "SACKS": 1.0,
+          "TFL": 1,
+          "QB HIT": 3
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Eyioma Uwazurike",
+        "depth": 2,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1044,7 +1052,7 @@
       },
       {
         "name": "Rj Harvey",
-        "depth": 2,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1062,7 +1070,7 @@
       },
       {
         "name": "Jonah Elliss",
-        "depth": 3,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1074,23 +1082,6 @@
           "PD": 1,
           "TFL": 1,
           "QB HIT": 2
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Tyler Badie",
-        "depth": 4,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$735,000",
-        "stats": {
-          "CAR": 6,
-          "RU YDS": 22,
-          "REC": 6,
-          "RE YDS": 67,
-          "TGT": 7
         },
         "stats_season": 2026
       },
@@ -1150,6 +1141,26 @@
         "cap_number": "$569,000",
         "stats": {},
         "stats_season": null
+      }
+    ],
+    "SUS": [
+      {
+        "name": "J.k. Dobbins",
+        "depth": 1,
+        "injured": false,
+        "attainment": null,
+        "standard_slot": "SUS",
+        "standard_pos": "DEF",
+        "cap_number": null,
+        "stats": {
+          "CAR": 99,
+          "RU YDS": 324,
+          "RU TDs": 3,
+          "REC": 9,
+          "RE YDS": 31,
+          "TGT": 10
+        },
+        "stats_season": 2026
       }
     ],
     "DFR": [

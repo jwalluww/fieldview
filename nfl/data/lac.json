@@ -24,18 +24,18 @@
         "stats_season": 2026
       },
       {
-        "name": "Theo Wease Jr.",
+        "name": "Keandre Lambert-smith",
         "depth": 2,
         "injured": false,
-        "attainment": "SF26",
+        "attainment": "25/5",
         "standard_slot": "LWR",
         "standard_pos": "WR",
-        "cap_number": "$781,667",
+        "cap_number": "$1,003,667",
         "stats": {
-          "TGT": 5,
-          "REC": 3,
-          "YDS": 37,
-          "YAC": 6
+          "TGT": 13,
+          "REC": 6,
+          "YDS": 82,
+          "YAC": 20
         },
         "stats_season": 2026
       }
@@ -69,22 +69,6 @@
           "TGT": 3,
           "REC": 1,
           "YDS": 13
-        },
-        "stats_season": 2026
-      },
-      {
-        "name": "Keandre Lambert-smith",
-        "depth": 3,
-        "injured": false,
-        "attainment": "25/5",
-        "standard_slot": "RWR",
-        "standard_pos": "WR",
-        "cap_number": "$1,003,667",
-        "stats": {
-          "TGT": 13,
-          "REC": 6,
-          "YDS": 82,
-          "YAC": 20
         },
         "stats_season": 2026
       }
@@ -307,17 +291,6 @@
         "cap_number": null,
         "stats": {},
         "stats_season": 2026
-      },
-      {
-        "name": "Josiah Deguara",
-        "depth": 5,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "TE",
-        "standard_pos": "TE",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "QB": [
@@ -427,6 +400,17 @@
         "depth": 4,
         "injured": false,
         "attainment": "SF25",
+        "standard_slot": "RB",
+        "standard_pos": "RB",
+        "cap_number": null,
+        "stats": {},
+        "stats_season": null
+      },
+      {
+        "name": "Ian Wheeler",
+        "depth": 5,
+        "injured": false,
+        "attainment": "SF26",
         "standard_slot": "RB",
         "standard_pos": "RB",
         "cap_number": null,
@@ -827,20 +811,6 @@
           "PD": 8
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Deane Leonard",
-        "depth": 2,
-        "injured": false,
-        "attainment": "22/7",
-        "standard_slot": "RCB",
-        "standard_pos": "CB",
-        "cap_number": "$1,402,500",
-        "stats": {
-          "TKL": 8,
-          "PD": 1
-        },
-        "stats_season": 2026
       }
     ],
     "NB": [
@@ -874,6 +844,17 @@
           "PD": 5
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Avery Smith",
+        "depth": 3,
+        "injured": false,
+        "attainment": "W/Sea",
+        "standard_slot": "NB",
+        "standard_pos": "CB",
+        "cap_number": "$344,167",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "PT": [
@@ -928,6 +909,22 @@
         "cap_number": null,
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Theo Wease Jr.",
+        "depth": 3,
+        "injured": false,
+        "attainment": "SF26",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {
+          "TGT": 5,
+          "REC": 3,
+          "YDS": 37,
+          "YAC": 6
+        },
+        "stats_season": 2026
       }
     ],
     "OT": [
@@ -1028,8 +1025,22 @@
     ],
     "IR": [
       {
-        "name": "Rodney Shelley",
+        "name": "Deane Leonard",
         "depth": 1,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$1,402,500",
+        "stats": {
+          "TKL": 8,
+          "PD": 1
+        },
+        "stats_season": 2026
+      },
+      {
+        "name": "Rodney Shelley",
+        "depth": 2,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1043,7 +1054,7 @@
       },
       {
         "name": "Branson Taylor",
-        "depth": 2,
+        "depth": 3,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1054,7 +1065,7 @@
       },
       {
         "name": "Derwin James Jr.",
-        "depth": 3,
+        "depth": 4,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1068,7 +1079,7 @@
       },
       {
         "name": "Alec Ingold",
-        "depth": 4,
+        "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1083,7 +1094,7 @@
       },
       {
         "name": "Trevor Penning",
-        "depth": 5,
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1094,7 +1105,7 @@
       },
       {
         "name": "Trey Lance",
-        "depth": 6,
+        "depth": 7,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1105,7 +1116,7 @@
       },
       {
         "name": "Rashawn Slater",
-        "depth": 7,
+        "depth": 8,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1116,7 +1127,7 @@
       },
       {
         "name": "Tyler Biadasz",
-        "depth": 8,
+        "depth": 9,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",

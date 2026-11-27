@@ -124,17 +124,6 @@
         "cap_number": "$20,012,845",
         "stats": {},
         "stats_season": 2026
-      },
-      {
-        "name": "Vederian Lowe",
-        "depth": 2,
-        "injured": false,
-        "attainment": "U/NE",
-        "standard_slot": "LT",
-        "standard_pos": "OL",
-        "cap_number": "$2,292,000",
-        "stats": {},
-        "stats_season": 2026
       }
     ],
     "LG": [
@@ -211,13 +200,13 @@
     ],
     "RT": [
       {
-        "name": "Colton Mckivitz",
+        "name": "Vederian Lowe",
         "depth": 1,
         "injured": false,
-        "attainment": "20/5",
+        "attainment": "U/NE",
         "standard_slot": "RT",
         "standard_pos": "OL",
-        "cap_number": "$5,823,555",
+        "cap_number": "$2,292,000",
         "stats": {},
         "stats_season": 2026
       },
@@ -702,6 +691,19 @@
           "PD": 7
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Siran Neal",
+        "depth": 2,
+        "injured": false,
+        "attainment": "U/Mia",
+        "standard_slot": "LCB",
+        "standard_pos": "CB",
+        "cap_number": "$1,750,000",
+        "stats": {
+          "TKL": 8
+        },
+        "stats_season": 2026
       }
     ],
     "SS": [
@@ -821,17 +823,15 @@
         "stats_season": 2026
       },
       {
-        "name": "Siran Neal",
+        "name": "Nate Hobbs",
         "depth": 2,
         "injured": false,
-        "attainment": "U/Mia",
+        "attainment": "CC/GB",
         "standard_slot": "NB",
         "standard_pos": "CB",
-        "cap_number": "$1,750,000",
-        "stats": {
-          "TKL": 8
-        },
-        "stats_season": 2026
+        "cap_number": "$3,380,000",
+        "stats": {},
+        "stats_season": null
       }
     ],
     "PT": [
@@ -902,6 +902,23 @@
           "YAC": 15
         },
         "stats_season": 2026
+      },
+      {
+        "name": "Brandin Cooks",
+        "depth": 4,
+        "injured": false,
+        "attainment": "U/Buf",
+        "standard_slot": "LWR",
+        "standard_pos": "WR",
+        "cap_number": null,
+        "stats": {
+          "TGT": 10,
+          "REC": 5,
+          "YDS": 58,
+          "TDs": 1,
+          "YAC": 14
+        },
+        "stats_season": 2026
       }
     ],
     "OT": [
@@ -954,17 +971,6 @@
           "QB HIT": 3
         },
         "stats_season": 2026
-      },
-      {
-        "name": "Robert Beal Jr.",
-        "depth": 3,
-        "injured": false,
-        "attainment": "SF26",
-        "standard_slot": "ED",
-        "standard_pos": "DEF",
-        "cap_number": null,
-        "stats": {},
-        "stats_season": null
       }
     ],
     "DT": [
@@ -1081,19 +1087,8 @@
         "stats_season": null
       },
       {
-        "name": "Austen Pleasants",
-        "depth": 5,
-        "injured": true,
-        "attainment": null,
-        "standard_slot": "IR",
-        "standard_pos": "DEF",
-        "cap_number": "$1,075,000",
-        "stats": {},
-        "stats_season": null
-      },
-      {
         "name": "Nick Martin",
-        "depth": 6,
+        "depth": 5,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1104,7 +1099,7 @@
       },
       {
         "name": "Sam Okuayinonu",
-        "depth": 7,
+        "depth": 6,
         "injured": true,
         "attainment": null,
         "standard_slot": "IR",
@@ -1112,6 +1107,17 @@
         "cap_number": "$2,280,000",
         "stats": {},
         "stats_season": null
+      },
+      {
+        "name": "Colton Mckivitz",
+        "depth": 7,
+        "injured": true,
+        "attainment": null,
+        "standard_slot": "IR",
+        "standard_pos": "DEF",
+        "cap_number": "$5,823,555",
+        "stats": {},
+        "stats_season": 2026
       },
       {
         "name": "Gracen Halton",
@@ -1200,13 +1206,13 @@
     ],
     "DFR": [
       {
-        "name": "Nate Hobbs",
+        "name": "Austen Pleasants",
         "depth": 1,
         "injured": true,
         "attainment": null,
         "standard_slot": "DFR",
         "standard_pos": "DEF",
-        "cap_number": "$3,380,000",
+        "cap_number": "$1,075,000",
         "stats": {},
         "stats_season": null
       }
