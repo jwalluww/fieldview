@@ -66,6 +66,17 @@ def resolve_position(nba_pos, depth_pos, ratings_positions):
     return None
 
 
+def resolve_positions(position, depth_pos, ratings_positions):
+    """Every position listed for a player, primary first, from the same source
+    resolve_position() took `position` from: the depth chart's string, else 2K's
+    (minus the height token), else just `position`. Granular tokens only."""
+    for raw in (depth_pos, ratings_positions):
+        if primary_position(raw):
+            tokens = [t.strip() for t in raw.split("/")]
+            return list(dict.fromkeys(t for t in tokens if t in GRANULAR_POSITIONS))
+    return [position] if position in GRANULAR_POSITIONS else []
+
+
 def log_position_counts(positions):
     """Prints players per position and warns (never fails) when one is thin, so
     a broken position source shows up in the job log."""
@@ -135,15 +146,16 @@ def main():
         rotation = resolve_rotation(pid, p.get("rotation_status"), depth_by_id)
         team = resolve_team(pid, p.get("team"), depth_by_id)
 
+        depth_pos = depth_by_id.get(pid, {}).get("position")
+        ratings_positions = rating.get("positions") if rating else None
+        position = resolve_position(p.get("position"), depth_pos, ratings_positions)
+
         output[pid_str] = {
             "player_id": pid,
             "name": p.get("name"),
             "team": team,
-            "position": resolve_position(
-                p.get("position"),
-                depth_by_id.get(pid, {}).get("position"),
-                rating.get("positions") if rating else None,
-            ),
+            "position": position,
+            "positions": resolve_positions(position, depth_pos, ratings_positions),
             "jersey_number": p.get("jersey_number"),
             "height": p.get("height"),
             "weight": p.get("weight"),

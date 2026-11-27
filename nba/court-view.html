@@ -646,6 +646,8 @@ let positionRanks = {};
 // by court zone, never written back to nba_players_master.json, reset on
 // every team switch (see loadTeam()).
 let manualStarters = {};
+// {zone: player} for the loaded team before any manual sub (computeNaturalLineup(), set in loadTeam()).
+let naturalLineup = {};
 // Single-level undo, keyed by zone: manualStarters[pos]'s value right before
 // the most recent substitutePlayer() call for that zone (undefined if the
 // zone had no manual starter yet). A zone key here means "show Undo"; using
@@ -671,6 +673,8 @@ function mapPlayer(p) {
     name: p.name,
     team: p.team,
     pos: p.position,
+    // every listed position, primary first (used only to place players on the court)
+    positions: Array.isArray(p.positions) && p.positions.length ? p.positions : [p.position],
     jersey: p.jersey_number,
     height: p.height,
     weight: p.weight,
@@ -781,6 +785,7 @@ async function loadTeam(abbr) {
   sidebarZone = null; compareId = null;
   document.body.classList.remove('sb-open');
   teamPlayers = allPlayers.filter(p => p.team === abbr);
+  naturalLineup = computeNaturalLineup(teamPlayers);
   updateHeader();
   renderCourt();
   renderBenchList();
@@ -797,21 +802,67 @@ function updateHeader() {
 // ══════════════════════════════════════════
 // STARTING FIVE (COURT)
 // ══════════════════════════════════════════
-function getStarter(pos) {
-  if (manualStarters[pos] != null) {
-    const manual = teamPlayers.find(p => p.id === manualStarters[pos]);
-    if (manual) return manual;
+const byMpg = (a, b) => (b.mpg || 0) - (a.mpg || 0);
+const UNLISTED_COST = 10;
+// 0 = his primary position, 1 = his second, ...; UNLISTED_COST when the zone isn't listed for him.
+function zoneCost(p, zone) {
+  const i = p.positions.indexOf(zone);
+  return i < 0 ? UNLISTED_COST : i;
+}
+
+function permutations(list) {
+  if (list.length < 2) return [list];
+  return list.flatMap((x, i) => permutations([...list.slice(0, i), ...list.slice(i + 1)]).map(rest => [x, ...rest]));
+}
+
+// The team's natural five, {zone: player}: its 'starter' players (top 5 by MPG, topped up with the
+// highest-MPG others if fewer), assigned to the zones with the lowest total zoneCost over all 120
+// orders. Ties: more MPG playing a primary position, then the first order tried.
+function computeNaturalLineup(players) {
+  const starters = players.filter(p => p.status === 'starter').sort(byMpg).slice(0, ZONE_ORDER.length);
+  const others = players.filter(p => !starters.includes(p)).sort(byMpg);
+  const five = starters.concat(others.slice(0, ZONE_ORDER.length - starters.length));
+  while (five.length < ZONE_ORDER.length) five.push(null);
+  let best = null;
+  for (const order of permutations(five)) {
+    let cost = 0, primaryMpg = 0;
+    order.forEach((p, i) => {
+      if (!p) return;
+      const c = zoneCost(p, ZONE_ORDER[i]);
+      cost += c;
+      if (c === 0) primaryMpg += p.mpg || 0;
+    });
+    if (!best || cost < best.cost || (cost === best.cost && primaryMpg > best.primaryMpg + 1e-6)) best = { order, cost, primaryMpg };
   }
-  const usedElsewhere = new Set(
-    Object.entries(manualStarters).filter(([k]) => k !== pos).map(([, id]) => id)
-  );
-  const candidates = teamPlayers.filter(p => p.pos === pos && !usedElsewhere.has(p.id));
-  if (!candidates.length) return null;
-  const starters = candidates.filter(p => p.status === 'starter');
-  // among starters at this position, take the highest-minutes one; if
-  // none are flagged starter, fall back to the highest-minutes player
-  const pool = starters.length ? starters : candidates;
-  return pool.sort((a,b) => (b.mpg||0) - (a.mpg||0))[0];
+  return Object.fromEntries(ZONE_ORDER.map((z, i) => [z, best.order[i]]));
+}
+
+// What is on the court now: manual subs first, then each other zone's natural player unless he was
+// placed manually elsewhere. A zone left open takes the highest-MPG unused player who lists it, else the
+// highest-MPG unused player.
+function currentLineup() {
+  const lineup = {}, used = new Set();
+  const place = (zone, p) => { lineup[zone] = p; used.add(p.id); };
+  for (const zone of ZONE_ORDER) {
+    const manual = manualStarters[zone] != null && teamPlayers.find(p => p.id === manualStarters[zone]);
+    if (manual) place(zone, manual);
+  }
+  for (const zone of ZONE_ORDER) {
+    const p = naturalLineup[zone];
+    if (!lineup[zone] && p && !used.has(p.id)) place(zone, p);
+  }
+  for (const listedOnly of [true, false]) {
+    for (const zone of ZONE_ORDER) {
+      if (lineup[zone]) continue;
+      const p = teamPlayers.filter(c => !used.has(c.id) && (!listedOnly || c.positions.includes(zone))).sort(byMpg)[0];
+      if (p) place(zone, p);
+    }
+  }
+  return lineup;
+}
+
+function getStarter(pos) {
+  return currentLineup()[pos] || null;
 }
 
 function renderCourt() {
@@ -1022,6 +1073,8 @@ function undoSubstitution(pos) {
   if (prev == null) {
     delete manualStarters[pos];
   } else {
+    // if that player has since been subbed into another zone, he leaves it (never on court twice)
+    ZONE_ORDER.filter(z => z !== pos && manualStarters[z] === prev).forEach(z => { delete manualStarters[z]; delete subUndo[z]; });
     manualStarters[pos] = prev;
   }
   hidePopup();

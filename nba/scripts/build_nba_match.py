@@ -20,6 +20,7 @@ by reading all three scrapers' matching code: none of them filter or
 gate on position the way NFL's EDGE/DI split did, so there's no
 analogous position-taxonomy mismatch here to fix.
 """
+import json
 import os
 
 import duckdb
@@ -27,7 +28,7 @@ import pandas as pd
 
 from build_nba_master import (
     resolve_position, resolve_rotation, resolve_team, format_salary,
-    log_position_counts,
+    log_position_counts, resolve_positions,
 )
 
 DB_PATH = os.path.join('nba', 'data', 'fieldview.duckdb')
@@ -113,14 +114,17 @@ def build_match():
                 bbr_cols[prefix + BBR_RENAME.get(f, f)] = b[f] if b else None
             bbr_cols[prefix + 'adv_season'] = b['season'] if b else None
 
+        depth_pos = depth_by_id.get(pid, {}).get('position')
+        ratings_positions = rating.get('positions') if rating is not None else None
+        position = resolve_position(p.get('position'), depth_pos, ratings_positions)
+
         matches.append({
             **bbr_cols,
             'player_id': pid,
             'team': team,
-            'position': resolve_position(
-                p.get('position'),
-                depth_by_id.get(pid, {}).get('position'),
-                rating.get('positions') if rating is not None else None),
+            'position': position,
+            # JSON string column, like nba_depth_chart's status_flags_json
+            'positions_json': json.dumps(resolve_positions(position, depth_pos, ratings_positions)),
             'rotation_status': rotation['rotation_status'],
             'rotation_source': rotation['rotation_source'],
             'depth_rank': rotation['depth_rank'],
