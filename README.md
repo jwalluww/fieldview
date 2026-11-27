@@ -23,7 +23,7 @@ Plain HTML/CSS/JS on GitHub Pages (no framework, no build step), fed by Python s
 
 ## Data credits
 
-nflverse, OurLads, OverTheCap, Spotrac, ESPN, Basketball-Reference, nba2kapi / 2kratings, MLB Stats API, MLB The Show, NHL API, nhlratings.net, Fantasy Premier League (FPL), American Soccer Analysis, EA Sports (Madden, EA FC), PFN and Mock Draft Hero.
+nflverse, OurLads, OverTheCap, ESPN, Basketball-Reference, nba2kapi / 2kratings, MLB Stats API, MLB The Show, NHL API, nhlratings.net, Fantasy Premier League (FPL), American Soccer Analysis, EA Sports (Madden, EA FC), PFN and Mock Draft Hero.
 
 **Data belongs to its sources.** FieldView is not affiliated with or endorsed by the NFL, NBA, MLB, NHL, MLS, Premier League, EA Sports, 2K or their teams; team names and logos are trademarks of their owners.
 
